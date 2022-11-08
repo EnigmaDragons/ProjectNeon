@@ -18,7 +18,7 @@ public class AdventureProgressV5 : AdventureProgressBase
     private DictionaryWithDefault<string, bool> _storyStates = new DictionaryWithDefault<string, bool>(false);
 
     public override int AdventureId => currentAdventure.Adventure.Id;
-    public override string AdventureName => currentAdventure.Adventure.MapTitle;
+    public override string AdventureNameTerm => currentAdventure.Adventure.MapTitleTerm;
     public override CurrentGlobalEffects GlobalEffects => currentGlobalEffects;
     public override int CurrentStageProgress => currentSegmentIndex;
     public override int CurrentChapterNumber => currentChapterIndex + 1;
@@ -107,7 +107,7 @@ public class AdventureProgressV5 : AdventureProgressBase
         try
         {
             return
-                $"Adventure: {currentAdventure.Adventure.Id} {currentAdventure.Adventure.Title}. Stage: {currentChapterIndex}. StageProgress: {Progress}." +
+                $"Adventure: {currentAdventure.Adventure.Id} {currentAdventure.Adventure.TitleTerm.ToEnglish()}. Stage: {currentChapterIndex}. StageProgress: {Progress}." +
                 $"Chapter: {currentChapterIndex}/{currentAdventure.Adventure.StagesV5.Length}. Segment: {currentSegmentIndex}. Rng: {RngSeed}";
         }
         catch (Exception e)
@@ -195,7 +195,7 @@ public class AdventureProgressV5 : AdventureProgressBase
         currentSegmentIndex++;
         rngSeed = Rng.NewSeed();;
         AdvanceStageIfNeeded();
-        AllMetrics.PublishAdventureProgress(AdventureName, Progress);
+        AllMetrics.PublishAdventureProgress(AdventureNameTerm.ToEnglish(), Progress);
     }
 
     public override void SetStoryState(string state, bool value) => _storyStates[state] = value;

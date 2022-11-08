@@ -7,10 +7,10 @@ using UnityEngine.UI;
 public class CompletionProgressPresenter : MonoBehaviour
 {
     [SerializeField] private Image adventureCover;
-    [SerializeField] private TextMeshProUGUI adventureTitle;
+    [SerializeField] private Localize adventureTitle;
     [SerializeField] private HeroCompletionPresenter[] heroes;
     [SerializeField] private GameObject lockedObj;
-    [SerializeField] private TextMeshProUGUI lockReasonLabel;
+    [SerializeField] private Localize lockReasonLabel;
     [SerializeField] private GameObject completionCheckmark;
 
     [SerializeField] private GameObject difficultyPanel;
@@ -18,18 +18,18 @@ public class CompletionProgressPresenter : MonoBehaviour
     [SerializeField] private GameObject difficultiesCompletionCheckmark;
 
     public CompletionProgressPresenter Initialized(Adventure adv, ProgressionItem[] progressItems)
-        => Initialized(adv.MapTitle, adv.AdventureImage, progressItems, adv.IsLocked ? adv.LockConditionExplanation : Maybe<string>.Missing());
+        => Initialized(adv.MapTitleTerm, adv.AdventureImage, progressItems, adv.IsLocked ? adv.LockConditionExplanation : Maybe<string>.Missing());
     
-    public CompletionProgressPresenter Initialized(string title, Sprite coverArt, ProgressionItem[] progressItems, Maybe<string> lockReason)
+    public CompletionProgressPresenter Initialized(string titleTerm, Sprite coverArt, ProgressionItem[] progressItems, Maybe<string> lockReason)
     {
         adventureCover.sprite = coverArt;
-        adventureTitle.text = title;
+        adventureTitle.SetTerm(titleTerm);
         RenderHeroes(progressItems);
         completionCheckmark.SetActive(progressItems.Where(p => p.Difficulty.IsMissing).All(p => p.Completed));
         RenderDifficulty(progressItems);
         lockedObj.SetActive(lockReason.IsPresent);
         if (lockReason.IsPresent)
-            lockReasonLabel.text = lockReason.Value;
+            lockReasonLabel.SetFinalText(lockReason.Value);
         gameObject.SetActive(true);
         return this; 
     }

@@ -8,6 +8,6 @@ public class ConclusionController : MonoBehaviour
 
     private void Start()
     {
-        presenter.Init(conclusion.IsVictorious, adventure.Adventure.Title, conclusion.EndingStoryText);
+        presenter.Init(conclusion.IsVictorious, adventure.Adventure.TitleTerm, conclusion.EndingStoryTextTerm);
     }
 }

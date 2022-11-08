@@ -91,7 +91,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
             Log.Info("Navigating to defeat screen");
             AllMetrics.PublishGameLost(adventure.Adventure.Id);
             state.AccumulateRunStats();
-            conclusion.RecordFinishedGameAndCleanUp(false, adventure.Adventure.DefeatConclusion, CurrentGameData.Data.Stats, partyState.BaseHeroes);
+            conclusion.RecordFinishedGameAndCleanUp(false, adventure.Adventure.DefeatConclusionTerm, CurrentGameData.Data.Stats, partyState.BaseHeroes);
             this.ExecuteAfterDelay(() => navigator.NavigateToConclusionScene(), secondsBeforeGameOverScreen);
         }
     }

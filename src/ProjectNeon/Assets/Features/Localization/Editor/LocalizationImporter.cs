@@ -21,6 +21,7 @@ public class LocalizationImporter
         ImportHeroes(true);
         ImportBlessings(true);
         ImportDifficulties(true);
+        ImportAdventures(true);
     }
 
     [MenuItem("Neon/Localization/Import Tutorial Slides")]
@@ -72,7 +73,6 @@ public class LocalizationImporter
     [MenuItem("Neon/Localization/Import Blessings")]
     private static void ImportBlessings()
         => ImportBlessings(false);
-
     private static void ImportBlessings(bool hasInit)
     {
         ImportSubItems<CorpClinicProvider, BlessingData>(p => p.blessingsV4, b => b.NameTerm, (b, text) => b.Name = text, hasInit);
@@ -87,6 +87,20 @@ public class LocalizationImporter
         ImportItems<Difficulty>(x => x.NameTerm, (d, text) => d.difficultyName = text, hasInit);
         ImportItems<Difficulty>(x => x.DescriptionTerm, (d, text) => d.description = text, hasInit);
         ImportItems<Difficulty>(x => x.ChangesTerm, (d, text) => d.changes = text, hasInit);
+    }
+    
+    [MenuItem("Neon/Localization/Import Adventures")]
+    private static void ImportAdventures()
+        => ImportAdventures(false);
+    private static void ImportAdventures(bool hasInit)
+    {
+        ImportItems<Adventure>(x => x.TitleTerm, (a, text) => a.adventureTitle = text, hasInit);
+        ImportItems<Adventure>(x => x.RawMapTitleTerm, (a, text) => a.mapAdventureTitle = text, hasInit);
+        ImportItems<Adventure>(x => x.AllowedHeroesDescriptionTerm, (a, text) => a.allowedHeroesDescription = text, hasInit);
+        ImportItems<Adventure>(x => x.StoryTerm, (a, text) => a.story = text, hasInit);
+        ImportItems<Adventure>(x => x.LockConditionExplanationTerm, (a, text) => a.lockConditionExplanation = text, hasInit);
+        ImportItems<Adventure>(x => x.VictoryConclusionTerm, (a, text) => a.victoryConclusion = text, hasInit);
+        ImportItems<Adventure>(x => x.DefeatConclusionTerm, (a, text) => a.defeatConclusion = text, hasInit);
     }
 
     private static void ImportItems<T>(Func<T, string> getTerm, Action<T, string> setText, bool hasInit) where T : ScriptableObject

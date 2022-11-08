@@ -9,7 +9,7 @@ public class ProgressionItem
 
     public string FullDescription()
     {
-        var completedWord = Completed ? "Complete" : "Incomplete";
+        var completedWord = (Completed ? "Progressions/Complete" : "Progressions/Incomplete").ToLocalized();
         return $"{completedWord} - {Description}";
     }
 

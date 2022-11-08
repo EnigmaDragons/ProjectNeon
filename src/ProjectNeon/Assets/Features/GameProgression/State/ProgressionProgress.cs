@@ -32,12 +32,12 @@ public class ProgressionProgress : MonoBehaviour
     
     private ProgressionItem[] GetTutorialProgress()
     {
-        return new ProgressionItem(true, $"Adventure - {tutorialAdventure.MapTitle} - Anon", tutorialAdventure.RequiredHeroes.First(), tutorialAdventure, Maybe<Difficulty>.Missing()).AsArray();
+        return new ProgressionItem(true, $"{"Progressions/Adventure".ToLocalized()} - {tutorialAdventure.MapTitleTerm.ToLocalized()} - {"Heroes/HeroName16".ToLocalized()}", tutorialAdventure.RequiredHeroes.First(), tutorialAdventure, Maybe<Difficulty>.Missing()).AsArray();
     }
 
     private ProgressionItem[] GetHeroUnlockProgress(BaseHero[] heroes)
     {
-        return heroes.Select(x => new ProgressionItem(false, $"Hero - Unlocked - {x.NameTerm().ToEnglish()}", x, Maybe<Adventure>.Missing(), Maybe<Difficulty>.Missing())).ToArray();
+        return heroes.Select(x => new ProgressionItem(false, $"{"Progressions/Hero".ToLocalized()} - {"Progressions/Unlocked".ToLocalized()} - {x.NameTerm().ToLocalized()}", x, Maybe<Adventure>.Missing(), Maybe<Difficulty>.Missing())).ToArray();
     }
 
     private ProgressionItem[] GetAdventureBaseDifficultyProgress(BaseHero[] heroes, Adventure[] adventures, List<AdventureCompletionRecord> records)
@@ -46,11 +46,11 @@ public class ProgressionProgress : MonoBehaviour
         return adventures
             .SelectMany(a =>
             {
-                var adventureWord = a.Mode == AdventureMode.Draft ? "Draft" : "Adventure";
+                var adventureWord = (a.Mode == AdventureMode.Draft ? "Progressions/Draft" : "Progressions/Adventure").ToLocalized();
                 return heroes
                     .Select(h =>
                         new ProgressionItem(keyable.ContainsKey($"{a.Id}-{h.id}"),
-                            $"{adventureWord} - {a.MapTitle} - {h.NameTerm().ToEnglish()}", h, a, Maybe<Difficulty>.Missing()));
+                            $"{adventureWord} - {a.MapTitleTerm.ToLocalized()} - {h.NameTerm().ToLocalized()}", h, a, Maybe<Difficulty>.Missing()));
             })
             .ToArray();
     }
@@ -64,13 +64,13 @@ public class ProgressionProgress : MonoBehaviour
             var highestCompleted = data.HighestCompletedDifficulty(a.id);
             Enumerable.Range(-1, difficulties.Length).ForEach(difficultyId =>
             {
-                var adventureWord = a.Mode == AdventureMode.Draft ? "Draft" : "Adventure";
+                var adventureWord = (a.Mode == AdventureMode.Draft ? "Progressions/Draft" : "Progressions/Adventure").ToLocalized();
                 if (!difficultiesDict.ContainsKey(difficultyId))
                     return;
                 
                 var difficulty = difficultiesDict[difficultyId];
                 items.Add(new ProgressionItem(highestCompleted >= difficultyId, 
-                    $"{adventureWord} - {a.MapTitle} - Difficulty - {difficulty.Name}", 
+                    $"{adventureWord} - {a.MapTitleTerm.ToLocalized()} - {"Progressions/Difficulty".ToLocalized()} - {difficulty.NameTerm.ToLocalized()}", 
                         Maybe<BaseHero>.Missing(), a, difficulty));
             });
         });

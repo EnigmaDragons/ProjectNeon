@@ -1,19 +1,20 @@
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 
 public class ConclusionPresenter : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI outcomeLabel;
-    [SerializeField] private TextMeshProUGUI adventureTitleLabel;
-    [SerializeField] private TextMeshProUGUI storyTextBox;
+    [SerializeField] private Localize adventureTitleLabel;
+    [SerializeField] private Localize storyTextBox;
     [SerializeField] private GameObject[] victoryElements;
     [SerializeField] private GameObject[] defeatElements;
 
-    public void Init(bool won, string adventureTitle, string storyText)
+    public void Init(bool won, string adventureTitleTerm, string storyTextTerm)
     {
         outcomeLabel.text = won ? "You Won!" : "Game Over";
-        adventureTitleLabel.text = adventureTitle;
-        storyTextBox.text = storyText;
+        adventureTitleLabel.SetTerm(adventureTitleTerm);
+        storyTextBox.SetTerm(storyTextTerm);
         HideElements();
         if (won)
         {

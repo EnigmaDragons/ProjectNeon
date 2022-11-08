@@ -6,17 +6,17 @@ using UnityEngine;
 public class Adventure : ScriptableObject, CurrentAdventureData
 {
     [SerializeField] public int id;
-    [SerializeField] private string lockConditionExplanation = "";
+    [SerializeField] public string lockConditionExplanation = "";
     [SerializeField] private Adventure[] prerequisiteCompletedAdventures;
     [SerializeField] private AdventureMode mode;
     [SerializeField] private DynamicStage[] dynamicStages;
     [SerializeField] private StaticStageV4[] stages;
     [SerializeField] private HybridStageV5[] v5Stages;
-    [SerializeField] private string adventureTitle;
-    [SerializeField] private string mapAdventureTitle;
+    [SerializeField] public string adventureTitle;
+    [SerializeField] public string mapAdventureTitle;
     [SerializeField] private Sprite adventureImage;
     [SerializeField] private int partySize;
-    [SerializeField] private string allowedHeroesDescription = "";
+    [SerializeField] public string allowedHeroesDescription = "";
     [SerializeField] private BaseHero[] requiredHeroes;
     [SerializeField] private BaseHero[] bannedHeroes;
     [SerializeField] private BaseHero[] fixedStartingHeroes;
@@ -30,20 +30,21 @@ public class Adventure : ScriptableObject, CurrentAdventureData
     [SerializeField] private int startingClinicVouchers = 1;
     [SerializeField] private int battleRewardClinicVouchers = 1;
     [SerializeField] private int numOfImplantOptions = 4;
-    [SerializeField, TextArea(4, 10)] private string story;
-    [SerializeField, TextArea(4, 10)] private string defeatConclusion = "";
-    [SerializeField, TextArea(4, 10)] private string victoryConclusion = "";
+    [SerializeField, TextArea(4, 10)] public string story;
+    [SerializeField, TextArea(4, 10)] public string defeatConclusion = "";
+    [SerializeField, TextArea(4, 10)] public string victoryConclusion = "";
     [SerializeField] private bool mapDeckbuildingEnabled = true;
     [SerializeField] private bool allowDifficultySelection = true;
 
     public AdventureMode Mode => mode;
     public int Id => id;
-    public string Title => adventureTitle;
-    public string MapTitle => string.IsNullOrWhiteSpace(mapAdventureTitle) ? adventureTitle : mapAdventureTitle;
-    public string Story => story;
+    public string TitleTerm => $"Adventures/Adventure{id}Title";
+    public string RawMapTitleTerm => $"Adventures/Adventure{id}MapTitle";
+    public string MapTitleTerm => string.IsNullOrWhiteSpace(RawMapTitleTerm.ToEnglish()) ? TitleTerm : RawMapTitleTerm;
+    public string StoryTerm => $"Adventures/Adventure{id}Story";
 
-    public string DefeatConclusion => defeatConclusion;
-    public string VictoryConclusion => victoryConclusion;
+    public string DefeatConclusionTerm => $"Adventures/Adventure{id}ConclusionDefeat";
+    public string VictoryConclusionTerm => $"Adventures/Adventure{id}ConclusionVictory";
 
     public DynamicStage[] DynamicStages => dynamicStages.ToArray();
     public StaticStageV4[] StagesV4 => stages.ToArray();
@@ -69,22 +70,23 @@ public class Adventure : ScriptableObject, CurrentAdventureData
 
     public bool IsCompleted => CurrentProgressionData.Data.Completed(Id);
     public bool MapDeckbuildingEnabled => mapDeckbuildingEnabled;
-    
+
+    public string LockConditionExplanationTerm => $"Adventures/Adventure{id}LockCondition";
     public bool IsLocked => !string.IsNullOrWhiteSpace(lockConditionExplanation) || prerequisiteCompletedAdventures.Any(p => !p.IsCompleted);
     public string LockConditionExplanation
     {
         get
         {
-            var staticCondition = lockConditionExplanation ?? "";
+            var staticCondition = LockConditionExplanationTerm.ToLocalized() ?? "";
             if (staticCondition.Length > 0)
                 return staticCondition;
 
             var firstUncompletedRequiredAdventure = prerequisiteCompletedAdventures.Where(p => !p.IsCompleted).FirstAsMaybe();
-            return firstUncompletedRequiredAdventure.Select(a => $"Must Complete {a.MapTitle}", () => "");
+            return firstUncompletedRequiredAdventure.Select(a => string.Format("Adventures/DefaultLockedReason".ToLocalized(), a.MapTitleTerm.ToLocalized()), () => "");
         }
     }
-
-    public string AllowedHeroesDescription => allowedHeroesDescription;
+    
+    public string AllowedHeroesDescriptionTerm => $"Adventures/Adventure{id}AllowedHeroes";
     public BattleRewards NormalBattleRewards => normalBattleRewards;
     public BattleRewards EliteBattleRewards => eliteBattleRewards;
     public bool AllowDifficultySelection => allowDifficultySelection;

@@ -48,11 +48,11 @@ public class StoryExporterEditor : EditorWindow
         return matchingAdventure.Select(a =>
         {
             var storyLines = new List<string>();
-            storyLines.Add("Story Title: " + a.Title);
+            storyLines.Add("Story Title: " + a.adventureTitle);
             storyLines.Add(_divider);
             
             storyLines.Add("Story: Intro");
-            storyLines.Add("  " + a.Story);
+            storyLines.Add("  " + a.story);
             storyLines.Add(_divider);
             var storySegments = new List<StageSegment>();
             for (var stage = 0; stage < a.StagesV5.Length; stage++)

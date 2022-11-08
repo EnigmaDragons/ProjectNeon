@@ -12,7 +12,6 @@ public class Difficulty : ScriptableObject
     [SerializeField] private StaticGlobalEffect[] globalEffects;
 
     public int Id => id;
-    public string Name => difficultyName;
     public string NameTerm => $"Difficulties/Difficulty{id}Name";
     public string DescriptionTerm => $"Difficulties/Difficulty{id}Description";
     public string ChangesTerm => $"Difficulties/Difficulty{id}Changes";

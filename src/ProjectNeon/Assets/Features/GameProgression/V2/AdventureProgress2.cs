@@ -26,7 +26,7 @@ public class AdventureProgress2 : AdventureProgressBase
     public override float[] RisingActionPoints => new float[0];
     public bool IsFinalStage => currentChapterIndex == currentAdventure.Adventure.DynamicStages.Length - 1;
     public bool IsLastSegmentOfStage => currentMap3.CompletedNodes.Any() && currentMap3.CompletedNodes[currentMap3.CompletedNodes.Count - 1].Type == MapNodeType.Boss;
-    public override string AdventureName => CurrentAdventure.Title;
+    public override string AdventureNameTerm => CurrentAdventure.TitleTerm;
     public override GameAdventureProgressType AdventureType => GameAdventureProgressType.V2;
     public override int RngSeed => currentMap3.CurrentNodeRngSeed;
     public override bool UsesRewardXp { get; } = true;

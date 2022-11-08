@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ public class GameProgressionSummaryUiPresenterV2 : MonoBehaviour
     [SerializeField] private ProgressionProgress progress;
     [SerializeField] private TextMeshProUGUI totalPercentLabel;
     [SerializeField] private CompletionProgressPresenter[] completionPresenters;
-    [SerializeField] private TextMeshProUGUI nonVisualCompletionItemsLabel;
+    [SerializeField] private Localize nonVisualCompletionItemsLabel;
     
     private void OnEnable()
     {
@@ -36,9 +37,9 @@ public class GameProgressionSummaryUiPresenterV2 : MonoBehaviour
             completionPresenters[i].Initialized(progressItem.First().Adventure.Value, progressItem.ToArray());
         }
         
-        nonVisualCompletionItemsLabel.text = string.Join(Environment.NewLine, groupedProgress
+        nonVisualCompletionItemsLabel.SetFinalText(string.Join(Environment.NewLine, groupedProgress
             .Where(x => x.Key == -1)
             .SelectMany(x => x.ToArray())
-            .Select(p => p.FullDescription()));
+            .Select(p => p.FullDescription())));
     }
 }

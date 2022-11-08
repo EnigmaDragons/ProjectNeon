@@ -15,7 +15,7 @@ public class AdventureProgressV4 : AdventureProgressBase
     private DictionaryWithDefault<string, bool> _storyStates = new DictionaryWithDefault<string, bool>(false);
 
     public override int AdventureId => currentAdventure.Adventure.Id;
-    public override string AdventureName => currentAdventure.Adventure.Title;
+    public override string AdventureNameTerm => currentAdventure.Adventure.TitleTerm;
     public override CurrentGlobalEffects GlobalEffects => currentGlobalEffects;
     public override int CurrentStageProgress => currentSegmentIndex;
     public override int CurrentChapterNumber => currentChapterIndex + 1;

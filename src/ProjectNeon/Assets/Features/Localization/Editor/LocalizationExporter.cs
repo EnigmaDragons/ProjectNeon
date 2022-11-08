@@ -161,6 +161,23 @@ public class LocalizationExporter
         WriteCsv("blessings", data);
     }
 
+    [MenuItem("Neon/Localization/Export Adventures")]
+    public static void ExportAdventures()
+    {
+        var data = new List<string>();
+        foreach (var adventure in GetAllInstances<Adventure>())
+        {
+            data.Add($"{adventure.TitleTerm.Split('/').Last()}^{ToSingleLineI2Format(adventure.adventureTitle ?? "")}");
+            data.Add($"{adventure.RawMapTitleTerm.Split('/').Last()}^{ToSingleLineI2Format(adventure.mapAdventureTitle ?? "")}");
+            data.Add($"{adventure.StoryTerm.Split('/').Last()}^{ToSingleLineI2Format(adventure.story ?? "")}");
+            data.Add($"{adventure.AllowedHeroesDescriptionTerm.Split('/').Last()}^{ToSingleLineI2Format(adventure.allowedHeroesDescription ?? "")}");
+            data.Add($"{adventure.LockConditionExplanationTerm.Split('/').Last()}^{ToSingleLineI2Format(adventure.lockConditionExplanation ?? "")}");
+            data.Add($"{adventure.VictoryConclusionTerm.Split('/').Last()}^{ToSingleLineI2Format(adventure.victoryConclusion ?? "")}");
+            data.Add($"{adventure.DefeatConclusionTerm.Split('/').Last()}^{ToSingleLineI2Format(adventure.defeatConclusion ?? "")}");
+        }
+        WriteCsv("adventures", data);
+    }
+
     private static T[] GetAllInstances<T>() where T : ScriptableObject
     {
         var guids = AssetDatabase.FindAssets("t:"+ typeof(T).Name);
