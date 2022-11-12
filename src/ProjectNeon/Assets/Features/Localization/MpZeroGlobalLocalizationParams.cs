@@ -16,5 +16,12 @@ public class MpZeroGlobalLocalizationParams : MonoBehaviour, ILocalizationParams
         LocalizationManager.ParamManagers.Remove(this);
     }
 
-    public virtual string GetParameterValue(string paramName) => paramName.FromI2ParamValue();
+    public virtual string GetParameterValue(string paramName)
+    {
+        if (paramName.Equals("SaveGameVersion"))
+            return CurrentGameData.SaveGameVersion;
+        if (paramName.Equals("GameVersion"))
+            return CurrentGameData.GameVersion;
+        return paramName.FromI2ParamValue();
+    }
 }

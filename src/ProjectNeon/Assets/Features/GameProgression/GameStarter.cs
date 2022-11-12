@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNewGameRequested, StartAdventureV5Requested>
+public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNewGameRequested, StartAdventureV5Requested>, ILocalizeTerms
 {
     [SerializeField] private Navigator navigator;
     [SerializeField] private SaveLoadSystem io;
@@ -154,18 +154,14 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
                 if (!CurrentGameData.SaveMatchesCurrentVersion)
                 {
                     Message.Publish(new RefreshMainMenu());
-                    Message.Publish(new ShowInfoDialog(
-                        $"Load failed. Save Game Version is {CurrentGameData.SaveGameVersion}. Current Game Version is {CurrentGameData.GameVersion}. Updating your game may fix this issue.",
-                        "Drek!"));
+                    Message.Publish(ShowLocalizedDialog.Info(DialogTerms.LoadFailedVersionMismatch, DialogTerms.OptionDrek));
                 }
                 else
                 {
                     io.ClearCurrentSlot();
                     CurrentGameData.Clear();
                     Message.Publish(new RefreshMainMenu());
-                    Message.Publish(new ShowInfoDialog(
-                        "Unfortunately, your Save Game was unable to be loaded. A bug report has been automatically filed.",
-                        "Drek!"));
+                    Message.Publish(ShowLocalizedDialog.Info(DialogTerms.LoadFailed, DialogTerms.OptionDrek));
                 }
             }
         }
@@ -176,13 +172,13 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
         if (!CurrentGameData.HasActiveGame) 
             KickOffGameStartProcess(msg.Mode);
         else
-            Message.Publish(new ShowTwoChoiceDialog
+            Message.Publish(new ShowLocalizedDialog
             {
                 UseDarken = true,
-                Prompt = "Starting a new game will abandon your current run. Are you sure you wish to start to start a new game?",
-                PrimaryButtonText = "Yes",
+                PromptTerm = DialogTerms.AbandonCurrentRunWarning,
+                PrimaryButtonTerm = DialogTerms.OptionYes,
                 PrimaryAction = () => KickOffGameStartProcess(msg.Mode),
-                SecondaryButtonText = "No",
+                SecondaryButtonTerm = DialogTerms.OptionNo,
                 SecondaryAction = () => { }
             });
     }
@@ -194,4 +190,14 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
         else
             Message.Publish(new StartNewGame());
     }
+
+    public string[] GetLocalizeTerms() => new[]
+    {
+        DialogTerms.OptionYes,
+        DialogTerms.OptionNo,
+        DialogTerms.OptionDrek,
+        DialogTerms.AbandonCurrentRunWarning,
+        DialogTerms.LoadFailed,
+        DialogTerms.LoadFailedVersionMismatch
+    };
 }

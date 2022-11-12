@@ -11,17 +11,19 @@ public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl, St
     [SerializeField] private TextMeshProUGUI numCopiesLabel;
     [SerializeField] private GameObject superFocus;
 
+    private const string Basic = "Basic";
+    
     public CardInLibraryButton InitInfoOnly(Card card, Action action)
     {
         presenter.Set(card, action);
-        numCopiesLabel.text = "";
+        numCopiesLabel.text = string.Empty;
         return this;
     }
 
     public CardInLibraryButton InitInfoOnly(CardTypeData card)
     {
         presenter.Set(card, () => { });
-        numCopiesLabel.text = "";
+        numCopiesLabel.text = string.Empty;
         return this;
     }
 
@@ -56,14 +58,14 @@ public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl, St
     public CardInLibraryButton InitBasic(CardTypeData card)
     {
         presenter.Set(card, () => { });
-        numCopiesLabel.text = "Basic";
+        numCopiesLabel.text = Basic;
         return this;
     }
     
     public CardInLibraryButton InitBasic(Card card)
     {
         presenter.Set(card, () => { });
-        numCopiesLabel.text = "Basic";
+        numCopiesLabel.text = Basic;
         return this;
     }
 
@@ -72,8 +74,7 @@ public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl, St
         if (card.Rarity == Rarity.Starter && card.Archetypes.None() && !CurrentAcademyData.Data.ReceivedNoticeAboutGeneralStarterCards)
         {
             CurrentAcademyData.Mutate(a => a.ReceivedNoticeAboutGeneralStarterCards = true);
-            Message.Publish(new ShowInfoDialog("The general starter cards (Lite Charge Shield/Improvise/Scrounge) are playable, but usually weaker than your hero's card set. " +
-                                               "Choose wisely! Be sure you want them.", "Got it!"));
+            Message.Publish(ShowLocalizedDialog.Info(DialogTerms.StarterCardsWarning, DialogTerms.OptionGotIt));
         }
         state.SelectedHeroesDeck.Deck.Add(card);
         Message.Publish(new DeckBuilderCurrentDeckChanged(state.SelectedHeroesDeck));

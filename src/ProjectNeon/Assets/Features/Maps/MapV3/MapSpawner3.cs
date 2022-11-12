@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[Obsolete("Old Version")]
 public class MapSpawner3 : OnMessage<NodeFinished, GuaranteeStoryEvent>
 {
     [SerializeField] private CurrentGameMap3 gameMap;

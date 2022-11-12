@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ClinicUIController : OnMessage<ToggleClinic>
+public class ClinicUIController : OnMessage<ToggleClinic>, ILocalizeTerms
 {
     [SerializeField] private GameObject clinicUi;
     [SerializeField] private ClinicState clinic;
@@ -18,14 +18,23 @@ public class ClinicUIController : OnMessage<ToggleClinic>
             var shouldHealInjury = party.ClinicVouchers > 0 && party.TotalNumInjuries > 0;
             var shouldGetSomeHealing = party.ClinicVouchers > 0 && party.MissingHpFactor > 0.33;
             
-            if (shouldHealInjury || shouldGetSomeHealing)
-                Message.Publish(new ShowTwoChoiceDialog
+            if (shouldHealInjury)
+                Message.Publish(new ShowLocalizedDialog
                 {
-                    UseDarken = true, 
-                    Prompt = $"Are you sure you're ready to leave? You still have untreated {(shouldHealInjury ? "injuries" : "wounds")}!",
-                    PrimaryButtonText = "Leave Anyway",
+                    UseDarken = true,
+                    PromptTerm = DialogTerms.LeaveClinicWithInjury,
+                    PrimaryButtonTerm = DialogTerms.OptionLeave,
                     PrimaryAction = LeaveClinic,
-                    SecondaryButtonText = "Stay"
+                    SecondaryButtonTerm = DialogTerms.OptionStay
+                });
+            else if (shouldGetSomeHealing)
+                Message.Publish(new ShowLocalizedDialog
+                {
+                    UseDarken = true,
+                    PromptTerm = DialogTerms.LeaveClinicWithWounds,
+                    PrimaryButtonTerm = DialogTerms.OptionLeave,
+                    PrimaryAction = LeaveClinic,
+                    SecondaryButtonTerm = DialogTerms.OptionStay
                 });
             else
                 LeaveClinic();    
@@ -46,5 +55,13 @@ public class ClinicUIController : OnMessage<ToggleClinic>
         clinicUi.SetActive(!clinicUi.activeSelf);
         if (msg.IsTutorial)
             Message.Publish(new SetSuperFocusHealControl(true));
-    } 
+    }
+
+    public string[] GetLocalizeTerms() => new[]
+    {
+        DialogTerms.OptionLeave,
+        DialogTerms.OptionStay,
+        DialogTerms.LeaveClinicWithInjury,
+        DialogTerms.LeaveClinicWithWounds
+    };
 }

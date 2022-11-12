@@ -1,4 +1,6 @@
+using System;
 
+[Obsolete("Is not Localized")]
 public class ShowInfoDialog
 {
     public bool UseDarken { get; }

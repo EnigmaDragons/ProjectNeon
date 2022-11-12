@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ILocalizeTerms
 {
     [SerializeField] private Button button;
     [SerializeField] private StageSegment segment;
@@ -116,13 +116,13 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
 
                 if (isEnlarged && !CurrentAcademyData.Data.ConfirmedStorySkipBehavior && mapData.Type != MapNodeType.MainStory && gameMap.CurrentChoices.Any(n => n.Type == MapNodeType.MainStory))
                 {
-                    Message.Publish(new ShowTwoChoiceDialog
-                    {     
-                        UseDarken = true,                   
-                        Prompt = "You are skipping a Main Story segment. If you don't visit the Main Story segment right now, you will miss it for this entire run. Are you sure you wish to skip it?",
-                        PrimaryButtonText = "Oops! Thanks!",
+                    Message.Publish(new ShowLocalizedDialog
+                    {
+                        UseDarken = true,
+                        PromptTerm = DialogTerms.SkipStoryWarning,
+                        PrimaryButtonTerm = DialogTerms.OptionOops,
                         PrimaryAction = () => { },
-                        SecondaryButtonText = "Skip the Story",
+                        SecondaryButtonTerm = DialogTerms.OptionSkipTheStory,
                         SecondaryAction = () =>
                         {
                             CurrentAcademyData.Mutate(d => d.ConfirmedStorySkipBehavior = true);
@@ -178,4 +178,11 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
         _rulesPanel.IfPresent(r => r.SetActive(false));
         Message.Publish(new HideTooltip());
     }
+
+    public string[] GetLocalizeTerms() => new []
+    {
+        DialogTerms.OptionOops, 
+        DialogTerms.SkipStoryWarning, 
+        DialogTerms.OptionSkipTheStory
+    };
 }
