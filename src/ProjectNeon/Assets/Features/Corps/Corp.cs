@@ -14,3 +14,11 @@ public interface Corp
     string ShortDescription { get; }
     string LongDescription { get; }
 }
+
+public static class CorpExtensions
+{
+    public static string GetLocalizedName(this Corp c) => c.GetTerm().ToLocalized();
+    public static string GetTerm(this Corp c) => $"MegaCorps/{c.Name}";
+}
+
+
