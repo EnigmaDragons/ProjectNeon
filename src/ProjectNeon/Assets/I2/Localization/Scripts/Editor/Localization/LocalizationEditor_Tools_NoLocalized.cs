@@ -41,7 +41,7 @@ namespace I2.Loc
 				EditorSceneManager.OpenScene(startingScene.name);
 		}
 		
-		[MenuItem("Neon/Localization/SelectNonLocalized")]
+		[MenuItem("Neon/Localization/SelectNonLocalized %&_l")]
 		static void SelectNonLocalized()
 		{
 			EditorApplication.update += SelectNoLocalizedLabels;
