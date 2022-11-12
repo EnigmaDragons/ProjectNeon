@@ -23,6 +23,7 @@ namespace I2.Loc
 		[MenuItem("Neon/Localization/AllBuildSceneLocalizedProgress %#_l")]
 		static void PrintNonLocalizedForEverySceneInBuild()
 		{
+			Log.Info("Begun Checking For Total Scene Localization Progress");
 			var startingScene = SceneManager.GetActiveScene();
 			var scenesInBuild = EditorBuildSettings.scenes;
 			var length = scenesInBuild.Length;

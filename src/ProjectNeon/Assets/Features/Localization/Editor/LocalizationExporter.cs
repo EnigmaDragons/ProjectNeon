@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -176,6 +177,19 @@ public class LocalizationExporter
             data.Add($"{adventure.DefeatConclusionTerm.Split('/').Last()}^{ToSingleLineI2Format(adventure.defeatConclusion ?? "")}");
         }
         WriteCsv("adventures", data);
+    }
+
+    [MenuItem("Neon/Localization/Export Stat Types")]
+    public static void ExportStatTypes()
+    {
+        var data = new List<string>();
+        
+        foreach (var x in Enum.GetValues(typeof(StatType)).Cast<StatType>())
+            data.Add($"{x.GetShortTerm()}, {x}");
+        foreach (var x in Enum.GetValues(typeof(TemporalStatType)).Cast<TemporalStatType>())
+            data.Add($"{x.GetShortTerm()}, {x}");
+
+        WriteCsv("StatTypes", data);
     }
 
     private static T[] GetAllInstances<T>() where T : ScriptableObject
