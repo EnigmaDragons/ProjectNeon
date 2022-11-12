@@ -26,6 +26,7 @@ public class LoadingController : OnMessage<NavigateToSceneRequested, HideLoadUiR
 
     private void Navigate(string sceneName)
     {
+        Log.Info("Loader - Navigate");
         if (Time.timeScale < 0.01)
             Time.timeScale = 1;
         MouseDragState.Set(false);

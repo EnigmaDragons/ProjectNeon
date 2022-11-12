@@ -85,7 +85,11 @@ public class EquipmentPresenter : OnMessage<LanguageChanged>, IPointerDownHandle
 
     private void OnDisable() => ClearHoverCard();
     
-    protected override void Execute(LanguageChanged msg) => Initialized(_currentEquipment, _onClick, _useHoverHighlight, _useAnyHover);
+    protected override void Execute(LanguageChanged msg)
+    {
+        if (_currentEquipment != null)
+            Initialized(_currentEquipment, _onClick, _useHoverHighlight, _useAnyHover);
+    }
 
     public void SetOnHover(Action onHoverEnter, Action onHoverExit)
     {

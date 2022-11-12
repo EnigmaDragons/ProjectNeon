@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,7 +9,7 @@ public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerE
 {
     [SerializeField] private Image icon;
     [SerializeField] private TextMeshProUGUI counter;
-    [SerializeField] private TextMeshProUGUI resourceNameLabel;
+    [SerializeField] private Localize resourceNameLabel;
 
     private Member _member;
     private IResourceType _resourceType;
@@ -48,7 +49,7 @@ public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerE
         var maxString = max < 25 ? $"/{max}" : string.Empty;
         counter.text = $"{state[_resourceType]}{maxString}";
         if (resourceNameLabel != null)
-            resourceNameLabel.text = _resourceType.Name;
+            resourceNameLabel.SetTerm(_resourceType.GetTerm());
 
         transform.DOKill(true);
         transform.DOPunchScale(new Vector3(1.5f, 1.5f, 1.5f), 0.3f, 1);
