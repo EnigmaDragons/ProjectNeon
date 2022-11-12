@@ -25,20 +25,30 @@ namespace I2.Loc
 			var startingScene = SceneManager.GetActiveScene();
 			var scenesInBuild = EditorBuildSettings.scenes;
 			var length = scenesInBuild.Length;
+			
+			var finalDone = 0;
+			var finalNeeded = 0;
 			var csv = new List<string>();
 			csv.Add("Scene, Progress, Done, Needed, Total");
+			
 			for (var i = 0; i < length; i++)
 			{
 				EditorSceneManager.OpenScene(scenesInBuild[i].path, OpenSceneMode.Single);
 				var (done, objs) = GetNonLocalizedInCurrentScene();
 				var total = objs.Count + done;
 				var percentComplete = total == 0 ? 0 : (float)done / total;
+				finalDone += done;
+				finalNeeded += objs.Count;
 				Log.Info($"{SceneManager.GetActiveScene().name,-32} - Localization Progress: {percentComplete:P} - Done: {done} - Needed: {objs.Count}");
 				csv.Add($"{SceneManager.GetActiveScene().name}, {percentComplete:P}, {done}, {objs.Count}, {total}");
 			}
 			LocalizationExporter.WriteCsv("SceneLocalizationProgress", csv);
 			if (startingScene.IsValid()) 
 				EditorSceneManager.OpenScene(startingScene.name);
+			
+			var finalTotal = finalDone + finalNeeded;
+			var finalPercentComplete = finalTotal == 0 ? 0 : (float)finalDone / finalTotal;
+			Log.Info($"Overall - Localization Progress: {finalPercentComplete:P} - Done: {finalDone} - Needed: {finalNeeded}");
 		}
 		
 		[MenuItem("Neon/Localization/SelectNonLocalized %&_l")]

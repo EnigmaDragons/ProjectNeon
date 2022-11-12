@@ -156,7 +156,7 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
                     Message.Publish(new RefreshMainMenu());
                     Message.Publish(new ShowInfoDialog(
                         $"Load failed. Save Game Version is {CurrentGameData.SaveGameVersion}. Current Game Version is {CurrentGameData.GameVersion}. Updating your game may fix this issue.",
-                        "Null Persp"));
+                        "Drek!"));
                 }
                 else
                 {
