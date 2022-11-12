@@ -187,7 +187,7 @@ namespace AeLa.EasyFeedback
                     CurrentReport.Title ?? "[no summary]",
                     CurrentReport.ToString() ?? "[no detail]",
                     CurrentReport.Labels,
-                    CurrentReport.List.id
+                    CurrentReport.List.id ?? "63388da4f1861e008374d7ab"
                 );
                 
                 // send up attachments 

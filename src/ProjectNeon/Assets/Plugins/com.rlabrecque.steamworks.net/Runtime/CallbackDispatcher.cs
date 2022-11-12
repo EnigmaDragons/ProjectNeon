@@ -153,8 +153,14 @@ namespace Steamworks {
 			}
 		}
 
-		internal static void RunFrame(bool isGameServer) {
-			if (!IsInitialized) throw new InvalidOperationException("Callback dispatcher is not initialized.");
+		internal static void RunFrame(bool isGameServer)
+		{
+			if (!IsInitialized)
+#if !UNITY_EDITOR
+				throw new InvalidOperationException("Callback dispatcher is not initialized.");
+#else
+				return;
+#endif
 
 			HSteamPipe hSteamPipe = (HSteamPipe)(isGameServer ? NativeMethods.SteamGameServer_GetHSteamPipe() : NativeMethods.SteamAPI_GetHSteamPipe());
 			NativeMethods.SteamAPI_ManualDispatch_RunFrame(hSteamPipe);
