@@ -72,8 +72,8 @@ public class EnemyDetailsView : MonoBehaviour
                 .OrderBy(x => x.Tags.Contains(CardTag.Ultimate) ? 1 : 0)
                 .ThenBy(x => x.Tags.Contains(CardTag.Focus) ? 0 : 1)
                 .ThenBy(x => x.Cost.BaseAmount)
-                .Select(x => ((CardTypeData)x, (x.Tags.Contains(CardTag.Ultimate) ? "Ultimate" : "")))
-                .Concat(e.ReactionCards.Select(x => ((CardTypeData)x, "Reaction")))
+                .Select(x => (x, x.Tags.Contains(CardTag.Ultimate) ? "Ultimate" : ""))
+                    .Concat(e.ReactionCards.Select(x => ((CardTypeData)x, "Reaction")))
                 .Select(c => (c.Item1.CreateInstance(-1, member), c.Item2)));
         if (corpUi != null)
             corpUi.Init(e.Corp);

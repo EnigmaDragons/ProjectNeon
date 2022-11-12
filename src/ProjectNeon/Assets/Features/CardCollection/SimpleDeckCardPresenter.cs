@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,7 +9,7 @@ using UnityEngine.UI;
 
 public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
-    [SerializeField] private TextMeshProUGUI cardNameText;
+    [SerializeField] private Localize cardNameText;
     [SerializeField] private TextMeshProUGUI countText;
     [SerializeField] private Image cardArt;
     [SerializeField] private HoverCard hoverCard;
@@ -82,7 +83,7 @@ public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPoi
 
     private void Render()
     {
-        cardNameText.text = _cardType.Name;
+        cardNameText.SetTerm(_cardType.CardLocalizationNameTerm());
         countText.text = _isBasic 
             ? "B" 
             : _count > -1 

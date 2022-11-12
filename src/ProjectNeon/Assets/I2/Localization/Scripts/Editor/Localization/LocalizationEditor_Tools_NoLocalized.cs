@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -28,6 +29,7 @@ namespace I2.Loc
 			
 			var finalDone = 0;
 			var finalNeeded = 0;
+			var allObjNamesNotLocalized = new List<string>();
 			var csv = new List<string>();
 			csv.Add("Scene, Progress, Done, Needed, Total");
 			
@@ -39,6 +41,7 @@ namespace I2.Loc
 				var percentComplete = total == 0 ? 0 : (float)done / total;
 				finalDone += done;
 				finalNeeded += objs.Count;
+				allObjNamesNotLocalized.AddRange(objs.Select(GetGameObjectSimplifiedName));
 				Log.Info($"{SceneManager.GetActiveScene().name,-32} - Localization Progress: {percentComplete:P} - Done: {done} - Needed: {objs.Count}");
 				csv.Add($"{SceneManager.GetActiveScene().name}, {percentComplete:P}, {done}, {objs.Count}, {total}");
 			}
@@ -49,6 +52,19 @@ namespace I2.Loc
 			var finalTotal = finalDone + finalNeeded;
 			var finalPercentComplete = finalTotal == 0 ? 0 : (float)finalDone / finalTotal;
 			Log.Info($"Overall - Localization Progress: {finalPercentComplete:P} - Done: {finalDone} - Needed: {finalNeeded}");
+			PrintTop5GameObjectNames(allObjNamesNotLocalized);
+		}
+
+		static string GetGameObjectSimplifiedName(GameObject o) =>
+			Regex.Replace(o.gameObject.name, @"^((?:.{3})?[^_\s]*).*$", "$1");
+		
+		static void PrintTop5GameObjectNames(List<string> objNames)
+		{
+			objNames
+				.GroupBy(a => a)
+				.OrderByDescending(a => a.Count())
+				.Take(5)
+				.ForEach(a => Log.Info($"Object: {a.Key} - {a.Count()}"));
 		}
 		
 		[MenuItem("Neon/Localization/SelectNonLocalized %&_l")]
@@ -109,6 +125,7 @@ namespace I2.Loc
 				Selection.objects = objs.ToArray();
 				var percentComplete = (float)localizedCount / (objs.Count + localizedCount);
 				Log.Info($"{SceneManager.GetActiveScene().name} - Localization Progress: {percentComplete:P} - Done: {localizedCount} - Needed: {objs.Count}");
+				PrintTop5GameObjectNames(objs.Select(GetGameObjectSimplifiedName).ToList());
 			}
 			else
 				ShowWarning("All labels in this scene have a Localize component assigned");

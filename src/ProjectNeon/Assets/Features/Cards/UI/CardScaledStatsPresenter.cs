@@ -19,7 +19,7 @@ public class CardScaledStatsPresenter : MonoBehaviour
     public void Show(string[] statTypes, StatType primaryStat)
     {
         var statTypesString = string.Join(", ", statTypes.Select(s 
-            => s.Equals(StatType.Power.ToString()) ? primaryStat.ToString() 
+            => s.Equals(StatType.Power.GetString()) ? primaryStat.GetString() 
                 : s.Equals("Base Power") ? $"Base {primaryStat}"
                     : s));
         label.text = statTypes.AnyNonAlloc() ? $"Scales with {statTypesString}" : "No Scaling";
@@ -34,8 +34,8 @@ public class CardScaledStatsPresenter : MonoBehaviour
         {
             if (formula.IndexOf($"Base[{stat}]", StringComparison.OrdinalIgnoreCase) >= 0)
                 stats.Add("Base " + stat);
-            else if (formula.IndexOf(stat.ToString(), StringComparison.OrdinalIgnoreCase) >= 0)
-                stats.Add(stat.ToString());
+            else if (formula.IndexOf(stat.GetString(), StringComparison.OrdinalIgnoreCase) >= 0)
+                stats.Add(stat.GetString());
         }
 
         foreach (var stat in StatTypeAliases.AbbreviationToFullNames)
