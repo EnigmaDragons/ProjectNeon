@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace I2.Loc
@@ -15,11 +18,37 @@ namespace I2.Loc
 		#endregion
 		
 		#region GUI Find NoLocalized Terms
+
+		[MenuItem("Neon/Localization/AllBuildSceneLocalizedProgress %#_l")]
+		static void PrintNonLocalizedForEverySceneInBuild()
+		{
+			var startingScene = SceneManager.GetActiveScene();
+			var scenesInBuild = EditorBuildSettings.scenes;
+			var length = scenesInBuild.Length;
+			var csv = new List<string>();
+			csv.Add("Scene, Progress, Done, Needed, Total");
+			for (var i = 0; i < length; i++)
+			{
+				EditorSceneManager.OpenScene(scenesInBuild[i].path, OpenSceneMode.Single);
+				var (done, objs) = GetNonLocalizedInCurrentScene();
+				var total = objs.Count + done;
+				var percentComplete = total == 0 ? 0 : (float)done / total;
+				Log.Info($"{SceneManager.GetActiveScene().name,-32} - Localization Progress: {percentComplete:P} - Done: {done} - Needed: {objs.Count}");
+				csv.Add($"{SceneManager.GetActiveScene().name}, {percentComplete:P}, {done}, {objs.Count}, {total}");
+			}
+			LocalizationExporter.WriteCsv("SceneLocalizationProgress", csv);
+			if (startingScene.IsValid()) 
+				EditorSceneManager.OpenScene(startingScene.name);
+		}
+		
+		[MenuItem("Neon/Localization/SelectNonLocalized")]
+		static void SelectNonLocalized()
+		{
+			EditorApplication.update += SelectNoLocalizedLabels;
+		}
 		
 		void OnGUI_Tools_NoLocalized()
 		{
-			//OnGUI_ScenesList();
-
 			if (_Tools_NoLocalized_Include==null)
 			{
 				_Tools_NoLocalized_Include = EditorPrefs.GetString ("_Tools_NoLocalized_Include", string.Empty);
@@ -62,7 +91,20 @@ namespace I2.Loc
 		
 		#region Find No Localized
 
-		void SelectNoLocalizedLabels()
+		static void SelectNoLocalizedLabels()
+		{
+			var (localizedCount, objs) = GetNonLocalizedInCurrentScene();
+			if (objs.Count > 0)
+			{
+				Selection.objects = objs.ToArray();
+				var percentComplete = (float)localizedCount / (objs.Count + localizedCount);
+				Log.Info($"{SceneManager.GetActiveScene().name} - Localization Progress: {percentComplete:P} - Done: {localizedCount} - Needed: {objs.Count}");
+			}
+			else
+				ShowWarning("All labels in this scene have a Localize component assigned");
+		}
+
+		static (int done, List<GameObject> needed) GetNonLocalizedInCurrentScene()
 		{
 			EditorPrefs.SetString ("_Tools_NoLocalized_Include", _Tools_NoLocalized_Include);
 			EditorPrefs.SetString ("_Tools_NoLocalized_Exclude", _Tools_NoLocalized_Exclude);
@@ -70,6 +112,8 @@ namespace I2.Loc
 			EditorApplication.update -= SelectNoLocalizedLabels;
 
 			List<Component> labels = new List<Component>();
+			List<GameObject> Objs = new List<GameObject>();
+			int localizedCount = 0;
 
 			TextMesh[] textMeshes = (TextMesh[])Resources.FindObjectsOfTypeAll(typeof(TextMesh));
 			if (textMeshes!=null && textMeshes.Length>0)
@@ -99,10 +143,10 @@ namespace I2.Loc
 #endif
 
 			if (labels.Count==0)
-				return;
+				return (localizedCount, Objs);
 
 			string[] Includes = null;
-			string[] Excludes = null; 
+			string[] Excludes = null;
 
 			if (!string.IsNullOrEmpty (_Tools_NoLocalized_Include))
 				Includes = _Tools_NoLocalized_Include.ToLower().Split(',', ';');
@@ -110,32 +154,30 @@ namespace I2.Loc
 			if (!string.IsNullOrEmpty (_Tools_NoLocalized_Exclude))
 				Excludes = _Tools_NoLocalized_Exclude.ToLower().Split(',', ';');
 
-			List<GameObject> Objs = new List<GameObject>();
-			
 			for (int i=0, imax=labels.Count; i<imax; ++i)
 			{
 				Component label = labels[i];
 				if (label==null || label.gameObject==null || !GUITools.ObjectExistInScene(label.gameObject))
 					continue;
 
-				if (labels[i].GetComponent<Localize>()!=null 
+				if (labels[i].GetComponent<Localize>() != null
 				    || labels[i].GetComponent<NoLocalizationNeeded>() != null
 				    || labels[i].GetComponent<UsesDynamicLocalization>() != null)
+				{
+					++localizedCount;
 					continue;
+				}
 
 				if (ShouldFilter(label.name.ToLower(), Includes, Excludes))
 					continue;
 
 				Objs.Add( labels[i].gameObject );
 			}
-			
-			if (Objs.Count>0)
-				Selection.objects = Objs.ToArray();
-			else
-				ShowWarning("All labels in this scene have a Localize component assigned");
+
+			return (localizedCount, Objs);
 		}
 
-		bool ShouldFilter( string Text, string[] Includes, string[] Excludes )
+		static bool ShouldFilter( string Text, string[] Includes, string[] Excludes )
 		{
 			if (Includes!=null && Includes.Length>0)
 			{

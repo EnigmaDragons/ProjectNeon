@@ -7,8 +7,10 @@ using UnityEngine;
 
 public class Member
 {
+    private readonly Lazy<string> _unambiguousEnglishName;
+    
     public int Id { get; }
-    public string UnambiguousEnglishName { get; }
+    public string UnambiguousEnglishName => _unambiguousEnglishName.Value;
     public string NameTerm { get; }
     public string ClassTerm { get; }
     public MemberMaterialType MaterialType { get; }
@@ -16,7 +18,7 @@ public class Member
     public BattleRole BattleRole { get; }
     public MemberState State { get; }
     public Maybe<CardTypeData> BasicCard { get; }
-
+    
     public override bool Equals(object obj) => obj is Member && ((Member)obj).Id == Id;
     public override int GetHashCode() => Id.GetHashCode();
     public override string ToString() => $"{NameTerm.ToEnglish()} {Id}";
@@ -37,7 +39,7 @@ public class Member
         BattleRole = battleRole;
         State = new MemberState(id, nameTerm, baseStats, primaryStat, initialHp);
         BasicCard = basicCard;
-        UnambiguousEnglishName = TeamType == TeamType.Enemies ? $"{NameTerm.ToEnglish()} {Id}" : NameTerm.ToEnglish();
+        _unambiguousEnglishName = new Lazy<string>(() => TeamType == TeamType.Enemies ? $"{NameTerm.ToEnglish()} {Id}" : NameTerm.ToEnglish());
     }
 
     public Member Apply(Action<MemberState> effect)

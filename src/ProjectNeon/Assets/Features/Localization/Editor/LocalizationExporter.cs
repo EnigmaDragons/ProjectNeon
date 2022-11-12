@@ -10,7 +10,7 @@ public class LocalizationExporter
 {
     private static string BaseDir = ".\\LocalizationAssets";
 
-    private static void WriteCsv(string filename, List<string> data)
+    public static void WriteCsv(string filename, List<string> data)
     {
         if (!Directory.Exists(BaseDir))
             Directory.CreateDirectory(BaseDir);
