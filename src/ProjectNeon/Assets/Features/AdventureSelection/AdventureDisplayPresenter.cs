@@ -31,7 +31,7 @@ public class AdventureDisplayPresenter : MonoBehaviour
         selectButton.onClick.AddListener(() => onSelect());
         selectButton.enabled = !adventure.IsLocked;
         lockVisual.SetActive(adventure.IsLocked);
-        lockReasonLabel.SetFinalText(adventure.LockConditionExplanation);
+        lockReasonLabel.SetTerm(adventure.LockConditionExplanationTerm);
         isCompletedView.SetActive(!adventure.IsLocked && adventure.IsCompleted);
         if (adventure.IsLocked)
             hoverGlow.color = new Color(0, 0, 0, 0);
@@ -45,11 +45,12 @@ public class AdventureDisplayPresenter : MonoBehaviour
         if (hasDescription)
         {
             heroLimitDescriptionLabel.SetTerm(adventure.AllowedHeroesDescriptionTerm);
+            heroLimitDescriptionLabel.gameObject.SetActive(true);
             heroIcons.ForEach(h => h.SetActive(false));
         }
         else
         {
-            heroLimitDescriptionLabel.SetTerm("");
+            heroLimitDescriptionLabel.gameObject.SetActive(false);
             heroIcons[0].SetActive(adventure.RequiredHeroes.Length > 0);
             heroIcons[1].SetActive(adventure.RequiredHeroes.Length > 1);
             heroIcons[2].SetActive(adventure.RequiredHeroes.Length > 2);

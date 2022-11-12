@@ -10,7 +10,7 @@ public class CardTargetRulePresenter : MonoBehaviour
     public void Show(CardActionSequence seq) => Show(seq.Scope, seq.Group);
     public void Show(Scope scope, Group group)
     {
-        var text = "";
+        var text = string.Empty;
         if (group == Group.Self)
             text = "Targets Owner";
         else if (scope == Scope.One && group == Group.Opponent)

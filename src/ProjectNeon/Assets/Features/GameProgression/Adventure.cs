@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Adventure/Adventure")]
-public class Adventure : ScriptableObject, CurrentAdventureData
+public class Adventure : ScriptableObject, CurrentAdventureData, ILocalizeTerms
 {
     [SerializeField] public int id;
     [SerializeField] public string lockConditionExplanation = "";
@@ -90,4 +90,16 @@ public class Adventure : ScriptableObject, CurrentAdventureData
     public BattleRewards NormalBattleRewards => normalBattleRewards;
     public BattleRewards EliteBattleRewards => eliteBattleRewards;
     public bool AllowDifficultySelection => allowDifficultySelection;
+
+    public string[] GetLocalizeTerms() => new[]
+    {
+        TitleTerm,
+        StoryTerm, 
+        DefeatConclusionTerm, 
+        VictoryConclusionTerm, 
+        MapTitleTerm, 
+        AllowedHeroesDescriptionTerm,
+        LockConditionExplanationTerm, 
+        RawMapTitleTerm
+    };
 }

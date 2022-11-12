@@ -5,7 +5,7 @@ using I2.Loc;
 public static class Localized
 {
 
-    public static string ToEnglish(this string term) => LocalizationManager.GetTranslation(term, overrideLanguage: "English");
+    public static string ToEnglish(this string term) => LocalizationManager.GetTranslation(term, overrideLanguage: "English") ?? "";
     public static string ToLocalized(this string term) => StringTerm(term);
     
     public static string Archetype(string term) => String("Archetypes", term);
