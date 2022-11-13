@@ -19,7 +19,7 @@ public class DeckBuilderModeControllerV5 : OnMessage<TogglePartyDetails, DeckBui
     
     private void Start()
     {
-        saveButtonCont.Init("Save", OnFinished);
+        saveButtonCont.Init(OnFinished);
         fightButton.onClick.AddListener(OnFinished);
     }
     

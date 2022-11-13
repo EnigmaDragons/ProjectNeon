@@ -441,7 +441,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         var shouldUseLibraryMode = _card == null || _card.Owner.TeamType == TeamType.Party && (_card.Cost.PlusXCost && !_isHand);
         IsPlayable = CheckIfCanPlay();
-        nameLabel.SetTerm(_cardType.CardLocalizationNameTerm());
+        nameLabel.SetTerm(_cardType.LocalizationNameTerm());
 
         description.SetFinalText(shouldUseLibraryMode
             ? _cardType.LocalizedDescription(_card?.Owner ?? Maybe<Member>.Missing(), ResourceQuantity.DontInterpolateX)

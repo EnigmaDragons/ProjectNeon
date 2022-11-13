@@ -77,7 +77,7 @@ public static class CardTypeDataExtensions
     public static Card ToNonBattleCard(this CardTypeData c, Hero hero)
         => ToNonBattleCard(c, hero.Character, hero.Stats);
 
-    public static string CardLocalizationNameTerm(this CardTypeData c)
+    public static string LocalizationNameTerm(this CardTypeData c)
         => $"CardNames/{LocalizationNameKey(c)}";
     
     public static string LocalizationNameKey(this CardTypeData c)

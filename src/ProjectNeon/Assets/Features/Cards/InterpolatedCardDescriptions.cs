@@ -24,7 +24,7 @@ public static class InterpolatedCardDescriptions
         }
         catch (Exception)
         {
-            return $"{card.Name} is not Translated Correctly into {LocalizationManager.CurrentLanguage}";
+            return $"{card.Name} Description is not Translated Correctly into {LocalizationManager.CurrentLanguage}";
         }
     }
 #endif
@@ -39,7 +39,7 @@ public static class InterpolatedCardDescriptions
         }
         catch (Exception)
         {
-            Log.Warn($"{card.Name} is not Translated Correctly into {LocalizationManager.CurrentLanguage}.");
+            return $"{card.Name} Description is not Translated Correctly into {LocalizationManager.CurrentLanguage}";
         }
 
         return card.InterpolatedDescription(owner, xCost, cardsInHand, cardsCycledThisTurn, desc);

@@ -64,7 +64,7 @@ public class CardType : ScriptableObject, CardTypeData, ILocalizeTerms
     
     public string[] GetLocalizeTerms() => new []
     {
-        this.CardLocalizationNameTerm(), 
+        this.LocalizationNameTerm(), 
         this.CardLocalizationDescriptionTerm()
     }; 
 
