@@ -31,18 +31,18 @@ public static class InterpolatedCardDescriptions
 
     public static string LocalizedDescription(this CardTypeData card, Maybe<Member> owner, ResourceQuantity xCost, int cardsInHand = 0, int cardsCycledThisTurn = 0)
     {
-        var descV1 = card.Description;
+        var desc = card.Description;
         try
         {
             if (card.DescriptionV2.IsUsable())
-                descV1 = Localized.FormatTerm(card.CardLocalizationDescriptionTerm(), card.DescriptionV2.formatArgs);
+                desc = Localized.FormatTerm(card.CardLocalizationDescriptionTerm(), card.DescriptionV2.formatArgs);
         }
         catch (Exception)
         {
-            Log.Warn($"{card.Name} is not Translated Correctly into {LocalizationManager.CurrentLanguage}");
+            Log.Warn($"{card.Name} is not Translated Correctly into {LocalizationManager.CurrentLanguage}.");
         }
 
-        return card.InterpolatedDescription(owner, xCost, cardsInHand, cardsCycledThisTurn, descV1);
+        return card.InterpolatedDescription(owner, xCost, cardsInHand, cardsCycledThisTurn, desc);
     }
 
     public static string InterpolatedDescription(this CardTypeData card, Maybe<Member> owner, ResourceQuantity xCost, int cardsInHand = 0, int cardsCycledThisTurn = 0, string overrideDescription = null)

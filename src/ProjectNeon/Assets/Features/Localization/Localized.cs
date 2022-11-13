@@ -35,6 +35,9 @@ public static class Localized
     
     public static string FormatTerm(string term, params object[] args)
         => Format(StringTerm(term), args);
+    
+    public static string FormatSanitizedTerm(string term, params object[] args)
+        => Format(StringTerm(term).Sanitized(), args);
 
     public static string FormatTermOrDefault(string term, string defaultTranslation, params object[] args)
     {
@@ -73,6 +76,14 @@ public static class Localized
         var r = s;
         GlobalParams.Backward.ForEach(p => r = r.Replace("{[" + p.Value + "]}", p.Key));
         return r;
+    }
+
+    public static string Sanitized(this string s)
+    {
+        return s
+            .Replace("{[b]}", "<b>")
+            .Replace("{[/b]}", "</b>")
+            .Replace("{[br]}", "<br>");
     }
 
     public static string FromI2ParamValue(this string paramName)
