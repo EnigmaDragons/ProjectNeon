@@ -14,6 +14,7 @@ public class LocalizationImporter
     {
         LocalizationManager.UpdateSources();
         ImportTutorialSlides(true);
+        ImportTutorialSlideshows(true);
         ImportCutscenes(true);
         ImportStoryEvents(true);
         ImportLoadingScreens(true);
@@ -30,6 +31,12 @@ public class LocalizationImporter
     private static void ImportTutorialSlides(bool hasInit)
         => ImportItems<TutorialSlide>(x => x.Term, (s, text) => s.text = text, hasInit);
 
+    [MenuItem("Neon/Localization/Import Tutorial Slideshows")]
+    private static void ImportTutorialSlideshows()
+        => ImportTutorialSlideshows(false);
+    private static void ImportTutorialSlideshows(bool hasInit)
+        => ImportItems<TutorialSlideshow>(x => x.DisplayNameTerm, (s, text) => s.displayName = text, hasInit);
+    
     [MenuItem("Neon/Localization/Import Cutscenes")]
     private static void ImportCutscenes()
         => ImportCutscenes(false);

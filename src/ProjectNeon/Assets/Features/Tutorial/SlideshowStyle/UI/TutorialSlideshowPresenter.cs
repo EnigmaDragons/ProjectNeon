@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 
 public class TutorialSlideshowPresenter : OnMessage<TutorialNextRequested, TutorialPreviousRequested>
 {
     [SerializeField] private GameObject backgroundUiParent;
-    [SerializeField] private TextMeshProUGUI titleLabel;
+    [SerializeField] private Localize titleLabel;
     [SerializeField] private GameObject slideUiParent;
     [SerializeField] private SlideTextPresenterBase defaultTextPresenter;
     [SerializeField] private GameObject nextButtonIndicator;
@@ -52,7 +53,7 @@ public class TutorialSlideshowPresenter : OnMessage<TutorialNextRequested, Tutor
         _currentSlideTextPresenter.gameObject.SetActive(true);
 
         _maybeSlideWalker = new IndexSelector<TutorialSlide>(slideshow.Slides);
-        titleLabel.text = slideshow.DisplayName;
+        titleLabel.SetTerm(slideshow.DisplayNameTerm);
         backgroundUiParent.DestroyAllChildren();
         if (slideshow.BackgroundPrototype != null)
             Instantiate(slideshow.BackgroundPrototype, backgroundUiParent.transform);
