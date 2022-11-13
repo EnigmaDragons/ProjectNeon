@@ -50,6 +50,9 @@ namespace I2.Loc
 
         public static void ApplyLocalizationParams(ref string translation, GameObject root, bool allowLocalizedParameters = true)
         {
+            if (root == null)
+                return;
+            
             ApplyLocalizationParams(ref translation, p => GetLocalizationParam(p, root), allowLocalizedParameters);
         }
 

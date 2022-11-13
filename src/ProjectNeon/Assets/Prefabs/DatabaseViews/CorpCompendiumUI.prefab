@@ -201,6 +201,7 @@ MonoBehaviour:
   gradient: {fileID: 5878148230693003423}
   logo: {fileID: 5542433463555554586}
   corpNameLabel: {fileID: 843465018264959764}
+  corpNameLabel2: {fileID: 0}
 --- !u!1 &2278343155847047479
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,6 +300,7 @@ GameObject:
   - component: {fileID: 1727404426657662538}
   - component: {fileID: 6613134135218435290}
   - component: {fileID: 1537368880170400879}
+  - component: {fileID: 6148150603100967997}
   m_Layer: 0
   m_Name: Header
   m_TagString: Untagged
@@ -422,6 +424,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6148150603100967997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2281298824014209478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: Menu/MetroCorps
+  mTermSecondary: UI-Kit2-Header-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &2790186291765294224
 GameObject:
   m_ObjectHideFlags: 0
@@ -582,6 +623,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &992336569260838708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4126339520164527548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: Menu/Done
+  mTermSecondary: UI-Kit2-Sans-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &4824353790159690107
 GameObject:
   m_ObjectHideFlags: 0
@@ -1150,6 +1230,7 @@ MonoBehaviour:
   sounds: {fileID: 0}
   fmodSounds: {fileID: 0}
   isPrimaryActionButton: 0
+  ignoreText: 1
 --- !u!114 &8921759651940441701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1438,6 +1519,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40d8be0f0d2443c458edb1e52844edfa, type: 3}
+--- !u!224 &7858702790914167296 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7526539178195887445, guid: 40d8be0f0d2443c458edb1e52844edfa, type: 3}
+  m_PrefabInstance: {fileID: 395220606991365973}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4142673929730798698 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4323914077660398399, guid: 40d8be0f0d2443c458edb1e52844edfa, type: 3}
@@ -1449,11 +1535,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &7858702790914167296 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7526539178195887445, guid: 40d8be0f0d2443c458edb1e52844edfa, type: 3}
-  m_PrefabInstance: {fileID: 395220606991365973}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4083066923725916174
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1595,6 +1676,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+--- !u!1 &4126339520164527548 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 137997872680105394, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_PrefabInstance: {fileID: 4083066923725916174}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2194306818494843059 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
@@ -1720,6 +1806,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3172c8a1b5c83cc438b9fa9ca174c4c3, type: 3}
+--- !u!224 &5506845951399205490 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1703994310890730665, guid: 3172c8a1b5c83cc438b9fa9ca174c4c3, type: 3}
+  m_PrefabInstance: {fileID: 6614084689535643355}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2781509736150009400 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9029746549933746403, guid: 3172c8a1b5c83cc438b9fa9ca174c4c3, type: 3}
@@ -1731,8 +1822,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &5506845951399205490 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1703994310890730665, guid: 3172c8a1b5c83cc438b9fa9ca174c4c3, type: 3}
-  m_PrefabInstance: {fileID: 6614084689535643355}
-  m_PrefabAsset: {fileID: 0}

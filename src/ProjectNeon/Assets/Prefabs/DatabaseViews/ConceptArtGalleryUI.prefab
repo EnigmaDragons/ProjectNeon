@@ -327,7 +327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mTerm: '-'
-  mTermSecondary: 
+  mTermSecondary: UI-Kit2-Header-SDF - Outline
   PrimaryTermModifier: 0
   SecondaryTermModifier: 0
   TermPrefix: 
@@ -404,6 +404,45 @@ MonoBehaviour:
     ConstantValue: WorldArtGallery
     Variable: {fileID: 0}
   alwaysStartInactive: 1
+--- !u!114 &5441455799530701391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4934611794231220469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: Menu/Done
+  mTermSecondary: UI-Kit2-Sans-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &5183507668689924511
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,6 +454,7 @@ GameObject:
   - component: {fileID: 4311562748225804860}
   - component: {fileID: 7618996777674413010}
   - component: {fileID: 2889442993740639645}
+  - component: {fileID: 4362780363420889176}
   m_Layer: 0
   m_Name: Header
   m_TagString: Untagged
@@ -538,6 +578,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4362780363420889176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5183507668689924511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: Menu/World Concept Art Gallery
+  mTermSecondary: UI-Kit2-Header-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &6559365854419838164
 GameObject:
   m_ObjectHideFlags: 0
@@ -598,7 +677,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6512986809734226326
 RectTransform:
   m_ObjectHideFlags: 0
@@ -717,7 +796,7 @@ MonoBehaviour:
   sounds: {fileID: 0}
   fmodSounds: {fileID: 0}
   isPrimaryActionButton: 0
-  ignoreText: 0
+  ignoreText: 1
 --- !u!114 &5810550417743513809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1138,6 +1217,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameLogo_Underlay
       objectReference: {fileID: 0}
+    - target: {fileID: 4936185457243913043, guid: 019ecda32bfbede45a57a564e54a06c1, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7960249983512756381, guid: 019ecda32bfbede45a57a564e54a06c1, type: 3}
       propertyPath: m_Color.a
       value: 0.5019608
@@ -1370,11 +1453,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40d8be0f0d2443c458edb1e52844edfa, type: 3}
---- !u!224 &5845553937418094916 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 7526539178195887445, guid: 40d8be0f0d2443c458edb1e52844edfa, type: 3}
-  m_PrefabInstance: {fileID: 4137743543925746705}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &391134929248743214 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4323914077660398399, guid: 40d8be0f0d2443c458edb1e52844edfa, type: 3}
@@ -1386,6 +1464,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &5845553937418094916 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7526539178195887445, guid: 40d8be0f0d2443c458edb1e52844edfa, type: 3}
+  m_PrefabInstance: {fileID: 4137743543925746705}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4655876156493166443
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1396,6 +1479,10 @@ PrefabInstance:
     - target: {fileID: 3284689424245515244, guid: 019ecda32bfbede45a57a564e54a06c1, type: 3}
       propertyPath: m_Name
       value: GameLogo
+      objectReference: {fileID: 0}
+    - target: {fileID: 4936185457243913043, guid: 019ecda32bfbede45a57a564e54a06c1, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8616577231780243075, guid: 019ecda32bfbede45a57a564e54a06c1, type: 3}
       propertyPath: m_Pivot.x
@@ -1641,6 +1728,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+--- !u!1 &4934611794231220469 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 137997872680105394, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_PrefabInstance: {fileID: 5012795684584271175}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7154899065670430202 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
