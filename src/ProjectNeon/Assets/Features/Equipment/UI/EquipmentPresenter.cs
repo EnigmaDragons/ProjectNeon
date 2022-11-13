@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using TMPro;
+using I2.Loc;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -9,9 +9,9 @@ public class EquipmentPresenter : OnMessage<LanguageChanged>, IPointerDownHandle
 {
     [SerializeField] private SmoothFocusDarken focusDarken;
     [SerializeField] private GameObject highlight;
-    [SerializeField] private TextMeshProUGUI nameLabel;
-    [SerializeField] private TextMeshProUGUI descriptionLabel;
-    [SerializeField] private TextMeshProUGUI classesLabel;
+    [SerializeField] private Localize nameLabel;
+    [SerializeField] private Localize descriptionLabel;
+    [SerializeField] private Localize classesLabel;
     [SerializeField] private RarityPresenter rarity;
     [SerializeField] private Image slotIcon;
     [SerializeField] private EquipmentSlotIcons slotIcons;
@@ -35,8 +35,8 @@ public class EquipmentPresenter : OnMessage<LanguageChanged>, IPointerDownHandle
     private Canvas _canvas;
     private HoverCard _hoverCard;
     
-    private const string ArchetypesFormat = "Archetypes: {0}";
-    private const string Any = "Any";
+    private const string ArchetypesTerm = "Archetypes/Archetypes";
+    private const string AnyTerm = "Archetypes/Any";
     private const string MadeByTerm = "BattleUI/Made By";
 
     public void Set(Equipment e, Action onClick) => Initialized(e, onClick);
@@ -52,12 +52,13 @@ public class EquipmentPresenter : OnMessage<LanguageChanged>, IPointerDownHandle
         _useHoverHighlight = useHoverHighlight;
         _useAnyHover = useAnyHover;
         _useDarkenOnHover = true;
-        nameLabel.text = e.Name;
+        nameLabel.SetTerm(e.LocalizationNameTerm());
         var archetypeText = e.Archetypes.Any()
-            ? string.Join(",", e.Archetypes.Select(c => c))
-            : Any;
-        classesLabel.text = string.Format(ArchetypesFormat, archetypeText);
-        descriptionLabel.text = e.GetInterpolatedDescription();
+            ? e.LocalizedArchetypeDescription()
+            : AnyTerm.ToLocalized();
+        var labelPrefix = ArchetypesTerm.ToLocalized();
+        classesLabel.SetFinalText($"{labelPrefix} - {archetypeText}");
+        descriptionLabel.SetTerm(e.LocalizationDescriptionTerm());
         rarity.Set(e.Rarity);
         slotIcon.sprite = slotIcons.All[e.Slot];
         var corp = allCorps.GetCorpByNameOrNone(e.Corp);
@@ -165,5 +166,5 @@ public class EquipmentPresenter : OnMessage<LanguageChanged>, IPointerDownHandle
             .FirstOrDefault();
     }
 
-    public string[] GetLocalizeTerms() => new[] { MadeByTerm };
+    public string[] GetLocalizeTerms() => new[] { MadeByTerm, ArchetypesTerm, AnyTerm };
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 
 public interface Equipment
@@ -32,7 +33,6 @@ public static class EquipmentExtensions
         => new StatMultipliers(e.Modifiers.Where(m => m.ModifierType == StatMathOperator.Multiplier)
             .ToDictionary(m => m.StatType, m => m.Amount));
 
-    public static string GetArchetypeKey(this Equipment e) => string.Join(" + ", e.Archetypes.OrderBy(a => a));
 
     public static bool IsRandomlyGenerated(this Equipment e) => e is InMemoryEquipment;
     public static bool IsImplant(this Equipment e) => e.Slot == EquipmentSlot.Permanent && e.Name.Equals("Implant");
@@ -41,4 +41,26 @@ public static class EquipmentExtensions
     {
         return e.Description.Replace("true damage", InterpolatedCardDescriptions.TrueDamageIcon);
     }
+
+    public static string GetArchetypeKey(this Equipment e) => string.Join(" + ", e.Archetypes.OrderBy(a => a));
+    
+    public static string LocalizedArchetypeDescription(this Equipment e) 
+        => string.Join(" - ", e.Archetypes().Select(Localized.Archetype));
+    
+    private static List<string> Archetypes(this Equipment e) =>
+        e.Archetypes.AnyNonAlloc() 
+            ? e.Archetypes.OrderBy(a => a).ToList() 
+            : new List<string>{"General"};
+    
+    public static string LocalizationNameTerm(this Equipment e)
+        => $"EquipmentNames/{LocalizationNameKey(e)}";
+    
+    public static string LocalizationNameKey(this Equipment e)
+        => $"{e.Id.ToString().PadLeft(5, '0')}-Name";
+    
+    public static string LocalizationDescriptionTerm(this Equipment e)
+        => $"EquipmentDescriptions/{LocalizationDescriptionKey(e)}";
+    
+    public static string LocalizationDescriptionKey(this Equipment e)
+        => $"{e.Id.ToString().PadLeft(5, '0')}-Desc";
 }

@@ -36,12 +36,32 @@ public class LocalizationExporter
         var descs = new List<string>();
         allCards.ForEach(c =>
         {
-            names.Add($"{c.CardLocalizationNameKey()}^{c.Name}");
+            names.Add($"{c.LocalizationNameKey()}^{c.Name}");
             var csvDesc = ToSingleLineI2Format(c.DescriptionV2.text);
-            descs.Add($"{c.CardLocalizationDescriptionKey()}^{csvDesc}");
+            descs.Add($"{c.LocalizationDescriptionKey()}^{csvDesc}");
         });
         WriteCsv("card-names", names);
         WriteCsv("card-descs", descs);
+    }
+    
+    [MenuItem("Neon/Localization/Export Equipment For Localization")]
+    public static void ExportEquipmentForLocalization()
+    {
+        var items = GetAllInstances<StaticEquipment>()
+            .Where(x => !x.IsWip)
+            .Where(x => x.Slot == EquipmentSlot.Augmentation)
+            .OrderBy(x => x.Id);
+
+        var names = new List<string>();
+        var descs = new List<string>();
+        items.ForEach(x =>
+        {
+            names.Add($"{x.LocalizationNameKey()}^{x.Name}");
+            var csvDesc = ToSingleLineI2Format(x.Description);
+            descs.Add($"{x.LocalizationDescriptionKey()}^{csvDesc}");
+        });
+        WriteCsv("augment-names", names);
+        WriteCsv("augment-descs", descs);
     }
 
     [MenuItem("Neon/Localization/Export Archetypes For Localization")]

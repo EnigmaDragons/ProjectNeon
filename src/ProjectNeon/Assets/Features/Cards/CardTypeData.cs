@@ -32,7 +32,7 @@ public static class CardTypeDataExtensions
     
     public static string LocalizedArchetypeDescription(this CardTypeData c) 
         => string.Join(" - ", c.Archetypes().Select(Localized.Archetype));
-
+    
     public static string ArchetypeDescription(this CardTypeData c) => c.Archetypes.None() 
         ? "General" 
         : string.Join(" - ", c.Archetypes.OrderBy(a => a).Select(a => a.WithSpaceBetweenWords()));
@@ -78,15 +78,15 @@ public static class CardTypeDataExtensions
         => ToNonBattleCard(c, hero.Character, hero.Stats);
 
     public static string CardLocalizationNameTerm(this CardTypeData c)
-        => $"CardNames/{CardLocalizationNameKey(c)}";
+        => $"CardNames/{LocalizationNameKey(c)}";
     
-    public static string CardLocalizationNameKey(this CardTypeData c)
+    public static string LocalizationNameKey(this CardTypeData c)
         => $"{c.Id.ToString().PadLeft(5, '0')}-00-Name";
     
     public static string CardLocalizationDescriptionTerm(this CardTypeData c)
-        => $"CardDescriptions/{CardLocalizationDescriptionKey(c)}";
+        => $"CardDescriptions/{LocalizationDescriptionKey(c)}";
     
-    public static string CardLocalizationDescriptionKey(this CardTypeData c)
+    public static string LocalizationDescriptionKey(this CardTypeData c)
         => $"{c.Id.ToString().PadLeft(5, '0')}-05-Desc";
     
     public static Card ToNonBattleCard(this CardTypeData c, HeroCharacter hero, IStats heroStats) 

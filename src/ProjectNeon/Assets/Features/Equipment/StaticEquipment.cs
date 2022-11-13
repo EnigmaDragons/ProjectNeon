@@ -8,7 +8,7 @@ public class StaticEquipment : ScriptableObject, Equipment
 {
     [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public int id;
     [SerializeField] private string displayName;
-    [SerializeField] private string description;
+    [SerializeField] public string description;
     [SerializeField] private StringVariable corp;
     [SerializeField] private StringVariable[] archetypes = new StringVariable[0];
     [SerializeField] private Rarity rarity;

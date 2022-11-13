@@ -2,7 +2,6 @@
 
 using System;
 using System.Linq;
-using System.Xml.Schema;
 using I2.Loc;
 using UnityEditor;
 using UnityEngine;
@@ -23,7 +22,14 @@ public class LocalizationImporter
         ImportBlessings(true);
         ImportDifficulties(true);
         ImportAdventures(true);
+        ImportEquipments(true);
     }
+    
+    [MenuItem("Neon/Localization/Import Equipments")]
+    private static void ImportEquipments()
+        => ImportEquipments(false);
+    private static void ImportEquipments(bool hasInit)
+        => ImportItems<StaticEquipment>(x => x.LocalizationDescriptionTerm(), (s, text) => s.description = text, hasInit);
 
     [MenuItem("Neon/Localization/Import Tutorial Slides")]
     private static void ImportTutorialSlides()
