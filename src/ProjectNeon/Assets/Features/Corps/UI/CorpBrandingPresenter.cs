@@ -1,3 +1,4 @@
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +8,7 @@ public class CorpBrandingPresenter : CorpUiBase
     [SerializeField] private UnityEngine.UI.Extensions.Gradient gradient;
     [SerializeField] private Image logo;
     [SerializeField] private TextMeshProUGUI corpNameLabel;
+    [SerializeField] private Localize corpNameLabel2;
     
     public override void Init(Corp c)
     {
@@ -16,5 +18,7 @@ public class CorpBrandingPresenter : CorpUiBase
         gradient.Vertex2 = c.Color2;
         if (corpNameLabel != null)
             corpNameLabel.text = c.Name;
+        if (corpNameLabel2 != null)
+            corpNameLabel2.SetTerm(c.GetTerm());
     }
 }

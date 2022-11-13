@@ -385,6 +385,7 @@ GameObject:
   - component: {fileID: 8641853737303965315}
   - component: {fileID: 1128360847664229505}
   - component: {fileID: 4374834652823224925}
+  - component: {fileID: 4556499348100063503}
   m_Layer: 5
   m_Name: Counter
   m_TagString: Untagged
@@ -508,6 +509,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4556499348100063503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1133228935326666699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 863c5aa2de9e49089e0a948ab1da690f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1394915233713021950
 GameObject:
   m_ObjectHideFlags: 0
@@ -1522,11 +1535,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d0f241a069af80a4fbe58317fdb27254, type: 3}
---- !u!224 &358218495724512540 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 1535076678857706556, guid: d0f241a069af80a4fbe58317fdb27254, type: 3}
-  m_PrefabInstance: {fileID: 1275950026218973472}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8654774649899892801 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: -1608072616277939871, guid: d0f241a069af80a4fbe58317fdb27254, type: 3}
@@ -1538,6 +1546,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21b03b056ceb8dd43a4bd954d5fc7f37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &358218495724512540 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1535076678857706556, guid: d0f241a069af80a4fbe58317fdb27254, type: 3}
+  m_PrefabInstance: {fileID: 1275950026218973472}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1631162943795418865
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2802,9 +2815,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -147.6
       objectReference: {fileID: 0}
+    - target: {fileID: 2368149353136638643, guid: 3d9d742d73416d744975280a61b7c056, type: 3}
+      propertyPath: m_Name
+      value: DeckCount
+      objectReference: {fileID: 0}
+    - target: {fileID: 4062827586323515774, guid: 3d9d742d73416d744975280a61b7c056, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4650624640807934854, guid: 3d9d742d73416d744975280a61b7c056, type: 3}
       propertyPath: m_Name
       value: DeckUIV2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876811735093975685, guid: 3d9d742d73416d744975280a61b7c056, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8428692378567754631, guid: 3d9d742d73416d744975280a61b7c056, type: 3}
       propertyPath: m_Pivot.x

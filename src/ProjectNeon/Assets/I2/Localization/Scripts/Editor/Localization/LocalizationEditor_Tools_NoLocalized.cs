@@ -188,9 +188,10 @@ namespace I2.Loc
 				if (label==null || label.gameObject==null || !GUITools.ObjectExistInScene(label.gameObject))
 					continue;
 
-				if (labels[i].GetComponent<Localize>() != null
-				    || labels[i].GetComponent<NoLocalizationNeeded>() != null
-				    || labels[i].GetComponent<UsesDynamicLocalization>() != null)
+				if (labels[i].GetComponent<LocalizationNeeded>() == null && (
+					    labels[i].GetComponent<Localize>() != null
+				        || labels[i].GetComponent<NoLocalizationNeeded>() != null
+				        || labels[i].GetComponent<UsesDynamicLocalization>() != null))
 				{
 					++localizedCount;
 					continue;

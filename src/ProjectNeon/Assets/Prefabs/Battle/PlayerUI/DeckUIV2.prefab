@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: 6515061933416301419}
   - component: {fileID: 7903265912542338992}
   - component: {fileID: 8833276730946731133}
+  - component: {fileID: 4697168937919340822}
   m_Layer: 5
   m_Name: Counter
   m_TagString: Untagged
@@ -223,6 +224,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4697168937919340822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 379350339935035047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 863c5aa2de9e49089e0a948ab1da690f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &798729759021090127
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,8 +397,10 @@ GameObject:
   - component: {fileID: 1948952163556966814}
   - component: {fileID: 8883310677968749687}
   - component: {fileID: 1601549893059017804}
+  - component: {fileID: 5854292411776191435}
+  - component: {fileID: 4207161993093828051}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: DeckCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -507,6 +522,30 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5854292411776191435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2368149353136638643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 863c5aa2de9e49089e0a948ab1da690f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4207161993093828051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2368149353136638643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 863c5aa2de9e49089e0a948ab1da690f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3766233726823951487
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,8 +557,9 @@ GameObject:
   - component: {fileID: 3380107581947674776}
   - component: {fileID: 8828951088631753479}
   - component: {fileID: 3124584700701055112}
+  - component: {fileID: 6690663123688317290}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: ViewLabel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -641,6 +681,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6690663123688317290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3766233726823951487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: Menu/View
+  mTermSecondary: UI-Kit2-Sans-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &4650624640807934854
 GameObject:
   m_ObjectHideFlags: 0
@@ -755,6 +834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696a8c0e53d8446e877820ad00842749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowedIfCurrentlyDragging: 0
   allowedButtons: 01000000
   action:
     m_PersistentCalls:
@@ -876,6 +956,18 @@ MonoBehaviour:
   textField: {fileID: 1601549893059017804}
   deckVisual: {fileID: 8445021116881562292}
   showWithZeroCards: 1
+--- !u!114 &5522903781462988469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6017629367341387801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2eaf036cf4ef43f1b15d6ba41ae81fb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7447160407099026940
 GameObject:
   m_ObjectHideFlags: 0
@@ -1292,5 +1384,10 @@ RectTransform:
 --- !u!1 &4062827586323515774 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6741264942208778873, guid: 1914058b0c1eabe4eb8be322a414c76c, type: 3}
+  m_PrefabInstance: {fileID: 7345327657956838151}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6017629367341387801 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3921846447469304606, guid: 1914058b0c1eabe4eb8be322a414c76c, type: 3}
   m_PrefabInstance: {fileID: 7345327657956838151}
   m_PrefabAsset: {fileID: 0}

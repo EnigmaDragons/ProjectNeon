@@ -1,16 +1,14 @@
-using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Schema;
 using I2.Loc;
 using TMPro;
 using UnityEngine;
 
-public class EnemyDetailsView : MonoBehaviour
+public class EnemyDetailsView : MonoBehaviour, ILocalizeTerms
 {
     [SerializeField] private Enemy staringEnemy;
     [SerializeField] private TextMeshProUGUI idLabel;
     [SerializeField] private Localize nameLocalize;
-    [SerializeField] private TextMeshProUGUI typeLabel;
+    [SerializeField] private Localize typeLabel;
     [SerializeField] private Localize descriptionLocalize;
     [SerializeField] private MemberStatPanel statPanel;
     [SerializeField] private MemberUiBase[] otherViews;
@@ -24,6 +22,10 @@ public class EnemyDetailsView : MonoBehaviour
     [SerializeField] private StatusIcons icons;
 
     private bool _isInitialized;
+    private const string Elite = "Elite";
+    private const string Hasty = "Hasty ";
+    private const string Ultimate = "Ultimate";
+    private const string Reaction = "Reaction";
     
     private void Awake()
     {
@@ -36,30 +38,40 @@ public class EnemyDetailsView : MonoBehaviour
         _isInitialized = true;
         idLabel.text = $"#{e.EnemyId.ToString().PadLeft(3, '0')}";
         nameLocalize.SetTerm(e.NameTerm);
-        var eliteText = e.Tier == EnemyTier.Elite ? "Elite" : string.Empty;
-        var hastyText = e.IsHasty ? "Hasty " : string.Empty;
+        var eliteText = e.Tier == EnemyTier.Elite ? Elite : string.Empty;
+        var hastyText = e.IsHasty ? Hasty : string.Empty;
+        var typeTerm = (hastyText + eliteText).Trim();
         if (typeLabel != null)
-            typeLabel.text = hastyText + eliteText;
+        {
+            if (string.IsNullOrWhiteSpace(typeTerm))
+                typeLabel.SetFinalText("");
+            else
+                typeLabel.SetTerm($"BattleUI/{typeTerm}");
+        }
+
         if (statPanel != null)
             statPanel.Initialized(e.Stats);
         
         var member = possibleMember.OrDefault(() => e.AsMember(InfoMemberId.Get()));
         if (specialPowers != null && icons != null)
         {
-            var powers = e.StartOfBattleEffects.Where(x => x.StatusTag != StatusTag.None).Select(s =>
-                new CurrentStatusValue
-                {
-                    Type = s.StatusTag.ToString(),
-                    Icon = icons[s.StatusTag].Icon,
-                    Tooltip = s.StatusDetailText
-                }).ToList();
-            e.StartOfBattleEffects.Where(x => x.EffectType == EffectType.EnterStealth)
-                .ForEach(s => powers.Add(new CurrentStatusValue 
-                { 
-                    Type = TemporalStatType.Stealth.ToString(), 
-                    Icon = icons[TemporalStatType.Stealth].Icon,
-                    Tooltip = "Start Battle Stealthed"
-                }));
+            var powers = e.StartOfBattleEffects
+                    .Where(x => x.StatusTag != StatusTag.None)
+                    .Select(s => new CurrentStatusValue
+                    {
+                        Type = s.StatusTag.ToString(),
+                        Icon = icons[s.StatusTag].Icon,
+                        Tooltip = s.StatusDetailText
+                    })
+                .Concat(e.StartOfBattleEffects
+                    .Where(x => x.EffectType == EffectType.EnterStealth)
+                    .Take(1)
+                    .Select(s => new CurrentStatusValue 
+                    { 
+                        Type = TemporalStatType.Stealth.ToString(), 
+                        Icon = icons[TemporalStatType.Stealth].Icon,
+                        Tooltip = "Start Battle Stealthed"
+                    })).ToList();
             specialPowers.UpdateStatuses(powers);
         }
 
@@ -72,8 +84,8 @@ public class EnemyDetailsView : MonoBehaviour
                 .OrderBy(x => x.Tags.Contains(CardTag.Ultimate) ? 1 : 0)
                 .ThenBy(x => x.Tags.Contains(CardTag.Focus) ? 0 : 1)
                 .ThenBy(x => x.Cost.BaseAmount)
-                .Select(x => (x, x.Tags.Contains(CardTag.Ultimate) ? "Ultimate" : ""))
-                    .Concat(e.ReactionCards.Select(x => ((CardTypeData)x, "Reaction")))
+                .Select(x => (x, x.Tags.Contains(CardTag.Ultimate) ? Ultimate : string.Empty))
+                    .Concat(e.ReactionCards.Select(x => ((CardTypeData)x, Reaction)))
                 .Select(c => (c.Item1.CreateInstance(-1, member), c.Item2)));
         if (corpUi != null)
             corpUi.Init(e.Corp);
@@ -86,4 +98,6 @@ public class EnemyDetailsView : MonoBehaviour
         otherViews.ForEach(o => o.Init(member));
         Message.Publish(new ShowEnemyOnStage(e));
     }
+
+    public string[] GetLocalizeTerms() => new[] { "BattleUI/Hasty", "BattleUI/Elite", "BattleUI/Hasty Elite" };
 }
