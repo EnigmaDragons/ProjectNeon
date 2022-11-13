@@ -22,7 +22,7 @@ public class QualityAssurance
         public override string ToString() => $"{ItemName} issues: {string.Join(", ", Issues)}";
     }
 
-    [MenuItem("Neon/QA/Run Full Content QA")]
+    [MenuItem("Neon/QA/Run Full Content QA %#_Q")]
     public static bool Go()
     {
         ErrorReport.DisableDuringQa();
