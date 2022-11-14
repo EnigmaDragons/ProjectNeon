@@ -93,6 +93,7 @@ namespace ChangeLogGenerator
             { "Fixed", "Bug Fixes" },
             { "UI:", "UI Improvements" },
             { "Battle Log:", "UI Improvements"},
+            { "Localize", "UI Improvements"},
             { "Editor:", "Miscellaneous"},
             { "Coding:", "Miscellaneous"},
             { "Project:", "Project" },
