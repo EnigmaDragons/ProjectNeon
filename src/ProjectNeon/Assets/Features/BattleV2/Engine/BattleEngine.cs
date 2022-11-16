@@ -74,7 +74,10 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         BattleLog.Write($"--------------  Turn {state.TurnNumber}  --------------");
         BeginPhase(BattleV2Phase.StartOfTurnEffects);
         if (state.TurnNumber == 1)
+        {
             state.ApplyAllGlobalStartOfBattleEffects();
+            Message.Publish(new RefreshCardsInHand());
+        }
         state.StartTurn();
         _playerTurnConfirmed = false;
         Message.Publish(new TurnStarted());
@@ -137,7 +140,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     
     protected override void Execute(PlayerTurnConfirmed msg) => StartCoroutine(WaitForAllPlayerCardsToFinishResolving());
     protected override void Execute(StartOfTurnEffectsStatusResolved msg)
-    {
+    { 
         Log.Info("StartOfTurnEffectsStatusResolved");
         if (state.TurnNumber == 1)
             BeginGlobalEffectCardsPhase();
