@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class UnlocksToShowProcessor : MonoBehaviour
+public class UnlocksToShowProcessor : MonoBehaviour, ILocalizeTerms
 {
     [SerializeField] private Library library;
     [SerializeField] private Adventure tutorialAdventure;
@@ -59,4 +59,7 @@ public class UnlocksToShowProcessor : MonoBehaviour
             });
         }, 1f);
     }
+
+    public string[] GetLocalizeTerms()
+        => new[] { "Unlocks/UnlockAdventureHeader", "Unlocks/UnlockDifficultyHeader", "Unlocks/UnlockHeroHeader" };
 }

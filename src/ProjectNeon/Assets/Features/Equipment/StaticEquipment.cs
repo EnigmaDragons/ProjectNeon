@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Equipment", order = -80)]
-public class StaticEquipment : ScriptableObject, Equipment
+public class StaticEquipment : ScriptableObject, Equipment, ILocalizeTerms
 {
     [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public int id;
     [SerializeField] private string displayName;
@@ -74,4 +74,7 @@ public class StaticEquipment : ScriptableObject, Equipment
             .ForEach(m => stats.WithRaw(m.StatType, m.Amount));
         return stats;
     }
+
+    public string[] GetLocalizeTerms()
+        => new[] {this.LocalizationNameTerm(), this.LocalizationDescriptionTerm()};
 }

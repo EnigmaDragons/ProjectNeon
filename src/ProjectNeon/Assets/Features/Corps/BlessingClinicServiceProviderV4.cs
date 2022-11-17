@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-public class BlessingClinicServiceProviderV4 : ClinicServiceProvider
+public class BlessingClinicServiceProviderV4 : ClinicServiceProvider, ILocalizeTerms
 {
     private readonly PartyAdventureState _party;
     private readonly BlessingData[] _blessings;
@@ -75,4 +75,7 @@ public class BlessingClinicServiceProviderV4 : ClinicServiceProvider
     }
     
     public bool RequiresSelection() => false;
+
+    public string[] GetLocalizeTerms()
+        => _blessings.SelectMany(x => new[] {x.NameTerm, x.DescriptionTerm}).Concat(GetTitleTerm()).ToArray();
 }

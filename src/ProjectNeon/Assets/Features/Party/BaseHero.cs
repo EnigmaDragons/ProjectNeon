@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Hero/1 - HeroCharacter", order = -5)]
-public class BaseHero : ScriptableObject, HeroCharacter
+public class BaseHero : ScriptableObject, HeroCharacter, ILocalizeTerms
 {
     [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public int id;
     [SerializeField] private bool allowedForSocialMedia = false;
@@ -148,4 +148,10 @@ public class BaseHero : ScriptableObject, HeroCharacter
     }
 
     public int AdventuresPlayedBeforeUnlocked => adventuresPlayedBeforeUnlocked;
+
+    public string[] GetLocalizeTerms()
+        => new[] {this.NameTerm(), this.ClassTerm(), this.DescriptionTerm(), this.BackStoryTerm()}
+            .Concat(resource1 == null ? new string[0] : new [] { resource1.GetTerm() })
+            .Concat(resource2 == null ? new string[0] : new [] { resource2.GetTerm() })
+            .ToArray();
 }

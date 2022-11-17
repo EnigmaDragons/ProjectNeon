@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
+public class ImplantClinicServiceProviderV4 : ClinicServiceProvider, ILocalizeTerms
 {
     private static readonly Dictionary<StatType, int> StatAmounts = new Dictionary<StatType, int>
     {
@@ -127,4 +127,9 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
     }
 
     public bool RequiresSelection() => false;
+
+    public string[] GetLocalizeTerms()
+        => StatAmounts.SelectMany(loss => StatAmounts.Select(gain => $"Clinics/Implant{loss.Key.ToString()}{gain.Key.ToString()}"))
+            .Concat(new[] { "Clinics/ImplantLossless", "Clinics/ImplantTradeOff", GetTitleTerm() })
+            .ToArray();
 }

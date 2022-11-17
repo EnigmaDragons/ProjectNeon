@@ -2,7 +2,7 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Cutscene/Cutscene")]
-public class Cutscene : ScriptableObject
+public class Cutscene : ScriptableObject, ILocalizeTerms
 {
     [SerializeField] public int id;
     [SerializeField] private bool isObsolete = false;
@@ -21,5 +21,10 @@ public class Cutscene : ScriptableObject
     {
         skipTrueStates.ForEach(x => a.SetStoryState(x, true));
         skipFalseStates.ForEach(x => a.SetStoryState(x, false));
+    }
+
+    public string[] GetLocalizeTerms()
+    {
+        return segments.Select(x => x.Term).ToArray();
     }
 }

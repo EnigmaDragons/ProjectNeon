@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "Adventure/Difficulty")]
-public class Difficulty : ScriptableObject
+public class Difficulty : ScriptableObject, ILocalizeTerms
 {
     [SerializeField] public int id;
     [SerializeField, PreviewSprite] private Sprite img; 
@@ -18,4 +18,7 @@ public class Difficulty : ScriptableObject
     public bool ResetAfterDeath => resetAfterDeath;
     public StaticGlobalEffect[] GlobalEffects => globalEffects;
     public Sprite Image => img;
+
+    public string[] GetLocalizeTerms()
+        => new[] { NameTerm, DescriptionTerm, ChangesTerm };
 }

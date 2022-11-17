@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ClinicUIV5 : OnMessage<UpdateClinic, RefreshShop>
+public class ClinicUIV5 : OnMessage<UpdateClinic, RefreshShop>, ILocalizeTerms
 {
     [SerializeField] private GameObject patientParent;
     [SerializeField] private ClinicPatientUIV5 patientPrototype;
@@ -60,4 +60,7 @@ public class ClinicUIV5 : OnMessage<UpdateClinic, RefreshShop>
             _serviceButtons[i].Init(options[i], party);
         }
     }
+
+    public string[] GetLocalizeTerms()
+        => new [] { "Clinics/SelectionRequired" };
 }

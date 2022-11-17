@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameContent/Enemy")]
-public class Enemy : ScriptableObject
+public class Enemy : ScriptableObject, ILocalizeTerms
 {
     [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public int id;
     [SerializeField] public string enemyName;
@@ -81,4 +81,9 @@ public class Enemy : ScriptableObject
         this.minimumAllies = minAllies;
         return this;
     }
+
+    public string[] GetLocalizeTerms()
+        => new[] { EnemyNameTerm, DescriptionTerm }
+            .Concat(resourceType == null ? new string[0] : new [] { resourceType.GetTerm() })
+            .ToArray();
 }

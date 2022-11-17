@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameContent/Corp")]
-public class StaticCorp : ScriptableObject, Corp
+public class StaticCorp : ScriptableObject, Corp, ILocalizeTerms
 {
     [SerializeField] private StringVariable corpName;
     [SerializeField] private string gearShopName;
@@ -30,4 +30,6 @@ public class StaticCorp : ScriptableObject, Corp
     public StatType[] GeneratedEquipmentPrimaryStatPreference => generatedEquipmentPrimaryStatPreference ?? new StatType[0];
     public string ShortDescription => shortDescription;
     public string LongDescription => longDescription;
+    public string[] GetLocalizeTerms()
+        => new [] { this.GetTerm() };
 }

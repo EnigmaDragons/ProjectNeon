@@ -4,7 +4,7 @@ using I2.Loc;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "StoryEvent/StoryEvent2")]
-public class StoryEvent2 : ScriptableObject
+public class StoryEvent2 : ScriptableObject, ILocalizeTerms
 {
     [SerializeField] public int id;
     [SerializeField] public string storyText;
@@ -42,4 +42,7 @@ public class StoryEvent2 : ScriptableObject
 
         return sb.ToString();
     }
+
+    public string[] GetLocalizeTerms()
+        => choices.Select(x => x.Term).Concat(Term).ToArray();
 }

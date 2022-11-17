@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ProgressionProgress : MonoBehaviour
+public class ProgressionProgress : MonoBehaviour, ILocalizeTerms
 {
     [SerializeField] private Library library;
     [SerializeField] private Adventure tutorialAdventure;
@@ -77,4 +77,7 @@ public class ProgressionProgress : MonoBehaviour
 
         return items.ToArray();
     }
+
+    public string[] GetLocalizeTerms()
+        => new[] { "Progressions/Draft", "Progressions/Difficulty", "Progressions/Adventure", "Progressions/Unlocked", "Progressions/Hero", "Progressions/Complete", "Progressions/Incomplete" };
 }
