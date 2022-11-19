@@ -10,11 +10,12 @@ using I2.Loc;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using Object = System.Object;
 
 public class ScriptLocalizationAnalysis : EditorWindow
 {
-    [MenuItem("Neon/Script Localization Summary")]
-    static void Open()
+    [MenuItem("Neon/Script Localization Prefab Summary")]
+    static void PrefabSummary()
     {
         var results = new List<MonoScriptLocalizationSummary>();
         var assetPaths = AssetDatabase.GetAllAssetPaths();
@@ -29,6 +30,25 @@ public class ScriptLocalizationAnalysis : EditorWindow
                 continue;
             var type = AssetDatabase.LoadAssetAtPath<MonoScript>(scriptPath).GetClass();
             if (type == null || !type.IsSubclassOf(typeof(MonoBehaviour)))
+                continue;
+            var fields = type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+            if (fields.None(x => x.FieldType == typeof(TextMeshProUGUI) || x.FieldType == typeof(Localize)))
+                continue;
+            results.Add(SummarizeScript(scriptPath, type, fields));
+        }
+        Display(results.ToArray());
+    }
+    
+    [MenuItem("Neon/Script Localization Scene Summary")]
+    static void SceneSummary()
+    {
+        var results = new List<MonoScriptLocalizationSummary>();
+        var assetPaths = AssetDatabase.GetAllAssetPaths();
+        var scriptPaths = assetPaths.Where(x => x.EndsWith(".cs"));
+        foreach (var scriptPath in scriptPaths)
+        {
+            var type = AssetDatabase.LoadAssetAtPath<MonoScript>(scriptPath).GetClass();
+            if (type == null || !type.IsSubclassOf(typeof(MonoBehaviour)) || !FindObjectsOfType(type).Any())
                 continue;
             var fields = type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
             if (fields.None(x => x.FieldType == typeof(TextMeshProUGUI) || x.FieldType == typeof(Localize)))
