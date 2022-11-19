@@ -100,6 +100,7 @@ public class Adventure : ScriptableObject, CurrentAdventureData, ILocalizeTerms
         MapTitleTerm, 
         AllowedHeroesDescriptionTerm,
         LockConditionExplanationTerm, 
-        RawMapTitleTerm
+        RawMapTitleTerm,
+        "Adventures/DefaultLockedReason"
     };
 }
