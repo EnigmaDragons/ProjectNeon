@@ -1,0 +1,163 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 048dbf930ebe4aab942f774b438631a8, type: 3}
+  m_Name: StatRulesV2
+  m_EditorClassIdentifier: 
+  items:
+  - title: HP
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: c1ee77b2fb754624594092a57fc2c569, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Tooltips/Stat-HP
+      Variable: {fileID: 0}
+    Value: 'Current Health / Maximum Health
+
+
+      Health persists between battles.
+
+
+      If
+      a character reaches 0 HP, they become unconscious.'
+  - title: Max Shield
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: e7f3f64674ce4c4429003ce12f699980, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Tooltips/Stat-MaxShield
+      Variable: {fileID: 0}
+    Value: 'Maximum Shield Amount
+
+
+      Incoming damage reduces your shields before
+      your HP
+
+
+      True Damage and Damage over Time effects ignore shields'
+  - title: Attack
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 96cf1c08e7e402b4b904d889d8e179ef, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Tooltips/Stat-Attack
+      Variable: {fileID: 0}
+    Value: 'Attack | <b>ATK</b>
+
+
+      This stat is the primary offensive stat for
+      physical attack cards. It directly impacts your damage output.'
+  - title: Magic
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: e04cb353987dbad4094394cb66ac1c6a, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Tooltips/Stat-Magic
+      Variable: {fileID: 0}
+    Value: 'Magic | <b>MAG</b>
+
+
+      This stat is the primary offensive stat for
+      magic attacks and spells. It directly impacts your damage output, healing output,
+      and other effects.'
+  - title: Armor
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 17c8fbf9e2b5f79459e077374380ae85, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Tooltips/Stat-Armor
+      Variable: {fileID: 0}
+    Value: 'Armor | <b>ARM</b>
+
+
+      Reduces incoming physical damage by this amount.'
+  - title: Resistance
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 1085d0ae716f453429fd9122b0f8227c, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Tooltips/Stat-Resistance
+      Variable: {fileID: 0}
+    Value: 'Resistance | <b>RES</b>
+
+
+      Reduces incoming magic damage by this
+      amount'
+  - title: Leadership
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 88d65c262b0c2b240a5c8915b576c16e, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Tooltips/Stat-Leadership
+      Variable: {fileID: 0}
+    Value: 'Leadership | <b>LEAD</b>
+
+
+      This stat impacts the effectiveness
+      of teamwork-oriented abilities. Many cards scale off this stat.'
+  - title: Starting Shield
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 6d84df3b258b65040a4108a35fc1744b, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Tooltips/Stat-StartingShield
+      Variable: {fileID: 0}
+    Value: 'Starting Shield
+
+
+      Incoming damage reduces your shields before your
+      HP
+
+
+      Shield amount at the start of battle.'
+  - title: Economy
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 028f444c83a8048468e940a793eeed08, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Tooltips/Stat-Economy
+      Variable: {fileID: 0}
+    Value: 'Economy | <b>ECON</b>
+
+
+      This stat impacts the effectiveness of
+      economy abilities. Economy cards scale off this stat.'
+  - title: ExtraCardPlays
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 85f49375563a056468197eb85a992b6b, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Tooltips/Stat-ExtraCardPlays
+      Variable: {fileID: 0}
+    Value: 'Card Plays
+
+
+      Number of card plays per turn.'

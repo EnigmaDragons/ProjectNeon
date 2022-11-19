@@ -54,7 +54,7 @@ public static class AllEffects
         { EffectType.ApplyMultiplicativeStatInjury, e => new AegisPreventable(new ApplyStatInjury(StatOperation.Multiply, e.EffectScope, e.TotalAmount, e.FlavorText), "Injury") },
         { EffectType.Kill, e => new SimpleEffect(m => m.SetHp(0)) },
         { EffectType.ShowCustomTooltip, e => new FullContextEffect((ctx, duration, m) => m.AddCustomStatus(
-            new CustomStatusIcon(string.IsNullOrWhiteSpace(e.StatusDetailText) ? e.FlavorText: e.StatusDetailText, 
+            new CustomStatusIcon(string.IsNullOrWhiteSpace(e.StatusDetailTerm.ToLocalized()) ? e.FlavorText: e.StatusDetailTerm.ToLocalized(), 
                 e.StatusTag == StatusTag.None ? e.EffectScope : e.StatusTag.ToString(), e.IntAmount, 
                 e.ForSimpleDurationStatAdjustment(ctx.Source.Id, duration))), e.DurationFormula) },
         { EffectType.OnDeath, e => new EffectOnDeath(false, e.IntAmount, e.DurationFormula, e.ReactionSequence, e.ReactionTimingWindow, e) },

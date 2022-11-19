@@ -288,9 +288,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1387160874607282870}
   - component: {fileID: 710097375821536684}
-  - component: {fileID: 3945390179849692275}
   - component: {fileID: 1896394523668166600}
   - component: {fileID: 7013044495040939523}
+  - component: {fileID: 8058963144894296294}
   m_Layer: 5
   m_Name: RecycleIcon
   m_TagString: Untagged
@@ -333,19 +333,6 @@ MonoBehaviour:
   panel: {fileID: 6678515616094666162}
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
   counter: {fileID: 4374834652823224925}
---- !u!114 &3945390179849692275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 955530534252431169}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77d005e298df44ca8cca949f2df12ba7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tooltipText: Number of Card Cycles left this Turn
 --- !u!114 &1896394523668166600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,6 +361,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   refName: TrashRecycleDropArea
+--- !u!114 &8058963144894296294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 955530534252431169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d38e8cafb944ccbbddbb31ab70c31e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipTerm: Tooltips/RecycleCardControl
+  tooltipText: 
 --- !u!1 &1133228935326666699
 GameObject:
   m_ObjectHideFlags: 0
@@ -693,10 +694,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 607935585965809583}
-  - component: {fileID: 1224408819948383282}
   - component: {fileID: 4057306077180044206}
   - component: {fileID: 4451651746880072901}
   - component: {fileID: 5723491336218609372}
+  - component: {fileID: 9154724111126102431}
   m_Layer: 5
   m_Name: TrashIcon
   m_TagString: Untagged
@@ -724,19 +725,6 @@ RectTransform:
   m_AnchoredPosition: {x: 151, y: -96}
   m_SizeDelta: {x: 128, y: 128}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1224408819948383282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2730036098768759733}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77d005e298df44ca8cca949f2df12ba7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tooltipText: Discard a Card (Drop a card here)
 --- !u!114 &4057306077180044206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -779,6 +767,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   refName: TrashRecycleDropArea
+--- !u!114 &9154724111126102431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2730036098768759733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d38e8cafb944ccbbddbb31ab70c31e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipTerm: Tooltips/TrashCardControl
+  tooltipText: 
 --- !u!1 &3452979192471549175
 GameObject:
   m_ObjectHideFlags: 0

@@ -44,7 +44,7 @@ public sealed class GeneratedBattleStageSegment : IStageSegment
     {
         Name = name;
         _start = () => Message.Publish(new EnterSpecificBattle(battleField, isElite, enemies, false, null, false));
-        Detail = new Maybe<string>(string.Join("\n", enemies.Select(x => x.NameTerm.ToEnglish())));;
+        Detail = new Maybe<string>(string.Join("\n", enemies.Select(x => x.NameTerm.ToLocalized())));;
     }
 }
 

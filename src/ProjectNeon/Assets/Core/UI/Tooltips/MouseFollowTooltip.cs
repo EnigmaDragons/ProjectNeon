@@ -35,6 +35,7 @@ public class MouseFollowTooltip : OnMessage<ShowTooltip, ShowTooltipObject, Hide
         HideTooltip();
 
         _showTooltipMsg = msg;
+        
         tooltipLabel.text = msg.Text.Replace("\\n", Environment.NewLine);
         panel.SetActive(true);
         background.SetActive(msg.ShowBackground);

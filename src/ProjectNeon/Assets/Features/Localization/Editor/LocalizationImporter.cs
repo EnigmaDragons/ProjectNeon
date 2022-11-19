@@ -23,6 +23,10 @@ public class LocalizationImporter
         ImportDifficulties(true);
         ImportAdventures(true);
         ImportEquipments(true);
+        ImportCardStatuses(true);
+        ImportGlobalEffects(true);
+        ImportTooltips(true);
+        ImportKeyTermCollections(true);
     }
     
     [MenuItem("Neon/Localization/Import Equipments")]
@@ -115,7 +119,47 @@ public class LocalizationImporter
         ImportItems<Adventure>(x => x.VictoryConclusionTerm, (a, text) => a.victoryConclusion = text, hasInit);
         ImportItems<Adventure>(x => x.DefeatConclusionTerm, (a, text) => a.defeatConclusion = text, hasInit);
     }
+    
+    [MenuItem("Neon/Localization/Import Card Statuses")]
+    private static void ImportCardStatuses()
+        => ImportAdventures(false);
+    private static void ImportCardStatuses(bool hasInit)
+    {
+        ImportSubItems<CardActionsData, EffectData>( 
+            c => c.Actions
+                .Where(a => a.Type == CardBattleActionType.Battle)
+                .Select(a => a.BattleEffect)
+                .ToArray(), 
+            e => e.StatusDetailTerm, 
+            (e, text) => e.StatusDetailText = text, 
+            hasInit);
+    }
 
+    [MenuItem("Neon/Localization/Import Global Effects")]
+    private static void ImportGlobalEffects()
+        => ImportGlobalEffects(false);
+    private static void ImportGlobalEffects(bool hasInit)
+    {
+        ImportItems<StaticGlobalEffect>(e => e.ShortDescriptionTerm, (e, text) => e.Data.ShortDescription = text, hasInit);
+        ImportItems<StaticGlobalEffect>(e => e.FullDescriptionTerm, (e, text) => e.Data.FullDescription = text, hasInit);
+    }
+
+    [MenuItem("Neon/Localization/Import Tooltips")]
+    private static void ImportTooltips()
+        => ImportTooltips(false);
+    private static void ImportTooltips(bool hasInit)
+    {
+        
+    }
+    
+    [MenuItem("Neon/Localization/Import Key Term Collections")]
+    private static void ImportKeyTermCollections()
+        => ImportKeyTermCollections(false);
+    private static void ImportKeyTermCollections(bool hasInit)
+    {
+        ImportSubItems<StringKeyTermCollection, StringKeyTermPair>(c => c.All.ToArray(), p => p.Term, (p, text) => p.Value = text, hasInit);
+    }
+    
     private static void ImportItems<T>(Func<T, string> getTerm, Action<T, string> setText, bool hasInit) where T : ScriptableObject
     {
         if (!hasInit)
@@ -135,10 +179,13 @@ public class LocalizationImporter
     }
 
     private static void ImportSubItems<T, T2>(Func<T, T2[]> getSubItems, Func<T2, string> getTerm, Action<T2, string> setText, bool hasInit) where T : ScriptableObject
+        => ImportSubItems(_ => true, getSubItems, getTerm, setText, hasInit);
+        
+    private static void ImportSubItems<T, T2>(Func<T, bool> conditional, Func<T, T2[]> getSubItems, Func<T2, string> getTerm, Action<T2, string> setText, bool hasInit) where T : ScriptableObject
     {
         if (!hasInit)
             LocalizationManager.UpdateSources();
-        foreach (var item in GetAllInstances<T>())
+        foreach (var item in GetAllInstances<T>().Where(conditional))
         {
             var hasSetDirty = false;
             foreach (var subItem in getSubItems(item))
@@ -159,6 +206,33 @@ public class LocalizationImporter
             }
         }
     }
+    
+    /*private static void ImportComponents<T>(Func<T, string> getTerm, Action<T, string> setText, bool hasInit) where T : MonoBehaviour
+    {
+        if (!hasInit)
+            LocalizationManager.UpdateSources();
+        foreach (var prefabGuid in AssetDatabase.FindAssets("t:prefab"))
+        {
+            var prefabPath = AssetDatabase.GUIDToAssetPath(prefabGuid);
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+            var component = prefab.GetComponentInChildren<T>();
+            if (component == null)
+                continue;
+            
+            
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+            
+            var term = getTerm(item);
+            var text = term.ToEnglish();
+            if (string.IsNullOrWhiteSpace(text) || text == term)
+                Debug.LogError($"Could not translate {term}");
+            else
+            {
+                setText(item, text);
+                EditorUtility.SetDirty(item);
+            }
+        }
+    }*/
 
     private static T[] GetAllInstances<T>() where T : ScriptableObject
     {

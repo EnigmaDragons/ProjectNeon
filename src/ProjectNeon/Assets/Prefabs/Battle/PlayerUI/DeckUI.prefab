@@ -220,8 +220,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1453549941647074655}
   - component: {fileID: 1060282436541739589}
-  - component: {fileID: 3579504051338939290}
   - component: {fileID: 2106976860756564001}
+  - component: {fileID: 2003553952818607867}
   m_Layer: 5
   m_Name: RecycleIcon
   m_TagString: Untagged
@@ -264,19 +264,6 @@ MonoBehaviour:
   panel: {fileID: 6612126610862166619}
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
   counter: {fileID: 4312949255409593780}
---- !u!114 &3579504051338939290
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 733696938301958312}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77d005e298df44ca8cca949f2df12ba7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tooltipText: Number of Card Cycles left this Turn
 --- !u!114 &2106976860756564001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,6 +279,20 @@ MonoBehaviour:
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
   rotateTarget: {fileID: 1456800733744499735}
   rotateSpeed: 15
+--- !u!114 &2003553952818607867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733696938301958312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d38e8cafb944ccbbddbb31ab70c31e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipTerm: Tooltips/RecycleCardControl
+  tooltipText: 
 --- !u!1 &744790751805381251
 GameObject:
   m_ObjectHideFlags: 0
@@ -451,8 +452,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1081979635458109510}
-  - component: {fileID: 1698382465325892571}
   - component: {fileID: 4549294154961243207}
+  - component: {fileID: 463311140260037199}
   m_Layer: 5
   m_Name: TrashIcon
   m_TagString: Untagged
@@ -480,19 +481,6 @@ RectTransform:
   m_AnchoredPosition: {x: 50, y: 100}
   m_SizeDelta: {x: 600, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1698382465325892571
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2490259495259374684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77d005e298df44ca8cca949f2df12ba7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tooltipText: Discard a Card (Drop a card here)
 --- !u!114 &4549294154961243207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -508,6 +496,20 @@ MonoBehaviour:
   rotateTarget: {fileID: 466011380342670703}
   shakeSize: 1
   shakeSpeed: 15
+--- !u!114 &463311140260037199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2490259495259374684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d38e8cafb944ccbbddbb31ab70c31e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipTerm: Tooltips/TrashCardControl
+  tooltipText: 
 --- !u!1 &2680820700935421545
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,7 +520,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3234769256262129210}
   - component: {fileID: 1006400932667783059}
-  - component: {fileID: 3938783897044160330}
+  - component: {fileID: 8404285191813306016}
   m_Layer: 5
   m_Name: ExtraPlaysIcon
   m_TagString: Untagged
@@ -562,7 +564,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   counter: {fileID: 914240223898402795}
---- !u!114 &3938783897044160330
+  state: {fileID: 0}
+  hideTextWhen0PlaysRemaining: 1
+--- !u!114 &8404285191813306016
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -571,10 +575,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2680820700935421545}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77d005e298df44ca8cca949f2df12ba7, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d38e8cafb944ccbbddbb31ab70c31e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipText: Number of Card Plays Remaining This Turn
+  tooltipTerm: Tooltips/ExtraPlays
+  tooltipText: 
 --- !u!1 &3369963883820117397
 GameObject:
   m_ObjectHideFlags: 0

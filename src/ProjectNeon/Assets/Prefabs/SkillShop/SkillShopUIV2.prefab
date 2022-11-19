@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 102574711032532455}
   - component: {fileID: 1797156350435111202}
   - component: {fileID: 3734272879266220430}
-  - component: {fileID: 1235914714288383557}
+  - component: {fileID: 4753677779739744480}
   m_Layer: 5
   m_Name: PartyButton
   m_TagString: Untagged
@@ -180,7 +180,7 @@ MonoBehaviour:
   PlayOnAwake: 0
   PlayOnDestroy: 0
   hoverEnterSound: event:/DeckBulder_Scene/Hover
---- !u!114 &1235914714288383557
+--- !u!114 &4753677779739744480
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -189,10 +189,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1055587364198810714}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77d005e298df44ca8cca949f2df12ba7, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d38e8cafb944ccbbddbb31ab70c31e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipText: Party
+  tooltipTerm: Tooltips/PartyButton
+  tooltipText: 
 --- !u!1 &1562095870964590054
 GameObject:
   m_ObjectHideFlags: 0
@@ -1068,6 +1069,14 @@ PrefabInstance:
     - target: {fileID: 614299582971389449, guid: 7c89566c62ed8fb4ba2013c7f1e0c8b9, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1093603376325383325, guid: 7c89566c62ed8fb4ba2013c7f1e0c8b9, type: 3}
+      propertyPath: m_AfterStackBundles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1093603376325383325, guid: 7c89566c62ed8fb4ba2013c7f1e0c8b9, type: 3}
+      propertyPath: m_AfterStackBundles.Array.data[0].assemblyQualifiedName
+      value: Xibanya.Scanline, GameAssembly, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       objectReference: {fileID: 0}
     - target: {fileID: 1093603378245552278, guid: 7c89566c62ed8fb4ba2013c7f1e0c8b9, type: 3}
       propertyPath: m_RootOrder

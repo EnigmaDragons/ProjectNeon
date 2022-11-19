@@ -61,7 +61,7 @@ public class EnemyDetailsView : MonoBehaviour, ILocalizeTerms
                     {
                         Type = s.StatusTag.ToString(),
                         Icon = icons[s.StatusTag].Icon,
-                        Tooltip = s.StatusDetailText
+                        Tooltip = s.StatusDetailTerm.ToLocalized()
                     })
                 .Concat(e.StartOfBattleEffects
                     .Where(x => x.EffectType == EffectType.EnterStealth)
@@ -70,7 +70,7 @@ public class EnemyDetailsView : MonoBehaviour, ILocalizeTerms
                     { 
                         Type = TemporalStatType.Stealth.ToString(), 
                         Icon = icons[TemporalStatType.Stealth].Icon,
-                        Tooltip = "Start Battle Stealthed"
+                        Tooltip = "Tooltips/StartBattleStealthed".ToLocalized()
                     })).ToList();
             specialPowers.UpdateStatuses(powers);
         }

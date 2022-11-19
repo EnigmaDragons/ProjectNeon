@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8390134548940830144}
-  - component: {fileID: 9057219491707476073}
+  - component: {fileID: 8279574326252765286}
   m_Layer: 5
   m_Name: DeckCountIcon
   m_TagString: Untagged
@@ -38,7 +38,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &9057219491707476073
+--- !u!114 &8279574326252765286
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,10 +47,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 541332447313934012}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77d005e298df44ca8cca949f2df12ba7, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d38e8cafb944ccbbddbb31ab70c31e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipText: Number of Cards in Discard Zone
+  tooltipTerm: Tooltips/DiscardZone
+  tooltipText: 
 --- !u!1 &927531013987958547
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,7 +546,7 @@ GameObject:
   - component: {fileID: 7233002803685685849}
   - component: {fileID: 629397240212888884}
   - component: {fileID: 6029727347119264411}
-  - component: {fileID: 2143080494375537906}
+  - component: {fileID: 9101378366589684127}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -610,7 +611,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2143080494375537906
+--- !u!114 &9101378366589684127
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -619,10 +620,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4757038905086878733}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77d005e298df44ca8cca949f2df12ba7, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d38e8cafb944ccbbddbb31ab70c31e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipText: Cards in Deck
+  tooltipTerm: Tooltips/DeckZone
+  tooltipText: 
 --- !u!1 &6263606146310022847
 GameObject:
   m_ObjectHideFlags: 0

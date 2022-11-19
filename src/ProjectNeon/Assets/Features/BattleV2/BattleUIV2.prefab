@@ -1773,8 +1773,8 @@ GameObject:
   - component: {fileID: 325210002661469019}
   - component: {fileID: 6709270935040684346}
   - component: {fileID: 843903515366541529}
-  - component: {fileID: 3045489316334639011}
   - component: {fileID: 4782493926814332675}
+  - component: {fileID: 5456846765604037519}
   m_Layer: 5
   m_Name: ToggleLogButton
   m_TagString: Untagged
@@ -1936,7 +1936,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 3045489316334639011}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: UiTooltip, EnigmaDragons.Core
           m_MethodName: Show
           m_Mode: 1
@@ -1952,7 +1952,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 3045489316334639011}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: UiTooltip, EnigmaDragons.Core
           m_MethodName: Hide
           m_Mode: 1
@@ -1980,19 +1980,6 @@ MonoBehaviour:
   PlayOnAwake: 0
   PlayOnDestroy: 0
   hoverEnterSound: event:/DeckBulder_Scene/Hover
---- !u!114 &3045489316334639011
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2945749596453154519}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77d005e298df44ca8cca949f2df12ba7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tooltipText: Toggle Battle Log
 --- !u!114 &4782493926814332675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2006,6 +1993,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   refName: ClickableControls
+--- !u!114 &5456846765604037519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2945749596453154519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d38e8cafb944ccbbddbb31ab70c31e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipTerm: Tooltips/ToggleBattleLogButton
+  tooltipText: 
 --- !u!1 &3502216220807832133
 GameObject:
   m_ObjectHideFlags: 0
@@ -7399,8 +7400,8 @@ GameObject:
   - component: {fileID: 6822798566737510892}
   - component: {fileID: 341878008758778596}
   - component: {fileID: 5415236864237345804}
-  - component: {fileID: 8760847299875079621}
   - component: {fileID: 816784195779757503}
+  - component: {fileID: 3250420337449410141}
   m_Layer: 5
   m_Name: ToggleMenuButton
   m_TagString: Untagged
@@ -7578,7 +7579,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 8760847299875079621}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: UiTooltip, EnigmaDragons.Core
           m_MethodName: Show
           m_Mode: 1
@@ -7594,7 +7595,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 8760847299875079621}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: UiTooltip, EnigmaDragons.Core
           m_MethodName: Hide
           m_Mode: 1
@@ -7606,19 +7607,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &8760847299875079621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4349093701420402364}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77d005e298df44ca8cca949f2df12ba7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tooltipText: Open Game Menu
 --- !u!114 &816784195779757503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7632,6 +7620,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   refName: ClickableControls
+--- !u!114 &3250420337449410141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4349093701420402364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d38e8cafb944ccbbddbb31ab70c31e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipTerm: Tooltips/ToggleMenuButton
+  tooltipText: 
 --- !u!1 &4448769814096526193
 GameObject:
   m_ObjectHideFlags: 0
@@ -9188,7 +9190,7 @@ GameObject:
   - component: {fileID: 7100763177291325287}
   - component: {fileID: 7230178423911063440}
   - component: {fileID: 4247455616185417491}
-  - component: {fileID: 8421457867964468217}
+  - component: {fileID: 3673152678608718482}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -9351,7 +9353,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 8421457867964468217}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: UiTooltip, EnigmaDragons.Core
           m_MethodName: Show
           m_Mode: 1
@@ -9367,7 +9369,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 8421457867964468217}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: UiTooltip, EnigmaDragons.Core
           m_MethodName: Hide
           m_Mode: 1
@@ -9395,7 +9397,7 @@ MonoBehaviour:
   PlayOnAwake: 0
   PlayOnDestroy: 0
   hoverEnterSound: event:/DeckBulder_Scene/Hover
---- !u!114 &8421457867964468217
+--- !u!114 &3673152678608718482
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9404,10 +9406,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8471804755952166628}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77d005e298df44ca8cca949f2df12ba7, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d38e8cafb944ccbbddbb31ab70c31e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipText: Change Battle Speed
+  tooltipTerm: Tooltips/BattleSpeedButton
+  tooltipText: 
 --- !u!1 &8522328804687614349
 GameObject:
   m_ObjectHideFlags: 0

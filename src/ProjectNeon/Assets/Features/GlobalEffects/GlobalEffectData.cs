@@ -5,6 +5,8 @@ public class GlobalEffectData
 {
     [UnityEngine.UI.Extensions.ReadOnly] public int OriginatingId = -1;
     
+    public string ShortDescriptionTerm => $"GlobalEffects/Effect{OriginatingId}ShortDescription";
+    public string FullDescriptionTerm => $"GlobalEffects/Effect{OriginatingId}FullDescription";
     public string ShortDescription;
     public string FullDescription;
     public GlobalEffectType EffectType = GlobalEffectType.None;

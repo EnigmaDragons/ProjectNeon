@@ -17,6 +17,7 @@ public class AssetUpdater
         UpdateLevelUpOptions();
         UpdateCardIDs();
         UpdateAllCards();
+        UpdateEffectIds();
         UpdateEquipmentIDs();
         UpdateAllEquipments();
         UpdateAllResourceTypes();
@@ -233,6 +234,17 @@ public class AssetUpdater
                 EditorUtility.SetDirty(x);   
             }
         });
+    }
+
+    [MenuItem("Neon/Update/Update Effect IDs")]
+    private static void UpdateEffectIds()
+    {
+        AssignAllSubIds(
+            ScriptableExtensions.GetAllInstances<CardActionsData>()
+                .SelectMany(actions => actions.Actions.Select(action => new Tuple<CardActionsData, EffectData>(actions, action.BattleEffect)))
+                .ToArray(), 
+            effect => effect.Id, 
+            (effect, id) => effect.Id = id);
     }
     
     [MenuItem("Neon/Update/Update All Heroes")]

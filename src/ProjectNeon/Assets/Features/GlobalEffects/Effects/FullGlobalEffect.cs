@@ -13,8 +13,8 @@ public class FullGlobalEffect : GlobalEffect
         _revert = revert;
     }
 
-    public string ShortDescription => _data.ShortDescription;
-    public string FullDescription => _data.FullDescription;
+    public string ShortDescriptionTerm => _data.ShortDescriptionTerm;
+    public string FullDescriptionTerm => _data.FullDescriptionTerm;
     public GlobalEffectData Data => _data;
     public void Apply(GlobalEffectContext ctx) => _apply(ctx);
     public void Revert(GlobalEffectContext ctx) => _revert(ctx);

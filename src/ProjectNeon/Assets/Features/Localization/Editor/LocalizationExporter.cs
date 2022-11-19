@@ -212,6 +212,30 @@ public class LocalizationExporter
         WriteCsv("StatTypes", data);
     }
 
+    [MenuItem("Neon/Localization/Export Card Statuses")]
+    public static void ExportCardStatuses()
+    {
+        var data = new List<string>();
+        foreach (var action in GetAllInstances<CardActionsData>()
+            .SelectMany(x => x.Actions)
+            .Where(x => x.Type == CardBattleActionType.Battle && !string.IsNullOrWhiteSpace(x.BattleEffect.StatusDetailText))
+            .Select(x => x.BattleEffect))
+            data.Add($"{action.StatusDetailTerm.Split('/').Last()}^{ToSingleLineI2Format(action.StatusDetailText ?? "")}");
+        WriteCsv("CardStatuses", data);
+    }
+
+    [MenuItem("Neon/Localization/Export Global Effects")]
+    public static void ExportGlobalEffects()
+    {
+        var data = new List<string>();
+        foreach (var effect in GetAllInstances<StaticGlobalEffect>())
+        {
+            data.Add($"{effect.ShortDescriptionTerm.Split('/').Last()}^{ToSingleLineI2Format(effect.Data.ShortDescription)}");
+            data.Add($"{effect.FullDescriptionTerm.Split('/').Last()}^{ToSingleLineI2Format(effect.Data.FullDescription)}");
+        }
+        WriteCsv("GlobalEffects", data);
+    }
+
     private static T[] GetAllInstances<T>() where T : ScriptableObject
     {
         var guids = AssetDatabase.FindAssets("t:"+ typeof(T).Name);

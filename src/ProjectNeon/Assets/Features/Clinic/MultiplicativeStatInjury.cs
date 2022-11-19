@@ -8,5 +8,5 @@ public class MultiplicativeStatInjury : HeroInjury
     public float Amount;
 
     public string InjuryName => Name;
-    public string Description => $"{Amount}x {Stat}";
+    public string Description => $"{Amount} {$"Stats/Stat-{Stat}".ToLocalized()}";
 }

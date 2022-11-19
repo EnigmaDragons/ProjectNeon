@@ -44,10 +44,10 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
             travelPreventedVisual.SetActive(!canTravel);
         if (unvisitedTextLabel != null)
             unvisitedTextLabel.text = allGlobalEffects.GetEffectById(mapData.UnVisitedGlobalEffectId)
-                .Select(e => $"<b>If Not Visited:</b>\n{e.FullDescription}", "");
+                .Select(e => $"<b>If Not Visited:</b>\n{e.FullDescriptionTerm.ToEnglish()}", "");
         if (visitedTextLabel != null)
             visitedTextLabel.text = allGlobalEffects.GetEffectById(mapData.VisitedGlobalEffectId)
-                .Select(e => $"<b>If Visited</b>:\n{e.FullDescription}", "");
+                .Select(e => $"<b>If Visited</b>:\n{e.FullDescriptionTerm.ToEnglish()}", "");
         if (description != null)
             description.Init(descriptionName, descriptionDetail);
         button.enabled = canTravel;
@@ -84,10 +84,10 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
             travelPreventedVisual.SetActive(!canTravel);
         if (unvisitedTextLabel != null)
             unvisitedTextLabel.text = allGlobalEffects.GetEffectById(mapData.UnVisitedGlobalEffectId)
-                .Select(e => $"<b>If Not Visited:</b>\n{e.FullDescription}", "");
+                .Select(e => $"<b>If Not Visited:</b>\n{e.FullDescriptionTerm.ToEnglish()}", "");
         if (visitedTextLabel != null)
             visitedTextLabel.text = allGlobalEffects.GetEffectById(mapData.VisitedGlobalEffectId)
-                .Select(e => $"<b>If Visited</b>:\n{e.FullDescription}", "");
+                .Select(e => $"<b>If Visited</b>:\n{e.FullDescriptionTerm.ToEnglish()}", "");
         if (description != null)
             description.Init(descriptionName, descriptionDetail);
         button.enabled = canTravel;

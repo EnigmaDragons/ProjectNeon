@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 048dbf930ebe4aab942f774b438631a8, type: 3}
+  m_Name: GeneralGameRulesV2
+  m_EditorClassIdentifier: 
+  items:
+  - title: Hero Level
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: bec0857a6a4f8d649ba1c5ef0b9782f9, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Tooltips/HeroLevel
+      Variable: {fileID: 0}
+    Value: '<b>Hero Level</b>
+
+
+      Represents your hero''s current power. Collect
+      experience points (XP) to increase your level and become more powerful.'
+  - title: Resource Gain Per Turn
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: bf47bf21f36820143a1b0ef36e671bd3, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Tooltips/ResourceGainPerTurn
+      Variable: {fileID: 0}
+    Value: '<b>Resource Gain</b>
+
+
+      Gain this many resources at the end of every
+      turn.'
