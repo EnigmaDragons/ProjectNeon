@@ -1,13 +1,11 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using I2.Loc;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StoryEventPresenterV4 : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI storyNameLabel;
+    [SerializeField] private Localize storyNameLabel;
     [SerializeField] private Localize storyTextLocalize;
     [SerializeField] private Image corpLogo;
     [SerializeField] private UnityEngine.UI.Extensions.Gradient corpTint;
@@ -78,7 +76,7 @@ public class StoryEventPresenterV4 : MonoBehaviour
             corpLogo.sprite = s.Corp.Logo;
             corpTint.Vertex1 = s.Corp.Color1;
             corpTint.Vertex2 = s.Corp.Color2;
-            storyNameLabel.text = s.DisplayName;
+            storyNameLabel.SetTerm(s.DisplayNameTerm);
         }
         storyTextLocalize.SetTerm(s.Term);
         if (s.IsMultiChoice)

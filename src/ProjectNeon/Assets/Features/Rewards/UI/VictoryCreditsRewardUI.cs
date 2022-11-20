@@ -4,7 +4,7 @@ using UnityEngine;
 public class VictoryCreditsRewardUI : OnMessage<ShowCreditsGain>
 {
     [SerializeField] private GameObject view;
-    [SerializeField] private TextMeshProUGUI creditsLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI creditsLabel;
     [SerializeField] private RarityPresenter rarityPresenter;
     
     protected override void Execute(ShowCreditsGain msg)

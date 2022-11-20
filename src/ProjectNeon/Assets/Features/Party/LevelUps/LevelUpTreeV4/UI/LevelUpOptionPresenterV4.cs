@@ -1,3 +1,4 @@
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -5,7 +6,7 @@ using UnityEngine.UI;
 
 public sealed class LevelUpOptionPresenterV4 : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private Localize text;
     [SerializeField] private Image button;
     [SerializeField] private Sprite hoverImg;
     [SerializeField] private GameObject hasDetailPrompt;
@@ -21,7 +22,7 @@ public sealed class LevelUpOptionPresenterV4 : MonoBehaviour, IPointerDownHandle
     {
         _option = o;
         _allOptions = allOptions;
-        text.text = o.Description.Replace("\\n", "\n");
+        text.SetFinalText(o.Description.Replace("\\n", "\n"));
         hasDetailPrompt.SetActive(o.HasDetail);
         return this;
     }

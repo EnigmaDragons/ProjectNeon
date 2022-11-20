@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Hero/LevelUpsV4/HeroPermanentAugmentOptions")]
-public class HeroPermanentAugmentOptions : LevelUpOptions
+public class HeroPermanentAugmentOptions : LevelUpOptions, ILocalizeTerms
 {
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private EquipmentPool allEquipmentPool;
@@ -11,7 +11,7 @@ public class HeroPermanentAugmentOptions : LevelUpOptions
     [SerializeField] private EquipmentPresenter customPresenterPrototype;
     [SerializeField] private StaticEquipment[] choiceOverride;
 
-    public override string ChoiceDescription => "Choose an Augment";
+    public override string ChoiceDescriptionTerm => "LevelUps/ChooseAugment";
 
     public override LevelUpOption[] Generate(Hero h)
     {
@@ -58,4 +58,7 @@ public class HeroPermanentAugmentOptions : LevelUpOptions
 
         return finalSet.ToArray();
     }
+
+    public string[] GetLocalizeTerms()
+        => new[] {ChoiceDescriptionTerm};
 }

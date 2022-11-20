@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+[IgnoreForLocalization]
 public sealed class DevLogViewController : OnMessage<WriteDevLogMessageRequested, ToggleDevLogView>
 {
     [SerializeField] private BoolReference loggingEnabled;

@@ -5,10 +5,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerEnterHandler, IPointerExitHandler
+public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerEnterHandler, IPointerExitHandler, ILocalizeTerms
 {
     [SerializeField] private Image icon;
-    [SerializeField] private TextMeshProUGUI counter;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI counter;
     [SerializeField] private Localize resourceNameLabel;
 
     private Member _member;
@@ -64,4 +64,7 @@ public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerE
     }
 
     public void OnPointerExit(PointerEventData eventData) => Message.Publish(new HideTooltip());
+
+    public string[] GetLocalizeTerms()
+        => new[] { "Tooltips/HeroHasResources" };
 }

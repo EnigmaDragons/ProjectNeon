@@ -4,7 +4,7 @@ using UnityEngine;
 public sealed class WorldStatusIconPresenter : StatusIcon
 {
     [SerializeField] private SpriteRenderer icon;
-    [SerializeField] private TextMeshPro label;
+    [SerializeField, NoLocalizationNeeded] private TextMeshPro label;
 
     private Vector3 _originalScale;
     private string _tooltip;

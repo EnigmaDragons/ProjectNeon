@@ -236,6 +236,30 @@ public class LocalizationExporter
         WriteCsv("GlobalEffects", data);
     }
 
+    [MenuItem("Neon/Localization/Export Stages")]
+    public static void ExportStages()
+    {
+        var data = new List<string>();
+        foreach (var stage in GetAllInstances<HybridStageV5>())
+            data.Add($"{stage.DisplayName.Split('/').Last()}^{ToSingleLineI2Format(stage.displayName)}");
+        WriteCsv("stages", data);
+    }
+    
+    [MenuItem("Neon/Localization/Export Corps")]
+    public static void ExportCorps()
+    {
+        var data = new List<string>();
+        foreach (var stage in GetAllInstances<StaticCorp>())
+        {
+            data.Add($"{stage.GetTerm().Split('/').Last()}^{ToSingleLineI2Format(stage.Name)}");
+            data.Add($"{stage.ClinicNameTerm.Split('/').Last()}^{ToSingleLineI2Format(stage.clinicName)}");  
+            data.Add($"{stage.GearShopData.ShopNameTerm.Split('/').Last()}^{ToSingleLineI2Format(stage.gearShopName)}");  
+            data.Add($"{stage.ShortDescriptionTerm.Split('/').Last()}^{ToSingleLineI2Format(stage.shortDescription)}");  
+            data.Add($"{stage.LongDescriptionTerm.Split('/').Last()}^{ToSingleLineI2Format(stage.longDescription)}");  
+        }
+        WriteCsv("corps", data);
+    }
+
     private static T[] GetAllInstances<T>() where T : ScriptableObject
     {
         var guids = AssetDatabase.FindAssets("t:"+ typeof(T).Name);

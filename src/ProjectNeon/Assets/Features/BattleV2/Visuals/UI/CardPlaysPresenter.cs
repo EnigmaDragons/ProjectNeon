@@ -3,7 +3,7 @@ using UnityEngine;
 
 public sealed class CardPlaysPresenter : OnMessage<PlayerStateChanged>
 {
-    [SerializeField] private TextMeshProUGUI counter;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI counter;
 
     private void Awake() => counter.text = "3";
 

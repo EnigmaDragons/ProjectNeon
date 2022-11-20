@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[IgnoreForLocalization]
 public class PartyAffinityPresenter : OnMessage<PartyAdventureStateChanged>
 {
     [SerializeField] private PartyAdventureState party;

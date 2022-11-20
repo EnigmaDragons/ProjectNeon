@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[IgnoreForLocalization]
 public sealed class BattleLogViewController : OnMessage<WriteBattleLogMessageRequested, ToggleBattleLogView>
 {
     [SerializeField] private BoolReference loggingEnabled;

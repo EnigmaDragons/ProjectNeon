@@ -11,7 +11,7 @@ public class PageViewer : MonoBehaviour
     [SerializeField] private GameObject pageTemplate;
     [SerializeField] private Vector2 elementSpace;
     [SerializeField] private GameObject previousPageButton;
-    [SerializeField] private TextMeshProUGUI pageNumText;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI pageNumText;
     [SerializeField] private GameObject nextPageButton;
     [SerializeField] private bool bindButtons;
 

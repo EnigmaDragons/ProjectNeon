@@ -4,7 +4,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Adventure/Stage V5")]
 public class HybridStageV5 : ScriptableObject, IStage
 {
-    [SerializeField] private string displayName;
+    [SerializeField] public int id;
+    [SerializeField] public string displayName;
     [SerializeField] private GameMap3 gameMap3;
     [SerializeField] private EncounterBuilderV5 encounterBuilder;
     [SerializeField] private StorySetting storySetting;
@@ -20,7 +21,7 @@ public class HybridStageV5 : ScriptableObject, IStage
     [SerializeField] private float shopOdds = 0.17f;
     [SerializeField] private int noShopsUntilSegment = 3;
 
-    public string DisplayName => displayName;
+    public string DisplayName => $"Stage/Stage{id}Name";
 
     public GameObject BattlegroundForSegment(int segment)
     {

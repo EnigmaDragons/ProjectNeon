@@ -67,7 +67,7 @@ public class CutsceneSegmentData
     private string[] GetChoiceDescription()
     {
         var lines = new List<string>();
-        lines.Add($"Present Player Game With {(StoryEvent.IsMultiChoice ? "Multi-Choice" : "Choice")}: {StoryEvent.DisplayName}");
+        lines.Add($"Present Player Game With {(StoryEvent.IsMultiChoice ? "Multi-Choice" : "Choice")}: {StoryEvent.DisplayNameTerm.ToEnglish()}");
         lines.Add($"  Choice Prompt: \"{StoryEvent.Term.ToEnglish()}\"");
         for (var i = 0; i < StoryEvent.Choices.Length; i++)
         {

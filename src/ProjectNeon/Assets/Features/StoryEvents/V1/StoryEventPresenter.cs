@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 
+[IgnoreForLocalization]
 public class StoryEventPresenter : OnMessage<ShowStoryEventResolution, ShowCreditChange, 
     ShowGainedEquipment, ShowCardReward, ShowStoryEventResultMessage>
 {

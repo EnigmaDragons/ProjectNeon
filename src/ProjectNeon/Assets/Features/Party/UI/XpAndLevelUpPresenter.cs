@@ -4,7 +4,7 @@ using UnityEngine;
 public sealed class XpAndLevelUpPresenter : MonoBehaviour
 {
     [SerializeField] private XpPresenter xp;
-    [SerializeField] private TextMeshProUGUI levelLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI levelLabel;
     [SerializeField] private TextCommandButton levelUpButton;
 
     private Hero _hero;

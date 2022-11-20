@@ -3,19 +3,19 @@ using UnityEngine;
 
 public sealed class MemberStatPanel : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI hpLabel;
-    [SerializeField] private TextMeshProUGUI startingShieldLabel;
-    [SerializeField] private TextMeshProUGUI maxShieldLabel;
-    [SerializeField] private TextMeshProUGUI attackLabel;
-    [SerializeField] private TextMeshProUGUI attackNameLabel;
-    [SerializeField] private TextMeshProUGUI magicLabel;
-    [SerializeField] private TextMeshProUGUI magicNameLabel;
-    [SerializeField] private TextMeshProUGUI leaderLabel;
-    [SerializeField] private TextMeshProUGUI leaderNameLabel;
-    [SerializeField] private TextMeshProUGUI armorLabel;
-    [SerializeField] private TextMeshProUGUI resistLabel;
-    [SerializeField] private TextMeshProUGUI econLabel;
-    [SerializeField] private TextMeshProUGUI econNameLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI hpLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI startingShieldLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI maxShieldLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI attackLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI attackNameLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI magicLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI magicNameLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI leaderLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI leaderNameLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI armorLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI resistLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI econLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI econNameLabel;
     [SerializeField] private TMP_FontAsset normalFont;
     [SerializeField] private TMP_FontAsset primaryStatFont;
     [SerializeField] private Color buffColor = Color.green;

@@ -65,12 +65,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button: {fileID: 6178966740185896732}
   segment: {fileID: 11400000, guid: d55bf596eb8b7a3419400dc5b895bd98, type: 2}
-  hoverRulesPanel: {fileID: 0}
   travelPreventedVisual: {fileID: 8973109606406146233}
   plotEventVisual: {fileID: 7868801993971914355}
-  unvisitedTextLabel: {fileID: 4039984912315070402}
-  visitedTextLabel: {fileID: 6052709856971665450}
-  alwaysShowRules: 0
+  unvisitedTextLabel: {fileID: 3243592376512207073}
+  visitedTextLabel: {fileID: 2935264300056776388}
   imagesToEnlarge:
   - {fileID: 8615735903994527189}
   - {fileID: 6610454905464063879}
@@ -85,9 +83,87 @@ MonoBehaviour:
     UseConstant: 0
     ConstantValue: 0
     FloatVariable: {fileID: 11400000, guid: ffbfb01dd024aef4487b06a1ec1abaf4, type: 2}
+  alwaysShowRules: 0
   description: {fileID: 3284166063288451629}
-  descriptionName: Combat
-  descriptionDetail: Frag goons to gain XP and MCs
+  nodeTerm: Combat
+--- !u!114 &2935264300056776388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551675435355559096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: '-'
+  mTermSecondary: LiberationSans SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 0
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
+--- !u!114 &3243592376512207073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2003031518436127727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: '-'
+  mTermSecondary: LiberationSans SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 0
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &6610454905464063879
 GameObject:
   m_ObjectHideFlags: 0
@@ -551,28 +627,16 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1594077258556548530, guid: c19d1eebd2b06f049bd50ffae9f1a435, type: 3}
   m_PrefabInstance: {fileID: 5319548525211720393}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6052709856971665450 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1886267966727629539, guid: c19d1eebd2b06f049bd50ffae9f1a435, type: 3}
+--- !u!1 &1551675435355559096 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6654769548251876977, guid: c19d1eebd2b06f049bd50ffae9f1a435, type: 3}
   m_PrefabInstance: {fileID: 5319548525211720393}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4039984912315070402 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8197182357447945483, guid: c19d1eebd2b06f049bd50ffae9f1a435, type: 3}
+--- !u!1 &2003031518436127727 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5917421766341912870, guid: c19d1eebd2b06f049bd50ffae9f1a435, type: 3}
   m_PrefabInstance: {fileID: 5319548525211720393}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &7389044760609059369
 PrefabInstance:
   m_ObjectHideFlags: 0

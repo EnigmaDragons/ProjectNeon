@@ -4,7 +4,7 @@ using UnityEngine;
 
 public sealed class ShopEquipmentPurchaseSlot : OnMessage<PartyAdventureStateChanged>
 {
-    [SerializeField] private TextMeshProUGUI costLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI costLabel;
     [SerializeField] private EquipmentPresenter equipmentPresenter;
     [SerializeField] private GameObject soldVisual;
     [SerializeField] private PartyAdventureState party;

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class CardCostPresenter : MonoBehaviour
 {
     [SerializeField] private GameObject costPanel;
-    [SerializeField] private TextMeshProUGUI costLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI costLabel;
     [SerializeField] private Image costResourceTypeIcon;
     
     public void Render(Maybe<Card> c, CardTypeData ct, IResourceType primaryResourceType, bool forceShowXcostAsX = false)

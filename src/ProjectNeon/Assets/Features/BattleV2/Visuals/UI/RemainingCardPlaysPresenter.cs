@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RemainingCardPlaysPresenter : OnMessage<BattleStateChanged>
 {
-    [SerializeField] private TextMeshProUGUI counter;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI counter;
     [SerializeField] private BattleState state;
     [SerializeField] private bool hideTextWhen0PlaysRemaining = true;
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -6,9 +7,9 @@ using UnityEngine.UI;
 
 public class CardListItem : MonoBehaviour, IPointerDownHandler
 {
-    [SerializeField] private TextMeshProUGUI name;
+    [SerializeField] private Localize name;
     [SerializeField] private Image art;
-    [SerializeField] private TextMeshProUGUI count;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI count;
 
     [SerializeField] private GameObject highlight;
 
@@ -19,7 +20,7 @@ public class CardListItem : MonoBehaviour, IPointerDownHandler
     {
         _onClick = onClick;
         _card = card;
-        name.text = _card.name.WithSpaceBetweenWords();
+        name.SetTerm(_card.LocalizationNameTerm());
         art.sprite = _card.Art;
         count.text = "2x";
     }

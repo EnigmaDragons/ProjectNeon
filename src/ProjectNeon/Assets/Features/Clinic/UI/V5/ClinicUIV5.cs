@@ -12,7 +12,6 @@ public class ClinicUIV5 : OnMessage<UpdateClinic, RefreshShop>, ILocalizeTerms
     [SerializeField] private ClinicState clinic;
     [SerializeField] private CorpClinicProvider clinics;
     [SerializeField] private Localize serviceTitleLocalize;
-    [SerializeField] private TextMeshProUGUI serviceTitle;
     [SerializeField] private GameObject servicesParent;
     [SerializeField] private ClinicServiceButtonV5 serviceButtonPrototype;
     [SerializeField] private CorpUiBase[] corpUi = new CorpUiBase[0];
@@ -51,10 +50,9 @@ public class ClinicUIV5 : OnMessage<UpdateClinic, RefreshShop>, ILocalizeTerms
             corpUi.ForEach(c => c.Init(clinic.Corp));
         doneButton.interactable = !_serviceProvider.RequiresSelection() && (!clinic.IsTutorial || party.ClinicVouchers == 0 || party.Heroes.All(x => x.Health.MissingHp == 0));
         var options = _serviceProvider.GetOptions();
-        serviceTitleLocalize.SetTerm("");
-        serviceTitle.text = options.Length > 0 
+        serviceTitleLocalize.SetFinalText(options.Length > 0 
             ? $"{_serviceProvider.GetTitleTerm().ToLocalized()}{(_serviceProvider.RequiresSelection() ? $" ({"Clinics/SelectionRequired".ToLocalized()})" : "")}"
-            : "";
+            : "");
         for (var i = 0; i < _serviceButtons.Length; i++)
         {
             _serviceButtons[i].Init(options[i], party);

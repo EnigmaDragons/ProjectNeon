@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class HeroHpPresenter : OnMessage<PartyAdventureStateChanged, HeroStateChanged>
 {
     [SerializeField] private Image bust;
-    [SerializeField] private TextMeshProUGUI hpText;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI hpText;
 
     private Hero _hero;
     

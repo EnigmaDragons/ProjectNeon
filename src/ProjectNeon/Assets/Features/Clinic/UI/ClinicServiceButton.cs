@@ -1,20 +1,21 @@
-﻿using TMPro;
+﻿using I2.Loc;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ClinicServiceButton : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI title;
-    [SerializeField] private TextMeshProUGUI description;
-    [SerializeField] private TextMeshProUGUI cost;
+    [SerializeField] private Localize title;
+    [SerializeField] private Localize description;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI cost;
     [SerializeField] private Image credIcon;
     [SerializeField] private Button button;
     [SerializeField] private TwoSidedRulesDescriptionPresenter rules;
 
     public void Init(ClinicServiceButtonData data, PartyAdventureState party)
     {
-        title.text = data.NameTerm;
-        description.text = data.Description;
+        title.SetTerm(data.NameTerm);
+        description.SetFinalText(data.Description);
         cost.text = data.Cost.ToString();
         button.interactable = data.Enabled && party.Credits >= data.Cost;
         button.onClick.RemoveAllListeners();

@@ -10,7 +10,7 @@ public class ClinicPatientUI : OnMessage<UpdateClinic, HeroStateChanged, PartyAd
     [SerializeField] private HeroHpPresenter hpPresenter;
     [SerializeField] private Button healToFullButton;
     [SerializeField] private Button viewHeroDetailButton;
-    [SerializeField] private TextMeshProUGUI healToFullCostLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI healToFullCostLabel;
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private GameObject injuriesParent;
     [SerializeField] private HealInjuryButton healInjuryButtonPrototype;

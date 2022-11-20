@@ -13,7 +13,7 @@ public class AugmentLevelUpOption : LevelUpOption
     }
 
     public string IconName => "Augment";
-    public string Description => _e.Name;
+    public string Description => _e.LocalizationNameTerm().ToLocalized();
     
     public void SelectAsLevelUp(Hero h)
     {

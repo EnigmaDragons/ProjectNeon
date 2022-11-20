@@ -15,7 +15,7 @@ public class HeroDetailsPanelForCustomization : OnMessage<HeroStateChanged, Deck
     [SerializeField] private MemberStatPanel stats;
     [SerializeField] private HeroEquipmentPanelV2 equipment;
     [SerializeField] private HeroInjuryPanel injuries;
-    [SerializeField] private TextMeshProUGUI levelLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI levelLabel;
     [SerializeField] private TMP_Dropdown primaryStat;
 
     private bool _ignoreChanges;

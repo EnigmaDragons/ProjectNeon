@@ -5,8 +5,8 @@ using UnityEngine;
 public class VictoryPrefactoredRewardUI : OnMessage<ShowPrefactoredReward, ProceedRequested>
 {
     [SerializeField] private GameObject view;
-    [SerializeField] private TextMeshProUGUI creditsLabel;
-    [SerializeField] private TextMeshProUGUI clinicVouchersLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI creditsLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI clinicVouchersLabel;
     [SerializeField] private GameObject creditsPanel;
 
     private bool _triggeredFinish;

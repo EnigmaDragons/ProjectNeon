@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(TextMeshProUGUI))]
 public sealed class Stopwatch : MonoBehaviour
 {
-    private TextMeshProUGUI display;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI display;
 
     private float elapsed;
     

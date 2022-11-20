@@ -8,7 +8,7 @@ public class EquipmentInLibraryButton : MonoBehaviour
     [SerializeField] private DeckBuilderState deckBuilderState;
     [SerializeField] private PartyAdventureState partyAdventureState;
     [SerializeField] private GameObject darken;
-    [SerializeField] private TextMeshProUGUI countLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI countLabel;
     
     public void InitInfoOnly(Equipment e, Action action)
     {

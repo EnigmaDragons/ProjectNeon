@@ -1,12 +1,12 @@
 
 public class CorpGearShopData
 {
-    public string ShopName { get; }
+    public string ShopNameTerm { get; }
     public CorpAffinityLines AffinityLines { get; }
 
-    public CorpGearShopData(string shopName, CorpAffinityLines affinityLines)
+    public CorpGearShopData(string shopNameTerm, CorpAffinityLines affinityLines)
     {
-        ShopName = shopName;
+        ShopNameTerm = shopNameTerm;
         AffinityLines = affinityLines;
     }
 }

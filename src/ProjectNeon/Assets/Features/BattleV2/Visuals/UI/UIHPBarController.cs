@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public sealed class UIHPBarController : HPBarControllerBase
 {
     [SerializeField] private Image barImage;
-    [SerializeField] private TextMeshProUGUI barTextValue;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI barTextValue;
     [SerializeField] private Image shieldImage;
-    [SerializeField] private TextMeshProUGUI shieldTextValue;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI shieldTextValue;
 
     protected override void Init(float hpAmount, float shieldAmount)
     {

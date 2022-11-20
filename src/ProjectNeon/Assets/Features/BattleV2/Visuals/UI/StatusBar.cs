@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-public abstract class StatusBar : OnMessage<MemberStateChanged>
+public abstract class StatusBar : OnMessage<MemberStateChanged>, ILocalizeTerms
 {
     [SerializeField] private BattleState battleState;
     [SerializeField] private StatusIcons icons;
@@ -201,4 +201,49 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>
 
     protected abstract void UpdateStatuses(List<CurrentStatusValue> statuses);
     private static int CeilingInt(float v) => Convert.ToInt32(Math.Ceiling(v));
+
+    public string[] GetLocalizeTerms()
+        => new[]
+        {
+            "Tooltips/Originator", 
+            "Tooltips/PlaysCardsPerTurn",
+            "Tooltips/Invincible",
+            "Tooltips/Counterattack",
+            "Tooltips/SecretTrapPower",
+            "Tooltips/UnknownAugmentPower",
+            "Tooltips/DodgeAttacks",
+            "Tooltips/ReduceAttackDamage",
+            "Tooltips/ReduceMagicDamage",
+            "Tooltips/DoubleDamage",
+            "Tooltips/Blinded",
+            "Tooltips/Inhibited",
+            "Tooltips/Taunt",
+            "Tooltips/Stealth",
+            "Tooltips/Disabled",
+            "Tooltips/Stunned",
+            "Tooltips/Confused",
+            "Tooltips/Aegis",
+            "Tooltips/Lifesteal",
+            "Tooltips/Vulnerable",
+            "Tooltips/AntiHeal",
+            "Tooltips/AfterShielded",
+            "Tooltips/ClipUsedEffect",
+            "Tooltips/BloodiedEffect",
+            "Tooltips/ShieldBrokenEffect",
+            "Tooltips/HpDamageDealtEffect",
+            "Tooltips/AllyKilledEffect",
+            "Tooltips/AfflictedEffect",
+            "Tooltips/IgnitedEffect",
+            "Tooltips/ReceivedInjuries",
+            "Tooltips/Marked",
+            "Tooltips/PreventResourceGains",
+            "Tooltips/DamageOverTime",
+            "Tooltips/HealsTurnStart",
+            "Tooltips/CannotStealthProminent",
+            "Tooltips/OnHitEffect",
+            "Tooltips/WhenKilledEffect",
+            "Tooltips/WhenDamagedEffect",
+            "Tooltips/TurnStartEffect",
+            "Tooltips/TurnEndEffect"
+        };
 }

@@ -5,7 +5,7 @@ using TMPro;
 
 public class SingleUseResourceNumber : MonoBehaviour
 {
-    [SerializeField] TextMeshPro text;
+    [SerializeField, NoLocalizationNeeded] TextMeshPro text;
     [SerializeField] private SpriteRenderer resourceIcon;
     [SerializeField] private AllResourceTypes allResourceTypes;
     [SerializeField] private SingleUseObjectDriftConfig driftConfig;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,8 +12,8 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
     [SerializeField] private StageSegment segment;
     [SerializeField] private GameObject travelPreventedVisual;
     [SerializeField] private GameObject plotEventVisual;
-    [SerializeField] private TextMeshProUGUI unvisitedTextLabel;
-    [SerializeField] private TextMeshProUGUI visitedTextLabel;
+    [SerializeField] private Localize unvisitedTextLabel;
+    [SerializeField] private Localize visitedTextLabel;
     
     [Header("Enlargement")]
     [SerializeField] private GameObject[] imagesToEnlarge;
@@ -23,13 +24,17 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
     [Header("Hover Description")]
     [SerializeField] private bool alwaysShowRules = false;
     [SerializeField] private MapNodeDescription description;
-    [SerializeField] private string descriptionName;
-    [SerializeField, TextArea(1, 4)] private string descriptionDetail;
+    [SerializeField] private string nodeTerm;
     
     public IStageSegment ArrivalSegment { get; private set; }
     public MapNode3 MapData { get; private set; }
     private Maybe<GameObject> _rulesPanel;
 
+    private string NodeName => $"Maps/{nodeTerm}_Name";
+    private string NodeDetail => $"Maps/{nodeTerm}_Detail";
+    private const string NotVisitedEffect = "Maps/NotVisitedEffect";
+    private const string VisitedEffect = "Maps/VisitedEffect";
+    
     public void Init(MapNode3 mapData, CurrentGameMap3 gameMap, AdventureGenerationContext ctx, AllStaticGlobalEffects allGlobalEffects, Action<Transform> onMidPointArrive)
         => Init(mapData, gameMap, segment.GenerateDeterministic(ctx, mapData), allGlobalEffects, onMidPointArrive);
     
@@ -43,13 +48,13 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
         if (travelPreventedVisual != null)
             travelPreventedVisual.SetActive(!canTravel);
         if (unvisitedTextLabel != null)
-            unvisitedTextLabel.text = allGlobalEffects.GetEffectById(mapData.UnVisitedGlobalEffectId)
-                .Select(e => $"<b>If Not Visited:</b>\n{e.FullDescriptionTerm.ToEnglish()}", "");
+            unvisitedTextLabel.SetFinalText(allGlobalEffects.GetEffectById(mapData.UnVisitedGlobalEffectId)
+                .Select(e => string.Format(NotVisitedEffect.ToLocalized(), e.FullDescriptionTerm.ToLocalized()), ""));
         if (visitedTextLabel != null)
-            visitedTextLabel.text = allGlobalEffects.GetEffectById(mapData.VisitedGlobalEffectId)
-                .Select(e => $"<b>If Visited</b>:\n{e.FullDescriptionTerm.ToEnglish()}", "");
+            visitedTextLabel.SetFinalText(allGlobalEffects.GetEffectById(mapData.VisitedGlobalEffectId)
+                .Select(e => string.Format(VisitedEffect.ToLocalized(), e.FullDescriptionTerm.ToLocalized()), ""));
         if (description != null)
-            description.Init(descriptionName, descriptionDetail);
+            description.Init(NodeName, NodeDetail);
         button.enabled = canTravel;
         if (canTravel)
             button.onClick.AddListener(() =>
@@ -83,13 +88,13 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
         if (travelPreventedVisual != null)
             travelPreventedVisual.SetActive(!canTravel);
         if (unvisitedTextLabel != null)
-            unvisitedTextLabel.text = allGlobalEffects.GetEffectById(mapData.UnVisitedGlobalEffectId)
-                .Select(e => $"<b>If Not Visited:</b>\n{e.FullDescriptionTerm.ToEnglish()}", "");
+            unvisitedTextLabel.SetFinalText(allGlobalEffects.GetEffectById(mapData.UnVisitedGlobalEffectId)
+                .Select(e => string.Format(NotVisitedEffect.ToLocalized(), e.FullDescriptionTerm.ToLocalized()), ""));
         if (visitedTextLabel != null)
-            visitedTextLabel.text = allGlobalEffects.GetEffectById(mapData.VisitedGlobalEffectId)
-                .Select(e => $"<b>If Visited</b>:\n{e.FullDescriptionTerm.ToEnglish()}", "");
+            visitedTextLabel.SetFinalText(allGlobalEffects.GetEffectById(mapData.VisitedGlobalEffectId)
+                .Select(e => string.Format(VisitedEffect.ToLocalized(), e.FullDescriptionTerm.ToLocalized()), ""));
         if (description != null)
-            description.Init(descriptionName, descriptionDetail);
+            description.Init(NodeName, NodeDetail);
         button.enabled = canTravel;
         if (canTravel)
             button.onClick.AddListener(() =>
@@ -183,6 +188,10 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
     {
         DialogTerms.OptionOops, 
         DialogTerms.SkipStoryWarning, 
-        DialogTerms.OptionSkipTheStory
+        DialogTerms.OptionSkipTheStory,
+        NodeName, 
+        NodeDetail,
+        NotVisitedEffect,
+        VisitedEffect
     };
 }

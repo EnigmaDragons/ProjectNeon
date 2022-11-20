@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName= "Adventure/FixedHeroPick")]
-public class PickNewHeroFromFixedChoicesSegment: StageSegment
+public class PickNewHeroFromFixedChoicesSegment: StageSegment, ILocalizeTerms
 {
     [SerializeField] private BaseHero[] options;
     [SerializeField] private Party currentParty;
@@ -11,7 +11,7 @@ public class PickNewHeroFromFixedChoicesSegment: StageSegment
     public override void Start()
     {
         var existingHeroes = currentParty.Heroes.ToArray();
-        var prompt = currentParty.Heroes.Length == 0 ? "Choose Your Mission Squad Leader" : "Choose A New Squad Member";
+        var prompt = currentParty.Heroes.Length == 0 ? "Menu/ChooseLeader" : "Menu/ChooseMember";
         Message.Publish(new GetUserSelectedHero(prompt, options, h =>
         {
             AllMetrics.PublishHeroSelected(h.NameTerm().ToEnglish(), options.Select(x => x.NameTerm().ToEnglish()).ToArray(), existingHeroes.Select(x => x.NameTerm().ToEnglish()).ToArray());
@@ -28,4 +28,7 @@ public class PickNewHeroFromFixedChoicesSegment: StageSegment
     
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => this;
     public override bool ShouldSpawnThisOnMap(CurrentAdventureProgress p) => true;
+
+    public string[] GetLocalizeTerms()
+        => new[] {"Menu/ChooseLeader", "Menu/ChooseMember"};
 }

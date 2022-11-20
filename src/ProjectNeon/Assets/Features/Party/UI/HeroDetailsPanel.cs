@@ -12,7 +12,7 @@ public sealed class HeroDetailsPanel : OnMessage<HeroStateChanged>
     [SerializeField] private HeroEquipmentPanel equipment;
     [SerializeField] private HeroInjuryPanel injuries;
     [SerializeField] private TextCommandButton levelUpButton;
-    [SerializeField] private TextMeshProUGUI levelLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI levelLabel;
 
     private Hero _hero;
     private bool _canInteractWithEquipment;

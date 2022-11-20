@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7022743149702873186}
   - component: {fileID: 639002597413816875}
   - component: {fileID: 4791989002277241529}
+  - component: {fileID: 2747761919803107628}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -134,6 +135,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2747761919803107628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876192738726045388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: '-'
+  mTermSecondary: LiberationSans SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 0
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &2059873364982563037
 GameObject:
   m_ObjectHideFlags: 0
@@ -1097,7 +1137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   party: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
   button: {fileID: 2509107360930107435}
-  costLabel: {fileID: 4791989002277241529}
+  costLabel: {fileID: 2747761919803107628}
   cost: 30
   reviveCost: 100
 --- !u!1001 &698095998216452877
@@ -1107,6 +1147,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3541395153576993883}
     m_Modifications:
+    - target: {fileID: 2031086931488379718, guid: 1666d91348a7b8644b300031d2e3b211, type: 3}
+      propertyPath: m_text
+      value: XP
+      objectReference: {fileID: 0}
     - target: {fileID: 2031086931488379718, guid: 1666d91348a7b8644b300031d2e3b211, type: 3}
       propertyPath: m_textAlignment
       value: 65535

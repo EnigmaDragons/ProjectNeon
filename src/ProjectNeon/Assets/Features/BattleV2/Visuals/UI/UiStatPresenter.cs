@@ -7,7 +7,7 @@ public class UiStatPresenter : OnMessage<MemberStateChanged>, IPointerEnterHandl
 {
     [SerializeField] private Image icon;
     [SerializeField] private Image border;
-    [SerializeField] private TextMeshProUGUI counter;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI counter;
     [SerializeField] private StatVisuals statVisuals;
     
     private Member _member;

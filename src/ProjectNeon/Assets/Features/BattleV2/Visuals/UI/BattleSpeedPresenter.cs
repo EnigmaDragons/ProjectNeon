@@ -4,7 +4,7 @@ using UnityEngine;
 public sealed class BattleSpeedPresenter : OnMessage<BattleSpeedChanged>
 {
     [SerializeField] private GameObject panel;
-    [SerializeField] private TextMeshProUGUI speedLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI speedLabel;
 
     private void Awake() => UpdateUi(CurrentGameOptions.Data.BattleSpeedFactor);
 

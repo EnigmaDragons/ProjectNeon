@@ -2,28 +2,29 @@
 using TMPro;
 using UnityEngine;
 using System.Linq;
+using I2.Loc;
 using UnityEngine.EventSystems;
 
 public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl, StartBattleInitiated>, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private CardPresenter presenter;
     [SerializeField] private DeckBuilderState state;
-    [SerializeField] private TextMeshProUGUI numCopiesLabel;
+    [SerializeField] private Localize numCopiesLabel;
     [SerializeField] private GameObject superFocus;
 
-    private const string Basic = "Basic";
+    private const string Basic = "Menu/Basic";
     
     public CardInLibraryButton InitInfoOnly(Card card, Action action)
     {
         presenter.Set(card, action);
-        numCopiesLabel.text = string.Empty;
+        numCopiesLabel.SetFinalText(string.Empty);
         return this;
     }
 
     public CardInLibraryButton InitInfoOnly(CardTypeData card)
     {
         presenter.Set(card, () => { });
-        numCopiesLabel.text = string.Empty;
+        numCopiesLabel.SetFinalText(string.Empty);
         return this;
     }
 
@@ -51,21 +52,19 @@ public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl, St
             : () => Message.Publish(new CardAddToDeckAttemptRejected(transform));
     
     private void UpdateNumberText(int numTotal, int numAvailable) 
-        => numCopiesLabel.text = $"{numAvailable}/{numTotal}";
-
-    public void SetNumberText(string value) => numCopiesLabel.text = value;
+        => numCopiesLabel.SetFinalText($"{numAvailable}/{numTotal}");
     
     public CardInLibraryButton InitBasic(CardTypeData card)
     {
         presenter.Set(card, () => { });
-        numCopiesLabel.text = Basic;
+        numCopiesLabel.SetTerm(Basic);
         return this;
     }
     
     public CardInLibraryButton InitBasic(Card card)
     {
         presenter.Set(card, () => { });
-        numCopiesLabel.text = Basic;
+        numCopiesLabel.SetTerm(Basic);
         return this;
     }
 

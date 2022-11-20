@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 
+[IgnoreForLocalization]
 public class DisplayRandomStringCollectionValueOnEnable : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI textArea;

@@ -7,7 +7,7 @@ using UnityEngine;
 public class GameProgressionSummaryUiPresenterV2 : MonoBehaviour
 {
     [SerializeField] private ProgressionProgress progress;
-    [SerializeField] private TextMeshProUGUI totalPercentLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI totalPercentLabel;
     [SerializeField] private CompletionProgressPresenter[] completionPresenters;
     [SerializeField] private Localize nonVisualCompletionItemsLabel;
     

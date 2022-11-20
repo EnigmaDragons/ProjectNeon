@@ -5,7 +5,7 @@ using TMPro;
 
 public class SingleUseDamageNumber : MonoBehaviour
 {
-    [SerializeField] TextMeshPro text;
+    [SerializeField, NoLocalizationNeeded] TextMeshPro text;
     [SerializeField] private SingleUseObjectDriftConfig driftConfig;
     [SerializeField] private Color positiveChangeColor = Color.green;
     [SerializeField] private Color negativeChangeColor = Color.red;

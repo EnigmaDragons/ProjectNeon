@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 
+[IgnoreForLocalization]
 public class SlideTextPresenter : SlideTextPresenterBase
 {
     [SerializeField] private TextMeshProUGUI slideText;

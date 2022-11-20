@@ -14,7 +14,7 @@ public class StoryEvent2 : ScriptableObject, ILocalizeTerms
     [SerializeField] private bool inCutscene;
     [SerializeField] private bool isMultiChoice;
 
-    public string DisplayName => new LocalizedString($"Event{id}");
+    public string DisplayNameTerm => $"StoryEvents/Event{id}";
     
     public StorySetting StorySetting => settingType;
     public StaticCorp Corp => corp;

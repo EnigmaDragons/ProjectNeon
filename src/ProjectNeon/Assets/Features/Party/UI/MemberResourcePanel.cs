@@ -5,9 +5,9 @@ using UnityEngine.UI;
 public class MemberResourcePanel : MonoBehaviour
 {
     [SerializeField] private Image resource1Icon;
-    [SerializeField] private TextMeshProUGUI resource1Text;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI resource1Text;
     [SerializeField] private Image resource2Icon;
-    [SerializeField] private TextMeshProUGUI resource2Text;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI resource2Text;
     [SerializeField] private Color buffColor = Color.green;
     [SerializeField] private Color debuffColor = Color.red;
 

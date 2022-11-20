@@ -37,6 +37,7 @@ public class AssetUpdater
         UpdateAllCorps();
         UpdateGlobalEffectIds();
         UpdateAllGlobalEffectsPool();
+        UpdateStageIds();
         UpdateAllTutorialSlideshows();
         UpdateAllCorpLoadingScreens();
         Timed("All Battle VFX", UpdateAllBattleVfx);
@@ -324,6 +325,12 @@ public class AssetUpdater
             x.Effects = effects;
             EditorUtility.SetDirty(x);
         });
+    }
+
+    [MenuItem("Neon/Update/Update Stage IDs")]
+    private static void UpdateStageIds()
+    {
+        AssignAllIds(ScriptableExtensions.GetAllInstances<HybridStageV5>(), s => s.id, (s, id) => s.id = id);
     }
 
     [MenuItem("Neon/Update/Update Tutorial Slideshows")]

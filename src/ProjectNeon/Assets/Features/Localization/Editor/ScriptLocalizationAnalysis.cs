@@ -14,7 +14,7 @@ using Object = System.Object;
 
 public class ScriptLocalizationAnalysis : EditorWindow
 {
-    [MenuItem("Neon/Script Localization Prefab Summary")]
+    /*[MenuItem("Neon/Script Localization Prefab Summary")]
     static void PrefabSummary()
     {
         var results = new List<MonoScriptLocalizationSummary>();
@@ -37,10 +37,10 @@ public class ScriptLocalizationAnalysis : EditorWindow
             results.Add(SummarizeScript(scriptPath, type, fields));
         }
         Display(results.ToArray());
-    }
+    }*/
     
-    [MenuItem("Neon/Script Localization Scene Summary")]
-    static void SceneSummary()
+    [MenuItem("Neon/Script Localization Summary")]
+    static void AllSummary()
     {
         var results = new List<MonoScriptLocalizationSummary>();
         var assetPaths = AssetDatabase.GetAllAssetPaths();
@@ -48,10 +48,10 @@ public class ScriptLocalizationAnalysis : EditorWindow
         foreach (var scriptPath in scriptPaths)
         {
             var type = AssetDatabase.LoadAssetAtPath<MonoScript>(scriptPath).GetClass();
-            if (type == null || !type.IsSubclassOf(typeof(MonoBehaviour)) || !FindObjectsOfType(type).Any())
+            if (type == null || !type.IsSubclassOf(typeof(MonoBehaviour)) || (type.Namespace != null && type.Namespace.StartsWith("MoreMountains")))
                 continue;
             var fields = type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            if (fields.None(x => x.FieldType == typeof(TextMeshProUGUI) || x.FieldType == typeof(Localize)))
+            if (fields.None(x => x.FieldType == _textMeshProUGuiType || x.FieldType == _textMeshProType || x.FieldType == _localizeType))
                 continue;
             results.Add(SummarizeScript(scriptPath, type, fields));
         }
@@ -66,16 +66,18 @@ public class ScriptLocalizationAnalysis : EditorWindow
             return new MonoScriptLocalizationSummary
             {
                 Name = type.Name,
-                Fields = fields.Where(ShouldSummarizeField).Select(x => SummarizeField(x, rawFileText)).ToArray()
+                Fields = fields.Where(ShouldSummarizeField).Select(x => SummarizeField(x, rawFileText)).ToArray(),
+                IgnoreForLocalization = Attribute.IsDefined(type, typeof(IgnoreForLocalizationAttribute))
             };
         }
     }
 
-    private static Type _textMeshProType = typeof(TextMeshProUGUI);
+    private static Type _textMeshProUGuiType = typeof(TextMeshProUGUI);
+    private static Type _textMeshProType = typeof(TextMeshPro);
     private static Type _localizeType = typeof(Localize);
     
     private static bool ShouldSummarizeField(FieldInfo field)
-        => field.FieldType == _textMeshProType || field.FieldType == _localizeType;
+        => field.FieldType == _textMeshProUGuiType || field.FieldType == _textMeshProType || field.FieldType == _localizeType;
     
     private static FieldLocalizationSummary SummarizeField(FieldInfo field, string rawFileText)
     {
@@ -100,10 +102,15 @@ public class ScriptLocalizationAnalysis : EditorWindow
     {
         var items = new List<string>();
         items.Add($"Progress: {summaries.Count(x => x.IsLocalized)}/{summaries.Length}");
-        foreach (var summary in summaries)
+        foreach (var summary in summaries.OrderBy(x => x.IgnoreForLocalization ? 2 : x.IsLocalized ? 1 : 0))
         {
             items.Add("");
-            items.Add($"  Class: {summary.Name} - {(summary.IsLocalized ? "Complete" : "Incomplete")} - {summary.TotalHits}/{summary.Fields.Length}");
+            var classSummaryWord = "Incomplete";
+            if (summary.IgnoreForLocalization)
+                classSummaryWord = "Ignored";
+            else if (summary.IsLocalized)
+                classSummaryWord = "Complete";
+            items.Add($"  Class: {summary.Name} - {classSummaryWord} - {summary.TotalHits}/{summary.Fields.Length}");
             foreach (var field in summary.Fields)
             {
                 var summaryWord = "Not Localized";
@@ -123,8 +130,9 @@ public class ScriptLocalizationAnalysis : EditorWindow
     {
         public string Name;
         public FieldLocalizationSummary[] Fields;
+        public bool IgnoreForLocalization;
         
-        public bool IsLocalized => Fields.All(x => x.IsLocalized);
+        public bool IsLocalized => IgnoreForLocalization || Fields.All(x => x.IsLocalized);
         public int TotalHits => Fields.Count(x => x.IsLocalized);
     }
 
@@ -135,7 +143,7 @@ public class ScriptLocalizationAnalysis : EditorWindow
         public bool SetterCalled;
         public string Name;
         
-        public bool IsLocalized => Type == FieldLocalizationType.Localize || NoLocalizationNeeded || SetterCalled;
+        public bool IsLocalized => Type == FieldLocalizationType.Localize || NoLocalizationNeeded || !SetterCalled;
     }
 
     private enum FieldLocalizationType

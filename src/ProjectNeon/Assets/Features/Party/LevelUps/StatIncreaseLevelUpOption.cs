@@ -7,7 +7,7 @@ public class StatIncreaseLevelUpOption : StaticHeroLevelUpOption
     [SerializeField] private int amount;
 
     public override string IconName => stat.Value;
-    public override string Description => $"+{amount} {stat.Value}";
+    public override string Description => $"+{amount} {$"Stats/Stat-{stat.Value}".ToLocalized()}";
     
     public override void Apply(Hero h) => h.AddToStats(new StatAddends().WithRaw(stat.Value, amount));
 

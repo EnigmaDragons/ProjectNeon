@@ -12,7 +12,7 @@ public class ClinicPatientUIV5 : OnMessage<UpdateClinic, HeroStateChanged, Party
     [SerializeField] private GameObject healToFullSuperFocus;
     [SerializeField] private GameObject fullHealth;
     [SerializeField] private Button viewHeroDetailButton;
-    [SerializeField] private TextMeshProUGUI healToFullCostLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI healToFullCostLabel;
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private GameObject injuriesParent;
     [SerializeField] private GameObject noInjuriesPrototype;

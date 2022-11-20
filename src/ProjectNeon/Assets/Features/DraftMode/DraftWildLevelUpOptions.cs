@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Draft/WildLevelUpOptions")]
-public class DraftWildLevelUpOptions : LevelUpOptions
+public class DraftWildLevelUpOptions : LevelUpOptions, ILocalizeTerms
 {    
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private EquipmentPresenter equipmentPresenterPrototype;
@@ -14,7 +14,7 @@ public class DraftWildLevelUpOptions : LevelUpOptions
     [SerializeField] private int permanentEquipmentWeight = 4;
     [SerializeField] private int statGainWeight = 8;
 
-    public override string ChoiceDescription => "Select an Option!";
+    public override string ChoiceDescriptionTerm => "LevelUps/SelectOption";
     
     public override LevelUpOption[] Generate(Hero h)
     {
@@ -57,4 +57,7 @@ public class DraftWildLevelUpOptions : LevelUpOptions
         Equipment,
         StatGain
     }
+
+    public string[] GetLocalizeTerms()
+        => new[] {ChoiceDescriptionTerm};
 }

@@ -2,7 +2,6 @@
 public class DisplayCharacterWordRequested
 {
     public int MemberId { get; }
-    public string Word { get; }
     public CharacterReactionType ReactionType { get; }
 
     public DisplayCharacterWordRequested(Member m, CharacterReactionType reactionType)
@@ -12,6 +11,5 @@ public class DisplayCharacterWordRequested
     {
         MemberId = memberId;
         ReactionType = reactionType;
-        Word = reactionType.DisplayWord();
     }
 }

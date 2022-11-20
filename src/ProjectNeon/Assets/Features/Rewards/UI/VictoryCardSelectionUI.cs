@@ -8,8 +8,8 @@ public class VictoryCardSelectionUI : OnMessage<GetUserSelectedCardType, GetUser
     [SerializeField] private CardPresenter cardPresenter;
     [SerializeField] private GameObject optionsParent;
     [SerializeField] private BattleState state;
-    [SerializeField] private TextMeshProUGUI creditsLabel;
-    [SerializeField] private TextMeshProUGUI clinicVouchersLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI creditsLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI clinicVouchersLabel;
 
     private bool _hasSelected = false;
     private Action<Maybe<CardTypeData>> _onSelectedType = _ => { };

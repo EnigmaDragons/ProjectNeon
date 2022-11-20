@@ -1,3 +1,4 @@
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +9,7 @@ public class CorpDescriptionsPresenter : MonoBehaviour
     [SerializeField] private Button nextButton;
     [SerializeField] private Button prevButton;
     [SerializeField] private CorpBrandingPresenter corpBranding;
-    [SerializeField] private TextMeshProUGUI corpDescriptionLabel;
+    [SerializeField] private Localize corpDescriptionLabel;
 
     private IndexSelector<Corp> _allCorps;
     
@@ -26,6 +27,6 @@ public class CorpDescriptionsPresenter : MonoBehaviour
     private void Render(Corp corp)
     {
         corpBranding.Init(corp);
-        corpDescriptionLabel.text = corp.LongDescription;
+        corpDescriptionLabel.SetTerm(corp.LongDescriptionTerm);
     }
 }

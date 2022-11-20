@@ -1,14 +1,15 @@
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 
 public class MapNodeDescription : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI nameLabel;
-    [SerializeField] private TextMeshProUGUI detailLabel;
+    [SerializeField] private Localize nameLabel;
+    [SerializeField] private Localize detailLabel;
 
     public void Init(string nodeName, string nodeDetail)
     {
-        nameLabel.text = nodeName;
-        detailLabel.text = nodeDetail;
+        nameLabel.SetTerm(nodeName);
+        detailLabel.SetTerm(nodeDetail);
     }
 }

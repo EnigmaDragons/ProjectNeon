@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipDraft>
+public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipDraft>, ILocalizeTerms
 {
     [SerializeField] private DraftState draftState;
     [SerializeField] private CurrentAdventure adventure;
@@ -110,7 +110,7 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipD
     {
         var currentParty = party.Party.Heroes;
         var featuredThree = PickNewHeroFrom3RandomSegment.GetFeatureHeroOptions(library, currentParty);
-        var prompt = currentParty.Length == 0 ? "Choose Your Mission Squad Leader" : "Choose A New Squad Member";
+        var prompt = currentParty.Length == 0 ? "Menu/ChooseLeader" : "Menu/ChooseMember";
         Message.Publish(new GetUserSelectedHero(prompt, featuredThree, h =>
         {
             AllMetrics.PublishHeroSelected(h.NameTerm().ToEnglish(), featuredThree.Select(x => x.NameTerm().ToEnglish()).ToArray(), currentParty.Select(x => x.NameTerm().ToEnglish()).ToArray());
@@ -140,4 +140,7 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipD
         Message.Publish(new HideNamedTarget("DraftCardPicker"));
         Message.Publish(new NodeFinished());
     }
+
+    public string[] GetLocalizeTerms()
+        => new[] { "Menu/ChooseLeader", "Menu/ChooseMember" };
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
+[IgnoreForLocalization]
 public class ProgressiveTextRevealWorld : ProgressiveText
 {
     [SerializeField] private GameObject chatBox;

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class HeroLevelUpSelectionPresenterV2 : OnMessage<LevelUpOptionSelected, HeroStateChanged>
 {
-    [SerializeField] private TextMeshProUGUI levelLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI levelLabel;
     [SerializeField] private Image bust;
     [SerializeField] private MemberStatPanel stats;
     [SerializeField] private LevelUpOptionsPresenter optionsPresenter;

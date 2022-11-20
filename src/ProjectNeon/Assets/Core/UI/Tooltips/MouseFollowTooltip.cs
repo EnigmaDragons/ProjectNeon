@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
+[IgnoreForLocalization]
 public class MouseFollowTooltip : OnMessage<ShowTooltip, ShowTooltipObject, HideTooltip>
 {
     [SerializeField] private GameObject panel;

@@ -1,12 +1,14 @@
 using System;
 using System.Linq;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[IgnoreForLocalization]
 public class StoryEventPresenter2 : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI storyNameLabel;
+    [SerializeField] private Localize storyNameLabel;
     [SerializeField] private TextMeshProUGUI storyTextArea;
     [SerializeField] private Image corpLogo;
     [SerializeField] private UnityEngine.UI.Extensions.Gradient corpTint;
@@ -63,7 +65,7 @@ public class StoryEventPresenter2 : MonoBehaviour
         corpLogo.sprite = s.Corp.Logo;
         corpTint.Vertex1 = s.Corp.Color1;
         corpTint.Vertex2 = s.Corp.Color2;
-        storyNameLabel.text = s.DisplayName;
+        storyNameLabel.SetTerm(s.DisplayNameTerm);
         storyTextArea.text = s.Term.ToEnglish();
         for (var i = _buttons.Length - 1; i > -1; i--)
         {

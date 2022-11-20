@@ -4,7 +4,7 @@ using UnityEngine;
 
 public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged, SetSuperFocusBuyControl>
 {
-    [SerializeField] private TextMeshProUGUI costLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI costLabel;
     [SerializeField] private CardPresenter cardPresenter;
     [SerializeField] private GameObject soldVisual;
     [SerializeField] private PartyAdventureState party;

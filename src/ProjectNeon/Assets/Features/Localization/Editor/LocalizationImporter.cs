@@ -25,8 +25,9 @@ public class LocalizationImporter
         ImportEquipments(true);
         ImportCardStatuses(true);
         ImportGlobalEffects(true);
-        ImportTooltips(true);
+        ImportCorps(true);
         ImportKeyTermCollections(true);
+        ImportStages(true);
     }
     
     [MenuItem("Neon/Localization/Import Equipments")]
@@ -144,12 +145,15 @@ public class LocalizationImporter
         ImportItems<StaticGlobalEffect>(e => e.FullDescriptionTerm, (e, text) => e.Data.FullDescription = text, hasInit);
     }
 
-    [MenuItem("Neon/Localization/Import Tooltips")]
-    private static void ImportTooltips()
-        => ImportTooltips(false);
-    private static void ImportTooltips(bool hasInit)
+    [MenuItem("Neon/Localization/Import Corps")]
+    private static void ImportCorps()
+        => ImportCorps(false);
+    private static void ImportCorps(bool hasInit)
     {
-        
+        ImportItems<StaticCorp>(e => e.GearShopData.ShopNameTerm, (e, text) => e.gearShopName = text, hasInit);
+        ImportItems<StaticCorp>(e => e.ClinicNameTerm, (e, text) => e.clinicName = text, hasInit);
+        ImportItems<StaticCorp>(e => e.ShortDescriptionTerm, (e, text) => e.shortDescription = text, hasInit);
+        ImportItems<StaticCorp>(e => e.LongDescriptionTerm, (e, text) => e.longDescription = text, hasInit);
     }
     
     [MenuItem("Neon/Localization/Import Key Term Collections")]
@@ -158,6 +162,14 @@ public class LocalizationImporter
     private static void ImportKeyTermCollections(bool hasInit)
     {
         ImportSubItems<StringKeyTermCollection, StringKeyTermPair>(c => c.All.ToArray(), p => p.Term, (p, text) => p.Value = text, hasInit);
+    }
+    
+    [MenuItem("Neon/Localization/Import Stages")]
+    private static void ImportStages()
+        => ImportStages(false);
+    private static void ImportStages(bool hasInit)
+    {
+        ImportItems<HybridStageV5>(p => p.DisplayName, (p, text) => p.displayName = text, hasInit);
     }
     
     private static void ImportItems<T>(Func<T, string> getTerm, Action<T, string> setText, bool hasInit) where T : ScriptableObject
@@ -206,33 +218,6 @@ public class LocalizationImporter
             }
         }
     }
-    
-    /*private static void ImportComponents<T>(Func<T, string> getTerm, Action<T, string> setText, bool hasInit) where T : MonoBehaviour
-    {
-        if (!hasInit)
-            LocalizationManager.UpdateSources();
-        foreach (var prefabGuid in AssetDatabase.FindAssets("t:prefab"))
-        {
-            var prefabPath = AssetDatabase.GUIDToAssetPath(prefabGuid);
-            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
-            var component = prefab.GetComponentInChildren<T>();
-            if (component == null)
-                continue;
-            
-            
-            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
-            
-            var term = getTerm(item);
-            var text = term.ToEnglish();
-            if (string.IsNullOrWhiteSpace(text) || text == term)
-                Debug.LogError($"Could not translate {term}");
-            else
-            {
-                setText(item, text);
-                EditorUtility.SetDirty(item);
-            }
-        }
-    }*/
 
     private static T[] GetAllInstances<T>() where T : ScriptableObject
     {

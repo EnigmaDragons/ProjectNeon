@@ -4,7 +4,7 @@ using TMPro;
 
 public class DamageEffect : OnMessage<MemberStateChanged>
 {
-    [SerializeField] TextMeshPro text;
+    [SerializeField, NoLocalizationNeeded] TextMeshPro text;
     [SerializeField] private float driftDistance = 0.1f;
     [SerializeField] private float duration = 2f;
     [SerializeField] private TemporalStatType statType = TemporalStatType.HP;

@@ -1,12 +1,12 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Hero/LevelUps/BasicCard")]
-public class NewBasicLevelUpOption : StaticHeroLevelUpOption
+public class NewBasicLevelUpOption : StaticHeroLevelUpOption, ILocalizeTerms
 {
     [SerializeField] private CardType card;
 
     public override string IconName => "";
-    public override string Description => $"New Basic:\\n{card.Name}";
+    public override string Description => $"{"LevelUps/NewBasic".ToLocalized()}: {card.LocalizationNameTerm().ToLocalized()}";
 
     public override void Apply(Hero h) => h.SetBasic(card);
 
@@ -24,4 +24,7 @@ public class NewBasicLevelUpOption : StaticHeroLevelUpOption
         presenter.SetHoverAction(() => presenter.SetDetailHighlight(true), () => presenter.SetDetailHighlight(false));
         return presenter.gameObject;
     }
+
+    public string[] GetLocalizeTerms()
+        => new[] {"LevelUps/NewBasic"};
 }

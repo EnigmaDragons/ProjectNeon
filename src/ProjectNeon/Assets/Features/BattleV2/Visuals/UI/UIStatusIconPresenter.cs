@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public sealed class UIStatusIconPresenter : StatusIcon, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Image icon;
-    [SerializeField] private TextMeshProUGUI label;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI label;
 
     private Vector3 _originalScale;
     private string _tooltip = string.Empty;

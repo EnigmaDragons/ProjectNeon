@@ -4,7 +4,7 @@ using UnityEngine;
 public class UIRewardsPresenter : MonoBehaviour
 {
     [SerializeField] private BattleState state;
-    [SerializeField] private TextMeshProUGUI creditsLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI creditsLabel;
     [SerializeField] private CardPresenter cardPrototype;
     [SerializeField] private GameObject cardParent;
 

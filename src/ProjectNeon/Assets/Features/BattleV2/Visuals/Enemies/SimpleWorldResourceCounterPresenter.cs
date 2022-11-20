@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SimpleWorldResourceCounterPresenter : OnMessage<MemberStateChanged>
 {
-    [SerializeField] private TextMeshPro text;
+    [SerializeField, NoLocalizationNeeded] private TextMeshPro text;
     [SerializeField] private SpriteRenderer icon;
 
     private int _lastAmount = -999;

@@ -28,7 +28,7 @@ public class TickerPresenter : MonoBehaviour
     
     private void ShowNext()
     {
-        _items.MoveNext().Initialized(_feed.Current.Text, ShowNext);
+        _items.MoveNext().Initialized(_feed.Current.Term, ShowNext);
         _feed.MoveNext();
     }
 }

@@ -1,4 +1,5 @@
 using System.Linq;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 
@@ -9,11 +10,11 @@ public class SimpleCardsUI : MonoBehaviour
     [SerializeField] private GameObject smallZoneParent;
     [SerializeField] private CardInLibraryButton cardPrototype;
     [SerializeField] private GameObject noCardsInZone;
-    [SerializeField] private TextMeshProUGUI headerLabel;
+    [SerializeField] private Localize headerLabel;
     
-    public void Init(string header, Card[] cards)
+    public void Init(string headerTerm, Card[] cards)
     {
-        headerLabel.text = header;
+        headerLabel.SetTerm(headerTerm);
         ClearZones();
         noCardsInZone.SetActive(cards.Length == 0);
         

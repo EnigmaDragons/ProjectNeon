@@ -10,7 +10,7 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
     [SerializeField] private CurrentAdventure adventure;
     
     [SerializeField] private TextMeshProUGUI headerLabel;
-    [SerializeField] private TextMeshProUGUI levelLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI levelLabel;
     [SerializeField] private GameObject heroNameObject;
     [SerializeField] private Localize heroNameLocalize;
     [SerializeField] private GameObject heroClassObject;
@@ -19,7 +19,7 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
     [SerializeField] private ResourceCounterPresenter primaryResourceCounter;
     [SerializeField] private ResourceCounterPresenter secondaryResourceCounter;
     
-    [SerializeField] private TextMeshProUGUI faintLevelLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI faintLevelLabel;
     [SerializeField] private Image faintBust;
     [SerializeField] private Localize faintClassLocalize;
     [SerializeField] private TextMeshProUGUI faintClassName;

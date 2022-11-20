@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7624657589909302908}
   - component: {fileID: 2125253602087612411}
   - component: {fileID: 7310816449837063555}
+  - component: {fileID: 3399992671008681664}
   m_Layer: 5
   m_Name: SquadPrompt
   m_TagString: Untagged
@@ -256,6 +257,45 @@ MonoBehaviour:
   optionalRotationMode: 0
   optionalScrambleMode: 0
   optionalString: 
+--- !u!114 &3399992671008681664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936777633946299832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: '-'
+  mTermSecondary: UI-Kit2-Sans-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 0
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &1218067141623896342
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,7 +478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b88d7b5db6194f528e8c52666e6de382, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  promptLabel: {fileID: 7624657589909302908}
+  promptLabel: {fileID: 3399992671008681664}
   presenters:
   - {fileID: 3018310196828700869}
   - {fileID: 7127318117875264206}

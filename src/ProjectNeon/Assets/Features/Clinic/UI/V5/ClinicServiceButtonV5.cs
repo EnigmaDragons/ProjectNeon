@@ -8,8 +8,7 @@ public class ClinicServiceButtonV5 : MonoBehaviour, IPointerEnterHandler, IPoint
 {
     [SerializeField] private Localize title;
     [SerializeField] private Localize descriptionLocalize;
-    [SerializeField] private TextMeshProUGUI description;
-    [SerializeField] private TextMeshProUGUI cost;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI cost;
     [SerializeField] private Image currencyIcon;
     [SerializeField] private Button button;
     [SerializeField] private TwoSidedRulesDescriptionPresenter rules;
@@ -25,8 +24,7 @@ public class ClinicServiceButtonV5 : MonoBehaviour, IPointerEnterHandler, IPoint
     {
         _data = data;
         title.SetTerm(data.NameTerm);
-        descriptionLocalize.SetTerm("");
-        description.text = data.Description;
+        descriptionLocalize.SetFinalText(data.Description);
         cost.text = data.Cost.ToString();
         var interactable = data.Enabled && party.ClinicVouchers >= data.Cost;
         button.interactable = interactable;

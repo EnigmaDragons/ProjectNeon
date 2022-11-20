@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-public class CharacterWordsController : OnMessage<DisplayCharacterWordRequested>
+public class CharacterWordsController : OnMessage<DisplayCharacterWordRequested>, ILocalizeTerms
 {
     [SerializeField] private SingleUseCharacterWord prototype;
     [SerializeField] private Vector3 offset;
@@ -34,6 +33,14 @@ public class CharacterWordsController : OnMessage<DisplayCharacterWordRequested>
         if (_member == null || msg.MemberId != _member.Id)
             return;
 
-        _actionQueue.Enqueue(() => Instantiate(prototype, transform.position + offset, Quaternion.identity, transform).Initialized(msg.Word));
+        _actionQueue.Enqueue(() => Instantiate(prototype, transform.position + offset, Quaternion.identity, transform).Initialized(msg.ReactionType.DisplayTerm()));
+    }
+
+    public string[] GetLocalizeTerms()
+    {
+        var terms = new List<string>();
+        foreach (CharacterReactionType reactionType in Enum.GetValues(typeof(CharacterReactionType)))
+            terms.Add(reactionType.DisplayTerm());
+        return terms.ToArray();
     }
 }

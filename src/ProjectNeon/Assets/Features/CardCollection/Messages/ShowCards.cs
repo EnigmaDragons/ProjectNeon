@@ -1,12 +1,12 @@
 
 public class ShowCards
 {
-    public string CardZoneName { get; }
+    public string CardZoneNameTerm { get; }
     public Card[] Cards { get; }
 
-    public ShowCards(string cardZoneName, Card[] cards)
+    public ShowCards(string cardZoneNameTerm, Card[] cards)
     {
-        CardZoneName = cardZoneName;
+        CardZoneNameTerm = cardZoneNameTerm;
         Cards = cards;
     }
 }

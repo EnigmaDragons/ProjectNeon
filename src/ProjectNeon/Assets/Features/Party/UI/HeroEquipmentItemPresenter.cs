@@ -1,12 +1,12 @@
 using System;
-using TMPro;
+using I2.Loc;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class HeroEquipmentItemPresenter : MonoBehaviour, IPointerDownHandler
 {
-    [SerializeField] private TextMeshProUGUI nameLabel;
+    [SerializeField] private Localize nameLabel;
     [SerializeField] private Image slotIcon;
     [SerializeField] private EquipmentSlotIcons icons;
 
@@ -15,7 +15,7 @@ public class HeroEquipmentItemPresenter : MonoBehaviour, IPointerDownHandler
     public HeroEquipmentItemPresenter Initialized(EquipmentSlot slot, Maybe<Equipment> e, Action onClick)
     {
         _onClick = onClick;
-        nameLabel.text = e.IsPresent ? e.Value.Name : "---";
+        nameLabel.SetTerm(e.IsPresent ? e.Value.LocalizationNameTerm() : "---");
         slotIcon.sprite = icons.All[slot];
         return this;
     }

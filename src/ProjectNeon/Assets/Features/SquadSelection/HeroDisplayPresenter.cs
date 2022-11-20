@@ -15,13 +15,13 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
     [SerializeField] private Localize heroName;
     [SerializeField] private Localize heroClassName;
     [SerializeField] private Localize heroDescription;
-    [FormerlySerializedAs("roleDescription")] [SerializeField] private TextMeshProUGUI complexityLabel;
+    [FormerlySerializedAs("roleDescription")] [SerializeField] private Localize complexityLabel;
     [SerializeField] private Slider complexitySlider;
     [SerializeField] private Localize backstory;
     [SerializeField] private NamedGameObject[] tabTargets;
     [SerializeField] private ResourceCounterPresenter resource1;
     [SerializeField] private ResourceCounterPresenter resource2;
-    [SerializeField] private TextMeshProUGUI startingCredits;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI startingCredits;
     [SerializeField] private MemberSimplifiedVisualStatPanel statPanel;
     [SerializeField] private GameObject buttonsPanel;
     [SerializeField] private Button statButton;
@@ -62,7 +62,7 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
         heroName.SetTerm(c.NameTerm());
         heroClassName.SetTerm(c.ClassTerm());
         heroDescription.SetTerm(c.DescriptionTerm());
-        complexityLabel.text = $"Complexity:";
+        complexityLabel.SetFinalText($"{"Menu/Complexity".ToLocalized()}:");
         complexitySlider.value = Mathf.Clamp(c.ComplexityRating / 5f, 0.2f, 1f);
         backstory.SetTerm(c.BackStoryTerm());
         var member = m;

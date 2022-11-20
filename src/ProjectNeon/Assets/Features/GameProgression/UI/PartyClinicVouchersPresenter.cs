@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PartyClinicVouchersPresenter : OnMessage<PartyAdventureStateChanged, PartyClinicVouchersChanged>
 {
     [SerializeField] private PartyAdventureState party;
-    [SerializeField] private TextMeshProUGUI label;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI label;
     [SerializeField] private GameObject animateTarget;
     [SerializeField] private bool animateOnChange = false;
     [SerializeField] private Image recolorWhenZero;

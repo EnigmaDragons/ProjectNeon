@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3883239517441939127}
   - component: {fileID: 8218501171235950785}
   - component: {fileID: 3615165782290594356}
+  - component: {fileID: 4433451182445535781}
   m_Layer: 5
   m_Name: CorpNameLabel
   m_TagString: Untagged
@@ -134,6 +135,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4433451182445535781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 320253388635925215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: '-'
+  mTermSecondary: UI-Kit2-Header-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 0
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &607202753184992583
 GameObject:
   m_ObjectHideFlags: 0
@@ -1619,7 +1659,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gradient: {fileID: 4627487291665031255}
   logo: {fileID: 8318070125733184636}
-  corpShopNameLabel: {fileID: 3615165782290594356}
+  corpShopNameLabel: {fileID: 4433451182445535781}
 --- !u!1 &5427366597872801931
 GameObject:
   m_ObjectHideFlags: 0
@@ -2641,7 +2681,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4776587559597745366, guid: 4b95f8da519a32a4a864564c768e8ce8, type: 3}
       propertyPath: m_text
-      value: Purchase
+      value: Select
       objectReference: {fileID: 0}
     - target: {fileID: 4776587559597745366, guid: 4b95f8da519a32a4a864564c768e8ce8, type: 3}
       propertyPath: m_textAlignment

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class HealInjuryButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Localize injuryLabel;
-    [SerializeField] private TextMeshProUGUI costLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI costLabel;
     [SerializeField] private Button _button;
 
     private string _injuryTooltip;

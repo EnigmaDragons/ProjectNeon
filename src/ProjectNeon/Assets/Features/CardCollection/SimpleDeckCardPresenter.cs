@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     [SerializeField] private Localize cardNameText;
-    [SerializeField] private TextMeshProUGUI countText;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI countText;
     [SerializeField] private Image cardArt;
     [SerializeField] private HoverCard hoverCard;
     [SerializeField] private CardCostPresenter costPresenter;

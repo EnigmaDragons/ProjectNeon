@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[IgnoreForLocalization]
 public class ProgressiveTextRevealUi : ProgressiveText
 {
     [SerializeField] private Button chatBox;

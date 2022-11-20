@@ -7,7 +7,7 @@ public sealed class AdventureHeroUiSummary : OnMessage<HeroStateChanged>
     [SerializeField] private HeroHpPresenter hpUi;
     [SerializeField] private HealHeroButton healButton;
     [SerializeField] private GameObject injuryPanel;
-    [SerializeField] private TextMeshProUGUI injuryCounter;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI injuryCounter;
     [SerializeField] private XpAndLevelUpPresenter xpAndLevels;
 
     private Hero _hero;

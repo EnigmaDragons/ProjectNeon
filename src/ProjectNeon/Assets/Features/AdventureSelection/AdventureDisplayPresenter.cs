@@ -14,7 +14,7 @@ public class AdventureDisplayPresenter : MonoBehaviour
     [SerializeField] private Image[] heroBusts;
     [SerializeField] private GameObject[] heroIcons;
     [SerializeField] private GameObject allHeroesText;
-    [SerializeField] private TextMeshProUGUI lengthText;
+    [SerializeField] private Localize lengthText;
     [SerializeField] private Localize heroLimitDescriptionLabel;
     [SerializeField] private GameObject lockVisual;
     [SerializeField] private Localize lockReasonLabel;
@@ -26,7 +26,7 @@ public class AdventureDisplayPresenter : MonoBehaviour
         image.sprite = adventure.AdventureImage;
         nameText.SetTerm(adventure.TitleTerm);
         storyText.SetTerm(adventure.StoryTerm);
-        lengthText.text = adventure.DynamicStages.Length + " Chapters";
+        lengthText.SetTerm(string.Format("Menu/Chapters".ToLocalized(), adventure.DynamicStages.Length));
         DisplayHeroPool(adventure);
         selectButton.onClick.AddListener(() => onSelect());
         selectButton.enabled = !adventure.IsLocked;

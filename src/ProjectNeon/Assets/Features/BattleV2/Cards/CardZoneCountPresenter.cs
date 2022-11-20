@@ -4,7 +4,7 @@ using UnityEngine;
 public class CardZoneCountPresenter : MonoBehaviour
 {
     [SerializeField] private CardPlayZone zone;
-    [SerializeField] private TextMeshProUGUI textField;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI textField;
     [SerializeField] private GameObject deckVisual;
     [SerializeField] private bool showWithZeroCards = false;
 

@@ -6,7 +6,7 @@ using UnityEngine;
 public class EnemyDetailsView : MonoBehaviour, ILocalizeTerms
 {
     [SerializeField] private Enemy staringEnemy;
-    [SerializeField] private TextMeshProUGUI idLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI idLabel;
     [SerializeField] private Localize nameLocalize;
     [SerializeField] private Localize typeLabel;
     [SerializeField] private Localize descriptionLocalize;
@@ -99,5 +99,5 @@ public class EnemyDetailsView : MonoBehaviour, ILocalizeTerms
         Message.Publish(new ShowEnemyOnStage(e));
     }
 
-    public string[] GetLocalizeTerms() => new[] { "BattleUI/Hasty", "BattleUI/Elite", "BattleUI/Hasty Elite" };
+    public string[] GetLocalizeTerms() => new[] { "BattleUI/Hasty", "BattleUI/Elite", "BattleUI/Hasty Elite", "Tooltips/StartBattleStealthed" };
 }

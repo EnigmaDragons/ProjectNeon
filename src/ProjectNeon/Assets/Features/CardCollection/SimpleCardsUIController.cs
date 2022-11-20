@@ -14,7 +14,7 @@ public class SimpleCardsUIController : OnMessage<ToggleCardsView, ShowCards>
 
     protected override void Execute(ShowCards msg)
     {
-        cardUi.Init($"{msg.CardZoneName} Cards", msg.Cards);
+        cardUi.Init(msg.CardZoneNameTerm, msg.Cards);
         uiObj.SetActive(true);
     }
 }

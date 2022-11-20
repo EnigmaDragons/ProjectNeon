@@ -5,7 +5,7 @@ using UnityEngine;
 
 public sealed class LevelUpOptionsPresenter : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI levelLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI levelLabel;
     [SerializeField] private GameObject optionParent;
     [SerializeField] private LevelUpOptionPresenter optionPrototype;
     [SerializeField] private GameObject[] toDestroyOnStart;

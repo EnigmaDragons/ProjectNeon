@@ -5,9 +5,9 @@ using UnityEngine;
 public sealed class EquipmentSummaryPanel : OnMessage<PartyAdventureStateChanged>
 {
     [SerializeField] private PartyAdventureState state;
-    [SerializeField] private TextMeshProUGUI weaponSummaryLabel;
-    [SerializeField] private TextMeshProUGUI armorSummaryLabel;
-    [SerializeField] private TextMeshProUGUI augmentSummaryLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI weaponSummaryLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI armorSummaryLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI augmentSummaryLabel;
 
     protected override void AfterEnable() => UpdateUi();
     

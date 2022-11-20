@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class DeckCountUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckChanged>
 {
-    [SerializeField] private TextMeshProUGUI deckCount;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI deckCount;
     [SerializeField] private DeckBuilderState state;
     [SerializeField] private IntReference deckSize;
     [SerializeField] private string prefix = "";

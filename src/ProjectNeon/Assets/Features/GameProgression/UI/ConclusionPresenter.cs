@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ConclusionPresenter : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI outcomeLabel;
+    [SerializeField] private Localize outcomeLabel;
     [SerializeField] private Localize adventureTitleLabel;
     [SerializeField] private Localize storyTextBox;
     [SerializeField] private GameObject[] victoryElements;
@@ -12,7 +12,7 @@ public class ConclusionPresenter : MonoBehaviour
 
     public void Init(bool won, string adventureTitleTerm, string storyTextTerm)
     {
-        outcomeLabel.text = won ? "You Won!" : "Game Over";
+        outcomeLabel.SetTerm(won ? "Menu/Won" : "Menu/Game Over");
         adventureTitleLabel.SetTerm(adventureTitleTerm);
         storyTextBox.SetTerm(storyTextTerm);
         HideElements();
