@@ -686,6 +686,7 @@ GameObject:
   - component: {fileID: 8667438649923526280}
   - component: {fileID: 422265896885320346}
   - component: {fileID: 5552644050266814190}
+  - component: {fileID: 5339404115737998896}
   m_Layer: 0
   m_Name: Prompt
   m_TagString: Untagged
@@ -809,6 +810,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5339404115737998896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4066126004239905683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: LevelUps/SelectUpgrade
+  mTermSecondary: UI-Kit2-Header-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &4418703509633744717
 GameObject:
   m_ObjectHideFlags: 0
@@ -931,6 +971,7 @@ GameObject:
   - component: {fileID: 4437675416827315743}
   - component: {fileID: 4437675416827315713}
   - component: {fileID: 4437675416827315742}
+  - component: {fileID: 2842711021102866105}
   m_Layer: 0
   m_Name: LevelLabel
   m_TagString: Untagged
@@ -1054,6 +1095,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2842711021102866105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4437675416827315740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: '-'
+  mTermSecondary: UI-Kit2-Header-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 0
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &4437675416855188432
 GameObject:
   m_ObjectHideFlags: 0
@@ -1245,7 +1325,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   draftOptions: {fileID: 11400000, guid: 31a606d796eb9944da266cdfbe132702, type: 2}
   levelLabel: {fileID: 0}
-  promptLabel: {fileID: 5552644050266814190}
+  promptLabel: {fileID: 0}
   optionParent: {fileID: 4437675418363652553}
   basicOptionPrototype: {fileID: 7056801384905488705, guid: 617c1e1408feef3428709c6cb39ca0b2, type: 3}
   presenters: {fileID: 11400000, guid: 7ec318d37141090489fd8f59458a96ee, type: 2}
@@ -1584,7 +1664,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   adventure: {fileID: 11400000, guid: 62e84d9ce18ccb747b8d7d0083704709, type: 2}
   headerLabel: {fileID: 6002985157729789728}
-  levelLabel: {fileID: 4437675416827315742}
+  levelLabel: {fileID: 2842711021102866105}
   heroNameObject: {fileID: 7050883637454715899}
   heroNameLocalize: {fileID: 7941579719893231753}
   heroClassObject: {fileID: 1371502595680872236}
@@ -1952,6 +2032,7 @@ GameObject:
   - component: {fileID: 4320565921229154980}
   - component: {fileID: 7574606146804104715}
   - component: {fileID: 216942815217509913}
+  - component: {fileID: 205424750585993084}
   m_Layer: 0
   m_Name: FaintLevelNumber
   m_TagString: Untagged
@@ -2077,6 +2158,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &205424750585993084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5487855099389519382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 863c5aa2de9e49089e0a948ab1da690f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6433339513940431741
 GameObject:
   m_ObjectHideFlags: 0
@@ -2487,6 +2580,7 @@ GameObject:
   - component: {fileID: 6458322489921922158}
   - component: {fileID: 83506449655435520}
   - component: {fileID: 6002985157729789728}
+  - component: {fileID: 5364986104571430728}
   m_Layer: 0
   m_Name: Header
   m_TagString: Untagged
@@ -2610,6 +2704,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5364986104571430728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8393277927858603774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: LevelUps/LevelUp
+  mTermSecondary: UI-Kit2-Header-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1001 &2276638722173489889
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2996,14 +3129,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 617c1e1408feef3428709c6cb39ca0b2, type: 3}
---- !u!1 &8214587794282344667 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5330127451934037330, guid: 617c1e1408feef3428709c6cb39ca0b2, type: 3}
-  m_PrefabInstance: {fileID: 4321343197413598601}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8214587794282344664 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5330127451934037329, guid: 617c1e1408feef3428709c6cb39ca0b2, type: 3}
+  m_PrefabInstance: {fileID: 4321343197413598601}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8214587794282344667 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5330127451934037330, guid: 617c1e1408feef3428709c6cb39ca0b2, type: 3}
   m_PrefabInstance: {fileID: 4321343197413598601}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4729181938851901201
@@ -4031,6 +4164,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: be35e715fd796f540871256e5334b817, type: 3}
+--- !u!1 &558223876341290703 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6678554249060705405, guid: be35e715fd796f540871256e5334b817, type: 3}
+  m_PrefabInstance: {fileID: 6562246154942591666}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &2698667392425541026 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 9106946597131030288, guid: be35e715fd796f540871256e5334b817, type: 3}
+  m_PrefabInstance: {fileID: 6562246154942591666}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &100779362584650002 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6518892667941344160, guid: be35e715fd796f540871256e5334b817, type: 3}
@@ -4042,16 +4185,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b751c98e51ade16419e4d4b7ebd361e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &2698667392425541026 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 9106946597131030288, guid: be35e715fd796f540871256e5334b817, type: 3}
-  m_PrefabInstance: {fileID: 6562246154942591666}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &558223876341290703 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6678554249060705405, guid: be35e715fd796f540871256e5334b817, type: 3}
-  m_PrefabInstance: {fileID: 6562246154942591666}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8389538611698064138
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4185,13 +4318,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 617c1e1408feef3428709c6cb39ca0b2, type: 3}
---- !u!1 &4437675416546299480 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5330127451934037330, guid: 617c1e1408feef3428709c6cb39ca0b2, type: 3}
-  m_PrefabInstance: {fileID: 8389538611698064138}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &4437675416546299483 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5330127451934037329, guid: 617c1e1408feef3428709c6cb39ca0b2, type: 3}
+  m_PrefabInstance: {fileID: 8389538611698064138}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4437675416546299480 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5330127451934037330, guid: 617c1e1408feef3428709c6cb39ca0b2, type: 3}
   m_PrefabInstance: {fileID: 8389538611698064138}
   m_PrefabAsset: {fileID: 0}

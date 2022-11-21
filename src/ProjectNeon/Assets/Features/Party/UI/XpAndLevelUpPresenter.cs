@@ -5,7 +5,7 @@ public sealed class XpAndLevelUpPresenter : MonoBehaviour
 {
     [SerializeField] private XpPresenter xp;
     [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI levelLabel;
-    [SerializeField] private TextCommandButton levelUpButton;
+    [SerializeField] private LocalizedCommandButton levelUpButton;
 
     private Hero _hero;
     
@@ -28,7 +28,7 @@ public sealed class XpAndLevelUpPresenter : MonoBehaviour
         
         levelUpButton.gameObject.SetActive(false);
         if (_hero.Levels.UnspentLevelUpPoints > 0)
-            levelUpButton.Init("Level\nUp", () =>
+            levelUpButton.InitTerm("Menu/LevelUp2", () =>
             {
                 Debug.Log($"Clicked Level Up {_hero.NameTerm.ToEnglish()}");
                 Message.Publish(new LevelUpHero(_hero));

@@ -9,7 +9,7 @@ public class DeckBuilderModeControllerV4 : OnMessage<TogglePartyDetails, DeckBui
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private GameObject parent;
     [SerializeField] private Button saveButton;
-    [SerializeField] private TextCommandButton saveButtonCont;
+    [SerializeField] private LocalizedCommandButton saveButtonCont;
     [SerializeField] private GameObject[] fightOnlyElements;
     [SerializeField] private Button fightButton;
     [SerializeField] private Navigator navigator;
@@ -17,7 +17,7 @@ public class DeckBuilderModeControllerV4 : OnMessage<TogglePartyDetails, DeckBui
 
     private void Awake()
     {
-        saveButtonCont.Init("Save", OnFinished);
+        saveButtonCont.InitTerm("Menu/Save", OnFinished);
         fightButton.onClick.AddListener(OnFinished);
     }
     

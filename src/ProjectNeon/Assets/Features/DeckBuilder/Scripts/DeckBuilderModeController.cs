@@ -11,7 +11,7 @@ public class DeckBuilderModeController : OnMessage<TogglePartyDetails, DeckBuild
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private GameObject parent;
     [SerializeField] private Button saveButton;
-    [SerializeField] private TextCommandButton saveButtonCont;
+    [SerializeField] private LocalizedCommandButton saveButtonCont;
     [SerializeField] private GameObject[] fightOnlyElements;
     [SerializeField] private Button fightButton;
     [SerializeField] private Navigator navigator;

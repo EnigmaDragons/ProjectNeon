@@ -9,10 +9,10 @@ public class DeckBuilderModeControllerV5 : OnMessage<TogglePartyDetails, DeckBui
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private GameObject parent;
     [SerializeField] private Button saveButton;
-    [SerializeField] private TextCommandButton saveButtonCont;
+    [SerializeField] private LocalizedCommandButton saveButtonCont;
     [SerializeField] private GameObject[] fightOnlyElements;
     [SerializeField] private Button fightButton;
-    [SerializeField] private TextCommandButton fightButtonCont;
+    [SerializeField] private LocalizedCommandButton fightButtonCont;
     [SerializeField] private Navigator navigator;
 
     private bool _doneButtonCannotBeInteractive;

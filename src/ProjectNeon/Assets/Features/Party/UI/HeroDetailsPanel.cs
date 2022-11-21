@@ -11,7 +11,7 @@ public sealed class HeroDetailsPanel : OnMessage<HeroStateChanged>
     [SerializeField] private MemberStatPanel stats;
     [SerializeField] private HeroEquipmentPanel equipment;
     [SerializeField] private HeroInjuryPanel injuries;
-    [SerializeField] private TextCommandButton levelUpButton;
+    [SerializeField] private LocalizedCommandButton levelUpButton;
     [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI levelLabel;
 
     private Hero _hero;
@@ -32,7 +32,7 @@ public sealed class HeroDetailsPanel : OnMessage<HeroStateChanged>
         
         levelUpButton?.gameObject.SetActive(false);
         if (levelUpButton != null && !h.IsMaxLevelV4 && h.Levels.UnspentLevelUpPoints > 0)
-            levelUpButton.Init("Level Up", () => Message.Publish(new LevelUpHero(h)));
+            levelUpButton.InitTerm("Menu/LevelUp", () => Message.Publish(new LevelUpHero(h)));
         
         return this;
     }

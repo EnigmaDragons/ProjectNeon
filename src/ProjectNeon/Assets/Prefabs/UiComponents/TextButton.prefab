@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4620041494339355545}
   - component: {fileID: 446627764353318404}
   - component: {fileID: 8417788295269649810}
+  - component: {fileID: 2109954892313273533}
   m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -134,6 +135,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2109954892313273533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137997872680105394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: '-'
+  mTermSecondary: UI-Kit2-Sans-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 0
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &2038136876053344907
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,10 +186,10 @@ GameObject:
   - component: {fileID: 1415254814451718868}
   - component: {fileID: 1323814454254533983}
   - component: {fileID: 8829254996912500189}
-  - component: {fileID: 2799631306169696445}
   - component: {fileID: 2580615212551995239}
   - component: {fileID: 1362238914015055632}
   - component: {fileID: 447197667555999599}
+  - component: {fileID: 7662283224723068775}
   m_Layer: 0
   m_Name: TextButton
   m_TagString: Untagged
@@ -259,19 +299,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2799631306169696445
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2038136876053344907}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  label: {fileID: 8417788295269649810}
 --- !u!114 &2580615212551995239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,3 +403,17 @@ MonoBehaviour:
   useBigClickSound: 0
   hoverEnterSound: event:/DeckBulder_Scene/Hover
   hoverExitSound: event:/DeckBulder_Scene/Hover
+--- !u!114 &7662283224723068775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038136876053344907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55509cb7b084451f8226cc1a94538cef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  labelText: {fileID: 8417788295269649810}
+  label: {fileID: 2109954892313273533}

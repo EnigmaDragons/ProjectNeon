@@ -4,7 +4,7 @@ using UnityEngine;
 public class EquipmentPicker : OnMessage<GetUserSelectedEquipment>
 {
     [SerializeField] private GameObject view;
-    [SerializeField] private TextCommandButton noneButton;
+    [SerializeField] private LocalizedCommandButton noneButton;
     [SerializeField] private EquipmentPresenter equipmentPrototype;
     [SerializeField] private GameObject optionsParent;
 
@@ -12,7 +12,7 @@ public class EquipmentPicker : OnMessage<GetUserSelectedEquipment>
 
     private void Awake()
     {
-        noneButton.Init("None", SelectNone);
+        noneButton.InitTerm("Menu/None", SelectNone);
     }
     
     protected override void Execute(GetUserSelectedEquipment msg)

@@ -7,7 +7,7 @@ public class CreditsPresenter : MonoBehaviour
     [SerializeField] private FloatReference delayBeforeStart = new FloatReference(4f);
     [SerializeField] private FloatReference delayBetween = new FloatReference(2.4f);
     [SerializeField] private AllCredits allCredits;
-    [SerializeField] private CreditPresenter creditPresenter;
+    [SerializeField] private CreditPresenterBase creditPresenter;
     [SerializeField] private GameObject creditParent;
     [SerializeField] private FloatReference maxLifetimeOfCredit;
     [SerializeField] private UnityEvent onStart;

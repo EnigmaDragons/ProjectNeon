@@ -7617,9 +7617,9 @@ GameObject:
   - component: {fileID: 4256398036137299828}
   - component: {fileID: 6083171375940605957}
   - component: {fileID: 2071236525949055543}
-  - component: {fileID: 2627423963964568898}
-  - component: {fileID: 7287430771563767222}
   - component: {fileID: 426982974635782934}
+  - component: {fileID: 5584636984480599410}
+  - component: {fileID: 7429270328789957163}
   m_Layer: 0
   m_Name: DeckBuilderUI
   m_TagString: Untagged
@@ -7726,48 +7726,6 @@ MonoBehaviour:
   notEnemyObjects:
   - {fileID: 3284226534916779256}
   equipmentEnabled: 1
---- !u!114 &2627423963964568898
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4518693809890149358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b5780950d8a49c1a075799c05c1d5c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  btn: {fileID: 5392055461166115748}
-  text: Save
-  action:
-    m_PersistentCalls:
-      m_Calls: []
-  sounds: {fileID: 0}
-  fmodSounds: {fileID: 0}
-  isPrimaryActionButton: 1
-  ignoreText: 0
---- !u!114 &7287430771563767222
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4518693809890149358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b5780950d8a49c1a075799c05c1d5c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  btn: {fileID: 4454142683821522612}
-  text: Fight
-  action:
-    m_PersistentCalls:
-      m_Calls: []
-  sounds: {fileID: 0}
-  fmodSounds: {fileID: 0}
-  isPrimaryActionButton: 1
-  ignoreText: 0
 --- !u!114 &426982974635782934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7788,7 +7746,7 @@ MonoBehaviour:
   party: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
   parent: {fileID: 2557740840237495083}
   saveButton: {fileID: 1624098157195675332}
-  saveButtonCont: {fileID: 5392055461166115748}
+  saveButtonCont: {fileID: 458173056733527166}
   fightOnlyElements:
   - {fileID: 2570686291739165490}
   fightButton: {fileID: 7029505872687993812}
@@ -7796,6 +7754,48 @@ MonoBehaviour:
   equipmentLibraryUI: {fileID: 7318943568565805469}
   cardFilter: {fileID: 327551111039500631}
   heroDetails: {fileID: 272668452560112886}
+--- !u!114 &5584636984480599410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4518693809890149358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d7fdc7debec4116a83d5823a2276b29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btn: {fileID: 458173056733527166}
+  term: Menu/Save
+  action:
+    m_PersistentCalls:
+      m_Calls: []
+  sounds: {fileID: 0}
+  fmodSounds: {fileID: 0}
+  isPrimaryActionButton: 1
+  ignoreText: 0
+--- !u!114 &7429270328789957163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4518693809890149358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d7fdc7debec4116a83d5823a2276b29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btn: {fileID: 8169502253713287534}
+  term: Menu/Fight
+  action:
+    m_PersistentCalls:
+      m_Calls: []
+  sounds: {fileID: 0}
+  fmodSounds: {fileID: 0}
+  isPrimaryActionButton: 1
+  ignoreText: 0
 --- !u!1 &4532444037304842016
 GameObject:
   m_ObjectHideFlags: 0
@@ -9626,7 +9626,6 @@ MonoBehaviour:
   previous: {fileID: 6146597263660158892}
   next: {fileID: 2248793475191953292}
   enemyLocalizedList: {fileID: 6026942615698326493}
-  enemyList: {fileID: 4248445611279390772}
 --- !u!1 &5810904641781819512
 GameObject:
   m_ObjectHideFlags: 0
@@ -14615,15 +14614,15 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
   m_PrefabInstance: {fileID: 1948373065890594313}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4454142683821522612 stripped
+--- !u!114 &8169502253713287534 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7662283224723068775, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
   m_PrefabInstance: {fileID: 1948373065890594313}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
+  m_Script: {fileID: 11500000, guid: 55509cb7b084451f8226cc1a94538cef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &2753828232921111437
@@ -16900,15 +16899,15 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
   m_PrefabInstance: {fileID: 7786200425338514201}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5392055461166115748 stripped
+--- !u!114 &458173056733527166 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7662283224723068775, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
   m_PrefabInstance: {fileID: 7786200425338514201}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
+  m_Script: {fileID: 11500000, guid: 55509cb7b084451f8226cc1a94538cef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1624098157195675332 stripped

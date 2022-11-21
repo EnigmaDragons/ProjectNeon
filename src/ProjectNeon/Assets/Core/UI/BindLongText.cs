@@ -4,7 +4,7 @@ using UnityEngine;
 public class BindLongText : MonoBehaviour
 {
     [SerializeField] private LongText value;
-    [SerializeField] private TextMeshProUGUI textArea;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI textArea;
     [SerializeField] private float heightSizeFactor = 1;
 
     void Start()

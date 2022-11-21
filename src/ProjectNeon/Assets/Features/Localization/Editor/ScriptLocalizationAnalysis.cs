@@ -38,7 +38,9 @@ public class ScriptLocalizationAnalysis : EditorWindow
         }
         Display(results.ToArray());
     }*/
-    
+
+    private static string[] _excludedNamespaces = new []{"TMPro", "MoreMountains"};
+
     [MenuItem("Neon/Script Localization Summary")]
     static void AllSummary()
     {
@@ -48,10 +50,10 @@ public class ScriptLocalizationAnalysis : EditorWindow
         foreach (var scriptPath in scriptPaths)
         {
             var type = AssetDatabase.LoadAssetAtPath<MonoScript>(scriptPath).GetClass();
-            if (type == null || !type.IsSubclassOf(typeof(MonoBehaviour)) || (type.Namespace != null && type.Namespace.StartsWith("MoreMountains")))
+            if (type == null || !type.IsSubclassOf(typeof(MonoBehaviour)) || (type.Namespace != null && _excludedNamespaces.Any(x => type.Namespace.StartsWith(x))))
                 continue;
             var fields = type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            if (fields.None(x => x.FieldType == _textMeshProUGuiType || x.FieldType == _textMeshProType || x.FieldType == _localizeType))
+            if (fields.None(x => x.FieldType == _textMeshProUGuiType || x.FieldType == _textMeshProType || x.FieldType == _localizeType || x.FieldType == _tmpText))
                 continue;
             results.Add(SummarizeScript(scriptPath, type, fields));
         }
@@ -74,10 +76,11 @@ public class ScriptLocalizationAnalysis : EditorWindow
 
     private static Type _textMeshProUGuiType = typeof(TextMeshProUGUI);
     private static Type _textMeshProType = typeof(TextMeshPro);
+    private static Type _tmpText = typeof(TMP_Text);
     private static Type _localizeType = typeof(Localize);
     
     private static bool ShouldSummarizeField(FieldInfo field)
-        => field.FieldType == _textMeshProUGuiType || field.FieldType == _textMeshProType || field.FieldType == _localizeType;
+        => field.FieldType == _textMeshProUGuiType || field.FieldType == _textMeshProType || field.FieldType == _localizeType || field.FieldType == _tmpText;
     
     private static FieldLocalizationSummary SummarizeField(FieldInfo field, string rawFileText)
     {

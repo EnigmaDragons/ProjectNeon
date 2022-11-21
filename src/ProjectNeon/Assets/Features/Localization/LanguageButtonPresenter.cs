@@ -6,7 +6,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class LanguageButtonPresenter : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI text;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI text;
     [SerializeField] private Image image;
     
     private Action _onSelect;

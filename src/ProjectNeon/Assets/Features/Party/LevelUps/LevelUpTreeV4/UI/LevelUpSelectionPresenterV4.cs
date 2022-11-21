@@ -5,12 +5,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
+public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>, ILocalizeTerms
 {
     [SerializeField] private CurrentAdventure adventure;
     
     [SerializeField] private TextMeshProUGUI headerLabel;
-    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI levelLabel;
+    [SerializeField] private Localize levelLabel;
     [SerializeField] private GameObject heroNameObject;
     [SerializeField] private Localize heroNameLocalize;
     [SerializeField] private GameObject heroClassObject;
@@ -76,7 +76,7 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
         stats.Initialized(_hero);
         heroNameLocalize.SetTerm(_hero.NameTerm);
         heroClassLocalize.SetTerm(_hero.ClassTerm);
-        levelLabel.text = $"Level {_hero.Level.ToString()}";
+        levelLabel.SetFinalText($"{"LevelUps/Level".ToLocalized()} {_hero.Level.ToString()}");
         var adventureMode = adventure != null ? adventure.Adventure.Mode : AdventureMode.Standard;
         optionsPresenter.Init(adventureMode, _hero);
         
@@ -113,4 +113,7 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
             Message.Publish(new HeroLevelledUp());
         }, finishAnimationDuration);
     }
+
+    public string[] GetLocalizeTerms()
+        => new [] {"LevelUps/Level"};
 }

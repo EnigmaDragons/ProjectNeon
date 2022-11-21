@@ -2288,8 +2288,8 @@ GameObject:
   - component: {fileID: 8542642884207400162}
   - component: {fileID: 8542642884207389042}
   - component: {fileID: 431798980832371294}
-  - component: {fileID: 7465394623458525442}
-  - component: {fileID: 8816633087592789263}
+  - component: {fileID: 4080241284765093589}
+  - component: {fileID: 4880514113928868427}
   m_Layer: 5
   m_Name: Easy Feedback (TMP)
   m_TagString: Untagged
@@ -2464,7 +2464,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   columnIndex: 1
---- !u!114 &7465394623458525442
+--- !u!114 &4080241284765093589
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2473,11 +2473,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8542642884214494546}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b5780950d8a49c1a075799c05c1d5c8, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d7fdc7debec4116a83d5823a2276b29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btn: {fileID: 7734337882264976475}
-  text: Submit
+  btn: {fileID: 2871695103393753985}
+  term: Menu/Submit
   action:
     m_PersistentCalls:
       m_Calls:
@@ -2494,10 +2494,10 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   sounds: {fileID: 0}
-  fmodSounds: {fileID: 5457071288617010057}
+  fmodSounds: {fileID: 0}
   isPrimaryActionButton: 0
   ignoreText: 1
---- !u!114 &8816633087592789263
+--- !u!114 &4880514113928868427
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2506,11 +2506,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 8542642884214494546}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b5780950d8a49c1a075799c05c1d5c8, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d7fdc7debec4116a83d5823a2276b29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btn: {fileID: 5566884751484117910}
-  text: Cancel
+  btn: {fileID: 130076656998855756}
+  term: Menu/Cancel
   action:
     m_PersistentCalls:
       m_Calls:
@@ -3029,26 +3029,15 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
   m_PrefabInstance: {fileID: 5588873148097297638}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7734337882264976475 stripped
+--- !u!114 &2871695103393753985 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7662283224723068775, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
   m_PrefabInstance: {fileID: 5588873148097297638}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5457071288617010057 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 447197667555999599, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
-  m_PrefabInstance: {fileID: 5588873148097297638}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61f450f3723f4a8aab133e3ef98e1357, type: 3}
+  m_Script: {fileID: 11500000, guid: 55509cb7b084451f8226cc1a94538cef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5505068704634079572 stripped
@@ -3403,14 +3392,14 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 137997872680105394, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
   m_PrefabInstance: {fileID: 7754008856013906731}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5566884751484117910 stripped
+--- !u!114 &130076656998855756 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7662283224723068775, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
   m_PrefabInstance: {fileID: 7754008856013906731}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
+  m_Script: {fileID: 11500000, guid: 55509cb7b084451f8226cc1a94538cef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

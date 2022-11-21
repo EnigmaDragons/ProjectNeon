@@ -2,7 +2,7 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Adventure/Stage V5")]
-public class HybridStageV5 : ScriptableObject, IStage
+public class HybridStageV5 : ScriptableObject, IStage, ILocalizeTerms
 {
     [SerializeField] public int id;
     [SerializeField] public string displayName;
@@ -21,7 +21,7 @@ public class HybridStageV5 : ScriptableObject, IStage
     [SerializeField] private float shopOdds = 0.17f;
     [SerializeField] private int noShopsUntilSegment = 3;
 
-    public string DisplayName => $"Stage/Stage{id}Name";
+    public string DisplayName => $"Stages/Stage{id}Name";
 
     public GameObject BattlegroundForSegment(int segment)
     {
@@ -53,4 +53,7 @@ public class HybridStageV5 : ScriptableObject, IStage
     public RarityFactors RewardRarityFactors => rewardRarityFactors != null 
         ? rewardRarityFactors 
         : (RarityFactors)new DefaultRarityFactors();
+
+    public string[] GetLocalizeTerms()
+        => new[] {DisplayName};
 }

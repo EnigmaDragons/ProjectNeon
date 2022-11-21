@@ -1,10 +1,11 @@
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 
-public class BattleStatSummaryPresenter : MonoBehaviour
+public class BattleStatSummaryPresenter : MonoBehaviour, ILocalizeTerms
 {
     [SerializeField] private BattleState state;
-    [SerializeField] private TextMeshProUGUI[] labels;
+    [SerializeField] private Localize[] localizedLabels;
     [SerializeField] private TextMeshProUGUI[] values;
 
     private void OnEnable() => Render();
@@ -12,19 +13,29 @@ public class BattleStatSummaryPresenter : MonoBehaviour
     private void Render()
     {
         var stats = state.Stats;
-        Render(0, "Cards Played", stats.CardsPlayed);
-        Render(1, "Damage Dealt", stats.DamageDealt);
-        Render(2, "Damage Taken", stats.DamageReceived);
-        Render(3, "HP Damage Taken", stats.HpDamageReceived);
-        Render(4, "Healing Received", stats.HealingReceived);
+        Render(0, "Conclusions/Cards Played", stats.CardsPlayed);
+        Render(1, "Conclusions/Damage Dealt", stats.DamageDealt);
+        Render(2, "Conclusions/Damage Taken", stats.DamageReceived);
+        Render(3, "Conclusions/HP Damage Taken", stats.HpDamageReceived);
+        Render(4, "Conclusions/Healing Received", stats.HealingReceived);
     }
 
-    private void Render(int index, string label, int value)
+    private void Render(int index, string term, int value)
     {
-        if (labels.Length < index || values.Length < index)
+        if (localizedLabels.Length < index || values.Length < index)
             return;
         
-        labels[index].text = label;
+        localizedLabels[index].SetTerm(term);
         values[index].text = value.ToString();
     }
+
+    public string[] GetLocalizeTerms()
+        => new[]
+        {
+            "Conclusions/Cards Played",
+            "Conclusions/Damage Dealt",
+            "Conclusions/Damage Taken",
+            "Conclusions/HP Damage Taken",
+            "Conclusions/Healing Received"
+        };
 }

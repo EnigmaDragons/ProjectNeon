@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5216674476589688635}
   - component: {fileID: 5216674476589688632}
   - component: {fileID: 5216674476589688633}
-  - component: {fileID: 4528895742305771507}
   m_Layer: 5
   m_Name: MapUI
   m_TagString: Untagged
@@ -82,6 +81,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &5216674476589688633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,21 +99,3 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 55
---- !u!114 &4528895742305771507
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5216674476589688614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1df2d3cd4927abf4da113d1c7d57414d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  map: {fileID: 11400000, guid: eb860c63799abc34dbce2248adcc28f6, type: 2}
-  nodePrototype: {fileID: 8735785579392061029, guid: 9a3bc08eda157174ab5d11107b3a3ff5,
-    type: 3}
-  tokenPrototype: {fileID: 62304065873535587, guid: a4775238501ca3445aad9d5cd06aaa55,
-    type: 3}
-  progress: {fileID: 11400000, guid: e9d87bb76e42a2e46859ea635cdf5bd5, type: 2}
