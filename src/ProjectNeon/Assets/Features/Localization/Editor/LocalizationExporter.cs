@@ -48,8 +48,7 @@ public class LocalizationExporter
     public static void ExportEquipmentForLocalization()
     {
         var items = GetAllInstances<StaticEquipment>()
-            .Where(x => !x.IsWip)
-            .Where(x => x.Slot == EquipmentSlot.Augmentation)
+            .Where(x => !x.IsWip && x.Slot == EquipmentSlot.Augmentation)
             .OrderBy(x => x.Id);
 
         var names = new List<string>();

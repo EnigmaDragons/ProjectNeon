@@ -62,7 +62,7 @@ public class CardType : ScriptableObject, CardTypeData, ILocalizeTerms
     public override int GetHashCode() => ToString().GetHashCode();
     public override bool Equals(object other) => other is CardType && other.ToString() == ToString();
 
-    public string[] GetLocalizeTerms() => new[]
+    public string[] GetLocalizeTerms() => isWIP ? new string[0] : new[]
     {
         this.LocalizationNameTerm(),
         this.CardLocalizationDescriptionTerm()

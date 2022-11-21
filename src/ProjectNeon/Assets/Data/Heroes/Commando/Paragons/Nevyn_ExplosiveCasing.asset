@@ -18,8 +18,10 @@ MonoBehaviour:
   description: "Deal {E[0]}. \n\nYou gain {E[1]}"
   typeDescription: {fileID: 0}
   descriptionV2:
-    text: 
-    formatArgs: []
+    text: "Deal {0}. \n\nYou gain {1}"
+    formatArgs:
+    - '{E[0]}'
+    - '{E[1]}'
   tags: 
   speed: 0
   isSinglePlay: 0

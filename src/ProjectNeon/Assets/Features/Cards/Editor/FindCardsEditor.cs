@@ -230,7 +230,7 @@ public class FindCardsEditor : EditorWindow
         {
             var cards = GetAllInstances<CardType>()
                 .Where(c => c.id == _id)
-                .Select(e => e.EditorName)
+                .Select(e => e.name)
                 .ToArray();
             ShowCards($"ID {_id}", cards);
             GUIUtility.ExitGUI();

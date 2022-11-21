@@ -14,12 +14,12 @@ public class CardEnemyTypePresenter : MonoBehaviour
             gameObject.SetActive(true);
     }
 
-    public void Init(string type)
+    public void Init(string typeTerm)
     {
-        if (string.IsNullOrWhiteSpace(type))
+        if (string.IsNullOrWhiteSpace(typeTerm))
             return;
         
-        label.SetTerm($"BattleUI/{type}");
+        label.SetTerm(typeTerm);
         _hasInit = true;
         Show();
     }

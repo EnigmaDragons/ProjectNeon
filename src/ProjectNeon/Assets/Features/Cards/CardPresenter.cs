@@ -517,7 +517,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         return result;
     }
 
-    public void ShowEnemyCardType(string type) => enemyTypePresenter.Init(type);
+    public void ShowEnemyCardType(string typeTerm) => enemyTypePresenter.Init(typeTerm);
 
     private void DebugLog(string msg)
     {

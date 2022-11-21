@@ -52,7 +52,8 @@ public class EquipmentPresenter : OnMessage<LanguageChanged>, IPointerDownHandle
         _useHoverHighlight = useHoverHighlight;
         _useAnyHover = useAnyHover;
         _useDarkenOnHover = true;
-        nameLabel.SetTerm(e.LocalizationNameTerm());
+        if (nameLabel != null)
+            nameLabel.SetTerm(e.LocalizationNameTerm());
         var archetypeText = e.Archetypes.Any()
             ? e.LocalizedArchetypeDescription()
             : AnyTerm.ToLocalized();

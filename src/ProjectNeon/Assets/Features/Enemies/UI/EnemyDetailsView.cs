@@ -24,8 +24,8 @@ public class EnemyDetailsView : MonoBehaviour, ILocalizeTerms
     private bool _isInitialized;
     private const string Elite = "Elite";
     private const string Hasty = "Hasty ";
-    private const string Ultimate = "Ultimate";
-    private const string Reaction = "Reaction";
+    private const string UltimateTerm = "BattleUI/Ultimate";
+    private const string ReactionTerm = "BattleUI/Reaction";
     
     private void Awake()
     {
@@ -84,8 +84,8 @@ public class EnemyDetailsView : MonoBehaviour, ILocalizeTerms
                 .OrderBy(x => x.Tags.Contains(CardTag.Ultimate) ? 1 : 0)
                 .ThenBy(x => x.Tags.Contains(CardTag.Focus) ? 0 : 1)
                 .ThenBy(x => x.Cost.BaseAmount)
-                .Select(x => (x, x.Tags.Contains(CardTag.Ultimate) ? Ultimate : string.Empty))
-                    .Concat(e.ReactionCards.Select(x => ((CardTypeData)x, Reaction)))
+                .Select(x => (x, x.Tags.Contains(CardTag.Ultimate) ? UltimateTerm : string.Empty))
+                    .Concat(e.ReactionCards.Select(x => ((CardTypeData)x, Reaction: ReactionTerm)))
                 .Select(c => (c.Item1.CreateInstance(-1, member), c.Item2)));
         if (corpUi != null)
             corpUi.Init(e.Corp);
@@ -99,5 +99,5 @@ public class EnemyDetailsView : MonoBehaviour, ILocalizeTerms
         Message.Publish(new ShowEnemyOnStage(e));
     }
 
-    public string[] GetLocalizeTerms() => new[] { "BattleUI/Hasty", "BattleUI/Elite", "BattleUI/Hasty Elite", "Tooltips/StartBattleStealthed" };
+    public string[] GetLocalizeTerms() => new[] { "BattleUI/Hasty", "BattleUI/Elite", "BattleUI/Hasty Elite", "Tooltips/StartBattleStealthed", UltimateTerm, ReactionTerm };
 }

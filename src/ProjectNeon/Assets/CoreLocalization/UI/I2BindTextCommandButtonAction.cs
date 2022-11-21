@@ -10,7 +10,6 @@ public class I2BindTextCommandButtonAction : MonoBehaviour, ILocalizeTerms
     [SerializeField] private ButtonSounds sounds;
     [SerializeField] private FModButtonSounds fmodSounds;
     [SerializeField] private bool isPrimaryActionButton;
-    [SerializeField] private bool ignoreText = false;
 
     private void Awake()
     {
@@ -22,5 +21,5 @@ public class I2BindTextCommandButtonAction : MonoBehaviour, ILocalizeTerms
     }
 
     public string[] GetLocalizeTerms()
-        => ignoreText ? Array.Empty<string>() : new[] {term};
+        => new[] {term};
 }

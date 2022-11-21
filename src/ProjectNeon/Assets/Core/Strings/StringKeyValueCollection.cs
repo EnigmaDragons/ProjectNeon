@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(order = -19)]
-public class StringKeyValueCollection : ScriptableObject, ILocalizeTerms
+public class StringKeyValueCollection : ScriptableObject
 {
     [SerializeField] private List<StringKeyValuePair> items;
 
@@ -19,14 +19,4 @@ public class StringKeyValueCollection : ScriptableObject, ILocalizeTerms
     public bool Contains(string key) => items.FirstOrMaybe(x => x.Key.Value.Equals(key)).IsPresent;
 
     public IEnumerable<StringKeyValuePair> All => items;
-    
-    public string[] GetLocalizeTerms()
-    {
-        if (name.Equals("KeywordRules"))
-            return items.SelectMany(i => new[] { $"Keywords/{i.Key.Value}", $"Keywords/{i.Key.Value}_Rule" })
-                .Concat("Missing rule text for")
-                .ToArray();
-        
-        return Array.Empty<string>();
-    }
 }

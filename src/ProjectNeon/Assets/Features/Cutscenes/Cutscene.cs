@@ -25,6 +25,8 @@ public class Cutscene : ScriptableObject, ILocalizeTerms
 
     public string[] GetLocalizeTerms()
     {
-        return segments.Select(x => x.Term).ToArray();
+        return segments
+            .Where(segment => segment.SegmentType == CutsceneSegmentType.DialogueLine || segment.SegmentType == CutsceneSegmentType.NarratorLine || segment.SegmentType == CutsceneSegmentType.PlayerLine)
+            .Select(x => x.Term).ToArray();
     }
 }
