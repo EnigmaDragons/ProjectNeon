@@ -359,6 +359,8 @@ namespace I2.Loc
 
 		public void SetTerm (string primary)
 		{
+			if (primary == "")
+				mLocalizeTarget.Clear();
 			if (!string.IsNullOrEmpty(primary))
 				FinalTerm = mTerm = primary;
 
@@ -376,6 +378,8 @@ namespace I2.Loc
 
 		public void SetFinalText(string finalText)
 		{
+			if (finalText == "")
+				mLocalizeTarget.Clear();
 			OnLocalize(true, finalText);
 		}
 

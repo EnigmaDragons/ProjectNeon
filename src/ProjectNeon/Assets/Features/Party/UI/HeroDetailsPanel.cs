@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public sealed class HeroDetailsPanel : OnMessage<HeroStateChanged>
+public sealed class HeroDetailsPanel : OnMessage<HeroStateChanged>, ILocalizeTerms
 {
     [SerializeField] private Image heroBust;
     [SerializeField] private Localize nameLocalize;
@@ -16,6 +16,8 @@ public sealed class HeroDetailsPanel : OnMessage<HeroStateChanged>
 
     private Hero _hero;
     private bool _canInteractWithEquipment;
+    
+    private const string LevelUpTerm = "Menu/LevelUp";
     
     public HeroDetailsPanel Initialized(Hero h, bool canInteractWithEquipment)
     {
@@ -32,10 +34,13 @@ public sealed class HeroDetailsPanel : OnMessage<HeroStateChanged>
         
         levelUpButton?.gameObject.SetActive(false);
         if (levelUpButton != null && !h.IsMaxLevelV4 && h.Levels.UnspentLevelUpPoints > 0)
-            levelUpButton.InitTerm("Menu/LevelUp", () => Message.Publish(new LevelUpHero(h)));
+            levelUpButton.InitTerm(LevelUpTerm, () => Message.Publish(new LevelUpHero(h)));
         
         return this;
     }
 
     protected override void Execute(HeroStateChanged msg) => Initialized(_hero, _canInteractWithEquipment);
+
+    public string[] GetLocalizeTerms()
+        => new[] {LevelUpTerm};
 }

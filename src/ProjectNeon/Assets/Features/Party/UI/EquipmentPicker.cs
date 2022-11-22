@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class EquipmentPicker : OnMessage<GetUserSelectedEquipment>
+public class EquipmentPicker : OnMessage<GetUserSelectedEquipment>, ILocalizeTerms
 {
     [SerializeField] private GameObject view;
     [SerializeField] private LocalizedCommandButton noneButton;
@@ -10,11 +10,13 @@ public class EquipmentPicker : OnMessage<GetUserSelectedEquipment>
 
     private Action<Maybe<Equipment>> _onSelected = _ => { };
 
+    private const string NoneTerm = "Menu/None";
+    
     private void Awake()
     {
-        noneButton.InitTerm("Menu/None", SelectNone);
+        noneButton.InitTerm(NoneTerm, SelectNone);
     }
-    
+
     protected override void Execute(GetUserSelectedEquipment msg)
     {
         _onSelected = msg.OnSelected;
@@ -38,4 +40,7 @@ public class EquipmentPicker : OnMessage<GetUserSelectedEquipment>
         view.SetActive(false);
         s();
     }
+
+    public string[] GetLocalizeTerms()
+        => new[] {NoneTerm};
 }

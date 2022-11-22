@@ -2,7 +2,7 @@ using I2.Loc;
 using TMPro;
 using UnityEngine;
 
-public class ConclusionPresenter : MonoBehaviour
+public class ConclusionPresenter : MonoBehaviour, ILocalizeTerms
 {
     [SerializeField] private Localize outcomeLabel;
     [SerializeField] private Localize adventureTitleLabel;
@@ -10,9 +10,12 @@ public class ConclusionPresenter : MonoBehaviour
     [SerializeField] private GameObject[] victoryElements;
     [SerializeField] private GameObject[] defeatElements;
 
+    private const string GameOverTerm = "Menu/Game Over";
+    private const string WonTerm = "Menu/Won";
+    
     public void Init(bool won, string adventureTitleTerm, string storyTextTerm)
     {
-        outcomeLabel.SetTerm(won ? "Menu/Won" : "Menu/Game Over");
+        outcomeLabel.SetTerm(won ? WonTerm : GameOverTerm);
         adventureTitleLabel.SetTerm(adventureTitleTerm);
         storyTextBox.SetTerm(storyTextTerm);
         HideElements();
@@ -37,4 +40,7 @@ public class ConclusionPresenter : MonoBehaviour
         if (defeatElements != null)
             defeatElements.ForEach(g => g.SetActive(false));
     }
+
+    public string[] GetLocalizeTerms()
+        => new[] {WonTerm, GameOverTerm};
 }

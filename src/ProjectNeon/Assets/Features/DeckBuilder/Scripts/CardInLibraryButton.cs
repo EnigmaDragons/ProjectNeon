@@ -5,7 +5,7 @@ using System.Linq;
 using I2.Loc;
 using UnityEngine.EventSystems;
 
-public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl, StartBattleInitiated>, IPointerEnterHandler, IPointerExitHandler
+public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl, StartBattleInitiated>, IPointerEnterHandler, IPointerExitHandler, ILocalizeTerms
 {
     [SerializeField] private CardPresenter presenter;
     [SerializeField] private DeckBuilderState state;
@@ -98,5 +98,8 @@ public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl, St
     protected override void Execute(StartBattleInitiated msg)
     {
         presenter.DisableInteractions();
-    } 
+    }
+
+    public string[] GetLocalizeTerms()
+        => new[] {DialogTerms.StarterCardsWarning, DialogTerms.OptionGotIt};
 }

@@ -167,5 +167,5 @@ public class EquipmentPresenter : OnMessage<LanguageChanged>, IPointerDownHandle
             .FirstOrDefault();
     }
 
-    public string[] GetLocalizeTerms() => new[] { MadeByTerm, ArchetypesTerm, AnyTerm };
+    public string[] GetLocalizeTerms() => new[] { MadeByTerm, ArchetypesTerm, AnyTerm, $"Archetypes/General" };
 }
