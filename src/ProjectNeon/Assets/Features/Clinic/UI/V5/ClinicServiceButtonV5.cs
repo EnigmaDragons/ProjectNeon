@@ -49,6 +49,7 @@ public class ClinicServiceButtonV5 : MonoBehaviour, IPointerEnterHandler, IPoint
             rarity.gameObject.SetActive(false);
         else 
             rarity.Set(data.Rarity);
+        highlight.SetActive(false);
     }
 
     public void ShowRules()
