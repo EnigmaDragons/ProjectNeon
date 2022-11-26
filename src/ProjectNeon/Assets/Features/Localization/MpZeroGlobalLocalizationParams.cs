@@ -18,6 +18,8 @@ public class MpZeroGlobalLocalizationParams : MonoBehaviour, ILocalizationParams
 
     public virtual string GetParameterValue(string paramName)
     {
+        if (paramName.StartsWith("t:"))
+            return paramName.Substring(2).ToLocalized();
         if (paramName.Equals("SaveGameVersion"))
             return CurrentGameData.SaveGameVersion;
         if (paramName.Equals("GameVersion"))
