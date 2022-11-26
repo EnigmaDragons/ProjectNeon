@@ -52,9 +52,13 @@ public class FindCardsEditor : EditorWindow
     
     //By Resource Type
     private string _resourceType;
+
+    private Vector2 _scrollPos;
     
     void OnGUI()
     {
+        _scrollPos = EditorGUILayout.BeginScrollView(_scrollPos);
+        
         _effectType = (EffectType)EditorGUILayout.EnumPopup("EffectType", _effectType);
         if (GUILayout.Button("Search By Effect Type")) 
         {
@@ -294,6 +298,38 @@ public class FindCardsEditor : EditorWindow
             ShowCards($"Total Items: {items.Length}", items);
             GUIUtility.ExitGUI();
         }
+        
+        DrawUILine();
+
+        if (GUILayout.Button("Find Referenced Cards Marked as WIP"))
+        {
+            var augments = GetAllInstances<StaticEquipment>()
+                .Where(e => e.IncludeInPools && e.Slot == EquipmentSlot.Augmentation)
+                .Where(e => e.ReferencedCard.IsPresentAnd(c => c is CardType { IsWip: true }))
+                .Select(e => (CardType)e.ReferencedCard.Value);
+            
+            var linkedCards = GetAllInstances<CardType>()
+                .Where(e => e.IncludeInPools && e.ChainedCard || e.SwappedCard)
+                .SelectMany(e => e.ReferencedCards());
+
+            var linkedReactionCards = GetAllInstances<ReactionCardType>()
+                .Where(e => e.ChainedCard || e.SwappedCard)
+                .SelectMany(e => e.ReferencedCards());
+
+            var items = augments
+                .Concat(linkedCards)
+                .Concat(linkedReactionCards)
+                .Where(e => e.IsWip)
+                .Select(e => $"{e.GetArchetypeKey()} - {e.Name}")
+                .Distinct()
+                .OrderBy(e => e)
+                .ToArray();
+
+            ShowCards($"Total Items: {items.Length}", items);
+            GUIUtility.ExitGUI();
+        }
+        
+        EditorGUILayout.EndScrollView();
     }
     
     private void ShowCards(string description, string[] cards) 
