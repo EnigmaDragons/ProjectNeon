@@ -378,7 +378,7 @@ namespace I2.Loc
 
 		public void SetFinalText(string finalText)
 		{
-			if (finalText == "")
+			if (finalText == "" && mLocalizeTarget != null)
 				mLocalizeTarget.Clear();
 			OnLocalize(true, finalText);
 		}
