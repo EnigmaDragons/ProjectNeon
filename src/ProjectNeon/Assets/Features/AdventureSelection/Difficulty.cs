@@ -5,9 +5,9 @@ public class Difficulty : ScriptableObject, ILocalizeTerms
 {
     [SerializeField] public int id;
     [SerializeField, PreviewSprite] private Sprite img; 
-    [SerializeField] public string difficultyName;
-    [SerializeField] public string description;
-    [SerializeField, TextArea(minLines: 3, maxLines: 9)] public string changes;
+    [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public string difficultyName;
+    [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public string description;
+    [SerializeField, TextArea(minLines: 3, maxLines: 9), UnityEngine.UI.Extensions.ReadOnly] public string changes;
     [SerializeField] private bool resetAfterDeath;
     [SerializeField] private StaticGlobalEffect[] globalEffects;
 

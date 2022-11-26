@@ -174,7 +174,7 @@ public class AdventureProgressV5 : AdventureProgressBase
              RngSeed = rngSeed,
              States = _storyStates.Keys.ToArray(),
              StateValues = _storyStates.Values.ToArray(),
-             DifficultyId = difficulty == null ? difficulty.Id : 0
+             DifficultyId = difficulty != null ? difficulty.Id : 0
         };
     
     public bool InitAdventure(GameAdventureProgressData d, Adventure adventure)

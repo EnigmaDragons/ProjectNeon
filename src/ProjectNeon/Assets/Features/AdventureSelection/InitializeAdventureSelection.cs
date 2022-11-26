@@ -48,7 +48,6 @@ public class InitializeAdventureSelection : MonoBehaviour
         adventureProgress.AdventureProgress.Init(adventure, 0);
         CurrentGameData.Write(s =>
         {
-            s.IsInitialized = true;
             s.Phase = CurrentGamePhase.SelectedAdventure;
             s.AdventureProgress = adventureProgress.AdventureProgress.GetData();
             return s;
