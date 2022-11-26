@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public sealed class Navigator : ScriptableObject
 {
+    [SerializeField] private string lastSceneName;
     [SerializeField] private bool loggingEnabled;
     
     public void NavigateToTitleScreen() => NavigateTo("TitleScreen");
@@ -26,6 +28,12 @@ public sealed class Navigator : ScriptableObject
     public void NavigateToSettingsScene() => NavigateTo("SettingsScene");
     public void NavigateToDifficultyScene() => NavigateTo("DifficultySelection");
     public void NavigateToWishlistScene() => NavigateTo("WishlistScene");
+    
+    public void NavigateBack()
+    {
+        if (!string.IsNullOrWhiteSpace(lastSceneName))
+            NavigateTo(lastSceneName);
+    }
 
     public void ReloadScene()
     {
@@ -36,6 +44,7 @@ public sealed class Navigator : ScriptableObject
 
     private void NavigateTo(string sceneName)
     {
+        lastSceneName = SceneManager.GetActiveScene().name;
         if (loggingEnabled)
             Log.Info($"Navigating to {sceneName}");
         Message.Publish(new NavigateToSceneRequested(sceneName));
