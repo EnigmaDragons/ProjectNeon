@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class TriggerAudioWithHover : MonoBehaviour
+public class TriggerAudioWithHover : OnMessage<NavigateToSceneRequested>
 {
     [FMODUnity.EventRef]
     public string Event;
@@ -31,7 +29,9 @@ public class TriggerAudioWithHover : MonoBehaviour
 
     private void Play(string sound)
     {
-        if (!string.IsNullOrWhiteSpace(sound))
+        if (enabled && !string.IsNullOrWhiteSpace(sound))
             FMODUnity.RuntimeManager.PlayOneShotAttached(sound, gameObject);
     }
+
+    protected override void Execute(NavigateToSceneRequested msg) => enabled = false;
 }

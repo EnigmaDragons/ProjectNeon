@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class FModButtonSounds : MonoBehaviour
+public class FModButtonSounds : OnMessage<NavigateToSceneRequested>
 {
     [SerializeField, FMODUnity.EventRef] private string bigClickSound;
     [SerializeField, FMODUnity.EventRef] private string standardClickSound;
@@ -16,7 +16,9 @@ public class FModButtonSounds : MonoBehaviour
     
     private void Play(string sound)
     {
-        if (!string.IsNullOrWhiteSpace(sound))
+        if (enabled && !string.IsNullOrWhiteSpace(sound))
             FMODUnity.RuntimeManager.PlayOneShotAttached(sound, gameObject);
     }
+
+    protected override void Execute(NavigateToSceneRequested msg) => enabled = false;
 }
