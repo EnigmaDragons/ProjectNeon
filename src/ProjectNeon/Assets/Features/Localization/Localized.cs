@@ -69,6 +69,12 @@ public static class Localized
         }
     }
     
+    public static string ToSingleLineI2Format(this string s)
+        => s
+            .Replace("\r\n", "<br>")
+            .Replace("\n", "<br>")
+            .ToI2Format();
+    
     public static string ToI2Format(this string s)
     {
         var r = s;

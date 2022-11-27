@@ -23,7 +23,8 @@ public class CardDescriptionV2
     
     public bool IsUsable() => !string.IsNullOrWhiteSpace(text);
     public string ToI2Format() => text.ToI2Format();
-
+    public string ToSingleLineI2Format() => text.ToSingleLineI2Format();
+    
     public static CardDescriptionV2 FromDescriptionV1(string descriptionV1)
     {
         var argsList = new List<string>();

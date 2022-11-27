@@ -328,7 +328,29 @@ public class FindCardsEditor : EditorWindow
             ShowCards($"Total Items: {items.Length}", items);
             GUIUtility.ExitGUI();
         }
-        
+
+        if (GUILayout.Button("Find Orphaned Enemy Cards"))
+        {
+            var enemies = GetAllInstances<Enemy>().Where(e => e.IsCurrentlyWorking);
+            var enemyCardsUsed = GetAllInstances<CardType>().Where(e => e.GetArchetypeKey().Equals("Enemy"))
+                .SafeToDictionary(c => c.name, c => false);
+            foreach (var e in enemies)
+            {
+                var stages = e.Stages;
+                foreach (var s in stages)
+                {
+                    var enemy = e.ForStage(s);
+                    enemy.Cards.ForEach(c => enemyCardsUsed[c.name] = true);
+                }
+            }
+
+            var orphanedCards = enemyCardsUsed.Where(e => !e.Value).Where(e => !e.Key.StartsWith("MimicTrickster_"));
+            ShowCards("Orphaned Enemy Cards", orphanedCards
+                .Where(c => !c.Key.StartsWith("Basic_"))
+                .Select(c => c.Key).ToArray());
+            
+        }
+
         EditorGUILayout.EndScrollView();
     }
     

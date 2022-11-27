@@ -20,10 +20,7 @@ public class LocalizationExporter
     }
 
     private static string ToSingleLineI2Format(string toReplace)
-        => toReplace
-            .Replace("\r\n", "<br>")
-            .Replace("\n", "<br>")
-            .ToI2Format();
+        => toReplace.ToSingleLineI2Format();
     
     [MenuItem("Neon/Localization/Export Cards For Localization")]
     public static void ExportCardsForLocalization()
