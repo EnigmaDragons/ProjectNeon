@@ -148,6 +148,8 @@ public class QualityAssurance
                 continue;
             
             var issues = new List<string>();
+            if (c.Setting is GameObjectSetting setting && setting.Battlefield == null)
+                issues.Add($"Cutscene {c.name} has a Null Game Object Setting");
             for (var i = 0; i < c.Segments.Length; i++)
             {
                 var s = c.Segments[i];
