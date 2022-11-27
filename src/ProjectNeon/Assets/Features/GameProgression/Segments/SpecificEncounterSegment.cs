@@ -19,6 +19,8 @@ public class SpecificEncounterSegment : StageSegment
     [SerializeField] private bool allowBasic = true;
     [SerializeField] private CardType[] overrideDeck;
 
+    public GameObject Battlefield => battlefield;
+    
     public override string Name => "Specific Encounter";
     public override bool ShouldCountTowardsEnemyPowerLevel => true;
     public override bool ShouldAutoStart => shouldAutoStart;

@@ -31,7 +31,7 @@ public class InitializeDifficultySelection : MonoBehaviour
         CurrentGameData.Write(s =>
         {
             s.IsInitialized = true;
-            s.Phase = CurrentGamePhase.SelectedAdventure;
+            s.Phase = CurrentGamePhase.SelectedDifficulty;
             s.AdventureProgress = adventureProgress.AdventureProgress.GetData();
             return s;
         });

@@ -43,16 +43,21 @@ public static class Localized
     {
         try
         {
-            return Format(StringTermOrDefault(term, defaultTranslation), args);
+            if (!string.IsNullOrWhiteSpace(term))
+                return Format(StringTermOrDefault(term, defaultTranslation), args);
         }
         catch (Exception)
         {
-            return Format(defaultTranslation, args);
+            Log.Error($"Tried to Format Term or default Term: \"{term}\" \"Default: {defaultTranslation}\"");
         }
+        return Format(defaultTranslation, args);
     }
 
     private static string Format(string template, params object[] args)
     {
+        if (string.IsNullOrWhiteSpace(template))
+            return string.Empty;
+        
         try
         {
             return string.Format(template, args);
@@ -63,6 +68,12 @@ public static class Localized
             throw;
         }
     }
+    
+    public static string ToSingleLineI2Format(this string s)
+        => s
+            .Replace("\r\n", "<br>")
+            .Replace("\n", "<br>")
+            .ToI2Format();
     
     public static string ToI2Format(this string s)
     {

@@ -17,7 +17,6 @@ public class CustomTheme : ScriptableObject
 
     private void InitializeIfNeeded()
     {
-        if (_colors == null)
-            _colors = colors.SafeToDictionary(c => c.Name, c => c.Color);
+        _colors = colors.SafeToDictionary(c => c.Name, c => c.Color);
     }
 }

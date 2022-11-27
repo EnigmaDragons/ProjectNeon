@@ -19,6 +19,8 @@ public class Hero
 
     public Hero(HeroCharacter character, RuntimeDeck deck)
     {
+        if (character == null)
+            Log.Error("Hero Ctor Character is null! WTF!");
         this.character = character;
         this.deck = deck;
         levels = new HeroLevels();
@@ -28,7 +30,7 @@ public class Hero
         _primaryResourceType = character.Stats.ResourceTypes.FirstAsMaybe().Select(r => r, () => new InMemoryResourceType());
     }
 
-    public string NameTerm => character.NameTerm();
+    public string NameTerm => character == null ? "" : character.NameTerm();
     public string ClassTerm => character.ClassTerm();
     public HeroCharacter Character => character;
     public RuntimeDeck Deck => deck;

@@ -52,6 +52,10 @@ public class CardTypeEditor : Editor
 
         if (descV2.IsUsable())
         {
+            if (GUILayout.Button("Copy V2 I2 English Description"))
+            {
+                GUIUtility.systemCopyBuffer = targetCard.descriptionV2.ToSingleLineI2Format();
+            }
             GUILayout.Label("Description V2 - Preview:", new GUIStyle() { fontStyle = FontStyle.Bold });
             GUILayout.TextArea(descV2.Preview(), new GUIStyle { padding = new RectOffset(0,0,8,8), stretchHeight = true});
             GUILayout.Label("Description V2 - Library Sample:", new GUIStyle() { fontStyle = FontStyle.Bold });

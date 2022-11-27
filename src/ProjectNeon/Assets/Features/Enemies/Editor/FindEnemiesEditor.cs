@@ -161,8 +161,9 @@ public class FindEnemiesEditor : EditorWindow
         if (GUILayout.Button("By Resource")) 
         {
             var items = GetAllInstances<Enemy>()
-                .Where(e => e.ResourceType.Name.Equals(_resourceType, StringComparison.InvariantCultureIgnoreCase))
-                .Select(e => e.name)
+                .Where(e => string.IsNullOrWhiteSpace(_resourceType) || e.ResourceType.Name.Equals(_resourceType, StringComparison.InvariantCultureIgnoreCase))
+                .Select(e => $"{e.ResourceType.Name} - {e.name}")
+                .OrderBy(e => e)
                 .ToArray();
             GetWindow<ListDisplayWindow>()
                 .Initialized($"{_corpName} - {items.Length} Enemies", items)

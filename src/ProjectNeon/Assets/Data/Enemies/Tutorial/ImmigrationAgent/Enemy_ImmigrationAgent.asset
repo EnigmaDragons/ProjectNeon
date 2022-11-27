@@ -27,6 +27,7 @@ MonoBehaviour:
     CardTagPriority: 
     UnpreferredCardTags: 
     RotatePlayingCardTags: 
+    IgnoreDesignatedAttackerRole: 0
   preferredTurnOrder: 99
   prefab: {fileID: 2394940212872579543, guid: 4d6b6f7c3ad596548b0dacd07e413b55, type: 3}
   materialType: 1
@@ -39,7 +40,7 @@ MonoBehaviour:
   tier: 0
   unique: 0
   isHasty: 0
-  resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
   description: 
   animations: {fileID: 11400000, guid: 1dc6b26695ac4b740919009fa699a952, type: 2}
   animationSounds: {fileID: 11400000, guid: 1bd3746881b800a4585ce7f8d21aac46, type: 2}
@@ -74,8 +75,13 @@ MonoBehaviour:
       resourceValue: 0
       perTurnPower: 0
       maxAndStartingResourcesPower: 0
+      estimatedHeroDamage: 0
       estimatedTurnsAlive: 0
+      estimatedPerTurnTotalValue: 0
       calculatedPowerLevel: 0
     startOfBattleEffects: []
     Cards:
     - {fileID: 11400000, guid: 79f3c37c5fd82f243913406f5356f7cb, type: 2}
+  maxCopies: 0
+  minimumAllies: 0
+  damageType: 0

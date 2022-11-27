@@ -97,4 +97,12 @@ public static class CardTypeDataExtensions
     
     private static Maybe<Sprite> NonBattleBust(this CardTypeData c, HeroCharacter h)
         => c.Archetypes.AnyNonAlloc() ? new Maybe<Sprite>(h.Bust) : Maybe<Sprite>.Missing();
+
+    public static CardType[] ReferencedCards(this CardTypeData c)
+    {
+        var list = new List<CardType>();
+        c.ChainedCard.IfPresentAndMatches(x => x is CardType, x => list.Add((CardType)x));
+        c.SwappedCard.IfPresentAndMatches(x => x is CardType, x => list.Add((CardType)x));
+        return list.ToArray();
+    }
 }

@@ -88,7 +88,7 @@ namespace I2.Loc
 		}
 
         // When JustCheck is true, importing from google will not download any data, just detect if the Spreadsheet is up-to-date
-		public void Import_Google( bool ForceUpdate, bool justCheck)
+		public void Import_Google( bool ForceUpdate, bool justCheck, bool forceInstantUpdate = false)
 		{
             if (!ForceUpdate && GoogleUpdateFrequency==eGoogleUpdateFrequency.Never)
 				return;
@@ -146,7 +146,7 @@ namespace I2.Loc
             #endif
 
 			//--[ Checking google for updated data ]-----------------
-			CoroutineManager.Start(Import_Google_Coroutine(ForceUpdate, justCheck));
+			CoroutineManager.Start(Import_Google_Coroutine(ForceUpdate, justCheck, forceInstantUpdate));
 		}
 
 		string GetSourcePlayerPrefName()
@@ -168,7 +168,7 @@ namespace I2.Loc
 #endif
 		}
 
-		IEnumerator Import_Google_Coroutine(bool forceUpdate, bool JustCheck)
+		IEnumerator Import_Google_Coroutine(bool forceUpdate, bool JustCheck, bool forceInstantUpdate = false)
 		{
             UnityWebRequest www = Import_Google_CreateWWWcall(forceUpdate, JustCheck);
 			if (www==null)
@@ -176,7 +176,7 @@ namespace I2.Loc
 
 			while (!www.isDone)
 				yield return null;
-
+			
 			//Debug.Log ("Google Result: " + www.text);
 			byte[] bytes = www.downloadHandler.data;
 			bool notError = string.IsNullOrEmpty(www.error) && bytes!=null;
@@ -201,6 +201,12 @@ namespace I2.Loc
                 if (!isEmpty)
                 {
                     mDelayedGoogleData = wwwText;
+
+                    if (forceInstantUpdate)
+                    {
+	                    ApplyDownloadedDataFromGoogle();
+	                    yield break;
+                    }
 
                     switch (GoogleUpdateSynchronization)
                     {

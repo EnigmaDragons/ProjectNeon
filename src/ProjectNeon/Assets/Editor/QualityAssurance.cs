@@ -34,22 +34,26 @@ public class QualityAssurance
         var (heroCount, heroFailures) = QaAllHeroes();
         var (cutsceneCount, cutsceneFailures) = QaAllCutscenes();
         var (prefabCount, prefabFailures) = QaSpecificPrefabs();
+        var (encounterCount, encounterFailures) = QaAllSpecificEncounterSegments();
+        var (adventureCount, adventureFailures) = QaAdventures();
 
         var qaPassed = enemyFailures.None() && cardFailures.None();
         var qaResultTerm = qaPassed ? "Passed" : "Failed - See Details Below";
-        Log.Info($"--------------------------------------------------------------");
+        Log.Info("--------------------------------------------------------------");
         Log.InfoOrError($"QA - {qaResultTerm}", !qaPassed);
         LogReport("Enemies", enemyCount, enemyFailures);
         LogReport("Cards", cardCount, cardFailures);
         LogReport("Heroes", heroCount, heroFailures);
         LogReport("Cutscenes", cutsceneCount, cutsceneFailures);
         LogReport("Prefabs", prefabCount, prefabFailures);
-        Log.Info($"--------------------------------------------------------------");
+        LogReport("Encounters", encounterCount, encounterFailures);
+        LogReport("Adventures", adventureCount, adventureFailures);
+        Log.Info("--------------------------------------------------------------");
 
         ErrorReport.ReenableAfterQa();
         return qaPassed;
     }
-
+    
     private static void LogReport(string qaCategory, int itemCount, List<ValidationResult> failures)
     {
         Log.InfoOrError($"QA - {qaCategory}: {itemCount - failures.Count} out of {itemCount} passed inspection.",
@@ -71,6 +75,39 @@ public class QualityAssurance
         return (1, badItems);
     }
 
+    private static (int adventureCount, List<ValidationResult> adventureFailures) QaAdventures()
+    {
+        var adventures = ScriptableExtensions.GetAllInstances<Library>().SelectMany(l => l.UnlockedAdventures).ToArray();
+        var badItems = new List<ValidationResult>();
+        var numItems = adventures.Length;
+        foreach (var a in adventures)
+        {
+            var issues = new List<string>();
+            var stages = a.StagesV5;
+            for (var i = 0; i < stages.Length; i++)
+            {
+                var stage = stages[i];
+                var segmentCount = stage.SegmentCount;
+                for (var seg = 0; seg < segmentCount; seg++)
+                {
+                    var mainSegment = stage.Segments[seg];
+                    var autoStarts = mainSegment.ShouldAutoStart;
+                    if (autoStarts)
+                    {
+                        if (stage.MaybeSecondarySegments.Length > seg && stage.MaybeSecondarySegments[seg] != null)
+                            issues.Add($"Has Unreachable Secondary Segment - Index {seg}");
+                        if (stage.MaybeStorySegments.Length > seg && stage.MaybeStorySegments[seg] != null)
+                            issues.Add($"Has Unreachable Story Segment - Index {seg}");
+                    }
+                }
+            }
+            if (issues.Any())
+                badItems.Add(new ValidationResult(a.name, issues));
+        }
+
+        return (numItems, badItems);
+    }
+    
     private static ValidationResult QaDeckBuilderPrefab()
     {
         var issues = new List<string>();
@@ -82,6 +119,7 @@ public class QualityAssurance
         else
         {
             var obj = (GameObject)PrefabUtility.InstantiatePrefab(assets[0]);
+            obj.hideFlags = HideFlags.HideAndDontSave;
             try
             {
                 var canvas = obj.transform.Find("DeckBuilderCanvas");
@@ -110,6 +148,8 @@ public class QualityAssurance
                 continue;
             
             var issues = new List<string>();
+            if (c.Setting is GameObjectSetting setting && setting.Battlefield == null)
+                issues.Add($"Cutscene {c.name} has a Null Game Object Setting");
             for (var i = 0; i < c.Segments.Length; i++)
             {
                 var s = c.Segments[i];
@@ -174,6 +214,23 @@ public class QualityAssurance
         }
         
         return (numEnemiesCount, badEnemies);
+    }
+
+    private static (int, List<ValidationResult>) QaAllSpecificEncounterSegments()
+    {
+        var encounters = ScriptableExtensions.GetAllInstances<SpecificEncounterSegment>();
+        var badEncounters = new List<ValidationResult>();
+        var numEncounters = encounters.Length;
+        foreach (var e in encounters)
+        {
+            var issues = new List<string>();
+            if (e.Battlefield == null)
+                issues.Add($"Specific Encounter Segment {e.name} has no Battlefield Set");
+            if (issues.Any())
+                badEncounters.Add(new ValidationResult(e.name, issues));
+        }
+
+        return (numEncounters, badEncounters);
     }
 
     private static void ValidateEnemyPrefab(Enemy e, List<string> issues)

@@ -26,13 +26,16 @@ public class BattleSoundGuy : MonoBehaviour
     [SerializeField, FMODUnity.EventRef] private string OnCardRightClick;
     [SerializeField, FMODUnity.EventRef] private string OnCardRightClickBack;
     [SerializeField, FMODUnity.EventRef] private string OnCardGlitchedSFX;
+    
+    private bool _disableHoverSounds = false;
 
     private void OnEnable()
     {
+        _disableHoverSounds = false;
         Message.Subscribe<ShowEnemySFX>(e => PlayOneShot(OnEnemyDetalisShown, e.UiSource), this);
         Message.Subscribe<HideEnemyDetails>(OnEnemyDetailsHiddenSFX, this);
         Message.Subscribe<CardHoverSFX>(OnCardPresentedSFX, this);
-        Message.Subscribe<CardHoverExitSFX>(e => PlayOneShot(OnCardHoverExit, e.UiSource), this);
+        Message.Subscribe<CardHoverExitSFX>(OnCardHoverExitted, this);
         Message.Subscribe<TargetChanged>(OnTargetChanged, this);
         Message.Subscribe<ShowTooltip>(OnTrashHovered, this);
         Message.Subscribe<CardDiscarded>(e => PlayOneShot(OnCardRecycled, e.UiSource), this);
@@ -52,6 +55,14 @@ public class BattleSoundGuy : MonoBehaviour
         Message.Subscribe<BattleRewardsStarted>(_ => OnBattleWon(), this);
         Message.Subscribe<NavigateToSceneRequested>(OnBattleWonFadeFUNC, this);
         Message.Subscribe<CardsGlitched>(OnCardGlithced, this);
+        Message.Subscribe<NavigateToSceneRequested>(_ => _disableHoverSounds = true, this);
+    }
+
+    private void OnCardHoverExitted(CardHoverExitSFX obj)
+    {
+        if (_disableHoverSounds) return;
+
+        PlayOneShot(OnCardHoverExit, obj.UiSource);
     }
 
     private void OnCardGlithced(CardsGlitched msg)
@@ -75,6 +86,8 @@ public class BattleSoundGuy : MonoBehaviour
         
     private void OnHoverEntered(HoverEntered msg)
     {
+        if (_disableHoverSounds) return;
+        
         if (msg.ElementName == "CycleCardDropTarget")
         {
             CardCycle = FMODUnity.RuntimeManager.CreateInstance("event:/BattleScene/CARD_CYCLE");
@@ -89,6 +102,8 @@ public class BattleSoundGuy : MonoBehaviour
     
     private void OnHoverExited(HoverExited msg)
     {
+        if (_disableHoverSounds) return;
+        
         if (msg.ElementName == "CycleCardDropTarget")
         {
             CardCycle.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
@@ -125,6 +140,7 @@ public class BattleSoundGuy : MonoBehaviour
 
     private void OnEnemyHoverFUNC(CharacterHoverChanged msg)
     {
+        if (_disableHoverSounds) return;
         try
         {
             if (msg.HoverCharacter.IsPresentAnd(m => m.Member.TeamType == TeamType.Enemies))
@@ -160,6 +176,7 @@ public class BattleSoundGuy : MonoBehaviour
 
     private void OnTrashHovered(ShowTooltip msg)
     {
+        if (_disableHoverSounds) return;
         FMODUnity.RuntimeManager.PlayOneShot(OnTooltipHover, Vector3.zero);
     }
 
@@ -171,6 +188,8 @@ public class BattleSoundGuy : MonoBehaviour
 
     private void OnCardPresentedSFX(CardHoverSFX msg)
     {
+        if (_disableHoverSounds) return;
+        
         FMODUnity.RuntimeManager.PlayOneShot(OnCardPresented, Vector3.zero);
     }
 

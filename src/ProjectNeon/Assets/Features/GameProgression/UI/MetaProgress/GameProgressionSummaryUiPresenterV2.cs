@@ -37,9 +37,10 @@ public class GameProgressionSummaryUiPresenterV2 : MonoBehaviour
             completionPresenters[i].Initialized(progressItem.First().Adventure.Value, progressItem.ToArray());
         }
         
-        nonVisualCompletionItemsLabel.SetFinalText(string.Join(Environment.NewLine, groupedProgress
-            .Where(x => x.Key == -1)
-            .SelectMany(x => x.ToArray())
-            .Select(p => p.FullDescription())));
+        if (nonVisualCompletionItemsLabel != null)
+            nonVisualCompletionItemsLabel.SetFinalText(string.Join(Environment.NewLine, groupedProgress
+                .Where(x => x.Key == -1)
+                .SelectMany(x => x.ToArray())
+                .Select(p => p.FullDescription())));
     }
 }
