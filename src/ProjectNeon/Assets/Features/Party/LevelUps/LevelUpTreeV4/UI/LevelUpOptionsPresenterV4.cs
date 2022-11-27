@@ -63,7 +63,10 @@ public sealed class LevelUpOptionsPresenterV4 : MonoBehaviour, ILocalizeTerms
         _options.Clear();
         if (levelLabel != null)
             levelLabel.text = level.ToString();
-        promptLabel.SetFinalText(string.Empty);
+        if (promptLabel != null)
+            promptLabel.SetFinalText(string.Empty);
+        else
+            Log.Error("Prompt Label binding is missing from Level Up Options Presenter V4");
 
         var unfoldDelay = unfoldInitialDelay;
         options.Where(x => x.IsFunctional)

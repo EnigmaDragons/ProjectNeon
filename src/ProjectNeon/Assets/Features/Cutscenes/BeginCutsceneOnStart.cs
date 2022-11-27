@@ -7,6 +7,7 @@ public class BeginCutsceneOnStart : MonoBehaviour
     
     private void Start()
     {
+        Log.Info($"Beginning Cutscene {Cutscene.name}");
         Message.Publish(new StartCutsceneRequested(Cutscene, Maybe<Action>.Missing()));
     }
 }
