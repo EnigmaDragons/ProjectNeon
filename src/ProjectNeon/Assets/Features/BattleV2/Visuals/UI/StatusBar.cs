@@ -34,10 +34,10 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>, ILocalizeTerms
         var s = states.ValueOrDefault(statusTag, Array.Empty<ITemporalState>());
 
         var combined = Combine(s, x => x.Status.CustomText.OrDefault(() => defaultText)
-            .Replace("[Originator]", battleState.Members.TryGetValue(x.OriginatorId, out var m)
+            .Replace("{[Originator]}", battleState.Members.TryGetValue(x.OriginatorId, out var m)
                 ? m.TeamType == TeamType.Enemies ? $"{m.NameTerm.ToLocalized()} {m.Id}" : m.NameTerm.ToLocalized()
                 : "Tooltips/Originator".ToLocalized())
-            .Replace("[PrimaryStat]", _member.PrimaryStat().GetString()), x => x.Length > 1 ? x.Length : 0);
+            .Replace("{[PrimaryStat]}", _member.PrimaryStat().GetString()), x => x.Length > 1 ? x.Length : 0);
         combined.IfPresent(c => statuses.Add(c));
     }
 
