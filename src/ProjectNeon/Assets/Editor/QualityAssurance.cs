@@ -35,10 +35,11 @@ public class QualityAssurance
         var (cutsceneCount, cutsceneFailures) = QaAllCutscenes();
         var (prefabCount, prefabFailures) = QaSpecificPrefabs();
         var (encounterCount, encounterFailures) = QaAllSpecificEncounterSegments();
+        var (adventureCount, adventureFailures) = QaAdventures();
 
         var qaPassed = enemyFailures.None() && cardFailures.None();
         var qaResultTerm = qaPassed ? "Passed" : "Failed - See Details Below";
-        Log.Info($"--------------------------------------------------------------");
+        Log.Info("--------------------------------------------------------------");
         Log.InfoOrError($"QA - {qaResultTerm}", !qaPassed);
         LogReport("Enemies", enemyCount, enemyFailures);
         LogReport("Cards", cardCount, cardFailures);
@@ -46,12 +47,13 @@ public class QualityAssurance
         LogReport("Cutscenes", cutsceneCount, cutsceneFailures);
         LogReport("Prefabs", prefabCount, prefabFailures);
         LogReport("Encounters", encounterCount, encounterFailures);
-        Log.Info($"--------------------------------------------------------------");
+        LogReport("Adventures", adventureCount, adventureFailures);
+        Log.Info("--------------------------------------------------------------");
 
         ErrorReport.ReenableAfterQa();
         return qaPassed;
     }
-
+    
     private static void LogReport(string qaCategory, int itemCount, List<ValidationResult> failures)
     {
         Log.InfoOrError($"QA - {qaCategory}: {itemCount - failures.Count} out of {itemCount} passed inspection.",
@@ -73,6 +75,39 @@ public class QualityAssurance
         return (1, badItems);
     }
 
+    private static (int adventureCount, List<ValidationResult> adventureFailures) QaAdventures()
+    {
+        var adventures = ScriptableExtensions.GetAllInstances<Library>().SelectMany(l => l.UnlockedAdventures).ToArray();
+        var badItems = new List<ValidationResult>();
+        var numItems = adventures.Length;
+        foreach (var a in adventures)
+        {
+            var issues = new List<string>();
+            var stages = a.StagesV5;
+            for (var i = 0; i < stages.Length; i++)
+            {
+                var stage = stages[i];
+                var segmentCount = stage.SegmentCount;
+                for (var seg = 0; seg < segmentCount; seg++)
+                {
+                    var mainSegment = stage.Segments[seg];
+                    var autoStarts = mainSegment.ShouldAutoStart;
+                    if (autoStarts)
+                    {
+                        if (stage.MaybeSecondarySegments.Length > seg && stage.MaybeSecondarySegments[seg] != null)
+                            issues.Add($"Has Unreachable Secondary Segment - Index {seg}");
+                        if (stage.MaybeStorySegments.Length > seg && stage.MaybeStorySegments[seg] != null)
+                            issues.Add($"Has Unreachable Story Segment - Index {seg}");
+                    }
+                }
+            }
+            if (issues.Any())
+                badItems.Add(new ValidationResult(a.name, issues));
+        }
+
+        return (numItems, badItems);
+    }
+    
     private static ValidationResult QaDeckBuilderPrefab()
     {
         var issues = new List<string>();
@@ -84,6 +119,7 @@ public class QualityAssurance
         else
         {
             var obj = (GameObject)PrefabUtility.InstantiatePrefab(assets[0]);
+            obj.hideFlags = HideFlags.HideAndDontSave;
             try
             {
                 var canvas = obj.transform.Find("DeckBuilderCanvas");
