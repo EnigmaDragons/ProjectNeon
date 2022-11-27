@@ -34,6 +34,7 @@ public class QualityAssurance
         var (heroCount, heroFailures) = QaAllHeroes();
         var (cutsceneCount, cutsceneFailures) = QaAllCutscenes();
         var (prefabCount, prefabFailures) = QaSpecificPrefabs();
+        var (encounterCount, encounterFailures) = QaAllSpecificEncounterSegments();
 
         var qaPassed = enemyFailures.None() && cardFailures.None();
         var qaResultTerm = qaPassed ? "Passed" : "Failed - See Details Below";
@@ -44,6 +45,7 @@ public class QualityAssurance
         LogReport("Heroes", heroCount, heroFailures);
         LogReport("Cutscenes", cutsceneCount, cutsceneFailures);
         LogReport("Prefabs", prefabCount, prefabFailures);
+        LogReport("Encounters", encounterCount, encounterFailures);
         Log.Info($"--------------------------------------------------------------");
 
         ErrorReport.ReenableAfterQa();
@@ -174,6 +176,23 @@ public class QualityAssurance
         }
         
         return (numEnemiesCount, badEnemies);
+    }
+
+    private static (int, List<ValidationResult>) QaAllSpecificEncounterSegments()
+    {
+        var encounters = ScriptableExtensions.GetAllInstances<SpecificEncounterSegment>();
+        var badEncounters = new List<ValidationResult>();
+        var numEncounters = encounters.Length;
+        foreach (var e in encounters)
+        {
+            var issues = new List<string>();
+            if (e.Battlefield == null)
+                issues.Add($"Specific Encounter Segment {e.name} has no Battlefield Set");
+            if (issues.Any())
+                badEncounters.Add(new ValidationResult(e.name, issues));
+        }
+
+        return (numEncounters, badEncounters);
     }
 
     private static void ValidateEnemyPrefab(Enemy e, List<string> issues)
