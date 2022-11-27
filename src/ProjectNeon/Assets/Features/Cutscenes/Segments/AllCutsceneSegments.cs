@@ -22,6 +22,8 @@ public static class AllCutsceneSegments
             {CutsceneSegmentType.PlayerLine, e => new MessagePublishSegment(
                 new ShowCharacterDialogueLine(CutsceneCharacterAliases.Player, e.Term.ToLocalized()),
                 new FullyDisplayDialogueLine(CutsceneCharacterAliases.Player))},
+            { CutsceneSegmentType.ActivateGlitchEffect, e => new MessagePublishSegment(new CutsceneGlitchEffectRequested(true))},
+            { CutsceneSegmentType.DeactivateGlitchEffect, e => new MessagePublishSegment(new CutsceneGlitchEffectRequested(false))}
         };
 
     public static CutsceneSegment Create(CutsceneSegmentData data)

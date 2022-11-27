@@ -11,4 +11,6 @@ public enum CutsceneSegmentType
     HideCharacter = 7,
     ShowCharacter = 8,
     PlayerLine = 9,
+    ActivateGlitchEffect = 10,
+    DeactivateGlitchEffect = 11,
 }

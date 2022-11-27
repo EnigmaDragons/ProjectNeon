@@ -21,6 +21,7 @@ public class DeterministicRng
     public int Int() => Int(int.MaxValue);
     public int Int(int max) => _instance.Next(max);
     public int Int(int min, int max) => _instance.Next(min, max);
+    public float Float() => Convert.ToSingle(_instance.NextDouble());
     public double Dbl() => _instance.NextDouble();
     public KeyValuePair<T, T2> Random<T, T2>(Dictionary<T, T2> dictionary) => dictionary.ElementAt(Int(dictionary.Count));
     public T Random<T>(T[] array) => array[Int(array.Length)];
