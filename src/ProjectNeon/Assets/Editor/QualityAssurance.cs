@@ -37,7 +37,7 @@ public class QualityAssurance
         var (encounterCount, encounterFailures) = QaAllSpecificEncounterSegments();
         var (adventureCount, adventureFailures) = QaAdventures();
 
-        var qaPassed = enemyFailures.None() && cardFailures.None();
+        var qaPassed = enemyFailures.None() && cardFailures.None() && heroFailures.None() && cutsceneFailures.None() && prefabFailures.None() && encounterFailures.None() && adventureFailures.None();
         var qaResultTerm = qaPassed ? "Passed" : "Failed - See Details Below";
         Log.Info("--------------------------------------------------------------");
         Log.InfoOrError($"QA - {qaResultTerm}", !qaPassed);
@@ -130,11 +130,22 @@ public class QualityAssurance
             }
             catch (Exception)
             {
-                Object.DestroyImmediate(obj);
             }
+            SafeDestroyImmediate(obj);
         }
         
         return new ValidationResult("DeckBuilder-V5-Prefab", issues);
+    }
+
+    private static void SafeDestroyImmediate(GameObject obj)
+    {
+        try
+        {
+            Object.DestroyImmediate(obj);
+        }
+        catch (Exception)
+        {
+        }
     }
     
     private static (int, List<ValidationResult>) QaAllCutscenes()
@@ -278,7 +289,7 @@ public class QualityAssurance
         if (cutsceneCharacter != null && cutsceneCharacter.SpeechBubble == null)
             issues.Add($"{enemyName}'s {nameof(CutsceneCharacter)} {nameof(CutsceneCharacter.SpeechBubble)} binding is null");
         
-        Object.DestroyImmediate(obj);
+        SafeDestroyImmediate(obj);
     }
 
     private static (int, List<ValidationResult>) QaAllCards()
