@@ -38,7 +38,6 @@ public class QualityAssurance
         var (prefabCount, prefabFailures) = QaSpecificPrefabs();
         var (encounterCount, encounterFailures) = QaAllSpecificEncounterSegments();
         var (adventureCount, adventureFailures) = QaAdventures();
-        var (termCount, termFailures)= QaAllTerms();
 
         var qaPassed = enemyFailures.None() && cardFailures.None() && heroFailures.None() && cutsceneFailures.None() && prefabFailures.None() && encounterFailures.None() && adventureFailures.None();
         var qaResultTerm = qaPassed ? "Passed" : "Failed - See Details Below";
@@ -51,7 +50,6 @@ public class QualityAssurance
         LogReport("Prefabs", prefabCount, prefabFailures);
         LogReport("Encounters", encounterCount, encounterFailures);
         LogReport("Adventures", adventureCount, adventureFailures);
-        LogReport("Terms", termCount, termFailures);
         Log.Info("--------------------------------------------------------------");
 
         ErrorReport.ReenableAfterQa();
@@ -316,11 +314,18 @@ public class QualityAssurance
     private static Regex _specialTag = new Regex(@"{\[(.+?)]}", RegexOptions.IgnoreCase);
     private static string[] _validSpecialTags = new[] { "Originator", "PrimaryStat" };
     private static Regex _xmlTags = new Regex(@"<.+?>");
-    private static Regex _validXmlTags = new Regex(@"<(b|i|\/b|\/i|\/size|\/color|color=#......|size=\d+%|sprite index=\d+)>");
+    private static Regex _validXmlTags = new Regex(@"<(b|i|\/b|\/i|\/size|\/color|color=#......|size=\d+%|sprite index=\d+|s)>");
     private static Regex _specialOpenTag = new Regex(@"{\[");
     private static Regex _specialCloseTag = new Regex("]}");
     private static Regex _invalidSpecialTag = new Regex(@"{[^\[]t:.*[^]]}", RegexOptions.IgnoreCase);
 
+    [MenuItem("Neon/QA/QA Terms")]
+    private static void QaTerms()
+    {
+        var (termCount, termFailures) = QaAllTerms();
+        LogReport("Terms", termCount, termFailures);
+    }
+    
     private static (int, List<ValidationResult>) QaAllTerms()
     {
         var languageSources = ScriptableExtensions.GetAllInstances<LanguageSourceAsset>();
