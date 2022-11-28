@@ -355,7 +355,7 @@ public class QualityAssurance
                                 issues.Add($"{term} ({language}) has an invalid subterm {{[t:{subterm}]}}");
                         }
                         else if (!_validSpecialTags.Contains(value))
-                            Log.Warn($"{term} ({language}) has an invalid special tag {{[{value}]}}");//issues.Add($"{term} ({language}) has an invalid special tag {{[{value}]}}");
+                            Log.Error($"{term} ({language}) has an invalid special tag {{[{value}]}}");
                     }
 
                     var xmlTags = _xmlTags.Matches(str);
