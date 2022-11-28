@@ -197,7 +197,13 @@ public class AdventureProgressV5 : AdventureProgressBase
         AdvanceStageIfNeeded();
         AllMetrics.PublishAdventureProgress(AdventureNameTerm.ToEnglish(), Progress);
     }
-
+    
     public override void SetStoryState(string state, bool value) => _storyStates[state] = value;
-    public override bool IsTrue(string state) => _storyStates[state];
+    public override bool IsTrue(string state)
+    {
+        _storyStates.ForEach(s => Log.Info($"{s.Key} - {s.Value}"));
+        return _storyStates[state];
+    }
+
+    public void ClearStoryState() => _storyStates = new DictionaryWithDefault<string, bool>(false);
 }

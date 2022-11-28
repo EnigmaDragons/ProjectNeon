@@ -152,7 +152,7 @@ public abstract class BaseCutscenePresenter : MonoBehaviour
                 },
                 () =>
                 {
-                    DebugLog($"Character Not Found in Cutscene {msg.CharacterAlias}");
+                    Log.Error($"Cutscene Error {cutscene.Current.name} - Character Not Found in Set: {msg.CharacterAlias}");
                     FinishCurrentSegment();
                 });
     }
@@ -164,6 +164,7 @@ public abstract class BaseCutscenePresenter : MonoBehaviour
 
         if (msg.SegmentData.ShouldSkip(x => progress.AdventureProgress.IsTrue(x)))
         {
+            DebugLog("Skipped Cutscene Segment");
             FinishCurrentSegment();
             return;
         }
