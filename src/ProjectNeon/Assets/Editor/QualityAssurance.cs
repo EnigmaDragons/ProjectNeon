@@ -305,10 +305,10 @@ public class QualityAssurance
     private static Regex _specialTag = new Regex(@"{\[(.+?)]}", RegexOptions.IgnoreCase);
     private static string[] _validSpecialTags = new[] { "Originator", "PrimaryStat" };
     private static Regex _xmlTags = new Regex(@"<.+?>");
-    private static Regex _validXmlTags = new Regex(@"<(b|i|\/b|\/i|\/size|\/color|color=#......|size=\d+%)>");
+    private static Regex _validXmlTags = new Regex(@"<(b|i|\/b|\/i|\/size|\/color|color=#......|size=\d+%|sprite index=\d+)>");
     private static Regex _specialOpenTag = new Regex(@"{\[");
     private static Regex _specialCloseTag = new Regex("]}");
-    private static Regex _invalidSpecialTag = new Regex(@"{[^\[].*[^]]}", RegexOptions.IgnoreCase);
+    private static Regex _invalidSpecialTag = new Regex(@"{[^\[]t:.*[^]]}", RegexOptions.IgnoreCase);
 
     private static (int, List<ValidationResult>) QaAllTerms()
     {
@@ -318,6 +318,7 @@ public class QualityAssurance
         foreach (LanguageSourceAsset source in languageSources)
         {
             var terms = source.mSource.mTerms.Select(x => x.Term).ToHashSet();
+            itemCount = terms.Count;
             foreach (var term in terms)
             {
                 var issues = new List<string>();
@@ -338,7 +339,7 @@ public class QualityAssurance
                                 issues.Add($"{term} ({language}) has an invalid subterm {{[t:{subterm}]}}");
                         }
                         else if (!_validSpecialTags.Contains(value))
-                            issues.Add($"{term} ({language}) has an invalid special tag {{[{value}]}}");
+                            Log.Warn($"{term} ({language}) has an invalid special tag {{[{value}]}}");//issues.Add($"{term} ({language}) has an invalid special tag {{[{value}]}}");
                     }
 
                     var xmlTags = _xmlTags.Matches(str);
