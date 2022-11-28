@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+using I2.Loc;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -36,6 +38,7 @@ public class QualityAssurance
         var (prefabCount, prefabFailures) = QaSpecificPrefabs();
         var (encounterCount, encounterFailures) = QaAllSpecificEncounterSegments();
         var (adventureCount, adventureFailures) = QaAdventures();
+        var (termCount, termFailures)= QaAllTerms();
 
         var qaPassed = enemyFailures.None() && cardFailures.None() && heroFailures.None() && cutsceneFailures.None() && prefabFailures.None() && encounterFailures.None() && adventureFailures.None();
         var qaResultTerm = qaPassed ? "Passed" : "Failed - See Details Below";
@@ -48,6 +51,7 @@ public class QualityAssurance
         LogReport("Prefabs", prefabCount, prefabFailures);
         LogReport("Encounters", encounterCount, encounterFailures);
         LogReport("Adventures", adventureCount, adventureFailures);
+        LogReport("Terms", termCount, termFailures);
         Log.Info("--------------------------------------------------------------");
 
         ErrorReport.ReenableAfterQa();
@@ -306,6 +310,68 @@ public class QualityAssurance
                 failures.Add(new ValidationResult($"{i.Name} - {i.id}", issues));
         }
         
+        return (itemCount, failures);
+    }
+
+    private static Regex _specialTag = new Regex(@"{\[(.+?)]}", RegexOptions.IgnoreCase);
+    private static string[] _validSpecialTags = new[] { "Originator", "PrimaryStat" };
+    private static Regex _xmlTags = new Regex(@"<.+?>");
+    private static Regex _validXmlTags = new Regex(@"<(b|i|\/b|\/i|\/size|\/color|color=#......|size=\d+%)>");
+    private static Regex _specialOpenTag = new Regex(@"{\[");
+    private static Regex _specialCloseTag = new Regex("]}");
+    private static Regex _invalidSpecialTag = new Regex(@"{[^\[].*[^]]}", RegexOptions.IgnoreCase);
+
+    private static (int, List<ValidationResult>) QaAllTerms()
+    {
+        var languageSources = ScriptableExtensions.GetAllInstances<LanguageSourceAsset>();
+        var failures = new List<ValidationResult>();
+        var itemCount = 0;
+        foreach (LanguageSourceAsset source in languageSources)
+        {
+            var terms = source.mSource.mTerms.Select(x => x.Term).ToHashSet();
+            foreach (var term in terms)
+            {
+                var issues = new List<string>();
+                foreach (var language in LocalizationManager.GetAllLanguages())
+                {
+                    var str = LocalizationManager.GetTranslation(term, overrideLanguage: language);
+                    if (string.IsNullOrEmpty(str))
+                        continue;
+                    
+                    var specialTags = _specialTag.Matches(str);
+                    foreach (Match tag in specialTags)
+                    {
+                        var value = tag.Groups[1].Value;
+                        if (value.StartsWith("t:"))
+                        {
+                            var subterm = value.Substring(2);
+                            if (!terms.Contains(subterm))
+                                issues.Add($"{term} ({language}) has an invalid subterm {{[t:{subterm}]}}");
+                        }
+                        else if (!_validSpecialTags.Contains(value))
+                            issues.Add($"{term} ({language}) has an invalid special tag {{[{value}]}}");
+                    }
+
+                    var xmlTags = _xmlTags.Matches(str);
+                    foreach (Match tag in xmlTags)
+                    {
+                        if (!_validXmlTags.IsMatch(tag.Value))
+                            issues.Add($"{term} ({language}) has an invalid xml tag {tag.Value}");
+                    }
+                    
+                    if (str.Count(x => x == '<') != str.Count(x => x == '>'))
+                        issues.Add($"{term} ({language}) has an invalid <> tag");
+                    if (_specialOpenTag.Matches(str).Count != _specialCloseTag.Matches(str).Count)
+                        issues.Add($"{term} ({language}) has an invalid {{[]}} tag");
+                    else if (str.Count(x => x == '{') != str.Count(x => x == '}'))
+                        issues.Add($"{term} ({language}) has an invalid {{}} tag");
+                    if (_invalidSpecialTag.IsMatch(str))
+                        issues.Add($"{term} ({language}) has a {{[t:]}} tag with out the [] tag");
+                }
+                if (issues.Any())
+                    failures.Add(new ValidationResult($"Term: {term}", issues));
+            }
+        }
         return (itemCount, failures);
     }
     
