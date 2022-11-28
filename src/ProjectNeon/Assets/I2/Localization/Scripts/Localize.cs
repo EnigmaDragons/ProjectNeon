@@ -359,7 +359,7 @@ namespace I2.Loc
 
 		public void SetTerm (string primary)
 		{
-			if (primary == "")
+			if (primary == "" && mLocalizeTarget != null)
 				mLocalizeTarget.Clear();
 			if (!string.IsNullOrEmpty(primary))
 				FinalTerm = mTerm = primary;
