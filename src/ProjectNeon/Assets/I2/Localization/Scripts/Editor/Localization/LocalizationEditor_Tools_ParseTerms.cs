@@ -27,6 +27,7 @@ namespace I2.Loc
 		public static bool mParseTermsIn_Scripts = true;
 		public static bool mParseTermsIn_ScriptableObjects = true;
 		public static bool mParseTermsIn_PrefabScripts = true;
+		public static bool mParseTermsIn_Terms = true;
 
 		#endregion
 		
@@ -56,6 +57,8 @@ namespace I2.Loc
 					mParseTermsIn_ScriptableObjects = GUILayout.Toggle(mParseTermsIn_ScriptableObjects, new GUIContent("Parse SCRIPTABLE OBJECTS", "Searches all Scriptable Objects and gets Terms provided by ILocalizeTerms"));
 					GUILayout.FlexibleSpace();
 					mParseTermsIn_PrefabScripts = GUILayout.Toggle(mParseTermsIn_PrefabScripts, new GUIContent("Parse PREFAB SCRIPTS", "Searches all prefabs for ILocalizeTerms and gets Terms"));
+					GUILayout.FlexibleSpace();
+					mParseTermsIn_Terms = GUILayout.Toggle(mParseTermsIn_ScriptableObjects, new GUIContent("Parse SUB TERMS", "Searches all terms for sub terms in them"));
 					GUILayout.EndHorizontal();
 				GUILayout.FlexibleSpace();
 				GUILayout.EndHorizontal();
@@ -128,22 +131,22 @@ namespace I2.Loc
 		public static void ParseTermsInSelectedScenes()
 		{
 			EditorApplication.update -= ParseTermsInSelectedScenes;
-			ParseTerms(false, false, true, mParseTermsIn_ScriptableObjects, mParseTermsIn_PrefabScripts);
+			ParseTerms(false, false, true, mParseTermsIn_ScriptableObjects, mParseTermsIn_PrefabScripts, mParseTermsIn_Terms);
 		}
 
         public static void DoParseTermsInCurrentScene()
         {
             EditorApplication.update -= DoParseTermsInCurrentScene;
-			ParseTerms(true, false, true, mParseTermsIn_ScriptableObjects, mParseTermsIn_PrefabScripts);
+			ParseTerms(true, false, true, mParseTermsIn_ScriptableObjects, mParseTermsIn_PrefabScripts, mParseTermsIn_Terms);
         }
 
         public static void DoParseTermsInCurrentSceneAndScripts()
         {
             EditorApplication.update -= DoParseTermsInCurrentSceneAndScripts;
-            ParseTerms(true, true, true, mParseTermsIn_ScriptableObjects, mParseTermsIn_PrefabScripts);
+            ParseTerms(true, true, true, mParseTermsIn_ScriptableObjects, mParseTermsIn_PrefabScripts, mParseTermsIn_Terms);
         }
 
-        static void ParseTerms(bool OnlyCurrentScene, bool ParseScripts, bool OpenTermsTab, bool ParseScriptableObjects = true, bool ParsePrefabScriptTerms = true)
+        static void ParseTerms(bool OnlyCurrentScene, bool ParseScripts, bool OpenTermsTab, bool ParseScriptableObjects = true, bool ParsePrefabScriptTerms = true, bool ParseSubTerms = false)
         {
             mIsParsing = true;
 
@@ -164,6 +167,9 @@ namespace I2.Loc
 
             if (ParsePrefabScriptTerms)
 	            FindTermsInPrefabs();
+
+            if (ParseSubTerms)
+	            FindTermsInTerms();
 
             if (mParseTermsIn_Scenes)
             {
@@ -237,6 +243,13 @@ namespace I2.Loc
 					foreach (var t in component.GetLocalizeTerms())
 				        GetParsedTerm(t).Usage++;
 	        }
+        }
+        
+        private static void FindTermsInTerms()
+        {
+	        foreach (TermData termData in mLanguageSource.mTerms)
+				foreach (Match match in Regex.Matches(termData.Term.ToEnglish(), @"{\[t:(.*)\]}"))
+					GetParsedTerm(match.Groups[1].Value).Usage++;
         }
 
         static void FindTermsInCurrentScene()
