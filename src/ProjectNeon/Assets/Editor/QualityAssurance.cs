@@ -244,6 +244,7 @@ public class QualityAssurance
 
         var enemyName = e.enemyName;
         var obj = (GameObject)PrefabUtility.InstantiatePrefab(e.Prefab);
+        obj.hideFlags = HideFlags.HideAndDontSave;
         
         var stealth = obj.GetComponentInChildren<StealthTransparency>();
         var stealth2 = obj.GetComponentInChildren<CharacterCreatorStealthTransparency>();

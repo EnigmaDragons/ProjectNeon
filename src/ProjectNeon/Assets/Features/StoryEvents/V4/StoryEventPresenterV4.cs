@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using I2.Loc;
 using UnityEngine;
 using UnityEngine.UI;
@@ -64,7 +65,20 @@ public class StoryEventPresenterV4 : MonoBehaviour
         Message.Publish(new HideDieRoll());
         rewardParent.DestroyAllChildren();
         InitFreshOptionsButtons();
-        var ctx = new StoryEventContext(adventure.CurrentChapterNumber, adventure.CurrentChapter.RewardRarityFactors, party, allEquipmentPool, map, adventure);
+
+        RarityFactors rarityFactors = new DefaultRarityFactors();
+        try
+        {
+            rarityFactors = adventure.CurrentChapter.RewardRarityFactors;
+        }
+        catch (Exception e)
+        {
+#if !UNITY_EDITOR
+            Log.Error("Unable to get Reward Rarity Factors");
+#endif
+        }
+
+        var ctx = new StoryEventContext(adventure.CurrentChapterNumber, rarityFactors, party, allEquipmentPool, map, adventure);
         if (s.InCutscene)
         {
             corpBranding.SetActive(false);
