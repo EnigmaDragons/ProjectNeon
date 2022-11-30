@@ -248,7 +248,7 @@ namespace I2.Loc
         private static void FindTermsInTerms()
         {
 	        foreach (TermData termData in mLanguageSource.mTerms)
-				foreach (Match match in Regex.Matches(termData.Term.ToEnglish(), @"{\[t:(.*)\]}"))
+				foreach (Match match in Regex.Matches(termData.Term.ToEnglish(), @"{\[t:(.+?)\]}"))
 					GetParsedTerm(match.Groups[1].Value).Usage++;
         }
 

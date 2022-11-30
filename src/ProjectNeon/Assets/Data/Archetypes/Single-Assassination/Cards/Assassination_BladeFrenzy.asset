@@ -15,28 +15,26 @@ MonoBehaviour:
   id: 40
   customName: 
   art: {fileID: 21300000, guid: 435d71d3b59ba6e409cec5a4b072bc03, type: 3}
-  description: Repeat While <b>Marked</b>:\nDeal {E[1]}.\nGives self <b>+1 ATK</b>.\nRemove
-    <b>1 Mark</b>
+  description: 
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   descriptionV2:
-    text: Repeat While <b>Marked</b>:\nDeal {0}.\nGives self <b>+1 ATK</b>.\nRemove
-      <b>1 Mark</b>
+    text: For each Mark (Max 5 times) attack dealing {0}
     formatArgs:
     - '{E[1]}'
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 3
+    cost: 0
     resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
   rarity: 3
   actionSequences:
   - scope: 0
     group: 1
-    cardActions: {fileID: 11400000, guid: 85c27dc5cb15f954caa42c9b1a6c68a7, type: 2}
+    cardActions: {fileID: 11400000, guid: 0270c3f2b4bf0054aa524bbd27456c74, type: 2}
     repeatX: 0
-    repeatCount: 12
+    repeatCount: 0
   chainedCard: {fileID: 0}
   swappedCard: {fileID: 0}
   functionalityIssues: 
@@ -45,6 +43,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2a9990ef3da432e42acdb151f8669008, type: 2}
   highlightCondition: []
   unhighlightCondition:
-  - {fileID: 11400000, guid: b3610e13c3ce5fa4388644484ce3fe1c, type: 2}
+  - {fileID: 11400000, guid: a46cdbdd8438bc547ab203020ae8074d, type: 2}
   isWIP: 0
   notAvailableForGeneralDistribution: 0

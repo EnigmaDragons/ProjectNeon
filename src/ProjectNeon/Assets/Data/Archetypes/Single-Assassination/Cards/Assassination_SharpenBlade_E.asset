@@ -74,7 +74,7 @@ MonoBehaviour:
       ReferencedEffect: {fileID: 0}
     characterAnimation: {fileID: 0}
     characterAnimation2:
-      Type: 5
+      Type: 3
       Conditions: []
     atTargetAnimation:
       animation:
@@ -158,7 +158,7 @@ MonoBehaviour:
       animation:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: d344c2ad8f7429348945a07501a28e84, type: 2}
+        Variable: {fileID: 11400000, guid: c280ce9d79081424a93be4b8b7944371, type: 2}
       size: 1
       speed: 1
       color:
@@ -171,8 +171,8 @@ MonoBehaviour:
     enemySpawnOffset: {x: 0, y: 0, z: 0}
   - type: 1
     battleEffect:
-      Id: 2546
-      EffectType: 82
+      Id: 3879
+      EffectType: 79
       Conditions: []
       BaseAmount:
         UseConstant: 1
@@ -186,7 +186,7 @@ MonoBehaviour:
       EffectScope:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 0}
+        Variable: {fileID: 11400000, guid: 3c078d6f5df480444bb3edd47b7e81f9, type: 2}
       HitsRandomTargetMember: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
@@ -260,18 +260,18 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
-      DurationFormula: 1
+      DurationFormula: -1
       EffectScope:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 11400000, guid: 96cf1c08e7e402b4b904d889d8e179ef, type: 2}
       HitsRandomTargetMember: 0
-      ReTargetScope: 0
+      ReTargetScope: 1
       ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
-      TurnDelay: 1
-      Formula: 4
+      TurnDelay: 0
+      Formula: Target[Marked]
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 

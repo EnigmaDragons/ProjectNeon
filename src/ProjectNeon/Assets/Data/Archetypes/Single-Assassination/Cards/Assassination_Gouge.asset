@@ -18,17 +18,18 @@ MonoBehaviour:
   description: Deal {E[0]}
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   descriptionV2:
-    text: Deal {0}
+    text: <b>3 Marks:</b> Deal {0} + {1} per Mark
     formatArgs:
-    - '{E[0]}'
+    - '{E[1]}'
+    - '{E[2]}'
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 1
+    cost: 0
     resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
-  rarity: 1
+  rarity: 2
   actionSequences:
   - scope: 0
     group: 1
@@ -42,6 +43,7 @@ MonoBehaviour:
   archetypes:
   - {fileID: 11400000, guid: 2a9990ef3da432e42acdb151f8669008, type: 2}
   highlightCondition: []
-  unhighlightCondition: []
+  unhighlightCondition:
+  - {fileID: 11400000, guid: 217f409050d66d84899777c9562acba7, type: 2}
   isWIP: 0
   notAvailableForGeneralDistribution: 0

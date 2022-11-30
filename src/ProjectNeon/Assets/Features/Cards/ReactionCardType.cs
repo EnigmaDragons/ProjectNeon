@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(order = -98)]
-public sealed class ReactionCardType : ScriptableObject, CardTypeData
+public sealed class ReactionCardType : ScriptableObject, CardTypeData, ILocalizeTerms
 {
     [SerializeField] public int id;
     [SerializeField] private string displayName;
@@ -53,4 +53,7 @@ public sealed class ReactionCardType : ScriptableObject, CardTypeData
         actionSequence = action;
         return this;
     }
+
+    public string[] GetLocalizeTerms()
+        => new[] {NameTerm, DescriptionTerm};
 }
