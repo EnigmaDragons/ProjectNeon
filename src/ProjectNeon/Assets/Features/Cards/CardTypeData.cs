@@ -6,10 +6,12 @@ public interface CardTypeData
 {
     int Id { get; }
     string Name { get; }
+    string NameTerm { get; }
     IResourceAmount Cost { get; }
     CardSpeed Speed { get; }
     Sprite Art  { get; }
     string Description  { get; }
+    string DescriptionTerm { get; }
     CardDescriptionV2 DescriptionV2 { get; }
     HashSet<CardTag> Tags  { get; }
     string TypeDescription  { get; }
@@ -77,18 +79,6 @@ public static class CardTypeDataExtensions
     public static Card ToNonBattleCard(this CardTypeData c, Hero hero)
         => ToNonBattleCard(c, hero.Character, hero.Stats);
 
-    public static string LocalizationNameTerm(this CardTypeData c)
-        => $"CardNames/{LocalizationNameKey(c)}";
-    
-    public static string LocalizationNameKey(this CardTypeData c)
-        => $"{c.Id.ToString().PadLeft(5, '0')}-00-Name";
-    
-    public static string CardLocalizationDescriptionTerm(this CardTypeData c)
-        => $"CardDescriptions/{LocalizationDescriptionKey(c)}";
-    
-    public static string LocalizationDescriptionKey(this CardTypeData c)
-        => $"{c.Id.ToString().PadLeft(5, '0')}-05-Desc";
-    
     public static Card ToNonBattleCard(this CardTypeData c, HeroCharacter hero, IStats heroStats) 
         => new Card(-1, hero.AsMemberForLibrary(heroStats), c, c.NonBattleTint(hero), c.NonBattleBust(hero));
 

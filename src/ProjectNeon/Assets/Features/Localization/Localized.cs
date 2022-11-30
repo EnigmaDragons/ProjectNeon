@@ -105,11 +105,6 @@ public static class Localized
     private static readonly BidirectionalDictionary<string, string> GlobalParams = new BidirectionalDictionary<string, string>(
         new Dictionary<string, string>
         {
-            { "BR", "<br>" },
-            { "B", "<b>" },
-            { "/B", "</b>" },
-            { "I", "<i>" },
-            { "/I", "</i>" },
             { "0", "{0}" },
             { "1", "{1}" },
             { "2", "{2}" },

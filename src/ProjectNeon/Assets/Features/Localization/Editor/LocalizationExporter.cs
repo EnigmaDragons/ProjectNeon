@@ -33,12 +33,30 @@ public class LocalizationExporter
         var descs = new List<string>();
         allCards.ForEach(c =>
         {
-            names.Add($"{c.LocalizationNameKey()}^{c.Name}");
-            var csvDesc = ToSingleLineI2Format(c.DescriptionV2.text);
-            descs.Add($"{c.LocalizationDescriptionKey()}^{csvDesc}");
+            names.Add($"{c.NameKey}^{c.Name}");
+            var csvDesc = c.DescriptionV2.text.Replace("<br>", "\n").ToI2Format();
+            descs.Add($"{c.DescriptionKey}^\"{csvDesc}\"");
         });
         WriteCsv("card-names", names);
         WriteCsv("card-descs", descs);
+    }
+
+    [MenuItem("Neon/Localization/Export Reaction Cards For Localization")]
+    public static void ExportReactionCardsForLocalization()
+    {
+        var reactionCards = GetAllInstances<ReactionCardType>()
+            .OrderBy(c => c.Id);
+        
+        var names = new List<string>();
+        var descs = new List<string>();
+        reactionCards.ForEach(c =>
+        {
+            names.Add($"{c.NameKey}^{c.Name}");
+            var csvDesc = c.DescriptionV2.text.Replace("<br>", "\n").ToI2Format();
+            descs.Add($"{c.DescriptionKey}^\"{csvDesc}\"");
+        });
+        WriteCsv("reaction-card-names", names);
+        WriteCsv("reaction-card-descs", descs);
     }
     
     [MenuItem("Neon/Localization/Export Equipment For Localization")]

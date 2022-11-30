@@ -35,7 +35,7 @@ public static class InterpolatedCardDescriptions
         try
         {
             if (card.DescriptionV2.IsUsable())
-                desc = Localized.FormatTerm(card.CardLocalizationDescriptionTerm(), card.DescriptionV2.formatArgs);
+                desc = Localized.FormatTerm(card.DescriptionTerm, card.DescriptionV2.formatArgs);
         }
         catch (Exception)
         {

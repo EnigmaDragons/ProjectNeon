@@ -27,6 +27,8 @@ public sealed class Card : CardTypeData
     public int CardId => id;
     public int Id => _type.Id;
     public string Name => _type?.Name ?? "Card Not Initialized";
+    public string NameTerm => _type?.NameTerm ?? "Card Not Initialized";
+    public string DescriptionTerm => _type?.DescriptionTerm ?? "Card Not Initialized";
     public IResourceAmount Cost => new InMemoryResourceAmount(
         Math.Max(_type.Cost.BaseAmount + _temporalStates.Where(x => x.IsActive).Sum(x => x.CostAdjustment), 0), _type.Cost.ResourceType, _type.Cost.PlusXCost);
     public CardSpeed Speed => _type.Speed;

@@ -5,6 +5,10 @@ public class InMemoryCard : CardTypeData
 {
     public int Id { get; set; } = -1;
     public string Name { get; set; } = "Unnamed";
+    public string NameTerm => $"CardNames/{NameKey}";
+    public string NameKey => $"{Id.ToString().PadLeft(5, '0')}-00-Name";
+    public string DescriptionTerm => $"CardDescriptions/{DescriptionKey}";
+    public string DescriptionKey => $"{Id.ToString().PadLeft(5, '0')}-05-Desc";
     public Rarity Rarity { get; set; } = Rarity.Common;
     public IResourceAmount Cost { get; set; } = new InMemoryResourceAmount(0, "None", false);
     public CardSpeed Speed { get; set; } = CardSpeed.Standard;

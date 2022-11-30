@@ -20,7 +20,7 @@ public class CardListItem : MonoBehaviour, IPointerDownHandler
     {
         _onClick = onClick;
         _card = card;
-        name.SetTerm(_card.LocalizationNameTerm());
+        name.SetTerm(_card.NameTerm);
         art.sprite = _card.Art;
         count.text = "2x";
     }

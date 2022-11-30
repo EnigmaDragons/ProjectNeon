@@ -83,7 +83,7 @@ public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPoi
 
     private void Render()
     {
-        cardNameText.SetTerm(_cardType.LocalizationNameTerm());
+        cardNameText.SetTerm(_cardType.NameTerm);
         countText.text = _isBasic 
             ? "B" 
             : _count > -1 

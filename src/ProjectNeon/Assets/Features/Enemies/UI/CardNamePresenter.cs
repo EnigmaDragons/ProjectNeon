@@ -20,7 +20,7 @@ public class CardNamePresenter : MonoBehaviour, IPointerEnterHandler, IPointerEx
         UpdateInfo();
     }
 
-    private void UpdateInfo() => cardNameText.SetTerm(_card.LocalizationNameTerm());
+    private void UpdateInfo() => cardNameText.SetTerm(_card.NameTerm);
 
     public void OnPointerEnter(PointerEventData eventData) => OnHover();
     public void OnPointerExit(PointerEventData eventData) => OnExit();

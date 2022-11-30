@@ -28,6 +28,10 @@ public class CardType : ScriptableObject, CardTypeData, ILocalizeTerms
     [SerializeField] private bool notAvailableForGeneralDistribution = false;
 
     public string Name => this.GetName(customName);
+    public string NameTerm => $"CardNames/{NameKey}";
+    public string NameKey => $"{Id.ToString().PadLeft(5, '0')}-00-Name";
+    public string DescriptionTerm => $"CardDescriptions/{DescriptionKey}";
+    public string DescriptionKey => $"{Id.ToString().PadLeft(5, '0')}-05-Desc";
     public int Id => id;
     public IResourceAmount Cost => cost;
     public CardSpeed Speed => speed;
@@ -64,8 +68,8 @@ public class CardType : ScriptableObject, CardTypeData, ILocalizeTerms
 
     public string[] GetLocalizeTerms() => isWIP ? new string[0] : new[]
     {
-        this.LocalizationNameTerm(),
-        this.CardLocalizationDescriptionTerm()
+        NameTerm,
+        DescriptionTerm
     };
 
     public CardType Initialized(Rarity rarity, int id)

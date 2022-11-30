@@ -221,6 +221,12 @@ public class AssetUpdater
     {
         AssignAllIds(ScriptableExtensions.GetAllInstances<CardType>(), c => c.id, (c, id) => c.id = id);
     }
+    
+    [MenuItem("Neon/Update/Update Reaction Card IDs")]
+    private static void UpdateReactionCardIDs()
+    {
+        AssignAllIds(ScriptableExtensions.GetAllInstances<ReactionCardType>(), c => c.id, (c, id) => c.id = id);
+    }
 
     [MenuItem("Neon/Update/Update All Cards")]
     private static void UpdateAllCards()
