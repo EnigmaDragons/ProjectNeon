@@ -49,7 +49,7 @@ public static class AllEffects
         { EffectType.DuplicateStatesOfTypeToRandomEnemy, e => new DuplicateStatesOfTypeToRandomEnemy(e.StatusTag)},
         { EffectType.DealTrueDamageFormula, e => new FullContextEffect((ctx, _, m) => 
             BattleLoggedItem(amount => $"{amount} true damage dealt to {m.NameTerm.ToEnglish()}", 
-                m.TakeTrueDamage(Formula.EvaluateToInt(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount))), e.DurationFormula)},
+                m.TakeTrueDamage(Formula.EvaluateToInt(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount, ctx.ScopedData))), e.DurationFormula)},
         { EffectType.ApplyAdditiveStatInjury, e => new AegisPreventable(new ApplyStatInjury(StatOperation.Add, e.EffectScope, e.TotalAmount, e.FlavorText), "Injury") },
         { EffectType.ApplyMultiplicativeStatInjury, e => new AegisPreventable(new ApplyStatInjury(StatOperation.Multiply, e.EffectScope, e.TotalAmount, e.FlavorText), "Injury") },
         { EffectType.Kill, e => new SimpleEffect(m => m.SetHp(0)) },
@@ -61,10 +61,10 @@ public static class AllEffects
         { EffectType.PlayBonusCardAfterNoCardPlayedInXTurns, e => new SimpleEffect(m => m.ApplyBonusCardPlayer(
             new PlayBonusCardAfterNoCardPlayedInXTurns(m.MemberId, e.BonusCardType, e.TotalIntAmount, e.StatusDetail)))},
         { EffectType.PlayBonusChainCard, e => new SimpleEffect(m => m.ApplyBonusCardPlayer(new PlayBonusChainCard(m.MemberId, e.BonusCardType, e.StatusDetail)))},
-        { EffectType.HealFormula, e => new FullContextEffect((ctx, _, m) => m.GainHp(Formula.EvaluateToInt(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount)), e.DurationFormula) },
-        { EffectType.AttackFormula, e => new Attack(new PhysicalDamage((ctx, m) => Formula.EvaluateToInt(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
-        { EffectType.MagicAttackFormula, e => new MagicAttack(new SpellDamage((ctx, m) => Formula.EvaluateToInt(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
-        { EffectType.TrueDamageAttackFormula, e => new TrueDamageAttack(new TrueDamageCalculation((ctx, m) => Formula.EvaluateToInt(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount)), e.HitsRandomTargetMember)},
+        { EffectType.HealFormula, e => new FullContextEffect((ctx, _, m) => m.GainHp(Formula.EvaluateToInt(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount, ctx.ScopedData)), e.DurationFormula) },
+        { EffectType.AttackFormula, e => new Attack(new PhysicalDamage((ctx, m) => Formula.EvaluateToInt(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount, ctx.ScopedData)), e.HitsRandomTargetMember)},
+        { EffectType.MagicAttackFormula, e => new MagicAttack(new SpellDamage((ctx, m) => Formula.EvaluateToInt(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount, ctx.ScopedData)), e.HitsRandomTargetMember)},
+        { EffectType.TrueDamageAttackFormula, e => new TrueDamageAttack(new TrueDamageCalculation((ctx, m) => Formula.EvaluateToInt(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount, ctx.ScopedData)), e.HitsRandomTargetMember)},
         { EffectType.AddToXCostTransformer, e => new EffectAddToXCostTransformer(e) },
         { EffectType.CycleAllCardsInHand, e => new FullContextEffect((ctx, _) =>
             {
@@ -73,12 +73,12 @@ public static class AllEffects
                 ctx.PlayerCardZones.CycleHand();
             }, e.DurationFormula)},
         { EffectType.DrawCards, e => new FullContextEffect((ctx, _) => ctx.PlayerCardZones.DrawCards(
-            BattleLoggedItem(v => $"Drew {v} cards", Formula.EvaluateToInt(ctx.SourceStateSnapshot, e.Formula, ctx.XPaidAmount))), e.DurationFormula)},
+            BattleLoggedItem(v => $"Drew {v} cards", Formula.EvaluateToInt(ctx.SourceStateSnapshot, e.Formula, ctx.XPaidAmount, ctx.ScopedData))), e.DurationFormula)},
         { EffectType.DrawCardsOfOwner, e => new FullContextEffect((ctx, _, m) => ctx.PlayerCardZones.DrawCards(
-            BattleLoggedItem(v => $"Drew {v} cards for {ctx.Source.NameTerm.ToEnglish()}", Formula.EvaluateToInt(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount)), 
+            BattleLoggedItem(v => $"Drew {v} cards for {ctx.Source.NameTerm.ToEnglish()}", Formula.EvaluateToInt(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount, ctx.ScopedData)), 
                 card => card.Owner.Id == ctx.Source.Id), e.DurationFormula)},
         { EffectType.DrawCardsOfArchetype, e => new FullContextEffect((ctx, _) => ctx.PlayerCardZones.DrawCards(BattleLoggedItem(v => $"Drew {v} {e.EffectScope} cards", 
-                Formula.EvaluateToInt(ctx.SourceStateSnapshot, e.Formula, ctx.XPaidAmount)), 
+                Formula.EvaluateToInt(ctx.SourceStateSnapshot, e.Formula, ctx.XPaidAmount, ctx.ScopedData)), 
                     card => card.Archetypes.Contains(e.EffectScope.Value)), e.DurationFormula)},
         { EffectType.GlitchRandomCards, e => new GlitchCards(e.BaseAmount, e.EffectScope) },
         { EffectType.LeaveBattle, e => new SimpleEffect((m, __) =>
@@ -89,7 +89,7 @@ public static class AllEffects
         { EffectType.ResetStatToBase, e => new SimpleEffect(m => m.ResetStatToBase(e.EffectScope))},
         { EffectType.TransferPrimaryResourceFormula, e => new TransferPrimaryResource((ctx, m) => 
             BattleLoggedItem(v => $"{m.NameTerm.ToEnglish()} {GainedOrLostTerm(v)} {v} {m.State.PrimaryResource.Name}", 
-                Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, e.Formula, ctx.XPaidAmount))) },
+                Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, e.Formula, ctx.XPaidAmount, ctx.ScopedData))) },
         { EffectType.Reload, e => new SimpleEffect(m => BattleLogged($"{m.NameTerm.ToEnglish()} Reloaded", () => m.AdjustPrimaryResource(99))) },
         { EffectType.ResolveInnerEffect, e => new ResolveInnerEffect(e.ReferencedSequence?.BattleEffects?.ToArray() ?? Array.Empty<EffectData>()) },
         { EffectType.AdjustCostOfAllCardsInHandAtEndOfTurn, e => new AdjustAllCardsCostUntilPlayed(e.BaseAmount) },
@@ -105,15 +105,17 @@ public static class AllEffects
         { EffectType.AdjustCardCosts, e => new AdjustCardCosts(e.EffectScope, e.Formula)},
         { EffectType.Drain, e => new Transfer(e.EffectScope.Value.MaybeEnumVal<TemporalStatType>(), 
             (ctx, m) => BattleLoggedItem(v => $"{m.NameTerm.ToEnglish()} {GainedOrLostTerm(v)} {v} {e.EffectScope.Value}", 
-                Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, e.Formula, ctx.XPaidAmount))) },
+                Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, e.Formula, ctx.XPaidAmount, ctx.ScopedData))) },
         { EffectType.AdjustOwnersPrimaryResourceBasedOnTargetShieldSum, 
             e => new FullContextEffect((ctx, t) => ctx.Source.State.AdjustPrimaryResource((ctx.Target.TotalShields() 
-                * Formula.EvaluateRaw(ctx.SourceSnapshot.State, ctx.Source.State, e.Formula, ctx.XPaidAmount)).CeilingInt()))},
+                * Formula.EvaluateRaw(ctx.SourceSnapshot.State, ctx.Source.State, e.Formula, ctx.XPaidAmount, ctx.ScopedData)).CeilingInt()))},
         { EffectType.RemoveTemporalModsMatchingStatusTag, e => new SimpleEffect(m => m.RemoveTemporaryEffects(t => t.Status.Tag.ToString() == e.EffectScope.Value))},
         { EffectType.InvulnerableForTurns, e => new FullContextEffect((ctx, duration, m) => m.ApplyTemporaryMultiplier(new AdjustedStats(
             new StatMultipliers().With(StatType.Damagability, 0f),
             TemporalStateMetadata.BuffForDuration(ctx.Source.Id, duration, new StatusDetail(StatusTag.Invulnerable, Maybe<string>.Missing())))), e.DurationFormula)},
         { EffectType.RandomEffect, e => new ResolveInnerEffect(e.ReferencedSequences?.Random()?.BattleEffects?.ToArray() ?? Array.Empty<EffectData>()) },
+        { EffectType.EvaluateCondition, e => new EvaluateConditionEffect(e.EffectScope) },
+        { EffectType.SetScopedVariable, e => new SetScopedVariable(e) },
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";

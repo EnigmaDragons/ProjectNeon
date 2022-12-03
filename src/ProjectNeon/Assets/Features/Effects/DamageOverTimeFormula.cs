@@ -10,8 +10,8 @@ public class DamageOverTimeFormula : Effect
         var sourceSnapshot = ctx.Source.State.ToSnapshot();
         ctx.Target.Members.GetConscious().ForEach(m =>
         {
-            var calculatedAmount = Formula.EvaluateToInt(new FormulaContext(sourceSnapshot, m, ctx.XPaidAmount), _e.Formula);
-            m.State.ApplyTemporaryAdditive(new DamageOverTimeState(ctx.Source.Id, calculatedAmount, m, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, _e.DurationFormula, ctx.XPaidAmount)));
+            var calculatedAmount = Formula.EvaluateToInt(new FormulaContext(sourceSnapshot, m, ctx.XPaidAmount, ctx.ScopedData), _e.Formula);
+            m.State.ApplyTemporaryAdditive(new DamageOverTimeState(ctx.Source.Id, calculatedAmount, m, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, _e.DurationFormula, ctx.XPaidAmount, ctx.ScopedData)));
         });
     }
 }

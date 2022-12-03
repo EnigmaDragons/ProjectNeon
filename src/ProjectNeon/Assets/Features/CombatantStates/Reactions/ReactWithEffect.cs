@@ -227,7 +227,7 @@ public class EffectReactWith : Effect
                 
                 reactionConditionContext.Possessor = ctx.BattleMembers.VerboseGetValue(m.MemberId, nameof(ctx.BattleMembers));
                 reactionConditionContext.Actor = _reactionCard.Value.ActionSequence.Reactor == ReactiveMember.Originator ? ctx.Source : reactionConditionContext.Possessor;
-                m.AddReactiveState(new ReactWithCard(_isDebuff, _numberOfUses, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m, _maxDurationFormula, ctx.XPaidAmount),
+                m.AddReactiveState(new ReactWithCard(_isDebuff, _numberOfUses, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m, _maxDurationFormula, ctx.XPaidAmount, ctx.ScopedData),
                     _status, _timing, _triggerScope, ctx.BattleMembers, m.MemberId, ctx.Source, _reactionCard.Value,
                     _conditionBuilder(reactionConditionContext)));
                 DevLog.Write($"Applied React With Card {_conditionType} to {m.NameTerm.ToEnglish()}");
@@ -241,7 +241,7 @@ public class EffectReactWith : Effect
 
                 reactionConditionContext.Possessor = ctx.BattleMembers.VerboseGetValue(m.MemberId, nameof(ctx.BattleMembers));
                 reactionConditionContext.Actor = _reactionEffect.Value.Reactor == ReactiveMember.Originator ? ctx.Source : reactionConditionContext.Possessor;
-                m.AddReactiveState(new ReactWithEffect(_isDebuff, _numberOfUses, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m, _maxDurationFormula, ctx.XPaidAmount), 
+                m.AddReactiveState(new ReactWithEffect(_isDebuff, _numberOfUses, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m, _maxDurationFormula, ctx.XPaidAmount, ctx.ScopedData), 
                     _status, _timing, _triggerScope, ctx.BattleMembers, m.MemberId, ctx.Source, _reactionEffect.Value,
                     _conditionBuilder(reactionConditionContext)));
                 DevLog.Write($"Applied React With Effect {_conditionType} to {m.NameTerm.ToEnglish()}");

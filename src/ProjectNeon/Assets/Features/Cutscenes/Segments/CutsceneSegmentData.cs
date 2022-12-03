@@ -18,7 +18,7 @@ public class CutsceneSegmentData
     public StringReference[] ForbiddenStates;
     public bool Or;
     public StringReference StoryState = new StringReference("");
-    public string Term => $"Cutscenes/Segment{Id}";
+    public string Term => $"Cutscenes/Segment{Id.ToString().PadLeft(5, '0')}";
 
     public bool ShouldShow(Func<string, bool> storyState)
         => !ShouldSkip(storyState);

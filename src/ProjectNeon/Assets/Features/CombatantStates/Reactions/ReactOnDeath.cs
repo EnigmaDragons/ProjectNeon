@@ -24,7 +24,7 @@ public sealed class EffectOnDeath : Effect
     {
         ctx.Target.ApplyToAllConscious(m => 
             m.AddReactiveState(new ReactOnDeath(_isDebuff, _numberOfUses, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m, 
-                _maxDurationFormula, ctx.XPaidAmount), ctx.BattleMembers, m.MemberId, ctx.Source, _reaction, _timing, 
+                _maxDurationFormula, ctx.XPaidAmount, ctx.ScopedData), ctx.BattleMembers, m.MemberId, ctx.Source, _reaction, _timing, 
                     string.IsNullOrWhiteSpace(_e.StatusDetailTerm.ToLocalized()) ? Maybe<string>.Missing() : _e.StatusDetailTerm.ToLocalized())));
     }
 }

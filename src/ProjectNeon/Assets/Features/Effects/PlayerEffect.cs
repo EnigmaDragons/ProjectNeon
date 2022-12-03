@@ -18,7 +18,7 @@ public class PlayerEffect : Effect
     public void Apply(EffectContext ctx)
     {
         _action(ctx.PlayerState, 
-            Formula.EvaluateToInt(ctx.SourceSnapshot.State, _durationFormula, ctx.XPaidAmount),
-            Formula.EvaluateToInt(ctx.SourceSnapshot.State, _formula, ctx.XPaidAmount));
+            Formula.EvaluateToInt(ctx.SourceSnapshot.State, _durationFormula, ctx.XPaidAmount, ctx.ScopedData),
+            Formula.EvaluateToInt(ctx.SourceSnapshot.State, _formula, ctx.XPaidAmount, ctx.ScopedData));
     }
 }

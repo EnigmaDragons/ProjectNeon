@@ -351,6 +351,18 @@ public class FindCardsEditor : EditorWindow
             
         }
 
+        if (GUILayout.Button("Find Conditioned Cards"))
+        {
+            var effects = GetAllInstances<CardActionsData>()
+                .Where(e => e.Actions.Any(x => x.Type == CardBattleActionType.Battle && x.BattleEffect.Conditions.Any()))
+                .Select(e => e.name)
+                .ToArray();
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"{_effectType} - {effects.Length} uses", effects)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+
         EditorGUILayout.EndScrollView();
     }
     

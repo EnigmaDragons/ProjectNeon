@@ -348,7 +348,7 @@ public static class InterpolatedCardDescriptions
     }
 
     private static int FormulaResult(string formula, Member owner, ResourceQuantity xCost)
-        => Formula.EvaluateToInt(owner.State.ToSnapshot(), formula, xCost);
+        => Formula.EvaluateToInt(owner.State.ToSnapshot(), formula, xCost, new EffectScopedData());
     
     private static string MagicAmount(EffectData data, Maybe<Member> owner) 
         => WithImplications(owner.IsPresent
@@ -383,7 +383,7 @@ public static class InterpolatedCardDescriptions
         var formulaValueString = owner.IsMissing ? Bold(FormattedFormula(data.DurationFormula)) : string.Empty;
         if (owner.IsPresent)
         {
-            value = Formula.EvaluateToInt(owner.Value.State.ToSnapshot(), data.DurationFormula, xCost);
+            value = Formula.EvaluateToInt(owner.Value.State.ToSnapshot(), data.DurationFormula, xCost, new EffectScopedData());
             formulaValueString = Bold(value.ToString());
         }
 

@@ -10,7 +10,7 @@ public class DelayedStartOfTurnEffect : Effect
         ctx.Target.ApplyToAllConsciousMembers(m => m.State.ApplyTemporaryAdditive(
             new DelayedStartOfTurnState(ctx, m, _source.ReferencedSequence, 
                 TemporalStateMetadata.ForDuration(ctx.Source.Id,
-                    Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, _source.DurationFormula, ctx.XPaidAmount), 
+                    Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, _source.DurationFormula, ctx.XPaidAmount, ctx.ScopedData), 
                     _source.EffectScope.Value.Equals("Debuff"), new StatusDetail(_source.StatusTag)))));
     }
 }

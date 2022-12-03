@@ -29,7 +29,7 @@ public class AdjustCounterFormula : Effect
         ctx.Target.Members.GetConscious().ForEach(m =>
         {
             var impactSign = _negativeEffectScopes.Contains(_e.EffectScope) ? -1 : 1;
-            var formulaAmount = Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, _e.Formula, ctx.XPaidAmount);
+            var formulaAmount = Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, _e.Formula, ctx.XPaidAmount, ctx.ScopedData);
 
             var isDebuff = !_neutralEffectScopes.Contains(_e.EffectScope) && (impactSign * formulaAmount < 0); 
             if (isDebuff && !_e.Unpreventable)

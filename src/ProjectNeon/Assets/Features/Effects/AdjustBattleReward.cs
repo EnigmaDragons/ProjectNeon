@@ -11,7 +11,7 @@
     
     public void Apply(EffectContext ctx)
     {
-        var amount = Formula.EvaluateToInt(ctx.SourceStateSnapshot, _amountFormula, ctx.XPaidAmount);
+        var amount = Formula.EvaluateToInt(ctx.SourceStateSnapshot, _amountFormula, ctx.XPaidAmount, ctx.ScopedData);
         ctx.RewardState.Add(_rewardName, amount);
         var sign = amount > 0 ? "+" : "";
         BattleLog.Write($"Battle Reward {_rewardName} adjusted by {sign}{amount}");

@@ -1,5 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// LAST NUMBER USED: 101
+// LAST NUMBER USED: 103
 
 public enum EffectType
 {
@@ -79,6 +79,10 @@ public enum EffectType
     GainCredits = 52,
     ApplyAdditiveStatInjury = 71,
     ApplyMultiplicativeStatInjury = 72,
+    
+    //Variables
+    EvaluateCondition = 102,
+    SetScopedVariable = 103,
     
     // Miscellaneous
     Drain = 97,

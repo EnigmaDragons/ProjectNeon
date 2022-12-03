@@ -14,6 +14,6 @@ public sealed class HealOverTime : Effect
     {
         ctx.Target.Members.ForEach(x => x.State.ApplyTemporaryAdditive(
             new HealOverTimeState(ctx.Source.Id, (int)Math.Ceiling(_multiplier * ctx.Source.Magic()), x, 
-                Formula.EvaluateToInt(ctx.SourceSnapshot.State, x.State, _turnsFormula, ctx.XPaidAmount))));
+                Formula.EvaluateToInt(ctx.SourceSnapshot.State, x.State, _turnsFormula, ctx.XPaidAmount, ctx.ScopedData))));
     }
 }

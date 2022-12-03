@@ -111,10 +111,11 @@ public class EnemyInstance : EnemyType
     
     public Member SetupMemberState(Member m, BattleState state)
     {
-        var ctx = new EffectContext(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None, state.Party, state.PlayerState, state.RewardState, 
-            state.Members, state.PlayerCardZones, new UnpreventableContext(), new SelectionContext(), new Dictionary<int, CardTypeData>(), 
+        var ctx = new EffectContext(m, new Single(m), Maybe<Card>.Missing(), ResourceQuantity.None, state.Party, state.PlayerState, 
+            state.RewardState, state.Members, state.PlayerCardZones, new UnpreventableContext(), new SelectionContext(), new Dictionary<int, CardTypeData>(), 
             state.CreditsAtStartOfBattle, state.Party.Credits, state.Enemies.ToDictionary(x => x.Member.Id, x => (EnemyType)x.Enemy), 
-            () => state.GetNextCardId(), new PlayedCardSnapshot[0], new Dictionary<int, Color>(), new Dictionary<int, Sprite>(), true, ReactionTimingWindow.Default);
+            () => state.GetNextCardId(), new PlayedCardSnapshot[0], new Dictionary<int, Color>(), new Dictionary<int, Sprite>(), 
+            true, ReactionTimingWindow.Default, new EffectScopedData());
         m.State.InitResourceAmount(_resourceType, _startingResourceAmount);
         m.State.ApplyPersistentState(
             new EndOfTurnResourceGainPersistentState(new ResourceQuantity { ResourceType = _resourceType.Name, Amount = _resourceGainPerTurn}, m, state.Party));

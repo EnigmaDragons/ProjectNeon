@@ -34,7 +34,8 @@ public class Blessing
             state.OwnerTints,
             state.OwnerBusts,
             true,
-            ReactionTimingWindow.FirstCause);
+            ReactionTimingWindow.FirstCause, 
+            new EffectScopedData());
         AllEffects.Apply(Effect, ctx);
     }
 }

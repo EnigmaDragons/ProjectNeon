@@ -36,6 +36,9 @@ public class BattleState : ScriptableObject
     private readonly CurrentBattleStats _currentBattleStats = new CurrentBattleStats();
     private int _numPlayerDiscardsUsedThisTurn = 0;
     private bool _runStatsWritten = false;
+    private EffectScopedData _effectScopedData = new EffectScopedData();
+    public EffectScopedData EffectScopedData => _effectScopedData;
+    public void ResetEffectScopedData() => _effectScopedData = new EffectScopedData();
 
     public int CreditsAtStartOfBattle { get; private set; }
     public bool IsSelectingTargets = false;
@@ -199,6 +202,7 @@ public class BattleState : ScriptableObject
         turnNumber = 0;
         _currentBattleStats.Clear();
         _runStatsWritten = false;
+        ResetEffectScopedData();
     }
 
     public void SetPhase(BattleV2Phase p) => UpdateState(() => phase = p);
