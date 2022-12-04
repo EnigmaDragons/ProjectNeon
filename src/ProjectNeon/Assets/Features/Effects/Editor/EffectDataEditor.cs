@@ -71,7 +71,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.InvulnerableForTurns, new [] { "DurationFormula" }},
         {EffectType.RandomEffect, new [] { "ReferencedSequences" }},
         {EffectType.EvaluateCondition, new [] { "EffectScope" }},
-        {EffectType.SetScopedVariable, new [] { "EffectScope", "Formula" }},
+        {EffectType.AdjustScopedVariable, new [] { "EffectScope", "Formula" }},
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

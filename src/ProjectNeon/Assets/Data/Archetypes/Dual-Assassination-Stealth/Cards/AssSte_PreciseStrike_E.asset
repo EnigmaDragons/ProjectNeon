@@ -91,6 +91,7 @@ MonoBehaviour:
       skipWaitingForCompletion: 0
       conditions:
       - {fileID: 11400000, guid: cc6a994bd6d4d714eac0bc744fc8fc40, type: 2}
+      - {fileID: 11400000, guid: 05392e09856c9fb48a96ae02180b80ac, type: 2}
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
   - type: 1
@@ -99,6 +100,7 @@ MonoBehaviour:
       EffectType: 79
       Conditions:
       - {fileID: 11400000, guid: cc6a994bd6d4d714eac0bc744fc8fc40, type: 2}
+      - {fileID: 11400000, guid: 05392e09856c9fb48a96ae02180b80ac, type: 2}
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -234,7 +236,9 @@ MonoBehaviour:
     characterAnimation: {fileID: 0}
     characterAnimation2:
       Type: 2
-      Conditions: []
+      Conditions:
+      - {fileID: 11400000, guid: cc6a994bd6d4d714eac0bc744fc8fc40, type: 2}
+      - {fileID: 11400000, guid: 05392e09856c9fb48a96ae02180b80ac, type: 2}
     atTargetAnimation:
       animation:
         UseConstant: 1
@@ -325,14 +329,18 @@ MonoBehaviour:
         ConstantValue: {r: 0, g: 0, b: 0, a: 0}
         Variable: {fileID: 0}
       skipWaitingForCompletion: 0
-      conditions: []
+      conditions:
+      - {fileID: 11400000, guid: cc6a994bd6d4d714eac0bc744fc8fc40, type: 2}
+      - {fileID: 11400000, guid: 05392e09856c9fb48a96ae02180b80ac, type: 2}
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
   - type: 1
     battleEffect:
       Id: 2207
       EffectType: 30
-      Conditions: []
+      Conditions:
+      - {fileID: 11400000, guid: cc6a994bd6d4d714eac0bc744fc8fc40, type: 2}
+      - {fileID: 11400000, guid: 05392e09856c9fb48a96ae02180b80ac, type: 2}
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0

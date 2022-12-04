@@ -12,7 +12,7 @@ public class EffectScopedData
     public void RecordTrueCondition(string name) => trueConditions.Add(name);
     public bool IsCondition(string name) => trueConditions.Contains(name);
 
-    public void SetVariable(string name, float value)
+    public void AdjustVariable(string name, float value)
     {
         var index = variableNames.IndexOf(name);
         if (index == -1)
@@ -21,7 +21,7 @@ public class EffectScopedData
             variables.Add(0);
             index = variableNames.Count - 1;
         }
-        variables[index] = value;
+        variables[index] += value;
     }
 
     public float GetVariable(string name)

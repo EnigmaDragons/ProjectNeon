@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: AffArc_PainIntoGain_E_Each
+  m_Name: AffArc_Despair_Check
   m_EditorClassIdentifier: 
   Actions:
   - type: 1
     battleEffect:
-      Id: 1750
-      EffectType: 86
+      Id: 0
+      EffectType: 102
       Conditions:
       - {fileID: 11400000, guid: b857806ba4dfebf4d979dc778dc93cb5, type: 2}
       BaseAmount:
@@ -29,7 +29,7 @@ MonoBehaviour:
         FloatVariable: {fileID: 0}
       DurationFormula: 0
       EffectScope:
-        UseConstant: 0
+        UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
@@ -47,7 +47,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
-      ReferencedSequence: {fileID: 11400000, guid: 101b74489c0f98f4e8ca40e2f7ba4295, type: 2}
+      ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
       ReactionConditionType: 0
       ReactionEffectScope:

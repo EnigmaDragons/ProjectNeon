@@ -82,7 +82,7 @@ public enum EffectType
     
     //Variables
     EvaluateCondition = 102,
-    SetScopedVariable = 103,
+    AdjustScopedVariable = 103,
     
     // Miscellaneous
     Drain = 97,

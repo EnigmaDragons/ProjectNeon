@@ -20,9 +20,9 @@ MonoBehaviour:
   descriptionV2:
     text: '<b>Afflicted</b>: Gives self {0} Shield.<br><br>Deal {1} {2}'
     formatArgs:
-    - '{IE[1]}'
     - '{E[1]}'
-    - '{D[1]}'
+    - '{E[2]}'
+    - '{D[2]}'
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -32,6 +32,16 @@ MonoBehaviour:
     plusXCost: 0
   rarity: 3
   actionSequences:
+  - scope: 0
+    group: 1
+    cardActions: {fileID: 11400000, guid: aebb790af290b864aa6775376a60bee3, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: 7306fff8f21927b4184b903c009128a2, type: 2}
+    repeatX: 0
+    repeatCount: 0
   - scope: 0
     group: 1
     cardActions: {fileID: 11400000, guid: 996abf42adbf8414cbebee14dbff9121, type: 2}

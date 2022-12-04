@@ -114,8 +114,8 @@ public static class AllEffects
             new StatMultipliers().With(StatType.Damagability, 0f),
             TemporalStateMetadata.BuffForDuration(ctx.Source.Id, duration, new StatusDetail(StatusTag.Invulnerable, Maybe<string>.Missing())))), e.DurationFormula)},
         { EffectType.RandomEffect, e => new ResolveInnerEffect(e.ReferencedSequences?.Random()?.BattleEffects?.ToArray() ?? Array.Empty<EffectData>()) },
-        { EffectType.EvaluateCondition, e => new EvaluateConditionEffect(e.EffectScope) },
-        { EffectType.SetScopedVariable, e => new SetScopedVariable(e) },
+        { EffectType.EvaluateCondition, e => new EvaluateConditionEffect(e) },
+        { EffectType.AdjustScopedVariable, e => new AdjustScopedVariable(e) },
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";

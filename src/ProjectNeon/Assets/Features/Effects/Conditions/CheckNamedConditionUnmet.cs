@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "EffectConditions/Check Named Condition")]
-public class CheckNameCondition : StaticEffectCondition
+[CreateAssetMenu(menuName = "EffectConditions/Check Named Condition Unmet")]
+public class CheckNamedConditionUnmet : StaticEffectCondition
 {
     [SerializeField] private string conditionName;
     [SerializeField] private StaticEffectCondition condition;
@@ -10,7 +10,7 @@ public class CheckNameCondition : StaticEffectCondition
     {
         var chosenName = string.IsNullOrWhiteSpace(conditionName) ? condition.name : conditionName;
         return ctx.ScopedData.IsCondition(chosenName)
-            ? $"Did not fulfill precalculated condition: {chosenName}"
-            : Maybe<string>.Missing();
+            ? Maybe<string>.Missing()
+            : $"Did fulfill precalculated condition: {chosenName}";
     }
 }
