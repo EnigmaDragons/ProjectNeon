@@ -20,6 +20,9 @@ public class CardTargetRulePresenter : MonoBehaviour, ILocalizeTerms
     private const string TargetsAnyoneExceptOwner = "BattleUI/Targets Anyone Except Owner";
     private const string TargetsEveryoneExcept = "BattleUI/Targets Everyone Except";
     private const string TargetsEveryoneExceptOwner = "BattleUI/Targets Everyone Except Owner";
+    private const string TargetsRandomEnemy = "BattleUI/Targets Random Enemy";
+    private const string TargetsRandomAlly = "BattleUI/Targets Random Ally";
+    private const string TargetsRandom = "BattleUI/Targets Random Character";
     
     public void Hide() => gameObject.SetActive(false);
 
@@ -57,6 +60,12 @@ public class CardTargetRulePresenter : MonoBehaviour, ILocalizeTerms
             term = TargetsEveryoneExcept;
         else if (scope == Scope.AllExceptSelf && group == Group.All)
             term = TargetsEveryoneExceptOwner;
+        else if (scope == Scope.Random && group == Group.Ally)
+            term = TargetsRandomAlly;
+        else if (scope == Scope.Random && group == Group.Opponent)
+            term = TargetsRandomEnemy;
+        else if (scope == Scope.Random && group == Group.All)
+            term = TargetsRandom;
 
         label.SetTerm(term);
         gameObject.SetActive(term.Length > 0);

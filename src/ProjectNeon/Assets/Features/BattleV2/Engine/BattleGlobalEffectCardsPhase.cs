@@ -40,11 +40,11 @@ public class BattleGlobalEffectCardsPhase : OnMessage<BattleStateChanged, CardRe
                         return new Multiple(state.MembersWithoutIds.Where(m => m.TeamType == TeamType.Party && m.IsConscious()).ToArray());
                     if (x.Group == Group.Opponent && x.Scope == Scope.All)
                         return new Multiple(state.MembersWithoutIds.Where(m => m.TeamType == TeamType.Enemies && m.IsConscious()).ToArray());
-                    if (x.Group == Group.All && x.Scope == Scope.One)
+                    if (x.Group == Group.All && (x.Scope == Scope.One || x.Scope == Scope.Random || x.Scope == Scope.RandomExceptTarget)) //doesn't properly implement RandomExceptTarget
                         return new Single(state.MembersWithoutIds.Where(m => m.IsConscious()).Random());
-                    if (x.Group == Group.Ally && x.Scope == Scope.One)
+                    if (x.Group == Group.Ally && (x.Scope == Scope.One || x.Scope == Scope.Random || x.Scope == Scope.RandomExceptTarget)) //doesn't properly implement RandomExceptTarget
                         return new Single(state.MembersWithoutIds.Where(m => m.TeamType == TeamType.Party && m.IsConscious()).Random());
-                    if (x.Group == Group.Opponent && x.Scope == Scope.One)
+                    if (x.Group == Group.Opponent && (x.Scope == Scope.One || x.Scope == Scope.Random || x.Scope == Scope.RandomExceptTarget)) //doesn't properly implement RandomExceptTarget
                         return new Single(state.MembersWithoutIds.Where(m => m.TeamType == TeamType.Enemies && m.IsConscious()).Random());
                     return new NoTarget();
                 }).ToArray();

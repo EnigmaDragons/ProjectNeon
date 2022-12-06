@@ -19,7 +19,7 @@ public static class AITargetSelectionLogic
         {
             var target = GetActionTarget(ctx, isPreferredTarget, action, card, membersSpecificallyTargeted);
             Log($"Selected Target is {target}");
-            if (action.Scope == Scope.One || action.Scope == Scope.Random || action.Scope == Scope.OneExceptSelf || action.Scope == Scope.RandomExceptTarget)
+            if (action.Scope == Scope.One || action.Scope == Scope.Random || action.Scope == Scope.OneExceptSelf || action.Scope == Scope.Random || action.Scope == Scope.RandomExceptTarget)
                 membersSpecificallyTargeted.AddRange(target.Members);
             return target;
         }).ToArray();

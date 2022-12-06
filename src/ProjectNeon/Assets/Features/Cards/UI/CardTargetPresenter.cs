@@ -24,7 +24,7 @@ public class CardTargetPresenter : MonoBehaviour
         }
 
         var firstSeq = c.ActionSequences.First();
-        targetIcon.sprite = firstSeq.Scope == Scope.One || firstSeq.Scope == Scope.OneExceptSelf
+        targetIcon.sprite = firstSeq.Scope == Scope.One || firstSeq.Scope == Scope.OneExceptSelf || firstSeq.Scope == Scope.Random || firstSeq.Scope == Scope.RandomExceptTarget
             ? singleTargetSprite
             : groupTargetSprite;
 
