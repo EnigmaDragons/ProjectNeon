@@ -85,7 +85,7 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
         var targetMaps = 0;
         foreach (var sequence in card.ActionSequences)
         {
-            if (sequence.Group == Group.Self || sequence.Scope == Scope.All || sequence.Scope == Scope.AllExceptSelf)
+            if (sequence.Group == Group.Self || sequence.Scope == Scope.All || sequence.Scope == Scope.AllExceptSelf || sequence.Scope == Scope.Random)
             {
                 var target = battleState.GetPossibleConsciousTargets(card.Owner, sequence.Group, sequence.Scope).First();
                 getTargets.Add(() => target);
@@ -93,13 +93,21 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
             else
             {
                 var tmp = targetMaps;
-                getTargets.Add(() =>
-                {
-                    if (memberToTargetMap[tmp].ContainsKey(targetingState.TargetMember.Value))
-                        return memberToTargetMap[tmp][targetingState.TargetMember.Value];
-                    Log.Error("Get Targets was asked for when the targets were invalid");
-                    return memberToTargetMap[tmp].First().Value;
-                });
+                if (sequence.Scope == Scope.RandomExceptTarget)
+                    getTargets.Add(() =>
+                    {
+                        var targets = battleState.GetPossibleConsciousTargets(card.Owner, sequence.Group, Scope.RandomExceptTarget);
+                        targets = targets.Where(x => x.Members[0].Id != targetingState.TargetMember.Value).ToArray();
+                        return targets.Any() ? targets.Shuffled().First() : new NoTarget();
+                    });
+                else
+                    getTargets.Add(() =>
+                    {
+                        if (memberToTargetMap[tmp].ContainsKey(targetingState.TargetMember.Value))
+                            return memberToTargetMap[tmp][targetingState.TargetMember.Value];
+                        Log.Error("Get Targets was asked for when the targets were invalid");
+                        return memberToTargetMap[tmp].First().Value;
+                    });
                 var scopeOne = battleState.GetPossibleConsciousTargets(card.Owner, sequence.Group, Scope.One);
                 memberToTargetMap.Add(battleState.GetPossibleConsciousTargets(card.Owner, sequence.Group, sequence.Scope)
                     .ToDictionary(x =>

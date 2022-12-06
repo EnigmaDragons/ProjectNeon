@@ -19,31 +19,31 @@ public static class TestEffects
         => ApplyEffectAndReactions(effectData, source, target, Maybe<Card>.Missing());
     
     public static void Apply(EffectData effectData, Member source, Target target)
-        => ApplyEffectAndReactions(effectData, source, target, Maybe<Card>.Missing(), ResourceQuantity.None);
+        => ApplyEffectAndReactions(effectData, source, target, Maybe<Card>.Missing(), ResourceQuantity.None, ResourceQuantity.None);
     
     public static void Apply(EffectData effectData, Member source, Member target, Maybe<Card> card)
-        => ApplyEffectAndReactions(effectData, source, new Single(target), card, ResourceQuantity.None);
+        => ApplyEffectAndReactions(effectData, source, new Single(target), card, ResourceQuantity.None, ResourceQuantity.None);
 
     public static void Apply(EffectData effectData, Member source, Target target, Maybe<Card> card)
-        => ApplyEffectAndReactions(effectData, source, target, card, ResourceQuantity.None);
+        => ApplyEffectAndReactions(effectData, source, target, card, ResourceQuantity.None, ResourceQuantity.None);
     
-    public static void Apply(EffectData effectData, Member source, Member target, Maybe<Card> card, ResourceQuantity xAmountPaid)
-        => ApplyEffectAndReactions(effectData, source, new Single(target), card, xAmountPaid);
+    public static void Apply(EffectData effectData, Member source, Member target, Maybe<Card> card, ResourceQuantity xAmountPaid, ResourceQuantity amountPaid)
+        => ApplyEffectAndReactions(effectData, source, new Single(target), card, xAmountPaid, amountPaid);
 
-    public static void Apply(EffectData effectData, Member source, Target target, Maybe<Card> card, ResourceQuantity xAmountPaid)
-        => ApplyEffectAndReactions(effectData, source, target, card, xAmountPaid);
+    public static void Apply(EffectData effectData, Member source, Target target, Maybe<Card> card, ResourceQuantity xAmountPaid, ResourceQuantity amountPaid)
+        => ApplyEffectAndReactions(effectData, source, target, card, xAmountPaid, amountPaid);
 
     private static void ApplyEffectAndReactions(EffectData e, Member source, Member target, Maybe<Card> card)
-        => ApplyEffectAndReactions(e, source, new Single(target), card, ResourceQuantity.None);
+        => ApplyEffectAndReactions(e, source, new Single(target), card, ResourceQuantity.None, ResourceQuantity.None);
 
-    private static void ApplyEffectAndReactions(EffectData e, Member source, Target target, Maybe<Card> card, ResourceQuantity xAmountPaid)
+    private static void ApplyEffectAndReactions(EffectData e, Member source, Target target, Maybe<Card> card, ResourceQuantity xAmountPaid, ResourceQuantity amountPaid)
     {
         var tempMembers = target.Members.ToDictionary(t => t.Id, t => t);
         tempMembers[source.Id] = source;
         var members = tempMembers.Values;
         var battleSnapshotBefore = new BattleStateSnapshot(members.Select(m => m.GetSnapshot()).ToArray());
         var preventions = new PreventionContextMut(target);
-        AllEffects.Apply(e, EffectContext.ForTests(source, target, card, xAmountPaid, preventions));
+        AllEffects.Apply(e, EffectContext.ForTests(source, target, card, xAmountPaid, amountPaid, preventions));
         var battleSnapshotAfter = new BattleStateSnapshot(members.Select(m => m.GetSnapshot()).ToArray());
 
         var effectResolved = new EffectResolved(wasApplied: true, isFirstBattleEffectOfChosenTarget: true, e, source, target, 
@@ -57,7 +57,7 @@ public static class TestEffects
             var reactionPreventions = new PreventionContextMut(r.Target);
             r.ReactionSequence.CardActions.Actions.Where(a => a.Type == CardBattleActionType.Battle)
                 .ForEach(be => AllEffects.Apply(be.BattleEffect,
-                    EffectContext.ForTests(r.Source, r.Target, Maybe<Card>.Missing(), ResourceQuantity.None, reactionPreventions)));
+                    EffectContext.ForTests(r.Source, r.Target, Maybe<Card>.Missing(), ResourceQuantity.None, ResourceQuantity.None, reactionPreventions)));
         });
     }
 }

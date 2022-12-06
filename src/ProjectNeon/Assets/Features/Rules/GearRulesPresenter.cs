@@ -36,7 +36,7 @@ public class GearRulesPresenter : MonoBehaviour
         {
             Hide();
             var rulesToShow = new List<string>();
-            AddAllDescriptionFoundRules(rulesToShow, e.Description);
+            AddAllDescriptionFoundRules(rulesToShow, e.LocalizationDescriptionTerm().ToEnglish());
 
             var battleEffects = e.BattleStartEffects
                 .Concat(e.BattleEndEffects)

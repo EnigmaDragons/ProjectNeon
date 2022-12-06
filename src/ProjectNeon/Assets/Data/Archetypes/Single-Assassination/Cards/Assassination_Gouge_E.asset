@@ -175,7 +175,8 @@ MonoBehaviour:
     battleEffect:
       Id: 2522
       EffectType: 30
-      Conditions: []
+      Conditions:
+      - {fileID: 11400000, guid: 016b125352fb18649800a35718152285, type: 2}
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -197,9 +198,9 @@ MonoBehaviour:
       TurnDelay: 0
       Formula: 2 * Attack + 4 * Target[Marked]
       InterpolatePartialFormula:
-        EvaluationPartialFormula: 1 * Attack
+        EvaluationPartialFormula: 
         Prefix: 
-        Suffix: + Target[Marked]
+        Suffix: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 

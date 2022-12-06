@@ -18,8 +18,8 @@ public class AddToXCostTransformerTest
             Formula = "2 * X"
         };
 
-        TestEffects.Apply(effect1, member, member, new Card(1, member, TestableObjectFactory.Create<CardType>()), new ResourceQuantity { Amount = 2 });
-        TestEffects.Apply(effect2, member, member, new Card(1, member, TestableObjectFactory.Create<CardType>()), new ResourceQuantity { Amount = 2 });
+        TestEffects.Apply(effect1, member, member, new Card(1, member, TestableObjectFactory.Create<CardType>()), new ResourceQuantity { Amount = 2 }, new ResourceQuantity { Amount = 2 });
+        TestEffects.Apply(effect2, member, member, new Card(1, member, TestableObjectFactory.Create<CardType>()), new ResourceQuantity { Amount = 2 }, new ResourceQuantity { Amount = 2 });
 
         Assert.AreEqual(3, member.CurrentHp());
     }

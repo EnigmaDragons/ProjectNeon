@@ -119,7 +119,7 @@ public class Hero
             .ForEach(x => AllEffects.Apply(x, CreateEffectContext(m, state)));
 
     private EffectContext CreateEffectContext(Member m, BattleState state) => new EffectContext(m, new Single(m),
-        Maybe<Card>.Missing(), ResourceQuantity.None, state.Party, state.PlayerState, state.RewardState, 
+        Maybe<Card>.Missing(), ResourceQuantity.None, ResourceQuantity.None, state.Party, state.PlayerState, state.RewardState, 
         state.Members, state.PlayerCardZones, new UnpreventableContext(), new SelectionContext(),
         state.AllCards.GetMap(),
         state.Party.Credits, state.Party.Credits, new Dictionary<int, EnemyType>(), () => state.GetNextCardId(),

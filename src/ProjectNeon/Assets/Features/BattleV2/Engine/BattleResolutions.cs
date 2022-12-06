@@ -137,7 +137,7 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
     {
         DebugLog($"Apply Battle Effect {msg.Effect.EffectType} - Is Reaction: {msg.IsReaction} - Reaction Timing {msg.Timing}");
         // Core Execution
-        var ctx = new EffectContext(msg.Source, msg.Target, msg.Card, msg.XPaidAmount, partyAdventureState, state.PlayerState, state.RewardState,
+        var ctx = new EffectContext(msg.Source, msg.Target, msg.Card, msg.XPaidAmount, msg.PaidAmount, partyAdventureState, state.PlayerState, state.RewardState,
             state.Members, state.PlayerCardZones, msg.Preventions, new SelectionContext(), allCards.GetMap(), state.CreditsAtStartOfBattle, 
             state.Party.Credits, state.Enemies.ToDictionary(x => x.Member.Id, x => (EnemyType)x.Enemy), () => state.GetNextCardId(), 
             state.CurrentTurnCardPlays(), state.OwnerTints, state.OwnerBusts, msg.IsReaction, msg.Timing, state.EffectScopedData);

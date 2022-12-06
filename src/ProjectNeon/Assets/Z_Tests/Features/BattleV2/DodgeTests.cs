@@ -22,7 +22,7 @@ public class DodgeTests
         attacker.Apply(m => m.Adjust(TemporalStatType.Blind, 1));
 
         var basicAttackCard = new Card(0, attacker, BasicAttackCard);
-        basicAttackCard.Execute(new Target[] { new Single(defender),}, ResourceQuantity.None, attacker, defender);
+        basicAttackCard.Execute(new Target[] { new Single(defender),}, ResourceQuantity.None, ResourceQuantity.None, attacker, defender);
         
         Assert.AreEqual(1, defender.State[TemporalStatType.Dodge]);
     }
@@ -36,7 +36,7 @@ public class DodgeTests
         var attacker = TestMembers.Any();
 
         var basicAttackCard = new Card(0, attacker, BasicAttackCard);
-        basicAttackCard.Execute(new Target[] { new Single(defender),}, ResourceQuantity.None, attacker, defender);
+        basicAttackCard.Execute(new Target[] { new Single(defender),}, ResourceQuantity.None, ResourceQuantity.None, attacker, defender);
         
         Assert.AreEqual(0, defender.State[TemporalStatType.Dodge], "Dodge Not Consumed");
         Assert.AreEqual(0, defender.State.MissingHp());
@@ -59,7 +59,7 @@ public class DodgeTests
                     TestableObjectFactory.Create<CardActionsData>().Initialized(new CardActionV2(TestEffects.BasicAttack)), repeatX: false)
             }
         });
-        basicAttackCard.Execute(new Target[] { new Single(defender), new Single(defender)}, ResourceQuantity.None, attacker, defender);
+        basicAttackCard.Execute(new Target[] { new Single(defender), new Single(defender)}, ResourceQuantity.None, ResourceQuantity.None, attacker, defender);
         
         Assert.AreEqual(0, defender.State[TemporalStatType.Dodge], "Dodge Not Consumed");
         Assert.AreEqual(0, defender.State.MissingHp());
@@ -75,7 +75,7 @@ public class DodgeTests
         attacker.Apply(m => m.Adjust(TemporalStatType.Blind, 1));
 
         var basicAttackCard = new Card(0, attacker, BasicAttackCard);
-        basicAttackCard.Execute(new Target[] { new Single(defender),}, ResourceQuantity.None, attacker, defender);
+        basicAttackCard.Execute(new Target[] { new Single(defender),}, ResourceQuantity.None, ResourceQuantity.None, attacker, defender);
         
         Assert.AreEqual(0, attacker.State[TemporalStatType.Blind]);
     }

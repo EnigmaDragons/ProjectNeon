@@ -11,16 +11,18 @@
     public bool IsReaction { get; }
     public Maybe<Card> Card { get; }
     public ResourceQuantity XPaidAmount { get; }
+    public ResourceQuantity PaidAmount { get; }
     public PreventionContext Preventions { get; }
 
-    public ApplyBattleEffect(bool isFirstBattleEffectOfChosenTarget, EffectData effect, Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, 
-        PreventionContext preventions, ReactionTimingWindow timing)
-        : this(isFirstBattleEffectOfChosenTarget, effect, source, target, card, xPaidAmount, preventions, default(Group), default(Scope), true, timing) {}
-    public ApplyBattleEffect(bool isFirstBattleEffectOfChosenTarget, EffectData effect, Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, 
-        PreventionContext preventions, bool isReaction, ReactionTimingWindow timing)
-        : this(isFirstBattleEffectOfChosenTarget, effect, source, target, card, xPaidAmount, preventions, default(Group), default(Scope), isReaction, timing) {}
     public ApplyBattleEffect(bool isFirstBattleEffectOfChosenTarget, EffectData effect, Member source, Target target, Maybe<Card> card, 
-        ResourceQuantity xPaidAmount, PreventionContext preventions, Group targetGroup, Scope scope, bool isReaction, ReactionTimingWindow timing)
+        ResourceQuantity xPaidAmount, ResourceQuantity paidAmount, PreventionContext preventions, ReactionTimingWindow timing)
+        : this(isFirstBattleEffectOfChosenTarget, effect, source, target, card, xPaidAmount, paidAmount, preventions, default(Group), default(Scope), true, timing) {}
+    public ApplyBattleEffect(bool isFirstBattleEffectOfChosenTarget, EffectData effect, Member source, Target target, Maybe<Card> card, 
+        ResourceQuantity xPaidAmount, ResourceQuantity paidAmount, PreventionContext preventions, bool isReaction, ReactionTimingWindow timing)
+        : this(isFirstBattleEffectOfChosenTarget, effect, source, target, card, xPaidAmount, paidAmount, preventions, default(Group), default(Scope), isReaction, timing) {}
+    public ApplyBattleEffect(bool isFirstBattleEffectOfChosenTarget, EffectData effect, Member source, Target target, Maybe<Card> card, 
+        ResourceQuantity paidAmount, ResourceQuantity xPaidAmount, PreventionContext preventions, Group targetGroup, Scope scope, bool isReaction, 
+        ReactionTimingWindow timing)
     {
         IsFirstBattleEffectOfChosenTarget = isFirstBattleEffectOfChosenTarget;
         Effect = effect;
@@ -33,6 +35,7 @@
         Timing = timing;
         Card = card;
         XPaidAmount = xPaidAmount;
+        PaidAmount = paidAmount;
         Preventions = preventions;
     }
 }

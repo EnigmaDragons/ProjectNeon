@@ -18,6 +18,7 @@ public class Blessing
             target,
             Maybe<Card>.Missing(), 
             ResourceQuantity.None, 
+            ResourceQuantity.None, 
             state.Party, 
             state.PlayerState, 
             state.RewardState,

@@ -150,6 +150,12 @@ public class CardResolutionZone : ScriptableObject
             return " on all Enemies";
         if (seq.Group == Group.All && seq.Scope == Scope.All)
             return " on everyone";
+        if (seq.Group == Group.Ally && seq.Scope == Scope.Random)
+            return " on random Ally";
+        if (seq.Group == Group.Opponent && seq.Scope == Scope.Random)
+            return " on random Enemy";
+        if (seq.Group == Group.All && seq.Scope == Scope.Random)
+            return " on random character";
         return string.Empty;
     }
     
@@ -288,6 +294,8 @@ public class CardResolutionZone : ScriptableObject
         {
             var action = card.ActionSequences[i];
             var possibleTargets = battleState.GetPossibleConsciousTargets(m, action.Group, action.Scope);
+            if (action.Scope == Scope.RandomExceptTarget && previousTargets.IsPresent)
+                possibleTargets = possibleTargets.Where(possible => !previousTargets.Value.Any(previous => previous.Matches(possible))).ToArray();
             if (possibleTargets.None())
                 targets[i] = new NoTarget();
             else

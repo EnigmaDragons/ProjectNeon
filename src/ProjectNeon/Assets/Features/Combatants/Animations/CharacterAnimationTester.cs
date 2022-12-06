@@ -29,7 +29,8 @@ public class CharacterAnimationTester : MonoBehaviour
             Target = new NoTarget(),
             Card = Maybe<Card>.Missing(),
             Condition = Maybe<EffectCondition>.Missing(),
-            XPaidAmount = ResourceQuantity.None
+            XPaidAmount = ResourceQuantity.None,
+            PaidAmount = ResourceQuantity.None
         });
     }
 

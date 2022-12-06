@@ -18,7 +18,7 @@ public class ChooseBuyoutCardOrDefaultToCreateTests
         var templateCard = new InMemoryCard() { Name = "default" };
         var defaultCard = new InMemoryCard() { Name = "template", ActionSequences = new CardActionSequence[] { CardActionSequence.Create(Scope.One, Group.Self, ((CardActionsData)FormatterServices.GetUninitializedObject(typeof(CardActionsData))).Initialized(new CardActionV2(new EffectData { EffectType = EffectType.BuyoutEnemyById })), false) }};
         var allCards = new Dictionary<int, CardTypeData> { { 1, templateCard }, { 2, defaultCard } };
-        var effectContext = new EffectContext(TestMembers.Any(), new Single(TestMembers.Any()), Maybe<Card>.Missing(), ResourceQuantity.None, 
+        var effectContext = new EffectContext(TestMembers.Any(), new Single(TestMembers.Any()), Maybe<Card>.Missing(), ResourceQuantity.None, ResourceQuantity.None, 
             PartyAdventureState.InMemory(), new PlayerState(), BattleRewardState.InMemory(), battleMembers, CardPlayZones.InMemory, new UnpreventableContext(),
             new SelectionContext(), allCards, 0, 0, enemies, () => 0, new PlayedCardSnapshot[0], new Dictionary<int, Color>(), 
             new Dictionary<int, Sprite>(), false, ReactionTimingWindow.FirstCause, new EffectScopedData());
