@@ -57,7 +57,7 @@ public class BalanceEngine
             return 1f;
         if (g == Group.Self && tags.Contains(BalanceTag.StatBuff))
             return 1f;
-        if (g == Group.Self || s == Scope.Random || s == Scope.RandomExceptTarget)
+        if (g == Group.Self || s == Scope.Random)
             return 0.8f;
         if (s == Scope.One)
             return 1f;

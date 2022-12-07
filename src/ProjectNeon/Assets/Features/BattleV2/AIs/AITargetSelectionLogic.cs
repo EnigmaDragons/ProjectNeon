@@ -14,28 +14,18 @@ public static class AITargetSelectionLogic
             throw new InvalidOperationException("Cannot select targets before a card is selected");
 
         var card = ctx.SelectedCard.Value;
-        var membersSpecificallyTargeted = new List<Member>();
         return card.ActionSequences.Select(action =>
         {
-            var target = GetActionTarget(ctx, isPreferredTarget, action, card, membersSpecificallyTargeted);
+            var target = GetActionTarget(ctx, isPreferredTarget, action, card);
             Log($"Selected Target is {target}");
-            if (action.Scope == Scope.One || action.Scope == Scope.Random || action.Scope == Scope.OneExceptSelf || action.Scope == Scope.Random || action.Scope == Scope.RandomExceptTarget)
-                membersSpecificallyTargeted.AddRange(target.Members);
             return target;
         }).ToArray();
     }
 
-    private static Target GetActionTarget(CardSelectionContext ctx, Func<Target, bool> isPreferredTarget, CardActionSequence action, CardTypeData card, List<Member> membersSpecificallyTargeted)
+    private static Target GetActionTarget(CardSelectionContext ctx, Func<Target, bool> isPreferredTarget, CardActionSequence action, CardTypeData card)
     {
         var possibleTargets = ctx.AllMembers.GetPossibleConsciousTargets(ctx.Member, action.Group, action.Scope);
         Log($"Possible Targets for {card.Name} are [{string.Join(", ", possibleTargets.Select(p => p.ToString()))}]");
-        if (action.Scope == Scope.RandomExceptTarget)
-        {
-            possibleTargets = possibleTargets.Where(x => !membersSpecificallyTargeted.Contains(x.Members[0])).ToArray();
-            return possibleTargets.Any()
-                ? possibleTargets.Shuffled().First()
-                : new NoTarget();
-        }
         if (possibleTargets.Where(isPreferredTarget).Any())
             possibleTargets = possibleTargets.Where(isPreferredTarget).ToArray();
 

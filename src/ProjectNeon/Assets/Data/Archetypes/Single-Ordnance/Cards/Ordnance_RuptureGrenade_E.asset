@@ -169,11 +169,12 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
-  - type: 20
+  - type: 1
     battleEffect:
-      Id: 2839
-      EffectType: 0
-      Conditions: []
+      Id: 0
+      EffectType: 30
+      Conditions:
+      - {fileID: 11400000, guid: 16841abc0b8202a4e831e48091538bd0, type: 2}
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -189,11 +190,11 @@ MonoBehaviour:
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
       ReTargetScope: 0
-      ApplyToEachMemberIndividually: 0
+      ApplyToEachMemberIndividually: 1
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 
+      Formula: 2.8 * Attack
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
@@ -218,7 +219,7 @@ MonoBehaviour:
       BonusCardType: {fileID: 0}
       Unpreventable: 0
     conditionData:
-      ConditionType: 9
+      ConditionType: 0
       FloatAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -227,7 +228,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
-      ReferencedEffect: {fileID: 11400000, guid: 5f0e5f0dbad2d414d9f0e5143d0e377a, type: 2}
+      ReferencedEffect: {fileID: 0}
     characterAnimation: {fileID: 0}
     characterAnimation2:
       Type: 0

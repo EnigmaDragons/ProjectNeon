@@ -173,7 +173,8 @@ MonoBehaviour:
     battleEffect:
       Id: 2397
       EffectType: 31
-      Conditions: []
+      Conditions:
+      - {fileID: 11400000, guid: 9b9786e72d8a6b947b2c9f9e1d75e38a, type: 2}
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -247,11 +248,12 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
-  - type: 20
+  - type: 1
     battleEffect:
-      Id: 2398
-      EffectType: 0
-      Conditions: []
+      Id: 0
+      EffectType: 31
+      Conditions:
+      - {fileID: 11400000, guid: b857806ba4dfebf4d979dc778dc93cb5, type: 2}
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -260,9 +262,9 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
-      DurationFormula: 
+      DurationFormula: 0
       EffectScope:
-        UseConstant: 1
+        UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
@@ -271,7 +273,7 @@ MonoBehaviour:
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 
+      Formula: 0.97 * 2 * Magic
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
@@ -296,7 +298,7 @@ MonoBehaviour:
       BonusCardType: {fileID: 0}
       Unpreventable: 0
     conditionData:
-      ConditionType: 7
+      ConditionType: 0
       FloatAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -305,7 +307,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
-      ReferencedEffect: {fileID: 11400000, guid: 0c630672f00a1cd45b3a531753dcf9d5, type: 2}
+      ReferencedEffect: {fileID: 0}
     characterAnimation: {fileID: 0}
     characterAnimation2:
       Type: 0

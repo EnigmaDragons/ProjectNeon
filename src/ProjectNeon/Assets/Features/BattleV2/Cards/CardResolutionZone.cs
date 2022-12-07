@@ -250,27 +250,32 @@ public class CardResolutionZone : ScriptableObject
             Log.Info($"Num Bonus Cards {member.NameTerm.ToEnglish()}: {bonusCards.Length}");
             foreach (var bc in bonusCards)
             {
-                var card = bc.Card;
-                var bcCost = bc.Cost.Amount; 
-                var paidAmount = new ResourceCalculations(card.Cost.ResourceType, bcCost, 0, 0); // Not factoring in X-Cost. Not relevant unless we have X-Cost Chain cards.
-                if (!card.IsPlayableBy(member, battleState.Party, 1, paidAmount))
-                {
-                    Log.Info($"Bonus Card {bc.Card.Name} not playable since {member.NameTerm.ToEnglish()} could not afford it.");
-                    continue;
-                }
-
-                var lastPlayedMove = _movesThisTurn.LastOrMaybe();
-                var targets = GetTargets(member, card, lastPlayedMove.Map(move => move.Targets));
-                if (targets.Length == 0 || targets[0].Members.Length == 0)
-                    return;
-                
-                if (member.TeamType == TeamType.Party)
-                    PlayImmediately(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card, battleState.GetHeroById(member.Id).Tint, battleState.GetHeroById(member.Id).Bust), isTransient: true, retargetingAllowed: true, paidAmount));
-                else
-                    PlayImmediately(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card), isTransient: true, retargetingAllowed: true, paidAmount));
+                PlayBonusCard(member, bc);
                 Message.Publish(new DisplayCharacterWordRequested(member, CharacterReactionType.BonusCardPlayed));
             }
         }
+    }
+
+    public void PlayBonusCard(Member member, BonusCardDetails bonusCard)
+    {
+        var card = bonusCard.Card;
+        var bcCost = bonusCard.Cost.Amount; 
+        var paidAmount = new ResourceCalculations(card.Cost.ResourceType, bcCost, 0, 0); // Not factoring in X-Cost. Not relevant unless we have X-Cost Chain cards.
+        if (!card.IsPlayableBy(member, battleState.Party, 1, paidAmount))
+        {
+            Log.Info($"Bonus Card {bonusCard.Card.Name} not playable since {member.NameTerm.ToEnglish()} could not afford it.");
+            return;
+        }
+
+        var lastPlayedMove = _movesThisTurn.LastOrMaybe();
+        var targets = GetTargets(member, card, lastPlayedMove.Map(move => move.Targets));
+        if (targets.Length == 0 || targets[0].Members.Length == 0)
+            return;
+                
+        if (member.TeamType == TeamType.Party)
+            PlayImmediately(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card, battleState.GetHeroById(member.Id).Tint, battleState.GetHeroById(member.Id).Bust), isTransient: true, retargetingAllowed: true, paidAmount));
+        else
+            PlayImmediately(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card), isTransient: true, retargetingAllowed: true, paidAmount));
     }
     
     private void AddChainedCardIfApplicable(IPlayedCard trigger)
@@ -294,8 +299,6 @@ public class CardResolutionZone : ScriptableObject
         {
             var action = card.ActionSequences[i];
             var possibleTargets = battleState.GetPossibleConsciousTargets(m, action.Group, action.Scope);
-            if (action.Scope == Scope.RandomExceptTarget && previousTargets.IsPresent)
-                possibleTargets = possibleTargets.Where(possible => !previousTargets.Value.Any(previous => previous.Matches(possible))).ToArray();
             if (possibleTargets.None())
                 targets[i] = new NoTarget();
             else

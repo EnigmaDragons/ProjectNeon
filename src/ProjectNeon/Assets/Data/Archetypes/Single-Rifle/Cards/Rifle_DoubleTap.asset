@@ -10,29 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Basic_RevengeStrike
+  m_Name: Rifle_DoubleTap
   m_EditorClassIdentifier: 
-  id: 149
+  id: 449
   customName: 
-  art: {fileID: 21300000, guid: 18e78c8b940c3d042af8912f7f599a7e, type: 3}
-  description: "Deal {E[0]}. \n<b>Revenge:</b> Deal {E[1]} additional."
+  art: {fileID: 21300000, guid: f99460f3d031ca5459e9f98d0777add2, type: 3}
+  description: "Deal {E[0]}.\n \nDeal {IE[0]} to a random different enemy"
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   descriptionV2:
-    text: Deal {0} | <b>Crit:<b> No allies remain
+    text: Deal {0} | <b>Crit:</b> Has <b>Shot</b> the target this round
     formatArgs:
     - '{E[1]}'
-  tags: 04000000
+  tags: 2a000000
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 0
-    resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
+    cost: 1
+    resourceType: {fileID: 11400000, guid: 029856820b64438428ee04adda380477, type: 2}
     plusXCost: 0
-  rarity: 0
+  rarity: 2
   actionSequences:
   - scope: 0
     group: 1
-    cardActions: {fileID: 11400000, guid: 557616128ca07f444b14dc1fc678666d, type: 2}
+    cardActions: {fileID: 11400000, guid: 0a36714f33d1fb24385bba3e723fa3aa, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -40,7 +40,7 @@ MonoBehaviour:
   functionalityIssues: 
   presentationIssues: 
   archetypes:
-  - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}
+  - {fileID: 11400000, guid: fbcb59caa7d5a114f8b9cf6016d20160, type: 2}
   highlightCondition: []
   unhighlightCondition: []
   isWIP: 0

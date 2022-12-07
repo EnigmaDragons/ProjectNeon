@@ -8,6 +8,5 @@ public static class CardExtensions
             => x.Group != Group.Self
                 && x.Scope != Scope.All
                 && x.Scope != Scope.AllExceptSelf
-                && x.Scope != Scope.Random
-                && x.Scope != Scope.RandomExceptTarget);
+                && x.Scope != Scope.Random);
 }

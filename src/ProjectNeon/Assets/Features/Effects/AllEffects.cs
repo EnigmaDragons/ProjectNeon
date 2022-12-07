@@ -116,6 +116,9 @@ public static class AllEffects
         { EffectType.RandomEffect, e => new ResolveInnerEffect(e.ReferencedSequences?.Random()?.BattleEffects?.ToArray() ?? Array.Empty<EffectData>()) },
         { EffectType.EvaluateCondition, e => new EvaluateConditionEffect(e) },
         { EffectType.AdjustScopedVariable, e => new AdjustScopedVariable(e) },
+        { EffectType.PlayCardAtStartOfTurn, e => new FullContextEffect(
+                (ctx, duration, m) => m.ApplyBonusCardPlayer(new PlayBonusCardAtStartOfTurn(m.MemberId, duration, e.BonusCardType, e.StatusDetail)), 
+                e.DurationFormula) },
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";

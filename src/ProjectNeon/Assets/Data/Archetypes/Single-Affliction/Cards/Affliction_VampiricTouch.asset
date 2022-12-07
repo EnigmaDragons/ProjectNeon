@@ -18,10 +18,13 @@ MonoBehaviour:
   description: 'Deal {E[0]}. <b>Afflicted</b>: Gives self {E[1]} before dealing damage'
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   descriptionV2:
-    text: 'Deal {0}. <b>Afflicted</b>: Gives self {1} before dealing damage'
+    text: '<b>Afflicted</b>: Gives self {0}
+
+
+      Deal {1}'
     formatArgs:
-    - '{E[0]}'
     - '{E[1]}'
+    - '{E[2]}'
   tags: 0400000006000000
   speed: 0
   isSinglePlay: 0
@@ -31,6 +34,16 @@ MonoBehaviour:
     plusXCost: 0
   rarity: 1
   actionSequences:
+  - scope: 0
+    group: 1
+    cardActions: {fileID: 11400000, guid: 90de6601136d32f4f8e0990196e91477, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: 67e5f74d8974af3499aefc55a448c97d, type: 2}
+    repeatX: 0
+    repeatCount: 0
   - scope: 0
     group: 1
     cardActions: {fileID: 11400000, guid: 94a40fe3eb3af3d4f99143dd271c8189, type: 2}

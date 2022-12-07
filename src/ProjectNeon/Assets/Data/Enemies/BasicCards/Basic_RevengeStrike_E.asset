@@ -95,7 +95,8 @@ MonoBehaviour:
     battleEffect:
       Id: 3130
       EffectType: 30
-      Conditions: []
+      Conditions:
+      - {fileID: 11400000, guid: ff3d7d861d5f96049a084c2a30cbaa3f, type: 2}
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -115,7 +116,7 @@ MonoBehaviour:
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 1 * Attack
+      Formula: 2 * Attack
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
@@ -169,11 +170,12 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
-  - type: 20
+  - type: 1
     battleEffect:
-      Id: 3131
-      EffectType: 0
-      Conditions: []
+      Id: 0
+      EffectType: 30
+      Conditions:
+      - {fileID: 11400000, guid: 568ce82ceecc0524aa11f120f8029662, type: 2}
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -182,9 +184,9 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
-      DurationFormula: 
+      DurationFormula: 0
       EffectScope:
-        UseConstant: 1
+        UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
@@ -193,7 +195,7 @@ MonoBehaviour:
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 
+      Formula: 1 * Attack
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
@@ -218,7 +220,7 @@ MonoBehaviour:
       BonusCardType: {fileID: 0}
       Unpreventable: 0
     conditionData:
-      ConditionType: 6
+      ConditionType: 0
       FloatAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -227,7 +229,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
-      ReferencedEffect: {fileID: 11400000, guid: 4457239d1b66aa84488bb9127e62ab03, type: 2}
+      ReferencedEffect: {fileID: 0}
     characterAnimation: {fileID: 0}
     characterAnimation2:
       Type: 0

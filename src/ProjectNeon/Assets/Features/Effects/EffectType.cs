@@ -1,5 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// LAST NUMBER USED: 103
+// LAST NUMBER USED: 104
 
 public enum EffectType
 {
@@ -20,6 +20,7 @@ public enum EffectType
     AtStartOfTurn = 54,
     AtEndOfTurn = 66,
     DelayedStartOfTurn = 23,
+    PlayCardAtStartOfTurn = 104,
 
     // Resets
     RemoveDebuffs = 4,

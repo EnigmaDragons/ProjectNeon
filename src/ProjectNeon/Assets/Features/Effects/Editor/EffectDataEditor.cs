@@ -14,8 +14,8 @@ public class EffectDataEditor : PropertyDrawer
         new DictionaryWithDefault<EffectType, string[]>(new string[] { "BaseAmount", "FloatAmount", "DurationFormula", "HitsRandomTargetMember" })
     {
         {EffectType.Nothing, new string[0]},
-        {EffectType.ReactWithEffect, new []{ "FloatAmount", "DurationFormula", "EffectScope", "StatusTag", "StatusDetailText", "ReactionConditionType", "ReactionEffectScope", "ReactionTimingWindow", "ReactionEffect"}},
-        {EffectType.ReactWithCard, new []{ "FloatAmount", "DurationFormula", "EffectScope", "StatusTag", "StatusDetailText", "ReactionConditionType", "ReactionEffectScope", "ReactionSequence", "ReactionTimingWindow"}},
+        {EffectType.ReactWithEffect, new []{ "Id", "FloatAmount", "DurationFormula", "EffectScope", "StatusTag", "StatusDetailText", "ReactionConditionType", "ReactionEffectScope", "ReactionTimingWindow", "ReactionEffect"}},
+        {EffectType.ReactWithCard, new []{ "Id", "FloatAmount", "DurationFormula", "EffectScope", "StatusTag", "StatusDetailText", "ReactionConditionType", "ReactionEffectScope", "ReactionSequence", "ReactionTimingWindow"}},
         {EffectType.AdjustResourceFlat, new [] { "FloatAmount", "DurationFormula", "EffectScope" }},
         {EffectType.RemoveDebuffs, new string[0]},
         {EffectType.ShieldRemoveAll, new string[0]},
@@ -27,8 +27,8 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.AdjustPrimaryResourceFormula, new [] {"Formula", "InterpolatePartialFormula"}},
         {EffectType.AdjustPlayerStats, new [] { "FloatAmount", "DurationFormula", "EffectScope" }},
         {EffectType.AdjustPlayerStatsFormula, new [] { "Formula", "InterpolatePartialFormula", "DurationFormula", "EffectScope" }},
-        {EffectType.AtStartOfTurn, new [] { "DurationFormula", "EffectScope", "ReferencedSequence", "StatusTag", "StatusDetailText" }},
-        {EffectType.AtEndOfTurn, new [] { "DurationFormula", "EffectScope", "ReferencedSequence", "StatusTag", "StatusDetailText" }},
+        {EffectType.AtStartOfTurn, new [] { "Id", "DurationFormula", "EffectScope", "ReferencedSequence", "StatusTag", "StatusDetailText" }},
+        {EffectType.AtEndOfTurn, new [] { "Id", "DurationFormula", "EffectScope", "ReferencedSequence", "StatusTag", "StatusDetailText" }},
         {EffectType.DuplicateStatesOfType, new [] { "StatusTag" }},
         {EffectType.DuplicateStatesOfTypeToRandomEnemy, new [] { "StatusTag" }},
         {EffectType.DealTrueDamageFormula, new [] { "Formula", "InterpolatePartialFormula" }},
@@ -36,14 +36,14 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.ApplyAdditiveStatInjury, new [] { "FlavorText", "FloatAmount", "EffectScope" }},
         {EffectType.ApplyMultiplicativeStatInjury, new [] {  "FlavorText", "FloatAmount", "EffectScope" }},
         {EffectType.Kill, new string[0]},
-        {EffectType.ShowCustomTooltip, new [] { "FlavorText", "FloatAmount", "EffectScope", "DurationFormula", "StatusTag", "StatusDetailText" }},
-        {EffectType.OnDeath, new []{ "FloatAmount", "DurationFormula", "ReactionSequence", "StatusDetailText" }},
-        {EffectType.PlayBonusCardAfterNoCardPlayedInXTurns, new[]{"BaseAmount", "EffectScope", "StatusTag", "StatusDetailText", "BonusCardType"}},
-        {EffectType.PlayBonusChainCard, new[]{ "StatusTag", "StatusDetailText", "BonusCardType"}},
+        {EffectType.ShowCustomTooltip, new [] { "Id", "FlavorText", "FloatAmount", "EffectScope", "DurationFormula", "StatusTag", "StatusDetailText" }},
+        {EffectType.OnDeath, new []{ "Id", "FloatAmount", "DurationFormula", "ReactionSequence", "StatusDetailText" }},
+        {EffectType.PlayBonusCardAfterNoCardPlayedInXTurns, new[]{ "Id", "BaseAmount", "EffectScope", "StatusTag", "StatusDetailText", "BonusCardType"}},
+        {EffectType.PlayBonusChainCard, new[]{ "Id", "StatusTag", "StatusDetailText", "BonusCardType"}},
         {EffectType.AttackFormula, new [] { "Formula", "InterpolatePartialFormula", "HitsRandomTargetMember" }},
         {EffectType.MagicAttackFormula, new [] { "Formula", "InterpolatePartialFormula", "HitsRandomTargetMember" }},
         {EffectType.TrueDamageAttackFormula, new [] { "Formula", "InterpolatePartialFormula", "HitsRandomTargetMember" }},
-        {EffectType.AddToXCostTransformer, new [] { "FloatAmount", "DurationFormula", "StatusTag", "StatusDetailText" }},
+        {EffectType.AddToXCostTransformer, new [] { "Id", "FloatAmount", "DurationFormula", "StatusTag", "StatusDetailText" }},
         {EffectType.CycleAllCardsInHand, new string[0] },
         {EffectType.DrawCards, new [] { "Formula", "InterpolatePartialFormula" } },
         {EffectType.GlitchRandomCards, new []{ "BaseAmount", "EffectScope" }},
@@ -72,6 +72,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.RandomEffect, new [] { "ReferencedSequences" }},
         {EffectType.EvaluateCondition, new [] { "EffectScope" }},
         {EffectType.AdjustScopedVariable, new [] { "EffectScope", "Formula" }},
+        {EffectType.PlayCardAtStartOfTurn, new [] { "Id", "BonusCardType", "DurationFormula", "StatusTag", "StatusDetailText" }}
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

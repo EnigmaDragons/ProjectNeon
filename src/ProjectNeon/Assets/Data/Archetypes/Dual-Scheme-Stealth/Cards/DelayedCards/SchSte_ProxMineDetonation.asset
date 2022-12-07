@@ -10,29 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Basic_RevengeStrike
+  m_Name: SchSte_ProxMineDetonation
   m_EditorClassIdentifier: 
-  id: 149
+  id: 654
   customName: 
-  art: {fileID: 21300000, guid: 18e78c8b940c3d042af8912f7f599a7e, type: 3}
-  description: "Deal {E[0]}. \n<b>Revenge:</b> Deal {E[1]} additional."
-  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  art: {fileID: 21300000, guid: b8c41adf92f24ed42870a160bd56fb1a, type: 3}
+  description: 
+  typeDescription: {fileID: 0}
   descriptionV2:
-    text: Deal {0} | <b>Crit:<b> No allies remain
+    text: <b>Sneaky:</b> Deal {0}
     formatArgs:
-    - '{E[1]}'
-  tags: 04000000
-  speed: 0
+    - '{E[0]}'
+  tags: 
+  speed: 1
   isSinglePlay: 0
   cost:
     cost: 0
-    resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
+    resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
     plusXCost: 0
-  rarity: 0
+  rarity: 3
   actionSequences:
   - scope: 0
     group: 1
-    cardActions: {fileID: 11400000, guid: 557616128ca07f444b14dc1fc678666d, type: 2}
+    cardActions: {fileID: 11400000, guid: f9b561019d7b74648bfe427c671f3030, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -40,8 +40,9 @@ MonoBehaviour:
   functionalityIssues: 
   presentationIssues: 
   archetypes:
-  - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}
+  - {fileID: 11400000, guid: c3bd2cb0d323191448e78929b9cb214e, type: 2}
+  - {fileID: 11400000, guid: 1e6b060bb2d10434c8d325b3765125dd, type: 2}
   highlightCondition: []
   unhighlightCondition: []
   isWIP: 0
-  notAvailableForGeneralDistribution: 0
+  notAvailableForGeneralDistribution: 1

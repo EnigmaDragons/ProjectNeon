@@ -10,30 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Rifle_Ricochet
+  m_Name: DefTech_EnergyCirculation
   m_EditorClassIdentifier: 
-  id: 449
+  id: 655
   customName: 
-  art: {fileID: 21300000, guid: f99460f3d031ca5459e9f98d0777add2, type: 3}
-  description: "Deal {E[0]}.\n \nDeal {IE[0]} to a random different enemy"
-  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  art: {fileID: 21300000, guid: 88fe2e82fe5446d45acce4f67dfacd3c, type: 3}
+  description: "Gives <b>(0.2 \xD7 Target[Shield]) Primary Stat</b> for this turn"
+  typeDescription: {fileID: 0}
   descriptionV2:
-    text: "Deal {0}.\n \nDeal {1} to a random different enemy"
+    text: Gives <b>{0} Primary Stat</b> for this turn
     formatArgs:
     - '{E[0]}'
-    - '{IE[0]}'
-  tags: 2a000000
-  speed: 0
+  tags: 
+  speed: 1
   isSinglePlay: 0
   cost:
-    cost: 1
-    resourceType: {fileID: 11400000, guid: 029856820b64438428ee04adda380477, type: 2}
+    cost: 0
+    resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
     plusXCost: 0
-  rarity: 2
+  rarity: 1
   actionSequences:
   - scope: 0
-    group: 1
-    cardActions: {fileID: 11400000, guid: 0a36714f33d1fb24385bba3e723fa3aa, type: 2}
+    group: 0
+    cardActions: {fileID: 11400000, guid: 2a220f5edec260c40a654a023faafd87, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -41,8 +40,8 @@ MonoBehaviour:
   functionalityIssues: 
   presentationIssues: 
   archetypes:
-  - {fileID: 11400000, guid: fbcb59caa7d5a114f8b9cf6016d20160, type: 2}
+  - {fileID: 11400000, guid: 3b03a1e83bfdbec43a1fa15d87d2f7fa, type: 2}
   highlightCondition: []
   unhighlightCondition: []
   isWIP: 0
-  notAvailableForGeneralDistribution: 0
+  notAvailableForGeneralDistribution: 1

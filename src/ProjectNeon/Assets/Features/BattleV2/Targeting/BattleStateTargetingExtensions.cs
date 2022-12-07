@@ -105,8 +105,6 @@ public static class BattleStateTargetingExtensions
 
         if (scope == Scope.Random)
             return Targets(new Single(teamMembers.Shuffled().First()));
-        if (scope == Scope.RandomExceptTarget)
-            return Targets(teamMembers.Select(x => new Single(x)).Cast<Target>().ToArray());
         return Targets(new Multiple(teamMembers));
     }
 

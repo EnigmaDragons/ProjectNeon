@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Veda_ShieldingTouch_E2
+  m_Name: Affliction_VampiricTouch_Self
   m_EditorClassIdentifier: 
   Actions:
   - type: 31
     battleEffect:
-      Id: 2094
+      Id: 0
       EffectType: 0
       Conditions: []
       BaseAmount:
@@ -80,21 +80,22 @@ MonoBehaviour:
       animation:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: b6e4cb31be52d4a46a4440ed9829df8c, type: 2}
+        Variable: {fileID: 11400000, guid: d344c2ad8f7429348945a07501a28e84, type: 2}
       size: 1
       speed: 1
       color:
         UseConstant: 1
-        ConstantValue: {r: 0.5882353, g: 0, b: 0.78431374, a: 1}
+        ConstantValue: {r: 0.4117647, g: 0, b: 1, a: 1}
         Variable: {fileID: 0}
       skipWaitingForCompletion: 0
-      conditions: []
+      conditions:
+      - {fileID: 11400000, guid: c9d699c349fb0674abb47ba5d5200695, type: 2}
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
   - type: 1
     battleEffect:
-      Id: 2095
-      EffectType: 80
+      Id: 0
+      EffectType: 79
       Conditions: []
       BaseAmount:
         UseConstant: 1
@@ -108,14 +109,14 @@ MonoBehaviour:
       EffectScope:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 0}
+        Variable: {fileID: 11400000, guid: 8aee5857c9a3d794a8f461309134108c, type: 2}
       HitsRandomTargetMember: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 0.55 * Magic
+      Formula: 2
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 

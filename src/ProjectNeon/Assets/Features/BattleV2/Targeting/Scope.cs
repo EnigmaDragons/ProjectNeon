@@ -6,6 +6,5 @@ public enum Scope
     AllExcept = 2,
     OneExceptSelf = 3,
     AllExceptSelf = 4,
-    Random = 5,
-    RandomExceptTarget = 6
+    Random = 5
 }
