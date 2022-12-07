@@ -19,9 +19,10 @@ MonoBehaviour:
     or empty your Ammo"
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   descriptionV2:
-    text: "Gain <b>Max</b> Ammo \nGain <b>4 ATK</b> until next time you reload or
-      empty your Ammo"
-    formatArgs: []
+    text: "Gain <b>Max</b> Ammo \nGain {0} Attack until next time you reload or empty
+      your Ammo"
+    formatArgs:
+    - '{E[1]}'
   tags: 
   speed: 0
   isSinglePlay: 0

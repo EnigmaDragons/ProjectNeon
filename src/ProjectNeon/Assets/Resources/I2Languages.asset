@@ -2275,7 +2275,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Drain {[0]} from each <b>Afflicted Enemy</b>
+      - '{[t:Keywords/Drain]} {[0]} from each <b>{[t:Keywords/Afflicted]} Enemy</b>'
       - 
       - 
       - 
@@ -2289,7 +2289,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gain {[0]} for each Afflicted Enemy {[1]}
+      - Gain {[0]} for each {[t:Keywords/Afflicted]} Enemy {[1]}
       - 
       - 
       - 
@@ -2306,7 +2306,7 @@ MonoBehaviour:
       - 'Deal {[0]}.
 
 
-        <b>Afflicted</b>: Deal {[1]}'
+        <b>{[t:Keywords/Afflicted]}</b>: Deal {[1]}'
       - 
       - 
       - 
@@ -2323,7 +2323,8 @@ MonoBehaviour:
       - 'Deal {[0]} {[1]}.
 
 
-        <b>When Ignited</b>: Enemy takes {[2]}'
+        <b>When {[t:Keywords/Igniting]}</b>: Enemy takes
+        {[2]}'
       - 
       - 
       - 
@@ -2351,7 +2352,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gain {[0]}, and {[1]}, whenever you play a Fire card, gain {[2]}
+      - Gain {[0]}, and {[1]}, whenever you play a {[t:Archetypes/Fire]} card, gain
+        {[2]}
       - 
       - 
       - 
@@ -2365,8 +2367,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Gain <b>Max</b> Ammo \nGain <b>4 ATK</b> until next time you reload or empty
-        your Ammo"
+      - "Gain <b>Max</b> {[t:Resources/Ammo]} \nGain {[0]} Attack until next time
+        you reload or empty your {[t:Resources/Ammo]}"
       - 
       - 
       - 
@@ -2380,7 +2382,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gain <b>2</b> Grenades
+      - Gain <b>2</b> {[t:Resources/Grenades]}
       - 
       - 
       - 
@@ -2411,7 +2413,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Whenever target is attacked this turn, you fire back for 1 Ammo, {[0]}.
+      - Whenever target is attacked this turn, you shoot back for 1 {[t:Resources/Ammo]},
+        {[0]}.
       - 
       - 
       - 
@@ -2425,7 +2428,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Shield {[0]}
+      - '{[t:Stats/Stat-Shield]} {[0]}'
       - 
       - 
       - 
@@ -2467,10 +2470,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gain {[0]} Shield for every DoT active on Enemies.
+      - 'Gain {[0]} {[t:Stats/Stat-Shield]} for every DoT active on Enemies.
 
 
-        Gain {[1]}'
+        Gain
+        {[1]}'
       - 
       - 
       - 
@@ -2484,7 +2488,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Quick:</b> Deal {[0]} {[1]}
+      - <b>{[t:Keywords/Quick]}:</b> Deal {[0]} {[1]}
       - 
       - 
       - 
@@ -2498,10 +2502,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Deal {[0]}.
-
-
-        <b>Afflicted</b>: Deal {[1]}.'
+      - 'Deal {[0]}. | <b>{[t:Keywords/Critical]}: {[t:Keywords/Afflicted]}</b>'
       - 
       - 
       - 
@@ -2518,7 +2519,7 @@ MonoBehaviour:
       - 'Deal {[0]}.
 
 
-        <b>Afflicted:</b> Gives {[1]}'
+        <b>{[t:Keywords/Afflicted]}:</b> Gives {[1]}'
       - 
       - 
       - 
@@ -2532,10 +2533,10 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Afflicted</b>: Halve <b>Attack</b> and <b>Magic</b> for 2 turns.
+      - '<b>{[t:Keywords/Afflicted]}</b>: Halve <b>{[t:Keywords/PrimaryStat]}</b>
+        for 2 turns.
 
-        Deal
-        {[0]} {[1]}. '
+        Deal {[0]} {[1]}. '
       - 
       - 
       - 
@@ -2606,7 +2607,10 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Deal {[0]}. <b>Afflicted</b>: Gives self {[1]} before dealing damage'
+      - '<b>{[t:Keywords/Afflicted]}</b>: Gives self {[0]}
+
+
+        Deal {[1]}'
       - 
       - 
       - 
@@ -2634,9 +2638,10 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Shield {[0]}. Gain <b>3  Magic</b> {[1]}.
+      - '{[t:Stats/Stat-Shield]} {[0]}. Gain <b>3  {[t:Stats/Stat-Magic]}</b> {[1]}.
 
-        Next 3 turns: Gain {[2]}.'
+        Next
+        3 turns: Gain {[2]}.'
       - 
       - 
       - 
@@ -2748,7 +2753,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Quick:</b> Gain <b>Double Damage</b>
+      - <b>{[t:Keywords/Quick]}:</b> Gain <b>{[t:Keywords/DoubleDamage]}</b>
       - 
       - 
       - 
@@ -2762,7 +2767,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Gives {[0]}. \n\n<b>Finisher:</b> Channel V2"
+      - "Gives {[0]}. \n\n<b>{[t:Keywords/Chain]}:</b> Channel V2"
       - 
       - 
       - 
@@ -2779,7 +2784,7 @@ MonoBehaviour:
       - 'Gives {[0]}
 
 
-        Gives self {[1]} <b>Magic</b> {[2]}'
+        Gives self {[1]} <b>{[t:Stats/Stat-Magic]}</b> {[2]}'
       - 
       - 
       - 
@@ -2807,7 +2812,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives {[0]} <b>Power</b> {[1]}
+      - Gives {[0]} <b>{[t:Stats/Stat-Power]}</b> {[1]}
       - 
       - 
       - 
@@ -2821,7 +2826,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - For each Mark (Max 5 times) attack dealing {0}
+      - For each {[t:Keywords/Marked]} (Max 5 times) attack dealing {[0]}
       - 
       - 
       - 
@@ -2835,10 +2840,10 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gives <b>1 Mark</b>.
+      - 'Gives <b>1 {[t:Keywords/Marked]}</b>.
 
-        <b>On Death</b>: Transfer Marks to one random
-        ally'
+        <b>On Death</b>: Transfer
+        {[t:Keywords/Marked]} to one random ally'
       - 
       - 
       - 
@@ -2855,7 +2860,8 @@ MonoBehaviour:
       - 'Gain {[0]}
 
 
-        Next turn, gives +{[1]} <b>ATK</b> for the turn'
+        Next turn, gives +{[1]} <b>{[t:Stats/Stat-Attack]}</b>
+        for the turn'
       - 
       - 
       - 
@@ -2869,7 +2875,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>3 Marks:</b> Deal {[0]} + {[1]} per Mark
+      - <b>3 {[t:Keywords/Marked]}:</b> Deal {[0]} + {[1]} per {[t:Keywords/Marked]}
       - 
       - 
       - 
@@ -2883,7 +2889,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Sneaky</b>: {[0]}'
+      - '<b>{[t:Keywords/Sneaky]}</b>: {[0]}'
       - 
       - 
       - 
@@ -2897,7 +2903,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Sneaky + Quick:</b> Gives <b>2 Mark</b>
+      - <b>{[t:Keywords/Sneaky]} + {[t:Keywords/Quick]}:</b> Gives <b>2 {[t:Keywords/Marked]}</b>
       - 
       - 
       - 
@@ -2911,9 +2917,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Quick
-
-        1 Mark:</b> Gives {[0]}'
+      - <b>{[t:Keywords/Quick]} + 1 {[t:Keywords/Marked]}:</b> Gives {[0]}
       - 
       - 
       - 
@@ -2927,8 +2931,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>On Death</b>: Gain 6 Owner[PrimaryResource]. Deal {[0]} <b>|</b> <b>Sneaky</b>:
-        {[1]}.\n <b>Re-Stealth</b>'
+      - "<b>On Death</b>: Gain 6 Owner[PrimaryResource]. Deal {[0]} <b>|</b> <b>{[t:Keywords/Sneaky]}</b>:
+        {[1]}.\n <b>Re-Stealth</b>"
       - 
       - 
       - 
@@ -2942,7 +2946,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Gives {[0]}.\nEnter <b>Stealth</b>. \n<b>Finisher:</b> Deadly Blade."
+      - "Gives {[0]}.\nEnter <b>{[t:Keywords/Stealth]}</b>. \n<b>{[t:Keywords/Chain]}:</b>
+        Deadly Blade."
       - 
       - 
       - 
@@ -2956,7 +2961,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>2 Marks:</b> Deal {[0]} | <b>Crit: Bloodied'
+      - '2 {[t:Keywords/Marked]}: Deal {[0]} | <b>{[t:Keywords/Critical]}: {[t:Keywords/Bloodied]}'
       - 
       - 
       - 
@@ -2970,7 +2975,10 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Enter <b>Stealth</b>\n\nGain {[0]}
+      - 'Enter <b>{[t:Keywords/Stealth]}</b>
+
+
+        Gain {[0]}'
       - 
       - 
       - 
@@ -2984,9 +2992,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Quick
-
-        3 Marks:</b> Deal {[0]} per mark and draw 1 card'
+      - <b>{[t:Keywords/Quick]} - 3 {[t:Keywords/Marked]}:</b> Deal {[0]} per {[t:Keywords/Marked]}
+        and draw 1 card
       - 
       - 
       - 
@@ -3014,8 +3021,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - +2 Armor and Resist. Each time damaged in next 2 turns  gain {[0]} ATK for
-        2 turns.
+      - +2 {[t:Stats/Stat-Armor]} and {[t:Stats/Stat-Resistance]}. Each time damaged
+        in next 2 turns  gain {[0]} {[t:Stats/Stat-Attack]} for 2 turns.
       - 
       - 
       - 
@@ -3029,7 +3036,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Gain <b>3</b> Chems. \n<b>Finisher<b>: Med Prep"
+      - "Gain <b>3</b> {[t:Resources/Chems]}. \n<b>{[t:Keywords/Chain]}<b>: Med Prep"
       - 
       - 
       - 
@@ -3113,9 +3120,10 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Quick:</b> Gives <b>10 Creds</b>
+      - '<b>{[t:Keywords/Quick]}:</b> Gives <b>10 {[t:Resources/Creds]}</b>
 
-        <b>Swap: Micro Transaction</b>'
+        <b>{[t:Keywords/Swap]}:
+        Micro Transaction</b>'
       - 
       - 
       - 
@@ -3129,7 +3137,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>When Ignited</b>: <b>Blind 1</b>.'
+      - '<b>When {[t:Keywords/Igniting]}</b>: <b>{[t:Keywords/Blind]} 1</b>.'
       - 
       - 
       - 
@@ -3143,7 +3151,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Deal {[0]}. <b>On Slay</b>: Deal {[1]} to all Enemies.'
+      - 'Deal {[0]}. <b>On {[t:Keywords/OnSlay]}</b>: Deal {[1]} to all Enemies.'
       - 
       - 
       - 
@@ -3241,7 +3249,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "2 Times: Deal {[0]}. \n\n<b>Finisher:</b> Pulse"
+      - "2 Times: Deal {[0]}. \n\n<b>{[t:Keywords/Chain]}:</b> Pulse"
       - 
       - 
       - 
@@ -3255,7 +3263,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Removes all debuffs.\n\nShield <b>0.25 \xD7 Target[MaxShield]</b>"
+      - "Removes all debuffs.\n\n{[t:Stats/Stat-Shield]} <b>0.25 \xD7 Target[MaxShield]</b>"
       - 
       - 
       - 
@@ -3269,7 +3277,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>When Ignited</b>: Enemy takes {[0]} damage'
+      - '<b>When {[t:Keywords/Igniting]}</b>: Enemy takes {[0]} damage'
       - 
       - 
       - 
@@ -3353,7 +3361,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gain {[0]} Max HP. Heal {[1]} Health. Gain 1 Armor
+      - Gain {[0]} {[t:Stats/Stat-MaxHP]}. Heal {[1]} {[t:Stats/Stat-HP]}. Gain 1
+        {[t:Stats/Stat-Armor]}
       - 
       - 
       - 
@@ -3423,7 +3432,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gain <b>1</b> Grenade
+      - Gain <b>1</b> {[t:Resources/Grenades]}
       - 
       - 
       - 
@@ -3437,13 +3446,13 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gives <b>{[0]} Armor & {[0]} Resistance</b>.
+      - 'Gives <b>{[0]} {[t:Stats/Stat-Armor]} & {[0]} {[t:Stats/Stat-Resistance]}</b>.
 
-        Deal {[2]}.
+        Deal
+        {[2]}.
 
 
-        You
-        gain {[3]}'
+        You gain {[3]}'
       - 
       - 
       - 
@@ -3457,7 +3466,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Quick:</b> Gives {[0]} Primary Stat {[1]}
+      - <b>{[t:Keywords/Quick]}:</b> Gives {[0]} {[t:Keywords/PrimaryStat]} {[1]}
       - 
       - 
       - 
@@ -3555,7 +3564,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Next turn, gain 2 <b>Grenades</b>
+      - Next turn, gain 2 <b>{[t:Resources/Grenades]}</b>
       - 
       - 
       - 
@@ -3569,7 +3578,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Bloodied:</b> Deal {[0]}
+      - <b>{[t:Keywords/Bloodied]}:</b> Deal {[0]}
       - 
       - 
       - 
@@ -3645,7 +3654,7 @@ MonoBehaviour:
       - 'Deal {[0]}.
 
 
-        Reduce <b>Power</b> by 35% this turn'
+        Reduce <b>{[t:Stats/Stat-Power]}</b> by 35% this turn'
       - 
       - 
       - 
@@ -3662,7 +3671,8 @@ MonoBehaviour:
       - 'Deals {[0]}
 
 
-        Glitch 3 of the target''s cards in deck'
+        {[t:Keywords/Glitch]} 3 of the target''s cards in
+        deck'
       - 
       - 
       - 
@@ -3676,7 +3686,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Deal {[0]}. \n\nRemoves <b>All Taunt</b>"
+      - "Deal {[0]}. \n\nRemoves <b>All {[t:Keywords/Taunt]}</b>"
       - 
       - 
       - 
@@ -3690,7 +3700,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Deal {[0]} <b>| Crit:</b> You have max Ammo
+      - Deal {[0]} <b>| {[t:Keywords/Critical]}:</b> You have max {[t:Resources/Ammo]}
       - 
       - 
       - 
@@ -3704,7 +3714,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Enter <b>Stealth</b>. \n\nGives {[0]}"
+      - "Enter <b>{[t:Keywords/Stealth]}</b>. \n\nGives {[0]}"
       - 
       - 
       - 
@@ -3718,7 +3728,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gain <b>Max</b> Ammo
+      - Gain <b>Max</b> {[t:Resources/Ammo]}
       - 
       - 
       - 
@@ -3749,7 +3759,7 @@ MonoBehaviour:
       - 'Gives {[0]}
 
 
-        Next turn, gain <b>Max</b> Ammo'
+        Next turn, gain <b>Max</b> {[t:Resources/Ammo]}'
       - 
       - 
       - 
@@ -3763,7 +3773,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Deal {[0]}. \n\nYou gain <b>1 Dodge</b>"
+      - "Deal {[0]}. \n\nYou gain <b>1 {[t:Keywords/Dodge]}</b>"
       - 
       - 
       - 
@@ -3777,7 +3787,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Next turn, gain {[0]} <b>Card Cycles</b> and +1 <b>Card Play</b>
+      - Next turn, gain {[0]} <b>{[t:Keywords/CardCycles]}</b> and +1 <b>{[t:Keywords/CardPlays]}</b>
       - 
       - 
       - 
@@ -3805,7 +3815,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Quick:</b> Choose and draw a card from your draw or discard pile
+      - <b>{[t:Keywords/Quick]}:</b> Choose and draw a card from your draw or discard
+        pile
       - 
       - 
       - 
@@ -3819,7 +3830,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Next turn, fill hand with target's cards and <b>+1 Card Play</b>
+      - Next turn, fill hand with target's cards and <b>+1 {[t:Keywords/CardPlays]}</b>
       - 
       - 
       - 
@@ -3833,7 +3844,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives <b>{[0]} Primary Stat</b> {[1]} <b>(Cards + Cycles this turn)</b>
+      - Gives <b>{[0]} {[t:Keywords/PrimaryStat]}</b> {[1]} <b>(Cards + Cycles this
+        turn)</b>
       - 
       - 
       - 
@@ -3847,7 +3859,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Quick:</b> Cycle all cards in hand
+      - <b>{[t:Keywords/Quick]}:</b> Cycle all cards in hand
       - 
       - 
       - 
@@ -3861,7 +3873,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Quick:</b> Draw {[0]} Cards
+      - <b>{[t:Keywords/Quick]}:</b> Draw {[0]} Cards
       - 
       - 
       - 
@@ -3875,8 +3887,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gain {[0]} <b>Card Cycles. End of Turn:</b> Reduce Cost of Cards in Hand
-        by 1
+      - Gain {[0]} <b>{[t:Keywords/CardCycles]}. End of Turn:</b> Reduce Cost of
+        Cards in Hand by 1
       - 
       - 
       - 
@@ -3907,10 +3919,10 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gives <b>+</b>{[0]} <b>Primary Stat</b> to allies {[1]}.
+      - 'Gives <b>+</b>{[0]} <b>{[t:Keywords/PrimaryStat]}</b> to allies {[1]}.
 
-        You gain
-        <b>+{[2]} Primary Stat</b> {[3]}.'
+        You
+        gain <b>+{[2]} {[t:Keywords/PrimaryStat]}</b> {[3]}.'
       - 
       - 
       - 
@@ -3927,7 +3939,7 @@ MonoBehaviour:
       - 'Next turn, deal {[0]}.
 
 
-        <b>Finisher:</b> Bold Ploy'
+        <b>{[t:Keywords/Chain]}:</b> Bold Ploy'
       - 
       - 
       - 
@@ -3955,7 +3967,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives {[0]} Resistance {[1]}
+      - Gives {[0]} {[t:Stats/Stat-Resistance]} {[1]}
       - 
       - 
       - 
@@ -4014,7 +4026,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives {[0]} Primary Stat {[1]}
+      - Gives {[0]} {[t:Keywords/PrimaryStat]} {[1]}
       - 
       - 
       - 
@@ -4084,7 +4096,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives {[0]} {[1]}. Heal {[2]}. Shield {[3]}
+      - Gives {[0]} {[1]}. Heal {[2]}. {[t:Stats/Stat-Shield]} {[3]}
       - 
       - 
       - 
@@ -4098,7 +4110,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Shield {[0]}
+      - '{[t:Stats/Stat-Shield]} {[0]}'
       - 
       - 
       - 
@@ -4168,7 +4180,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Glitch 1 card in hand
+      - '{[t:Keywords/Glitch]} 1 card in hand'
       - 
       - 
       - 
@@ -4210,7 +4222,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Deal {[0]}. \n<b>Revenge:</b> Deal {[1]} additional."
+      - Deal {[0]} | <b>{[t:Keywords/Critical]}:<b> No allies remain
       - 
       - 
       - 
@@ -4224,7 +4236,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Grant {[0]} shield
+      - Grant {[0]} {[t:Stats/Stat-Shield]}
       - 
       - 
       - 
@@ -4238,7 +4250,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gain {[0]} shield
+      - Gain {[0]} {[t:Stats/Stat-Shield]}
       - 
       - 
       - 
@@ -4268,7 +4280,7 @@ MonoBehaviour:
       Languages:
       - 'Deal {[0]} + <b>2</b> per primary resource on that enemy
 
-        <b>Disable</b>
+        <b>{[t:Keywords/Disabled]}</b>
         for the next <b>1 Turn</b>'
       - 
       - 
@@ -4287,7 +4299,7 @@ MonoBehaviour:
 
 
         Doubles
-        own <b>Magic</b>'
+        own <b>{[t:Stats/Stat-Magic]}</b>'
       - 
       - 
       - 
@@ -4479,11 +4491,12 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gives <b>1 Vulnerable</b> next turn.
+      - 'Gives <b>1 {[t:Keywords/Vulnerable]}</b> next turn.
 
-        You gain <b>1 Energy</b>
+        You gain <b>1
+        {[t:Resources/Energy]}</b>
 
-        <b>Focus</b>'
+        <b>{[t:Keywords/Focus]}</b>'
       - 
       - 
       - 
@@ -4511,7 +4524,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Deal {[0]}. \n\n<b>Focus</b>"
+      - "Deal {[0]}. \n\n<b>{[t:Keywords/Focus]}</b>"
       - 
       - 
       - 
@@ -4525,7 +4538,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Deal {[0]}. \n\nEnter <b>Stealth</b>"
+      - "Deal {[0]}. \n\nEnter <b>{[t:Keywords/Stealth]}</b>"
       - 
       - 
       - 
@@ -4553,7 +4566,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Apply <b>0.8x Primary Stat Injury</b>
+      - Apply <b>0.8x {[t:Keywords/PrimaryStat]} Injury</b>
       - 
       - 
       - 
@@ -4581,7 +4594,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Deal {[0]}. \n\nYou gain {[1]} Resistance this turn"
+      - "Deal {[0]}. \n\nYou gain {[1]} {[t:Stats/Stat-Resistance]} this turn"
       - 
       - 
       - 
@@ -4595,7 +4608,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Deal {[0]}. \n\nYou gain {[1]} Armor this turn"
+      - "Deal {[0]}. \n\nYou gain {[1]} {[t:Stats/Stat-Armor]} this turn"
       - 
       - 
       - 
@@ -4623,7 +4636,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Deal {[0]}. \n\nYou gain shield {[1]}"
+      - "Deal {[0]}. \n\nYou gain {[t:Stats/Stat-Shield]} {[1]}"
       - 
       - 
       - 
@@ -4637,7 +4650,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Next turn, gives <b>1 Vulnerable</b>
+      - Next turn, gives <b>1 {[t:Keywords/Vulnerable]}</b>
       - 
       - 
       - 
@@ -4696,7 +4709,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives -3 MAG to all enemies for 3 Turns
+      - Gives -3 {[t:Stats/Stat-Magic]} to all enemies for 3 Turns
       - 
       - 
       - 
@@ -4710,7 +4723,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Disable</b> for the next Turn
+      - <b>{[t:Keywords/Disabled]}</b> for the next Turn
       - 
       - 
       - 
@@ -4738,7 +4751,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives -3 ATK to all enemies for 3 Turns
+      - Gives -3 {[t:Stats/Stat-Attack]} to all enemies for 3 Turns
       - 
       - 
       - 
@@ -4752,7 +4765,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Deals {[0]} \n\nGlitch 1 of the target's cards in hand"
+      - "Deals {[0]} \n\n{[t:Keywords/Glitch]} 1 of the target's cards in hand"
       - 
       - 
       - 
@@ -4780,7 +4793,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Hasty</b>: Steal 30 Creds.'
+      - '<b>Hasty</b>: Steal 30 {[t:Resources/Creds]}.'
       - 
       - 
       - 
@@ -4794,7 +4807,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Glitch 7 cards anywhere
+      - '{[t:Keywords/Glitch]} 7 cards anywhere'
       - 
       - 
       - 
@@ -4808,10 +4821,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Shield {[0]}
+      - '{[t:Stats/Stat-Shield]} {[0]}
 
 
-        Lose <b>1</b> Primary Stat for the next <b>2 turns</b>'
+        Lose <b>1</b> {[t:Keywords/PrimaryStat]}
+        for the next <b>2 turns</b>'
       - 
       - 
       - 
@@ -4825,8 +4839,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives <b>+{[0]} Armor, {[1]} Resistance</b> and <b>Bleed 3</b> for the next
-        2 turns
+      - Gives <b>+{[0]} {[t:Stats/Stat-Armor]}, {[1]} {[t:Stats/Stat-Resistance]}</b>
+        and <b>Bleed 3</b> for the next 2 turns
       - 
       - 
       - 
@@ -4840,10 +4854,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gives +60% Primary Stat for the next 2 turns
+      - 'Gives +60% {[t:Keywords/PrimaryStat]} for the next 2 turns
 
 
-        Gives {[0]}'
+        Gives
+        {[0]}'
       - 
       - 
       - 
@@ -4857,7 +4872,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives <b>2 Vulnerable</b>
+      - Gives <b>2 {[t:Keywords/Vulnerable]}</b>
       - 
       - 
       - 
@@ -4871,8 +4886,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Til end of battle, gives <b>+1 Card Plays</b> and deal {[0]} at the start
-        of turn.
+      - Til end of battle, gives <b>+1 {[t:Keywords/CardPlays]}</b> and deal {[0]}
+        at the start of turn.
       - 
       - 
       - 
@@ -4886,7 +4901,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives <b>3</b> Energy
+      - Gives <b>3</b> {[t:Resources/Energy]}
       - 
       - 
       - 
@@ -4900,7 +4915,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Grants +0.3x ATK to allies for 3 turns.
+      - Grants +0.3x {[t:Stats/Stat-Attack]} to allies for 3 turns.
       - 
       - 
       - 
@@ -4945,8 +4960,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Deal {[0]} <b>| Crit:</b> if you have targeted them this turn \n<b>Finisher:
-        Thrust V1</b>"
+      - "Deal {[0]} <b>| {[t:Keywords/Critical]}:</b> if you have targeted them this
+        turn \n<b>{[t:Keywords/Chain]}: Thrust V1</b>"
       - 
       - 
       - 
@@ -4962,10 +4977,10 @@ MonoBehaviour:
       Languages:
       - 'Remove Shields.
 
-        You enter <b>Stealth</b>.
+        You enter <b>{[t:Keywords/Stealth]}</b>.
 
-        Next Turn: Gives
-        <b>1 Vulnerable</b>
+        Next
+        Turn: Gives <b>1 {[t:Keywords/Vulnerable]}</b>
 
 
 '
@@ -4982,9 +4997,10 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Remove 1 Dodge.
+      - 'Remove 1 {[t:Keywords/Dodge]}.
 
-        Deal {[0]} (Ignores shields, armor, and resistance)'
+        Deal {[0]} (Ignores shields, {[t:Stats/Stat-Armor]},
+        and resistance)'
       - 
       - 
       - 
@@ -4998,7 +5014,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Deal {[0]} <b>| Crit:</b> if you have targeted them this turn
+      - Deal {[0]} <b>| {[t:Keywords/Critical]}:</b> if you have targeted them this
+        turn
       - 
       - 
       - 
@@ -5026,10 +5043,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Next Turn: Gives <b>1 Vulnerable</b>
+      - 'Next Turn: Gives <b>1 {[t:Keywords/Vulnerable]}</b>
 
 
-        You enter <b>Stealth</b>'
+        You enter
+        <b>{[t:Keywords/Stealth]}</b>'
       - 
       - 
       - 
@@ -5057,7 +5075,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Deals {[0]}. Next time I deal HP damage it inflicts an injury.
+      - Deals {[0]}. Next time I deal {[t:Stats/Stat-HP]} damage it inflicts an injury.
       - 
       - 
       - 
@@ -5071,7 +5089,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Start of turn after next: Gives 3 Primary Resource and 5 Armor & 5 Resistance'
+      - 'Start of turn after next: Gives 3 Primary Resource and 5 {[t:Stats/Stat-Armor]}
+        & 5 {[t:Stats/Stat-Resistance]}'
       - 
       - 
       - 
@@ -5113,7 +5132,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Grant {[0]} shield
+      - Grant {[0]} {[t:Stats/Stat-Shield]}
       - 
       - 
       - 
@@ -5127,7 +5146,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gains <b>Double Damage</b> on next effect
+      - Gains <b>{[t:Keywords/DoubleDamage]}</b> on next effect
       - 
       - 
       - 
@@ -5169,7 +5188,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - ' Deal {[0]}. <b>Disable 1</b>.'
+      - ' Deal {[0]}. <b>{[t:Keywords/Disabled]} 1</b>.'
       - 
       - 
       - 
@@ -5183,7 +5202,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Deal {[0]}. Gives <b>Blind 1</b>.
+      - Deal {[0]}. Gives <b>{[t:Keywords/Blind]} 1</b>.
       - 
       - 
       - 
@@ -5211,7 +5230,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gain <b>1</b> Energy. Deal {[0]}
+      - Gain <b>1</b> {[t:Resources/Energy]}. Deal {[0]}
       - 
       - 
       - 
@@ -5267,7 +5286,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Gives <b>15</b> Magic \nGives <b>2</b> Armor & Resistance"
+      - "Gives <b>15</b> {[t:Stats/Stat-Magic]} \nGives <b>2</b> {[t:Stats/Stat-Armor]}
+        & {[t:Stats/Stat-Resistance]}"
       - 
       - 
       - 
@@ -5283,7 +5303,7 @@ MonoBehaviour:
       Languages:
       - 'Deal {[0]}
 
-        <i>(Damage based on current Magic power)</i>
+        <i>(Damage based on current {[t:Stats/Stat-Magic]} power)</i>
 
 
         Resets
@@ -5301,7 +5321,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gain +6 ATK for 3 Turns
+      - Gain +6 {[t:Stats/Stat-Attack]} for 3 Turns
       - 
       - 
       - 
@@ -5346,7 +5366,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Grants <b>2</b> Resistance to all allies for 3 Turns
+      - Grants <b>2</b> {[t:Stats/Stat-Resistance]} to all allies for 3 Turns
       - 
       - 
       - 
@@ -5360,7 +5380,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Grants <b>2</b> Armor to all allies for 3 Turns
+      - Grants <b>2</b> {[t:Stats/Stat-Armor]} to all allies for 3 Turns
       - 
       - 
       - 
@@ -5388,7 +5408,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gain Taunt 2
+      - Gain {[t:Keywords/Taunt]} 2
       - 
       - 
       - 
@@ -5402,7 +5422,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gain {[0]} shield. Heal 20% missing health.
+      - Gain {[0]} {[t:Stats/Stat-Shield]}. Heal 20% missing {[t:Stats/Stat-HP]}.
       - 
       - 
       - 
@@ -5416,7 +5436,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Shield {[0]}
+      - '{[t:Stats/Stat-Shield]} {[0]}'
       - 
       - 
       - 
@@ -5430,7 +5450,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Shield {[0]}
+      - '{[t:Stats/Stat-Shield]} {[0]}'
       - 
       - 
       - 
@@ -5475,7 +5495,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Shield {[0]}. Next turn, gives {[1]}
+      - '{[t:Stats/Stat-Shield]} {[0]}. Next turn, gives {[1]}'
       - 
       - 
       - 
@@ -5517,7 +5537,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Remove all <b>Dodge</b>. Deal {[0]}, ignoring Shields and Armor
+      - Remove all <b>{[t:Keywords/Dodge]}</b>. Deal {[0]}, ignoring Shields and
+        {[t:Stats/Stat-Armor]}
       - 
       - 
       - 
@@ -5548,7 +5569,7 @@ MonoBehaviour:
       - 'Deal {[0]}.
 
 
-        You gain <b>2</b> Energy. '
+        You gain <b>2</b> {[t:Resources/Energy]}. '
       - 
       - 
       - 
@@ -5579,7 +5600,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Deal {[0]} <b>| Crit:</b> You have more resources than the target
+      - Deal {[0]} <b>| {[t:Keywords/Critical]}:</b> You have more resources than
+        the target
       - 
       - 
       - 
@@ -5628,7 +5650,7 @@ MonoBehaviour:
 
 
         This turn, when anyone is damaged, you gain <b>1
-        Energy</b>'
+        {[t:Resources/Energy]}</b>'
       - 
       - 
       - 
@@ -5645,7 +5667,8 @@ MonoBehaviour:
       - 'Gives {[0]}.
 
 
-        <b>Drain</b> all resources from all enemies.'
+        <b>{[t:Keywords/Drain]}</b> all resources from all
+        enemies.'
       - 
       - 
       - 
@@ -5673,7 +5696,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Deal {[0]} <b>| Crit: Defenseless</b>'
+      - 'Deal {[0]} <b>| {[t:Keywords/Critical]}: {[t:Keywords/Defenseless]}</b>'
       - 
       - 
       - 
@@ -5687,7 +5710,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Deal {[0]}. \n\n<b>Finisher</b>: Zap"
+      - "Deal {[0]}. \n\n<b>{[t:Keywords/Chain]}</b>: Zap"
       - 
       - 
       - 
@@ -5701,7 +5724,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Deal {[0]}. \n\n<b>Finisher:</b> Thrust V1"
+      - "Deal {[0]}. \n\n<b>{[t:Keywords/Chain]}:</b> Thrust V1"
       - 
       - 
       - 
@@ -5715,7 +5738,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Deal {[0]}. \n\n<b>Finisher:</b> Thrust V2"
+      - "Deal {[0]}. \n\n<b>{[t:Keywords/Chain]}:</b> Thrust V2"
       - 
       - 
       - 
@@ -5729,7 +5752,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Deal {[0]}. \n\n<b>Finisher:</b> @Energy CircuNet"
+      - "Deal {[0]}. \n\n<b>{[t:Keywords/Chain]}:</b> @Energy CircuNet"
       - 
       - 
       - 
@@ -5774,7 +5797,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Deal {[0]} <b>| Crit:</b> Target is stunned
+      - Deal {[0]} <b>| {[t:Keywords/Critical]}:</b> Target is stunned
       - 
       - 
       - 
@@ -5819,7 +5842,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Quick</b>: Deal {[0]}.'
+      - '<b>{[t:Keywords/Quick]}</b>: Deal {[0]}.'
       - 
       - 
       - 
@@ -5833,7 +5856,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Deal {[0]}. This turn, when you strike this target, you gain 1 Energy.
+      - Deal {[0]}. This turn, when you strike this target, you gain 1 {[t:Resources/Energy]}.
       - 
       - 
       - 
@@ -5847,7 +5870,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives <b>{[0]} Armor & {[0]} Resistance</b>
+      - Gives <b>{[0]} {[t:Stats/Stat-Armor]} & {[0]} {[t:Stats/Stat-Resistance]}</b>
       - 
       - 
       - 
@@ -5861,7 +5884,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Gives <b>{[0]} Armor & \n{[0]} Resistance</b>\n\nDeal {[2]}"
+      - "Gives <b>{[0]} {[t:Stats/Stat-Armor]} & \n{[0]} {[t:Stats/Stat-Resistance]}</b>\n\nDeal
+        {[2]}"
       - 
       - 
       - 
@@ -5892,7 +5916,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Remove all Dodge and Deal {[0]}
+      - Remove all {[t:Keywords/Dodge]} and Deal {[0]}
       - 
       - 
       - 
@@ -5906,7 +5930,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives {[0]} if target has no Armor & Resistance
+      - Gives {[0]} if target has no {[t:Stats/Stat-Armor]} & {[t:Stats/Stat-Resistance]}
       - 
       - 
       - 
@@ -5965,7 +5989,7 @@ MonoBehaviour:
       - 'Gives {[0]}.
 
 
-        Shield {[1]}'
+        {[t:Stats/Stat-Shield]} {[1]}'
       - 
       - 
       - 
@@ -6013,7 +6037,7 @@ MonoBehaviour:
       - 'Gives {[0]}.
 
 
-        Shield {[1]}'
+        {[t:Stats/Stat-Shield]} {[1]}'
       - 
       - 
       - 
@@ -6027,7 +6051,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Increase Max Shield by {[0]} <i>(and gain that much Shield)</i>
+      - Increase {[t:Stats/Stat-MaxShield]} by {[0]} <i>(and gain that much Shield)</i>
       - 
       - 
       - 
@@ -6044,7 +6068,7 @@ MonoBehaviour:
       - 'Deal {[0]}.
 
 
-        Gives {[1]} <b>Primary Stat</b> {[2]}'
+        Gives {[1]} <b>{[t:Keywords/PrimaryStat]}</b> {[2]}'
       - 
       - 
       - 
@@ -6072,7 +6096,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives <b>2 Vulnerable</b>
+      - Gives <b>2 {[t:Keywords/Vulnerable]}</b>
       - 
       - 
       - 
@@ -6114,10 +6138,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Shield {[0]}.
+      - '{[t:Stats/Stat-Shield]} {[0]}.
 
 
-        <b>Finisher:</b> Decoy Hologram'
+        <b>{[t:Keywords/Chain]}:</b> Decoy
+        Hologram'
       - 
       - 
       - 
@@ -6131,7 +6156,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Shield {[0]}
+      - '{[t:Stats/Stat-Shield]} {[0]}'
       - 
       - 
       - 
@@ -6148,7 +6173,7 @@ MonoBehaviour:
       - 'Deal {[0]} <i>({[1]})</i>
 
 
-        Lose {[2]} your Shield'
+        Lose {[2]} your {[t:Stats/Stat-Shield]}'
       - 
       - 
       - 
@@ -6165,7 +6190,7 @@ MonoBehaviour:
       - 'Gives {[0]}.
 
 
-        Shield {[1]}'
+        {[t:Stats/Stat-Shield]} {[1]}'
       - 
       - 
       - 
@@ -6193,7 +6218,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Shield {[0]}
+      - '{[t:Stats/Stat-Shield]} {[0]}'
       - 
       - 
       - 
@@ -6207,7 +6232,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Shield {[0]}
+      - '{[t:Stats/Stat-Shield]} {[0]}'
       - 
       - 
       - 
@@ -6221,10 +6246,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Remove <b>Stealth</b> and <b>Taunt</b>.
+      - 'Remove <b>{[t:Keywords/Stealth]}</b> and <b>{[t:Keywords/Taunt]}</b>.
 
 
-        Gives {[0]} Shield'
+        Gives
+        {[0]} {[t:Stats/Stat-Shield]}'
       - 
       - 
       - 
@@ -6266,10 +6292,10 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Quick:</b> Choose from {[0]} special cards to draw (Max 6)
+      - '<b>{[t:Keywords/Quick]}:</b> Choose from {[0]} special cards to draw (Max
+        6)
 
-        <b>Swap:</b>
-        Seedy Sale'
+        <b>{[t:Keywords/Swap]}:</b> Seedy Sale'
       - 
       - 
       - 
@@ -6285,9 +6311,9 @@ MonoBehaviour:
       Languages:
       - 'Gives <b>-0.2x ECON Resources</b>
 
-        Gives <b>10 Creds</b>
+        Gives <b>10 {[t:Resources/Creds]}</b>
 
-        <b>Swap:</b>
+        <b>{[t:Keywords/Swap]}:</b>
         Pay To Win'
       - 
       - 
@@ -6302,7 +6328,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Quick:</b> Choose a special paid damage card to draw
+      - <b>{[t:Keywords/Quick]}:</b> Choose a special paid damage card to draw
       - 
       - 
       - 
@@ -6333,7 +6359,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Shield {[0]} <b>| Unprofitable:</b> {[1]}
+      - '{[t:Stats/Stat-Shield]} {[0]} <b>| Unprofitable:</b> {[1]}'
       - 
       - 
       - 
@@ -6363,9 +6389,10 @@ MonoBehaviour:
       Languages:
       - 'Gives {[0]}
 
-        Gives <b>10 Creds</b>
+        Gives <b>10 {[t:Resources/Creds]}</b>
 
-        <b>Swap:</b> Blackmail'
+        <b>{[t:Keywords/Swap]}:</b>
+        Blackmail'
       - 
       - 
       - 
@@ -6382,7 +6409,7 @@ MonoBehaviour:
       - 'Next turn, gives {[0]}
 
 
-        You gain <b>Double Damage</b>
+        You gain <b>{[t:Keywords/DoubleDamage]}</b>
 
         <b>Re-Stealth</b>'
       - 
@@ -6398,7 +6425,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Quick:</b> Choose and draw a <b>Stealth</b> card
+      - <b>{[t:Keywords/Quick]}:</b> Choose and draw a <b>{[t:Keywords/Stealth]}</b>
+        card
       - 
       - 
       - 
@@ -6412,7 +6440,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Quick:</b> Choose and draw a <b>Economic</b> card
+      - <b>{[t:Keywords/Quick]}:</b> Choose and draw a <b>{[t:Archetypes/Economic]}</b>
+        card
       - 
       - 
       - 
@@ -6426,8 +6455,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Quick:</b> Choose a card to draw that either <b>Buyouts</b> an enemy or
-        gain a ton of credits
+      - <b>{[t:Keywords/Quick]}:</b> Choose a card to draw that either <b>Buyouts</b>
+        an enemy or gain a ton of credits
       - 
       - 
       - 
@@ -6445,8 +6474,7 @@ MonoBehaviour:
 
         Draw {[1]} <b>Cards</b>
 
-        Gain {[2]} <b>Card
-        Cycles</b>'
+        Gain {[2]} <b>{[t:Keywords/CardCycles]}</b>'
       - 
       - 
       - 
@@ -6460,7 +6488,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Shield {[0]}
+      - '{[t:Stats/Stat-Shield]} {[0]}
 
 
         Gives {[1]}'
@@ -6477,7 +6505,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Drain</b> all resources
+      - <b>{[t:Keywords/Drain]}</b> all resources
       - 
       - 
       - 
@@ -6521,7 +6549,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Quick:</b> Gives <b>-1 Primary Stat</b> this turn
+      - <b>{[t:Keywords/Quick]}:</b> Gives <b>-1 {[t:Keywords/PrimaryStat]}</b> this
+        turn
       - 
       - 
       - 
@@ -6535,8 +6564,9 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Quick:</b> Remove <b>Armor</b> and deal <sprite index=2> or remove <b>Resistance</b>
-        and deal <sprite index=0>
+      - <b>{[t:Keywords/Quick]}:</b> Remove <b>{[t:Stats/Stat-Armor]}</b> and deal
+        <sprite index=2> or remove <b>{[t:Stats/Stat-Resistance]}</b> and deal <sprite
+        index=0>
       - 
       - 
       - 
@@ -6550,7 +6580,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Quick:</b> Gain 1 Energy for every <b>Defenseless</b> enemy
+      - <b>{[t:Keywords/Quick]}:</b> Gain 1 {[t:Resources/Energy]} for every <b>{[t:Keywords/Defenseless]}</b>
+        enemy
       - 
       - 
       - 
@@ -6564,7 +6595,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Removes 1 <b>Armor & Resistance</b> now and at the start of each turn
+      - Removes 1 <b>{[t:Stats/Stat-Armor]} & {[t:Stats/Stat-Resistance]}</b> now
+        and at the start of each turn
       - 
       - 
       - 
@@ -6578,8 +6610,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Defenseless:</b> Gives <b>Taunt, Prominent,</b> and <b>Vulnerable</b>
-        for 3 turns
+      - <b>{[t:Keywords/Defenseless]}:</b> Gives <b>{[t:Keywords/Taunt]}, {[t:Keywords/Prominent]},</b>
+        and <b>{[t:Keywords/Vulnerable]}</b> for 3 turns
       - 
       - 
       - 
@@ -6593,7 +6625,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Defenseless:</b> Remove all shields
+      - <b>{[t:Keywords/Defenseless]}:</b> Remove all shields
       - 
       - 
       - 
@@ -6607,7 +6639,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Deal {[0]} | <b>Crit:</b> Target has a shield
+      - Deal {[0]} | <b>{[t:Keywords/Critical]}:</b> Target has a {[t:Stats/Stat-Shield]}
       - 
       - 
       - 
@@ -6621,8 +6653,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Defenseless:</b> Gives {[0]}, else <b>-2 Armor & -2 Resistance.</b> Deal
-        {[1]}.
+      - <b>{[t:Keywords/Defenseless]}:</b> Gives {[0]}, else <b>-2 {[t:Stats/Stat-Armor]}
+        & -2 {[t:Stats/Stat-Resistance]}.</b> Deal {[1]}.
       - 
       - 
       - 
@@ -6636,10 +6668,10 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Deal {[0]} <b>Crit:</b> Target is not <b>Bloodied</b>.
+      - 'Deal {[0]} <b>{[t:Keywords/Critical]}:</b> Target is not <b>{[t:Keywords/Bloodied]}</b>.
 
-        Target gains
-        {[1]} <b>Shields</b>.'
+        Target
+        gains {[1]} <b>Shields</b>.'
       - 
       - 
       - 
@@ -6667,7 +6699,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Deal {[0]} <b>| Crit:</b> Target has no shields
+      - Deal {[0]} <b>| {[t:Keywords/Critical]}:</b> Target has no shields
       - 
       - 
       - 
@@ -6681,7 +6713,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Quick:</b> Transform all your cards that remove defenses into Exploit
+      - <b>{[t:Keywords/Quick]}:</b> Transform all your cards that remove defenses
+        into Exploit
       - 
       - 
       - 
@@ -6725,7 +6758,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "<b>Stunned:</b> Deal {[0]} \n\n<b>Not Stunned:</b> Gives <b>1 Stun</b>"
+      - "<b>Stunned:</b> Deal {[0]} \n\n<b>Not Stunned:</b> Gives <b>1 {[t:Keywords/Stun]}</b>"
       - 
       - 
       - 
@@ -6739,7 +6772,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Deal {[0]} | <b>Crit:</b> Target has 0 resources
+      - Deal {[0]} | <b>{[t:Keywords/Critical]}:</b> Target has 0 resources
       - 
       - 
       - 
@@ -6753,8 +6786,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gives <b>1 Stun</b> for each: <b>Defenseless,</b> <b>Resourceless,</b> or
-        <b>Unshielded</b>'
+      - 'Gives <b>1 {[t:Keywords/Stun]}</b> for each: <b>{[t:Keywords/Defenseless]},</b>
+        <b>Resourceless,</b> or <b>Unshielded</b>'
       - 
       - 
       - 
@@ -6768,7 +6801,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gain Energy equal to stunned, defenseless, resourceless, & unshielded enemies
+      - Gain {[t:Resources/Energy]} equal to stunned, {[t:Keywords/Defenseless]},
+        resourceless, & unshielded enemies
       - 
       - 
       - 
@@ -6782,7 +6816,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives {[0]} shields. If you destroyed their shields, gives <b>1 Stun</b>
+      - Gives {[0]} shields. If you destroyed their shields, gives <b>1 {[t:Keywords/Stun]}</b>
       - 
       - 
       - 
@@ -6798,7 +6832,7 @@ MonoBehaviour:
       Languages:
       - 'Gives {[0]}.
 
-        Gives {[1]} armor and resistance.'
+        Gives {[1]} {[t:Stats/Stat-Armor]} and {[t:Stats/Stat-Resistance]}.'
       - 
       - 
       - 
@@ -6812,7 +6846,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Quick: Not Afflicted:</b> Deal {[0]} {[1]}'
+      - '<b>{[t:Keywords/Quick]}: Not {[t:Keywords/Afflicted]}:</b> Deal {[0]} {[1]}'
       - 
       - 
       - 
@@ -6844,7 +6878,7 @@ MonoBehaviour:
       - 'Deal {[0]}.
 
 
-        Gives self {[1]} <b>Magic</b> {[2]}'
+        Gives self {[1]} <b>{[t:Stats/Stat-Magic]}</b> {[2]}'
       - 
       - 
       - 
@@ -6860,7 +6894,7 @@ MonoBehaviour:
       Languages:
       - 'Deal {[0]}.
 
-        <b>When Ignited:</b> You gain {[1]}'
+        <b>When {[t:Keywords/Igniting]}:</b> You gain {[1]}'
       - 
       - 
       - 
@@ -6888,7 +6922,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Deal {[0]} and Drain <b>1 Resource</b> {[1]}
+      - Deal {[0]} and {[t:Keywords/Drain]} <b>1 Resource</b> {[1]}
       - 
       - 
       - 
@@ -6902,10 +6936,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Afflicted</b>: Gives self {[0]} Shield.
+      - '<b>{[t:Keywords/Afflicted]}</b>: Gives self {[0]} {[t:Stats/Stat-Shield]}.
 
 
-        Deal {[1]} {[2]}'
+        Deal
+        {[1]} {[2]}'
       - 
       - 
       - 
@@ -6922,7 +6957,7 @@ MonoBehaviour:
       - 'Gives {[0]}.
 
 
-        <b>When Ignited:</b> Deal {[1]}'
+        <b>When {[t:Keywords/Igniting]}:</b> Deal {[1]}'
       - 
       - 
       - 
@@ -6939,7 +6974,7 @@ MonoBehaviour:
       - 'Deal {[0]}.
 
 
-        <b>Finisher:</b> Osmose'
+        <b>{[t:Keywords/Chain]}:</b> Osmose'
       - 
       - 
       - 
@@ -6953,7 +6988,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives <b>-4</b> Primary Stat for <b>3</b> turns
+      - Gives <b>-4</b> {[t:Keywords/PrimaryStat]} for <b>3</b> turns
       - 
       - 
       - 
@@ -6967,7 +7002,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Quick:</b> Gives <b>-4</b> Primary Stat for <b>3</b> turns
+      - <b>{[t:Keywords/Quick]}:</b> Gives <b>-4</b> {[t:Keywords/PrimaryStat]} for
+        <b>3</b> turns
       - 
       - 
       - 
@@ -6981,7 +7017,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Afflicted</b>: Gives {[0]}'
+      - '<b>{[t:Keywords/Afflicted]}</b>: Gives {[0]}'
       - 
       - 
       - 
@@ -6998,7 +7034,8 @@ MonoBehaviour:
       - 'Deal {[0]}.
 
 
-        <b>On Slay</b>: Deal {[1]} {[2]} to all enemies. '
+        <b>On {[t:Keywords/OnSlay]}</b>: Deal {[1]} {[2]}
+        to all enemies. '
       - 
       - 
       - 
@@ -7012,7 +7049,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>When Ignited:</b>Deal {[0]} {[1]}
+      - <b>When {[t:Keywords/Igniting]}:</b>Deal {[0]} {[1]}
       - 
       - 
       - 
@@ -7046,7 +7083,7 @@ MonoBehaviour:
       - 'Gives {[0]}
 
 
-        Gain <b>1 Attack</b> per <b>Mark</b>'
+        Gain <b>1 Attack</b> per <b>{[t:Keywords/Marked]}</b>'
       - 
       - 
       - 
@@ -7063,7 +7100,7 @@ MonoBehaviour:
       - 'Deal {[0]}.
 
 
-        You gain <b>1</b> Energy. '
+        You gain <b>1</b> {[t:Resources/Energy]}. '
       - 
       - 
       - 
@@ -7077,7 +7114,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Gives <b>2 Mark</b>. \n\n<b>Sneaky:</b> You gain {[0]}"
+      - "Gives <b>2 {[t:Keywords/Marked]}</b>. \n\n<b>{[t:Keywords/Sneaky]}:</b>
+        You gain {[0]}"
       - 
       - 
       - 
@@ -7091,7 +7129,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Deal {[0]}. \n\nDraw <b>1</b> of your cards for each <b>Mark</b>"
+      - "Deal {[0]}. \n\nDraw <b>1</b> of your cards for each <b>{[t:Keywords/Marked]}</b>"
       - 
       - 
       - 
@@ -7105,10 +7143,10 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Sneaky:</b> Apply <b>Vulnerable</b> for the battle
+      - '<b>{[t:Keywords/Sneaky]}:</b> Apply <b>{[t:Keywords/Vulnerable]}</b> for
+        the battle
 
-        <b>Sneaky:</b>
-        You gain 1 PrimaryResource'
+        <b>{[t:Keywords/Sneaky]}:</b> You gain 1 PrimaryResource'
       - 
       - 
       - 
@@ -7122,8 +7160,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Quick.</b> This turn, when you hit, gain <b>+1 Card Play.</b> <b>Sneaky:</b>
-        Also gain 1 PrimaryResource
+      - <b>{[t:Keywords/Quick]}.</b> This turn, when you hit, gain <b>+1 {[t:Keywords/CardPlays]}.</b>
+        <b>{[t:Keywords/Sneaky]}:</b> Also gain 1 PrimaryResource
       - 
       - 
       - 
@@ -7137,7 +7175,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "<b>Sneaky:</b> Gives {[0]}. \n\n<b>Finisher:</b> Blade Frenzy"
+      - "<b>{[t:Keywords/Sneaky]}:</b> Gives {[0]}. \n\n<b>{[t:Keywords/Chain]}:</b>
+        Blade Frenzy"
       - 
       - 
       - 
@@ -7151,8 +7190,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Deal {[0]}. \n<b>Consume 1 Mark</b>: Draw <b>1</b> of your Cards. Gain <b>+1
-        Card Play</b>"
+      - "Deal {[0]}. \n<b>Consume 1 {[t:Keywords/Marked]}</b>: Draw <b>1</b> of your
+        Cards. Gain <b>+1 {[t:Keywords/CardPlays]}</b>"
       - 
       - 
       - 
@@ -7222,7 +7261,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Shield {[0]}
+      - '{[t:Stats/Stat-Shield]} {[0]}'
       - 
       - 
       - 
@@ -7236,7 +7275,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Shield {[0]}
+      - '{[t:Stats/Stat-Shield]} {[0]}'
       - 
       - 
       - 
@@ -7252,7 +7291,8 @@ MonoBehaviour:
       Languages:
       - 'Deal {[0]} to one enemy.
 
-        Gives <b>3</b> Primary Stat to everyone. '
+        Gives <b>3</b> {[t:Keywords/PrimaryStat]}
+        to everyone. '
       - 
       - 
       - 
@@ -7266,7 +7306,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Gives <b>-3</b> Armor \n\nDeal {[0]}"
+      - "Gives <b>-3</b> {[t:Stats/Stat-Armor]} \n\nDeal {[0]}"
       - 
       - 
       - 
@@ -7296,7 +7336,7 @@ MonoBehaviour:
       Languages:
       - 'To other allies:
 
-        Gives {[0]} Resistance & Armor
+        Gives {[0]} {[t:Stats/Stat-Resistance]} & {[t:Stats/Stat-Armor]}
 
         Start
         of turn: Deal {[1]}
@@ -7317,7 +7357,7 @@ MonoBehaviour:
       Languages:
       - 'To other allies:
 
-        Shield {[0]} and give <b>1 Double Damage</b>
+        {[t:Stats/Stat-Shield]} {[0]} and give <b>1 {[t:Keywords/DoubleDamage]}</b>
 
         Start
         of turn: Deal {[1]}'
@@ -7348,7 +7388,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "To other allies:\nGives {[0]} Primary Stat \nStart of turn: Deal {[1]}"
+      - "To other allies:\nGives {[0]} {[t:Keywords/PrimaryStat]} \nStart of turn:
+        Deal {[1]}"
       - 
       - 
       - 
@@ -7418,7 +7459,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Hasty</b>: Steal 10 Creds. Deal {[0]}.'
+      - '<b>Hasty</b>: Steal 10 {[t:Resources/Creds]}. Deal {[0]}.'
       - 
       - 
       - 
@@ -7432,7 +7473,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Afflicted:</b> Drain {[0]}
+      - <b>{[t:Keywords/Afflicted]}:</b> {[t:Keywords/Drain]} {[0]}
       - 
       - 
       - 
@@ -7446,7 +7487,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Afflicted: </b> Gives {[0]} Primary Stat {[1]}'
+      - '<b>{[t:Keywords/Afflicted]}: </b> Gives {[0]} {[t:Keywords/PrimaryStat]}
+        {[1]}'
       - 
       - 
       - 
@@ -7463,7 +7505,7 @@ MonoBehaviour:
       - 'Deal {[0]}
 
 
-        Gives <b>99 Vulnerable</b>'
+        Gives <b>99 {[t:Keywords/Vulnerable]}</b>'
       - 
       - 
       - 
@@ -7477,7 +7519,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Shield {[0]}.
+      - '{[t:Stats/Stat-Shield]} {[0]}.
 
 
         Gives {[1]}'
@@ -7494,7 +7536,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives {[0]} Primary Stat this turn
+      - Gives {[0]} {[t:Keywords/PrimaryStat]} this turn
       - 
       - 
       - 
@@ -7511,7 +7553,7 @@ MonoBehaviour:
       - 'Gives {[0]}.
 
 
-        <b>Finisher:</b> Attune Tech'
+        <b>{[t:Keywords/Chain]}:</b> Attune Tech'
       - 
       - 
       - 
@@ -7525,7 +7567,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Shield {[0]}
+      - '{[t:Stats/Stat-Shield]} {[0]}'
       - 
       - 
       - 
@@ -7541,7 +7583,7 @@ MonoBehaviour:
       Languages:
       - 'Deal {[0]}
 
-        <i>(Based on Shield and X)</i>'
+        <i>(Based on {[t:Stats/Stat-Shield]} and X)</i>'
       - 
       - 
       - 
@@ -7558,7 +7600,8 @@ MonoBehaviour:
       - 'Set <b>Max Shields</B> to ({[0]}) * <b>Max Shields</b>.
 
         <b>Whenever
-        Damaged</b>: Deal <b>Shield</b> <sprite index=2> to all enemies'
+        Damaged</b>: Deal <b>{[t:Stats/Stat-Shield]}</b> <sprite index=2> to all
+        enemies'
       - 
       - 
       - 
@@ -7603,8 +7646,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Each Ally: Convert their shields into Armor and Resistance for the battle
-        <i>(5:1 Ratio)</i>.'
+      - 'Each Ally: Convert their shields into {[t:Stats/Stat-Armor]} and {[t:Stats/Stat-Resistance]}
+        for the battle <i>(5:1 Ratio)</i>.'
       - 
       - 
       - 
@@ -7618,7 +7661,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Gain <b>0.2 \xD7 Allies Total Shield</b> Owner[PrimaryResource]"
+      - "Gain <b>0.2 \xD7 Allies Total {[t:Stats/Stat-Shield]}</b> Owner[PrimaryResource]"
       - 
       - 
       - 
@@ -7632,7 +7675,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Increase Max Shield by {[0]} <i>(and gain that much Shield)</i>
+      - Increase {[t:Stats/Stat-MaxShield]} by {[0]} <i>(and gain that much Shield)</i>
       - 
       - 
       - 
@@ -7646,7 +7689,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Shield {[0]}
+      - '{[t:Stats/Stat-Shield]} {[0]}'
       - 
       - 
       - 
@@ -7660,7 +7703,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Now & start of each turn: Gives <b>(0.2 \xD7 Target[Shield]) Primary Stat</b>
+      - "Now & start of each turn: Gives <b>(0.2 \xD7 Target[Shield]) {[t:Keywords/PrimaryStat]}</b>
         for this turn"
       - 
       - 
@@ -7675,7 +7718,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'You gain {[0]} Shield.
+      - 'You gain {[0]} {[t:Stats/Stat-Shield]}.
 
 
         Deal {[1]}'
@@ -7706,7 +7749,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Shield {[0]}.
+      - '{[t:Stats/Stat-Shield]} {[0]}.
 
 
         Gives {[1]}'
@@ -7723,10 +7766,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>After Shielded</b>: Shield {[0]}.
+      - '<b>After Shielded</b>: {[t:Stats/Stat-Shield]} {[0]}.
 
 
-        Shield {[1]}'
+        {[t:Stats/Stat-Shield]}
+        {[1]}'
       - 
       - 
       - 
@@ -7740,7 +7784,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "One random target: \nGives <b>1 Blind</b>. \nDeal {[0]}"
+      - "One random target: \nGives <b>1 {[t:Keywords/Blind]}</b>. \nDeal {[0]}"
       - 
       - 
       - 
@@ -7754,7 +7798,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Deal {0} | <b>Crit:</b> Has <b>Shot</b> the target this round.
+      - Deal {[0]} | <b>{[t:Keywords/Critical]}:</b> Has <b>Shot</b> the target this
+        round
       - 
       - 
       - 
@@ -7768,7 +7813,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Gives <b>Max Ammo</b>. \n\nGives {[0]}"
+      - "Gives <b>Max {[t:Resources/Ammo]}</b>. \n\nGives {[0]}"
       - 
       - 
       - 
@@ -7850,7 +7895,7 @@ MonoBehaviour:
       - 'Deal {[0]} {[1]}
 
 
-        You gain Shield {[2]}'
+        You gain {[t:Stats/Stat-Shield]} {[2]}'
       - 
       - 
       - 
@@ -7895,7 +7940,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Shield {[0]}
+      - '{[t:Stats/Stat-Shield]} {[0]}'
       - 
       - 
       - 
@@ -7909,8 +7954,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Spend all Ammo to deal {[0]} and give <b>-1 Primary Stat</b> this turn for
-        each Ammo spent
+      - Spend all {[t:Resources/Ammo]} to deal {[0]} and give <b>-1 {[t:Keywords/PrimaryStat]}</b>
+        this turn for each {[t:Resources/Ammo]} spent
       - 
       - 
       - 
@@ -7924,8 +7969,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Quick:</b> Choose a special card that benefits from enemies hit by grenades
-        or shots
+      - <b>{[t:Keywords/Quick]}:</b> Choose a special card that benefits from enemies
+        hit by {[t:Resources/Grenades]} or shots
       - 
       - 
       - 
@@ -7939,9 +7984,10 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Deal {0}
+      - 'Deal {[0]}
 
-        If was hit by your grenade this turn, gives <b>1 Stun</b>'
+        If was hit by your {[t:Resources/Grenades]} this turn,
+        gives <b>1 {[t:Keywords/Stun]}</b>'
       - 
       - 
       - 
@@ -7955,7 +8001,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Deal {0} | <b>Crit:</b> Has been shot by you this turn
+      - 'Deal {[0]} {[t:Keywords/Critical]}: Has been shot by you this turn'
       - 
       - 
       - 
@@ -7969,7 +8015,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Enter <b>Stealth</b>. \nGives {[0]}.\nDraw <b>1</b> of your Cards"
+      - "Enter <b>{[t:Keywords/Stealth]}</b>. \nGives {[0]}.\nDraw <b>1</b> of your
+        Cards"
       - 
       - 
       - 
@@ -7983,8 +8030,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Enter <b>Stealth</b>. \nGives <b>1 Primary Resource</b>. \nGives <b>1</b>
-        Primary Stat for <b>3</b> turns"
+      - "Enter <b>{[t:Keywords/Stealth]}</b>. \nGives <b>1 Primary Resource</b>.
+        \nGives <b>1</b> {[t:Keywords/PrimaryStat]} for <b>3</b> turns"
       - 
       - 
       - 
@@ -8001,7 +8048,7 @@ MonoBehaviour:
       - 'Deal {[0]}.
 
 
-        You gain {[1]} <b>Power</b> {[2]}'
+        You gain {[1]} <b>{[t:Stats/Stat-Power]}</b> {[2]}'
       - 
       - 
       - 
@@ -8032,7 +8079,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives <b>1 Mark</b>
+      - Gives <b>1 {[t:Keywords/Marked]}</b>
       - 
       - 
       - 
@@ -8046,7 +8093,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>1 Mark:</b> Deal {[0]}
+      - <b>1 {[t:Keywords/Marked]}:</b> Deal {[0]}
       - 
       - 
       - 
@@ -8060,7 +8107,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Gives {[0]} \n\n<b>Bloodied:</b> Gives {[1]} more"
+      - "Gives {[0]} \n\n<b>{[t:Keywords/Bloodied]}:</b> Gives {[1]} more"
       - 
       - 
       - 
@@ -8074,7 +8121,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Sneaky:</b> Next turn, gives <b>+</b>{[0]} Power for the turn
+      - <b>{[t:Keywords/Sneaky]}:</b> Next turn, gives <b>+</b>{[0]} {[t:Stats/Stat-Power]}
+        for the turn
       - 
       - 
       - 
@@ -8088,7 +8136,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Enter <b>Stealth</b>\nGives {[0]} \nGives {[1]}"
+      - "Enter <b>{[t:Keywords/Stealth]}</b>\nGives {[0]} \nGives {[1]}"
       - 
       - 
       - 
@@ -8102,7 +8150,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Sneaky:</b> Deal {[0]}
+      - <b>{[t:Keywords/Sneaky]}:</b> Deal {[0]}
       - 
       - 
       - 
@@ -8116,7 +8164,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Sneaky: Drain 1 Resource</b> per <b>Mark</b> and next turn gives {[0]}'
+      - '<b>{[t:Keywords/Sneaky]}: {[t:Keywords/Drain]} 1 Resource</b> per <b>{[t:Keywords/Marked]}</b>
+        and next turn gives {[0]}'
       - 
       - 
       - 
@@ -8130,10 +8179,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Enter <b>Stealth</b>
+      - 'Enter <b>{[t:Keywords/Stealth]}</b>
 
-        <b>Sneaky:</b> Lose all <b>Power</b> to gain
-        <b>1 Armor & 1 Resistance</b> for each lost this turn'
+        <b>{[t:Keywords/Sneaky]}:</b>
+        Lose all <b>{[t:Stats/Stat-Power]}</b> to gain <b>1 {[t:Stats/Stat-Armor]}
+        & 1 {[t:Stats/Stat-Resistance]}</b> for each lost this turn'
       - 
       - 
       - 
@@ -8150,7 +8200,7 @@ MonoBehaviour:
       - 'Gives {[0]}
 
 
-        Finisher: Mark'
+        {[t:Keywords/Chain]}: {[t:Keywords/Marked]}'
       - 
       - 
       - 
@@ -8164,10 +8214,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Sneaky:</b> Deal {[0]} per mark
+      - '<b>{[t:Keywords/Sneaky]}:</b> Deal {[0]} per {[t:Keywords/Marked]}
 
-        <b>On Slay:</b> Re-Stealth and
-        make a quick copy of Domino'
+        <b>On
+        {[t:Keywords/OnSlay]}:</b> Re-Stealth and make a {[t:Keywords/Quick]} copy
+        of Domino'
       - 
       - 
       - 
@@ -8181,7 +8232,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Quick: Sneaky:</b> Gain {[0]}'
+      - '<b>{[t:Keywords/Quick]}: {[t:Keywords/Sneaky]}:</b> Gain {[0]}'
       - 
       - 
       - 
@@ -8195,10 +8246,10 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gain single use quick <b>Shadow</b> or <b>Mark</b> card.
+      - 'Gain single use {[t:Keywords/Quick]} <b>Shadow</b> or <b>{[t:Keywords/Marked]}</b>
+        card.
 
-        Gives
-        {[0]} <b>Attack</b> this turn.'
+        Gives {[0]} <b>Attack</b> this turn.'
       - 
       - 
       - 
@@ -8212,11 +8263,9 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Quick:</b>
+      - '<b>{[t:Keywords/Quick]}:</b>
 
-        Gives <b>1 Mark</b>
-
-        Gain {[0]}'
+        Gives <b>1 {[t:Keywords/Marked]}</b>'
       - 
       - 
       - 
@@ -8230,11 +8279,12 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Quick:</b>
+      - '<b>{[t:Keywords/Quick]}:</b>
 
-        Enter <b>Stealth</b>
+        Enter <b>{[t:Keywords/Stealth]}</b>
 
-        Gain {[0]}'
+        Gain
+        {[0]}'
       - 
       - 
       - 
@@ -8248,11 +8298,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Sneaky:</b> Deal {[0]}.
+      - '<b>{[t:Keywords/Sneaky]}:</b> Deal {[0]}.
 
 
-        Otherwise enter <b>Stealth</b> and
-        gain {[1]}'
+        Otherwise enter <b>{[t:Keywords/Stealth]}</b>
+        and gain {[1]}'
       - 
       - 
       - 
@@ -8266,7 +8316,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Quick: Sneaky</b>: {[0]}'
+      - '<b>{[t:Keywords/Quick]}: {[t:Keywords/Sneaky]}</b>: {[0]}'
       - 
       - 
       - 
@@ -8280,7 +8330,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Quick:</b> Deal {[0]} + consume each enemy mark for {[1]} <b>Crit: Marked</b>'
+      - <b>1 {[t:Keywords/Marked]}:</b> Deal {[0]}
       - 
       - 
       - 
@@ -8294,11 +8344,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gain single use quick <b>Shadow</b> or <b>Mark</b>
+      - 'Gain single use {[t:Keywords/Quick]} <b>Shadow</b> or <b>{[t:Keywords/Marked]}</b>
 
 
-        Gives {[0]}
-        <b>Attack</b> next turn'
+        Gives
+        {[0]} <b>Attack</b> next turn'
       - 
       - 
       - 
@@ -8312,8 +8362,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gain single use quick <b>Shadow</b> or <b>Mark</b> or <b>Hidden Blade</b>
-        or <b>Mince</b>
+      - Gain single use {[t:Keywords/Quick]} <b>Shadow</b> or <b>{[t:Keywords/Marked]}</b>
+        or <b>Hidden Blade</b> or <b>Mince</b>
       - 
       - 
       - 
@@ -8327,10 +8377,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gain single use quick <b>Shadow</b> or <b>Mark</b>
+      - 'Gain single use {[t:Keywords/Quick]} <b>Shadow</b> or <b>{[t:Keywords/Marked]}</b>
 
 
-        Gives {[0]}'
+        Gives
+        {[0]}'
       - 
       - 
       - 
@@ -8358,7 +8409,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Deal {[0]}. \nYou gain {[1]}. \n\n<b>Finisher:</b> Double Slash"
+      - "Deal {[0]}. \nYou gain {[1]}. \n\n<b>{[t:Keywords/Chain]}:</b> Double Slash"
       - 
       - 
       - 
@@ -8372,7 +8423,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Deal {[0]}. \n\nDrain <b>1 Resource</b>"
+      - "Deal {[0]}. \n\n{[t:Keywords/Drain]} <b>1 Resource</b>"
       - 
       - 
       - 
@@ -8386,10 +8437,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gives <b>{[0]} Armor & {[0]} Resistance</b>
+      - 'Gives <b>{[0]} {[t:Stats/Stat-Armor]} & {[0]} {[t:Stats/Stat-Resistance]}</b>
 
 
-        You gain {[2]}'
+        You
+        gain {[2]}'
       - 
       - 
       - 
@@ -8403,7 +8455,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Next turn, gives {[0]}\n<b>Defenseless:</b> \nDeal {[1]}"
+      - "Next turn, gives {[0]}\n<b>{[t:Keywords/Defenseless]}:</b> \nDeal {[1]}"
       - 
       - 
       - 
@@ -8417,10 +8469,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gives <b>{[0]} Armor & {[0]} Resistance</b>
+      - 'Gives <b>{[0]} {[t:Stats/Stat-Armor]} & {[0]} {[t:Stats/Stat-Resistance]}</b>
 
 
-        You gain {[2]}'
+        You
+        gain {[2]}'
       - 
       - 
       - 
@@ -8434,10 +8487,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gives <b>{[0]} Armor & {[0]} Resistance</b>
+      - 'Gives <b>{[0]} {[t:Stats/Stat-Armor]} & {[0]} {[t:Stats/Stat-Resistance]}</b>
 
 
-        You gain {[2]}'
+        You
+        gain {[2]}'
       - 
       - 
       - 
@@ -8520,10 +8574,10 @@ MonoBehaviour:
 
         Draw {[1]} <b>Cards</b>
 
-        Gain {[2]} <b>Card
-        Cycles</b>
+        Gain {[2]} <b>{[t:Keywords/CardCycles]}</b>
 
-        You enter <b>Stealth</b>'
+        You
+        enter <b>{[t:Keywords/Stealth]}</b>'
       - 
       - 
       - 
@@ -8541,8 +8595,7 @@ MonoBehaviour:
 
         Draw {[1]} <b>Cards</b>
 
-        Gain {[2]} <b>Card
-        Cycles</b>'
+        Gain {[2]} <b>{[t:Keywords/CardCycles]}</b>'
       - 
       - 
       - 
@@ -8570,7 +8623,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Shield {[0]}. \n\nYou gain {[1]}"
+      - "{[t:Stats/Stat-Shield]} {[0]}. \n\nYou gain {[1]}"
       - 
       - 
       - 
@@ -8584,7 +8637,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Shield {[0]}
+      - '{[t:Stats/Stat-Shield]} {[0]}'
       - 
       - 
       - 
@@ -8598,7 +8651,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Shield {[0]}
+      - '{[t:Stats/Stat-Shield]} {[0]}'
       - 
       - 
       - 
@@ -8612,7 +8665,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Deal {[0]} <b>Crit:</b> Glitched card in hand
+      - Deal {[0]} <b>{[t:Keywords/Critical]}:</b> Glitched card in hand
       - 
       - 
       - 
@@ -8641,7 +8694,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Removes <b>Stealth</b>
+      - Removes <b>{[t:Keywords/Stealth]}</b>
       - 
       - 
       - 
@@ -8669,7 +8722,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Heal {[0]}. \n\nShield {[1]}"
+      - "Heal {[0]}. \n\n{[t:Stats/Stat-Shield]} {[1]}"
       - 
       - 
       - 
@@ -8683,7 +8736,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives {[0]} Primary Stat this turn
+      - Gives {[0]} {[t:Keywords/PrimaryStat]} this turn
       - 
       - 
       - 
@@ -8697,7 +8750,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives <b>1</b> Extra Card Plays this turn
+      - Gives <b>1</b> Extra {[t:Keywords/CardPlays]} this turn
       - 
       - 
       - 
@@ -8754,7 +8807,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Deal {[0]} <b>Crit:</b> One of the heroes cards is glitched in hand
+      - Deal {[0]} <b>{[t:Keywords/Critical]}:</b> One of the heroes cards is glitched
+        in hand
       - 
       - 
       - 
@@ -8782,10 +8836,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gain 1 Armor & Resistance til end of battle
+      - 'Gain 1 {[t:Stats/Stat-Armor]} & {[t:Stats/Stat-Resistance]} til end of battle
 
 
-        Deal {[0]}'
+        Deal
+        {[0]}'
       - 
       - 
       - 
@@ -8816,7 +8871,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Shield {[0]} on self
+      - '{[t:Stats/Stat-Shield]} {[0]} on self
 
 
         Deal {[1]}'
@@ -8833,7 +8888,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives {[0]} Armor & Resistance this turn
+      - Gives {[0]} {[t:Stats/Stat-Armor]} & {[t:Stats/Stat-Resistance]} this turn
       - 
       - 
       - 
@@ -8917,8 +8972,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Deals {[0]}\nReduces your Max HP by {[1]} \nGives {[2]} Primary Stat until
-        end of battle"
+      - "Deals {[0]}\nReduces your {[t:Stats/Stat-MaxHP]} by {[1]} \nGives {[2]}
+        {[t:Keywords/PrimaryStat]} until end of battle"
       - 
       - 
       - 
@@ -8932,7 +8987,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives a large stat buff based on how much max health has been reduced
+      - Gives a large stat buff based on how much max {[t:Stats/Stat-HP]} has been
+        reduced
       - 
       - 
       - 
@@ -8946,8 +9002,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Reduces an ally's maximum health by half of their missing health and heals
-        them to full
+      - Reduces an ally's maximum {[t:Stats/Stat-HP]} by half of their missing {[t:Stats/Stat-HP]}
+        and heals them to full
       - 
       - 
       - 
@@ -8989,8 +9045,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Quick:</b> For each <b>Stunned</b> enemy, draw <b>2 Cards</b> and gain
-        <b>+1 Card Play</b>.
+      - <b>{[t:Keywords/Quick]}:</b> For each <b>Stunned</b> enemy, draw <b>2 Cards</b>
+        and gain <b>+1 {[t:Keywords/CardPlays]}</b>.
       - 
       - 
       - 
@@ -9004,7 +9060,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Quick:</b> Choose and draw a <b>Lockdown</b> card
+      - <b>{[t:Keywords/Quick]}:</b> Choose and draw a <b>{[t:Archetypes/Lockdown]}</b>
+        card
       - 
       - 
       - 
@@ -9036,7 +9093,7 @@ MonoBehaviour:
       Description: 
       Languages:
       - "Prevent target from gaining resources until next turn. \n\nYou gain {[0]}
-        and {[1]} <b>Card Cycles</b>"
+        and {[1]} <b>{[t:Keywords/CardCycles]}</b>"
       - 
       - 
       - 
@@ -9050,8 +9107,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Next turn, gives <b>1 Vulnerable</b>. \nYou gain {[0]}.\nThis turn, when
-        an enemy attacks, you gain {[1]}"
+      - "Next turn, gives <b>1 {[t:Keywords/Vulnerable]}</b>. \nYou gain {[0]}.\nThis
+        turn, when an enemy attacks, you gain {[1]}"
       - 
       - 
       - 
@@ -9082,11 +9139,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gives {[0]} and {[1]} <b>Card Cycles</b>.
+      - 'Gives {[0]} and {[1]} <b>{[t:Keywords/CardCycles]}</b>.
 
 
-        This turn, when an enemy
-        attacks, you gain {[2]}'
+        This turn,
+        when an enemy attacks, you gain {[2]}'
       - 
       - 
       - 
@@ -9134,7 +9191,8 @@ MonoBehaviour:
       - 'Gives <b>1</b> Attack
 
 
-        Gives <b>5</b> Armor & Resistance this turn'
+        Gives <b>5</b> {[t:Stats/Stat-Armor]} &
+        {[t:Stats/Stat-Resistance]} this turn'
       - 
       - 
       - 
@@ -9165,7 +9223,7 @@ MonoBehaviour:
       - 'Gives the Heroes +1 Attack
 
 
-        Gains <b>1 Taunt</b>'
+        Gains <b>1 {[t:Keywords/Taunt]}</b>'
       - 
       - 
       - 
@@ -9179,7 +9237,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Shield {[0]}
+      - '{[t:Stats/Stat-Shield]} {[0]}'
       - 
       - 
       - 
@@ -9210,7 +9268,7 @@ MonoBehaviour:
       - 'Gain +1 Attack
 
 
-        Gain 1 more energy every turn'
+        Gain 1 more {[t:Resources/Energy]} every turn'
       - 
       - 
       - 
@@ -9262,7 +9320,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Sneaky + 1 Mark:</b> Removes <b>All Dodge</b> and Deal {[0]}
+      - <b>{[t:Keywords/Sneaky]} + 1 {[t:Keywords/Marked]}:</b> Removes <b>All {[t:Keywords/Dodge]}</b>
+        and Deal {[0]}
       - 
       - 
       - 
@@ -9278,12 +9337,17 @@ MonoBehaviour:
       Languages:
       - 'For the Battle,
 
-        On Mark: Gain <b>+1 Power</b>
+        On {[t:Keywords/Marked]}: Gain <b>+1 {[t:Stats/Stat-Power]}
 
-        On Stealth:
-        Gain <b>+2 Power</b>
+        </b>
 
-        On Slay: Gain <b>+5 Power</b>'
+        On
+        {[t:Keywords/Stealth]}: Gain <b>+2 {[t:Stats/Stat-Power]}
+
+        </b>
+
+        On
+        {[t:Keywords/OnSlay]}: Gain <b>+5 {[t:Stats/Stat-Power]}</b>'
       - 
       - 
       - 
@@ -9297,7 +9361,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gain <b>Stealth</b>
+      - Gain <b>{[t:Keywords/Stealth]}</b>
       - 
       - 
       - 
@@ -9343,7 +9407,7 @@ MonoBehaviour:
       Description: 
       Languages:
       - 'Next turn, gives allies {[0]} each and when an enemy dies, draw {[1]} <b>Card</b>
-        and <b>+</b>{[2]} <b>Card Play</b> '
+        and <b>+</b>{[2]} <b>{[t:Keywords/CardPlays]}</b> '
       - 
       - 
       - 
@@ -9357,7 +9421,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Start of next turn play on random enemy: <b>Sneaky:</b> deal {0}'
+      - 'Start of Next turn play card on random enemy: <b>{[t:Keywords/Sneaky]}:</b>
+        deal {[0]}'
       - 
       - 
       - 
@@ -9371,10 +9436,10 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Enter <b>Stealth</b>
+      - 'Enter <b>{[t:Keywords/Stealth]}</b>
 
 
-        Gain <b>4 Card Cycles</b>'
+        Gain <b>4 {[t:Keywords/CardCycles]}</b>'
       - 
       - 
       - 
@@ -9430,7 +9495,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gain {[0]} <b>Resistance</b> and lose all <b>Armor</b> this turn
+      - Gain {[0]} <b>{[t:Stats/Stat-Resistance]}</b> and lose all <b>{[t:Stats/Stat-Armor]}</b>
+        this turn
       - 
       - 
       - 
@@ -9444,7 +9510,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gain {[0]} <b>Armor</b> and lose all <b>Resistance</b> this turn
+      - Gain {[0]} <b>{[t:Stats/Stat-Armor]}</b> and lose all <b>{[t:Stats/Stat-Resistance]}</b>
+        this turn
       - 
       - 
       - 
@@ -9514,7 +9581,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Sneaky</b>: {[0]}'
+      - '<b>{[t:Keywords/Sneaky]}</b>: {[0]}'
       - 
       - 
       - 
@@ -9528,7 +9595,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gain <b>Stealth</b>
+      - Gain <b>{[t:Keywords/Stealth]}</b>
       - 
       - 
       - 
@@ -9570,7 +9637,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Enter <b>Stealth</b> \n\nGives <b>90 Attack</b> until the end of next turn"
+      - "Enter <b>{[t:Keywords/Stealth]}</b> \n\nGives <b>90 Attack</b> until the
+        end of next turn"
       - 
       - 
       - 
@@ -9598,7 +9666,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Shield {[0]}
+      - '{[t:Stats/Stat-Shield]} {[0]}'
       - 
       - 
       - 
@@ -9640,10 +9708,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Removes All <b>Aegis & Dodge</b>
+      - 'Removes All <b>{[t:Keywords/Aegis]} & {[t:Keywords/Dodge]}</b>
 
 
-        Deal {[0]}'
+        Deal
+        {[0]}'
       - 
       - 
       - 
@@ -9671,7 +9740,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Quick</b>: Deal {[0]}.'
+      - '<b>{[t:Keywords/Quick]}</b>: Deal {[0]}.'
       - 
       - 
       - 
@@ -9741,7 +9810,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives <b>1 Dodge</b>
+      - Gives <b>1 {[t:Keywords/Dodge]}</b>
       - 
       - 
       - 
@@ -9755,7 +9824,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Quick:</b> Next turn, gives {[0]} <b>Card Cycles</b>
+      - <b>{[t:Keywords/Quick]}:</b> Next turn, gives {[0]} <b>{[t:Keywords/CardCycles]}</b>
       - 
       - 
       - 
@@ -9769,7 +9838,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Glitch all cards in hand
+      - '{[t:Keywords/Glitch]} all cards in hand'
       - 
       - 
       - 
@@ -9783,7 +9852,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives <b>1 Stun</b>
+      - Gives <b>1 {[t:Keywords/Stun]}</b>
       - 
       - 
       - 
@@ -9797,10 +9866,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gives <b>99 Dodges OR 99 Aegis</b>
+      - 'Gives <b>99 Dodges OR 99 {[t:Keywords/Aegis]}</b>
 
 
-        Lose them after next turn'
+        Lose them after
+        next turn'
       - 
       - 
       - 
@@ -9814,7 +9884,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives <b>99 Armor OR 99 Resistance</b> this turn
+      - Gives <b>99 {[t:Stats/Stat-Armor]} OR 99 {[t:Stats/Stat-Resistance]}</b>
+        this turn
       - 
       - 
       - 
@@ -9828,10 +9899,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gives <b>99 Dodges OR 99 Aegis</b>
+      - 'Gives <b>99 Dodges OR 99 {[t:Keywords/Aegis]}</b>
 
 
-        Lose them after next turn'
+        Lose them after
+        next turn'
       - 
       - 
       - 
@@ -9845,7 +9917,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Glitch all target's cards in hand
+      - '{[t:Keywords/Glitch]} all target''s cards in hand'
       - 
       - 
       - 
@@ -9859,7 +9931,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives <b>99 Armor OR 99 Resistance</b> this turn
+      - Gives <b>99 {[t:Stats/Stat-Armor]} OR 99 {[t:Stats/Stat-Resistance]}</b>
+        this turn
       - 
       - 
       - 
@@ -9887,7 +9960,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "<b>Quick:</b> \nGives <b>1 Resources</b>.\nGain <b>1 Card Cycles</b>"
+      - "<b>{[t:Keywords/Quick]}:</b> \nGives <b>1 Resources</b>.\nGain <b>1 {[t:Keywords/CardCycles]}</b>"
       - 
       - 
       - 
@@ -9915,10 +9988,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Quick: Sneaky:</b> Gives {[0]}.
+      - '<b>{[t:Keywords/Quick]}: {[t:Keywords/Sneaky]}:</b> Gives {[0]}.
 
 
-        You gain {[1]}.'
+        You
+        gain {[1]}.'
       - 
       - 
       - 
@@ -9932,11 +10006,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Sneaky: </b>Next turn, gives <b>+</b>{[0]} <b>Power</b> for the turn.
+      - '<b>{[t:Keywords/Sneaky]}: </b>Next turn, gives <b>+</b>{[0]} <b>{[t:Stats/Stat-Power]}</b>
+        for the turn.
 
 
-        Next
-        turn, gives <b>1 Card Plays</b>. '
+        Next turn, gives <b>1 {[t:Keywords/CardPlays]}</b>. '
       - 
       - 
       - 
@@ -9964,7 +10038,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gives <b>-1 Primary Stat</b>
+      - 'Gives <b>-1 {[t:Keywords/PrimaryStat]}</b>
 
 
         Deal {[0]}'
@@ -9981,7 +10055,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Remove all Dodge
+      - Remove all {[t:Keywords/Dodge]}
       - 
       - 
       - 
@@ -9995,7 +10069,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gives <b>-1 Resistance</b>
+      - 'Gives <b>-1 {[t:Stats/Stat-Resistance]}</b>
 
 
         Deal {[0]}'
@@ -10012,7 +10086,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Deal {[0]} | <b>Crit: No Resistance</b>'
+      - 'Deal {[0]} | <b>{[t:Keywords/Critical]}: No {[t:Stats/Stat-Resistance]}</b>'
       - 
       - 
       - 
@@ -10026,7 +10100,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Deal {[0]} | <b>Crit: No Resistance</b>'
+      - 'Deal {[0]} | <b>{[t:Keywords/Critical]}: No {[t:Stats/Stat-Resistance]}</b>'
       - 
       - 
       - 
@@ -10043,7 +10117,7 @@ MonoBehaviour:
       - 'Gives 30% Attack
 
 
-        Gives <b>-1 Armor & -1 Resistance</b>'
+        Gives <b>-1 {[t:Stats/Stat-Armor]} & -1 {[t:Stats/Stat-Resistance]}</b>'
       - 
       - 
       - 
@@ -10071,7 +10145,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Deal {[0]} | <b>Crit: Bloodied</b>'
+      - 'Deal {[0]} | <b>{[t:Keywords/Critical]}: {[t:Keywords/Bloodied]}</b>'
       - 
       - 
       - 
@@ -10099,7 +10173,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Gives <b>1 Vulnerable</b> \n<i>(The enemies prioritize vulnerable targets)</i>"
+      - "Gives <b>1 {[t:Keywords/Vulnerable]}</b> \n<i>(The enemies prioritize {[t:Keywords/Vulnerable]}
+        targets)</i>"
       - 
       - 
       - 
@@ -10113,7 +10188,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Enter Stealth for 1 turn.
+      - 'Enter {[t:Keywords/Stealth]} for 1 turn.
 
 
         Give Bait.'
@@ -10130,10 +10205,10 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gives <b>1 Blind</b>
+      - 'Gives <b>1 {[t:Keywords/Blind]}</b>
 
 
-        Gain 1 Energy'
+        Gain 1 {[t:Resources/Energy]}'
       - 
       - 
       - 
@@ -10147,7 +10222,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Give 1 Inhibit</b>
+      - <b>Give 1 {[t:Keywords/Inhibit]}</b>
       - 
       - 
       - 
@@ -10161,10 +10236,10 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gives {[0]} Primary Stat
+      - 'Gives {[0]} {[t:Keywords/PrimaryStat]}
 
 
-        Gain 2 Energy'
+        Gain 2 {[t:Resources/Energy]}'
       - 
       - 
       - 
@@ -10178,10 +10253,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gives <b>1 Inhibit & 1 Blind</b>
+      - 'Gives <b>1 {[t:Keywords/Inhibit]} & 1 {[t:Keywords/Blind]}</b>
 
 
-        Gain 4 Energy'
+        Gain
+        4 {[t:Resources/Energy]}'
       - 
       - 
       - 
@@ -10195,12 +10271,12 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gives {[0]} Primary Stat.
+      - 'Gives {[0]} {[t:Keywords/PrimaryStat]}.
 
-        Kills target if they are at 0 Primary
-        Stat.
+        Kills target if they are
+        at 0 {[t:Keywords/PrimaryStat]}.
 
-        Gain 5 Energy.'
+        Gain 5 {[t:Resources/Energy]}.'
       - 
       - 
       - 
@@ -10217,7 +10293,7 @@ MonoBehaviour:
       - 'Deal {[0]}
 
 
-        Gain {[1]} & <b>1 Taunt</b>'
+        Gain {[1]} & <b>1 {[t:Keywords/Taunt]}</b>'
       - 
       - 
       - 
@@ -10245,10 +10321,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Deal {0} <b>| Crit:</b> I have shields
+      - 'Deal {E[0]} <b>| {[t:Keywords/Critical]}:</b> I have shields
 
 
-        Gain 1 Energy'
+        Gain
+        1 {[t:Resources/Energy]}'
       - 
       - 
       - 
@@ -10262,7 +10339,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gain <b>1 Vulnerable</b> and Max Energy
+      - 'Gain <b>1 {[t:Keywords/Vulnerable]}</b> and Max {[t:Resources/Energy]}
 
 '
       - 
@@ -10281,8 +10358,8 @@ MonoBehaviour:
       - 'Deal {[0]}
 
 
-        Gain <b>{[1]} & {[2]} Armor & {[3]} Resistance & {[4]}
-        Shields</b>'
+        Gain <b>{[1]} & {[2]} {[t:Stats/Stat-Armor]} & {[3]}
+        {[t:Stats/Stat-Resistance]} & {[4]} Shields</b>'
       - 
       - 
       - 
@@ -10296,11 +10373,12 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Enter Stealth for 1 turn.
+      - 'Enter {[t:Keywords/Stealth]} for 1 turn.
 
-        Gain 5 Energy.
+        Gain 5 {[t:Resources/Energy]}.
 
-        Give Bait.'
+        Give
+        Bait.'
       - 
       - 
       - 
@@ -10317,7 +10395,7 @@ MonoBehaviour:
       - 'Deal {[0]}
 
 
-        Gain 6 Energy'
+        Gain 6 {[t:Resources/Energy]}'
       - 
       - 
       - 
@@ -10331,10 +10409,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Deal {[0]} | <b>Crit: Stealth</b>
+      - 'Deal {[0]} | <b>{[t:Keywords/Critical]}: {[t:Keywords/Stealth]}</b>
 
 
-        Gain 1 Energy'
+        Gain
+        1 {[t:Resources/Energy]}'
       - 
       - 
       - 
@@ -10348,10 +10427,10 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Deal {[0]} <b>| Crit:</b> Target has played a card this turn.
+      - 'Deal {[0]} <b>| {[t:Keywords/Critical]}:</b> Target has played a card this
+        turn.
 
-        Gain
-        2 Energy.'
+        Gain 2 {[t:Resources/Energy]}.'
       - 
       - 
       - 
@@ -10382,7 +10461,7 @@ MonoBehaviour:
       - 'Deal {[0]}
 
 
-        I Gain <b>1 Aegis</b>'
+        I Gain <b>1 {[t:Keywords/Aegis]}</b>'
       - 
       - 
       - 
@@ -10424,7 +10503,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives <b>1 Inhibit</b>
+      - Gives <b>1 {[t:Keywords/Inhibit]}</b>
       - 
       - 
       - 
@@ -10438,7 +10517,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Disable or Stun everyone else
+      - '{[t:Keywords/Disabled]} or {[t:Keywords/Stun]} everyone else'
       - 
       - 
       - 
@@ -10452,7 +10531,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives <b>1 Aegis</b>
+      - Gives <b>1 {[t:Keywords/Aegis]}</b>
       - 
       - 
       - 
@@ -10466,7 +10545,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives <b>1 Armor</b>
+      - Gives <b>1 {[t:Stats/Stat-Armor]}</b>
       - 
       - 
       - 
@@ -10494,7 +10573,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives <b>1 Dodge</b>
+      - Gives <b>1 {[t:Keywords/Dodge]}</b>
       - 
       - 
       - 
@@ -10508,7 +10587,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives <b>1 Resistance</b>
+      - Gives <b>1 {[t:Stats/Stat-Resistance]}</b>
       - 
       - 
       - 
@@ -10522,7 +10601,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives 1 Energy
+      - Gives 1 {[t:Resources/Energy]}
       - 
       - 
       - 
@@ -10550,7 +10629,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives +20% Power
+      - Gives +20% {[t:Stats/Stat-Power]}
       - 
       - 
       - 
@@ -10564,7 +10643,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Enter Stealth for 1 turn
+      - Enter {[t:Keywords/Stealth]} for 1 turn
       - 
       - 
       - 
@@ -10578,7 +10657,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives <b>2 Blind</b>
+      - Gives <b>2 {[t:Keywords/Blind]}</b>
       - 
       - 
       - 
@@ -10592,7 +10671,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Lose <b>1 Card Play</b>
+      - Lose <b>1 {[t:Keywords/CardPlays]}</b>
       - 
       - 
       - 
@@ -10606,7 +10685,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Lose all starting <b>Armor & Resistance</b>
+      - Lose all starting <b>{[t:Stats/Stat-Armor]} & {[t:Stats/Stat-Resistance]}</b>
       - 
       - 
       - 
@@ -10620,7 +10699,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Disable for 1 turn
+      - '{[t:Keywords/Disabled]} for 1 turn'
       - 
       - 
       - 
@@ -10634,7 +10713,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Glitch 2 of the target's cards in hand
+      - '{[t:Keywords/Glitch]} 2 of the target''s cards in hand'
       - 
       - 
       - 
@@ -10648,7 +10727,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives <b>2 Inhibit</b>
+      - Gives <b>2 {[t:Keywords/Inhibit]}</b>
       - 
       - 
       - 
@@ -10676,7 +10755,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Half their Power for the battle.
+      - Half their {[t:Stats/Stat-Power]} for the battle.
       - 
       - 
       - 
@@ -10690,7 +10769,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives <b>9 Vulnerable</b>
+      - Gives <b>9 {[t:Keywords/Vulnerable]}</b>
       - 
       - 
       - 
@@ -10704,7 +10783,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives 1 Energy & +50% HP & +50% Power
+      - Gives 1 {[t:Resources/Energy]} & +50% {[t:Stats/Stat-HP]} & +50% {[t:Stats/Stat-Power]}
       - 
       - 
       - 
@@ -10718,12 +10797,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Quick<b>
+      - '<b>{[t:Keywords/Quick]} + {[t:Keywords/Sneaky]}:</b> Deal {[0]} per {[t:Keywords/Marked]}
 
-        Sneaky:</b> Deal {[0]} per mark
-
-        <b>On Slay:</b>
-        Re-Stealth and make this card'
+        <b>On
+        {[t:Keywords/OnSlay]}:</b> Re-Stealth and make a {[t:Keywords/Quick]} copy
+        of Domino'
       - 
       - 
       - 
@@ -10737,12 +10815,13 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Quick</b>
+      - '<b>{[t:Keywords/Quick]}</b>
 
         Gives {[0]}
 
-        <b>2 Mark:</b> Deal {[1]} <b>|
-        Crit: 3 Marks + Bloodied | Additional Crit: 4 Marks</b>'
+        <b>2 {[t:Keywords/Marked]}:</b>
+        Deal {[1]} <b>| {[t:Keywords/Critical]}: 3 {[t:Keywords/Marked]} + {[t:Keywords/Bloodied]}
+        | Additional {[t:Keywords/Critical]}: 4 {[t:Keywords/Marked]}</b>'
       - 
       - 
       - 
@@ -10756,7 +10835,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>Sneaky:</b> Deal {0}
+      - <b>{[t:Keywords/Sneaky]}:</b> Deal {[0]}
       - 
       - 
       - 
@@ -38092,24 +38171,16 @@ MonoBehaviour:
       - '<b>{[t:Keywords/Marked]}</b>
 
 
-        Marks are used to trigger various
-        Assassination effects.'
-      - "<b>{[t:Keywords/Marked]}</b>\n\n\u6807\u8BB0\u7528\u4E8E\u89E6\u53D1\u5404\u79CD\u6697\u6740\u6548\u5E94\u3002"
-      - "<b>{[t:Keywords/Marked]}</b>\n\n\u041E\u0446\u0435\u043D\u043A\u0438 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u0443\u044E\u0442\u0441\u044F
-        \u0434\u043B\u044F \u0437\u0430\u043F\u0443\u0441\u043A\u0430 \u0440\u0430\u0437\u043B\u0438\u0447\u043D\u044B\u0445
-        \u044D\u0444\u0444\u0435\u043A\u0442\u043E\u0432 \u0443\u0431\u0438\u0439\u0441\u0442\u0432\u0430."
-      - '<b>{[t:Keywords/Marked]}</b>
-
-
-        Las marcas se utilizan para desencadenar
-        varios efectos de asesinato.'
-      - "<b>{[t:Keywords/Marked]}</b>\n\nAs marcas s\xE3o usadas para desencadear
-        v\xE1rios efeitos de assassinato."
-      - "<b>{[t:Keywords/Marked]}</b>\n\nMarkierungen werden verwendet, um verschiedene
-        Attentateseffekte auszul\xF6sen."
-      - "<b>{[t:Keywords/Marked]}</b>\n\nLes marques sont utilis\xE9es pour d\xE9clencher
-        divers effets d'assassinat."
-      - "<b>{[t:Keywords/Marked]}</b>\n\n\u30DE\u30FC\u30AF\u306F\u3001\u3055\u307E\u3056\u307E\u306A\u6697\u6BBA\u52B9\u679C\u3092\u30C8\u30EA\u30AC\u30FC\u3059\u308B\u305F\u3081\u306B\u4F7F\u7528\u3055\u308C\u307E\u3059\u3002"
+        Marks are both used as requirements
+        on cards such as when you see "3 Marks:" and make some assination card effects
+        stronger'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
       Flags: 0000000000000000
       Languages_Touch: []
     - Term: Keywords/Missing rule text for
@@ -48379,15 +48450,15 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Heroes with <b>{[t:Keywords/Disable]}</b> can't play their cards. Enemies
+      - "Heroes with <b>{[t:Keywords/Disabled]}</b> can't play their cards. Enemies
         with <b>{[t:Keywords/Stun]}</b> will lose 1 Stun each time they play a card
         and that card will have no effect <i>(the card stills cost resources)</i>.
-        \n\nA character with {[t:Keywords/Disable]} or {[t:Keywords/Stun]} cannot
+        \n\nA character with {[t:Keywords/Disabled]} or {[t:Keywords/Stun]} cannot
         perform Counterattack reactions."
-      - "\u5177\u6709<b>{[t:Keywords/Disable]}</b>\u7684\u82F1\u96C4\u65E0\u6CD5\u4F7F\u7528\u4ED6\u4EEC\u7684\u724C\u3002
+      - "\u5177\u6709<b>{[t:Keywords/Disabled]}</b>\u7684\u82F1\u96C4\u65E0\u6CD5\u4F7F\u7528\u4ED6\u4EEC\u7684\u724C\u3002
         \u5177\u6709<b>{[t:Keywords/Stun]}</b>\u7684\u654C\u4EBA\u6BCF\u6B21\u6253\u51FA\u4E00\u5F20\u724C\u90FD\u4F1A\u5931\u53BB
-        1 \u6B21\u7729\u6655\uFF0C\u5E76\u4E14\u8BE5\u724C\u4E0D\u4F1A\u4EA7\u751F\u4EFB\u4F55\u6548\u679C<i>\uFF08\u8BE5\u724C\u4ECD\u4F1A\u6D88\u8017\u8D44\u6E90\uFF09</i>\u3002\r\n\r\n\u5177\u6709{[t:Keywords/Disable]}\u6216{[t:Keywords/Stun]}\u7684\u89D2\u8272\u65E0\u6CD5\u6267\u884C\u53CD\u51FB\u53CD\u5E94\u3002"
-      - "\u0413\u0435\u0440\u043E\u0438 \u0441 <b>{[t:Keywords/Disable]}</b> \u043D\u0435
+        1 \u6B21\u7729\u6655\uFF0C\u5E76\u4E14\u8BE5\u724C\u4E0D\u4F1A\u4EA7\u751F\u4EFB\u4F55\u6548\u679C<i>\uFF08\u8BE5\u724C\u4ECD\u4F1A\u6D88\u8017\u8D44\u6E90\uFF09</i>\u3002\n\n\u5177\u6709{[t:Keywords/Disabled]}\u6216{[t:Keywords/Stun]}\u7684\u89D2\u8272\u65E0\u6CD5\u6267\u884C\u53CD\u51FB\u53CD\u5E94\u3002"
+      - "\u0413\u0435\u0440\u043E\u0438 \u0441 <b>{[t:Keywords/Disabled]}</b> \u043D\u0435
         \u043C\u043E\u0433\u0443\u0442 \u0440\u0430\u0437\u044B\u0433\u0440\u044B\u0432\u0430\u0442\u044C
         \u0441\u0432\u043E\u0438 \u043A\u0430\u0440\u0442\u044B. \u0412\u0440\u0430\u0433\u0438
         \u0441 <b>{[t:Keywords/Stun]}</b> \u0431\u0443\u0434\u0443\u0442 \u0442\u0435\u0440\u044F\u0442\u044C
@@ -48397,32 +48468,32 @@ MonoBehaviour:
         \u043D\u0435 \u0431\u0443\u0434\u0435\u0442 \u0438\u043C\u0435\u0442\u044C
         \u043D\u0438\u043A\u0430\u043A\u043E\u0433\u043E \u044D\u0444\u0444\u0435\u043A\u0442\u0430
         <i>(\u043A\u0430\u0440\u0442\u0430 \u043F\u043E-\u043F\u0440\u0435\u0436\u043D\u0435\u043C\u0443
-        \u0442\u0440\u0435\u0431\u0443\u0435\u0442 \u0440\u0435\u0441\u0443\u0440\u0441\u043E\u0432)</i>.\r\n\r\n\u041F\u0435\u0440\u0441\u043E\u043D\u0430\u0436
-        \u0441 {[t:Keywords/Disable]} \u0438\u043B\u0438 {[t:Keywords/Stun]} \u043D\u0435
+        \u0442\u0440\u0435\u0431\u0443\u0435\u0442 \u0440\u0435\u0441\u0443\u0440\u0441\u043E\u0432)</i>.\n\n\u041F\u0435\u0440\u0441\u043E\u043D\u0430\u0436
+        \u0441 {[t:Keywords/Disabled]} \u0438\u043B\u0438 {[t:Keywords/Stun]} \u043D\u0435
         \u043C\u043E\u0436\u0435\u0442 \u0432\u044B\u043F\u043E\u043B\u043D\u044F\u0442\u044C
         \u0440\u0435\u0430\u043A\u0446\u0438\u0438 \u043A\u043E\u043D\u0442\u0440\u0430\u0442\u0430\u043A\u0438."
-      - "Los h\xE9roes con <b>{[t:Keywords/Disable]}</b> no pueden jugar sus cartas.
+      - "Los h\xE9roes con <b>{[t:Keywords/Disabled]}</b> no pueden jugar sus cartas.
         Los enemigos con <b>{[t:Keywords/Stun]}</b> perder\xE1n 1 Stun cada vez que
         jueguen una carta y esa carta no tendr\xE1 efecto <i>(la carta sigue costando
-        recursos)</i>.\r\n\r\nUn personaje con {[t:Keywords/Disable]} o {[t:Keywords/Stun]}
+        recursos)</i>.\n\nUn personaje con {[t:Keywords/Disabled]} o {[t:Keywords/Stun]}
         no puede realizar reacciones de contraataque."
-      - "Her\xF3is com <b>{[t:Keywords/Disable]}</b> n\xE3o podem jogar suas cartas.
+      - "Her\xF3is com <b>{[t:Keywords/Disabled]}</b> n\xE3o podem jogar suas cartas.
         Inimigos com <b>{[t:Keywords/Stun]}</b> perder\xE3o 1 Stun cada vez que jogarem
-        uma carta e essa carta n\xE3o ter\xE1 efeito <i>(a carta ainda custa recursos)</i>.\r\n\r\nUm
-        personagem com {[t:Keywords/Disable]} ou {[t:Keywords/Stun]} n\xE3o pode
+        uma carta e essa carta n\xE3o ter\xE1 efeito <i>(a carta ainda custa recursos)</i>.\n\nUm
+        personagem com {[t:Keywords/Disabled]} ou {[t:Keywords/Stun]} n\xE3o pode
         realizar rea\xE7\xF5es de contra-ataque."
-      - "Helden mit <b>{[t:Keywords/Disable]}</b> k\xF6nnen ihre Karten nicht ausspielen.
+      - "Helden mit <b>{[t:Keywords/Disabled]}</b> k\xF6nnen ihre Karten nicht ausspielen.
         Feinde mit <b>{[t:Keywords/Stun]}</b> verlieren jedes Mal 1 Stun, wenn sie
         eine Karte spielen, und diese Karte hat keinen Effekt <i>(die Karte kostet
-        immer noch Ressourcen)</i>.\r\n\r\nEin Charakter mit {[t:Keywords/Disable]}
+        immer noch Ressourcen)</i>.\n\nEin Charakter mit {[t:Keywords/Disabled]}
         oder {[t:Keywords/Stun]} kann keine Gegenangriffsreaktionen ausf\xFChren."
-      - "Les h\xE9ros avec <b>{[t:Keywords/Disable]}</b> ne peuvent pas jouer leurs
+      - "Les h\xE9ros avec <b>{[t:Keywords/Disabled]}</b> ne peuvent pas jouer leurs
         cartes. Les ennemis avec <b>{[t:Keywords/Stun]}</b> perdront 1\_\xE9tourdissement
         chaque fois qu'ils joueront une carte et cette carte n'aura aucun effet <i>(la
-        carte co\xFBte toujours des ressources)</i>.\r\n\r\nUn personnage avec {[t:Keywords/Disable]}
+        carte co\xFBte toujours des ressources)</i>.\n\nUn personnage avec {[t:Keywords/Disabled]}
         ou {[t:Keywords/Stun]} ne peut pas effectuer de r\xE9actions de contre-attaque."
-      - "<b>{[t:Keywords/Disable]}</b>\u3092\u6301\u3064\u30D2\u30FC\u30ED\u30FC\u306F\u30AB\u30FC\u30C9\u3092\u30D7\u30EC\u30A4\u3067\u304D\u307E\u305B\u3093\u3002
-        <b>{[t:Keywords/Stun]}</b>\u3092\u6301\u3064\u6575\u306F\u3001\u30AB\u30FC\u30C9\u3092\u30D7\u30EC\u30A4\u3059\u308B\u305F\u3073\u306B1\u3064\u306E\u6C17\u7D76\u3092\u5931\u3044\u3001\u305D\u306E\u30AB\u30FC\u30C9\u306F<i>\u52B9\u679C\u304C\u3042\u308A\u307E\u305B\u3093(\u30AB\u30FC\u30C9\u306F\u30EA\u30BD\u30FC\u30B9\u3092\u6D88\u8CBB\u3057\u307E\u3059)</i>\u3002\r\n\r\n{[t:Keywords/Disable]}\u307E\u305F\u306F{[t:Keywords/Stun]}\u3092\u6301\u3064\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u306F\u53CD\u6483\u53CD\u5FDC\u3092\u5B9F\u884C\u3067\u304D\u307E\u305B\u3093\u3002"
+      - "<b>{[t:Keywords/Disabled]}</b>\u3092\u6301\u3064\u30D2\u30FC\u30ED\u30FC\u306F\u30AB\u30FC\u30C9\u3092\u30D7\u30EC\u30A4\u3067\u304D\u307E\u305B\u3093\u3002
+        <b>{[t:Keywords/Stun]}</b>\u3092\u6301\u3064\u6575\u306F\u3001\u30AB\u30FC\u30C9\u3092\u30D7\u30EC\u30A4\u3059\u308B\u305F\u3073\u306B1\u3064\u306E\u6C17\u7D76\u3092\u5931\u3044\u3001\u305D\u306E\u30AB\u30FC\u30C9\u306F<i>\u52B9\u679C\u304C\u3042\u308A\u307E\u305B\u3093(\u30AB\u30FC\u30C9\u306F\u30EA\u30BD\u30FC\u30B9\u3092\u6D88\u8CBB\u3057\u307E\u3059)</i>\u3002\n\n{[t:Keywords/Disabled]}\u307E\u305F\u306F{[t:Keywords/Stun]}\u3092\u6301\u3064\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u306F\u53CD\u6483\u53CD\u5FDC\u3092\u5B9F\u884C\u3067\u304D\u307E\u305B\u3093\u3002"
       Flags: 0000000000000000
       Languages_Touch: []
     - Term: TutorialSlides/Tutorial_Slide_14
@@ -51554,26 +51625,26 @@ MonoBehaviour:
       Description: 
       Languages:
       - Some cards are able to deal true damage. This 3rd type of damage ignores
-        {[t:Stats/Stat-Armor]}, {[t:Stats/Stat-Resistance]}, and {[t:Stats/Stat-Shields]}.
+        {[t:Stats/Stat-Armor]}, {[t:Stats/Stat-Resistance]}, and {[t:Stats/Stat-Shield]}.
       - "\u6709\u4E9B\u5361\u7247\u80FD\u591F\u9020\u6210\u771F\u5B9E\u4F24\u5BB3\u3002
-        \u8FD9\u7B2C\u4E09\u79CD\u7C7B\u578B\u7684\u4F24\u5BB3\u5FFD\u7565{[t:Stats/Stat-Armor]}\u3001{[t:Stats/Stat-Resistance]}\u548C{[t:Stats/Stat-Shields]}\u3002"
+        \u8FD9\u7B2C\u4E09\u79CD\u7C7B\u578B\u7684\u4F24\u5BB3\u5FFD\u7565{[t:Stats/Stat-Armor]}\u3001{[t:Stats/Stat-Resistance]}\u548C{[t:Stats/Stat-Shield]}\u3002"
       - "\u041D\u0435\u043A\u043E\u0442\u043E\u0440\u044B\u0435 \u043A\u0430\u0440\u0442\u044B
         \u0441\u043F\u043E\u0441\u043E\u0431\u043D\u044B \u043D\u0430\u043D\u043E\u0441\u0438\u0442\u044C
         \u0440\u0435\u0430\u043B\u044C\u043D\u044B\u0439 \u0443\u0440\u043E\u043D.
         \u042D\u0442\u043E\u0442 3-\u0439 \u0442\u0438\u043F \u0443\u0440\u043E\u043D\u0430
         \u0438\u0433\u043D\u043E\u0440\u0438\u0440\u0443\u0435\u0442 {[t:Stats/Stat-Armor]},
-        {[t:Stats/Stat-Resistance]} \u0438 {[t:Stats/Stat-Shields]}."
+        {[t:Stats/Stat-Resistance]} \u0438 {[t:Stats/Stat-Shield]}."
       - "Algunas cartas pueden causar da\xF1o verdadero. Este tercer tipo de da\xF1o
-        ignora {[t:Stats/Stat-Armor]}, {[t:Stats/Stat-Resistance]} y {[t:Stats/Stat-Shields]}."
+        ignora {[t:Stats/Stat-Armor]}, {[t:Stats/Stat-Resistance]} y {[t:Stats/Stat-Shield]}."
       - "Algumas cartas s\xE3o capazes de causar dano verdadeiro. Este terceiro tipo
-        de dano ignora {[t:Stats/Stat-Armor]}, {[t:Stats/Stat-Resistance]} e {[t:Stats/Stat-Shields]}."
+        de dano ignora {[t:Stats/Stat-Armor]}, {[t:Stats/Stat-Resistance]} e {[t:Stats/Stat-Shield]}."
       - "Einige Karten k\xF6nnen echten Schaden verursachen. Diese dritte Schadensart
-        ignoriert {[t:Stats/Stat-Armor]}, {[t:Stats/Stat-Resistance]} und {[t:Stats/Stat-Shields]}."
+        ignoriert {[t:Stats/Stat-Armor]}, {[t:Stats/Stat-Resistance]} und {[t:Stats/Stat-Shield]}."
       - "Certaines cartes sont capables d'infliger de vrais d\xE9g\xE2ts. Ce 3e type
         de d\xE9g\xE2ts ignore {[t:Stats/Stat-Armor]}, {[t:Stats/Stat-Resistance]}
-        et {[t:Stats/Stat-Shields]}."
+        et {[t:Stats/Stat-Shield]}."
       - "\u4E00\u90E8\u306E\u30AB\u30FC\u30C9\u306F\u771F\u306E\u30C0\u30E1\u30FC\u30B8\u3092\u4E0E\u3048\u308B\u3053\u3068\u304C\u3067\u304D\u307E\u3059\u3002
-        \u3053\u306E 3 \u756A\u76EE\u306E\u30BF\u30A4\u30D7\u306E\u30C0\u30E1\u30FC\u30B8\u306F\u3001{[t:Stats/Stat-Armor]}\u3001{[t:Stats/Stat-Resistance]}\u3001\u304A\u3088\u3073{[t:Stats/Stat-Shields]}\u3092\u7121\u8996\u3057\u307E\u3059\u3002"
+        \u3053\u306E 3 \u756A\u76EE\u306E\u30BF\u30A4\u30D7\u306E\u30C0\u30E1\u30FC\u30B8\u306F\u3001{[t:Stats/Stat-Armor]}\u3001{[t:Stats/Stat-Resistance]}\u3001\u304A\u3088\u3073{[t:Stats/Stat-Shield]}\u3092\u7121\u8996\u3057\u307E\u3059\u3002"
       Flags: 0000000000000000
       Languages_Touch: []
     - Term: TutorialSlides/Tutorial_Slide_90
@@ -52032,7 +52103,7 @@ MonoBehaviour:
     Google_WebServiceURL: https://script.google.com/macros/s/AKfycbyxEWOh-oly9VUweggR4FE-PJti-q6vB4eiq60gjqN60mMW8pqUSFQDcNZf5paleAfH/exec
     Google_SpreadsheetKey: 1_k0GnzCkReGlY_2s-ODT0hVniGHYfv2qnG9nqRQ4VvU
     Google_SpreadsheetName: I2Loc MetroplexZero Localization
-    Google_LastUpdatedVersion: 1670410020743
+    Google_LastUpdatedVersion: 1670417856008
     Google_Password: 23jh9hj2rjfhj33^$^%^$inhgf9g9j90i
     GoogleUpdateFrequency: 2
     GoogleInEditorCheckFrequency: 2
