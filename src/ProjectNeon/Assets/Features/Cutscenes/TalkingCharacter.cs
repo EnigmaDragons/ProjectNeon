@@ -17,7 +17,7 @@ public class TalkingCharacter : MonoBehaviour
     private bool _isTalking;
     private float _untilChange;
 
-    private void Awake() => InitIfNeeded();
+    private void Start() => InitIfNeeded();
 
     private void InitIfNeeded()
     {

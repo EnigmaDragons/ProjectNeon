@@ -1,5 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// LAST NUMBER USED: 104
+// LAST NUMBER USED: 106
 
 public enum EffectType
 {
@@ -82,7 +82,7 @@ public enum EffectType
     ApplyMultiplicativeStatInjury = 72,
     
     //Variables
-    EvaluateCondition = 102,
+    RecordConditionIsTrue = 102,
     AdjustScopedVariable = 103,
     
     // Miscellaneous
@@ -98,5 +98,7 @@ public enum EffectType
     AdjustBattleRewardFormula = 91,
     TransformCardsIntoCard = 93,
     AdjustOwnersPrimaryResourceBasedOnTargetShieldSum = 98,
-    RandomEffect = 101
+    RandomEffect = 101,
+    RandomizeEnemyPosition = 105,
+    MakeTargetingRough = 106,
 }

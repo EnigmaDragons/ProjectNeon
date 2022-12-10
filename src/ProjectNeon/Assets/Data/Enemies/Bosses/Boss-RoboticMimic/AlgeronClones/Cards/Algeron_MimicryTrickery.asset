@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
+  m_Name: Algeron_MimicryTrickery
+  m_EditorClassIdentifier: 
+  id: 660
+  customName: 
+  art: {fileID: 0}
+  description: 
+  typeDescription: {fileID: 0}
+  descriptionV2:
+    text: 'Spawn 2 Fake Algerons.
+
+      Gives {0} Shield & 1 Dodge.
+
+      Gives
+      {1} Magic.'
+    formatArgs:
+    - '{E[6]}'
+    - '{E[7]}'
+  tags: 07000000
+  speed: 0
+  isSinglePlay: 0
+  cost:
+    cost: 0
+    resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+    plusXCost: 0
+  rarity: 4
+  actionSequences:
+  - scope: 1
+    group: 2
+    cardActions: {fileID: 11400000, guid: 5926af2745028be4c9e195a021d98812, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 1
+    group: 2
+    cardActions: {fileID: 11400000, guid: fd1b2b90de9403543b545bc6f61b5b32, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
+  functionalityIssues: 
+  presentationIssues: 
+  archetypes:
+  - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}
+  highlightCondition:
+  - {fileID: 11400000, guid: 437c36f8436651f4ebdd0ccbbb9a08e2, type: 2}
+  - {fileID: 11400000, guid: b059d95c180f2bd45be9c4fc279e2572, type: 2}
+  unhighlightCondition:
+  - {fileID: 11400000, guid: c7a251fefa06a3c4198c0d4efd762d63, type: 2}
+  isWIP: 0
+  notAvailableForGeneralDistribution: 0

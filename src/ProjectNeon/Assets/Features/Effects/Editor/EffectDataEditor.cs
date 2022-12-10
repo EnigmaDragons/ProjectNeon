@@ -70,9 +70,11 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.RemoveTemporalModsMatchingStatusTag, new[]{ "EffectScope"}},
         {EffectType.InvulnerableForTurns, new [] { "DurationFormula" }},
         {EffectType.RandomEffect, new [] { "ReferencedSequences" }},
-        {EffectType.EvaluateCondition, new [] { "EffectScope" }},
+        {EffectType.RecordConditionIsTrue, new [] { "EffectScope" }},
         {EffectType.AdjustScopedVariable, new [] { "EffectScope", "Formula" }},
-        {EffectType.PlayCardAtStartOfTurn, new [] { "Id", "BonusCardType", "DurationFormula", "StatusTag", "StatusDetailText" }}
+        {EffectType.PlayCardAtStartOfTurn, new [] { "Id", "BonusCardType", "DurationFormula", "StatusTag", "StatusDetailText" }},
+        {EffectType.RandomizeEnemyPosition, new string[0]},
+        {EffectType.MakeTargetingRough, new [] {"DurationFormula"}}
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

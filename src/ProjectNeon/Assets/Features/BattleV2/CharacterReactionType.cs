@@ -13,6 +13,7 @@
     LeftBattle = 16,
     SpawnedIntoBattle = 17,
     TookZeroDamage = 18,
+    Retargeted = 19,
 }
 
 public static class CharacterReactionTypeDisplayWords

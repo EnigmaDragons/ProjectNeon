@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnEnemy, DespawnEnemy, CardResolutionFinished, 
-    CardActionPrevented, WaitDuringResolution, ResolveReactionCards, ResolveReaction>
+    CardActionPrevented, WaitDuringResolution, ResolveReactionCards, ResolveReaction, RandomizeEnemyPositions>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private PartyAdventureState partyAdventureState;
@@ -216,6 +216,12 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
     {
         Log.Info("Resolve Reaction Message Received");
         StartCoroutine(ResolveNextReactionCard(msg.Reaction));
+    }
+
+    protected override void Execute(RandomizeEnemyPositions msg)
+    {
+        enemies.RandomizeEnemyPositions();
+        Message.Publish(new Finished<RandomizeEnemyPositions>());
     }
 
     private IEnumerator ResolveNextReactionCard()

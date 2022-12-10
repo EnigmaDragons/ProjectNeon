@@ -103,7 +103,7 @@ public class CardResolutionZone : ScriptableObject
         _pendingMoves = _pendingMoves.Skip(1).ToList();
         if (physicalZone.HasCards)
             physicalZone.DrawOneCard();
-
+        
         if (move.RetargetingAllowed && move.Targets.FirstAsMaybe().IsPresentAnd(t => t.Members.All(m => battleState.IsMissingOrUnconscious(m.Id))))
         {
             var retargetedCard = move.Retargeted(GetTargets(move.Member, move.Card, Maybe<Target[]>.Missing()));
@@ -167,6 +167,7 @@ public class CardResolutionZone : ScriptableObject
 
     public void StartResolvingOneCard(IPlayedCard played, Action<IPlayedCard> perform)
     {
+        played = battleState.PlayerState.PossiblyRetargeted(battleState, played);
         isResolving = true;
         Message.Publish(new CardResolutionStarted(played));
         BattleLog.Write($"Resolving {played.Member.NameTerm.ToEnglish()}'s {played.Card.Name}");

@@ -10,7 +10,7 @@ public class CheckNamedConditionUnmet : StaticEffectCondition
     {
         var chosenName = string.IsNullOrWhiteSpace(conditionName) ? condition.name : conditionName;
         return ctx.ScopedData.IsCondition(chosenName)
-            ? Maybe<string>.Missing()
-            : $"Did fulfill precalculated condition: {chosenName}";
+            ? $"Did fulfill precalculated condition: {chosenName}"
+            : Maybe<string>.Missing();
     }
 }

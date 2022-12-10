@@ -75,7 +75,7 @@ public class EnemyDetailsView : MonoBehaviour, ILocalizeTerms
             specialPowers.UpdateStatuses(powers);
         }
 
-        var enemyCards = e.Cards.ToArray();
+        var enemyCards = e.Cards.Concat(e.CardsItAppearsToHave).ToArray();
         if (enemyDeckUi != null)
             enemyDeckUi.Show(enemyCards, member);
         if (cardsView != null)
