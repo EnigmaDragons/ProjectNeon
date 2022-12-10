@@ -179,6 +179,11 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         BattleLog.Write($"Despawned {msg.Member.NameTerm.ToEnglish()}");
         Message.Publish(new MemberDespawned(msg.Member, pos));
         Message.Publish(new Finished<DespawnEnemy>());
+        if (state.ConsciousEnemyMembers.Length == 0)
+        {
+            BattleLog.Write("All Enemies Defeated!");
+            resolutionZone.ExpirePlayedCards(x => true);
+        }
     }
 
     protected override void Execute(CardResolutionFinished msg) => StartCoroutine(FinishEffect());
