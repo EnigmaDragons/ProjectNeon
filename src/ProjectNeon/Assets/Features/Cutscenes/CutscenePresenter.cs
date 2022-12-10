@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -30,6 +31,14 @@ public class CutscenePresenter : BaseCutscenePresenter
         
         var characters = settingParent.GetComponentsInChildren<CutsceneCharacter>();
         characters.Where(c => c.IsInitialized).ForEach(c => Characters.Add(c));
+        settingParent.GetComponentsInChildren<CutsceneCharacterAdditionalVisual>()
+            .ForEach(v => v.OwnerAliases.ForEach(a =>
+            {
+                if (CharacterAdditionalVisuals.TryGetValue(a, out var items))
+                    items.Add(v.gameObject);
+                else
+                    CharacterAdditionalVisuals[a] = new List<GameObject> { v.gameObject };
+            }));
         
         DebugLog($"Characters in cutscene: {string.Join(", ", Characters.Select(c => c.PrimaryName))}");
         

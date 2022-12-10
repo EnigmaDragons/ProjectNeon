@@ -17,6 +17,7 @@ public abstract class BaseCutscenePresenter : MonoBehaviour
     private bool _skippable = true;
     
     protected readonly List<CutsceneCharacter> Characters = new List<CutsceneCharacter>();
+    protected readonly Dictionary<string, List<GameObject>> CharacterAdditionalVisuals = new Dictionary<string, List<GameObject>>();
     
     private void OnEnable()
     {
@@ -80,6 +81,8 @@ public abstract class BaseCutscenePresenter : MonoBehaviour
         Characters.FirstOrMaybe(c => c.Matches(msg.CharacterAlias)).ExecuteIfPresentOrElse(x =>
         {
             x.gameObject.SetActive(false);
+            if (CharacterAdditionalVisuals.TryGetValue(msg.CharacterAlias, out var items))
+                items.ForEach(g => g.SetActive(false));
             FinishCurrentSegment();
         }, FinishCurrentSegment);
     }
