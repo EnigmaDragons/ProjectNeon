@@ -27,10 +27,11 @@ MonoBehaviour:
     CardTagPriority: 
     UnpreferredCardTags: 04000000
     RotatePlayingCardTags: 
+    IgnoreDesignatedAttackerRole: 0
   preferredTurnOrder: 130
   prefab: {fileID: 895029483254105348, guid: 1bcb20e0889ff4e459b4a281f7061f3e, type: 3}
   materialType: 2
-  libraryCameraOffset: {x: -0.2, y: -0.9, z: 2.8}
+  libraryCameraOffset: {x: 0, y: -0.9, z: 2.6}
   deathEffect:
     UseConstant: 1
     ConstantValue: 
@@ -79,7 +80,8 @@ MonoBehaviour:
       estimatedPerTurnTotalValue: 113.10476
       calculatedPowerLevel: 286
     startOfBattleEffects:
-    - EffectType: 75
+    - Id: 0
+      EffectType: 75
       Conditions: []
       BaseAmount:
         UseConstant: 0

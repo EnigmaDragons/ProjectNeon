@@ -15,6 +15,8 @@ public class AdventureProgressV5 : AdventureProgressBase
     [SerializeField] private int rngSeed = Rng.NewSeed();
     [SerializeField] private Difficulty difficulty;
 
+
+    private bool _shouldDebug = false;
     private DictionaryWithDefault<string, bool> _storyStates = new DictionaryWithDefault<string, bool>(false);
 
     public override int AdventureId => currentAdventure.Adventure.Id;
@@ -201,7 +203,8 @@ public class AdventureProgressV5 : AdventureProgressBase
     public override void SetStoryState(string state, bool value) => _storyStates[state] = value;
     public override bool IsTrue(string state)
     {
-        _storyStates.ForEach(s => Log.Info($"{s.Key} - {s.Value}"));
+        if (_shouldDebug)
+            _storyStates.ForEach(s => Log.Info($"{s.Key} - {s.Value}"));
         return _storyStates[state];
     }
 
