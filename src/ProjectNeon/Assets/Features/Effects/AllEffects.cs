@@ -114,11 +114,13 @@ public static class AllEffects
             new StatMultipliers().With(StatType.Damagability, 0f),
             TemporalStateMetadata.BuffForDuration(ctx.Source.Id, duration, new StatusDetail(StatusTag.Invulnerable, Maybe<string>.Missing())))), e.DurationFormula)},
         { EffectType.RandomEffect, e => new ResolveInnerEffect(e.ReferencedSequences?.Random()?.BattleEffects?.ToArray() ?? Array.Empty<EffectData>()) },
-        { EffectType.EvaluateCondition, e => new EvaluateConditionEffect(e) },
+        { EffectType.RecordConditionIsTrue, e => new EvaluateConditionEffect(e) },
         { EffectType.AdjustScopedVariable, e => new AdjustScopedVariable(e) },
         { EffectType.PlayCardAtStartOfTurn, e => new FullContextEffect(
                 (ctx, duration, m) => m.ApplyBonusCardPlayer(new PlayBonusCardAtStartOfTurn(m.MemberId, duration, e.BonusCardType, e.StatusDetail)), 
                 e.DurationFormula) },
+        { EffectType.RandomizeEnemyPosition, e => new SimpleEffect(() => Message.Publish(new RandomizeEnemyPositions()))},
+        { EffectType.MakeTargetingRough, e => new PlayerEffect((id, p, duration) => p.AddState(new EnemyRetargetingPlayerState(id, duration)), e.DurationFormula) }
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";
@@ -187,9 +189,10 @@ public static class AllEffects
             var shouldNotApplyReason = effectData.Condition().GetShouldNotApplyReason(updatedContext);
             if (shouldNotApplyReason.IsPresent)
             {
-                DevLog.Write($"Did not apply {effectData.EffectType} because {shouldNotApplyReason.Value}");
+                if (effectData.EffectType != EffectType.RecordConditionIsTrue)
+                    DevLog.Write($"Did not apply {effectData.EffectType} because {shouldNotApplyReason.Value}");
                 return new ApplyEffectResult(false, updatedContext);
-            }
+            } 
             
             // Apply Effect
             var effect = Create(updatedEffectData);

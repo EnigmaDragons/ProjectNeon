@@ -63,7 +63,7 @@ public class Enemy : ScriptableObject, ILocalizeTerms
         return new EnemyInstance(id, resourceType, detail.startOfBattleEffects, detail.startingResourceAmount, detail.resourceGainPerTurn, 
             detail.maxResourceAmount, detail.maxHp, detail.maxShield, detail.startingShield,  
             detail.attack, detail.magic, detail.leadership, detail.armor, detail.resistance, detail.cardsPerTurn, 
-            prefab, libraryCameraOffset, ai, detail.Cards, battleRole, tier, detail.powerLevel, preferredTurnOrder, deathEffect, 
+            prefab, libraryCameraOffset, ai, detail.Cards, detail.CardsTheyAppearsToHave, battleRole, tier, detail.powerLevel, preferredTurnOrder, deathEffect, 
             isHasty, unique, detail.CounterAdjustments, corp, animations, animationSounds, materialType, DescriptionTerm, 
             detail.startOfBattleEffects.Where(b => b.ReactionSequence != null).Select(b => b.ReactionSequence),
             aiPreferences ?? new AiPreferences());

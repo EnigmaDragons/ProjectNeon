@@ -28,6 +28,7 @@ public class EnemyStageDetails
     public EnemyStageCalculationResults calculationResults;
     public EffectData[] startOfBattleEffects = new EffectData[0];
     public List<CardType> Cards = new List<CardType>();
+    public List<CardType> CardsTheyAppearsToHave = new List<CardType>();
 
     public Dictionary<string, int> CounterAdjustments => new Dictionary<string, int>
     {

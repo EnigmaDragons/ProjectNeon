@@ -57,7 +57,8 @@ public static class AICardSelectionLogic
             .DontStealCreditsIfOpponentDoesntHaveAny()
             .DontRemoveDodgeIfOpponentDoesntHaveAny()
             .DontPlayAttackResistanceIfEnemiesDontHaveResistance()
-            .DontPlayAttackArmorIfEnemiesDontHaveArmor();
+            .DontPlayAttackArmorIfEnemiesDontHaveArmor()
+            .DontPlayCleanseIfNoDebuffsToRemove();
 
     public static CardSelectionContext DontPlayRequiresFocusCardWithoutAFocusTarget(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(_ => ctx.FocusTarget.IsMissing, CardTag.RequiresFocus);
@@ -98,6 +99,9 @@ public static class AICardSelectionLogic
     public static CardSelectionContext DontPlayMagicalCountersIfOpponentsAreNotMagical(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.Magic() == 0), CardTag.DebuffMagical)
             .IfTrueDontPlayType(x => x.Enemies.All(e => e.Magic() == 0), CardTag.Armor, CardTag.Resistance);
+
+    public static CardSelectionContext DontPlayCleanseIfNoDebuffsToRemove(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => x.Member.State.GetNumDebuffs() == 0, CardTag.RemoveDebuffs);
             
     public static CardSelectionContext DontPlayTauntIfAnyAllyIsPlayingOne(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Strategy.SelectedNonStackingTargets.ContainsKey(CardTag.Taunt), CardTag.Taunt);
@@ -256,7 +260,8 @@ public static class AICardSelectionLogic
     }
     
     public static CardSelectionContext WithFinalizedSmartCardSelection(this CardSelectionContext ctx)
-        => ctx.WithFinalizedCardSelection((c, index) => SmartCardPreference(ctx, c, index));
+        => ctx.WithFinalizedCardSelection((c, index) => 
+            SmartCardPreference(ctx, c, index));
 
     private static CardTypeData FinalizeCardSelection(this CardSelectionContext ctx, Func<CardTypeData, int, int> typePriority)
     {

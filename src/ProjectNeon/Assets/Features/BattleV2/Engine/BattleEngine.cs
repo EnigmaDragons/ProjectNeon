@@ -32,6 +32,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     
     private void Awake()
     {
+        MessageGroup.TerminateAndClear();
         state.SetPhase(BattleV2Phase.NotBegun);
         cards.ClearAll();
         confirm.Init(resolutions);

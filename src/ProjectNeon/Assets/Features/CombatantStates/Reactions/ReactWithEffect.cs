@@ -23,7 +23,7 @@ public class EffectReactWith : Effect
             && effect.Target.Members.Any(x => x.Id == ctx.Possessor.Id) },
         { ReactionConditionType.WhenShieldBroken, ctx => effect => ctx.Possessor.IsConscious() && WentToZero(effect.Select(ctx.Possessor, m => m.State[TemporalStatType.Shield])) },
         { ReactionConditionType.WhenShielded, ctx => effect => ctx.Possessor.IsConscious() && Increased(effect.Select(ctx.Possessor, m => m.State[TemporalStatType.Shield])) },
-        { ReactionConditionType.WhenDamagedHp, ctx => effect => ctx.Actor.IsConscious() && Decreased(effect.Select(ctx.Possessor, m => m.State.Hp))},
+        { ReactionConditionType.WhenDamagedHp, ctx => effect => ctx.Actor.IsConscious() && effect.Source.TeamType != ctx.Actor.TeamType && Decreased(effect.Select(ctx.Possessor, m => m.State.Hp))},
         { ReactionConditionType.WhenDamagedShield, ctx => effect => ctx.Actor.IsConscious() && Decreased(effect.Select(ctx.Possessor, m => m.State.Shield))},
         { ReactionConditionType.WhenDamaged, ctx => effect => ctx.Actor.IsConscious() && Decreased(effect.Select(ctx.Possessor, m => m.State.Hp + m.State.Shield))},
         { ReactionConditionType.WhenBlinded, ctx => effect => ctx.Possessor.IsConscious() && Increased(effect.Select(ctx.Possessor, m => m.State[TemporalStatType.Blind])) },
@@ -117,7 +117,7 @@ public class EffectReactWith : Effect
             && Increased(effect.Select(ctx.Actor, m => m.State[TemporalStatType.Stealth])) },
         { ReactionConditionType.WhenEnemyPrimaryStatBuffed, ctx => effect =>
             {
-                if (!ctx.Possessor.IsConscious())
+                if (!ctx.Actor.IsConscious())
                     return false;
                 if (effect.Target.Members.All(x => x.TeamType == ctx.Possessor.TeamType))
                     return false;
@@ -152,6 +152,16 @@ public class EffectReactWith : Effect
                 && x.Id != ctx.Actor.Id 
                 && !effect.BattleBefore.Members[x.Id].IsBloodied()
                 && effect.BattleAfter.Members[x.Id].IsBloodied()) },
+        { ReactionConditionType.WhenStunned, ctx => effect => ctx.Possessor.IsConscious() && Increased(effect.Select(ctx.Possessor, m => m.State[TemporalStatType.Stun])) },
+        { ReactionConditionType.WhenMarked, ctx => effect => ctx.Possessor.IsConscious() && Increased(effect.Select(ctx.Possessor, m => m.State[TemporalStatType.Marked])) },
+        { ReactionConditionType.WhenStatsReduced, ctx => effect => ctx.Possessor.IsConscious() && effect.Target.Members.Any(x => x.Id == ctx.Possessor.Id) && Decreased(effect.Select(ctx.Possessor, m => Mathf.RoundToInt(m.State[m.State.PrimaryStat]))) },
+        { ReactionConditionType.WhenEnemyStealthed, ctx => effect => ctx.Actor.IsConscious() && effect.EffectData.EffectType == EffectType.EnterStealth && effect.Target.Members.Any(x => x.TeamType != ctx.Actor.TeamType) },
+        { ReactionConditionType.WhenEnemyTaunted, ctx => effect => ctx.Actor.IsConscious() && effect.Target.Members.Any(x => x.TeamType != ctx.Actor.TeamType && Increased(effect.Select(ctx.Possessor, m => m.State[TemporalStatType.Taunt]))) },
+        { ReactionConditionType.WhenEnemyGainedDodge, ctx => effect => ctx.Actor.IsConscious() && effect.Target.Members.Any(x => x.TeamType != ctx.Actor.TeamType && Increased(effect.Select(ctx.Possessor, m => m.State[TemporalStatType.Dodge]))) },
+        { ReactionConditionType.WhenEnemyGainedAegis, ctx => effect => ctx.Actor.IsConscious() && effect.Target.Members.Any(x => x.TeamType != ctx.Actor.TeamType && Increased(effect.Select(ctx.Possessor, m => m.State[TemporalStatType.Aegis]))) },
+        { ReactionConditionType.WhenEnemyGainedLifesteal, ctx => effect => ctx.Actor.IsConscious() && effect.Target.Members.Any(x => x.TeamType != ctx.Actor.TeamType && Increased(effect.Select(ctx.Possessor, m => m.State[TemporalStatType.Lifesteal]))) },
+        /*{ ReactionConditionType.WhenEnemyGainedResources, ctx => effect => ctx.Actor.IsConscious() && effect.Target.Members.Any(x => x.TeamType != ctx.Actor.TeamType) && ((effect.EffectData.EffectType == EffectType.AdjustResourceFlat && effect.EffectData.IntAmount > 0) 
+            || ) },*/
     };
 
     private static bool IsRelevant(ReactionConditionType type, EffectResolved effect, ReactionConditionContext ctx)
@@ -164,7 +174,7 @@ public class EffectReactWith : Effect
 
     private static bool BecameTrue(bool[] values) => !values.First() && values.Last();
     private static bool WentToZero(int[] values) => values.First() > 0 && values.Last() == 0;
-    private static bool Decreased(int[] values) => values.Last() < values.First();
+    private static bool Decreased(params int[] values) => values.Last() < values.First();
     private static bool Increased(params int[] values) => values.Last() > values.First();
 
     private static T[] Logged<T>(T[] values)

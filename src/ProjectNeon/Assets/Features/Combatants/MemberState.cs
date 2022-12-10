@@ -257,7 +257,7 @@ public sealed class MemberState : IStats
         .Concat(_additiveResourceCalculators)
         .Concat(_multiplicativeResourceCalculators);
     
-    private int GetNumDebuffs()
+    public int GetNumDebuffs()
     {
         return DebuffStatTypes.Sum(t => _counters[t.GetString()].Amount)
             + _preventedTags.Count 
