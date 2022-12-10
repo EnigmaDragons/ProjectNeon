@@ -26,22 +26,22 @@ public class VisualFlyInFromRight : MonoBehaviour
         _isAnimating = true;
         transform.position = _initialPosition;
         var initialTarget = new Vector3(0, _initialPosition.y, _initialPosition.z);
-        var glideOffset = glideDistance / (shouldFlyOut ? 2 : 1);
+        var glideOffset = (glideDistance / (shouldFlyOut ? 2 : 1)) * (_initialPosition.x < 0 ? -1 : 1);
         if (shouldGlide)
             initialTarget += new Vector3(glideOffset, 0, 0);
         
-        transform.DOLocalMoveX(initialTarget.x, flyInDuration);
-        yield return new WaitForSeconds(flyInDuration);
+        transform.DOLocalMoveX(initialTarget.x - glideOffset / 2, flyInDuration);
+        yield return new WaitForSeconds(flyInDuration - 0.2f);
         if (shouldGlide)
         {
             transform.DOLocalMoveX(0 - glideOffset, glideDuration);
-            yield return new WaitForSeconds(glideDuration);
+            yield return new WaitForSeconds(glideDuration - 0.2f);
         }
 
         if (shouldFlyOut)
         {
-            transform.DOLocalMoveX(-_initialPosition.x, flyOutDuration);
-            yield return new WaitForSeconds(flyOutDuration);
+            transform.DOLocalMoveX(-_initialPosition.x * 3, flyOutDuration);
+            yield return new WaitForSeconds(flyOutDuration - 0.2f);
         }
         
         Finish();

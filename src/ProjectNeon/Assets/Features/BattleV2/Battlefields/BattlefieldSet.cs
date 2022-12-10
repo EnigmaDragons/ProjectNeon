@@ -7,6 +7,8 @@ public class BattlefieldSet : ScriptableObject
     [SerializeField] private GameObject[] battlefields;
     [SerializeField] private int lastUsedId = -1;
 
+    public GameObject[] Battlefields => battlefields; 
+    
     public GameObject GetNext()
     {
         var battlefieldOptions = battlefields
