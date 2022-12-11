@@ -16,6 +16,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.Nothing, new string[0]},
         {EffectType.ReactWithEffect, new []{ "Id", "FloatAmount", "DurationFormula", "EffectScope", "StatusTag", "StatusDetailText", "ReactionConditionType", "ReactionEffectScope", "ReactionTimingWindow", "ReactionEffect"}},
         {EffectType.ReactWithCard, new []{ "Id", "FloatAmount", "DurationFormula", "EffectScope", "StatusTag", "StatusDetailText", "ReactionConditionType", "ReactionEffectScope", "ReactionSequence", "ReactionTimingWindow"}},
+        {EffectType.ReactOncePerTurnWithEffect, new []{ "Id", "FloatAmount", "DurationFormula", "EffectScope", "StatusTag", "StatusDetailText", "ReactionConditionType", "ReactionEffectScope", "ReactionTimingWindow", "ReactionEffect"}},
         {EffectType.AdjustResourceFlat, new [] { "FloatAmount", "DurationFormula", "EffectScope" }},
         {EffectType.RemoveDebuffs, new string[0]},
         {EffectType.ShieldRemoveAll, new string[0]},
@@ -74,7 +75,8 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.AdjustScopedVariable, new [] { "EffectScope", "Formula" }},
         {EffectType.PlayCardAtStartOfTurn, new [] { "Id", "BonusCardType", "DurationFormula", "StatusTag", "StatusDetailText" }},
         {EffectType.RandomizeEnemyPosition, new string[0]},
-        {EffectType.MakeTargetingRough, new [] {"DurationFormula"}}
+        {EffectType.MakeTargetingRough, new [] {"DurationFormula"}},
+        {EffectType.ExitStealth, new string[0]},
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

@@ -277,6 +277,12 @@ public sealed class MemberState : IStats
         _counters[TemporalStatType.Stealth.GetString()].Set(0);
         _counters[TemporalStatType.Prominent.GetString()].Set(1);
     });
+
+    public void ExitStealth() => PublishAfter(() =>
+    {
+        RemoveTemporaryEffects(t => t.Status.Tag == StatusTag.Stealth);
+        _counters[TemporalStatType.Stealth.GetString()].Set(0);
+    });
     
     public int RemoveTemporaryEffects(Predicate<ITemporalState> condition) => PublishAfter(() => 
         _additiveMods.RemoveAll(condition)

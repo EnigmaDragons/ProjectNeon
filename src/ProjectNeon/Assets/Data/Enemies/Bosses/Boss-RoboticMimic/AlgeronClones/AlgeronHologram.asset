@@ -81,7 +81,7 @@ MonoBehaviour:
       calculatedPowerLevel: 0
     startOfBattleEffects:
     - Id: 10000
-      EffectType: 74
+      EffectType: 73
       Conditions: []
       BaseAmount:
         UseConstant: 0
@@ -123,7 +123,53 @@ MonoBehaviour:
       ReactionEffect:
         reactor: 0
         scope: 0
-        cardActions: {fileID: 11400000, guid: 1e535fa508247964b8937e4963d37a0f, type: 2}
+        cardActions: {fileID: 11400000, guid: ca09903bcc0226c4195ec79a58fd8c51, type: 2}
+      BonusCardType: {fileID: 0}
+      Unpreventable: 0
+    - Id: 10001
+      EffectType: 74
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: -1
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 12
+      StatusDetailText: 'When Stunned: Enter Stealth'
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
+      ReactionConditionType: 106
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionTimingWindow: 250
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 11400000, guid: 0d4794f1cba354f4aa4e70a410752c57, type: 2}
       BonusCardType: {fileID: 0}
       Unpreventable: 0
     Cards:

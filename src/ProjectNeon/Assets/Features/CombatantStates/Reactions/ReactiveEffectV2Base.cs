@@ -6,8 +6,11 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
 {
     private readonly TemporalStateTracker _tracker;
     private readonly Func<EffectResolved, Maybe<ProposedReaction>> _createMaybeEffect;
-
+    private readonly bool _hasUnlimitedUsesPerTurn;
+    private readonly int _maxUsesPerTurn;
+    
     public ReactionTimingWindow Timing { get; }
+    private int _usesThisTurn;
     
     public int OriginatorId => _tracker.Metadata.OriginatorId;
     public Maybe<int> Amount => _tracker.RemainingUses;
@@ -16,17 +19,31 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
     public bool IsDebuff => _tracker.IsDebuff;
     public bool IsActive => _tracker.IsActive;
     public Maybe<int> RemainingTurns => _tracker.RemainingTurns;
+    private bool HasUsesRemainingThisTurn => _hasUnlimitedUsesPerTurn || _usesThisTurn < _maxUsesPerTurn;
 
     public ReactiveEffectV2Base(int originatorId, bool isDebuff, int maxDurationTurns, int maxUses, StatusDetail status, ReactionTimingWindow timing, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
         : this(timing, new TemporalStateMetadata(originatorId, isDebuff, maxUses, maxDurationTurns, status), createMaybeEffect) {}
+    public ReactiveEffectV2Base(int originatorId, bool isDebuff, int maxDurationTurns, int maxUses, StatusDetail status, ReactionTimingWindow timing, int maxUsesPerTurn, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
+        : this(timing, new TemporalStateMetadata(originatorId, isDebuff, maxUses, maxDurationTurns, status), maxUsesPerTurn <= 0, maxUsesPerTurn, createMaybeEffect) {}
     public ReactiveEffectV2Base(ReactionTimingWindow timing, TemporalStateMetadata metadata, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
+        : this(timing, metadata, true, -1, createMaybeEffect) {}
+
+    private ReactiveEffectV2Base(ReactionTimingWindow timing, TemporalStateMetadata metadata,
+        bool hasUnlimitedUsesPerTurn, int maxUsesPerTurn,
+        Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
     {
         Timing = timing;
         _tracker = new TemporalStateTracker(metadata);
+        _hasUnlimitedUsesPerTurn = hasUnlimitedUsesPerTurn;
+        _maxUsesPerTurn = maxUsesPerTurn;
         _createMaybeEffect = createMaybeEffect;
     }
     
-    public IPayloadProvider OnTurnStart() => new NoPayload();
+    public IPayloadProvider OnTurnStart()
+    {
+        _usesThisTurn = 0;
+        return new NoPayload();
+    }
 
     public IPayloadProvider OnTurnEnd()
     {
@@ -40,12 +57,15 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
 
     public Maybe<ProposedReaction> OnEffectResolved(EffectResolved e)
     {
-        if (!_tracker.IsActive)
+        if (!_tracker.IsActive || !HasUsesRemainingThisTurn)
             return Maybe<ProposedReaction>.Missing();
         
         var maybeEffect = _createMaybeEffect(e);
         if (maybeEffect.IsPresent)
+        {
             _tracker.RecordUse();
+            _usesThisTurn++;
+        }
         return maybeEffect;
     }
     

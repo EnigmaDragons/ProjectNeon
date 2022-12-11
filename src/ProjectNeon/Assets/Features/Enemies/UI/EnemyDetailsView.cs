@@ -84,6 +84,7 @@ public class EnemyDetailsView : MonoBehaviour, ILocalizeTerms
                 .OrderBy(x => x.Tags.Contains(CardTag.Ultimate) ? 1 : 0)
                 .ThenBy(x => x.Tags.Contains(CardTag.Focus) ? 0 : 1)
                 .ThenBy(x => x.Cost.BaseAmount)
+                .ThenBy(x => x.NameTerm.ToEnglish())
                 .Select(x => (x, x.Tags.Contains(CardTag.Ultimate) ? UltimateTerm : string.Empty))
                     .Concat(e.ReactionCards.Select(x => ((CardTypeData)x, Reaction: ReactionTerm)))
                 .Select(c => (c.Item1.CreateInstance(-1, member), c.Item2)));

@@ -81,7 +81,7 @@ MonoBehaviour:
       calculatedPowerLevel: 0
     startOfBattleEffects:
     - Id: 10000
-      EffectType: 74
+      EffectType: 73
       Conditions: []
       BaseAmount:
         UseConstant: 0
@@ -126,11 +126,58 @@ MonoBehaviour:
         cardActions: {fileID: 11400000, guid: ca09903bcc0226c4195ec79a58fd8c51, type: 2}
       BonusCardType: {fileID: 0}
       Unpreventable: 0
+    - Id: 10001
+      EffectType: 74
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: -1
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 12
+      StatusDetailText: 'When Stunned: Enter Stealth'
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
+      ReactionConditionType: 106
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionTimingWindow: 250
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 1
+        scope: 0
+        cardActions: {fileID: 11400000, guid: 0d4794f1cba354f4aa4e70a410752c57, type: 2}
+      BonusCardType: {fileID: 0}
+      Unpreventable: 0
     Cards:
     - {fileID: 11400000, guid: 66258efbb2498a84d8bc15160243dda0, type: 2}
     - {fileID: 11400000, guid: 1de5f7211ee7b6146ac877697909520a, type: 2}
     - {fileID: 11400000, guid: efb7667d79829be47b35e1055fafd032, type: 2}
     - {fileID: 11400000, guid: af4025905a2db9c4cb10852c83f33a12, type: 2}
+    - {fileID: 11400000, guid: 483f804e4078def42a83d8263d0fe0e1, type: 2}
     CardsTheyAppearsToHave:
     - {fileID: 11400000, guid: ec4c82af892aa03458e737ce5b23e456, type: 2}
   maxCopies: 0

@@ -17,6 +17,9 @@ public static class AllEffects
             ReactiveTriggerScopeExtensions.Parse(e.EffectScope), e.ReactionConditionType, e.ReactionEffect)},
         { EffectType.ReactWithCard, e => new EffectReactWith(false, e.IntAmount, e.DurationFormula, e.StatusDetail, e.ReactionEffectScope, e.FinalReactionTimingWindow,
             ReactiveTriggerScopeExtensions.Parse(e.EffectScope), e.ReactionConditionType, e.ReactionSequence)},
+        { EffectType.ReactOncePerTurnWithEffect, e => new EffectReactWith(false, e.IntAmount, e.DurationFormula, 
+            e.StatusDetail, e.ReactionEffectScope, e.FinalReactionTimingWindow, ReactiveTriggerScopeExtensions.Parse(e.EffectScope), 
+            e.ReactionConditionType, e.ReactionEffect, Maybe<ReactionCardType>.Missing(), 1)},
         { EffectType.RemoveDebuffs, e => new SimpleEffect(m => BattleLoggedItemIf(n => $"{m.NameTerm.ToEnglish()} has been cleansed of {n} debuffs", n => n > 0, m.CleanseDebuffs))},
         { EffectType.AdjustCounterFormula, e => new AdjustCounterFormula(e)},
         { EffectType.ShieldFormula, e => new AegisIfFormulaResult((ctx, amount, m) 
@@ -120,7 +123,8 @@ public static class AllEffects
                 (ctx, duration, m) => m.ApplyBonusCardPlayer(new PlayBonusCardAtStartOfTurn(m.MemberId, duration, e.BonusCardType, e.StatusDetail)), 
                 e.DurationFormula) },
         { EffectType.RandomizeEnemyPosition, e => new SimpleEffect(() => Message.Publish(new RandomizeEnemyPositions()))},
-        { EffectType.MakeTargetingRough, e => new PlayerEffect((id, p, duration) => p.AddState(new EnemyRetargetingPlayerState(id, duration)), e.DurationFormula) }
+        { EffectType.MakeTargetingRough, e => new PlayerEffect((id, p, duration) => p.AddState(new EnemyRetargetingPlayerState(id, duration)), e.DurationFormula) },
+        { EffectType.ExitStealth, e => new SimpleEffect(state => state.ExitStealth())},
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";
