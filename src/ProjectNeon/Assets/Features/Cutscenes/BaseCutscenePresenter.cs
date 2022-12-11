@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class BaseCutscenePresenter : MonoBehaviour
 {
@@ -9,6 +11,7 @@ public abstract class BaseCutscenePresenter : MonoBehaviour
     [SerializeField] protected CutsceneCharacter narrator;
     [SerializeField] protected CutsceneCharacter you;
     [SerializeField] protected CutsceneCharacter player;
+    [SerializeField] protected Image fadeDarken;
     
     protected CutsceneSegment _currentSegment;
     protected bool _debugLoggingEnabled = true;
@@ -21,6 +24,7 @@ public abstract class BaseCutscenePresenter : MonoBehaviour
     
     private void OnEnable()
     {
+        fadeDarken.color = fadeDarken.color.WithAlpha(0f);
         narrator.Init(new [] { CutsceneCharacterAliases.Narrator });
         you.Init(new [] { CutsceneCharacterAliases.You });
         player.Init(new [] { CutsceneCharacterAliases.Player });
@@ -36,6 +40,21 @@ public abstract class BaseCutscenePresenter : MonoBehaviour
         Message.Subscribe<HideCharacterRequested>(Execute, this);
         Message.Subscribe<ShowCharacterRequested>(Execute, this);
         Message.Subscribe<WinBattleWithRewards>(Execute, this);
+        Message.Subscribe<CutsceneFadeRequested>(Execute, this);
+    }
+
+    private void Execute(CutsceneFadeRequested msg)
+    {
+        if (fadeDarken == null)
+        {
+            Log.Error("Missing Cutscene Darken Image for Camera Fades");
+            FinishCurrentSegment();
+            return;
+        }
+        
+        var targetAlpha = msg.FadeIn ? 0f : 1f;
+        fadeDarken.DOColor(fadeDarken.color.WithAlpha(targetAlpha), msg.Duration);
+        this.ExecuteAfterDelay(msg.Duration, FinishCurrentSegment);
     }
 
     protected void Reset()
@@ -165,11 +184,11 @@ public abstract class BaseCutscenePresenter : MonoBehaviour
         if (_finishTriggered)
             return;
 
-        Log.Info(progress.AdventureProgress.GetType().Name);
+        DebugLog(progress.AdventureProgress.GetType().Name);
         foreach (var required in msg.SegmentData.RequiredStates)
         {
             var isTrue = progress.AdventureProgress.IsTrue(required);
-            Log.Info($"Required: {required.Value}. IsTrue: {isTrue}");
+            DebugLog($"Required: {required.Value}. IsTrue: {isTrue}");
         }
 
         if (msg.SegmentData.ShouldSkip(x => progress.AdventureProgress.IsTrue(x)))

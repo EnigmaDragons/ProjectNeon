@@ -23,7 +23,9 @@ public static class AllCutsceneSegments
                 new ShowCharacterDialogueLine(CutsceneCharacterAliases.Player, e.Term.ToLocalized()),
                 new FullyDisplayDialogueLine(CutsceneCharacterAliases.Player))},
             { CutsceneSegmentType.ActivateGlitchEffect, e => new MessagePublishSegment(new CutsceneGlitchEffectRequested(true))},
-            { CutsceneSegmentType.DeactivateGlitchEffect, e => new MessagePublishSegment(new CutsceneGlitchEffectRequested(false))}
+            { CutsceneSegmentType.DeactivateGlitchEffect, e => new MessagePublishSegment(new CutsceneGlitchEffectRequested(false))},
+            { CutsceneSegmentType.FadeOut, e => new MessagePublishSegment(new CutsceneFadeRequested(false, e.FloatAmount > 0 ? e.FloatAmount : 2f)) },
+            { CutsceneSegmentType.FadeIn, e => new MessagePublishSegment(new CutsceneFadeRequested(true, e.FloatAmount > 0 ? e.FloatAmount : 2f)) },
         };
 
     public static CutsceneSegment Create(CutsceneSegmentData data)

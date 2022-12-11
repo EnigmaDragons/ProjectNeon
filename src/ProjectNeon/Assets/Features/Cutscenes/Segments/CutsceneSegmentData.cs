@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using I2.Loc;
 using UnityEngine;
 
 [Serializable]
@@ -61,6 +60,10 @@ public class CutsceneSegmentData
             return new [] { $"Story State:{StoryState.Value} - true" };
         if (SegmentType == CutsceneSegmentType.PlayerLine)
             return new [] { $"Player: \"{Text}\"" };
+        if (SegmentType == CutsceneSegmentType.FadeOut)
+            return new[] { "Camera Fade Out" };
+        if (SegmentType == CutsceneSegmentType.FadeIn)
+            return new[] { "Camera Fade In" };
         return new [] { "Unknown Cutscene Segment" };
     }
 
