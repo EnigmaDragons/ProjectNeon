@@ -73,8 +73,9 @@ public class TutorialImplantClinicServiceProviderV5 : ClinicServiceProvider
         var gain = _statAmounts.Where(x => x.Key != loss.Key).Random(_rng);
         var gainStat = gain.Key;
         var gainAmount = gain.Value;
+        var nameTerm = $"{_negativePrefix[lossStat]} {_positiveSuffix[gainStat]}";
         return new ClinicServiceButtonData(
-            $"{_negativePrefix[lossStat]} {_positiveSuffix[gainStat]}",
+            nameTerm,
             string.Format("Clinics/ImplantTradeOff".ToLocalized(), $"<b>{lossAmount} {lossStat.ToString().WithSpaceBetweenWords()}</b>", $"<b>{gainAmount} {gainStat.ToString().WithSpaceBetweenWords()}</b>", $"<b>{hero.NameTerm.ToLocalized()}</b>"),
             1,
             () =>
@@ -83,7 +84,8 @@ public class TutorialImplantClinicServiceProviderV5 : ClinicServiceProvider
                 _available[index] = false;
             }, Array.Empty<EffectData>(),
             "Medigeneix",
-            Rarity.Common);
+            Rarity.Common,
+            $"Medigeneix-{hero.NameTerm.ToEnglish()}-{nameTerm.ToEnglish()}");
     }
 
     private void AdjustHero(Hero hero, StatType lossStat, int lossAmount, StatType gainStat, int gainAmount)

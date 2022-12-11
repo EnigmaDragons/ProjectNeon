@@ -166,6 +166,9 @@ public class QualityAssurance
             for (var i = 0; i < c.Segments.Length; i++)
             {
                 var s = c.Segments[i];
+                if (s.SegmentType == CutsceneSegmentType.Choice && !s.StoryEvent.InCutscene)
+                    issues.Add($"Cutscene Segment Choice not marked as In Cutscene {c.name}");
+                
                 if (s.SegmentType != CutsceneSegmentType.DialogueLine && s.SegmentType != CutsceneSegmentType.NarratorLine && s.SegmentType != CutsceneSegmentType.PlayerLine)
                     continue;
                 var text = s.Term.ToEnglish();

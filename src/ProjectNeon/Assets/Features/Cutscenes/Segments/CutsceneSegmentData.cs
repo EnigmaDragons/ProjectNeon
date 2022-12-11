@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using I2.Loc;
 using UnityEngine;
 
 [Serializable]
@@ -13,6 +12,7 @@ public class CutsceneSegmentData
     [TextArea(4, 4)] public string Text = "";
     
     public FloatReference FloatAmount = new FloatReference(0);
+    public StringReference CutsceneEventName;
     public StoryEvent2 StoryEvent;
     public StringReference[] RequiredStates;
     public StringReference[] ForbiddenStates;
@@ -24,9 +24,9 @@ public class CutsceneSegmentData
         => !ShouldSkip(storyState);
     
     public bool ShouldSkip(Func<string, bool> storyState)
-        => ForbiddenStates.Any(x => storyState(x))
-           || (Or && RequiredStates.None(x => storyState(x)))
-           || (!Or && RequiredStates.Any(x => !storyState(x)));
+        => ForbiddenStates.Any(x => storyState(x)) // Is Forbidden
+           || (Or && RequiredStates.None(x => storyState(x))) // Is Missing All Required
+           || (!Or && RequiredStates.Any(x => !storyState(x))); // Is Missing Any Required
 
     public Maybe<string> GetRequiredConditionsDescription()
     {
@@ -61,6 +61,12 @@ public class CutsceneSegmentData
             return new [] { $"Story State:{StoryState.Value} - true" };
         if (SegmentType == CutsceneSegmentType.PlayerLine)
             return new [] { $"Player: \"{Text}\"" };
+        if (SegmentType == CutsceneSegmentType.FadeOut)
+            return new[] { "Camera Fade Out" };
+        if (SegmentType == CutsceneSegmentType.FadeIn)
+            return new[] { "Camera Fade In" };
+        if (SegmentType == CutsceneSegmentType.TriggerCutsceneEvent)
+            return new[] { $"Trigger Event: {CutsceneEventName}" };
         return new [] { "Unknown Cutscene Segment" };
     }
 

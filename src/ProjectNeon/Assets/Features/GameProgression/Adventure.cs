@@ -33,6 +33,7 @@ public class Adventure : ScriptableObject, CurrentAdventureData, ILocalizeTerms
     [SerializeField, TextArea(4, 10)] public string story;
     [SerializeField, TextArea(4, 10)] public string defeatConclusion = "";
     [SerializeField, TextArea(4, 10)] public string victoryConclusion = "";
+    [SerializeField] private bool shouldRollCreditsBeforeConclusionScene = false;
     [SerializeField] private bool mapDeckbuildingEnabled = true;
     [SerializeField] private bool allowDifficultySelection = true;
 
@@ -45,6 +46,7 @@ public class Adventure : ScriptableObject, CurrentAdventureData, ILocalizeTerms
 
     public string DefeatConclusionTerm => $"Adventures/Adventure{id}ConclusionDefeat";
     public string VictoryConclusionTerm => $"Adventures/Adventure{id}ConclusionVictory";
+    public bool ShouldRollCreditsBeforeConclusionScene => shouldRollCreditsBeforeConclusionScene;
 
     public DynamicStage[] DynamicStages => dynamicStages.ToArray();
     public StaticStageV4[] StagesV4 => stages.ToArray();

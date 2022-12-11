@@ -65,7 +65,8 @@ public class BlessingClinicServiceProviderV4 : ClinicServiceProvider, ILocalizeT
                         _available[index] = false;
                     }, d.Effect.AsArray(), 
                     "Tritoonico",
-                    Rarity.Starter);
+                    Rarity.Starter,
+                    $"Tritoonico-{d.Name}");
             }
         }
         for (var i = 0; i < _generatedOptions.Length; i++)

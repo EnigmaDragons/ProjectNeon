@@ -155,7 +155,7 @@ public class StoryEventPresenterV4 : MonoBehaviour
     protected void Execute(ShowStoryEventResolution msg)
     {
         ClearStoryElements();
-        if (msg.Story == "*")
+        if (msg.Story == "*" || string.IsNullOrWhiteSpace(msg.Story))
             Message.Publish(new MarkStoryEventCompleted());
         else
             this.ExecuteAfterDelay(outcomeDelay, () =>

@@ -64,14 +64,17 @@ public class ImplantClinicServiceProvider : ClinicServiceProvider
         var lossAmount = statsToAdjust[0].Value;
         var gainStat = statsToAdjust[1].Key;
         var gainAmount = statsToAdjust[1].Value;
+        var heroNameEnglish = hero.NameTerm.ToEnglish();
+        var serviceTitle = $"{_negativePrefix[lossStat]} {_positiveSuffix[gainStat]}";
         return new ClinicServiceButtonData(
-            $"{_negativePrefix[lossStat]} {_positiveSuffix[gainStat]}",
-            $"Lose {lossAmount} {lossStat.ToString().WithSpaceBetweenWords()} to gain {gainAmount} {gainStat.ToString().WithSpaceBetweenWords()} on {hero.NameTerm.ToEnglish()}",
+            serviceTitle,
+            $"Lose {lossAmount} {lossStat.ToString().WithSpaceBetweenWords()} to gain {gainAmount} {gainStat.ToString().WithSpaceBetweenWords()} on {heroNameEnglish}",
             CalculateCost(hero, lossStat, lossAmount, gainStat, gainAmount),
             () => AdjustHero(hero, lossStat, lossAmount, gainStat, gainAmount),
             Array.Empty<EffectData>(),
             "Medigeneix",
-            Rarity.Starter);
+            Rarity.Starter,
+            $"Medigeneix-{heroNameEnglish}-{serviceTitle}");
     }
 
     public int CalculateCost(Hero hero, StatType lossStat, int lossAmount, StatType gainStat, int gainAmount) 

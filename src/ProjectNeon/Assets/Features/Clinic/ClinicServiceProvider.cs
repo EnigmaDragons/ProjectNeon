@@ -16,10 +16,11 @@ public class ClinicServiceButtonData
     public RulePanelContext RulesContext { get; }
     public string CorpName { get; }
     public Rarity Rarity { get; }
+    public string MetricDescription { get; }
     
     public bool Enabled { get; set; }
 
-    public ClinicServiceButtonData(string nameTerm, string description, int cost, Action action, EffectData[] effects, string corpName, Rarity rarity)
+    public ClinicServiceButtonData(string nameTerm, string description, int cost, Action action, EffectData[] effects, string corpName, Rarity rarity, string metricDescription)
     {
         NameTerm = nameTerm;
         Description = description;
@@ -28,5 +29,15 @@ public class ClinicServiceButtonData
         RulesContext = new RulePanelContext(nameTerm, description, effects);
         CorpName = corpName;
         Rarity = rarity;
+        MetricDescription = metricDescription;
+    }
+
+    public ClinicServiceButtonData WithAction(Action newAction)
+    {
+        return new ClinicServiceButtonData(NameTerm, Description, Cost, () =>
+        {
+            Action();
+            newAction();
+        }, RulesContext.Effects, CorpName, Rarity, MetricDescription) { Enabled = Enabled };
     }
 }

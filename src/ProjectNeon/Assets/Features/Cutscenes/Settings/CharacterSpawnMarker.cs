@@ -4,6 +4,7 @@ public class CharacterSpawnMarker : MonoBehaviour
 {
     [SerializeField] private StringReference characterAlias;
     [SerializeField] private Vector3 shadowAdjustment = Vector3.zero;
+    [SerializeField] private Vector3 rotationAdjustment = Vector3.zero;
 
     public string Alias => characterAlias;
 
@@ -25,6 +26,8 @@ public class CharacterSpawnMarker : MonoBehaviour
             }
         }
 
+        g.gameObject.transform.localRotation = Quaternion.Euler(rotationAdjustment + g.gameObject.transform.localRotation.eulerAngles);
+        
         return g;
     }
 
