@@ -46,6 +46,8 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
             Log.Error($"{nameof(CharacterCreatorAnimationController)} {nameof(partyAdventureState)} is null");
         if (state == null)
             Log.Error($"{nameof(CharacterCreatorAnimationController)} {nameof(state)} is null");
+        if (character == null)
+            Log.Error($"{nameof(CharacterCreatorAnimationController)} {nameof(character)} is null");
         if (state == null || partyAdventureState == null || character == null || characterAnimations == null)
         {
             Log.Warn($"{nameof(CharacterCreatorAnimationController)} - {team} {memberId} - Cannot Animate");

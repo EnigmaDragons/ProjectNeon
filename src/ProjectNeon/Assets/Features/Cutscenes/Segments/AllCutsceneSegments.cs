@@ -26,6 +26,7 @@ public static class AllCutsceneSegments
             { CutsceneSegmentType.DeactivateGlitchEffect, e => new MessagePublishSegment(new CutsceneGlitchEffectRequested(false))},
             { CutsceneSegmentType.FadeOut, e => new MessagePublishSegment(new CutsceneFadeRequested(false, e.FloatAmount > 0 ? e.FloatAmount : 2f)) },
             { CutsceneSegmentType.FadeIn, e => new MessagePublishSegment(new CutsceneFadeRequested(true, e.FloatAmount > 0 ? e.FloatAmount : 2f)) },
+            { CutsceneSegmentType.TriggerCutsceneEvent, e => new MessagePublishSegment(new TriggerCutsceneEvent(e.CutsceneEventName, e.FloatAmount > 0 ? e.FloatAmount : 2f))}
         };
 
     public static CutsceneSegment Create(CutsceneSegmentData data)

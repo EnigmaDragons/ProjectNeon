@@ -17,6 +17,12 @@ public class BattleVFX : MonoBehaviour
 
     private float _lifetime;
 
+    public BattleVFX Initialized()
+    {
+        SetSpeed(1);
+        return this;
+    }
+    
     public void SetSpeed(float speed)
     {
         _liveDurationSeconds = durationSeconds * speed;

@@ -41,7 +41,10 @@ public abstract class BaseCutscenePresenter : MonoBehaviour
         Message.Subscribe<ShowCharacterRequested>(Execute, this);
         Message.Subscribe<WinBattleWithRewards>(Execute, this);
         Message.Subscribe<CutsceneFadeRequested>(Execute, this);
+        Message.Subscribe<TriggerCutsceneEvent>(Execute, this);
     }
+
+    private void Execute(TriggerCutsceneEvent msg) => this.ExecuteAfterDelay(msg.DurationBeforeContinue, FinishCurrentSegment);
 
     private void Execute(CutsceneFadeRequested msg)
     {

@@ -12,6 +12,7 @@ public class CutsceneSegmentData
     [TextArea(4, 4)] public string Text = "";
     
     public FloatReference FloatAmount = new FloatReference(0);
+    public StringReference CutsceneEventName;
     public StoryEvent2 StoryEvent;
     public StringReference[] RequiredStates;
     public StringReference[] ForbiddenStates;
@@ -64,6 +65,8 @@ public class CutsceneSegmentData
             return new[] { "Camera Fade Out" };
         if (SegmentType == CutsceneSegmentType.FadeIn)
             return new[] { "Camera Fade In" };
+        if (SegmentType == CutsceneSegmentType.TriggerCutsceneEvent)
+            return new[] { $"Trigger Event: {CutsceneEventName}" };
         return new [] { "Unknown Cutscene Segment" };
     }
 

@@ -15,4 +15,5 @@ public enum CutsceneSegmentType
     DeactivateGlitchEffect = 11,
     FadeOut = 12,
     FadeIn = 13,
+    TriggerCutsceneEvent = 14,
 }
