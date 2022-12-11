@@ -165,14 +165,21 @@ public abstract class BaseCutscenePresenter : MonoBehaviour
         if (_finishTriggered)
             return;
 
+        Log.Info(progress.AdventureProgress.GetType().Name);
+        foreach (var required in msg.SegmentData.RequiredStates)
+        {
+            var isTrue = progress.AdventureProgress.IsTrue(required);
+            Log.Info($"Required: {required.Value}. IsTrue: {isTrue}");
+        }
+
         if (msg.SegmentData.ShouldSkip(x => progress.AdventureProgress.IsTrue(x)))
         {
-            DebugLog("Skipped Cutscene Segment");
+            DebugLog($"Skipped Cutscene Segment {msg.SegmentData.Id}");
             FinishCurrentSegment();
             return;
         }
 
-        DebugLog("Show Cutscene Segment");
+        DebugLog($"Show Cutscene Segment {msg.SegmentData.Id}");
         HidePreviousSegmentStuff();
         _skippable = msg.SegmentData.SegmentType != CutsceneSegmentType.Wait; 
         _currentSegment = AllCutsceneSegments.Create(msg.SegmentData);

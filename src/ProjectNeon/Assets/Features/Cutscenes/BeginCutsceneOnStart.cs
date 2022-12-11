@@ -18,7 +18,7 @@ public class BeginCutsceneOnStart : MonoBehaviour
         if (setStoryStates.AnyNonAlloc())
             adventureProgressV5.ClearStoryState();
         foreach (var s in setStoryStates)
-            progress.AdventureProgress.SetStoryState(s.Value, true);
+            adventureProgressV5.SetStoryState(s.Value, true);
 
         party.Initialized(heroes.Length > 0 ? heroes[0] : null, heroes.Length > 1 ? heroes[1] : null, heroes.Length > 2 ? heroes[2] : null);
         

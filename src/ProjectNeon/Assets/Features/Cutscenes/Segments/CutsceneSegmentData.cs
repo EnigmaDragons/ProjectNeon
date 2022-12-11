@@ -24,9 +24,9 @@ public class CutsceneSegmentData
         => !ShouldSkip(storyState);
     
     public bool ShouldSkip(Func<string, bool> storyState)
-        => ForbiddenStates.Any(x => storyState(x))
-           || (Or && RequiredStates.None(x => storyState(x)))
-           || (!Or && RequiredStates.Any(x => !storyState(x)));
+        => ForbiddenStates.Any(x => storyState(x)) // Is Forbidden
+           || (Or && RequiredStates.None(x => storyState(x))) // Is Missing All Required
+           || (!Or && RequiredStates.Any(x => !storyState(x))); // Is Missing Any Required
 
     public Maybe<string> GetRequiredConditionsDescription()
     {
