@@ -11,6 +11,9 @@ public static class GameWrapup
         CurrentProgressionData.RecordCompletedAdventure(p.AdventureProgress.AdventureId, 0, heroes.Select(h => h.Id).ToArray());
         Message.Publish(new AutoSaveRequested());
         c.RecordFinishedGameAndCleanUp(true, a.Adventure.VictoryConclusionTerm, CurrentGameData.Data.Stats, heroes);
-        n.NavigateToConclusionScene();
+        if (a.Adventure.ShouldRollCreditsBeforeConclusionScene)
+            n.NavigateToFinalCreditsScene();
+        else
+            n.NavigateToConclusionScene();
     }
 }
