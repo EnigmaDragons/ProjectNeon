@@ -76,6 +76,7 @@ namespace ChangeLogGenerator
         {
             { "New Content", 1 },
             { "New Features", 10 },
+            { "Achievements", 15 },
             { "Balance Changes", 20 },
             { "Player Aids", 30 },
             { "Card Improvements", 40 },
@@ -88,6 +89,7 @@ namespace ChangeLogGenerator
 
         private static Dictionary<string, string> _containsTextThenCategory = new Dictionary<string,string>(StringComparer.OrdinalIgnoreCase)
         {
+            { "Achievement", "Achievements" },
             { "Bug:", "Bug Fixes" },
             { "Bug Fix:", "Bug Fixes" },
             { "Fixed", "Bug Fixes" },
