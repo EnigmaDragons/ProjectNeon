@@ -85,5 +85,6 @@ public class Enemy : ScriptableObject, ILocalizeTerms
     public string[] GetLocalizeTerms()
         => new[] { EnemyNameTerm, DescriptionTerm }
             .Concat(resourceType == null ? new string[0] : new [] { resourceType.GetTerm() })
+            .Concat(stageDetails.SelectMany(stage => stage.startOfBattleEffects.Where(effect => effect.StatusTag != StatusTag.None).Select(effect => effect.StatusDetailTerm)))
             .ToArray();
 }
