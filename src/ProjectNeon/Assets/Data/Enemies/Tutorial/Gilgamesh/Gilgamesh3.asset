@@ -27,6 +27,7 @@ MonoBehaviour:
     CardTagPriority: 
     UnpreferredCardTags: 
     RotatePlayingCardTags: 
+    IgnoreDesignatedAttackerRole: 0
   preferredTurnOrder: 99
   prefab: {fileID: 9154307915719940026, guid: ac815a989ecb9034492b4eeb5925aaca, type: 3}
   materialType: 1
@@ -79,7 +80,8 @@ MonoBehaviour:
       estimatedPerTurnTotalValue: 0
       calculatedPowerLevel: 0
     startOfBattleEffects:
-    - EffectType: 75
+    - Id: 10025
+      EffectType: 75
       Conditions: []
       BaseAmount:
         UseConstant: 0
@@ -124,7 +126,8 @@ MonoBehaviour:
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
       Unpreventable: 0
-    - EffectType: 25
+    - Id: 10026
+      EffectType: 25
       Conditions: []
       BaseAmount:
         UseConstant: 0
@@ -143,7 +146,7 @@ MonoBehaviour:
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 10
-      StatusDetailText: 'When Damaged: Leaves Battle'
+      StatusDetailText: 'When Killed: Leaves Battle'
       TurnDelay: 0
       Formula: 
       InterpolatePartialFormula:
@@ -173,6 +176,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: e66a392d71390264f84917a0250b49c8, type: 2}
     - {fileID: 11400000, guid: e494e5e48fa086b4aa632dd45050662e, type: 2}
     - {fileID: 11400000, guid: ab9d349cd738f5a408f865f5f49179f5, type: 2}
+    CardsTheyAppearsToHave: []
   maxCopies: 0
   minimumAllies: 0
   damageType: 0

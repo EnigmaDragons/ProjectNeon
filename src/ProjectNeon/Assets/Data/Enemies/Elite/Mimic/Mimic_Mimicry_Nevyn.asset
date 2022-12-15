@@ -1,0 +1,340 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
+  m_Name: Mimic_Mimicry_Nevyn
+  m_EditorClassIdentifier: 
+  Actions:
+  - type: 1
+    battleEffect:
+      Id: 0
+      EffectType: 102
+      Conditions:
+      - {fileID: 11400000, guid: 64f2d06beedb76e47b4549d1ef6bb0cb, type: 2}
+      - {fileID: 11400000, guid: 3fea81b14bb9b6046af506710c646e90, type: 2}
+      BaseAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      DurationFormula: 0
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: transformed
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 0
+      StatusDetailText: 
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionTimingWindow: 0
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+      Unpreventable: 0
+    conditionData:
+      ConditionType: 0
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedEffect: {fileID: 0}
+    characterAnimation: {fileID: 0}
+    characterAnimation2:
+      Type: 0
+      Conditions: []
+    atTargetAnimation:
+      animation:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      size: 1
+      speed: 1
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        Variable: {fileID: 0}
+      skipWaitingForCompletion: 0
+      conditions: []
+    enemyToSpawn: {fileID: 0}
+    enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
+  - type: 40
+    battleEffect:
+      Id: 0
+      EffectType: 0
+      Conditions: []
+      BaseAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      DurationFormula: 0
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 0
+      StatusDetailText: 
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionTimingWindow: 0
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+      Unpreventable: 0
+    conditionData:
+      ConditionType: 0
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedEffect: {fileID: 0}
+    characterAnimation: {fileID: 0}
+    characterAnimation2:
+      Type: 0
+      Conditions: []
+    atTargetAnimation:
+      animation:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      size: 1
+      speed: 1
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        Variable: {fileID: 0}
+      skipWaitingForCompletion: 0
+      conditions: []
+    enemyToSpawn: {fileID: 11400000, guid: 890170e25c4cc804da5582c1c6e7817a, type: 2}
+    enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions:
+    - {fileID: 11400000, guid: d5d641bec03c1354aaa693cc2c8c119c, type: 2}
+    replacing: 1
+  - type: 1
+    battleEffect:
+      Id: 0
+      EffectType: 34
+      Conditions:
+      - {fileID: 11400000, guid: d5d641bec03c1354aaa693cc2c8c119c, type: 2}
+      BaseAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      DurationFormula: 0
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 0
+      StatusDetailText: 
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionTimingWindow: 0
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+      Unpreventable: 0
+    conditionData:
+      ConditionType: 0
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedEffect: {fileID: 0}
+    characterAnimation: {fileID: 0}
+    characterAnimation2:
+      Type: 0
+      Conditions: []
+    atTargetAnimation:
+      animation:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      size: 1
+      speed: 1
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        Variable: {fileID: 0}
+      skipWaitingForCompletion: 0
+      conditions: []
+    enemyToSpawn: {fileID: 0}
+    enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
+  - type: 1
+    battleEffect:
+      Id: 0
+      EffectType: 86
+      Conditions:
+      - {fileID: 11400000, guid: e959dfd47f6e2ee4aa50cccfd08fee0e, type: 2}
+      BaseAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      DurationFormula: 0
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 0
+      StatusDetailText: 
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 11400000, guid: 4407c7815e77f9c4780e4be62be792a0, type: 2}
+      ReferencedSequences: []
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionTimingWindow: 0
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+      Unpreventable: 0
+    conditionData:
+      ConditionType: 0
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedEffect: {fileID: 0}
+    characterAnimation: {fileID: 0}
+    characterAnimation2:
+      Type: 0
+      Conditions: []
+    atTargetAnimation:
+      animation:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      size: 1
+      speed: 1
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        Variable: {fileID: 0}
+      skipWaitingForCompletion: 0
+      conditions: []
+    enemyToSpawn: {fileID: 0}
+    enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0

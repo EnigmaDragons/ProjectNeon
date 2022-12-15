@@ -317,7 +317,7 @@ public class QualityAssurance
     private static Regex _specialTag = new Regex(@"{\[(.+?)]}", RegexOptions.IgnoreCase);
     private static string[] _validSpecialTags = new[] { "Originator", "PrimaryStat", "SaveGameVersion", "GameVersion", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
     private static Regex _xmlTags = new Regex(@"<.+?>");
-    private static Regex _validXmlTags = new Regex(@"<(b|i|\/b|\/i|\/size|\/color|color=#......|size=\d+%|sprite index=\d+|s)>");
+    private static Regex _validXmlTags = new Regex(@"<(b|i|\/b|\/i|\/size|\/color|color=#......|size=\d+%|sprite index=\d+|s|\/s)>");
     private static Regex _specialOpenTag = new Regex(@"{\[");
     private static Regex _specialCloseTag = new Regex("]}");
     private static Regex _invalidSpecialTag = new Regex(@"{[^\[]t:.*[^]]}", RegexOptions.IgnoreCase);

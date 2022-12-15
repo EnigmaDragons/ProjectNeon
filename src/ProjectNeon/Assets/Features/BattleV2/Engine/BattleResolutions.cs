@@ -164,10 +164,17 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
 
     protected override void Execute(SpawnEnemy msg)
     {
-        var details = enemies.Spawn(msg.Enemy.ForStage(state.Stage), msg.Offset);
-        var member = details.Member;
-        BattleLog.Write($"Spawned {member.NameTerm.ToEnglish()}");
-        Message.Publish(new MemberSpawned(member, details.Transform));
+        var ctx = new EffectContext(msg.Source, new NoTarget(), msg.Card, ResourceQuantity.None, msg.PaidAmount, partyAdventureState, state.PlayerState, state.RewardState,
+            state.Members, state.PlayerCardZones, new UnpreventableContext(), new SelectionContext(), allCards.GetMap(), state.CreditsAtStartOfBattle, 
+            state.Party.Credits, state.Enemies.ToDictionary(x => x.Member.Id, x => (EnemyType)x.Enemy), () => state.GetNextCardId(), 
+            state.CurrentTurnCardPlays(), state.OwnerTints, state.OwnerBusts, msg.IsReaction, msg.Timing, state.EffectScopedData);
+        if (!msg.Condition.IsPresent || msg.Condition.Value.GetShouldNotApplyReason(ctx).IsMissing)
+        {
+            var details = enemies.Spawn(msg.Enemy.ForStage(state.Stage), msg.Offset, msg.IsReplacing ? msg.Source : Maybe<Member>.Missing());
+            var member = details.Member;
+            BattleLog.Write($"Spawned {member.NameTerm.ToEnglish()}");
+            Message.Publish(new MemberSpawned(member, details.Transform));
+        }
         Message.Publish(new Finished<SpawnEnemy>());
     }
     
@@ -186,7 +193,10 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         }
     }
 
-    protected override void Execute(CardResolutionFinished msg) => StartCoroutine(FinishEffect());
+    protected override void Execute(CardResolutionFinished msg)
+    {
+        StartCoroutine(FinishEffect());
+    } 
     
     private IEnumerator FinishEffect()
     {

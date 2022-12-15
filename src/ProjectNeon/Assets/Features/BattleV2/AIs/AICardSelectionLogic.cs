@@ -58,7 +58,8 @@ public static class AICardSelectionLogic
             .DontRemoveDodgeIfOpponentDoesntHaveAny()
             .DontPlayAttackResistanceIfEnemiesDontHaveResistance()
             .DontPlayAttackArmorIfEnemiesDontHaveArmor()
-            .DontPlayCleanseIfNoDebuffsToRemove();
+            .DontPlayCleanseIfNoDebuffsToRemove()
+            .DontPlayRequiresMarkIfNoMarkedEnemies();
 
     public static CardSelectionContext DontPlayRequiresFocusCardWithoutAFocusTarget(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(_ => ctx.FocusTarget.IsMissing, CardTag.RequiresFocus);
@@ -143,7 +144,10 @@ public static class AICardSelectionLogic
 
     private static CardSelectionContext DontRemoveDodgeIfOpponentDoesntHaveAny(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.State[TemporalStatType.Dodge] < 1f), CardTag.RemoveDodge);
-    
+
+    private static CardSelectionContext DontPlayRequiresMarkIfNoMarkedEnemies(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.State[TemporalStatType.Marked] == 0), CardTag.RequiresMark);
+
     private static CardTypeData SelectAttackCard(this CardSelectionContext ctx)
     {
         var options = ctx.CardOptions.Where(o => o.Is(CardTag.Attack))

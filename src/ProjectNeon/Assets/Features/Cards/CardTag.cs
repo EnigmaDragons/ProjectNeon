@@ -56,5 +56,6 @@ public enum CardTag
     CanPlayThisReactionEvenWhenStunned = 102,
     RemoveDodge = 103,
     Mark = 104,
-    RemoveDebuffs = 105
+    RemoveDebuffs = 105,
+    RequiresMark = 106,
 }

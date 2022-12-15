@@ -74,7 +74,7 @@ public class Adventure : ScriptableObject, CurrentAdventureData, ILocalizeTerms
     public bool MapDeckbuildingEnabled => mapDeckbuildingEnabled;
 
     public string LockConditionExplanationTerm => $"Adventures/Adventure{id}LockCondition";
-    public bool IsLocked => !string.IsNullOrWhiteSpace(lockConditionExplanation) || prerequisiteCompletedAdventures.Any(p => !p.IsCompleted);
+    public bool IsLocked => !string.IsNullOrWhiteSpace(LockConditionExplanation) || prerequisiteCompletedAdventures.Any(p => !p.IsCompleted);
     public string LockConditionExplanation
     {
         get

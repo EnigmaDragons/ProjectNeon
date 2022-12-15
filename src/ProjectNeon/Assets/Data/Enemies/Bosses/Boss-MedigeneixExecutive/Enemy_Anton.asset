@@ -27,6 +27,7 @@ MonoBehaviour:
     CardTagPriority: 
     UnpreferredCardTags: 
     RotatePlayingCardTags: 
+    IgnoreDesignatedAttackerRole: 0
   preferredTurnOrder: 50
   prefab: {fileID: 2084796812294946461, guid: 1176129cacfeef241a0f005999f1e1b8, type: 3}
   materialType: 1
@@ -79,7 +80,8 @@ MonoBehaviour:
       estimatedPerTurnTotalValue: 131.02339
       calculatedPowerLevel: 1020
     startOfBattleEffects:
-    - EffectType: 73
+    - Id: 10006
+      EffectType: 73
       Conditions: []
       BaseAmount:
         UseConstant: 0
@@ -126,7 +128,8 @@ MonoBehaviour:
         cardActions: {fileID: 11400000, guid: c68eeb360b8a1e6489ba5a68d5cd2e85, type: 2}
       BonusCardType: {fileID: 0}
       Unpreventable: 0
-    - EffectType: 54
+    - Id: 10007
+      EffectType: 54
       Conditions: []
       BaseAmount:
         UseConstant: 0
@@ -144,7 +147,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
-      StatusTag: 0
+      StatusTag: 7
       StatusDetailText: 'Start of turn: If i have no allies, gain 1 card play'
       TurnDelay: 0
       Formula: 
@@ -171,7 +174,8 @@ MonoBehaviour:
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
       Unpreventable: 0
-    - EffectType: 74
+    - Id: 10008
+      EffectType: 74
       Conditions: []
       BaseAmount:
         UseConstant: 0
@@ -189,7 +193,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
-      StatusTag: 0
+      StatusTag: 12
       StatusDetailText: 'When Killed: Win the fight'
       TurnDelay: 0
       Formula: 
@@ -216,7 +220,8 @@ MonoBehaviour:
         cardActions: {fileID: 11400000, guid: c68eeb360b8a1e6489ba5a68d5cd2e85, type: 2}
       BonusCardType: {fileID: 0}
       Unpreventable: 0
-    - EffectType: 75
+    - Id: 10009
+      EffectType: 75
       Conditions: []
       BaseAmount:
         UseConstant: 0
@@ -234,7 +239,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
-      StatusTag: 0
+      StatusTag: 17
       StatusDetailText: 'When Shield Broken: Summon Reinforcements'
       TurnDelay: 0
       Formula: 
@@ -261,7 +266,8 @@ MonoBehaviour:
         cardActions: {fileID: 11400000, guid: c68eeb360b8a1e6489ba5a68d5cd2e85, type: 2}
       BonusCardType: {fileID: 0}
       Unpreventable: 0
-    - EffectType: 75
+    - Id: 10010
+      EffectType: 75
       Conditions: []
       BaseAmount:
         UseConstant: 0
@@ -279,7 +285,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
-      StatusTag: 0
+      StatusTag: 14
       StatusDetailText: 'When Bloodied: Summon Reinforcements'
       TurnDelay: 0
       Formula: 
@@ -312,6 +318,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: a4b2a2102f6f4c74db9f5f1832e97892, type: 2}
     - {fileID: 11400000, guid: ce660aa1a092fac408d8d7f2957491cf, type: 2}
     - {fileID: 11400000, guid: 3238f3bcbb34fc64e9db2b464bd77138, type: 2}
+    CardsTheyAppearsToHave: []
   - stage: 2
     maxHp: 300
     maxShield: 150
@@ -347,7 +354,8 @@ MonoBehaviour:
       estimatedPerTurnTotalValue: 216.36485
       calculatedPowerLevel: 1107
     startOfBattleEffects:
-    - EffectType: 73
+    - Id: 0
+      EffectType: 73
       Conditions: []
       BaseAmount:
         UseConstant: 0
@@ -395,7 +403,8 @@ MonoBehaviour:
         cardActions: {fileID: 11400000, guid: c68eeb360b8a1e6489ba5a68d5cd2e85, type: 2}
       BonusCardType: {fileID: 0}
       Unpreventable: 0
-    - EffectType: 54
+    - Id: 0
+      EffectType: 54
       Conditions: []
       BaseAmount:
         UseConstant: 0
@@ -441,7 +450,8 @@ MonoBehaviour:
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
       Unpreventable: 0
-    - EffectType: 54
+    - Id: 0
+      EffectType: 54
       Conditions: []
       BaseAmount:
         UseConstant: 0
@@ -486,7 +496,8 @@ MonoBehaviour:
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
       Unpreventable: 0
-    - EffectType: 74
+    - Id: 0
+      EffectType: 74
       Conditions: []
       BaseAmount:
         UseConstant: 0
@@ -531,7 +542,8 @@ MonoBehaviour:
         cardActions: {fileID: 11400000, guid: 8f3eb9142df936b4fb3b347159ce9f96, type: 2}
       BonusCardType: {fileID: 0}
       Unpreventable: 0
-    - EffectType: 74
+    - Id: 0
+      EffectType: 74
       Conditions: []
       BaseAmount:
         UseConstant: 0
@@ -576,7 +588,8 @@ MonoBehaviour:
         cardActions: {fileID: 11400000, guid: c68eeb360b8a1e6489ba5a68d5cd2e85, type: 2}
       BonusCardType: {fileID: 0}
       Unpreventable: 0
-    - EffectType: 75
+    - Id: 0
+      EffectType: 75
       Conditions: []
       BaseAmount:
         UseConstant: 0
@@ -621,7 +634,8 @@ MonoBehaviour:
         cardActions: {fileID: 11400000, guid: c68eeb360b8a1e6489ba5a68d5cd2e85, type: 2}
       BonusCardType: {fileID: 0}
       Unpreventable: 0
-    - EffectType: 75
+    - Id: 0
+      EffectType: 75
       Conditions: []
       BaseAmount:
         UseConstant: 0
@@ -672,6 +686,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: a4b2a2102f6f4c74db9f5f1832e97892, type: 2}
     - {fileID: 11400000, guid: ce660aa1a092fac408d8d7f2957491cf, type: 2}
     - {fileID: 11400000, guid: 3238f3bcbb34fc64e9db2b464bd77138, type: 2}
+    CardsTheyAppearsToHave: []
   maxCopies: 0
   minimumAllies: 0
   damageType: 0

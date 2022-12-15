@@ -15,6 +15,7 @@ MonoBehaviour:
   id: 17
   displayName: Focus Amp
   description: Add 1 to X Cost Cards
+  corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
   archetypes: []
   rarity: 2
   slot: 2
@@ -27,7 +28,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 32
+  - Id: 10041
+    EffectType: 32
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -43,8 +45,8 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 12
     StatusDetailText: Add 1 to X Cost Cards
     TurnDelay: 0
@@ -58,16 +60,23 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
+  battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 1
-  corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
+  notAvailableForGeneralDistribution: 0
+  designComment: 

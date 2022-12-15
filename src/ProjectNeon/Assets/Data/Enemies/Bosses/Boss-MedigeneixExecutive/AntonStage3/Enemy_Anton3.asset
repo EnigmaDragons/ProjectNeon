@@ -81,7 +81,8 @@ MonoBehaviour:
       estimatedPerTurnTotalValue: 278.5695
       calculatedPowerLevel: 726
     startOfBattleEffects:
-    - EffectType: 73
+    - Id: 10015
+      EffectType: 73
       Conditions: []
       BaseAmount:
         UseConstant: 0
@@ -99,8 +100,9 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
-      StatusTag: 0
-      StatusDetailText: 
+      StatusTag: 12
+      StatusDetailText: Everytime Anton targets someone he also applies a 1 damage
+        dot til end of battle
       TurnDelay: 0
       Formula: 
       InterpolatePartialFormula:
@@ -132,6 +134,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: faa825ecf1e12a84b84cff15ebaa2666, type: 2}
     - {fileID: 11400000, guid: 57f36ac3bc259ad4aa41b86b742ae8eb, type: 2}
     - {fileID: 11400000, guid: 82ae3529e1ee94b4fa2ea5df394f7905, type: 2}
+    CardsTheyAppearsToHave: []
   maxCopies: 0
   minimumAllies: 0
   damageType: 0

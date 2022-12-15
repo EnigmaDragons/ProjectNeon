@@ -90,7 +90,7 @@ public static class BattleCardExecution
             return new SinglePayload(new ApplyBattleEffect(isFirstBattleEffectOfChosenTarget, action.BattleEffect, ctx.Source, ctx.Target, ctx.Card, ctx.XAmountPaid, ctx.AmountPaid, ctx.Preventions, ctx.Group, ctx.Scope, isReaction: false, ReactionTimingWindow.FirstCause));
         
         if (type == CardBattleActionType.SpawnEnemy)
-            return new SinglePayload(new SpawnEnemy(action.EnemyToSpawn, action.EnemySpawnOffset));
+            return new SinglePayload(new SpawnEnemy(action.EnemyToSpawn, action.EnemySpawnOffset, ctx.Source, action.Replacing, ctx.Card, ctx.XAmountPaid, ctx.AmountPaid, false, ReactionTimingWindow.Default, new Maybe<EffectCondition>(action.EnemySpawnCondition)));
         if (type == CardBattleActionType.AnimateCharacter)
             return new SinglePayload(PayloadData.ExactMatch(new CharacterAnimationRequested2(ctx.Source.Id, action.CharacterAnimation2.Type)
             {
@@ -159,7 +159,7 @@ public static class BattleCardExecution
                 PaidAmount = amountPaid
             });
         if (type == CardBattleActionType.SpawnEnemy)
-            return new SinglePayload(new SpawnEnemy(action.EnemyToSpawn, action.EnemySpawnOffset));
+            return new SinglePayload(new SpawnEnemy(action.EnemyToSpawn, action.EnemySpawnOffset, source, action.Replacing, Maybe<Card>.Missing(), xAmountPaid, amountPaid, true, timing, new Maybe<EffectCondition>(action.EnemySpawnCondition)));
         //if (type == CardBattleActionType.Condition)
             // TODO: Implement Conditional Reactive Effects if needed (probably not needed)
         throw new Exception($"Unhandled card battle action type: {type}");

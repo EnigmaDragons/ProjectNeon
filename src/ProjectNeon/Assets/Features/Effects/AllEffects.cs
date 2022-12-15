@@ -94,7 +94,7 @@ public static class AllEffects
             BattleLoggedItem(v => $"{m.NameTerm.ToEnglish()} {GainedOrLostTerm(v)} {v} {m.State.PrimaryResource.Name}", 
                 Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, e.Formula, ctx.XPaidAmount, ctx.ScopedData))) },
         { EffectType.Reload, e => new SimpleEffect(m => BattleLogged($"{m.NameTerm.ToEnglish()} Reloaded", () => m.AdjustPrimaryResource(99))) },
-        { EffectType.ResolveInnerEffect, e => new ResolveInnerEffect(e.ReferencedSequence?.BattleEffects?.ToArray() ?? Array.Empty<EffectData>()) },
+        { EffectType.ResolveInnerEffect, e => new ResolveInnerEffect(e.ReferencedSequence) },
         { EffectType.AdjustCostOfAllCardsInHandAtEndOfTurn, e => new AdjustAllCardsCostUntilPlayed(e.BaseAmount) },
         { EffectType.AdjustPrimaryStatForEveryCardCycledAndInHand, e => new AdjustPrimaryStatForEveryCardCycledAndInHand(e) },
         { EffectType.FillHandWithOwnersCards, e => new FillHandWithOwnersCards() },
@@ -116,7 +116,7 @@ public static class AllEffects
         { EffectType.InvulnerableForTurns, e => new FullContextEffect((ctx, duration, m) => m.ApplyTemporaryMultiplier(new AdjustedStats(
             new StatMultipliers().With(StatType.Damagability, 0f),
             TemporalStateMetadata.BuffForDuration(ctx.Source.Id, duration, new StatusDetail(StatusTag.Invulnerable, Maybe<string>.Missing())))), e.DurationFormula)},
-        { EffectType.RandomEffect, e => new ResolveInnerEffect(e.ReferencedSequences?.Random()?.BattleEffects?.ToArray() ?? Array.Empty<EffectData>()) },
+        { EffectType.RandomEffect, e => new ResolveInnerEffect(e.ReferencedSequences?.Random()) },
         { EffectType.RecordConditionIsTrue, e => new EvaluateConditionEffect(e) },
         { EffectType.AdjustScopedVariable, e => new AdjustScopedVariable(e) },
         { EffectType.PlayCardAtStartOfTurn, e => new FullContextEffect(

@@ -38,7 +38,9 @@ public class BattleState : ScriptableObject
     private bool _runStatsWritten = false;
     private EffectScopedData _effectScopedData = new EffectScopedData();
     public EffectScopedData EffectScopedData => _effectScopedData;
-    public void ResetEffectScopedData() => _effectScopedData = new EffectScopedData();
+
+    public void ResetEffectScopedData()
+        => _effectScopedData = new EffectScopedData();
 
     public int CreditsAtStartOfBattle { get; private set; }
     public bool IsSelectingTargets = false;

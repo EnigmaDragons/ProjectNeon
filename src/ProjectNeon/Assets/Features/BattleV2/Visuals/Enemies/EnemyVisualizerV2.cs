@@ -82,14 +82,17 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
         }
     }
 
-    private GameObject AddEnemy(EnemyInstance enemy, Member member, Vector3 offset)
+    private GameObject AddEnemy(EnemyInstance enemy, Member member, Vector3 offset, Maybe<Member> isReplacing)
     {
         var enemyObject = Instantiate(enemy.Prefab, transform);
         active.Add(enemyObject);
         var t = enemyObject.transform;
-        var i = _enemyPositions.Max(x => x.Item1) + 1;
-        _enemyPositions.Add(new Tuple<int, Member>(i, member));
-        t.localPosition = transform.localPosition - new Vector3(i * widthBetweenEnemies, (i % 2) * rowHeight, (i % 2) == 0 ? 0 : 1) + offset;
+        var iForIndex = _enemyPositions.Max(x => x.Item1) + 1;
+        var iForPositioning = isReplacing.IsPresent
+            ? _enemyPositions.First(x => x.Item2.Id == isReplacing.Value.Id).Item1
+            : iForIndex;
+        _enemyPositions.Add(new Tuple<int, Member>(iForIndex, member));
+        t.localPosition = transform.localPosition - new Vector3(iForPositioning * widthBetweenEnemies, (iForPositioning % 2) * rowHeight, (iForPositioning % 2) == 0 ? 0 : 1) + offset;
         return enemyObject;
     }
     
@@ -138,11 +141,11 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
             tauntEffect.Init(member);
     }
     
-    public EnemySpawnDetails Spawn(EnemyInstance enemy, Vector3 offset)
+    public EnemySpawnDetails Spawn(EnemyInstance enemy, Vector3 offset, Maybe<Member> isReplacing)
     {
         DevLog.Write($"Spawning {enemy.NameTerm.ToEnglish()}");
         var member = enemy.AsMember(state.GetNextEnemyId());
-        var enemyObject = AddEnemy(enemy, member, offset);
+        var enemyObject = AddEnemy(enemy, member, offset, isReplacing);
         state.AddEnemy(enemy, enemyObject, member);
         SetupEnemyUi(enemy, member, enemyObject.transform);
         SetupVisualComponents(enemyObject, member);
