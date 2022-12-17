@@ -38,6 +38,7 @@ public class QualityAssurance
         var (prefabCount, prefabFailures) = QaSpecificPrefabs();
         var (encounterCount, encounterFailures) = QaAllSpecificEncounterSegments();
         var (adventureCount, adventureFailures) = QaAdventures();
+        var (stageSegmentCount, stageSegmentFailures) = QaStageSegments();
 
         var qaPassed = enemyFailures.None() && cardFailures.None() && heroFailures.None() && cutsceneFailures.None() && prefabFailures.None() && encounterFailures.None() && adventureFailures.None();
         var qaResultTerm = qaPassed ? "Passed" : "Failed - See Details Below";
@@ -50,6 +51,7 @@ public class QualityAssurance
         LogReport("Prefabs", prefabCount, prefabFailures);
         LogReport("Encounters", encounterCount, encounterFailures);
         LogReport("Adventures", adventureCount, adventureFailures);
+        LogReport("StageSegments", stageSegmentCount, stageSegmentFailures);
         Log.Info("--------------------------------------------------------------");
 
         ErrorReport.ReenableAfterQa();
@@ -77,6 +79,28 @@ public class QualityAssurance
         return (1, badItems);
     }
 
+    private static (int stageSegmentCount, List<ValidationResult> stageSegmentFailures) QaStageSegments()
+    {
+        var stageSegments = ScriptableExtensions.GetAllInstances<StageSegment>();
+        var byId = new Dictionary<int, List<StageSegment>>();
+        foreach (var s in stageSegments)
+        {
+            var id = s.Id;
+            if (byId.TryGetValue(id, out var list))
+                list.Add(s);
+            else
+                byId[id] = new List<StageSegment> { s };
+        }
+
+        var failures = byId
+            .Where(i => i.Value.Count > 1)
+            .SelectMany(i =>
+                i.Value.Select(s => new ValidationResult(s.name, new List<string> { $"Has Duplicate Id {i.Key}" })))
+            .ToList();
+
+        return (stageSegments.Length, failures);
+    }
+    
     private static (int adventureCount, List<ValidationResult> adventureFailures) QaAdventures()
     {
         var adventures = ScriptableExtensions.GetAllInstances<Library>().SelectMany(l => l.UnlockedAdventures).ToArray();
