@@ -458,7 +458,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         else
             bust.Hide();
         SetCardTint();
-        UpdateCardHighlight();
+        if (_isHand)
+            UpdateCardHighlight();
         if (_card == null || _card.Mode != CardMode.Glitched)
             glitchableComponents.ForEach(x => x.material = null);
         else 
