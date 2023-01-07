@@ -12,6 +12,7 @@ public class BaseHero : ScriptableObject, HeroCharacter, ILocalizeTerms
     [SerializeField] private Sprite bust;
     [SerializeField] private GameObject body;
     [SerializeField] public string className;
+    [SerializeField] private CharacterSex sex;
     [SerializeField] private MemberMaterialType materialType;
     [SerializeField] private BattleRole battleRole;
     [SerializeField] private CardType basic;
@@ -52,6 +53,7 @@ public class BaseHero : ScriptableObject, HeroCharacter, ILocalizeTerms
     public int ComplexityRating => complexityRating;
     public Sprite Bust => bust;
     public GameObject Body => body;
+    public CharacterSex Sex => sex;
     public MemberMaterialType MaterialType => materialType;
     public BattleRole BattleRole => battleRole;
     public Deck Deck => startingDeck;
