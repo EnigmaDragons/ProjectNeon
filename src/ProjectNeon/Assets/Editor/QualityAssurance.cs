@@ -323,7 +323,7 @@ public class QualityAssurance
 
     private static (int, List<ValidationResult>) QaAllCards()
     {
-        var items = ScriptableExtensions.GetAllInstances<CardType>();
+        var items = ScriptableExtensions.GetAllInstances<CardType>().Where(c => !c.IsWip).ToArray();
         var failures = new List<ValidationResult>();
         var itemCount = items.Length;
         foreach (var i in items)
@@ -331,6 +331,8 @@ public class QualityAssurance
             var issues = new List<string>();
             if (i.cost.RawResourceType == null) 
                 issues.Add($"Broken Card: {i.Name} has Null Cost");
+            if (i.ActionSequences.Any(e => e.CardActions == null))
+                issues.Add($"Broken Card: {i.Name} has a Null Card Action");
             if (issues.Any())
                 failures.Add(new ValidationResult($"{i.Name} - {i.id}", issues));
         }
