@@ -329,9 +329,11 @@ public class QualityAssurance
         foreach (var i in items)
         {
             var issues = new List<string>();
-            if (i.cost.RawResourceType == null) 
+            if (i.Name == null)
+                issues.Add($"Broken Card: Missing Name");
+            else if (i.cost == null || i.cost.RawResourceType == null) 
                 issues.Add($"Broken Card: {i.Name} has Null Cost");
-            if (i.ActionSequences.Any(e => e.CardActions == null))
+            else if (i.ActionSequences.Any(e => e.CardActions == null))
                 issues.Add($"Broken Card: {i.Name} has a Null Card Action");
             if (issues.Any())
                 failures.Add(new ValidationResult($"{i.Name} - {i.id}", issues));
