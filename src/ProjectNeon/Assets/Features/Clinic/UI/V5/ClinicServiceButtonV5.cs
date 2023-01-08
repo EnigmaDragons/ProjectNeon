@@ -35,7 +35,7 @@ public class ClinicServiceButtonV5 : MonoBehaviour, IPointerEnterHandler, IPoint
             button.onClick.AddListener(() =>
             {
                 party.UpdateClinicVouchersBy(-data.Cost);
-                data.Action();
+                data.Select();
                 Message.Publish(new UpdateClinic());
             });
         if (data.Cost == 0)
