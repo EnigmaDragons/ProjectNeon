@@ -58,4 +58,5 @@ public enum CardTag
     Mark = 104,
     RemoveDebuffs = 105,
     RequiresMark = 106,
+    Utility = 107,
 }
