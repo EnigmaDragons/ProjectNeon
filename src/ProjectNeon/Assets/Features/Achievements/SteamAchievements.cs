@@ -1,3 +1,5 @@
+#if STEAMWORKS
+
 using System;
 using Steamworks;
 
@@ -18,3 +20,4 @@ public class SteamAchievements : IAchievements
         }
     }
 }
+#endif
