@@ -122,6 +122,8 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipD
                 Message.Publish(new DraftStepCompleted());
             });
         }));
+        if (party.Party.Heroes.Length >= draftState.HeroIndex && party.Party.Heroes.All(h => h.Sex == CharacterSex.Female))
+            Achievements.Record(Achievement.MiscGirlPower);
     }
     
     private void FinishDraft()

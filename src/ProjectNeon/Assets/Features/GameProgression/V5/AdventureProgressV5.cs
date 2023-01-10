@@ -31,7 +31,7 @@ public class AdventureProgressV5 : AdventureProgressBase
     public override bool UsesRewardXp => false;
     public override float BonusXpLevelFactor => currentAdventure.Adventure.BonusXpFactor;
     public override bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
-    public override bool IsFinalBoss => IsFinalStage && CurrentStageSegment.MapNodeType == MapNodeType.Boss;
+    public override bool IsFinalBoss => IsFinalStage && currentSegmentIndex < CurrentStageLength && CurrentStageSegment.MapNodeType == MapNodeType.Boss;
     public override float ProgressToBoss => CurrentStageProgress < 1 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCountToBoss;
     private int CurrentStageLength => CurrentChapter.SegmentCount;    
     public override float[] RisingActionPoints => CurrentChapter.Segments

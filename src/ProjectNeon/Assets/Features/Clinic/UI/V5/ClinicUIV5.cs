@@ -71,7 +71,7 @@ public class ClinicUIV5 : OnMessage<UpdateClinic, RefreshShop>, ILocalizeTerms
         if (clinic.Corp != null && corpUi != null)
             corpUi.ForEach(c => c.Init(clinic.Corp));
         doneButton.interactable = !_serviceProvider.RequiresSelection() && (!clinic.IsTutorial || party.ClinicVouchers == 0 || party.Heroes.All(x => x.Health.MissingHp == 0));
-        var options = _serviceProvider.GetOptions().Select(o => o.WithAction(() => RecordSelected(o.MetricDescription))).ToArray();
+        var options = _serviceProvider.GetOptions().Select(o => o.WithAdditionalAction(() => RecordSelected(o.MetricDescription))).ToArray();
         serviceTitleLocalize.SetFinalText(options.Length > 0 
             ? $"{_serviceProvider.GetTitleTerm().ToLocalized()}{(_serviceProvider.RequiresSelection() ? $" ({"Clinics/SelectionRequired".ToLocalized()})" : "")}"
             : "");

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
+using Object = UnityEngine.Object;
 
 public class FindCardsEditor : EditorWindow
 {
@@ -68,14 +69,15 @@ public class FindCardsEditor : EditorWindow
         _scrollPos = EditorGUILayout.BeginScrollView(_scrollPos);
         
         _effectType = (EffectType)EditorGUILayout.EnumPopup("EffectType", _effectType);
-        if (GUILayout.Button("Search By Effect Type")) 
+        if (GUILayout.Button("Search By Effect Type"))
         {
-            var effects = GetAllInstances<CardActionsData>()
-                .Where(e => e.Actions.Any(x => x.Type == CardBattleActionType.Battle && x.BattleEffect.EffectType == _effectType))
-                .Select(e => e.name)
+            var effects = GetAllInstances<CardType>()
+                .Where(c => c?.Actions != null && !c.IsWip)
+                .Where(c => c.Actions != null && c.Actions.Any(e => e.Actions.Any(x => x.Type == CardBattleActionType.Battle && x.BattleEffect.EffectType == _effectType)))
+                .Select(e => ($"{e.name} - Type: '{e.TypeDescription}'", e))
                 .ToArray();
             GetWindow<ListDisplayWindow>()
-                .Initialized($"{_effectType} - {effects.Length} uses", effects)
+                .Initialized($"{_effectType} - {effects.Length} uses", "Effect: ", effects.Select(e => e.Item1).ToArray(), effects.Select(e => e.Item2).Cast<Object>().ToArray())
                 .Show();
             GUIUtility.ExitGUI();
         }

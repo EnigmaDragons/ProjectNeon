@@ -12,13 +12,15 @@ public class ClinicServiceButtonData
     public string NameTerm { get; }
     public string Description { get; }
     public int Cost { get; }
-    public Action Action { get; }
+    private Action Action { get; }
     public RulePanelContext RulesContext { get; }
     public string CorpName { get; }
     public Rarity Rarity { get; }
     public string MetricDescription { get; }
     
     public bool Enabled { get; set; }
+
+    private Action _additionalAction = () => { };
 
     public ClinicServiceButtonData(string nameTerm, string description, int cost, Action action, EffectData[] effects, string corpName, Rarity rarity, string metricDescription)
     {
@@ -32,12 +34,15 @@ public class ClinicServiceButtonData
         MetricDescription = metricDescription;
     }
 
-    public ClinicServiceButtonData WithAction(Action newAction)
+    public void Select()
     {
-        return new ClinicServiceButtonData(NameTerm, Description, Cost, () =>
-        {
-            Action();
-            newAction();
-        }, RulesContext.Effects, CorpName, Rarity, MetricDescription) { Enabled = Enabled };
+        Action();
+        _additionalAction();
+    }
+    
+    public ClinicServiceButtonData WithAdditionalAction(Action newAction)
+    {
+        _additionalAction = newAction;
+        return this;
     }
 }

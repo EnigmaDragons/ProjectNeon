@@ -28,10 +28,12 @@ public class UnlocksToShowProcessor : MonoBehaviour, ILocalizeTerms
         var unshownAdventureUnlocks =
             adventures.Where(x => !x.IsLocked 
                 && !progressionData.HasShownUnlockForAdventure(x.id));
-
+        
+        if (heroes.Count(x => progressionData.RunsFinished >= x.AdventuresPlayedBeforeUnlocked) >= 9)
+            Achievements.Record(Achievement.Progress9HeroesUnlocked);
+        
         var unshownHeroUnlocks = heroes
-            .Where(x => x.AdventuresPlayedBeforeUnlocked > 0 && progressionData.RunsFinished >= x.AdventuresPlayedBeforeUnlocked 
-                && !progressionData.HasShownUnlockForHeroId(x.Id));
+            .Where(x => x.AdventuresPlayedBeforeUnlocked > 0 && progressionData.RunsFinished >= x.AdventuresPlayedBeforeUnlocked && !progressionData.HasShownUnlockForHeroId(x.Id));
 
         var allUnlocksToShow = 
             unshownAdventureUnlocks.Select(a => new UnlockUiData(ProgressionData.UnlockTypeAdventure, a.id, "Unlocks/UnlockAdventureHeader", a.MapTitleTerm, a.AdventureImage))

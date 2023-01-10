@@ -26,7 +26,9 @@ public class VisualFlyInFromRight : MonoBehaviour
         _isAnimating = true;
         transform.position = _initialPosition;
         var initialTarget = new Vector3(0, _initialPosition.y, _initialPosition.z);
-        var glideOffset = (glideDistance / (shouldFlyOut ? 2 : 1)) * (_initialPosition.x < 0 ? -1 : 1);
+        var glideOffset = shouldGlide 
+            ? (glideDistance / (shouldFlyOut ? 2 : 1)) * (_initialPosition.x < 0 ? -1 : 1) 
+            : 0;
         if (shouldGlide)
             initialTarget += new Vector3(glideOffset, 0, 0);
         

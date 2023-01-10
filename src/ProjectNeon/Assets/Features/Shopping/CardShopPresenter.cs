@@ -38,6 +38,8 @@ public class CardShopPresenter : OnMessage<RefreshShop, CardPurchased>
     protected override void AfterDisable()
     {
         PublishShopPurchaseMetricIfRelevant();
+        if (_selection.Cards.Count == _numCards)
+            Achievements.Record(Achievement.MiscShoppingSpree);
         _selection = null;
         Message.Publish(new AutoSaveRequested());
     }
