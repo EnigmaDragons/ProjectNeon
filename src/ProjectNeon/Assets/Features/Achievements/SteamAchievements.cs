@@ -9,6 +9,9 @@ public class SteamAchievements : IAchievements
     {
         try
         {
+            if (!SteamManager.Initialized)
+                return;
+            
             SteamUserStats.GetAchievement(achievementId, out var isRecordedAlready);
             if (!isRecordedAlready)
                 SteamUserStats.SetAchievement(achievementId);
