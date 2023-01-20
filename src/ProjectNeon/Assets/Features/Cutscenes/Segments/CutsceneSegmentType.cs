@@ -13,4 +13,7 @@ public enum CutsceneSegmentType
     PlayerLine = 9,
     ActivateGlitchEffect = 10,
     DeactivateGlitchEffect = 11,
+    FadeOut = 12,
+    FadeIn = 13,
+    TriggerCutsceneEvent = 14,
 }

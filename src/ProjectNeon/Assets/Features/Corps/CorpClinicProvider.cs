@@ -76,7 +76,7 @@ public class CorpClinicProvider : ScriptableObject, ILocalizeTerms
 
     public string[] GetLocalizeTerms()
     {
-        var implantProvider = new ImplantClinicServiceProviderV4(party, adventure.Adventure.NumOfImplantOptions, DeterministicRng.CreateRandom(), clinicState.IsTutorial, GetRarityChances());
+        var implantProvider = new ImplantClinicServiceProviderV4(party, 1, DeterministicRng.CreateRandom(), clinicState.IsTutorial, GetRarityChances());
         var blessingProvider = new BlessingClinicServiceProviderV4(party, blessingsV4, DeterministicRng.CreateRandom());
         return implantProvider.GetLocalizeTerms().Concat(blessingProvider.GetLocalizeTerms()).ToArray();
     }

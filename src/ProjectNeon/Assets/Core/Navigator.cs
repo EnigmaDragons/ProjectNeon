@@ -28,6 +28,7 @@ public sealed class Navigator : ScriptableObject
     public void NavigateToSettingsScene() => NavigateTo("SettingsScene");
     public void NavigateToDifficultyScene() => NavigateTo("DifficultySelection");
     public void NavigateToWishlistScene() => NavigateTo("WishlistScene");
+    public void NavigateToFinalCreditsScene() => NavigateTo("CreditsScene");
     
     public void NavigateBack()
     {

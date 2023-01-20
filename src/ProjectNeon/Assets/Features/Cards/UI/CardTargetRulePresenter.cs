@@ -88,6 +88,9 @@ public class CardTargetRulePresenter : MonoBehaviour, ILocalizeTerms
             TargetsAnyone,
             TargetsAnyoneExceptOwner,
             TargetsEveryoneExcept,
-            TargetsEveryoneExceptOwner
+            TargetsEveryoneExceptOwner,
+            TargetsRandom,
+            TargetsRandomAlly,
+            TargetsRandomEnemy
         };
 }

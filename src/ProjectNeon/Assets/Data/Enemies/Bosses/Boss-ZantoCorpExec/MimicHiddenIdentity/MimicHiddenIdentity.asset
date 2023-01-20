@@ -81,7 +81,8 @@ MonoBehaviour:
       estimatedPerTurnTotalValue: 0
       calculatedPowerLevel: 0
     startOfBattleEffects:
-    - EffectType: 75
+    - Id: 10030
+      EffectType: 75
       Conditions: []
       BaseAmount:
         UseConstant: 0
@@ -99,7 +100,7 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
-      StatusTag: 0
+      StatusTag: 9
       StatusDetailText: 'When HP Damaged: Kill all allies and leave the battle'
       TurnDelay: 0
       Formula: 
@@ -132,6 +133,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 2197438d5f9402745a0612630cb045e1, type: 2}
     - {fileID: 11400000, guid: 5bd286df436083644949817b6064fabd, type: 2}
     - {fileID: 11400000, guid: f557032599fcae34e8f618c4be4326d4, type: 2}
+    CardsTheyAppearsToHave: []
   maxCopies: 0
   minimumAllies: 0
   damageType: 3

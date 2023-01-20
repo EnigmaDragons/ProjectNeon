@@ -8,6 +8,7 @@ public sealed class ListDisplayWindow : EditorWindow
     public string[] Items;
     public string[] Labels;
     public string Title;
+    public Object[] Selectables;
 
     Vector2 scrollPosition = Vector2.zero;
 
@@ -36,13 +37,29 @@ public sealed class ListDisplayWindow : EditorWindow
         return this;
     }
     
+    public ListDisplayWindow Initialized(string title, string itemLabel, string[] items, Object[] clickSelectables)
+    {
+        Title = title;
+        Items = items;
+        Labels = items.Select(_ => itemLabel).ToArray();
+        Selectables = clickSelectables;
+        return this;
+    }
+    
     public void OnGUI()
     {
         EditorGUILayout.LabelField(Title);
         DrawUILine(Color.black);
         
         scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition, GUILayout.Width(Screen.width), GUILayout.Height(Screen.height - 16));
-        Items.ForEachIndex((item, idx) => EditorGUILayout.LabelField(Labels[idx], item, GUILayout.Width(Screen.width - 8)));
+        if (Selectables != null)
+            Items.ForEachIndex((item, idx) =>
+            {
+                if (GUILayout.Button($"{Labels[idx],-20} {item}", new GUIStyle { alignment = TextAnchor.MiddleLeft }))
+                    Selection.objects = new[] { Selectables[idx] };
+            });
+        else
+            Items.ForEachIndex((item, idx) => EditorGUILayout.LabelField(Labels[idx], item, GUILayout.Width(Screen.width - 8)));
         DrawUILine(Color.black);
         if (GUILayout.Button("Dismiss")) 
             Close();

@@ -93,8 +93,9 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider, ILocalizeTe
             cost = 3;
         else if (rarity == Rarity.Epic)
             cost = 4;
+        var nameTerm = $"Clinics/Implant{lossStat.ToString()}{gainStat.ToString()}";
         return new ClinicServiceButtonData(
-            $"Clinics/Implant{lossStat.ToString()}{gainStat.ToString()}",
+            nameTerm,
             rarity == Rarity.Rare || rarity == Rarity.Epic
                 ? string.Format("Clinics/ImplantLossless".ToLocalized(), $"<b>{gainAmount} {gainStat.ToString().WithSpaceBetweenWords()}</b>", $"<b>{hero.NameTerm.ToLocalized()}</b>")
                 : string.Format("Clinics/ImplantTradeOff".ToLocalized(), $"<b>{lossAmount} {lossStat.ToString().WithSpaceBetweenWords()}</b>", $"<b>{gainAmount} {gainStat.ToString().WithSpaceBetweenWords()}</b>", $"<b>{hero.NameTerm.ToLocalized()}</b>"),
@@ -109,7 +110,8 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider, ILocalizeTe
             }, 
             Array.Empty<EffectData>(),
             "Medigeneix",
-            rarity);
+            rarity,
+            $"Medigeneix-{hero.NameTerm.ToEnglish()}-{nameTerm.ToEnglish()}");
     }
 
     private void AdjustHero(Hero hero, StatType lossStat, int lossAmount, StatType gainStat, int gainAmount)

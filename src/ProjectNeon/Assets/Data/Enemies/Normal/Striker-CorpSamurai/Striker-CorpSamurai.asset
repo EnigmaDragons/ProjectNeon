@@ -27,10 +27,11 @@ MonoBehaviour:
     CardTagPriority: 
     UnpreferredCardTags: 
     RotatePlayingCardTags: 
+    IgnoreDesignatedAttackerRole: 0
   preferredTurnOrder: 99
   prefab: {fileID: 1851497885818519504, guid: 0b94d1007a391a5429506f7a7e1d263e, type: 3}
   materialType: 1
-  libraryCameraOffset: {x: 0, y: -0.8, z: 2.8}
+  libraryCameraOffset: {x: 0, y: -0.8, z: 2.6}
   deathEffect:
     UseConstant: 1
     ConstantValue: 
@@ -80,7 +81,8 @@ MonoBehaviour:
       estimatedPerTurnTotalValue: 111.7709
       calculatedPowerLevel: 276
     startOfBattleEffects:
-    - EffectType: 74
+    - Id: 10033
+      EffectType: 74
       Conditions: []
       BaseAmount:
         UseConstant: 0
@@ -111,6 +113,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
       ReactionConditionType: 30
       ReactionEffectScope:
         UseConstant: 1
@@ -124,7 +127,8 @@ MonoBehaviour:
         cardActions: {fileID: 11400000, guid: e420af7b0dc751c4baef209c58236e74, type: 2}
       BonusCardType: {fileID: 0}
       Unpreventable: 0
-    - EffectType: 74
+    - Id: 0
+      EffectType: 74
       Conditions: []
       BaseAmount:
         UseConstant: 0
@@ -155,6 +159,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
       ReactionConditionType: 31
       ReactionEffectScope:
         UseConstant: 1
@@ -173,6 +178,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 3d537d0c252acda42805d3e8a2ea2d5b, type: 2}
     - {fileID: 11400000, guid: c4f3b35153cbc614b9a51d8b89db2a1d, type: 2}
     - {fileID: 11400000, guid: c44a554143cabd84fbbe1b5bd4517216, type: 2}
+    CardsTheyAppearsToHave: []
   maxCopies: 2
   minimumAllies: 0
   damageType: 1

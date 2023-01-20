@@ -3,7 +3,7 @@ using System.Linq;
 
 public class BattleReactions
 {
-    private bool _loggingEnabled = false;
+    private bool _loggingEnabled = true;
     private readonly Queue<ProposedReaction> _instantReactions;
     private readonly Queue<ProposedReaction> _cardReactions;
     

@@ -23,7 +23,7 @@ public class ClinicServiceButton : MonoBehaviour
             button.onClick.AddListener(() =>
             {
                 party.UpdateCreditsBy(-data.Cost);
-                data.Action();
+                data.Select();
                 Message.Publish(new UpdateClinic());
             });
         if (data.Cost == 0)

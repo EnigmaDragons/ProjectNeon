@@ -27,6 +27,7 @@ MonoBehaviour:
     CardTagPriority: 
     UnpreferredCardTags: 
     RotatePlayingCardTags: 
+    IgnoreDesignatedAttackerRole: 0
   preferredTurnOrder: 99
   prefab: {fileID: 5052724444396883319, guid: f4c680fcb7b05a0409e20e921e9c1946, type: 3}
   materialType: 2
@@ -80,7 +81,8 @@ MonoBehaviour:
       estimatedPerTurnTotalValue: 15.84862
       calculatedPowerLevel: 72
     startOfBattleEffects:
-    - EffectType: 58
+    - Id: 0
+      EffectType: 58
       Conditions: []
       BaseAmount:
         UseConstant: 1
@@ -129,6 +131,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 7b8a00e986c134e4dbf208e9cb002fdb, type: 2}
     - {fileID: 11400000, guid: 8664b6e1d3874cc46b60e052e564a1de, type: 2}
     - {fileID: 11400000, guid: 54d8f1eb336df2549886cf14aa9a2983, type: 2}
+    CardsTheyAppearsToHave: []
   maxCopies: 4
   minimumAllies: 0
   damageType: 1

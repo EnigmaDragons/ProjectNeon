@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using I2.Loc;
@@ -32,6 +33,7 @@ public class EnemyInstance : EnemyType
     public Vector3 LibraryCameraOffset { get; }
     public TurnAI AI { get; }
     public IEnumerable<CardType> Cards { get; }
+    public IEnumerable<CardType> CardsItAppearsToHave { get; }
     public BattleRole Role { get; }
     public EnemyTier Tier { get; }
     public Corp Corp => _corp;
@@ -56,9 +58,10 @@ public class EnemyInstance : EnemyType
     public EnemyInstance(int enemyId, ResourceType resourceType, EffectData[] startOfBattleEffects, int startingResourceAmount, 
         int resourceGainPerTurn, int maxResourceAmount, int maxHp, int maxShield, int startingShield, 
         int attack, int magic, int leadership, float armor, float resistance, int cardsPerTurn, 
-        GameObject prefab, Vector3 libraryCameraOffset, TurnAI ai, IEnumerable<CardType> cards, BattleRole role, EnemyTier tier, int powerLevel, 
-        int preferredTurnOrder, string deathEffect, bool isHasty, bool isUnique, Dictionary<string, int> counterAdjustments, Corp corp,
-        CharacterAnimations animations, CharacterAnimationSoundSet sounds, MemberMaterialType materialType, string descriptionTerm, IEnumerable<ReactionCardType> reactionCards, AiPreferences aiPreferences)
+        GameObject prefab, Vector3 libraryCameraOffset, TurnAI ai, IEnumerable<CardType> cards, IEnumerable<CardType> cardsItAppearsToHave, 
+        BattleRole role, EnemyTier tier, int powerLevel, int preferredTurnOrder, string deathEffect, bool isHasty, bool isUnique, 
+        Dictionary<string, int> counterAdjustments, Corp corp, CharacterAnimations animations, CharacterAnimationSoundSet sounds, 
+        MemberMaterialType materialType, string descriptionTerm, IEnumerable<ReactionCardType> reactionCards, AiPreferences aiPreferences)
     {
         _enemyId = enemyId;
         _resourceType = resourceType;
@@ -82,6 +85,7 @@ public class EnemyInstance : EnemyType
         LibraryCameraOffset = libraryCameraOffset;
         AI = ai;
         Cards = cards;
+        CardsItAppearsToHave = cardsItAppearsToHave;
         Role = role;
         Tier = tier;
         PowerLevel = powerLevel;

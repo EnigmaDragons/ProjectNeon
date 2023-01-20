@@ -93,9 +93,10 @@ MonoBehaviour:
     enemySpawnOffset: {x: 0, y: 0, z: 0}
   - type: 1
     battleEffect:
-      Id: 2346
-      EffectType: 86
-      Conditions: []
+      Id: 3903
+      EffectType: 70
+      Conditions:
+      - {fileID: 11400000, guid: c00249086dc15be4688faeb22fded2b4, type: 2}
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -114,8 +115,8 @@ MonoBehaviour:
       ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
-      TurnDelay: 1
-      Formula: 
+      TurnDelay: 0
+      Formula: 6.5 * Power
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
@@ -124,7 +125,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
-      ReferencedSequence: {fileID: 11400000, guid: f9b561019d7b74648bfe427c671f3030, type: 2}
+      ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
       ReactionConditionType: 0
       ReactionEffectScope:
@@ -138,6 +139,84 @@ MonoBehaviour:
         scope: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
+    conditionData:
+      ConditionType: 0
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedEffect: {fileID: 0}
+    characterAnimation: {fileID: 0}
+    characterAnimation2:
+      Type: 0
+      Conditions: []
+    atTargetAnimation:
+      animation:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      size: 1
+      speed: 1
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        Variable: {fileID: 0}
+      skipWaitingForCompletion: 0
+      conditions: []
+    enemyToSpawn: {fileID: 0}
+    enemySpawnOffset: {x: 0, y: 0, z: 0}
+  - type: 1
+    battleEffect:
+      Id: 3904
+      EffectType: 104
+      Conditions: []
+      BaseAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      DurationFormula: 1
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 7
+      StatusDetailText: If stealthed deal lots of damage to a random enemy
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionTimingWindow: 0
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 11400000, guid: 771bdff1444f26942a4734c8d2fdb720, type: 2}
       Unpreventable: 0
     conditionData:
       ConditionType: 0

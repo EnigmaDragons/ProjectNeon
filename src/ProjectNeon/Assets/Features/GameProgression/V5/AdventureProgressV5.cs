@@ -15,6 +15,7 @@ public class AdventureProgressV5 : AdventureProgressBase
     [SerializeField] private int rngSeed = Rng.NewSeed();
     [SerializeField] private Difficulty difficulty;
 
+    private const bool ShouldDebug = false; 
     private DictionaryWithDefault<string, bool> _storyStates = new DictionaryWithDefault<string, bool>(false);
 
     public override int AdventureId => currentAdventure.Adventure.Id;
@@ -30,7 +31,7 @@ public class AdventureProgressV5 : AdventureProgressBase
     public override bool UsesRewardXp => false;
     public override float BonusXpLevelFactor => currentAdventure.Adventure.BonusXpFactor;
     public override bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
-    public override bool IsFinalBoss => IsFinalStage && CurrentStageSegment.MapNodeType == MapNodeType.Boss;
+    public override bool IsFinalBoss => IsFinalStage && currentSegmentIndex < CurrentStageLength && CurrentStageSegment.MapNodeType == MapNodeType.Boss;
     public override float ProgressToBoss => CurrentStageProgress < 1 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCountToBoss;
     private int CurrentStageLength => CurrentChapter.SegmentCount;    
     public override float[] RisingActionPoints => CurrentChapter.Segments
@@ -201,7 +202,10 @@ public class AdventureProgressV5 : AdventureProgressBase
     public override void SetStoryState(string state, bool value) => _storyStates[state] = value;
     public override bool IsTrue(string state)
     {
-        _storyStates.ForEach(s => Log.Info($"{s.Key} - {s.Value}"));
+        if (ShouldDebug)
+            _storyStates.ForEach(s => Log.Info($"{s.Key} - {s.Value}"));
+        if (ShouldDebug && _storyStates.Count == 0)
+            Log.Info("No Story States");
         return _storyStates[state];
     }
 

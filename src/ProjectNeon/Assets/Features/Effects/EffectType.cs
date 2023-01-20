@@ -1,5 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// LAST NUMBER USED: 103
+// LAST NUMBER USED: 108
 
 public enum EffectType
 {
@@ -20,6 +20,7 @@ public enum EffectType
     AtStartOfTurn = 54,
     AtEndOfTurn = 66,
     DelayedStartOfTurn = 23,
+    PlayCardAtStartOfTurn = 104,
 
     // Resets
     RemoveDebuffs = 4,
@@ -41,6 +42,7 @@ public enum EffectType
     // Reactions
     ReactWithEffect = 74,
     ReactWithCard = 75,
+    ReactOncePerTurnWithEffect = 108,
     OnDeath = 25,
 
     // Transformers
@@ -62,6 +64,7 @@ public enum EffectType
     // Statuses
     DisableForTurns = 13,
     EnterStealth = 58,
+    ExitStealth = 107,
     GainDoubleDamage = 57,
     DuplicateStatesOfType = 65,
     DuplicateStatesOfTypeToRandomEnemy = 90,
@@ -81,7 +84,7 @@ public enum EffectType
     ApplyMultiplicativeStatInjury = 72,
     
     //Variables
-    EvaluateCondition = 102,
+    RecordConditionIsTrue = 102,
     AdjustScopedVariable = 103,
     
     // Miscellaneous
@@ -97,5 +100,7 @@ public enum EffectType
     AdjustBattleRewardFormula = 91,
     TransformCardsIntoCard = 93,
     AdjustOwnersPrimaryResourceBasedOnTargetShieldSum = 98,
-    RandomEffect = 101
+    RandomEffect = 101,
+    RandomizeEnemyPosition = 105,
+    MakeTargetingRough = 106,
 }

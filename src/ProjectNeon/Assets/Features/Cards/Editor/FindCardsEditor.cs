@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
+using Object = UnityEngine.Object;
 
 public class FindCardsEditor : EditorWindow
 {
@@ -52,6 +53,14 @@ public class FindCardsEditor : EditorWindow
     
     //By Resource Type
     private string _resourceType;
+    
+    //By Action Type
+    private CardBattleActionType _actionType;
+    private string[] GetAllCardsWithActionType(CardBattleActionType actionType) =>
+        GetAllInstances<CardType>()
+            .Where(e => e?.Actions != null && !e.IsWip && e.Actions.Any(data => data?.Actions != null && data.Actions.Any(action => action?.Type == actionType)))
+            .Select(e => e.name)
+            .ToArray();
 
     private Vector2 _scrollPos;
     
@@ -60,14 +69,15 @@ public class FindCardsEditor : EditorWindow
         _scrollPos = EditorGUILayout.BeginScrollView(_scrollPos);
         
         _effectType = (EffectType)EditorGUILayout.EnumPopup("EffectType", _effectType);
-        if (GUILayout.Button("Search By Effect Type")) 
+        if (GUILayout.Button("Search By Effect Type"))
         {
-            var effects = GetAllInstances<CardActionsData>()
-                .Where(e => e.Actions.Any(x => x.Type == CardBattleActionType.Battle && x.BattleEffect.EffectType == _effectType))
-                .Select(e => e.name)
+            var effects = GetAllInstances<CardType>()
+                .Where(c => c?.Actions != null && !c.IsWip)
+                .Where(c => c.Actions != null && c.Actions.Any(e => e.Actions.Any(x => x.Type == CardBattleActionType.Battle && x.BattleEffect.EffectType == _effectType)))
+                .Select(e => ($"{e.name} - Type: '{e.TypeDescription}'", e))
                 .ToArray();
             GetWindow<ListDisplayWindow>()
-                .Initialized($"{_effectType} - {effects.Length} uses", effects)
+                .Initialized($"{_effectType} - {effects.Length} uses", "Effect: ", effects.Select(e => e.Item1).ToArray(), effects.Select(e => e.Item2).Cast<Object>().ToArray())
                 .Show();
             GUIUtility.ExitGUI();
         }
@@ -359,6 +369,30 @@ public class FindCardsEditor : EditorWindow
                 .ToArray();
             GetWindow<ListDisplayWindow>()
                 .Initialized($"{_effectType} - {effects.Length} uses", effects)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+
+        DrawUILine();
+        _actionType = (CardBattleActionType)EditorGUILayout.EnumPopup("BattleActionType", _actionType);
+        if (GUILayout.Button("Find By Action Type"))
+        {
+            var cards = GetAllCardsWithActionType(_actionType);
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"{_actionType} - {cards.Length} uses", cards)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+        
+        DrawUILine();
+        if (GUILayout.Button("Find Cards Missing Action Data"))
+        {
+            var cards = GetAllInstances<CardType>()
+                .Where(x => !x.IsWip && x.ActionSequences.Any(sequence => sequence.CardActions == null))
+                .Select(x => x.name)
+                .ToArray();
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"{cards.Length}", cards)
                 .Show();
             GUIUtility.ExitGUI();
         }

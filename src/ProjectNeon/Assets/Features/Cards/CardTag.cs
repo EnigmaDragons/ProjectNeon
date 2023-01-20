@@ -55,4 +55,8 @@ public enum CardTag
     IgnoreCardOrder = 101,
     CanPlayThisReactionEvenWhenStunned = 102,
     RemoveDodge = 103,
+    Mark = 104,
+    RemoveDebuffs = 105,
+    RequiresMark = 106,
+    Utility = 107,
 }

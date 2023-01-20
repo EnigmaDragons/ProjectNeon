@@ -18,9 +18,9 @@ MonoBehaviour:
   description: Next turn, <b>Sneaky:</b> deal {IE[0]}
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   descriptionV2:
-    text: Next turn, <b>Sneaky:</b> deal {0}
+    text: 'Start of Next turn play card on random enemy: <b>Sneaky:</b> deal {0}'
     formatArgs:
-    - '{IE[0]}'
+    - '{E[0]}'
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -31,7 +31,7 @@ MonoBehaviour:
   rarity: 3
   actionSequences:
   - scope: 0
-    group: 1
+    group: 0
     cardActions: {fileID: 11400000, guid: a18326b4fe49a524280ffec481802dde, type: 2}
     repeatX: 0
     repeatCount: 0

@@ -9,7 +9,7 @@ public class OnlyEnabledInV2 : MonoBehaviour
     private void Awake()
     {
         var impliedTargets = targets.Any() ? targets : new [] { gameObject };
-        if (!adventure.Adventure.IsV2)
+        if (adventure.Adventure != null && !adventure.Adventure.IsV2)
             impliedTargets.ForEach(o => o.SetActive(false));
     }
 }

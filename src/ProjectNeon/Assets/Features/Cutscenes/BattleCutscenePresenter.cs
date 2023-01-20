@@ -36,6 +36,7 @@ public class BattleCutscenePresenter : BaseCutscenePresenter
             enemies[i].Init($"enemy{i+1}");
             Characters.Add(enemies[i]);
         }
+        
         DebugLog($"Num Cutscene Segments {cutscene.StartBattleCutscene.Segments.Length}");
         yield return new WaitForSeconds(1f);
         MessageGroup.Start(

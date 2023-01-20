@@ -93,21 +93,13 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
             else
             {
                 var tmp = targetMaps;
-                if (sequence.Scope == Scope.RandomExceptTarget)
-                    getTargets.Add(() =>
-                    {
-                        var targets = battleState.GetPossibleConsciousTargets(card.Owner, sequence.Group, Scope.RandomExceptTarget);
-                        targets = targets.Where(x => x.Members[0].Id != targetingState.TargetMember.Value).ToArray();
-                        return targets.Any() ? targets.Shuffled().First() : new NoTarget();
-                    });
-                else
-                    getTargets.Add(() =>
-                    {
-                        if (memberToTargetMap[tmp].ContainsKey(targetingState.TargetMember.Value))
-                            return memberToTargetMap[tmp][targetingState.TargetMember.Value];
-                        Log.Error("Get Targets was asked for when the targets were invalid");
-                        return memberToTargetMap[tmp].First().Value;
-                    });
+                getTargets.Add(() =>
+                {
+                    if (memberToTargetMap[tmp].ContainsKey(targetingState.TargetMember.Value))
+                        return memberToTargetMap[tmp][targetingState.TargetMember.Value];
+                    Log.Error("Get Targets was asked for when the targets were invalid");
+                    return memberToTargetMap[tmp].First().Value;
+                });
                 var scopeOne = battleState.GetPossibleConsciousTargets(card.Owner, sequence.Group, Scope.One);
                 memberToTargetMap.Add(battleState.GetPossibleConsciousTargets(card.Owner, sequence.Group, sequence.Scope)
                     .ToDictionary(x =>

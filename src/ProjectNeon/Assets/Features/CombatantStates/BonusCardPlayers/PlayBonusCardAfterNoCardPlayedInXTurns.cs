@@ -30,4 +30,7 @@ public class PlayBonusCardAfterNoCardPlayedInXTurns : TemporalStateBase, IBonusC
             ? Maybe<BonusCardDetails>.Missing()
             : new BonusCardDetails(_bonusCard, new ResourceQuantity { ResourceType = _bonusCard.Cost.ResourceType.Name, Amount = _bonusCard.Cost.BaseAmount });
     }
+    
+    public Maybe<BonusCardDetails> GetBonusCardOnStartOfTurnPhase(BattleStateSnapshot snapshot)
+        => Maybe<BonusCardDetails>.Missing();
 }

@@ -6,6 +6,7 @@ public class PickNewHeroFrom3RandomSegment : StageSegment, ILocalizeTerms
 {
     [SerializeField] private Library library;
     [SerializeField] private Party currentParty;
+    [SerializeField] private CurrentAdventure currentAdventure;
 
     public override string Name => $"Party Change Event";
     public override void Start()
@@ -15,7 +16,9 @@ public class PickNewHeroFrom3RandomSegment : StageSegment, ILocalizeTerms
         Message.Publish(new GetUserSelectedHero(prompt, featuredThree, h =>
         {
             AllMetrics.PublishHeroSelected(h.NameTerm().ToEnglish(), featuredThree.Select(x => x.NameTerm().ToEnglish()).ToArray(), currentParty.Heroes.Select(x => x.NameTerm().ToEnglish()).ToArray());
-            Message.Publish(new AddHeroToPartyRequested(h));
+            Message.Publish(new AddHeroToPartyRequested(h));        
+            if (currentAdventure != null && currentParty.Heroes.Length == currentAdventure.Adventure.PartySize && currentParty.Heroes.All(h => h.Sex == CharacterSex.Female))
+                Achievements.Record(Achievement.MiscGirlPower);
             Async.ExecuteAfterDelay(0.5f, () => Message.Publish(new ToggleNamedTarget("HeroSelectionView")));
         }));
     }

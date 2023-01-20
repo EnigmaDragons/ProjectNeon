@@ -38,6 +38,7 @@ public class QualityAssurance
         var (prefabCount, prefabFailures) = QaSpecificPrefabs();
         var (encounterCount, encounterFailures) = QaAllSpecificEncounterSegments();
         var (adventureCount, adventureFailures) = QaAdventures();
+        var (stageSegmentCount, stageSegmentFailures) = QaStageSegments();
 
         var qaPassed = enemyFailures.None() && cardFailures.None() && heroFailures.None() && cutsceneFailures.None() && prefabFailures.None() && encounterFailures.None() && adventureFailures.None();
         var qaResultTerm = qaPassed ? "Passed" : "Failed - See Details Below";
@@ -50,6 +51,7 @@ public class QualityAssurance
         LogReport("Prefabs", prefabCount, prefabFailures);
         LogReport("Encounters", encounterCount, encounterFailures);
         LogReport("Adventures", adventureCount, adventureFailures);
+        LogReport("StageSegments", stageSegmentCount, stageSegmentFailures);
         Log.Info("--------------------------------------------------------------");
 
         ErrorReport.ReenableAfterQa();
@@ -77,6 +79,28 @@ public class QualityAssurance
         return (1, badItems);
     }
 
+    private static (int stageSegmentCount, List<ValidationResult> stageSegmentFailures) QaStageSegments()
+    {
+        var stageSegments = ScriptableExtensions.GetAllInstances<StageSegment>();
+        var byId = new Dictionary<int, List<StageSegment>>();
+        foreach (var s in stageSegments)
+        {
+            var id = s.Id;
+            if (byId.TryGetValue(id, out var list))
+                list.Add(s);
+            else
+                byId[id] = new List<StageSegment> { s };
+        }
+
+        var failures = byId
+            .Where(i => i.Value.Count > 1)
+            .SelectMany(i =>
+                i.Value.Select(s => new ValidationResult(s.name, new List<string> { $"Has Duplicate Id {i.Key}" })))
+            .ToList();
+
+        return (stageSegments.Length, failures);
+    }
+    
     private static (int adventureCount, List<ValidationResult> adventureFailures) QaAdventures()
     {
         var adventures = ScriptableExtensions.GetAllInstances<Library>().SelectMany(l => l.UnlockedAdventures).ToArray();
@@ -166,6 +190,9 @@ public class QualityAssurance
             for (var i = 0; i < c.Segments.Length; i++)
             {
                 var s = c.Segments[i];
+                if (s.SegmentType == CutsceneSegmentType.Choice && !s.StoryEvent.InCutscene)
+                    issues.Add($"Cutscene Segment Choice not marked as In Cutscene {c.name}");
+                
                 if (s.SegmentType != CutsceneSegmentType.DialogueLine && s.SegmentType != CutsceneSegmentType.NarratorLine && s.SegmentType != CutsceneSegmentType.PlayerLine)
                     continue;
                 var text = s.Term.ToEnglish();
@@ -296,14 +323,18 @@ public class QualityAssurance
 
     private static (int, List<ValidationResult>) QaAllCards()
     {
-        var items = ScriptableExtensions.GetAllInstances<CardType>();
+        var items = ScriptableExtensions.GetAllInstances<CardType>().Where(c => !c.IsWip).ToArray();
         var failures = new List<ValidationResult>();
         var itemCount = items.Length;
         foreach (var i in items)
         {
             var issues = new List<string>();
-            if (i.cost.RawResourceType == null) 
+            if (i.Name == null)
+                issues.Add($"Broken Card: Missing Name");
+            else if (i.cost == null || i.cost.RawResourceType == null) 
                 issues.Add($"Broken Card: {i.Name} has Null Cost");
+            else if (i.ActionSequences.Any(e => e.CardActions == null))
+                issues.Add($"Broken Card: {i.Name} has a Null Card Action");
             if (issues.Any())
                 failures.Add(new ValidationResult($"{i.Name} - {i.id}", issues));
         }
@@ -314,7 +345,7 @@ public class QualityAssurance
     private static Regex _specialTag = new Regex(@"{\[(.+?)]}", RegexOptions.IgnoreCase);
     private static string[] _validSpecialTags = new[] { "Originator", "PrimaryStat", "SaveGameVersion", "GameVersion", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" };
     private static Regex _xmlTags = new Regex(@"<.+?>");
-    private static Regex _validXmlTags = new Regex(@"<(b|i|\/b|\/i|\/size|\/color|color=#......|size=\d+%|sprite index=\d+|s)>");
+    private static Regex _validXmlTags = new Regex(@"<(b|i|\/b|\/i|\/size|\/color|color=#......|size=\d+%|sprite index=\d+|s|\/s)>");
     private static Regex _specialOpenTag = new Regex(@"{\[");
     private static Regex _specialCloseTag = new Regex("]}");
     private static Regex _invalidSpecialTag = new Regex(@"{[^\[]t:.*[^]]}", RegexOptions.IgnoreCase);

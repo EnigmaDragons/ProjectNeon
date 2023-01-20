@@ -23,6 +23,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     [SerializeField] private BattleCutscenePresenter battleCutscenePresenter;
     [SerializeField] private ConfirmPlayerTurnV2 confirm;
     [SerializeField] private BattleGlobalEffectCardsPhase globalEffectCardsPhases;
+    [SerializeField] private StartOfTurnCardsPhase startOfTurnCardsPhase;
 
     private bool _triggeredBattleFinish;
     private bool _playerTurnConfirmed = false;
@@ -31,6 +32,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     
     private void Awake()
     {
+        MessageGroup.TerminateAndClear();
         state.SetPhase(BattleV2Phase.NotBegun);
         cards.ClearAll();
         confirm.Init(resolutions);
@@ -90,6 +92,13 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
             BeginPhase(BattleV2Phase.GlobalEffectCards);
             globalEffectCardsPhases.BeginPlayingAllGlobalEffectCards();
         });
+    
+    private void BeginStartOfTurnCardsPhase() =>
+        ResolveBattleFinishedOrExecute(() =>
+        {
+            BeginPhase(BattleV2Phase.StartOfTurnCards);
+            startOfTurnCardsPhase.BeginPlayingAllStartOfTurnCards();
+        });
 
     private void BeginHastyEnemiesPhase() =>
         ResolveBattleFinishedOrExecute(() =>
@@ -145,7 +154,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         if (state.TurnNumber == 1)
             BeginGlobalEffectCardsPhase();
         else
-            BeginHastyEnemiesPhase();
+            BeginStartOfTurnCardsPhase();
     }
 
     protected override void Execute(EndOfTurnStatusEffectsResolved msg) => BeginStartOfTurn();
@@ -158,6 +167,8 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         if (state.BattleIsOver())
             FinishBattle();
         else if (msg.Phase == BattleV2Phase.GlobalEffectCards)
+            BeginStartOfTurnCardsPhase();
+        else if (msg.Phase == BattleV2Phase.StartOfTurnCards)
             BeginHastyEnemiesPhase();
         else if (msg.Phase == BattleV2Phase.HastyEnemyCards)
             BeginPlayerCardsPhase();

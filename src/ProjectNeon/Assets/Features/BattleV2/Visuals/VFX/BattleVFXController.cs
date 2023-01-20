@@ -44,7 +44,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
             Log.Warn($"No VFX of type {e.EffectName}");
             Message.Publish(new Finished<BattleEffectAnimationRequested>());
         }
-        else if (e.Scope.Equals(Scope.One) || e.Scope.Equals(Scope.OneExceptSelf) || e.Scope.Equals(Scope.Random) || e.Scope.Equals(Scope.RandomExceptTarget))
+        else if (e.Scope.Equals(Scope.One) || e.Scope.Equals(Scope.OneExceptSelf) || e.Scope.Equals(Scope.Random))
         {
             if (e.Target.Members.None())
             {

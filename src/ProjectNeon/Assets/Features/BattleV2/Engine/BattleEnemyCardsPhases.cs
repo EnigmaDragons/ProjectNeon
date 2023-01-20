@@ -27,6 +27,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, CardResoluti
         _enemiesToActThisTurn = state.Enemies
             .Where(e => e.Member.IsConscious())
             .OrderBy(e => e.Enemy.PreferredTurnOrder)
+            .ThenBy(e => state.GetMaybeTransform(e.Member.Id).IsPresent ? state.GetMaybeTransform(e.Member.Id).Value.position.x : 0)
             .ToList();
         _numberOfCardsPlayedThisTurn = new DictionaryWithDefault<int, int>(0);
     }

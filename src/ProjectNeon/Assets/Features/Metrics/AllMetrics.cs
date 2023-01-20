@@ -41,6 +41,15 @@ public static class AllMetrics
     
     public static void PublishDraftGearSelection(string selectedGearNameOrDescription, string[] optionNameOrDescriptions)
         => Send("draftGearSelected", new OptionSelectionData {selected = selectedGearNameOrDescription, options = optionNameOrDescriptions});
+
+    public static void PublishClinicServiceSelection(int numInitialVouchers, int numFinalVouchers, string[] selecteds, string[] unselected)
+        => Send("clinicServicesSelected", new ClinicServicesSelectionData
+        {
+            numInitialVouchers = numInitialVouchers,
+            numFinalVouchers = numFinalVouchers,
+            selectedServices = selecteds,
+            unselectedServices = unselected
+        });
     
     public static void PublishLevelUpOptionSelection(string heroName, int level, string selectedDescription, string[] optionsDescription)
         => Send("heroLevelUp", new HeroLevelUpSelectionData {heroName = heroName, level = level, selection = selectedDescription, options = optionsDescription});
@@ -153,6 +162,15 @@ public static class AllMetrics
         public string[] options;
     }
 
+    [Serializable]
+    private class ClinicServicesSelectionData
+    {
+        public int numInitialVouchers;
+        public int numFinalVouchers;
+        public string[] selectedServices;
+        public string[] unselectedServices;
+    }
+    
     [Serializable]
     private class HeroLevelUpSelectionData
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnEnemy, DespawnEnemy, CardResolutionFinished, 
-    CardActionPrevented, WaitDuringResolution, ResolveReactionCards, ResolveReaction>
+    CardActionPrevented, WaitDuringResolution, ResolveReactionCards, ResolveReaction, RandomizeEnemyPositions>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private PartyAdventureState partyAdventureState;
@@ -164,10 +164,17 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
 
     protected override void Execute(SpawnEnemy msg)
     {
-        var details = enemies.Spawn(msg.Enemy.ForStage(state.Stage), msg.Offset);
-        var member = details.Member;
-        BattleLog.Write($"Spawned {member.NameTerm.ToEnglish()}");
-        Message.Publish(new MemberSpawned(member, details.Transform));
+        var ctx = new EffectContext(msg.Source, new NoTarget(), msg.Card, ResourceQuantity.None, msg.PaidAmount, partyAdventureState, state.PlayerState, state.RewardState,
+            state.Members, state.PlayerCardZones, new UnpreventableContext(), new SelectionContext(), allCards.GetMap(), state.CreditsAtStartOfBattle, 
+            state.Party.Credits, state.Enemies.ToDictionary(x => x.Member.Id, x => (EnemyType)x.Enemy), () => state.GetNextCardId(), 
+            state.CurrentTurnCardPlays(), state.OwnerTints, state.OwnerBusts, msg.IsReaction, msg.Timing, state.EffectScopedData);
+        if (!msg.Condition.IsPresent || msg.Condition.Value.GetShouldNotApplyReason(ctx).IsMissing)
+        {
+            var details = enemies.Spawn(msg.Enemy.ForStage(state.Stage), msg.Offset, msg.IsReplacing ? msg.Source : Maybe<Member>.Missing());
+            var member = details.Member;
+            BattleLog.Write($"Spawned {member.NameTerm.ToEnglish()}");
+            Message.Publish(new MemberSpawned(member, details.Transform));
+        }
         Message.Publish(new Finished<SpawnEnemy>());
     }
     
@@ -179,9 +186,17 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         BattleLog.Write($"Despawned {msg.Member.NameTerm.ToEnglish()}");
         Message.Publish(new MemberDespawned(msg.Member, pos));
         Message.Publish(new Finished<DespawnEnemy>());
+        if (state.ConsciousEnemyMembers.Length == 0)
+        {
+            BattleLog.Write("All Enemies Defeated!");
+            resolutionZone.ExpirePlayedCards(x => true);
+        }
     }
 
-    protected override void Execute(CardResolutionFinished msg) => StartCoroutine(FinishEffect());
+    protected override void Execute(CardResolutionFinished msg)
+    {
+        StartCoroutine(FinishEffect());
+    } 
     
     private IEnumerator FinishEffect()
     {
@@ -216,6 +231,12 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
     {
         Log.Info("Resolve Reaction Message Received");
         StartCoroutine(ResolveNextReactionCard(msg.Reaction));
+    }
+
+    protected override void Execute(RandomizeEnemyPositions msg)
+    {
+        enemies.RandomizeEnemyPositions();
+        Message.Publish(new Finished<RandomizeEnemyPositions>());
     }
 
     private IEnumerator ResolveNextReactionCard()

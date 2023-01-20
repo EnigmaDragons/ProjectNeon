@@ -38,7 +38,9 @@ public class BattleState : ScriptableObject
     private bool _runStatsWritten = false;
     private EffectScopedData _effectScopedData = new EffectScopedData();
     public EffectScopedData EffectScopedData => _effectScopedData;
-    public void ResetEffectScopedData() => _effectScopedData = new EffectScopedData();
+
+    public void ResetEffectScopedData()
+        => _effectScopedData = new EffectScopedData();
 
     public int CreditsAtStartOfBattle { get; private set; }
     public bool IsSelectingTargets = false;
@@ -394,6 +396,11 @@ public class BattleState : ScriptableObject
             _enemiesById[member.Id] = e;
             _membersById[member.Id] = member;
             _uiTransformsById[member.Id] = gameObject.transform;
+            _uiTransformsById[member.Id].GetComponent<ActiveMemberIndicator>()?.Init(member.Id, false);
+            _uiTransformsById[member.Id].GetComponentInChildren<CharacterCreatorAnimationController>()?.Init(member.Id, _enemiesById[member.Id].Animations, TeamType.Enemies);
+            _uiTransformsById[member.Id].GetComponentInChildren<DeathPresenter>()?.Init(member.Id);
+            if(e.AnimationSounds != null)
+                _uiTransformsById[member.Id].GetComponentInChildren<CharacterAnimationSoundPlayer>()?.Init(member.Id, e.AnimationSounds, gameObject.transform);
             e.SetupMemberState(member, this);
         });
 
@@ -495,6 +502,7 @@ public class BattleState : ScriptableObject
 
     public EnemyInstance GetEnemyById(int memberId) => _enemiesById[memberId];
     public Maybe<Transform> GetMaybeTransform(int memberId) => _uiTransformsById.ValueOrMaybe(memberId);
+    
     public AiPreferences GetAiPreferences(int memberId) => _enemiesById.ValueOrMaybe(memberId).Select(e => e.AIPreferences.WithDefaultsBasedOnRole(e.Role), () => new AiPreferences());
 
     public MemberMaterialType GetMaterialType(int memberId) => _membersById.ValueOrMaybe(memberId).Select(m => m.MaterialType, MemberMaterialType.Unknown);

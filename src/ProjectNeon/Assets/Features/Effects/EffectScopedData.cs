@@ -12,6 +12,13 @@ public class EffectScopedData
     public void RecordTrueCondition(string name) => trueConditions.Add(name);
     public bool IsCondition(string name) => trueConditions.Contains(name);
 
+    public void ResetScope()
+    {
+        trueConditions.Clear();
+        variableNames.Clear();
+        variables.Clear();
+    }
+    
     public void AdjustVariable(string name, float value)
     {
         var index = variableNames.IndexOf(name);

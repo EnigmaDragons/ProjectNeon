@@ -44,6 +44,13 @@ public class PlayerState
             _mods.RemoveAll(m => !m.IsActive);
         });
 
+    public IPlayedCard PossiblyRetargeted(BattleState state, IPlayedCard card)
+    {
+        foreach (var mod in _mods)
+            card = mod.PossiblyRetargeted(state, card);
+        return card;
+    }
+
     private void PublishAfter(Action a)
     {
         a();

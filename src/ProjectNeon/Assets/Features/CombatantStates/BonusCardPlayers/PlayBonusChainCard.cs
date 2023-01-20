@@ -30,4 +30,7 @@ public class PlayBonusChainCard : TemporalStateBase, IBonusCardPlayer
             : Maybe<BonusCardDetails>.Missing();
         return result;
     }
+
+    public Maybe<BonusCardDetails> GetBonusCardOnStartOfTurnPhase(BattleStateSnapshot snapshot)
+        => Maybe<BonusCardDetails>.Missing();
 }

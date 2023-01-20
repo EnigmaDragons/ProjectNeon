@@ -1,0 +1,185 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
+  m_Name: AlgeronHologenerator
+  m_EditorClassIdentifier: 
+  id: 83
+  enemyName: Algeron
+  allowedForSocialMedia: 0
+  excludeFromBestiary: 1
+  isTutorialEnemy: 0
+  lastBalanceDate: 12/9/2022
+  isCurrentlyWorking: 1
+  corp: {fileID: 11400000, guid: d20c2ade8bbc04c478ee886d55a9b984, type: 2}
+  ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
+  aiPreferences:
+    DesignatedAttackerPriority: 50
+    CardOrderPreferenceFactor: 0
+    CardTagPriority: 0400000069000000070000000b000000
+    UnpreferredCardTags: 
+    RotatePlayingCardTags: 
+    IgnoreDesignatedAttackerRole: 0
+  preferredTurnOrder: 99
+  prefab: {fileID: 5858442657547885006, guid: 23e20641219fd9a488e449dac9050ca9, type: 3}
+  materialType: 1
+  libraryCameraOffset: {x: 0, y: -0.8, z: 2.5}
+  deathEffect:
+    UseConstant: 1
+    ConstantValue: 
+    Variable: {fileID: 0}
+  battleRole: 0
+  tier: 3
+  unique: 0
+  isHasty: 0
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+  description: Which one? Which one~
+  animations: {fileID: 11400000, guid: 2026a6063f0f67340a4f5debc2cd1ad5, type: 2}
+  animationSounds: {fileID: 11400000, guid: 320a1f41711f2514e858f7835f7dd049, type: 2}
+  stageDetails:
+  - stage: 1
+    maxHp: 200
+    maxShield: 40
+    startingShield: 0
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 0
+    startingTaunt: 0
+    attack: 0
+    magic: 20
+    leadership: 0
+    armor: 0
+    resistance: 0
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 0
+    resourceGainPerTurn: 0
+    cardsPerTurn: 1
+    powerLevel: 0
+    calculationVariables:
+      startingDefensiveValueAdjustment: 0
+      startingValueAdjustment: 0
+      perTurnValueAdjustment: 0
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 201.97044
+      perCardValue: 20
+      resourceValue: 6.6
+      perTurnPower: 20
+      maxAndStartingResourcesPower: 0
+      estimatedHeroDamage: 17
+      estimatedTurnsAlive: 7.920409
+      estimatedPerTurnTotalValue: 112.33147
+      calculatedPowerLevel: 314
+    startOfBattleEffects:
+    - Id: 10000
+      EffectType: 73
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: -1
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 9
+      StatusDetailText: 'If this is the fake: Leaves battle when damaged'
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
+      ReactionConditionType: 1
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionTimingWindow: 0
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 11400000, guid: ca09903bcc0226c4195ec79a58fd8c51, type: 2}
+      BonusCardType: {fileID: 0}
+      Unpreventable: 0
+    - Id: 10001
+      EffectType: 74
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: -1
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 12
+      StatusDetailText: 'When Stunned: Enter Stealth'
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
+      ReactionConditionType: 106
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionTimingWindow: 250
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 1
+        scope: 0
+        cardActions: {fileID: 11400000, guid: 0d4794f1cba354f4aa4e70a410752c57, type: 2}
+      BonusCardType: {fileID: 0}
+      Unpreventable: 0
+    Cards:
+    - {fileID: 11400000, guid: 66258efbb2498a84d8bc15160243dda0, type: 2}
+    - {fileID: 11400000, guid: 1de5f7211ee7b6146ac877697909520a, type: 2}
+    - {fileID: 11400000, guid: efb7667d79829be47b35e1055fafd032, type: 2}
+    - {fileID: 11400000, guid: af4025905a2db9c4cb10852c83f33a12, type: 2}
+    - {fileID: 11400000, guid: 483f804e4078def42a83d8263d0fe0e1, type: 2}
+    CardsTheyAppearsToHave:
+    - {fileID: 11400000, guid: ec4c82af892aa03458e737ce5b23e456, type: 2}
+  maxCopies: 0
+  minimumAllies: 0
+  damageType: 3

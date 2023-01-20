@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
@@ -21,7 +22,80 @@ public class LocalizationExporter
 
     private static string ToSingleLineI2Format(string toReplace)
         => toReplace.ToSingleLineI2Format();
-    
+
+    private static Dictionary<string, string> _firstKeywords = new Dictionary<string, string>
+    {
+        {"max hp", "{[t:Stats/Stat-MaxHP]}"},
+        {"max shield", "{[t:Stats/Stat-MaxShield]}"},
+        {"maxhp", "{[t:Stats/Stat-MaxHP]}"},
+        {"maxshield", "{[t:Stats/Stat-MaxShield]}"},
+    };
+
+    private static Dictionary<string, string> _keywords = new Dictionary<string, string>
+    {
+        { "aegis", "{[t:Keywords/Aegis]}" },
+        { "afflicted", "{[t:Keywords/Afflicted]}" },
+        { "ammo", "{[t:Resources/Ammo]}" },
+        { "armor", "{[t:Stats/Stat-Armor]}" },
+        { "atk", "{[t:Stats/Stat-Attack]}" },
+        { "blind", "{[t:Keywords/Blind]}" },
+        { "bloodied", "{[t:Keywords/Bloodied]}" },
+        { "card cycles", "{[t:Keywords/CardCycles]}" },
+        { "card play", "{[t:Keywords/CardPlays]}" },
+        { "card plays", "{[t:Keywords/CardPlays]}" },
+        { "chems", "{[t:Resources/Chems]}" },
+        { "creds", "{[t:Resources/Creds]}" },
+        { "crit", "{[t:Keywords/Critical]}" },
+        { "disable", "{[t:Keywords/Disabled]}" },
+        { "energy", "{[t:Resources/Energy]}" },
+        { "defenseless", "{[t:Keywords/Defenseless]}" },
+        { "dodge", "{[t:Keywords/Dodge]}" },
+        { "double damage", "{[t:Keywords/DoubleDamage]}" },
+        { "drain", "{[t:Keywords/Drain]}" },
+        { "economic", "{[t:Archetypes/Economic]}" },
+        { "finisher", "{[t:Keywords/Chain]}" },
+        { "fire", "{[t:Archetypes/Fire]}" },
+        { "focus", "{[t:Keywords/Focus]}" },
+        { "glitch", "{[t:Keywords/Glitch]}" },
+        { "grenade", "{[t:Resources/Grenades]}" },
+        { "grenades", "{[t:Resources/Grenades]}" },
+        { "health", "{[t:Stats/Stat-HP]}" },
+        { "hp", "{[t:Stats/Stat-HP]}" },
+        { "ignited", "{[t:Keywords/Igniting]}" },
+        { "inhibit", "{[t:Keywords/Inhibit]}" },
+        { "lockdown", "{[t:Archetypes/Lockdown]}" },
+        { "mag", "{[t:Stats/Stat-Magic]}" },
+        { "magic", "{[t:Stats/Stat-Magic]}" },
+        { "mark", "{[t:Keywords/Marked]}" },
+        { "marks", "{[t:Keywords/Marked]}" },
+        { "power", "{[t:Stats/Stat-Power]}" },
+        { "primary stat", "{[t:Keywords/PrimaryStat]}" },
+        { "prominent", "{[t:Keywords/Prominent]}" },
+        { "quick", "{[t:Keywords/Quick]}" },
+        { "resist", "{[t:Stats/Stat-Resistance]}" },
+        { "resistance", "{[t:Stats/Stat-Resistance]}" },
+        { "shield", "{[t:Stats/Stat-Shield]}" },
+        { "slay", "{[t:Keywords/OnSlay]}" },
+        { "sneaky", "{[t:Keywords/Sneaky]}" },
+        { "stealth", "{[t:Keywords/Stealth]}" },
+        { "stun", "{[t:Keywords/Stun]}" },
+        { "swap", "{[t:Keywords/Swap]}" },
+        { "taunt", "{[t:Keywords/Taunt]}" },
+        { "vulnerable", "{[t:Keywords/Vulnerable]}" },
+    };
+
+    private static string CardDescriptionExport(string toReplace)
+    {
+        toReplace = toReplace.Replace("<br>", "\n").Replace("\\n", "\n").ToI2Format();
+        foreach (var keyword in _firstKeywords.Concat(_keywords))
+        {
+            var regex = new Regex(@"(\s|>|^|\.|:|,)(" + keyword.Key + @")(\s|<|$|\.|:|,)", RegexOptions.IgnoreCase);
+            toReplace = regex.Replace(toReplace, $"$1{keyword.Value}$3");
+        }
+
+        return toReplace;
+    }
+
     [MenuItem("Neon/Localization/Export Cards For Localization")]
     public static void ExportCardsForLocalization()
     {
@@ -34,7 +108,7 @@ public class LocalizationExporter
         allCards.ForEach(c =>
         {
             names.Add($"{c.NameKey}^{c.Name}");
-            var csvDesc = c.DescriptionV2.text.Replace("<br>", "\n").ToI2Format();
+            var csvDesc = CardDescriptionExport(c.DescriptionV2.text);
             descs.Add($"{c.DescriptionKey}^\"{csvDesc}\"");
         });
         WriteCsv("card-names", names);
@@ -52,7 +126,7 @@ public class LocalizationExporter
         reactionCards.ForEach(c =>
         {
             names.Add($"{c.NameKey}^{c.Name}");
-            var csvDesc = c.DescriptionV2.text.Replace("<br>", "\n").ToI2Format();
+            var csvDesc = CardDescriptionExport(c.DescriptionV2.text);
             descs.Add($"{c.DescriptionKey}^\"{csvDesc}\"");
         });
         WriteCsv("reaction-card-names", names);

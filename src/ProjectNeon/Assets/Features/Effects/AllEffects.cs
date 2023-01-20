@@ -17,6 +17,9 @@ public static class AllEffects
             ReactiveTriggerScopeExtensions.Parse(e.EffectScope), e.ReactionConditionType, e.ReactionEffect)},
         { EffectType.ReactWithCard, e => new EffectReactWith(false, e.IntAmount, e.DurationFormula, e.StatusDetail, e.ReactionEffectScope, e.FinalReactionTimingWindow,
             ReactiveTriggerScopeExtensions.Parse(e.EffectScope), e.ReactionConditionType, e.ReactionSequence)},
+        { EffectType.ReactOncePerTurnWithEffect, e => new EffectReactWith(false, e.IntAmount, e.DurationFormula, 
+            e.StatusDetail, e.ReactionEffectScope, e.FinalReactionTimingWindow, ReactiveTriggerScopeExtensions.Parse(e.EffectScope), 
+            e.ReactionConditionType, e.ReactionEffect, Maybe<ReactionCardType>.Missing(), 1)},
         { EffectType.RemoveDebuffs, e => new SimpleEffect(m => BattleLoggedItemIf(n => $"{m.NameTerm.ToEnglish()} has been cleansed of {n} debuffs", n => n > 0, m.CleanseDebuffs))},
         { EffectType.AdjustCounterFormula, e => new AdjustCounterFormula(e)},
         { EffectType.ShieldFormula, e => new AegisIfFormulaResult((ctx, amount, m) 
@@ -91,7 +94,7 @@ public static class AllEffects
             BattleLoggedItem(v => $"{m.NameTerm.ToEnglish()} {GainedOrLostTerm(v)} {v} {m.State.PrimaryResource.Name}", 
                 Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, e.Formula, ctx.XPaidAmount, ctx.ScopedData))) },
         { EffectType.Reload, e => new SimpleEffect(m => BattleLogged($"{m.NameTerm.ToEnglish()} Reloaded", () => m.AdjustPrimaryResource(99))) },
-        { EffectType.ResolveInnerEffect, e => new ResolveInnerEffect(e.ReferencedSequence?.BattleEffects?.ToArray() ?? Array.Empty<EffectData>()) },
+        { EffectType.ResolveInnerEffect, e => new ResolveInnerEffect(e.ReferencedSequence) },
         { EffectType.AdjustCostOfAllCardsInHandAtEndOfTurn, e => new AdjustAllCardsCostUntilPlayed(e.BaseAmount) },
         { EffectType.AdjustPrimaryStatForEveryCardCycledAndInHand, e => new AdjustPrimaryStatForEveryCardCycledAndInHand(e) },
         { EffectType.FillHandWithOwnersCards, e => new FillHandWithOwnersCards() },
@@ -113,9 +116,15 @@ public static class AllEffects
         { EffectType.InvulnerableForTurns, e => new FullContextEffect((ctx, duration, m) => m.ApplyTemporaryMultiplier(new AdjustedStats(
             new StatMultipliers().With(StatType.Damagability, 0f),
             TemporalStateMetadata.BuffForDuration(ctx.Source.Id, duration, new StatusDetail(StatusTag.Invulnerable, Maybe<string>.Missing())))), e.DurationFormula)},
-        { EffectType.RandomEffect, e => new ResolveInnerEffect(e.ReferencedSequences?.Random()?.BattleEffects?.ToArray() ?? Array.Empty<EffectData>()) },
-        { EffectType.EvaluateCondition, e => new EvaluateConditionEffect(e) },
+        { EffectType.RandomEffect, e => new ResolveInnerEffect(e.ReferencedSequences?.Random()) },
+        { EffectType.RecordConditionIsTrue, e => new EvaluateConditionEffect(e) },
         { EffectType.AdjustScopedVariable, e => new AdjustScopedVariable(e) },
+        { EffectType.PlayCardAtStartOfTurn, e => new FullContextEffect(
+                (ctx, duration, m) => m.ApplyBonusCardPlayer(new PlayBonusCardAtStartOfTurn(m.MemberId, duration, e.BonusCardType, e.StatusDetail)), 
+                e.DurationFormula) },
+        { EffectType.RandomizeEnemyPosition, e => new SimpleEffect(() => Message.Publish(new RandomizeEnemyPositions()))},
+        { EffectType.MakeTargetingRough, e => new PlayerEffect((id, p, duration) => p.AddState(new EnemyRetargetingPlayerState(id, duration)), e.DurationFormula) },
+        { EffectType.ExitStealth, e => new SimpleEffect(state => state.ExitStealth())},
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";
@@ -184,9 +193,10 @@ public static class AllEffects
             var shouldNotApplyReason = effectData.Condition().GetShouldNotApplyReason(updatedContext);
             if (shouldNotApplyReason.IsPresent)
             {
-                DevLog.Write($"Did not apply {effectData.EffectType} because {shouldNotApplyReason.Value}");
+                if (effectData.EffectType != EffectType.RecordConditionIsTrue)
+                    DevLog.Write($"Did not apply {effectData.EffectType} because {shouldNotApplyReason.Value}");
                 return new ApplyEffectResult(false, updatedContext);
-            }
+            } 
             
             // Apply Effect
             var effect = Create(updatedEffectData);

@@ -131,6 +131,12 @@ public sealed class MemberState : IStats
             .Where(x => x.IsPresent)
             .Select(x => x.Value)
             .ToArray();
+    public BonusCardDetails[] GetBonusStartOfTurnCards(BattleStateSnapshot snapshot)
+        => _bonusCardPlayers
+            .Select(x => x.GetBonusCardOnStartOfTurnPhase(snapshot))
+            .Where(x => x.IsPresent)
+            .Select(x => x.Value)
+            .ToArray();
 
     // Reaction Commands
     public ProposedReaction[] GetReactions(EffectResolved e) =>
@@ -251,7 +257,7 @@ public sealed class MemberState : IStats
         .Concat(_additiveResourceCalculators)
         .Concat(_multiplicativeResourceCalculators);
     
-    private int GetNumDebuffs()
+    public int GetNumDebuffs()
     {
         return DebuffStatTypes.Sum(t => _counters[t.GetString()].Amount)
             + _preventedTags.Count 
@@ -270,6 +276,12 @@ public sealed class MemberState : IStats
         RemoveTemporaryEffects(t => t.Status.Tag == StatusTag.Stealth);
         _counters[TemporalStatType.Stealth.GetString()].Set(0);
         _counters[TemporalStatType.Prominent.GetString()].Set(1);
+    });
+
+    public void ExitStealth() => PublishAfter(() =>
+    {
+        RemoveTemporaryEffects(t => t.Status.Tag == StatusTag.Stealth);
+        _counters[TemporalStatType.Stealth.GetString()].Set(0);
     });
     
     public int RemoveTemporaryEffects(Predicate<ITemporalState> condition) => PublishAfter(() => 
@@ -426,7 +438,8 @@ public sealed class MemberState : IStats
                 + _reactiveStates.RemoveAll(m => !m.IsActive)
                 + _transformers.RemoveAll(m => !m.IsActive)
                 + _additiveResourceCalculators.RemoveAll(m => !m.IsActive)
-                + _multiplicativeResourceCalculators.RemoveAll(m => !m.IsActive);
+                + _multiplicativeResourceCalculators.RemoveAll(m => !m.IsActive)
+                + _bonusCardPlayers.RemoveAll(m => !m.IsActive);
             if (count > 0)
                 DevLog.Write($"Cleaned {count} expired states from {NameTerm.ToEnglish()}");
         });
