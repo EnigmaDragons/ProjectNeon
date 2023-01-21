@@ -11,6 +11,7 @@ public class LanguageOption
     public Sprite FlagSprite;
     public string Language;
     public string LanguageCode;
+    public bool Enabled = true;
 
     public void Select()
     {
