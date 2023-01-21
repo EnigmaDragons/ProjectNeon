@@ -10,6 +10,7 @@ public class ProgressionData
     public List<UnlockItemDisplayRecord> ShownUnlocks = new List<UnlockItemDisplayRecord>();
     public int RunsFinished;
     public bool HasShownWishlistScene;
+    public bool HasSeenAlgeronFinalBoss;
 
     public bool Completed(int adventureId) => CompletedAdventureIds.Any(a => a == adventureId);
     public bool Completed(int adventureId, int heroId) 
