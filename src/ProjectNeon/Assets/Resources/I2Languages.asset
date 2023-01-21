@@ -10808,8 +10808,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gives <b>1 {[t:Keywords/Inhibit]}</b>
-      - "\u63D0\u4F9B <b>1 {[t:Keywords/Inhibit]}</b>\u3002"
+      - 'Gives <b>1 {[t:Keywords/Inhibit]}</b>
+
+
+        Deal {[0]}'
+      - "\u63D0\u4F9B <b>1 {[t:Keywords/Inhibit]}</b>\u3002\n\n\u9020\u6210 {[0]}\u70B9\u4F24\u5BB3\u3002"
       - 
       - 
       - 
@@ -21502,7 +21505,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Next Battle: +4 Cards on first turn'
+      - 'Next Battle: +4 Card Draws on first turn'
       - "\u4E0B\u4E00\u573A\u6218\u6597\uFF1A\u7B2C\u4E00\u56DE\u5408+4\u5F20\u5361\u724C"
       - "\u0421\u043B\u0435\u0434\u0443\u044E\u0449\u0430\u044F \u0431\u0438\u0442\u0432\u0430:
         +4 \u043A\u0430\u0440\u0442\u044B \u043D\u0430 \u043F\u0435\u0440\u0432\u043E\u043C
@@ -41727,6 +41730,22 @@ MonoBehaviour:
       - "{[t:MegaCorps/NNZ]}  - \u30C0\u30A6\u30F3\u30BF\u30A6\u30F3\u306E\u5C45\u4F4F\u8005\u30ED\u30D5\u30C8"
       Flags: 0000000000000000
       Languages_Touch: []
+    - Term: LoadingScreens/LocationTitle15
+      TermType: 0
+      Description: 
+      Languages:
+      - '{[t:MegaCorps/Unaffiliated]} - Squad Loadout Room'
+      - "{[t:MegaCorps/Unaffiliated]}  - \u5C0F\u961F\u52A0\u8F7D\u5BA4"
+      - "{[t:MegaCorps/Unaffiliated]} - \u041A\u043E\u043C\u043D\u0430\u0442\u0430
+        \u0434\u043B\u044F \u0440\u0430\u0437\u0433\u0440\u0443\u0437\u043A\u0438
+        \u043E\u0442\u0440\u044F\u0434\u0430"
+      - "{[t:MegaCorps/Unaffiliated]} - sala de carga del escuadr\xF3n"
+      - "{[t:MegaCorps/Unaffiliated]} - Sala de Loadout de Esquadr\xE3o"
+      - '{[t:MegaCorps/Unaffiliated]} - Squadout -Raum'
+      - '{[t:MegaCorps/Unaffiliated]} - Salle de chargement de l''escouade'
+      - "{[t:MegaCorps/Unaffiliated]}  - \u5206\u968A\u30ED\u30FC\u30C9\u30A2\u30A6\u30C8\u30EB\u30FC\u30E0"
+      Flags: 0000000000000000
+      Languages_Touch: []
     - Term: Maps/Boss_Detail
       TermType: 0
       Description: 
@@ -54805,182 +54824,7 @@ MonoBehaviour:
       - "\u30A2\u30F3\u30ED\u30C3\u30AF\u3055\u308C\u305F\u65B0\u3057\u3044\u30D2\u30FC\u30ED\u30FC\uFF01"
       Flags: 0000000000000000
       Languages_Touch: []
-    - Term: Cutscenes/Segment00555
-      TermType: 0
-      Description: 
-      Languages:
-      - 'Mimic Algeron was right about one thing: Mimics deserve to be allowed to
-        live just like us humans.'
-      - "\u963F\u5C14\u6770\u9686\u7684\u4EFF\u751F\u4F53\u5728\u4E00\u4EF6\u4E8B\u4E0A\u662F\u5BF9\u7684\uFF1A\u4EFF\u751F\u4F53\u5E94\u8BE5\u88AB\u5141\u8BB8\u50CF\u6211\u4EEC\u4EBA\u7C7B\u4E00\u6837\u751F\u6D3B\u3002"
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      Flags: 0000000000000000
-      Languages_Touch: []
-    - Term: Cutscenes/Segment00556
-      TermType: 0
-      Description: 
-      Languages:
-      - I hope this doesn't turn into a future crisis.
-      - "\u6211\u5E0C\u671B\u8FD9\u4E0D\u4F1A\u6F14\u53D8\u6210\u672A\u6765\u7684\u5371\u673A\u3002"
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      Flags: 0000000000000000
-      Languages_Touch: []
-    - Term: Cutscenes/Segment00557
-      TermType: 0
-      Description: 
-      Languages:
-      - You worry too much, plus we still have the kill switch.
-      - "\u4F60\u62C5\u5FC3\u7684\u592A\u591A\u4E86\uFF0C\u800C\u4E14\u6211\u4EEC\u8FD8\u6709\u6B7B\u4EA1\u5F00\u5173\u3002"
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      Flags: 0000000000000000
-      Languages_Touch: []
-    - Term: Cutscenes/Segment00558
-      TermType: 0
-      Description: 
-      Languages:
-      - The difference between us and the corps, is we don't treat sentient life
-        as an expendable resource.
-      - "\u6211\u4EEC\u548C\u516C\u53F8\u7684\u533A\u522B\u5728\u4E8E\uFF0C\u6211\u4EEC\u4E0D\u628A\u6709\u751F\u547D\u7684\u4EBA\u5F53\u4F5C\u53EF\u6D88\u8017\u7684\u8D44\u6E90\u3002"
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      Flags: 0000000000000000
-      Languages_Touch: []
-    - Term: Cutscenes/Segment00559
-      TermType: 0
-      Description: 
-      Languages:
-      - Glad we fragged that villain!
-      - "\u5F88\u9AD8\u5174\u6211\u4EEC\u51FB\u6E83\u4E86\u90A3\u4E2A\u574F\u86CB!"
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      Flags: 0000000000000000
-      Languages_Touch: []
-    - Term: Cutscenes/Segment00560
-      TermType: 0
-      Description: 
-      Languages:
-      - 'We are definitely getting some heat for this. '
-      - "\u6211\u4EEC\u80AF\u5B9A\u4F1A\u56E0\u6B64\u53D7\u5230\u4E00\u4E9B\u5173\u6CE8\u3002"
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      Flags: 0000000000000000
-      Languages_Touch: []
-    - Term: Cutscenes/Segment00561
-      TermType: 0
-      Description: 
-      Languages:
-      - Corps are always hunting us. They can try to bring it, but we will always
-        be one step ahead.
-      - "\u516C\u53F8\u603B\u662F\u5728\u8FFD\u6355\u6211\u4EEC\u3002\u4ED6\u4EEC\u53EF\u4EE5\u6765\u8BD5\u8BD5\uFF0C\u4F46\u6211\u4EEC\u5C06\u6C38\u8FDC\u9886\u5148\u4E00\u6B65\u3002"
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      Flags: 0000000000000000
-      Languages_Touch: []
-    - Term: Cutscenes/Segment00562
-      TermType: 0
-      Description: 
-      Languages:
-      - There was an invasion at one of ZantoCorp's facilities last night.
-      - "\u6628\u665A\u74A8\u9053\u516C\u53F8\u7684\u4E00\u4E2A\u8BBE\u65BD\u53D1\u751F\u4E86\u5165\u4FB5\u4E8B\u4EF6\u3002"
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      Flags: 0000000000000000
-      Languages_Touch: []
-    - Term: Cutscenes/Segment00563
-      TermType: 0
-      Description: 
-      Languages:
-      - Fortunately, the terrorist group involved in the attack was stopped with
-        only a few ZantoCorp employee casualities.
-      - "\u5E78\u8FD0\u7684\u662F\uFF0C\u53C2\u4E0E\u88AD\u51FB\u7684\u6050\u6016\u7EC4\u7EC7\u88AB\u963B\u6B62\u4E86\uFF0C\u53EA\u6709\u5C11\u6570\u74A8\u9053\u516C\u53F8\u5458\u5DE5\u4F24\u4EA1\u3002"
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      Flags: 0000000000000000
-      Languages_Touch: []
-    - Term: Cutscenes/Segment00564
-      TermType: 0
-      Description: 
-      Languages:
-      - In other news lawsuits against Secubotics accusing the corp of replacing
-        people with robotic mimics has been comepletely disproven.
-      - "\u5728\u5176\u4ED6\u65B0\u95FB\u4E2D\uFF0C\u5BF9\u751F\u5316\u5B89\u4FDD\u6307\u63A7\u8BE5\u516C\u53F8\u7528\u673A\u5668\u4EBA\u4EFF\u751F\u4F53\u53D6\u4EE3\u4EBA\u7684\u8BC9\u8BBC\u5DF2\u88AB\u5B8C\u5168\u63A8\u7FFB\u3002"
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      Flags: 0000000000000000
-      Languages_Touch: []
-    - Term: Cutscenes/Segment00565
-      TermType: 0
-      Description: 
-      Languages:
-      - It is just another great day in our perfect Metroplex.
-      - "\u8FD9\u53EA\u662F\u6211\u4EEC\u5B8C\u7F8E\u7684\u5927\u90FD\u5E02\u4E2D\u7684\u53C8\u4E00\u4E2A\u4F1F\u5927\u7684\u65E5\u5B50\u3002"
-      - 
-      - 
-      - 
-      - 
-      - 
-      - 
-      Flags: 0000000000000000
-      Languages_Touch: []
-    - Term: LoadingScreens/LocationTitle15
-      TermType: 0
-      Description: 
-      Languages:
-      - '{[t:MegaCorps/Unaffiliated]} - Squad Loadout Room'
-      - "{[t:MegaCorps/Unaffiliated]}  - \u5C0F\u961F\u52A0\u8F7D\u5BA4"
-      - "{[t:MegaCorps/Unaffiliated]} - \u041A\u043E\u043C\u043D\u0430\u0442\u0430
-        \u0434\u043B\u044F \u0440\u0430\u0437\u0433\u0440\u0443\u0437\u043A\u0438
-        \u043E\u0442\u0440\u044F\u0434\u0430"
-      - "{[t:MegaCorps/Unaffiliated]} - sala de carga del escuadr\xF3n"
-      - "{[t:MegaCorps/Unaffiliated]} - Sala de Loadout de Esquadr\xE3o"
-      - '{[t:MegaCorps/Unaffiliated]} - Squadout -Raum'
-      - '{[t:MegaCorps/Unaffiliated]} - Salle de chargement de l''escouade'
-      - "{[t:MegaCorps/Unaffiliated]}  - \u5206\u968A\u30ED\u30FC\u30C9\u30A2\u30A6\u30C8\u30EB\u30FC\u30E0"
-      Flags: 0000000000000000
-      Languages_Touch: []
-    CaseInsensitiveTerms: 1
+    CaseInsensitiveTerms: 0
     OnMissingTranslation: 1
     mTerm_AppName: 
     mLanguages:
@@ -55013,7 +54857,7 @@ MonoBehaviour:
     Google_WebServiceURL: https://script.google.com/macros/s/AKfycbyxEWOh-oly9VUweggR4FE-PJti-q6vB4eiq60gjqN60mMW8pqUSFQDcNZf5paleAfH/exec
     Google_SpreadsheetKey: 1_k0GnzCkReGlY_2s-ODT0hVniGHYfv2qnG9nqRQ4VvU
     Google_SpreadsheetName: I2Loc MetroplexZero Localization
-    Google_LastUpdatedVersion: 1674273547501
+    Google_LastUpdatedVersion: 1674278749898
     Google_Password: 23jh9hj2rjfhj33^$^%^$inhgf9g9j90i
     GoogleUpdateFrequency: 2
     GoogleInEditorCheckFrequency: 2
