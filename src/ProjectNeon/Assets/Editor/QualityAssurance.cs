@@ -311,6 +311,10 @@ public class QualityAssurance
         var tauntEffect = obj.GetComponentInChildren<TauntEffect>();
         if (tauntEffect == null) 
             issues.Add($"{enemyName} is missing a {nameof(TauntEffect)}");
+        
+        var stunnedDisabledEffect = obj.GetComponentInChildren<StunnedDisabledEffect>();
+        if (stunnedDisabledEffect == null) 
+            issues.Add($"{enemyName} is missing a {nameof(StunnedDisabledEffect)}");
 
         var talkingCharacter = obj.GetComponentInChildren<TalkingCharacter>();
         if (talkingCharacter != null && talkingCharacter.character == null)
@@ -446,6 +450,10 @@ public class QualityAssurance
         var tauntEffect = obj.GetComponentInChildren<TauntEffect>();
         if (tauntEffect == null) 
             issues.Add($"{hName} is missing a {nameof(TauntEffect)}");
+        
+        var stunnedDisabledEffect = obj.GetComponentInChildren<StunnedDisabledEffect>();
+        if (stunnedDisabledEffect == null) 
+            issues.Add($"{hName} is missing a {nameof(StunnedDisabledEffect)}");
 
         var talkingCharacter = obj.GetComponentInChildren<TalkingCharacter>();
         if (talkingCharacter == null)

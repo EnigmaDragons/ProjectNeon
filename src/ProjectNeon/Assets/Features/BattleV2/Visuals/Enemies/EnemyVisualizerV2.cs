@@ -139,6 +139,12 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
             Debug.LogError($"{member.NameTerm.ToEnglish()} is missing a {nameof(TauntEffect)}");
         else
             tauntEffect.Init(member);
+        
+        var stunnedDisabledEffect = obj.GetComponentInChildren<StunnedDisabledEffect>();
+        if (stunnedDisabledEffect == null)
+            Debug.LogError($"{member.NameTerm.ToEnglish()} is missing a {nameof(StunnedDisabledEffect)}");
+        else
+            stunnedDisabledEffect.Init(member);
     }
     
     public EnemySpawnDetails Spawn(EnemyInstance enemy, Vector3 offset, Maybe<Member> isReplacing)

@@ -25,6 +25,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, Highligh
     private readonly Dictionary<HeroCharacter, CharacterCreatorStealthTransparency> _stealths = new Dictionary<HeroCharacter, CharacterCreatorStealthTransparency>();
     private readonly Dictionary<HeroCharacter, MemberHighlighter> _highlighters  = new Dictionary<HeroCharacter, MemberHighlighter>();
     private readonly Dictionary<HeroCharacter, TauntEffect> _tauntEffects  = new Dictionary<HeroCharacter, TauntEffect>();
+    private readonly Dictionary<HeroCharacter, StunnedDisabledEffect> _stunnedDisabledEffects = new Dictionary<HeroCharacter, StunnedDisabledEffect>();
     private readonly Dictionary<HeroCharacter, DamageNumbersController> _damagesNew  = new Dictionary<HeroCharacter, DamageNumbersController>();
     private readonly Dictionary<HeroCharacter, CharacterWordsController> _words  = new Dictionary<HeroCharacter, CharacterWordsController>();
     private readonly Dictionary<HeroCharacter, CenterPoint> _centers = new Dictionary<HeroCharacter, CenterPoint>();
@@ -56,6 +57,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, Highligh
         _stealths.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
         _highlighters.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
         _tauntEffects.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
+        _stunnedDisabledEffects.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
     }
 
     private void SetupHero(GameObject heroOrigin, HeroCharacter hero, int visualOrder)
@@ -117,6 +119,12 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, Highligh
             Debug.LogWarning($"{hero.NameTerm().ToEnglish()} is missing a {nameof(TauntEffect)}");
         else
             _tauntEffects[hero] = tauntEffect;
+        
+        var stunnedDisabledEffect = character.GetComponentInChildren<StunnedDisabledEffect>();
+        if (stunnedDisabledEffect == null)
+            Debug.LogWarning($"{hero.NameTerm().ToEnglish()} is missing a {nameof(StunnedDisabledEffect)}");
+        else
+            _stunnedDisabledEffects[hero] = stunnedDisabledEffect;
     }
 
     protected override void Execute(CharacterAnimationRequested e)
