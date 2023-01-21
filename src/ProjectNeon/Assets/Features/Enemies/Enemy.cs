@@ -19,7 +19,7 @@ public class Enemy : ScriptableObject, ILocalizeTerms
     [SerializeField] private GameObject prefab;
     [SerializeField] private MemberMaterialType materialType;
     [SerializeField] private Vector3 libraryCameraOffset = new Vector3(0, -0.8f, 2.5f);
-    [SerializeField] private StringReference deathEffect;
+    [SerializeField] private bool shouldLive;
     [SerializeField] private BattleRole battleRole;
     [SerializeField] private EnemyTier tier; 
     [SerializeField] private bool unique;
@@ -63,7 +63,7 @@ public class Enemy : ScriptableObject, ILocalizeTerms
         return new EnemyInstance(id, resourceType, detail.startOfBattleEffects, detail.startingResourceAmount, detail.resourceGainPerTurn, 
             detail.maxResourceAmount, detail.maxHp, detail.maxShield, detail.startingShield,  
             detail.attack, detail.magic, detail.leadership, detail.armor, detail.resistance, detail.cardsPerTurn, 
-            prefab, libraryCameraOffset, ai, detail.Cards, detail.CardsTheyAppearsToHave, battleRole, tier, detail.powerLevel, preferredTurnOrder, deathEffect, 
+            prefab, libraryCameraOffset, ai, detail.Cards, detail.CardsTheyAppearsToHave, battleRole, tier, detail.powerLevel, preferredTurnOrder, shouldLive, 
             isHasty, unique, detail.CounterAdjustments, corp, animations, animationSounds, materialType, DescriptionTerm, 
             detail.startOfBattleEffects.Where(b => b.ReactionSequence != null).Select(b => b.ReactionSequence),
             aiPreferences ?? new AiPreferences());

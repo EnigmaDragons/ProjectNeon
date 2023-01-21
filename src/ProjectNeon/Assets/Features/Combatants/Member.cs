@@ -18,15 +18,16 @@ public class Member
     public BattleRole BattleRole { get; }
     public MemberState State { get; }
     public Maybe<CardTypeData> BasicCard { get; }
+    public bool ShouldLive { get; }
     
     public override bool Equals(object obj) => obj is Member && ((Member)obj).Id == Id;
     public override int GetHashCode() => Id.GetHashCode();
     public override string ToString() => $"{NameTerm.ToEnglish()} {Id}";
     
-    public Member(int id, string nameTerm, string characterClassTerm, MemberMaterialType materialType, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat)
-        : this(id, nameTerm, characterClassTerm, materialType, team, baseStats, battleRole, primaryStat, baseStats.MaxHp(), Maybe<CardTypeData>.Missing()) {}
+    public Member(int id, string nameTerm, string characterClassTerm, MemberMaterialType materialType, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat, bool shouldLive)
+        : this(id, nameTerm, characterClassTerm, materialType, team, baseStats, battleRole, primaryStat, shouldLive, baseStats.MaxHp(), Maybe<CardTypeData>.Missing()) {}
     
-    public Member(int id, string nameTerm, string characterClassTerm, MemberMaterialType materialType, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat, int initialHp, Maybe<CardTypeData> basicCard)
+    public Member(int id, string nameTerm, string characterClassTerm, MemberMaterialType materialType, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat, bool shouldLive, int initialHp, Maybe<CardTypeData> basicCard)
     {
         if (id > -1 && baseStats.Damagability() < 0.01)
             throw new InvalidDataException($"Damagability of {NameTerm.ToEnglish()} is 0");
@@ -39,6 +40,7 @@ public class Member
         BattleRole = battleRole;
         State = new MemberState(id, nameTerm, baseStats, primaryStat, initialHp);
         BasicCard = basicCard;
+        ShouldLive = shouldLive;
         _unambiguousEnglishName = new Lazy<string>(() => TeamType == TeamType.Enemies ? $"{NameTerm.ToEnglish()} {Id}" : NameTerm.ToEnglish());
     }
 

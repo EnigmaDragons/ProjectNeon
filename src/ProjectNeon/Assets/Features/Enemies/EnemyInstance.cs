@@ -40,7 +40,7 @@ public class EnemyInstance : EnemyType
     public int PowerLevel { get; }
     public int PreferredTurnOrder { get; }
     public string NameTerm => $"Enemies/EnemyName{_enemyId}";
-    public string DeathEffect { get; }
+    public bool ShouldLive { get; }
     public bool IsHasty { get; }
     public bool IsUnique { get; }
     public int ResourceGainPerTurn => _resourceGainPerTurn;
@@ -59,7 +59,7 @@ public class EnemyInstance : EnemyType
         int resourceGainPerTurn, int maxResourceAmount, int maxHp, int maxShield, int startingShield, 
         int attack, int magic, int leadership, float armor, float resistance, int cardsPerTurn, 
         GameObject prefab, Vector3 libraryCameraOffset, TurnAI ai, IEnumerable<CardType> cards, IEnumerable<CardType> cardsItAppearsToHave, 
-        BattleRole role, EnemyTier tier, int powerLevel, int preferredTurnOrder, string deathEffect, bool isHasty, bool isUnique, 
+        BattleRole role, EnemyTier tier, int powerLevel, int preferredTurnOrder, bool shouldLive, bool isHasty, bool isUnique, 
         Dictionary<string, int> counterAdjustments, Corp corp, CharacterAnimations animations, CharacterAnimationSoundSet sounds, 
         MemberMaterialType materialType, string descriptionTerm, IEnumerable<ReactionCardType> reactionCards, AiPreferences aiPreferences)
     {
@@ -90,7 +90,7 @@ public class EnemyInstance : EnemyType
         Tier = tier;
         PowerLevel = powerLevel;
         PreferredTurnOrder = preferredTurnOrder;
-        DeathEffect = deathEffect;
+        ShouldLive = shouldLive;
         IsHasty = isHasty;
         IsUnique = isUnique;
         Animations = animations;
@@ -107,7 +107,7 @@ public class EnemyInstance : EnemyType
     public Member AsMember(int id)
     {
         var stats = Stats;
-        var m = new Member(id, NameTerm, "Enemy", _materialType, TeamType.Enemies, stats, Role, stats.DefaultPrimaryStat(stats));
+        var m = new Member(id, NameTerm, "Enemy", _materialType, TeamType.Enemies, stats, Role, stats.DefaultPrimaryStat(stats), ShouldLive);
         m.State.InitResourceAmount(_resourceType, _startingResourceAmount);
         _counterAdjustments.ForEach(c => m.State.Adjust(c.Key, c.Value));
         return m;

@@ -17,6 +17,7 @@ public class CharacterAnimations : ScriptableObject
     [SerializeField] private CharacterAnimation hit;
     [SerializeField] private CharacterAnimation shot;
     [SerializeField] private CharacterAnimation rapidShot;
+    [SerializeField] private CharacterAnimation fall;
 
     public DictionaryWithDefault<CharacterAnimationType, CharacterAnimationStep[]> AnimationMap 
         => new DictionaryWithDefault<CharacterAnimationType, CharacterAnimationStep[]>(new [] { new CharacterAnimationStep { StepType = CharacterAnimationStepType.PublishFinished } })
@@ -31,5 +32,6 @@ public class CharacterAnimations : ScriptableObject
             { CharacterAnimationType.WhenHit, hit?.Steps ?? new CharacterAnimationStep[0] },
             { CharacterAnimationType.Shoot, shot?.Steps ?? new [] { new CharacterAnimationStep { StepType = CharacterAnimationStepType.PublishFinished } } },
             { CharacterAnimationType.RapidShoot, rapidShot?.Steps ?? new [] { new CharacterAnimationStep { StepType = CharacterAnimationStepType.PublishFinished } } },
+            { CharacterAnimationType.Fall, fall?.Steps ?? new [] { new CharacterAnimationStep { StepType = CharacterAnimationStepType.PublishFinished } } },
         };
 }

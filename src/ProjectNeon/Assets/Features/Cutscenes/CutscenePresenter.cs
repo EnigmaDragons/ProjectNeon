@@ -11,6 +11,7 @@ public class CutscenePresenter : BaseCutscenePresenter
     [SerializeField] private GameObject defaultCamera;
     [SerializeField] private GameObject settingParent;
     [SerializeField] private SpawnPartyToMarkers setupParty;
+    [SerializeField] private PartyAdventureState partyState;
     [SerializeField] private GameObject[] disableOnFinished;
 
     private bool _skipDelay;
@@ -84,7 +85,7 @@ public class CutscenePresenter : BaseCutscenePresenter
         }
         
         var onFinishedAction = shouldGoToAdventureVictoryScreen 
-            ? () => GameWrapup.NavigateToVictoryScreen(progress, adventure, navigator, conclusion, setupParty.Party.Heroes.Cast<HeroCharacter>().ToArray()) 
+            ? () => GameWrapup.NavigateToVictoryScreen(progress, adventure, navigator, conclusion, partyState.BaseHeroes) 
             : cutscene.OnCutsceneFinishedAction.Select(a => a, NavigateToInferredGameScene);
         if (shouldGoToAdventureVictoryScreen && !CurrentAcademyData.Data.IsLicensedBenefactor)
             onFinishedAction = () => TutorialWonHandler.Execute();

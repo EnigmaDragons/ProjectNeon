@@ -35,6 +35,8 @@ public class CurrentCutscene : ScriptableObject
     public void FinishStartBattleCutscene()
     {
         startBattleCutsceneFinished = true;
+        if (startBattleCutscene != null)
+            startBattleCutscene.OnFinished();
     }
 
     public CutsceneSegment MoveToNextSegment()

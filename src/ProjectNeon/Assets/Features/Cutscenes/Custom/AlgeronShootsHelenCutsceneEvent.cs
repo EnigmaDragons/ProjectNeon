@@ -38,7 +38,7 @@ public class AlgeronShootsHelenCutsceneEvent : OnMessage<TriggerCutsceneEvent>
             Instantiate(fx.ByName["Death"], deathParticleTarget, Quaternion.identity).Initialized();
             Message.Publish(
                 new MemberUnconscious(new Member(helenMemberId, "", "", MemberMaterialType.Organic, TeamType.Enemies,
-                    new StatAddends().With(StatType.Damagability, 1), BattleRole.Unknown, StatType.Power)));
+                    new StatAddends().With(StatType.Damagability, 1), BattleRole.Unknown, StatType.Power, false)));
         });
     }
 }
