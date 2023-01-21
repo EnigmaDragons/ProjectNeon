@@ -41,7 +41,7 @@ public class FinalRunStatSummaryPresenter : MonoBehaviour, ILocalizeTerms
                 var heroActive = state.Heroes.Length > i;
                 if (heroActive)
                 {
-                    heroBusts[i].sprite = state.Heroes[i].Bust;
+                    heroBusts[i].sprite = state.Heroes[i].Character.Bust;
                     heroObjects[i].SetActive(true);
                 }
             }

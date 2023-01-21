@@ -2,7 +2,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BossAttentionProgressPresenter : OnMessage<AdventureProgressChanged>
+public class BossAttentionProgressPresenter : OnMessage<AdventureProgressChanged, NodeFinished>
 {
     [SerializeField] private AdventureProgress2 adventure;
     [SerializeField] private Image barFill;
@@ -33,12 +33,16 @@ public class BossAttentionProgressPresenter : OnMessage<AdventureProgressChanged
 
     private void SmoothTransitionTo(float amount) => barFill.DOFillAmount(amount * _visualFactor + _offsetAmount, 1);
 
-    protected override void Execute(AdventureProgressChanged msg)
+    protected override void Execute(AdventureProgressChanged msg) => RenderUpdate();
+
+    private void RenderUpdate()
     {
-        Log.Info($"Stage Progress {adventure.ProgressToUnlockChapterBoss}");
+        Log.Info($"Updated Adventure Stage Progress Bar - {adventure.ProgressToUnlockChapterBoss}");
         SmoothTransitionTo(FillAmount);
         RenderHeatUpMarkers();
     }
+
+    protected override void Execute(NodeFinished msg) => this.ExecuteAfterTinyDelay(RenderUpdate);
 
     private float FillAmount => adventure.ProgressToUnlockChapterBoss * _visualFactor + _offsetAmount;
 }

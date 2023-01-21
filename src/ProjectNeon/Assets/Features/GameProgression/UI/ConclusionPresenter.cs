@@ -1,5 +1,4 @@
 using I2.Loc;
-using TMPro;
 using UnityEngine;
 
 public class ConclusionPresenter : MonoBehaviour, ILocalizeTerms

@@ -3,7 +3,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AdventureProgressV5Presenter : OnMessage<AdventureProgressChanged>
+public class AdventureProgressV5Presenter : OnMessage<AdventureProgressChanged, NodeFinished>
 {
     [SerializeField] private CurrentAdventureProgress adventure;
     [SerializeField] private Image barFill;
@@ -16,6 +16,11 @@ public class AdventureProgressV5Presenter : OnMessage<AdventureProgressChanged>
     private readonly float _offsetAmount = 0f;
 
     private void Awake()
+    {
+        RenderUpdateNoAnim();
+    }
+
+    private void RenderUpdateNoAnim()
     {
         Log.Info($"Stage Progress {adventure.AdventureProgress.ProgressToBoss}");
         barFill.fillAmount = FillAmount;
@@ -37,12 +42,16 @@ public class AdventureProgressV5Presenter : OnMessage<AdventureProgressChanged>
 
     private void SmoothTransitionTo(float amount) => barFill.DOFillAmount(amount * _visualFactor + _offsetAmount, 1);
 
-    protected override void Execute(AdventureProgressChanged msg)
+    protected override void Execute(AdventureProgressChanged msg) => RenderUpdateWithAnim();
+
+    private void RenderUpdateWithAnim()
     {
         Log.Info($"Stage Progress {adventure.AdventureProgress.ProgressToBoss}");
         SmoothTransitionTo(FillAmount);
         RenderMarkers();
     }
+
+    protected override void Execute(NodeFinished msg) => this.ExecuteAfterTinyDelay(RenderUpdateWithAnim);
 
     private float FillAmount => adventure.AdventureProgress.ProgressToBoss * _visualFactor + _offsetAmount;
 }

@@ -51,7 +51,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
             else
             {
                 state.AccumulateRunStats();
-                this.ExecuteAfterDelay(() => GameWrapup.NavigateToVictoryScreen(adventureProgress, adventure, navigator, conclusion, partyState.BaseHeroes), secondsBeforeGameOverScreen);   
+                this.ExecuteAfterDelay(() => GameWrapup.NavigateToVictoryScreen(adventureProgress, adventure, navigator, conclusion, partyState.Heroes), secondsBeforeGameOverScreen);   
             }
         }
         else
@@ -92,7 +92,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
             Achievements.RecordAdventureCompleted(adventure.Adventure.Id, false);
             AllMetrics.PublishGameLost(adventure.Adventure.Id);
             state.AccumulateRunStats();
-            conclusion.RecordFinishedGameAndCleanUp(false, adventure.Adventure.DefeatConclusionTerm, CurrentGameData.Data.Stats, partyState.BaseHeroes);
+            conclusion.RecordFinishedGameAndCleanUp(false, adventure.Adventure.DefeatConclusionTerm, CurrentGameData.Data.Stats, partyState.Heroes);
             this.ExecuteAfterDelay(() => navigator.NavigateToConclusionScene(), secondsBeforeGameOverScreen);
         }
     }

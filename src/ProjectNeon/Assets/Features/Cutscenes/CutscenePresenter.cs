@@ -85,7 +85,7 @@ public class CutscenePresenter : BaseCutscenePresenter
         }
         
         var onFinishedAction = shouldGoToAdventureVictoryScreen 
-            ? () => GameWrapup.NavigateToVictoryScreen(progress, adventure, navigator, conclusion, partyState.BaseHeroes) 
+            ? () => GameWrapup.NavigateToVictoryScreen(progress, adventure, navigator, conclusion, partyState.Heroes) 
             : cutscene.OnCutsceneFinishedAction.Select(a => a, NavigateToInferredGameScene);
         if (shouldGoToAdventureVictoryScreen && !CurrentAcademyData.Data.IsLicensedBenefactor)
             onFinishedAction = () => TutorialWonHandler.Execute();
