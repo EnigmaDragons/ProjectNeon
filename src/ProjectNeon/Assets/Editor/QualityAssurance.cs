@@ -248,6 +248,8 @@ public class QualityAssurance
                 issues.Add($"Broken Enemy: {e.enemyName} is not ReadyForPlay");
             if (e.MaterialType == MemberMaterialType.Unknown)
                 issues.Add($"Enemy {e.enemyName} does not have a Material Type set.");
+            if (e.stageDetails.Any(x => x.powerLevel == 0))
+                issues.Add($"Enemy {e.enemyName} - {e.name} does not have a Power Level set for one of their stages.");
             ValidateEnemyPrefab(e, issues);
             if (issues.Any())
                 badEnemies.Add(new ValidationResult(e.enemyName, issues));

@@ -387,7 +387,7 @@ namespace FMODUnity
 #if UNITY_EDITOR
         public void DeclareBuildTarget(BuildTarget buildTarget, Platform platform)
         {
-            PlatformForBuildTarget.Add(buildTarget, platform);
+            PlatformForBuildTarget[buildTarget] = platform;
         }
 #endif
 

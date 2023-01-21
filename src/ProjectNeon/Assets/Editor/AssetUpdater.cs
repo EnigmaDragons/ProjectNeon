@@ -511,11 +511,31 @@ public class AssetUpdater
         var enemies = ScriptableExtensions.GetAllInstances<Enemy>();
         foreach (var enemy in enemies)
         {
+            Log.Info($"{enemy}");
             foreach (var stage in enemy.stageDetails)
             {
                 if (stage.stage == 0)
-                    return;
+                    break;
                 CalculateEnemyPowerLevel(stage, enemy);
+            }
+        }
+    }
+
+    [MenuItem("Neon/Auto-Set Missing Enemy Power Levels")]
+    private static void AutoSetMissingEnemyPowerLevels()
+    {
+        var enemies = ScriptableExtensions.GetAllInstances<Enemy>();
+        foreach (var e in enemies)
+        {
+            if (!e.IsCurrentlyWorking) continue;
+
+            foreach (var s in e.stageDetails)
+            {
+                if (s.powerLevel > 0) continue;
+                
+                CalculateEnemyPowerLevel(s, e);
+                s.powerLevel = s.calculationResults.calculatedPowerLevel;
+                EditorUtility.SetDirty(e);
             }
         }
     }
