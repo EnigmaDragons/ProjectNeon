@@ -81,6 +81,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3312305515757641696}
+  - component: {fileID: 866123759548570732}
   - component: {fileID: 3312305515757641698}
   - component: {fileID: 7898284075491036911}
   m_Layer: 0
@@ -105,6 +106,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &866123759548570732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3312305515757641697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 052768f02d7a4463af470497461e9fe7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  presenter: {fileID: 3312305516583355718}
 --- !u!114 &3312305515757641698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,41 +421,57 @@ MonoBehaviour:
     FlagSprite: {fileID: 21300000, guid: fa9b7506aad2d59468613cda1c75a8d3, type: 3}
     Language: English
     LanguageCode: en
+    UnityLanguage: 10
+    Enabled: 1
   - OptionText: "\u4E2D\u56FD\u4EBA"
     OptionFont: {fileID: 11400000, guid: 87c545b6116207f49a3383df53bbf060, type: 2}
     FlagSprite: {fileID: 21300000, guid: 640f425f641948249a4c420f94c8b1cb, type: 3}
     Language: Chinese
     LanguageCode: zh
+    UnityLanguage: 40
+    Enabled: 1
   - OptionText: "\u0420\u0443\u0441\u0441\u043A\u0438\u0439"
     OptionFont: {fileID: 11400000, guid: 088f6ab9daf71c542a66ed400541f5ba, type: 2}
     FlagSprite: {fileID: 21300000, guid: bd6b91cc97a51c641863cb143b29298a, type: 3}
     Language: Russian
     LanguageCode: ru
+    UnityLanguage: 30
+    Enabled: 1
   - OptionText: "Espa\xF1ol"
     OptionFont: {fileID: 11400000, guid: a466fa9b2e60ed44da4dff9d08ee6d86, type: 2}
     FlagSprite: {fileID: 21300000, guid: a08cb14e2b0e4dd47afda6865ca7963a, type: 3}
     Language: Spanish
     LanguageCode: es
+    UnityLanguage: 34
+    Enabled: 1
   - OptionText: "Portugu\xEAs Brasileiro"
     OptionFont: {fileID: 11400000, guid: a466fa9b2e60ed44da4dff9d08ee6d86, type: 2}
     FlagSprite: {fileID: 21300000, guid: dd09bc707349b0b4088e24295a01032d, type: 3}
     Language: Portuguese (BR)
     LanguageCode: pt-br
+    UnityLanguage: 28
+    Enabled: 1
   - OptionText: Deutsch
     OptionFont: {fileID: 11400000, guid: a466fa9b2e60ed44da4dff9d08ee6d86, type: 2}
     FlagSprite: {fileID: 21300000, guid: 6e74b04f4fef2d8489f74f9ec959e020, type: 3}
     Language: German
     LanguageCode: de
+    UnityLanguage: 15
+    Enabled: 1
   - OptionText: "Fran\xE7ais"
     OptionFont: {fileID: 11400000, guid: a466fa9b2e60ed44da4dff9d08ee6d86, type: 2}
     FlagSprite: {fileID: 21300000, guid: a74b5bb0569cbc64681968e965cb752f, type: 3}
     Language: French
     LanguageCode: fr
+    UnityLanguage: 14
+    Enabled: 1
   - OptionText: "\u65E5\u672C"
     OptionFont: {fileID: 11400000, guid: 75fd95246bf2f2640b4f948ac8a4699f, type: 2}
     FlagSprite: {fileID: 21300000, guid: 9c27d9aea3d2fae4b8fb4d89f3dbbd53, type: 3}
     Language: Japanese
     LanguageCode: ja
+    UnityLanguage: 22
+    Enabled: 1
 --- !u!1001 &3312305515209827025
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -575,11 +605,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40d95786c1fa9ac4b92fcffae7a0dd7c, type: 3}
---- !u!224 &3654041207629862718 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2252485150255150575, guid: 40d95786c1fa9ac4b92fcffae7a0dd7c, type: 3}
-  m_PrefabInstance: {fileID: 3312305515209827025}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8018167241559537238 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4805882650435933319, guid: 40d95786c1fa9ac4b92fcffae7a0dd7c, type: 3}
@@ -602,6 +627,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &3654041207629862718 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2252485150255150575, guid: 40d95786c1fa9ac4b92fcffae7a0dd7c, type: 3}
+  m_PrefabInstance: {fileID: 3312305515209827025}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3312305515476989737
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -895,6 +925,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40d95786c1fa9ac4b92fcffae7a0dd7c, type: 3}
+--- !u!224 &3654041208192165845 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2252485150255150575, guid: 40d95786c1fa9ac4b92fcffae7a0dd7c, type: 3}
+  m_PrefabInstance: {fileID: 3312305515553493562}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3654041208192165844 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2252485150255150574, guid: 40d95786c1fa9ac4b92fcffae7a0dd7c, type: 3}
@@ -917,11 +952,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 144e4b1288114d70a05cabf8bca3f886, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &3654041208192165845 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2252485150255150575, guid: 40d95786c1fa9ac4b92fcffae7a0dd7c, type: 3}
-  m_PrefabInstance: {fileID: 3312305515553493562}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3312305515743371064
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1215,6 +1245,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40d95786c1fa9ac4b92fcffae7a0dd7c, type: 3}
+--- !u!224 &3654041206749787658 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2252485150255150575, guid: 40d95786c1fa9ac4b92fcffae7a0dd7c, type: 3}
+  m_PrefabInstance: {fileID: 3312305515924095973}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3654041206749787659 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2252485150255150574, guid: 40d95786c1fa9ac4b92fcffae7a0dd7c, type: 3}
@@ -1237,11 +1272,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 144e4b1288114d70a05cabf8bca3f886, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &3654041206749787658 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2252485150255150575, guid: 40d95786c1fa9ac4b92fcffae7a0dd7c, type: 3}
-  m_PrefabInstance: {fileID: 3312305515924095973}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3312305516349727613
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1691,11 +1721,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40d95786c1fa9ac4b92fcffae7a0dd7c, type: 3}
---- !u!224 &3312305516565357045 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2252485150255150575, guid: 40d95786c1fa9ac4b92fcffae7a0dd7c, type: 3}
-  m_PrefabInstance: {fileID: 3654041207316485146}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8071629006577811613 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4805882650435933319, guid: 40d95786c1fa9ac4b92fcffae7a0dd7c, type: 3}
@@ -1707,3 +1732,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 144e4b1288114d70a05cabf8bca3f886, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &3312305516565357045 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2252485150255150575, guid: 40d95786c1fa9ac4b92fcffae7a0dd7c, type: 3}
+  m_PrefabInstance: {fileID: 3654041207316485146}
+  m_PrefabAsset: {fileID: 0}

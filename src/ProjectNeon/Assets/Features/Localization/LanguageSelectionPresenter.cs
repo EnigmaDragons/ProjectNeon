@@ -6,6 +6,8 @@ public class LanguageSelectionPresenter : MonoBehaviour
     [SerializeField] private LanguageButtonPresenter[] optionButtons;
     [SerializeField] private LanguageOption[] options;
 
+    public LanguageOption[] Options => options.ToArray();
+    
     void Start()
     {
         var enabledOptions = options.Where(o => o.Enabled).ToArray();
