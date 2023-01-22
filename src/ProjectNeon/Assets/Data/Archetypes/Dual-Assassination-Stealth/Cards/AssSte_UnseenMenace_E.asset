@@ -91,6 +91,8 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 31
     battleEffect:
       Id: 2211
@@ -169,6 +171,8 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 1
     battleEffect:
       Id: 2212
@@ -191,7 +195,7 @@ MonoBehaviour:
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 12
-      StatusDetailText: 'On Mark: Gain +1 Power'
+      StatusDetailText: 'On Mark: Gain +1 {[t:Stats/Stat-Power]}'
       TurnDelay: 0
       Formula: 
       InterpolatePartialFormula:
@@ -247,6 +251,8 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 1
     battleEffect:
       Id: 2213
@@ -269,7 +275,7 @@ MonoBehaviour:
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 12
-      StatusDetailText: 'On Stealth: Gain +2 Power'
+      StatusDetailText: 'On {[t:Keywords/Stealth]}: Gain +2 {[t:Stats/Stat-Power]}'
       TurnDelay: 0
       Formula: 
       InterpolatePartialFormula:
@@ -325,6 +331,8 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 1
     battleEffect:
       Id: 2214
@@ -347,7 +355,7 @@ MonoBehaviour:
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 12
-      StatusDetailText: 'On Slay: Gain +5 Power'
+      StatusDetailText: 'On {[t:Keywords/OnSlay]}: Gain +5 {[t:Stats/Stat-Power]}'
       TurnDelay: 0
       Formula: 
       InterpolatePartialFormula:
@@ -403,3 +411,5 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0

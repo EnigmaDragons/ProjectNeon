@@ -18,7 +18,8 @@ MonoBehaviour:
   corp: {fileID: 0}
   choices:
   - Id: 15
-    Choice: Activate the virus embedded in all of Metroplex Zero's Medigeneix clinics
+    Choice: Activate the virus embedded in all of {[t:LocationName]}'s {[t:MegaCorps/Medigeneix]}
+      clinics
     Or: 0
     RequiredStates:
     - {fileID: 11400000, guid: 657664c4e9236f84785087e7b38ba10f, type: 2}
@@ -27,7 +28,6 @@ MonoBehaviour:
     - Chance: 1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 023cbe10045a81748966be1e6894ec08, type: 2}
-      ResultNumber: 1
       StoryText: 
   - Id: 16
     Choice: Leave Anton and his AI alive, but it is clear he now works with your
@@ -39,7 +39,6 @@ MonoBehaviour:
     - Chance: 1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: ee42f4a1b5a64284e8314e697803e657, type: 2}
-      ResultNumber: 1
       StoryText: 
   - Id: 17
     Choice: Kill Anton and his AI, putting an end to his schemes
@@ -50,7 +49,6 @@ MonoBehaviour:
     - Chance: 1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: b41b93a3f38c8204ba205796b4b17953, type: 2}
-      ResultNumber: 1
       StoryText: 
   inCutscene: 1
   isMultiChoice: 0

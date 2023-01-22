@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 109
   displayName: Skin-Camo Implant
-  description: 'Motionless: Gain Stealth'
+  description: '{[t:Keywords/Motionless]}: Gain {[t:Keywords/Stealth]}'
   corp: {fileID: 11400000, guid: 1c216af8c1977f34dbbb75041357df2d, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 1e6b060bb2d10434c8d325b3765125dd, type: 2}
@@ -26,7 +26,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 76
+  - Id: 0
+    EffectType: 76
     Conditions: []
     BaseAmount:
       UseConstant: 1
@@ -57,6 +58,7 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
@@ -69,6 +71,7 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 11400000, guid: 537d6ef5cd85be141942ca868b1578b2, type: 2}
+    Unpreventable: 0
   battleEndEffects: []
   requiresStatType: 
   excludeIfPartyHasStatType: 

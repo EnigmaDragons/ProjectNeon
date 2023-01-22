@@ -91,6 +91,8 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 31
     battleEffect:
       Id: 2656
@@ -169,6 +171,8 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 1
     battleEffect:
       Id: 2657
@@ -191,7 +195,7 @@ MonoBehaviour:
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 22
-      StatusDetailText: 'When Ignited: Blind'
+      StatusDetailText: 'When {[t:Keywords/Igniting]}: {[t:Stats/Stat-Blind]}'
       TurnDelay: 0
       Formula: 
       InterpolatePartialFormula:
@@ -247,3 +251,5 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0

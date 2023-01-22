@@ -91,6 +91,8 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 1
     battleEffect:
       Id: 3106
@@ -169,6 +171,8 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 1
     battleEffect:
       Id: 3107
@@ -247,6 +251,8 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 1
     battleEffect:
       Id: 3108
@@ -325,6 +331,8 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 1
     battleEffect:
       Id: 3109
@@ -403,6 +411,8 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 1
     battleEffect:
       Id: 3110
@@ -425,7 +435,8 @@ MonoBehaviour:
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 12
-      StatusDetailText: 'Promoted: +1 Starting Resource & +50% Power & HP'
+      StatusDetailText: 'Promoted: +1 Starting Resource & +50% {[t:Stats/Stat-Power]}
+        & {[t:Stats/Stat-HP]}'
       TurnDelay: 0
       Formula: 
       InterpolatePartialFormula:
@@ -481,3 +492,5 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0

@@ -22,10 +22,11 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Aegis_Rule
       Variable: {fileID: 0}
-    Value: '<b>Aegis</b>
+    Value: '<b>{[t:Keywords/Aegis]}</b>
 
 
-      Prevent the next harmful effect that would be received.'
+      Prevent the next harmful effect that
+      would be received.'
   - title: Afflicted
     Key:
       UseConstant: 0
@@ -35,11 +36,11 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Afflicted_Rule
       Variable: {fileID: 0}
-    Value: '<b>Afflicted</b>
+    Value: '<b>{[t:Keywords/Afflicted]}</b>
 
 
-      If target is already suffering from a Damage
-      over Time (DoT) effect, perform the stated effect.'
+      If target is already suffering
+      from a Damage over Time effect, perform the stated effect.'
   - title: Blind
     Key:
       UseConstant: 0
@@ -49,11 +50,11 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Blind_Rule
       Variable: {fileID: 0}
-    Value: '<b>Blind</b>
+    Value: '<b>{[t:Keywords/Blind]}</b>
 
 
-      Guarantees that the next attack card played will
-      miss.'
+      Guarantees that the next attack card
+      played will miss.'
   - title: Bloodied
     Key:
       UseConstant: 0
@@ -63,11 +64,11 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Bloodied_Rule
       Variable: {fileID: 0}
-    Value: '<b>Bloodied</b>
+    Value: '<b>{[t:Keywords/Bloodied]}</b>
 
 
-      The bonus effect applies if the target is at
-      or below half of their maximum health'
+      The bonus effect applies if the
+      target is at or below half of their maximum health'
   - title: Buyout
     Key:
       UseConstant: 1
@@ -77,7 +78,7 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Buyout_Rule
       Variable: {fileID: 0}
-    Value: '<b>Buyout</b>
+    Value: '<b>{[t:Keywords/Buyout]}</b>
 
 
       The specified enemy leaves the battle.'
@@ -90,9 +91,9 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/CardCycles_Rule
       Variable: {fileID: 0}
-    Value: "<b>Card Cycles</b>\n\nAdjusts the number of Card Cycles you can perform
-      during a turn. \n\nCycling a card discards the selected card and immediately
-      draws a new one."
+    Value: "<b>{[t:Keywords/CardCycles]}</b>\n\nAdjusts the number of Card Cycles
+      you can perform during a turn. \n\nCycling a card discards the selected card
+      and immediately draws a new one."
   - title: Confused
     Key:
       UseConstant: 0
@@ -102,11 +103,11 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Confused_Rule
       Variable: {fileID: 0}
-    Value: '<b>Confused</b>
+    Value: '<b>{[t:Keywords/Confused]}</b>
 
 
-      Confused characters may not choose targets. Card
-      effects will be targeted randomly.'
+      <b>{[t:Keywords/Confused]}</b>
+      characters may not choose targets. Card effects will be targeted randomly.'
   - title: Critical
     Key:
       UseConstant: 0
@@ -116,11 +117,11 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Critical_Rule
       Variable: {fileID: 0}
-    Value: '<b>Crit / Critical</b>
+    Value: '<b>{[t:Keywords/Critical]}</b>
 
 
-      If the condition is met, the attack deals
-      double damage.'
+      If the condition is met, the attack
+      deals double damage.'
   - title: Debuffs
     Key:
       UseConstant: 1
@@ -130,11 +131,12 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Debuffs_Rule
       Variable: {fileID: 0}
-    Value: '<b>Debuffs</b>
+    Value: '<b>{[t:Keywords/Debuffs]}</b>
 
 
-      Any temporary negative effect applied to a character.
-      Includes damage over time, vulnerable, blind, disabled, etc...'
+      Any temporary negative effect applied
+      to a character. Includes damage over time, {[t:Keywords/Vulnerable]}, {[t:Keywords/Blind]},
+      {[t:Keywords/Disabled]}, etc...'
   - title: Defenseless
     Key:
       UseConstant: 0
@@ -144,11 +146,11 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Defenseless_Rule
       Variable: {fileID: 0}
-    Value: '<b>Defenseless</b>
+    Value: '<b>{[t:Keywords/Defenseless]}</b>
 
 
-      A character is defenseless if they have no
-      Armor or Resistance.'
+      A character is defenseless
+      if they have no {[t:Stats/Stat-Armor]} or {[t:Stats/Stat-Resistance]}.'
   - title: Disabled
     Key:
       UseConstant: 0
@@ -158,10 +160,11 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Disabled_Rule
       Variable: {fileID: 0}
-    Value: '<b>Disable</b>
+    Value: '<b>{[t:Keywords/Disabled]}</b>
 
 
-      A disabled character may not play any cards.'
+      Character with <b>{[t:Keywords/Disabled]}</b>
+      may not play any cards.'
   - title: Dodge
     Key:
       UseConstant: 0
@@ -171,10 +174,11 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Dodge_Rule
       Variable: {fileID: 0}
-    Value: '<b>Dodge</b>
+    Value: '<b>{[t:Keywords/Dodge]}</b>
 
 
-      Prevent the next action damage that would be received.'
+      Prevent the next action damage that
+      would be received.'
   - title: Double Damage
     Key:
       UseConstant: 0
@@ -184,12 +188,12 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/DoubleDamage_Rule
       Variable: {fileID: 0}
-    Value: '<b>Double Damage</b>
+    Value: '<b>{[t:Keywords/DoubleDamage]}</b>
 
 
-      Doubles the amount of damage done by the
-      next damaging effect. If there are more than 1 damaging effects being applied,
-      only the first is modified.'
+      Doubles the amount of damage
+      done by the next damaging effect. If there are more than 1 damaging effects
+      being applied, only the first is modified.'
   - title: Drain
     Key:
       UseConstant: 0
@@ -199,11 +203,11 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Drain_Rule
       Variable: {fileID: 0}
-    Value: '<b>Drain</b>
+    Value: '<b>{[t:Keywords/Drain]}</b>
 
 
-      Remove from targets and gain a corresponding amount
-      for yourself.'
+      Remove from targets and gain a corresponding
+      amount for yourself.'
   - title: ExtraCardPlays
     Key:
       UseConstant: 0
@@ -213,11 +217,11 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/ExtraCardPlays_Rule
       Variable: {fileID: 0}
-    Value: '<b>Extra Card Plays</b>
+    Value: '<b>{[t:Keywords/ExtraCardPlays]}</b>
 
 
-      Allows your team to play to play X additional
-      cards.'
+      Allows your team to play
+      to play X additional cards.'
   - title: Finisher
     Key:
       UseConstant: 0
@@ -227,12 +231,12 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Chain_Rule
       Variable: {fileID: 0}
-    Value: '<b>Finisher</b>
+    Value: '<b>{[t:Keywords/Chain]}</b>
 
 
-      Play a free copy of the Finisher card if this
-      is the final card play and the 3 most recent cards (including this) match this
-      hero.'
+      Play a free copy of the <b>{[t:Keywords/Chain]}</b>
+      card if this is the final card play and the 3 most recent cards (including
+      this) match this hero.'
   - title: Focus
     Key:
       UseConstant: 0
@@ -242,11 +246,11 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Focus_Rule
       Variable: {fileID: 0}
-    Value: '<b>Focus</b>
+    Value: '<b>{[t:Keywords/Focus]}</b>
 
 
-      The target of this effect becomes the primary target
-      of the attacker for the remainder of the battle.'
+      The target of this effect becomes
+      the primary target of the attacker for the remainder of the battle.'
   - title: Glitch
     Key:
       UseConstant: 0
@@ -256,9 +260,9 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Glitch_Rule
       Variable: {fileID: 0}
-    Value: "<b>Glitch / Glitched</b>\n\nGlitched cards cannot be played. They can
-      be debugged or trashed to fix. \n\nSome cards in your Deck/Discard may be glitched
-      by powerful hacking enemies."
+    Value: "<b>{[t:Keywords/Glitch]}</b>\n\nGlitched cards cannot be played. They
+      can be debugged or trashed to fix. \n\nSome cards in your Deck/Discard may
+      be glitched by powerful hacking enemies."
   - title: Igniting
     Key:
       UseConstant: 0
@@ -268,11 +272,11 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Igniting_Rule
       Variable: {fileID: 0}
-    Value: '<b>Ignite</b>
+    Value: '<b>{[t:Keywords/Igniting]}</b>
 
 
-      When targeted by a Fire Card, <b>Ignited</b> effects
-      are triggered and consumed.'
+      When targeted by a {[t:Archetypes/Fire]}
+      Card, <b>{[t:Keywords/Igniting]}</b> effects are triggered and consumed.'
   - title: Inhibit
     Key:
       UseConstant: 0
@@ -282,11 +286,11 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Inhibit_Rule
       Variable: {fileID: 0}
-    Value: '<b>Inhibit</b>
+    Value: '<b>{[t:Keywords/Inhibit]}</b>
 
 
-      Guarantees that the next non-attack card played
-      will fizzle.'
+      Guarantees that the next non-attack
+      card played will fizzle.'
   - title: Injure
     Key:
       UseConstant: 0
@@ -296,11 +300,12 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Injure_Rule
       Variable: {fileID: 0}
-    Value: '<b>Inhibit</b>
+    Value: '<b>{[t:Keywords/Injure]}</b>
 
 
-      Guarantees that the next non-attack card played
-      will fizzle.'
+      After battle, the stated injury
+      will be applied and will persist until the character receives treatment for
+      it at a clinic.'
   - title: Lifesteal
     Key:
       UseConstant: 0
@@ -310,11 +315,12 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Lifesteal_Rule
       Variable: {fileID: 0}
-    Value: '<b>Lifesteal</b>
+    Value: '<b>{[t:Keywords/Lifesteal]}</b>
 
 
-      Next time you deal damage, heal yourself for
-      25% * Number of Lifesteal Counters * the amount of damage dealt.'
+      Next time you deal damage, heal
+      yourself for 25% * Number of <b>{[t:Keywords/Lifesteal]}</b> * the amount of
+      damage dealt.'
   - title: Marked
     Key:
       UseConstant: 0
@@ -324,10 +330,12 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Marked_Rule
       Variable: {fileID: 0}
-    Value: '<b>Mark</b>
+    Value: '<b>{[t:Keywords/Marked]}</b>
 
 
-      Marks are used to trigger various Assassination effects.'
+      Marks are both used as requirements
+      on cards such as when you see "3 Marks:" and make some assassination card effects
+      stronger'
   - title: Motionless
     Key:
       UseConstant: 0
@@ -337,11 +345,12 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Motionless_Rule
       Variable: {fileID: 0}
-    Value: '<b>Motionless</b>
+    Value: '<b>{[t:Keywords/Motionless]}</b>
 
 
-      If this hero plays no cards during the Play
-      Cards phase, gain the stated effect or play the stated bonus card.'
+      If this hero plays no cards
+      during the Play Cards phase, gain the stated effect or play the stated bonus
+      card.'
   - title: OnSlay
     Key:
       UseConstant: 0
@@ -351,11 +360,11 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/OnSlay_Rule
       Variable: {fileID: 0}
-    Value: '<b>Slay</b>
+    Value: '<b>{[t:Keywords/OnSlay]}</b>
 
 
-      When a target is killed by your action, trigger the
-      stated effect.'
+      When a target is killed by your
+      action, trigger the stated effect.'
   - title: Power
     Key:
       UseConstant: 0
@@ -365,11 +374,11 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Power_Rule
       Variable: {fileID: 0}
-    Value: '<b>Power</b>
+    Value: '<b>{[t:Keywords/Power]}</b>
 
 
-      Power refers to the main card-scaling state of a
-      character.'
+      {[t:Keywords/Power]} refers to the
+      main card-scaling stat of a character.'
   - title: Profitable
     Key:
       UseConstant: 1
@@ -379,7 +388,7 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Profitable_Rule
       Variable: {fileID: 0}
-    Value: '<b>Profitable/Unprofitable</b>
+    Value: '<b>{[t:Keywords/Profitable]}</b>
 
 
       If you have gained more money
@@ -394,14 +403,15 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Prominent_Rule
       Variable: {fileID: 0}
-    Value: '<b>Prominent</b>
+    Value: '<b>{[t:Keywords/Prominent]}</b>
 
 
-      You cannot <b>Stealth</b> while prominent, <i>(although
-      you can Re-Stealth)</i>.
+      You cannot <b>{[t:Keywords/Stealth]}</b>
+      while prominent, <i>(although you can {[t:Keywords/ReStealth]})</i>.
 
-      After breaking stealth, a character gains Prominent
-      for the remainder of the turn. '
+      After
+      breaking <b>{[t:Keywords/Stealth]}</b>, a character gains <b>{[t:Keywords/Prominent]}</b>
+      for the remainder of the turn.'
   - title: Primary Stat
     Key:
       UseConstant: 0
@@ -411,11 +421,11 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/PrimaryStat_Rule
       Variable: {fileID: 0}
-    Value: '<b>Primary Stat</b>
+    Value: '<b>{[t:Keywords/PrimaryStat]}</b>
 
 
-      Primary Stat refers to the main card-scaling
-      state of a character.'
+      {[t:Keywords/PrimaryStat]}
+      refers to the main card-scaling stat of a character.'
   - title: Quick
     Key:
       UseConstant: 0
@@ -425,11 +435,11 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Quick_Rule
       Variable: {fileID: 0}
-    Value: '<b>Quick</b>
+    Value: '<b>{[t:Keywords/Quick]}</b>
 
 
-      Does not cost a turn card play. You can play this
-      and still play all the other cards you would normally play.'
+      Does not cost a turn card play. You
+      can play this and still play all the other cards you would normally play.'
   - title: ReStealth
     Key:
       UseConstant: 0
@@ -439,10 +449,11 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/ReStealth_Rule
       Variable: {fileID: 0}
-    Value: '<b>ReStealth</b>
+    Value: '<b>{[t:Keywords/ReStealth]}</b>
 
 
-      Immediately gain Stealth. Works even if Prominent. '
+      Immediately gain <b>{[t:Keywords/Stealth]}</b>.
+      Works even if <b>{[t:Keywords/Prominent]}</b>.'
   - title: Self-Destruct
     Key:
       UseConstant: 0
@@ -452,11 +463,11 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/SelfDestruct_Rule
       Variable: {fileID: 0}
-    Value: '<b>Self-Destruct</b>
+    Value: '<b>{[t:Keywords/SelfDestruct]}</b>
 
 
-      The acting character instantly loses all
-      its remaining HP.'
+      The acting character instantly
+      loses all its remaining {[t:Stats/Stat-HP]}.'
   - title: Shoot
     Key:
       UseConstant: 0
@@ -466,11 +477,11 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Shoot_Rule
       Variable: {fileID: 0}
-    Value: '<b>Shoot</b>
+    Value: '<b>{[t:Keywords/Shoot]}</b>
 
 
-      When you target an enemy with a ranged weapon attack
-      card, trigger the stated effect.'
+      When you target an enemy with a ranged
+      weapon attack card, trigger the stated effect.'
   - title: Single Use
     Key:
       UseConstant: 1
@@ -480,11 +491,12 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/SingleUse_Rule
       Variable: {fileID: 0}
-    Value: '<b>Single Use</b>
+    Value: '<b>{[t:Keywords/SingleUse]}</b>
 
 
-      Any card with cracks at the edge of it, is
-      single use. After it resolves it will be destroyed instead of being discarded.'
+      Any card with cracks at the edge
+      of it, is single use. After it resolves it will be removed from that battle
+      instead of being discarded.'
   - title: Sneaky
     Key:
       UseConstant: 0
@@ -494,10 +506,11 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Sneaky_Rule
       Variable: {fileID: 0}
-    Value: '<b>Sneaky</b>
+    Value: '<b>{[t:Keywords/Sneaky]}</b>
 
 
-      If stealthed, apply the stated effect'
+      If you have {[t:Keywords/Stealth]},
+      apply the stated effect'
   - title: Stealth
     Key:
       UseConstant: 0
@@ -507,12 +520,13 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Stealth_Rule
       Variable: {fileID: 0}
-    Value: '<b>Stealth</b>
+    Value: '<b>{[t:Keywords/Stealth]}</b>
 
 
-      Stealthed characters may not be directly targeted.
-      They lose stealth when they perform an offensive action. Heroes cannot stealth
-      when Prominent.'
+      Characters with <b>{[t:Keywords/Stealth]}</b>
+      may not be directly targeted. They lose <b>{[t:Keywords/Stealth]}</b> when
+      they perform an offensive action. Heroes cannot <b>{[t:Keywords/Stealth]}</b>
+      while having <b>{[t:Keywords/Prominent]}</b>.'
   - title: Stun
     Key:
       UseConstant: 0
@@ -522,14 +536,15 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Stun_Rule
       Variable: {fileID: 0}
-    Value: '<b>Stun</b>
+    Value: '<b>{[t:Keywords/Stun]}</b>
 
 
-      Negates the next card played by that character.
+      Negates the next card played by that
+      character.
 
 
-      Also,
-      stunned characters cannot perform reactions.'
+      Also, characters with <b>{[t:Keywords/Stun]}</b> cannot
+      perform reactions.'
   - title: Swap
     Key:
       UseConstant: 1
@@ -539,11 +554,11 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Swap_Rule
       Variable: {fileID: 0}
-    Value: '<b>Swap</b>
+    Value: '<b>{[t:Keywords/Swap]}</b>
 
 
-      After this card is resolved it will swap with the
-      specified card'
+      After this card is resolved it will
+      swap with the specified card'
   - title: TagPlayed
     Key:
       UseConstant: 0
@@ -553,11 +568,11 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/TagPlayed_Rule
       Variable: {fileID: 0}
-    Value: '<b>[Condition]</b>
+    Value: '<b>(Condition)</b>
 
 
       This card becomes more powerful for each time
-      you have fulfilled the specified condition inside the "[]"'
+      you have fulfilled the specified condition inside the "()"'
   - title: Taunt
     Key:
       UseConstant: 0
@@ -567,11 +582,11 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Taunt_Rule
       Variable: {fileID: 0}
-    Value: '<b>Taunt</b>
+    Value: '<b>{[t:Keywords/Taunt]}</b>
 
 
-      While an opponent has taunt, all single target cards
-      must target that character.'
+      While an opponent has <b>{[t:Keywords/Taunt]}</b>,
+      all single target cards must target that character.'
   - title: Vulnerable
     Key:
       UseConstant: 0
@@ -581,11 +596,11 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/Vulnerable_Rule
       Variable: {fileID: 0}
-    Value: '<b>Vulnerable</b>
+    Value: '<b>{[t:Keywords/Vulnerable]}</b>
 
 
-      A vulnerable character receives 50% more damage.
-      Applies after all defenses.'
+      A character with <b>{[t:Keywords/Vulnerable]}</b>
+      receives 50% more damage. Applies after all defenses.'
   - title: X Cost
     Key:
       UseConstant: 0
@@ -595,8 +610,8 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Keywords/X-Cost_Rule
       Variable: {fileID: 0}
-    Value: '<b>X Cost</b>
+    Value: '<b>{[t:Keywords/X-Cost]}</b>
 
 
-      Expends all of the associated resource. Grants
-      effects that scale off the amount of resources spent.'
+      Expends all of the associated resource.
+      Grants effects that scale off the amount of resources spent.'

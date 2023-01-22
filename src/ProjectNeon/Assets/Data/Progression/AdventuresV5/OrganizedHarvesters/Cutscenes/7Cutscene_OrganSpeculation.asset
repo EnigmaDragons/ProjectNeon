@@ -18,6 +18,9 @@ MonoBehaviour:
   setting: {fileID: 11400000, guid: 3c274cf6f7957f348b799ba9c65584d4, type: 2}
   skipTrueStates: []
   skipFalseStates: []
+  onFinished:
+    m_PersistentCalls:
+      m_Calls: []
   segments:
   - Id: 396
     SegmentType: 1
@@ -25,12 +28,16 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Weldon
       Variable: {fileID: 0}
-    Text: Is Medigeneix holding out organs on purpose or is there actually an organ
-      transplant crisis that we are now a part of?
+    Text: Is {[t:MegaCorps/Medigeneix]} holding out organs on purpose or is there
+      actually an organ transplant crisis that we are now a part of?
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates:
@@ -60,6 +67,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates:
@@ -83,11 +94,15 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: Hacker
       Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: Medigeneix knew the demand was going to increase?
+    Text: '{[t:MegaCorps/Medigeneix]} knew the demand was going to increase?'
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates:
@@ -116,6 +131,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates:

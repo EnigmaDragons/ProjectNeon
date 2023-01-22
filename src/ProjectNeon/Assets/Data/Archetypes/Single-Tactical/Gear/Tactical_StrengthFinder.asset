@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 75
   displayName: 
-  description: 'Start of Turn: Give a random ally +1 Primary Stat for the turn'
+  description: 'Start of Turn: Give a random ally +1 {[t:Keywords/PrimaryStat]} for
+    the turn'
   corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: e97bda47e14bfeb49b6a38e814d38a6d, type: 2}
@@ -24,7 +25,8 @@ MonoBehaviour:
   modifiers: []
   resourceModifiers: []
   turnStartEffects:
-  - EffectType: 68
+  - Id: 0
+    EffectType: 68
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -40,8 +42,8 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 11400000, guid: a961f902c2ecfd54ebfbfe875405e991, type: 2}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 40
+    ApplyToEachMemberIndividually: 0
     StatusTag: 0
     StatusDetailText: 
     TurnDelay: 0
@@ -55,20 +57,24 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 73
+  - Id: 0
+    EffectType: 73
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -84,8 +90,8 @@ MonoBehaviour:
       ConstantValue: Augment
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 0
     StatusDetailText: 
     TurnDelay: 0
@@ -99,16 +105,23 @@ MonoBehaviour:
       ConstantValue: 'Start of Turn: Give a random ally +1 Primary Stat for the turn'
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 

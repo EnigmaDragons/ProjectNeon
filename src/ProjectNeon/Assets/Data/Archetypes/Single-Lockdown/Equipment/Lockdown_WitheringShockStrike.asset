@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 35
   displayName: 
-  description: 'On Stun: Also apply 2 Vulnerable'
+  description: 'On {[t:Keywords/Stun]}: Also apply 2 {[t:Keywords/Vulnerable]}'
   corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 9a78785ad807ed4499fd258fc05f8177, type: 2}
@@ -29,7 +29,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 74
+  - Id: 0
+    EffectType: 74
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -45,8 +46,8 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 6f09d4af906769b459c8f20406996184, type: 2}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 12
     StatusDetailText: 'On Stun: Also apply 2 Vulnerable'
     TurnDelay: 0
@@ -60,16 +61,23 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 20
     ReactionEffectScope:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 1
       scope: 3
       cardActions: {fileID: 11400000, guid: 0dd71162ba6ddc0428e342ca6fc172c9, type: 2}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 

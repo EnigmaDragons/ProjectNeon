@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 79
   displayName: 
-  description: Grenades apply Vulnerable 1
+  description: Grenades apply {[t:Keywords/Vulnerable]} 1
   corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 4b871eacf30af6f428fd307e9e308b4c, type: 2}
@@ -26,7 +26,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 74
+  - Id: 0
+    EffectType: 74
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -57,6 +58,7 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 29
     ReactionEffectScope:
       UseConstant: 0
@@ -69,6 +71,7 @@ MonoBehaviour:
       scope: 3
       cardActions: {fileID: 11400000, guid: 4815349f5f98d424fa36b9f41b520091, type: 2}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
   requiresStatType: 
   excludeIfPartyHasStatType: 

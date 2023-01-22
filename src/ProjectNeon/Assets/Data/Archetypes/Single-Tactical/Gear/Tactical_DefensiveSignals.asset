@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 77
   displayName: 
-  description: 'Finisher: Use Cover'
+  description: 'Finisher: {[t:CardNames/00137-00-Name]}'
   corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: e97bda47e14bfeb49b6a38e814d38a6d, type: 2}
@@ -26,7 +26,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 92
+  - Id: 0
+    EffectType: 92
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -57,6 +58,7 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0

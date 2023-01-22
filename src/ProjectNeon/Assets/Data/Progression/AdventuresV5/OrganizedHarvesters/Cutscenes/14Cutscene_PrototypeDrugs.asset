@@ -18,6 +18,9 @@ MonoBehaviour:
   setting: {fileID: 11400000, guid: 16ff067cea58b1f4285b745b5134e3d6, type: 2}
   skipTrueStates: []
   skipFalseStates: []
+  onFinished:
+    m_PersistentCalls:
+      m_Calls: []
   segments:
   - Id: 506
     SegmentType: 1
@@ -25,12 +28,17 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: enemy1
       Variable: {fileID: 0}
-    Text: I know Medigeneix. I made sure to keep Medigeneix's best combat drugs prototypes
-      with me for situations like these. You are on the wrong side of this book.
+    Text: I know {[t:MegaCorps/Medigeneix]}. I made sure to keep {[t:MegaCorps/Medigeneix]}'s
+      best combat drugs prototypes with me for situations like these. You are on
+      the wrong side of this book.
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []

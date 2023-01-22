@@ -18,6 +18,9 @@ MonoBehaviour:
   setting: {fileID: 11400000, guid: 02eee59ef2940ae41897605e13ddd805, type: 2}
   skipTrueStates: []
   skipFalseStates: []
+  onFinished:
+    m_PersistentCalls:
+      m_Calls: []
   segments:
   - Id: 527
     SegmentType: 3
@@ -30,6 +33,10 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 0.5
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -44,13 +51,17 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-    Text: Medigeneix is one of the region's leading medical suppliers. Unfortunately,
-      one of their clinics in Metroplex Zero has deviated from normal healthcare
-      protocols.
+    Text: '{[t:MegaCorps/Medigeneix]} is one of the region''s leading medical suppliers.
+      Unfortunately, one of their clinics in {[t:LocationName]} has deviated from
+      normal healthcare protocols.'
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -68,11 +79,15 @@ MonoBehaviour:
     Text: 'Instead of transplanting organs into patients who need life-saving donations,
       they are not only keeping the donation organs, but also harvesting the organs
       of the at-risk patients, making Geneca Hospital one of the most profitable
-      Medigeneix locations in the region. '
+      {[t:MegaCorps/Medigeneix]} locations in the region. '
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -93,6 +108,10 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []

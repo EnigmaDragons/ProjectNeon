@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 60
   displayName: Fighter's Reflexers
-  description: "Once Per Turn: Counterattack for 1 \xD7 PrimaryStat damage"
+  description: "Once Per Turn: Counterattack for 1\xD7 {[t:Keywords/PrimaryStat]}
+    damage"
   corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes: []
   rarity: 3
@@ -23,7 +24,8 @@ MonoBehaviour:
   modifiers: []
   resourceModifiers: []
   turnStartEffects:
-  - EffectType: 75
+  - Id: 0
+    EffectType: 75
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -54,6 +56,7 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0

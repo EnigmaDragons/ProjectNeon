@@ -91,6 +91,8 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 1
     battleEffect:
       Id: 2854
@@ -169,6 +171,8 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 1
     battleEffect:
       Id: 2855
@@ -191,7 +195,8 @@ MonoBehaviour:
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 7
-      StatusDetailText: Removes 1 more Armor and Resistance every turn
+      StatusDetailText: Removes 1 {[t:Stats/Stat-Armor]} and 1 {[t:Stats/Stat-Resistance]}
+        every turn
       TurnDelay: 0
       Formula: 
       InterpolatePartialFormula:
@@ -247,3 +252,5 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0

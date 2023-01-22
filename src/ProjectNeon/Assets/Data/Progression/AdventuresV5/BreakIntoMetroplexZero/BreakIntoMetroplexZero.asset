@@ -20,14 +20,15 @@ MonoBehaviour:
   stages: []
   v5Stages:
   - {fileID: 11400000, guid: ba4fa17d273a4214ba0c25af208e8475, type: 2}
-  adventureTitle: Prologue - Break Into Metroplex Zero
-  mapAdventureTitle: Break Into Metroplex Zero
+  adventureTitle: Prologue - {[t:Adventures/Adventure10MapTitle]}
+  mapAdventureTitle: Break Into {[t:LocationName]}
   adventureImage: {fileID: 21300000, guid: 6fb14100c41c5994f9c6b9a0cf9a944c, type: 3}
   partySize: 1
   allowedHeroesDescription: 
   requiredHeroes:
   - {fileID: 11400000, guid: 5efb0bfe60dc8664eb76bbe02871bcd5, type: 2}
   bannedHeroes: []
+  bannedLeaders: []
   fixedStartingHeroes:
   - {fileID: 11400000, guid: 5efb0bfe60dc8664eb76bbe02871bcd5, type: 2}
   baseNumberOfCardCycles: 0
@@ -40,14 +41,21 @@ MonoBehaviour:
   startingClinicVouchers: 1
   battleRewardClinicVouchers: 1
   numOfImplantOptions: 2
-  story: "Metroplex Zero was supposed to be a beacon of progression. A place without
-    restrictions and laws. A place where MegaCorps couldn't treat you differently
-    for where you shopped, worked, and slept.\n\nBut with all those laws out of the
-    way the MegaCorps were ruthless and subversively exploiting the \"benefactors\".
-    They had turned Metroplex Zero into a dystopic nightmare. \n\nWith your lack
-    of legitimate records you could never immigrate properly. You are going to break
-    in so you can help Metroplex Zero."
+  story: '{[t:LocationName]} was supposed to be a beacon of progression. A place
+    without restrictions and laws. A place where MegaCorps couldn''t treat you differently
+    for where you shopped, worked, and slept.
+
+
+    But with all those laws out of
+    the way the MegaCorps were ruthless and subversively exploiting the "benefactors".
+    They had turned {[t:LocationName]} into a dystopic nightmare.
+
+
+    With your
+    lack of legitimate records you could never immigrate properly. You are going
+    to break in so you can help {[t:LocationName]}.'
   defeatConclusion: 
   victoryConclusion: 
+  shouldRollCreditsBeforeConclusionScene: 0
   mapDeckbuildingEnabled: 0
   allowDifficultySelection: 0

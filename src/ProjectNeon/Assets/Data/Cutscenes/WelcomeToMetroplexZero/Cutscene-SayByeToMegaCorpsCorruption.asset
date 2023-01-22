@@ -18,6 +18,9 @@ MonoBehaviour:
   setting: {fileID: 11400000, guid: 25e4d52948d1e0f48b007bcc3f4dd2c5, type: 2}
   skipTrueStates: []
   skipFalseStates: []
+  onFinished:
+    m_PersistentCalls:
+      m_Calls: []
   segments:
   - Id: 13
     SegmentType: 3
@@ -30,6 +33,10 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 6
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -44,12 +51,21 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: You
       Variable: {fileID: 0}
-    Text: "I have made it past immigration and into Metroplex Zero.\r\n\nThe MetroCorps
-      reign of unchecked corruption is about to be over.\r"
+    Text: 'I have made it past immigration and into {[t:LocationName]}.
+
+
+      The
+      MetroCorps reign of unchecked corruption is about to be over.
+
+'
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -69,6 +85,10 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -84,12 +104,16 @@ MonoBehaviour:
       ConstantValue: Lieutenant
       Variable: {fileID: 0}
     Text: "Welcome commander! Our secret HQ and our mobile HQ are fully operational.
-      We\u2019ve made a variety of contacts within Metroplex Zero that would be willing
-      to directly fight the corps."
+      We\u2019ve made a variety of contacts within {[t:LocationName]} that would
+      be willing to directly fight the corps."
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -109,6 +133,10 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -129,6 +157,10 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -148,6 +180,10 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []

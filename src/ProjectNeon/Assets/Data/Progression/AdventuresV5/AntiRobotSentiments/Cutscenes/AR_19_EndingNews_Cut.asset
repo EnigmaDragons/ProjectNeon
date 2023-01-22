@@ -18,6 +18,9 @@ MonoBehaviour:
   setting: {fileID: 11400000, guid: c99cd71c592632c45b6ecad54cae75ee, type: 2}
   skipTrueStates: []
   skipFalseStates: []
+  onFinished:
+    m_PersistentCalls:
+      m_Calls: []
   segments:
   - Id: 241
     SegmentType: 1
@@ -25,8 +28,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
-    Text: Breaking news! For some strange reason many people all across Metroplex
-      Zero have gone missing.
+    Text: Breaking news! For some strange reason many people all across {[t:LocationName]}
+      have gone missing.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -55,8 +58,7 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
-    Text: Some camera photoage has shown them leaving their residences and corps
-      with no explanation.
+    Text: Footage has shown them leaving their residences and corps with no explanation.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -85,8 +87,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
-    Text: Rumors claim the missing people were taken on a Secubotics airship to the
-      Sahara desert but those haven't been verified.
+    Text: Rumors claim the missing people were taken on a {[t:MegaCorps/Secubotics]}
+      airship to the Sahara desert but those haven't been verified.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -115,8 +117,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
-    Text: Secubotics has denied any responsibility but did admit one of their canceled
-      projects had a ship that was stolen.
+    Text: '{[t:MegaCorps/Secubotics]} has denied any responsibility but did admit
+      one of their canceled projects had a ship that was stolen.'
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -175,8 +177,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
-    Text: ' Secubotics has volunteered their swarm of robots to assist in helping
-      and cleaning up the mess in this tragedy.'
+    Text: ' {[t:MegaCorps/Secubotics]} has volunteered their swarm of robots to assist
+      in helping and cleaning up the mess in this tragedy.'
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -205,8 +207,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
-    Text: At the same time as those deaths, ZantoCorp exec Helen DeVries was viciously
-      murdered.
+    Text: At the same time as those deaths, {[t:MegaCorps/ZantoCorp]} exec Helen
+      DeVries was viciously murdered.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -235,8 +237,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
-    Text: "ZantoCorp\u2019s CEO, Devin Larimov has vowed to spare no expense to find
-      the ones responsible and bring them to justice."
+    Text: "{[t:MegaCorps/ZantoCorp]}\u2019s CEO, Devin Larimov has vowed to spare
+      no expense to find the ones responsible and bring them to justice."
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -265,7 +267,7 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
-    Text: ZantoCorp provided us footage of the murderers.
+    Text: '{[t:MegaCorps/ZantoCorp]} provided us footage of the murderers.'
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -323,7 +325,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
-    Text: If you have any information about their whereabouts, contact NNZ immediately.
+    Text: If you have any information about their whereabouts, contact {[t:MegaCorps/NNZ]}
+      immediately.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -412,8 +415,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
-    Text: An advanced virus made by ZantoCorp executive Helen DeVries and her department
-      is responsible.
+    Text: An advanced virus made by {[t:MegaCorps/ZantoCorp]} executive Helen DeVries
+      and her department is responsible.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -442,7 +445,7 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
-    Text: Thanks to ZantoCorp the threat is no more.
+    Text: Thanks to {[t:MegaCorps/ZantoCorp]} the threat is no more.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
@@ -471,8 +474,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
-    Text: There will be new oversight over secubotics operations to ensure this will
-      never happen again.
+    Text: There will be new oversight over {[t:MegaCorps/Secubotics]} operations
+      to ensure this will never happen again.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0

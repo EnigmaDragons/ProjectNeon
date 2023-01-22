@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 34
   displayName: Static Discharge
-  description: When attacked, if you have 3+ energy expend 3 energy to stun the attacker
+  description: When attacked, if you have 3+ {[t:Resources/Energy]} expend 3  {[t:Resources/Energy]}
+    to stun the attacker
   corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 9a78785ad807ed4499fd258fc05f8177, type: 2}
@@ -29,7 +30,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 75
+  - Id: 0
+    EffectType: 75
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -45,8 +47,8 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 2f2a7d3c7d21efe41a694bdd1486f85a, type: 2}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 12
     StatusDetailText: When attacked, if you have 3+ energy expend 3 energy to stun
       the attacker
@@ -61,15 +63,23 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 11400000, guid: 6e32df67da65b6e40a4cedbf07ca525e, type: 2}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
+  battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 

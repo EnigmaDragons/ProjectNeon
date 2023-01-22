@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 87
   displayName: 
-  description: 'Start of Turn: Apply Vulnerable 1 to all Defenseless enemies'
+  description: 'Start of Turn: Apply {[t:Keywords/Vulnerable]} 1 to all {[t:Keywords/Defenseless]}
+    enemies'
   corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 079871761aec52040887b3de1c1a19c4, type: 2}
@@ -24,7 +25,8 @@ MonoBehaviour:
   modifiers: []
   resourceModifiers: []
   turnStartEffects:
-  - EffectType: 79
+  - Id: 0
+    EffectType: 79
     Conditions:
     - {fileID: 11400000, guid: a1323df62032feb4d8b5ac55fee032c2, type: 2}
     BaseAmount:
@@ -41,7 +43,6 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 11400000, guid: a44ad20938ad98d4ba2a05ebec66e947, type: 2}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 21
     ApplyToEachMemberIndividually: 1
     StatusTag: 0
@@ -57,20 +58,24 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 73
+  - Id: 0
+    EffectType: 73
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -86,7 +91,6 @@ MonoBehaviour:
       ConstantValue: Augment
       Variable: {fileID: 11400000, guid: 0c09abf54a6dc1e49afec8539b1cc13c, type: 2}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 0
@@ -102,16 +106,23 @@ MonoBehaviour:
       ConstantValue: 'Start of Turn: Apply Vulnerable 1 to all Defenseless enemies'
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 

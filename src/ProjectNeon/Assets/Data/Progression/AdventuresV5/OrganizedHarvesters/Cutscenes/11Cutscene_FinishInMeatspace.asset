@@ -18,6 +18,9 @@ MonoBehaviour:
   setting: {fileID: 11400000, guid: 3c274cf6f7957f348b799ba9c65584d4, type: 2}
   skipTrueStates: []
   skipFalseStates: []
+  onFinished:
+    m_PersistentCalls:
+      m_Calls: []
   segments:
   - Id: 499
     SegmentType: 1
@@ -25,11 +28,16 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: Hacker
       Variable: {fileID: 0}
-    Text: We have the location of Anton. Heavily guarded Medigeneix facility.
+    Text: We have the location of Anton. Heavily guarded {[t:MegaCorps/Medigeneix]}
+      facility.
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -49,6 +57,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []

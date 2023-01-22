@@ -27,14 +27,12 @@ MonoBehaviour:
     CardTagPriority: 
     UnpreferredCardTags: 
     RotatePlayingCardTags: 
+    IgnoreDesignatedAttackerRole: 0
   preferredTurnOrder: 99
   prefab: {fileID: 2005384641932284173, guid: e1d0ae52ca6cc254a99e185c4718ee6a, type: 3}
   materialType: 2
   libraryCameraOffset: {x: 0, y: -0.8, z: 2.5}
-  deathEffect:
-    UseConstant: 1
-    ConstantValue: 
-    Variable: {fileID: 0}
+  shouldLive: 0
   battleRole: 2
   tier: 0
   unique: 0
@@ -82,6 +80,7 @@ MonoBehaviour:
     Cards:
     - {fileID: 11400000, guid: 92fef7afef928a54fbb42678e949d421, type: 2}
     - {fileID: 11400000, guid: 79f3c37c5fd82f243913406f5356f7cb, type: 2}
+    CardsTheyAppearsToHave: []
   maxCopies: 0
   minimumAllies: 0
   damageType: 0

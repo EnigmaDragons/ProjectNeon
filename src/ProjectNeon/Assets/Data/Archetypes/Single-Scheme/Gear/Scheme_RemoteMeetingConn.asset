@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 116
   displayName: 
-  description: 'Finisher: Strategy Meeting'
+  description: 'Finisher: {[t:CardNames/00126-00-Name]}'
   corp: {fileID: 11400000, guid: 1c216af8c1977f34dbbb75041357df2d, type: 2}
   archetypes:
   - {fileID: 11400000, guid: c3bd2cb0d323191448e78929b9cb214e, type: 2}
@@ -26,7 +26,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 92
+  - Id: 0
+    EffectType: 92
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -57,6 +58,7 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0

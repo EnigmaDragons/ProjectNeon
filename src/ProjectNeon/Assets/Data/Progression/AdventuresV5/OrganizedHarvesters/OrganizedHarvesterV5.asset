@@ -27,6 +27,7 @@ MonoBehaviour:
   allowedHeroesDescription: Any 2 Heroes
   requiredHeroes: []
   bannedHeroes: []
+  bannedLeaders: []
   fixedStartingHeroes: []
   baseNumberOfCardCycles: 0
   rewardCreditsPerPowerLevel: 0.2
@@ -38,16 +39,17 @@ MonoBehaviour:
   startingClinicVouchers: 1
   battleRewardClinicVouchers: 1
   numOfImplantOptions: 4
-  story: 'Medigeneix is luring at-risk patients into their facilities under the pretext
-    of offering medical treatment, but instead, they harvest their organs. If that''s
-    not bad enough, those organs aren''t transplanted into patients who need life-saving
-    donations, but are sold to the highest bidder.
+  story: '{[t:MegaCorps/Medigeneix]} is luring at-risk patients into their facilities
+    under the pretext of offering medical treatment, but instead, they harvest their
+    organs. If that''s not bad enough, those organs aren''t transplanted into patients
+    who need life-saving donations, but are sold to the highest bidder.
 
 
-    Find the corrupt administrators
-    who are responsible for this and put a stop to their bloody operation.'
-  defeatConclusion: 'As your last squadmate loses consciousness, Medigeneix summons
-    a medical crew to load your squad into a MedEvac. The medical crew carefully
+    Find
+    the corrupt administrators who are responsible for this and put a stop to their
+    bloody operation.'
+  defeatConclusion: 'As your last squadmate loses consciousness, {[t:MegaCorps/Medigeneix]}
+    summons a medical crew to load your squad into a MedEvac. The medical crew carefully
     load up each body into the hovering vehicle. Emotionlessly, the crew carefully
     inject a lethal dose of chems into each of the would-be heroes before transport.
 
@@ -58,10 +60,11 @@ MonoBehaviour:
     corporate executive gaining a very nice bonus.'
   victoryConclusion: 'You made choices that affected many people''s lives. Hopefully,
     you can go to sleep knowing you made the best ones you could for the people of
-    Metroplex Zero.
+    {[t:LocationName]}.
 
 
-    Evil never sleeps, and neither shall your team. What other
-    Mega Corp corrupt initiatives will you have to stop?'
+    Evil never sleeps, and neither shall your team. What
+    other Mega Corp corrupt initiatives will you have to stop?'
+  shouldRollCreditsBeforeConclusionScene: 0
   mapDeckbuildingEnabled: 1
   allowDifficultySelection: 1

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 49
   displayName: Magic Area Dampener
-  description: 'Start of Battle: Reduce everyone''s Magic by 2'
+  description: 'Start of Battle: Reduce everyone''s {[t:Stats/Stat-Magic]} by 2'
   corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
   archetypes: []
   rarity: 1
@@ -25,7 +25,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 68
+  - Id: 0
+    EffectType: 68
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -56,6 +57,7 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
@@ -68,6 +70,7 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
   requiresStatType: 
   excludeIfPartyHasStatType: 03000000

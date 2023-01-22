@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 108
   displayName: Skill Catalog
-  description: 'Team: +2 Card Cycles'
+  description: 'Team: +2 {[t:Keywords/CardCycles]}'
   corp: {fileID: 11400000, guid: 4da9e8a658cc248438c17122d0269d3f, type: 2}
   archetypes: []
   rarity: 2
@@ -25,7 +25,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 49
+  - Id: 0
+    EffectType: 49
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -41,7 +42,6 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 38b278e86888e0d4bb759444b59c1d34, type: 2}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 0
@@ -57,17 +57,20 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
   requiresStatType: 
   excludeIfPartyHasStatType: 

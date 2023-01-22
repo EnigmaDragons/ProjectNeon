@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 47
   displayName: Minor Mana Pendant
-  description: 'Start of Turn: If you have no Mana, gain 2.'
+  description: 'Start of Turn: If you have no resources, gain 2.'
   corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: c5bd5ff6560fc8b4aa3182fd810a7fd0, type: 2}
@@ -24,7 +24,8 @@ MonoBehaviour:
   modifiers: []
   resourceModifiers: []
   turnStartEffects:
-  - EffectType: 82
+  - Id: 0
+    EffectType: 82
     Conditions:
     - {fileID: 11400000, guid: 24a4a21e0cb7fe4478da06562ab881c4, type: 2}
     BaseAmount:
@@ -56,6 +57,7 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
@@ -68,6 +70,7 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   turnEndEffects: []
   battleStartEffects: []
   battleEndEffects: []

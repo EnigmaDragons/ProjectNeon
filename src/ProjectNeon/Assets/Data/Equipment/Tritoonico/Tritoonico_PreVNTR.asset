@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 23
   displayName: PreVNRT Mk. 1
-  description: 'Start of Battle: Gain 1 Aegis'
+  description: 'Start of Battle: Gain 1 {[t:Keywords/Aegis]}'
   corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
   archetypes: []
   rarity: 1
@@ -25,7 +25,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 79
+  - Id: 0
+    EffectType: 79
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -41,7 +42,6 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 11400000, guid: e9066b8cb7e2985498d2da0611e31993, type: 2}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 0
@@ -57,17 +57,20 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
   requiresStatType: 
   excludeIfPartyHasStatType: 
