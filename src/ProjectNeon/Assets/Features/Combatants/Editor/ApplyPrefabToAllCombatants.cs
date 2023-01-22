@@ -9,10 +9,11 @@ public class ApplyPrefabToAllCombatants : EditorWindow
         => AssetDatabase.FindAssets("t:" + typeof(T).Name)
             .Select(x => AssetDatabase.LoadAssetAtPath<T>(AssetDatabase.GUIDToAssetPath(x))).ToArray();
     
-    [MenuItem("Neon/Prefabs/Apply Stunned Disabled Effect to All Prefabs %#_E")]
-    public static void ApplyStunnedDisabledEffect()
+    [MenuItem("Neon/Prefabs/Apply Effect to All Prefabs %#_E")]
+    public static void ApplyBlinded()
     {
-        ApplyPrefabToHeroes<StunnedDisabledEffect>("t:prefab HeroStunnedDisabledEffect");
+        ApplyPrefabToHeroes<BlindedEffect>("t:prefab VFX_Blinded_Persistent_Hero");
+        //ApplyPrefabToEnemies<BlindedEffect>("t:prefab VFX_Blinded_Persistent");
     }
 
     private static void ApplyPrefabToHeroes<TUniqueComponent>(string searchString)
@@ -30,7 +31,7 @@ public class ApplyPrefabToAllCombatants : EditorWindow
         var heroes = GetAllInstances<BaseHero>();
         foreach (var h in heroes)
             if (h.Body != null)
-                ApplyPrefabAtCenterpoint<StunnedDisabledEffect>(h.name, h.Body, searchString, effect);
+                ApplyPrefabAtCenterpoint<TUniqueComponent>(h.name, h.Body, searchString, effect);
 
         AssetDatabase.SaveAssets();
         Log.Info("Finished");
@@ -51,7 +52,7 @@ public class ApplyPrefabToAllCombatants : EditorWindow
         var enemies = GetAllInstances<Enemy>();
         foreach (var e in enemies)
             if (e.IsCurrentlyWorking && e.Prefab != null)
-                ApplyPrefabAtCenterpoint<StunnedDisabledEffect>(e.name, e.Prefab, searchString, effect);
+                ApplyPrefabAtCenterpoint<TUniqueComponent>(e.name, e.Prefab, searchString, effect);
         
         AssetDatabase.SaveAssets();
         Log.Info("Finished");

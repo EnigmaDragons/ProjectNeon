@@ -128,23 +128,19 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
         else
             shield.Init(member);
         
-        var highlighter = obj.GetComponentInChildren<MemberHighlighter>();
-        if (highlighter == null)
-            Debug.LogError($"{member.NameTerm.ToEnglish()} is missing a {nameof(MemberHighlighter)}");
+        InitRequired<TauntEffect>(member, obj);
+        InitRequired<StunnedDisabledEffect>(member, obj);
+        InitRequired<BlindedEffect>(member, obj);
+        InitRequired<MemberHighlighter>(member, obj);
+    }
+    
+    private void InitRequired<TComponent>(Member m, GameObject character) where TComponent: IMemberUi
+    {
+        var e = character.GetComponentInChildren<TComponent>();
+        if (e == null)
+            Debug.LogError($"{m.NameTerm.ToEnglish()} is missing a {typeof(TComponent).FullName}");
         else
-            highlighter.Init(member);
-        
-        var tauntEffect = obj.GetComponentInChildren<TauntEffect>();
-        if (tauntEffect == null)
-            Debug.LogError($"{member.NameTerm.ToEnglish()} is missing a {nameof(TauntEffect)}");
-        else
-            tauntEffect.Init(member);
-        
-        var stunnedDisabledEffect = obj.GetComponentInChildren<StunnedDisabledEffect>();
-        if (stunnedDisabledEffect == null)
-            Debug.LogError($"{member.NameTerm.ToEnglish()} is missing a {nameof(StunnedDisabledEffect)}");
-        else
-            stunnedDisabledEffect.Init(member);
+            e.Init(m);
     }
     
     public EnemySpawnDetails Spawn(EnemyInstance enemy, Vector3 offset, Maybe<Member> isReplacing)

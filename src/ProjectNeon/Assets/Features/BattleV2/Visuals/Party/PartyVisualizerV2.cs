@@ -26,6 +26,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, Highligh
     private readonly Dictionary<HeroCharacter, MemberHighlighter> _highlighters  = new Dictionary<HeroCharacter, MemberHighlighter>();
     private readonly Dictionary<HeroCharacter, TauntEffect> _tauntEffects  = new Dictionary<HeroCharacter, TauntEffect>();
     private readonly Dictionary<HeroCharacter, StunnedDisabledEffect> _stunnedDisabledEffects = new Dictionary<HeroCharacter, StunnedDisabledEffect>();
+    private readonly Dictionary<HeroCharacter, BlindedEffect> _blindedEffects = new Dictionary<HeroCharacter, BlindedEffect>();
     private readonly Dictionary<HeroCharacter, DamageNumbersController> _damagesNew  = new Dictionary<HeroCharacter, DamageNumbersController>();
     private readonly Dictionary<HeroCharacter, CharacterWordsController> _words  = new Dictionary<HeroCharacter, CharacterWordsController>();
     private readonly Dictionary<HeroCharacter, CenterPoint> _centers = new Dictionary<HeroCharacter, CenterPoint>();
@@ -58,6 +59,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, Highligh
         _highlighters.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
         _tauntEffects.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
         _stunnedDisabledEffects.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
+        _blindedEffects.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
     }
 
     private void SetupHero(GameObject heroOrigin, HeroCharacter hero, int visualOrder)
@@ -67,64 +69,29 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, Highligh
         _animators[hero] = character.GetComponentInChildren<Animator>();
         _renderers[hero] = character.GetComponentInChildren<SpriteRenderer>();
         _renderers[hero].material = defaultSpriteMaterial;
-         
-        var damageEffectController = character.GetComponentInChildren<DamageNumbersController>();
-        if (damageEffectController == null)
-            Debug.LogError($"{hero.NameTerm().ToEnglish()} is missing a DamageNumbersController");
-        else
-            _damagesNew[hero] = damageEffectController;
-        
-        var wordsController = character.GetComponentInChildren<CharacterWordsController>();
-        if (wordsController == null)
-            Debug.LogError($"{hero.NameTerm().ToEnglish()} is missing a {nameof(CharacterWordsController)}");
-        else
-            _words[hero] = wordsController;
-
         _hovers[hero] = character.GetCharacterMouseHover(hero.NameTerm());
-         
-        var centerPoint = character.GetComponentInChildren<CenterPoint>();
-        if (centerPoint == null)
-            Debug.LogError($"{hero.NameTerm().ToEnglish()} is missing a CenterPoint");
-        else
-            _centers[hero] = centerPoint;
-
-        var shield = character.GetComponentInChildren<ShieldVisual>();
-        if (shield == null)
-            Debug.LogError($"{hero.NameTerm().ToEnglish()} is missing a {nameof(ShieldVisual)}");
-        else
-            _shields[hero] = shield;
-        
-        var highlighter = character.GetComponentInChildren<MemberHighlighter>();
-        if (highlighter == null)
-            Debug.LogError($"{hero.NameTerm().ToEnglish()} is missing a {nameof(MemberHighlighter)}");
-        else
-            _highlighters[hero] = highlighter;
-         
-        var stealth = character.GetComponentInChildren<CharacterCreatorStealthTransparency>();
-        if (stealth == null)
-            Debug.LogWarning($"{hero.NameTerm().ToEnglish()} is missing a {nameof(CharacterCreatorStealthTransparency)}");
-        else
-            _stealths[hero] = stealth;
-
-        var speech = character.GetComponentInChildren<I2ProgressiveTextRevealWorld>();
-        if (speech == null)
-            Debug.LogError($"{hero.NameTerm().ToEnglish()} is missing a {nameof(I2ProgressiveTextRevealWorld)}");
-        else
-            _speech[hero] = speech;
         
         character.GetComponentInChildren<SpriteRenderer>().sortingOrder = visualOrder;
         
-        var tauntEffect = character.GetComponentInChildren<TauntEffect>();
-        if (tauntEffect == null)
-            Debug.LogWarning($"{hero.NameTerm().ToEnglish()} is missing a {nameof(TauntEffect)}");
+        AddRequired(hero, character, _speech);
+        AddRequired(hero, character, _stealths);
+        AddRequired(hero, character, _highlighters);
+        AddRequired(hero, character, _shields);
+        AddRequired(hero, character, _centers);
+        AddRequired(hero, character, _words);
+        AddRequired(hero, character, _damagesNew);
+        AddRequired(hero, character, _tauntEffects);
+        AddRequired(hero, character, _stunnedDisabledEffects);
+        AddRequired(hero, character, _blindedEffects);
+    }
+
+    private void AddRequired<TComponent>(HeroCharacter hero, GameObject character, Dictionary<HeroCharacter, TComponent> collection)
+    {
+        var e = character.GetComponentInChildren<TComponent>();
+        if (e == null)
+            Debug.LogError($"{hero.NameTerm()} is missing a {typeof(TComponent).FullName}");
         else
-            _tauntEffects[hero] = tauntEffect;
-        
-        var stunnedDisabledEffect = character.GetComponentInChildren<StunnedDisabledEffect>();
-        if (stunnedDisabledEffect == null)
-            Debug.LogWarning($"{hero.NameTerm().ToEnglish()} is missing a {nameof(StunnedDisabledEffect)}");
-        else
-            _stunnedDisabledEffects[hero] = stunnedDisabledEffect;
+            collection[hero] = e;
     }
 
     protected override void Execute(CharacterAnimationRequested e)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class MemberHighlighter : OnMessage<HighlightCardOwner, UnhighlightCardOwner, ActivateMemberHighlight, DeactivateMemberHighlight>
+public class MemberHighlighter : OnMessage<HighlightCardOwner, UnhighlightCardOwner, ActivateMemberHighlight, DeactivateMemberHighlight>, IMemberUi
 {
     [SerializeField] private SpriteRenderer sprite;
 
