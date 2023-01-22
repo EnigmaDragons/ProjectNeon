@@ -31,7 +31,7 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipD
             for (var i = 0; i < adventure.Adventure.PartySize; i++)
             {
                 var currentParty = party.Party.Heroes;
-                var featuredThree = PickNewHeroFrom3RandomSegment.GetFeatureHeroOptions(library, currentParty);
+                var featuredThree = PickNewHeroFrom3RandomSegment.GetFeatureHeroOptions(library, currentParty, adventure.Adventure);
                 var choice = featuredThree.Random();
                 party.WithAddedDraftHero(choice, CreateBlankDeck());
             }
@@ -109,7 +109,7 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipD
     private void SelectHero()
     {
         var currentParty = party.Party.Heroes;
-        var featuredThree = PickNewHeroFrom3RandomSegment.GetFeatureHeroOptions(library, currentParty);
+        var featuredThree = PickNewHeroFrom3RandomSegment.GetFeatureHeroOptions(library, currentParty, adventure.Adventure);
         var prompt = currentParty.Length == 0 ? "Menu/ChooseLeader" : "Menu/ChooseMember";
         Message.Publish(new GetUserSelectedHero(prompt, featuredThree, h =>
         {

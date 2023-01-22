@@ -162,7 +162,13 @@ public static class InterpolatedCardDescriptions
         }
 
         if (owner.IsPresent && _resourceIcons.TryGetValue(owner.Value.PrimaryResourceQuantity().ResourceType, out var icon))
+        {
             result = result.Replace("Owner[PrimaryResource]", Sprite(icon));
+            result = result.Replace("GlobalPrimaryResource", Sprite(icon));
+            Log.Info("OwnerResource");
+        }
+
+        result = result.Replace("GlobalPrimaryResource", "Resources");
 
         if (owner.IsPresent)
         {
@@ -236,8 +242,8 @@ public static class InterpolatedCardDescriptions
         { "Insight", 24 },
         { "Tech Points", 23 },
         { "TechPoints", 23 },
-        { "PrimaryResource", 20 },
-        { "Primary Resource", 20 },
+        { "PrimaryResource", 6 },
+        { "Primary Resource", 6 },
         { "Grenades", 8 },
         { "Grenade", 8 },
         { "Ambition", 9 },
