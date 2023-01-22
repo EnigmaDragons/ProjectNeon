@@ -19,7 +19,7 @@ public class FullGearLibraryUI : MonoBehaviour
             equipmentInLibraryButtonTemplate.gameObject, 
             emptyObj, 
             gearPool.All
-                .Where(c => c.Slot != EquipmentSlot.Permanent)
+                .Where(c => c.Slot == EquipmentSlot.Augmentation)
                 .Where(c => !c.IsRandomlyGenerated())
                 .OrderByDescending(c => c.Archetypes.Any())
                 .ThenBy(c => c.GetArchetypeKey())
