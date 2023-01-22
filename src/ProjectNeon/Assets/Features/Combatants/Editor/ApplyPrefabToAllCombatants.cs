@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using System;
 using System.Linq;
 using UnityEditor;
@@ -104,3 +106,5 @@ public class ApplyPrefabToAllCombatants : EditorWindow
         return Vector3.zero;
     }
 }
+
+#endif

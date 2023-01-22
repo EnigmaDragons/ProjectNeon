@@ -165,7 +165,6 @@ public static class InterpolatedCardDescriptions
         {
             result = result.Replace("Owner[PrimaryResource]", Sprite(icon));
             result = result.Replace("GlobalPrimaryResource", Sprite(icon));
-            Log.Info("OwnerResource");
         }
 
         result = result.Replace("GlobalPrimaryResource", "Resources");
