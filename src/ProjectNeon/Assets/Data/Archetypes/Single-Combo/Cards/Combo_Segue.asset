@@ -10,15 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Combo_CurrentSlashV2
+  m_Name: Combo_Segue
   m_EditorClassIdentifier: 
-  id: 277
+  id: 681
   customName: 
-  art: {fileID: 21300000, guid: c5a0ce97cf214164aa62eb4dce7227d1, type: 3}
-  description: 'Deal {E[0]}.<br><br>You gain <b>2</b> Energy. '
-  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  art: {fileID: 21300000, guid: 27fa8421ee88ac44c9b7166a43243f16, type: 3}
+  description: 
+  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   descriptionV2:
-    text: 'Deal {0}.<br><br>You gain <b>2</b> Energy. '
+    text: 'Gain {0}
+
+
+      Draw <b>1</b> of your cards'
     formatArgs:
     - '{E[0]}'
   tags: 
@@ -31,13 +34,8 @@ MonoBehaviour:
   rarity: 1
   actionSequences:
   - scope: 0
-    group: 1
-    cardActions: {fileID: 11400000, guid: 73c2c7837c0759541976e12278397369, type: 2}
-    repeatX: 0
-    repeatCount: 0
-  - scope: 0
     group: 0
-    cardActions: {fileID: 11400000, guid: 23e34ce6fce392245b07eb884827a622, type: 2}
+    cardActions: {fileID: 11400000, guid: 82ae22f9d68ece246bbad61555eddb06, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -48,5 +46,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fa0b1b9aad879d44faf8e5d18ec91d9a, type: 2}
   highlightCondition: []
   unhighlightCondition: []
-  isWIP: 1
+  isWIP: 0
   notAvailableForGeneralDistribution: 0
