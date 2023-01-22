@@ -659,7 +659,14 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             if (owner.IsDisabled())
                 Message.Publish(new ShowHeroBattleThought(owner.Id, "I'm disabled this turn. I can only discard, watch an ally play a card, or end the turn early."));
             else if (_card.Cost.BaseAmount > _card.Owner.ResourceAmount(_card.Cost.ResourceType))
-                Message.Publish(new ShowHeroBattleThought(owner.Id, $"I don't have enough {_card.Cost.ResourceType.Name} to play this card right now."));
+            {
+                var resourceType = _card.Cost.ResourceType.Name;
+                var impliedResourceType = resourceType.Equals("PrimaryResource")
+                    ? _card.Owner.PrimaryResourceType().Name
+                    : resourceType;
+                Message.Publish(new ShowHeroBattleThought(owner.Id,
+                    $"I don't have enough {impliedResourceType} to play this card right now."));
+            }
             else if (conditionNotMetHighlight.activeSelf && _card.UnhighlightCondition is { IsPresent: true })
                 Message.Publish(new ShowHeroBattleThought(owner.Id, _card.UnhighlightCondition.Value.UnhighlightMessage));
 
