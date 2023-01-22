@@ -11,7 +11,7 @@ public class PickNewHeroFrom3RandomSegment : StageSegment, ILocalizeTerms
     public override string Name => $"Party Change Event";
     public override void Start()
     {
-        var featuredThree = GetFeatureHeroOptions(library, currentParty.Heroes);
+        var featuredThree = GetFeatureHeroOptions(library, currentParty.Heroes, currentAdventure.Adventure);
         var prompt = currentParty.Heroes.Length == 0 ? "Menu/ChooseLeader" : "Menu/ChooseMember";
         Message.Publish(new GetUserSelectedHero(prompt, featuredThree, h =>
         {
@@ -32,12 +32,15 @@ public class PickNewHeroFrom3RandomSegment : StageSegment, ILocalizeTerms
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => this;
     public override bool ShouldSpawnThisOnMap(CurrentAdventureProgress p) => true;
 
-    public static BaseHero[] GetFeatureHeroOptions(Library library, BaseHero[] currentHeroes)
+    public static BaseHero[] GetFeatureHeroOptions(Library library, BaseHero[] currentHeroes, Adventure adventure)
     {
         var existingHeroes = currentHeroes.ToArray();
         var allOptions = library.UnlockedHeroes.Where(x => CurrentProgressionData.Data.RunsFinished >= x.AdventuresPlayedBeforeUnlocked).ToList();
         existingHeroes.ForEach(h => allOptions.Remove(h));
-        
+        adventure.BannedHeroes.ForEach(h => allOptions.Remove(h));
+        if (currentHeroes.Length == 0)
+            adventure.BannedLeaders.ForEach(h => allOptions.Remove(h));
+
         var currentArchs = currentHeroes.SelectMany(h => h.Archetypes).ToHashSet();
         var preferredSelection = allOptions.Where(h => !h.Archetypes.Any(a => currentArchs.Contains(a))).ToList();
         var optimizedSelection = preferredSelection.Count() >= 3 ? preferredSelection : allOptions;
