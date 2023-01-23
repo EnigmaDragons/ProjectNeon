@@ -277,4 +277,13 @@ public static class CollectionExtensions
 
         return false;
     }
+    
+    public static bool AllNonAlloc<T>(this IEnumerable<T> items, Func<T, bool> condition)
+    {
+        foreach (var i in items)
+            if (!condition(i))
+                return false;
+
+        return true;
+    }
 }

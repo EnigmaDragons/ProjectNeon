@@ -57,7 +57,7 @@ public class CardType : ScriptableObject, CardTypeData, ILocalizeTerms
         ? new Maybe<CardCondition>(new AndCardCondition(unhighlightCondition.Cast<CardCondition>().ToArray()))
         : Maybe<CardCondition>.Missing();
     public bool IsSinglePlay => isSinglePlay;
-    
+
     private static string WipWord(bool isWip) => isWip ? "WIP - " : string.Empty;
     public string EditorName => $"{WipWord(IsWip)}{Rarity} - {Name}";
 

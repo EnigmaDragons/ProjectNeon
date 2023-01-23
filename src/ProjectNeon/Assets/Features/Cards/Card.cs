@@ -45,10 +45,7 @@ public sealed class Card : CardTypeData
     public Maybe<Color> OwnerTint => tint;
     public Maybe<Sprite> OwnerBust => ownerBust;
     public HashSet<string> Archetypes => _type.Archetypes;
-    public bool IsAttack => !_type.TypeDescription.Equals("Spell") 
-                            && (_type.Tags.Contains(CardTag.Attack) 
-                                || _type.TypeDescription.Equals("Attack") 
-                                || (_type.Description.Contains("Deal") && !_type.Tags.Contains(CardTag.DamageOverTime)));
+    public bool IsAttack => _type.IsAttack();
     public Maybe<CardCondition> HighlightCondition => _type.HighlightCondition;
     public Maybe<CardCondition> UnhighlightCondition => _type.UnhighlightCondition;
     public bool IsSinglePlay => _type.IsSinglePlay;
@@ -93,4 +90,17 @@ public sealed class Card : CardTypeData
     public void OnTurnEnd() => _temporalStates.Where(x => x.IsActive).ToArray().ForEach(x => x.OnTurnEnd());
     public void OnPlayCard() => _temporalStates.Where(x => x.IsActive).ToArray().ForEach(x => x.OnCardPlay());
     public void CleanExpiredStates() => _temporalStates.RemoveAll(x => !x.IsActive);
+}
+
+public static class CardRuleExtensions
+{
+    public static bool IsAttack(this CardTypeData c) 
+        => !c.TypeDescription.Equals("Spell")
+           && !c.TargetsOnlyFriendlies()
+           && (c.Tags.Contains(CardTag.Attack) 
+                || c.TypeDescription.Equals("Attack") 
+                || (c.Description.Contains("Deal") && !c.Tags.Contains(CardTag.DamageOverTime)));
+
+    public static bool TargetsOnlyFriendlies(this CardTypeData c)
+        => c.ActionSequences.AllNonAlloc(a => a.Group == Group.Self || a.Group == Group.Ally);
 }

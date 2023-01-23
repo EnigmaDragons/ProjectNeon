@@ -68,6 +68,21 @@ public class FindCardsEditor : EditorWindow
     {
         _scrollPos = EditorGUILayout.BeginScrollView(_scrollPos);
         
+        if (GUILayout.Button("All By IsAttack"))
+        {
+            var effects = GetAllInstances<CardType>()
+                .Where(c => !c.IsWip)
+                .Where(c => c.Actions != null)
+                .OrderBy(c => c.Name)
+                .Select(e => ($"IsAttack {e.IsAttack()} - {e.Name} - {e.name} - {e.DescriptionV2.Preview().Replace("\r\n", " ").Replace("\n", " ").Replace("<br>", " ")}", e))
+                .ToArray();
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"Card Database - IsAttack", "Effect: ", effects.Select(e => e.Item1).ToArray(), effects.Select(e => e.Item2).Cast<Object>().ToArray())
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+        DrawUILine();
+        
         _effectType = (EffectType)EditorGUILayout.EnumPopup("EffectType", _effectType);
         if (GUILayout.Button("Search By Effect Type"))
         {
@@ -174,9 +189,9 @@ public class FindCardsEditor : EditorWindow
         {
             var cards = GetAllInstances<CardType>()
                 .Where(c => c.TypeDescription.Equals(_cardTypeDescription, StringComparison.InvariantCultureIgnoreCase))
-                .Select(e => e.name)
+                .Select(c => (c.name, c))
                 .ToArray();
-            ShowCards($"Card Type Description Is {_searchString}", cards);
+            ShowSelectables($"Card Type Description Is {_cardTypeDescription}", cards.Select(c => c.name).ToArray(), cards.Select(c => c.c).Cast<ScriptableObject>().ToArray());
             GUIUtility.ExitGUI();
         }
         DrawUILine();
@@ -399,6 +414,11 @@ public class FindCardsEditor : EditorWindow
 
         EditorGUILayout.EndScrollView();
     }
+    
+    private void ShowSelectables(string description, string[] items, ScriptableObject[] selectables)
+        =>  GetWindow<ListDisplayWindow>()
+            .Initialized(description, "Card: ", items, selectables.Cast<Object>().ToArray())
+            .Show();
     
     private void ShowCards(string description, string[] cards) 
         => GetWindow<ListDisplayWindow>()

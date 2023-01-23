@@ -87,6 +87,8 @@ public class CardTypeEditor : Editor
         PresentUnchanged(archetypes);
         PresentUnchanged(rarity);
         DrawUILine(Color.black);
+        GUILayout.Label($"Is Dodgeable/Blind Preventable: {targetCard.IsAttack().ToString()}", new GUIStyle { fontStyle = FontStyle.Bold });
+        GUILayout.Label($"Is Inhibitable: {(!targetCard.IsAttack()).ToString()}", new GUIStyle { fontStyle = FontStyle.Bold });
         PresentUnchanged(speed);
         PresentUnchanged(isSinglePlay);
         PresentUnchanged(cost);
