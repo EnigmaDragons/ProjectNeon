@@ -149,7 +149,7 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
     protected override void Execute(StatusEffectResolved msg)
     {
         DevLog.Write("Status Effect Resolved - Adding Status Effect Reactions");
-        var reactions = state.Members.Values.SelectMany(v => v.State.GetReactions(msg.EffectResolved)).ToArray();
+        var reactions = state.Members.Values.SelectMany(v => v.State.GetReactions(msg.EffectResolved, state.Phase == BattleV2Phase.HastyEnemyCards || state.Phase == BattleV2Phase.PlayCards || state.Phase == BattleV2Phase.EnemyCards)).ToArray();
         Reactions.Enqueue(reactions);
         
         msg.Member.State.CleanExpiredStates();

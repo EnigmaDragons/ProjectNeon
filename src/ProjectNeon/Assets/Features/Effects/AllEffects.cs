@@ -13,12 +13,12 @@ public static class AllEffects
         { EffectType.Nothing, e => new NoEffect() },
         { EffectType.AdjustStatAdditivelyFormula, e => new AdjustStatsFormula(e, multiplicative: false)},
         { EffectType.AdjustStatMultiplicativelyFormula, e => new AdjustStatsFormula(e, multiplicative: true)},
-        { EffectType.ReactWithEffect, e => new EffectReactWith(false, e.IntAmount, e.DurationFormula, e.StatusDetail, e.ReactionEffectScope, e.FinalReactionTimingWindow,
+        { EffectType.ReactWithEffect, e => new EffectReactWith(false, e.IntAmount, e.DurationFormula, e.StatusDetail, e.ReactionEffectScope, e.FinalReactionTimingWindow, e.OnlyReactDuringCardPhases,
             ReactiveTriggerScopeExtensions.Parse(e.EffectScope), e.ReactionConditionType, e.ReactionEffect)},
-        { EffectType.ReactWithCard, e => new EffectReactWith(false, e.IntAmount, e.DurationFormula, e.StatusDetail, e.ReactionEffectScope, e.FinalReactionTimingWindow,
+        { EffectType.ReactWithCard, e => new EffectReactWith(false, e.IntAmount, e.DurationFormula, e.StatusDetail, e.ReactionEffectScope, e.FinalReactionTimingWindow, e.OnlyReactDuringCardPhases,
             ReactiveTriggerScopeExtensions.Parse(e.EffectScope), e.ReactionConditionType, e.ReactionSequence)},
         { EffectType.ReactOncePerTurnWithEffect, e => new EffectReactWith(false, e.IntAmount, e.DurationFormula, 
-            e.StatusDetail, e.ReactionEffectScope, e.FinalReactionTimingWindow, ReactiveTriggerScopeExtensions.Parse(e.EffectScope), 
+            e.StatusDetail, e.ReactionEffectScope, e.FinalReactionTimingWindow, e.OnlyReactDuringCardPhases, ReactiveTriggerScopeExtensions.Parse(e.EffectScope), 
             e.ReactionConditionType, e.ReactionEffect, Maybe<ReactionCardType>.Missing(), 1)},
         { EffectType.RemoveDebuffs, e => new SimpleEffect(m => BattleLoggedItemIf(n => $"{m.NameTerm.ToEnglish()} has been cleansed of {n} debuffs", n => n > 0, m.CleanseDebuffs))},
         { EffectType.AdjustCounterFormula, e => new AdjustCounterFormula(e)},
@@ -125,6 +125,7 @@ public static class AllEffects
         { EffectType.RandomizeEnemyPosition, e => new SimpleEffect(() => Message.Publish(new RandomizeEnemyPositions()))},
         { EffectType.MakeTargetingRough, e => new PlayerEffect((id, p, duration) => p.AddState(new EnemyRetargetingPlayerState(id, duration)), e.DurationFormula) },
         { EffectType.ExitStealth, e => new SimpleEffect(state => state.ExitStealth())},
+        { EffectType.RemoveDots, e => new SimpleEffect(m => BattleLoggedItemIf(n => $"{m.NameTerm.ToEnglish()} has been cleansed of {n} damage over time effects", n => n > 0, m.CleanseDots))},
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";

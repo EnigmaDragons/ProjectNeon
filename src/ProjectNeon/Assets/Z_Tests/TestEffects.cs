@@ -50,7 +50,7 @@ public static class TestEffects
             battleSnapshotBefore, battleSnapshotAfter, isReaction: false, Maybe<Card>.Missing(), Maybe<Card>.Missing(), preventions, 
             ReactionTimingWindow.FirstCause, CardPlayZones.InMemory);
 
-        var reactions = members.SelectMany(x => x.State.GetReactions(effectResolved));
+        var reactions = members.SelectMany(x => x.State.GetReactions(effectResolved, true));
 
         reactions.ForEach(r =>
         {

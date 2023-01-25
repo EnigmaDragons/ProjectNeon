@@ -7,6 +7,7 @@ public abstract class TemporalStateBase : ITemporalState
     public StatusDetail Status => Tracker.Status;
     public bool IsDebuff => Tracker.IsDebuff;
     public bool IsActive => Tracker.IsActive;
+    public virtual bool IsDot => false;
     public Maybe<int> RemainingTurns => Tracker.RemainingTurns;
 
     protected TemporalStateBase(TemporalStateMetadata metadata) 

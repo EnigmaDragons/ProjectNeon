@@ -10,6 +10,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
     private readonly int _maxUsesPerTurn;
     
     public ReactionTimingWindow Timing { get; }
+    public bool OnlyReactDuringCardPhases { get; }
     private int _usesThisTurn;
     
     public int OriginatorId => _tracker.Metadata.OriginatorId;
@@ -18,21 +19,23 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
     public StatusDetail Status => _tracker.Status;
     public bool IsDebuff => _tracker.IsDebuff;
     public bool IsActive => _tracker.IsActive;
+    public bool IsDot => false;
     public Maybe<int> RemainingTurns => _tracker.RemainingTurns;
     private bool HasUsesRemainingThisTurn => _hasUnlimitedUsesPerTurn || _usesThisTurn < _maxUsesPerTurn;
 
-    public ReactiveEffectV2Base(int originatorId, bool isDebuff, int maxDurationTurns, int maxUses, StatusDetail status, ReactionTimingWindow timing, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
-        : this(timing, new TemporalStateMetadata(originatorId, isDebuff, maxUses, maxDurationTurns, status), createMaybeEffect) {}
-    public ReactiveEffectV2Base(int originatorId, bool isDebuff, int maxDurationTurns, int maxUses, StatusDetail status, ReactionTimingWindow timing, int maxUsesPerTurn, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
-        : this(timing, new TemporalStateMetadata(originatorId, isDebuff, maxUses, maxDurationTurns, status), maxUsesPerTurn <= 0, maxUsesPerTurn, createMaybeEffect) {}
-    public ReactiveEffectV2Base(ReactionTimingWindow timing, TemporalStateMetadata metadata, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
-        : this(timing, metadata, true, -1, createMaybeEffect) {}
+    public ReactiveEffectV2Base(int originatorId, bool isDebuff, int maxDurationTurns, int maxUses, StatusDetail status, ReactionTimingWindow timing, bool onlyReactDuringCardPhases, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
+        : this(timing, onlyReactDuringCardPhases, new TemporalStateMetadata(originatorId, isDebuff, maxUses, maxDurationTurns, status), createMaybeEffect) {}
+    public ReactiveEffectV2Base(int originatorId, bool isDebuff, int maxDurationTurns, int maxUses, StatusDetail status, ReactionTimingWindow timing, bool onlyReactDuringCardPhases, int maxUsesPerTurn, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
+        : this(timing, onlyReactDuringCardPhases, new TemporalStateMetadata(originatorId, isDebuff, maxUses, maxDurationTurns, status), maxUsesPerTurn <= 0, maxUsesPerTurn, createMaybeEffect) {}
+    public ReactiveEffectV2Base(ReactionTimingWindow timing, bool onlyReactDuringCardPhases, TemporalStateMetadata metadata, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
+        : this(timing, onlyReactDuringCardPhases, metadata, true, -1, createMaybeEffect) {}
 
-    private ReactiveEffectV2Base(ReactionTimingWindow timing, TemporalStateMetadata metadata,
+    private ReactiveEffectV2Base(ReactionTimingWindow timing, bool onlyReactDuringCardPhases, TemporalStateMetadata metadata,
         bool hasUnlimitedUsesPerTurn, int maxUsesPerTurn,
         Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
     {
         Timing = timing;
+        OnlyReactDuringCardPhases = onlyReactDuringCardPhases;
         _tracker = new TemporalStateTracker(metadata);
         _hasUnlimitedUsesPerTurn = hasUnlimitedUsesPerTurn;
         _maxUsesPerTurn = maxUsesPerTurn;
@@ -52,7 +55,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
     }
 
     public ITemporalState CloneOriginal() =>
-        new ClonedReactiveEffect(Timing, _tracker.Metadata, _createMaybeEffect);
+        new ClonedReactiveEffect(Timing, OnlyReactDuringCardPhases, _tracker.Metadata, _createMaybeEffect);
 
 
     public Maybe<ProposedReaction> OnEffectResolved(EffectResolved e)
@@ -143,7 +146,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
 
 public class ClonedReactiveEffect : ReactiveEffectV2Base
 {
-    public ClonedReactiveEffect(ReactionTimingWindow timing, TemporalStateMetadata metadata, 
+    public ClonedReactiveEffect(ReactionTimingWindow timing, bool onlyReactDuringCardPhases, TemporalStateMetadata metadata, 
         Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect) 
-            : base(timing, metadata, createMaybeEffect) {}
+            : base(timing, onlyReactDuringCardPhases, metadata, createMaybeEffect) {}
 }

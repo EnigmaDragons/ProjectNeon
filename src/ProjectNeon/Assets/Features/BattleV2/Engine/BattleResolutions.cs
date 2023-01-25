@@ -98,7 +98,7 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
     {
         var reactions = state.Members
             .Select(x => x.Value)
-            .SelectMany(v => v.State.GetReactions(e)).ToArray();
+            .SelectMany(v => v.State.GetReactions(e, state.Phase == BattleV2Phase.HastyEnemyCards || state.Phase == BattleV2Phase.PlayCards || state.Phase == BattleV2Phase.EnemyCards)).ToArray();
 
         DebugLog($"Reaction Timing {e.Timing}. Effects {reactions.Count(c => c.ReactionCard.IsMissing)}. " +
                      $"Cards: {reactions.Count(c => c.ReactionCard.IsPresent)}");

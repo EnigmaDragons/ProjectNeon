@@ -57,9 +57,10 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider, ILocalizeTe
             {
                 for (var ii = 0; ii < _numOfImplants / _party.Heroes.Length; ii++)
                 {
-                    var option = GetOption(_party.Heroes[i], i * 2 + ii);
+                    var multiplier = (_numOfImplants / _party.Heroes.Length);
+                    var option = GetOption(_party.Heroes[i], i * multiplier + ii);
                     while (newGeneratedOptions.Any(x => x.Description == option.Description))
-                        option = GetOption(_party.Heroes[i], i * 2 + ii);
+                        option = GetOption(_party.Heroes[i], i * multiplier + ii);
                     newGeneratedOptions.Add(option);   
                 }
             }

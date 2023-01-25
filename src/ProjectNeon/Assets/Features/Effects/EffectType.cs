@@ -1,5 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// LAST NUMBER USED: 108
+// LAST NUMBER USED: 109
 
 public enum EffectType
 {
@@ -25,6 +25,7 @@ public enum EffectType
     // Resets
     RemoveDebuffs = 4,
     ResetStatToBase = 83,
+    RemoveDots = 109,
     
     // Shields
     ShieldFormula = 80,

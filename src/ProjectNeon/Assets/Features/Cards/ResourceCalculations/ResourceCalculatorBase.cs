@@ -14,6 +14,7 @@ public class ResourceCalculatorBase : ResourceCalculator
     public StatusDetail Status => _tracker.Status;
     public bool IsDebuff => _tracker.IsDebuff;
     public bool IsActive => _tracker.IsActive;
+    public bool IsDot => false;
     public Maybe<int> RemainingTurns => _tracker.RemainingTurns;
     
     public ResourceCalculatorBase(int originatorId, bool isDebuff, int maxDurationTurns, int maxUses, StatusDetail status, Func<Card, bool> isUsedOn, Func<CardTypeData, MemberState, ResourceCalculations> calc)

@@ -4,6 +4,7 @@ public enum ReactionConditionType
     WhenDamaged = 4,
     WhenDamagedHp = 1,
     WhenDamagedShield = 3,
+    WhenDotted = 7,
     WhenBlinded = 2,
     WhenVulnerabled = 5,
     WhenShielded = 39,

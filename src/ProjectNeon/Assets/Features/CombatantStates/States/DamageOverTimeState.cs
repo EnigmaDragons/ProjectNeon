@@ -17,6 +17,7 @@ public class DamageOverTimeState : TemporalStateBase
     public override ITemporalState CloneOriginal() => new DamageOverTimeState(_amount, _target, Tracker.Metadata);
     public override IStats Stats { get; } = new StatAddends();
     public override Maybe<int> Amount => _amount;
+    public override bool IsDot => true;
 
     public override IPayloadProvider OnTurnStart()
     {

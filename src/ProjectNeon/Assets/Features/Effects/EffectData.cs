@@ -43,6 +43,7 @@ public sealed class EffectData
         : !ReferenceEquals(ReactionSequence, null) 
             ? ReactionTimingWindow.ReactionCard 
             : ReactionTimingWindow.Default;
+    public bool OnlyReactDuringCardPhases;
     public ReactionConditionType ReactionConditionType;
     public StringReference ReactionEffectScope = new StringReference();
     public ReactionTimingWindow ReactionTimingWindow = ReactionTimingWindow.Default;

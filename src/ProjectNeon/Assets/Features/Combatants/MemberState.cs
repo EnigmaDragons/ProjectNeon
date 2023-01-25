@@ -139,9 +139,9 @@ public sealed class MemberState : IStats
             .ToArray();
 
     // Reaction Commands
-    public ProposedReaction[] GetReactions(EffectResolved e) =>
+    public ProposedReaction[] GetReactions(EffectResolved e, bool duringCardPhases) =>
         ApplicableReactiveStates
-            .Where(x => (int)x.Timing > (int)e.Timing)
+            .Where(x => (int)x.Timing > (int)e.Timing && (duringCardPhases || !x.OnlyReactDuringCardPhases))
             .Select(x => x.OnEffectResolved(e))
             .Where(x => x.IsPresent)
             .Select(x => x.Value)
@@ -270,6 +270,8 @@ public sealed class MemberState : IStats
         _preventedTags = new Dictionary<CardTag, int>();
         RemoveTemporaryEffects(s => s.IsDebuff);
     }, GetNumDebuffs));
+    
+    public int CleanseDots() => -Diff(PublishAfter(() => RemoveTemporaryEffects(s => s.IsDot), GetNumDebuffs));
 
     public void BreakStealth() => PublishAfter(() =>
     {

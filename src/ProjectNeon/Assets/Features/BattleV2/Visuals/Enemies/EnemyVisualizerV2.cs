@@ -92,7 +92,10 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
             ? _enemyPositions.First(x => x.Item2.Id == isReplacing.Value.Id).Item1
             : iForIndex;
         _enemyPositions.Add(new Tuple<int, Member>(iForIndex, member));
-        t.localPosition = transform.localPosition - new Vector3(iForPositioning * widthBetweenEnemies, (iForPositioning % 2) * rowHeight, (iForPositioning % 2) == 0 ? 0 : 1) + offset;
+        t.localPosition = transform.localPosition - new Vector3(
+            iForPositioning * widthBetweenEnemies, 
+            rowUsesYAxis ? (iForPositioning % 2) * rowHeight : 0, 
+            !rowUsesYAxis ? (iForPositioning % 2) * rowHeight : 0) + offset;
         return enemyObject;
     }
     

@@ -110,6 +110,7 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 0
@@ -156,6 +157,7 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 1
       ReactionConditionType: 112
       ReactionEffectScope:
         UseConstant: 1
@@ -202,6 +204,7 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 1
       ReactionConditionType: 2
       ReactionEffectScope:
         UseConstant: 1
@@ -248,6 +251,7 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 1
       ReactionConditionType: 40
       ReactionEffectScope:
         UseConstant: 1
@@ -294,6 +298,7 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 1
       ReactionConditionType: 107
       ReactionEffectScope:
         UseConstant: 1
@@ -340,6 +345,7 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 1
       ReactionConditionType: 111
       ReactionEffectScope:
         UseConstant: 1
@@ -386,6 +392,7 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 1
       ReactionConditionType: 114
       ReactionEffectScope:
         UseConstant: 1
@@ -432,6 +439,7 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 1
       ReactionConditionType: 113
       ReactionEffectScope:
         UseConstant: 1
@@ -478,6 +486,7 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 1
       ReactionConditionType: 42
       ReactionEffectScope:
         UseConstant: 1
@@ -524,6 +533,7 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 1
       ReactionConditionType: 108
       ReactionEffectScope:
         UseConstant: 1
@@ -570,6 +580,7 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 1
       ReactionConditionType: 43
       ReactionEffectScope:
         UseConstant: 1
@@ -616,6 +627,7 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 1
       ReactionConditionType: 109
       ReactionEffectScope:
         UseConstant: 1
@@ -662,6 +674,7 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 1
       ReactionConditionType: 106
       ReactionEffectScope:
         UseConstant: 1
@@ -708,6 +721,7 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 1
       ReactionConditionType: 110
       ReactionEffectScope:
         UseConstant: 1
@@ -754,6 +768,7 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 1
       ReactionConditionType: 5
       ReactionEffectScope:
         UseConstant: 1
@@ -765,6 +780,53 @@ MonoBehaviour:
         reactor: 1
         scope: 0
         cardActions: {fileID: 11400000, guid: 4e38d226c14aea94abe971695fa28496, type: 2}
+      BonusCardType: {fileID: 0}
+      Unpreventable: 0
+    - Id: 0
+      EffectType: 108
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: -1
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 0
+      StatusDetailText: 
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
+      OnlyReactDuringCardPhases: 1
+      ReactionConditionType: 7
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionTimingWindow: 100
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 1
+        scope: 0
+        cardActions: {fileID: 11400000, guid: 381b6531b6c03104e8019e8c58d1a0f8, type: 2}
       BonusCardType: {fileID: 0}
       Unpreventable: 0
     Cards:

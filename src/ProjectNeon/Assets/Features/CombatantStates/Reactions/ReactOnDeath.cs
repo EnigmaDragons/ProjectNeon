@@ -33,7 +33,7 @@ public sealed class ReactOnDeath : ReactiveEffectV2Base
 {
     public ReactOnDeath(bool isDebuff, int numberOfUses, int maxDurationTurns, IDictionary<int, Member> allMembers, int possessingMemberId, Member originator, ReactionCardType reaction, 
         ReactionTimingWindow timing, Maybe<string> statusDetailTerm)
-        : base(originator.Id, isDebuff, maxDurationTurns, numberOfUses, new StatusDetail(StatusTag.WhenKilled, statusDetailTerm), timing, CreateMaybeEffect(allMembers, possessingMemberId, originator, true, reaction, timing,
+        : base(originator.Id, isDebuff, maxDurationTurns, numberOfUses, new StatusDetail(StatusTag.WhenKilled, statusDetailTerm), timing, false, CreateMaybeEffect(allMembers, possessingMemberId, originator, true, reaction, timing,
             effect =>
             {
                 //this is super hacky but the amount of changes required to bypass the consciousness system turns out to be completely insane
