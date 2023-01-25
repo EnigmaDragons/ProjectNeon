@@ -61,6 +61,21 @@ public class FindCardsEditor : EditorWindow
             .Where(e => e?.Actions != null && !e.IsWip && e.Actions.Any(data => data?.Actions != null && data.Actions.Any(action => action?.Type == actionType)))
             .Select(e => e.name)
             .ToArray();
+    private string[] GetAllCardsWithoutActionType(CardBattleActionType actionType) =>
+        GetAllInstances<CardType>()
+            .Where(e => e?.Actions != null && !e.IsWip && e.Actions.All(data => data?.Actions == null || data.Actions.All(action => action?.Type != actionType)))
+            .Select(e => e.name)
+            .ToArray();
+    private string[] GetAllReactionCardsWithActionType(CardBattleActionType actionType) =>
+        GetAllInstances<ReactionCardType>()
+            .Where(e => e?.ActionSequence != null && e.ActionSequence.CardActions.Actions.Any(action => action?.Type == actionType))
+            .Select(e => e.name)
+            .ToArray();
+    private string[] GetAllReactionCardsWithoutActionType(CardBattleActionType actionType) =>
+        GetAllInstances<ReactionCardType>()
+            .Where(e => e?.ActionSequence != null && e.ActionSequence.CardActions.Actions.All(action => action?.Type != actionType))
+            .Select(e => e.name)
+            .ToArray();
 
     private Vector2 _scrollPos;
     
@@ -395,6 +410,30 @@ public class FindCardsEditor : EditorWindow
             var cards = GetAllCardsWithActionType(_actionType);
             GetWindow<ListDisplayWindow>()
                 .Initialized($"{_actionType} - {cards.Length} uses", cards)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+        if (GUILayout.Button("Find By Missing Action Type"))
+        {
+            var cards = GetAllCardsWithoutActionType(_actionType);
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"{_actionType} - {cards.Length} missing", cards)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+        if (GUILayout.Button("Find Reaction By Action Type"))
+        {
+            var cards = GetAllReactionCardsWithActionType(_actionType);
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"{_actionType} - {cards.Length} uses", cards)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+        if (GUILayout.Button("Find Reaction By Missing Action Type"))
+        {
+            var cards = GetAllReactionCardsWithoutActionType(_actionType);
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"{_actionType} - {cards.Length} missing", cards)
                 .Show();
             GUIUtility.ExitGUI();
         }
