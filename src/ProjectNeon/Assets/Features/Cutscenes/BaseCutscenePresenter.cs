@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -160,26 +161,41 @@ public abstract class BaseCutscenePresenter : MonoBehaviour
         if (_finishTriggered)
             return;
 
+        if (msg.CharacterAlias == null)
+        {
+            Log.Error($"Cutscene Error {cutscene.Current.name} - No Character Provided for Line: {msg.Text}");
+            FinishCurrentSegment();
+            return;
+        }
+
         DebugLog($"Show Character Dialogue Line {msg.CharacterAlias}");
-        Characters.FirstOrMaybe(c => c.Matches(msg.CharacterAlias))
-            .ExecuteIfPresentOrElse(c =>
-                {
-                    var useAutoAdvance = CurrentGameOptions.Data.UseAutoAdvance;
-                    c.SetTalkingState(true);
-                    var speech = c.SpeechBubble;
-                    speech.SetAllowManualAdvance(!useAutoAdvance);
-                    speech.SetOnFullyShown(() => c.SetTalkingState(false));
-                    if (useAutoAdvance)
-                        speech.Display(msg.Text, shouldAutoProceed: true, manualInterventionDisablesAuto: false,
-                            () => Async.ExecuteAfterDelay(dialogueWaitDelay, FinishCurrentSegment));
-                    else
-                        speech.Display(msg.Text, shouldAutoProceed: false, FinishCurrentSegment);
-                },
-                () =>
-                {
-                    Log.Error($"Cutscene Error {cutscene.Current.name} - Character Not Found in Set: {msg.CharacterAlias}");
-                    FinishCurrentSegment();
-                });
+        try
+        {
+            Characters.FirstOrMaybe(c => c.Matches(msg.CharacterAlias))
+                .ExecuteIfPresentOrElse(c =>
+                    {
+                        var useAutoAdvance = CurrentGameOptions.Data.UseAutoAdvance;
+                        c.SetTalkingState(true);
+                        var speech = c.SpeechBubble;
+                        speech.SetAllowManualAdvance(!useAutoAdvance);
+                        speech.SetOnFullyShown(() => c.SetTalkingState(false));
+                        if (useAutoAdvance)
+                            speech.Display(msg.Text, shouldAutoProceed: true, manualInterventionDisablesAuto: false,
+                                () => Async.ExecuteAfterDelay(dialogueWaitDelay, FinishCurrentSegment));
+                        else
+                            speech.Display(msg.Text, shouldAutoProceed: false, FinishCurrentSegment);
+                    },
+                    () =>
+                    {
+                        Log.Error($"Cutscene Error {cutscene.Current.name} - Character Not Found in Set: {msg.CharacterAlias}");
+                        FinishCurrentSegment();
+                    });
+        }
+        catch (Exception e)
+        {
+            Log.Warn(e.StackTrace);
+            FinishCurrentSegment();
+        }
     }
 
     private void Execute(ShowCutsceneSegment msg)

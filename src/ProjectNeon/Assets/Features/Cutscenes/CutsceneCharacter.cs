@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -25,10 +26,17 @@ public class CutsceneCharacter : MonoBehaviour
     
     public void SetTalkingState(bool isTalking)
     {
-        if (talking != null)
-            talking.SetTalkingState(isTalking);
-        if (character)
-            character.SetBool("Talk 1", isTalking);
+        try
+        {
+            if (talking != null)
+                talking.SetTalkingState(isTalking);
+            if (character)
+                character.SetBool("Talk 1", isTalking);
+        }
+        catch (Exception e)
+        {
+            Log.Warn(e.StackTrace);
+        }
     }
     
     public void Init(string alias) => Init(new[] {alias});

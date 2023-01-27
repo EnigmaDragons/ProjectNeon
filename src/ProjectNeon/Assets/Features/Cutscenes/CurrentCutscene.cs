@@ -10,7 +10,7 @@ public class CurrentCutscene : ScriptableObject
 
     public Maybe<Action> OnCutsceneFinishedAction { get; private set; } = Maybe<Action>.Missing();
     
-    public Cutscene Current => cutscene;
+    public Cutscene Current => startBattleCutscene != null ? startBattleCutscene : cutscene;
     public Cutscene StartBattleCutscene => startBattleCutscene;
     private IndexSelector<CutsceneSegmentData> _segments;
     public bool IsOnFinalSegment => _segments.IsLastItem;
@@ -37,6 +37,7 @@ public class CurrentCutscene : ScriptableObject
         startBattleCutsceneFinished = true;
         if (startBattleCutscene != null)
             startBattleCutscene.OnFinished();
+        startBattleCutscene = null;
     }
 
     public CutsceneSegment MoveToNextSegment()
