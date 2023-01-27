@@ -12,7 +12,7 @@ public class I2UiTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void Show()
     {
-        if (!MouseDragState.IsDragging)
+        if (!MouseDragState.IsDragging && tooltipTerm != null)
             Message.Publish(new ShowTooltip(transform, tooltipTerm.ToLocalized()));
     }
 

@@ -11,7 +11,7 @@ public class UiTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     
     public void Show()
     {
-        if (!MouseDragState.IsDragging)
+        if (!MouseDragState.IsDragging && tooltipText != null)
             Message.Publish(new ShowTooltip(transform, tooltipText));
     }
 
