@@ -83,16 +83,18 @@ public class Adventure : ScriptableObject, CurrentAdventureData, ILocalizeTerms
     {
         get
         {
-            if (unlockedOverrides.Any(x => x.Value))
+            if (unlockedOverrides == null && lockedOverrides == null)
+                return "";
+            
+            if (unlockedOverrides != null && unlockedOverrides.Where(x => x != null).Any(x => x.Value))
                 return "";
 
-            if (lockedOverrides.Any(x => x))
+            if (lockedOverrides != null && lockedOverrides.Where(x => x != null).Any(x => x))
                 return "Adventures/LockedForBuild".ToLocalized();
             
             var staticCondition = LockConditionExplanationTerm.ToLocalized() ?? "";
             if (staticCondition.Length > 0)
                 return staticCondition;
-
 
             var firstUncompletedRequiredAdventure = prerequisiteCompletedAdventures.Where(p => !p.IsCompleted).FirstAsMaybe();
             return firstUncompletedRequiredAdventure.Select(a => string.Format("Adventures/DefaultLockedReason".ToLocalized(), a.MapTitleTerm.ToLocalized()), () => "");
