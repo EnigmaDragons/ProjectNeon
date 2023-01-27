@@ -7,6 +7,8 @@ public class Adventure : ScriptableObject, CurrentAdventureData, ILocalizeTerms
 {
     [SerializeField] public int id;
     [SerializeField] public string lockConditionExplanation = "";
+    [SerializeField] public BoolReference[] unlockedOverrides;
+    [SerializeField] public BoolReference[] lockedOverrides;
     [SerializeField] private Adventure[] prerequisiteCompletedAdventures;
     [SerializeField] private AdventureMode mode;
     [SerializeField] private DynamicStage[] dynamicStages;
@@ -76,14 +78,21 @@ public class Adventure : ScriptableObject, CurrentAdventureData, ILocalizeTerms
     public bool MapDeckbuildingEnabled => mapDeckbuildingEnabled;
 
     public string LockConditionExplanationTerm => $"Adventures/Adventure{id}LockCondition";
-    public bool IsLocked => !string.IsNullOrWhiteSpace(LockConditionExplanation) || prerequisiteCompletedAdventures.Any(p => !p.IsCompleted);
+    public bool IsLocked => !string.IsNullOrWhiteSpace(LockConditionExplanation);
     public string LockConditionExplanation
     {
         get
         {
+            if (unlockedOverrides.Any(x => x.Value))
+                return "";
+
+            if (lockedOverrides.Any(x => x))
+                return "Adventures/LockedForBuild".ToLocalized();
+            
             var staticCondition = LockConditionExplanationTerm.ToLocalized() ?? "";
             if (staticCondition.Length > 0)
                 return staticCondition;
+
 
             var firstUncompletedRequiredAdventure = prerequisiteCompletedAdventures.Where(p => !p.IsCompleted).FirstAsMaybe();
             return firstUncompletedRequiredAdventure.Select(a => string.Format("Adventures/DefaultLockedReason".ToLocalized(), a.MapTitleTerm.ToLocalized()), () => "");
