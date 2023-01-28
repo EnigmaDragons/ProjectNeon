@@ -20,6 +20,7 @@ public static class ErrorReport
     private static string[] _ignoreIfContainsInEditor = {  "Coroutine couldn't be started" };
     private static string[] _ignoreIfContains = { "Error Releasing render texture that is set as Camera.targetTexture" };
     private static string _lastErrorMessage = null;
+    private static bool _disableIfEditor = true;
 
     public static void Init(string appName, string version, Queue<string> recentLogs)
     {
@@ -29,6 +30,8 @@ public static class ErrorReport
         _recentLogs = recentLogs;
 #if UNITY_EDITOR
         _isEditor = true;
+        if (_disableIfEditor)
+            _disabled = true;
 #endif
     }
     
