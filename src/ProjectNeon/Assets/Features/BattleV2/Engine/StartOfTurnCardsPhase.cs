@@ -25,10 +25,10 @@ public class StartOfTurnCardsPhase : OnMessage<BattleStateChanged, CardResolutio
     private void PlayStartOfTurnCard()
     {
         DevLog.Info($"Start of Turn Cards - Began Playing Next Start of Turn Card. {_startOfTurnCards.Count()} to play.");
-        StartCoroutine(ExecuteAfterReactionsFinished(() =>
+        this.SafeCoroutineOrNothing(ExecuteAfterReactionsFinished(() =>
         {
             if (_startOfTurnCards.Count == 0)
-                StartCoroutine(WaitForResolutionsFinished(BattleV2Phase.StartOfTurnCards));
+                this.SafeCoroutineOrNothing(WaitForResolutionsFinished(BattleV2Phase.StartOfTurnCards));
             else
             {
                 var bonusCard = _startOfTurnCards.Dequeue();

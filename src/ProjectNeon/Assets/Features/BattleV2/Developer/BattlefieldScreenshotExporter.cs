@@ -10,7 +10,7 @@ public class BattlefieldScreenshotExporter : MonoBehaviour
     [SerializeField] private GameObject stage;
     [SerializeField] private bool takeAll = false;
 
-    private void Start() => StartCoroutine(Go());
+    private void Start() => this.SafeCoroutineOrNothing(Go());
 
     private IEnumerator Go()
     {

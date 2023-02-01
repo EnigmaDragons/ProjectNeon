@@ -44,7 +44,7 @@ public class HeroLevelUpSelectionUiController : OnMessage<LevelUpHero>
             if (msg.Hero.IsMaxLevelV4)
                 return;
 
-            StartCoroutine(ExecuteOnceV4CanvasIsHidden(() =>
+            this.SafeCoroutineOrNothing(ExecuteOnceV4CanvasIsHidden(() =>
             {
                 if (msg.Hero.Levels.UnspentLevelUpPoints < 1)
                     return;

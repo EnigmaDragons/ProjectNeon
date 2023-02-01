@@ -36,7 +36,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, CardResoluti
     private void PlayNextHastyCard()
     {
         DevLog.Info($"Enemies - Began Playing Next Hasty Card. {_enemiesToActThisTurn.Count(x => x.Enemy.IsHasty)} to act.");
-        StartCoroutine(ExecuteAfterReactionsFinished(() =>
+        this.SafeCoroutineOrNothing(ExecuteAfterReactionsFinished(() =>
         {
             RemoveUnconsciousAndEscapedEnemiesFromActPool();
             Message.Publish(new UpdateAIStrategy());
@@ -45,7 +45,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, CardResoluti
                 .FirstAsMaybe()
                 .ExecuteIfPresentOrElse(
                     Play,
-                    () => StartCoroutine(WaitForResolutionsFinished(BattleV2Phase.HastyEnemyCards)));
+                    () => this.SafeCoroutineOrNothing(WaitForResolutionsFinished(BattleV2Phase.HastyEnemyCards)));
         }));
     }
     
@@ -54,7 +54,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, CardResoluti
     private void PlayNextStandardCard()
     {
         DevLog.Info($"Enemies - Began Playing Next Standard Card. {_enemiesToActThisTurn.Count(x => !x.Enemy.IsHasty)} to act.");
-        StartCoroutine(ExecuteAfterReactionsFinished(() =>
+        this.SafeCoroutineOrNothing(ExecuteAfterReactionsFinished(() =>
         {
             RemoveUnconsciousAndEscapedEnemiesFromActPool();
             Message.Publish(new UpdateAIStrategy());
@@ -63,7 +63,7 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, CardResoluti
                 .FirstAsMaybe()
                 .ExecuteIfPresentOrElse(
                     Play,
-                    () => StartCoroutine(WaitForResolutionsFinished(BattleV2Phase.EnemyCards)));
+                    () => this.SafeCoroutineOrNothing(WaitForResolutionsFinished(BattleV2Phase.EnemyCards)));
         }));
 }
     

@@ -44,7 +44,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
             Setup();
     }
     
-    public void Setup() => StartCoroutine(ExecuteSetupAsync());
+    public void Setup() => SafeCoroutine(ExecuteSetupAsync());
     
     private IEnumerator ExecuteSetupAsync()
     {
@@ -147,7 +147,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         Message.Publish(new ResolutionsFinished(BattleV2Phase.PlayCards));
     }
     
-    protected override void Execute(PlayerTurnConfirmed msg) => StartCoroutine(WaitForAllPlayerCardsToFinishResolving());
+    protected override void Execute(PlayerTurnConfirmed msg) => SafeCoroutine(WaitForAllPlayerCardsToFinishResolving());
     protected override void Execute(StartOfTurnEffectsStatusResolved msg)
     { 
         Log.Info("StartOfTurnEffectsStatusResolved");
@@ -159,7 +159,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
 
     protected override void Execute(EndOfTurnStatusEffectsResolved msg) => BeginStartOfTurn();
     protected override void Execute(CardAndEffectsResolutionFinished msg) => ResolveBattleFinishedOrExecute(() => Message.Publish(new CheckForAutomaticTurnEnd()));
-    protected override void Execute(StartCardSetupRequested msg) => StartCoroutine(ExecuteCardSetupAsync());
+    protected override void Execute(StartCardSetupRequested msg) => SafeCoroutine(ExecuteCardSetupAsync());
 
     protected override void Execute(ResolutionsFinished msg)
     {
@@ -173,9 +173,9 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         else if (msg.Phase == BattleV2Phase.HastyEnemyCards)
             BeginPlayerCardsPhase();
         else if (msg.Phase == BattleV2Phase.PlayCards)
-            StartCoroutine(TransitionToEnemyCardsPhase());
+            SafeCoroutine(TransitionToEnemyCardsPhase());
         else if (msg.Phase == BattleV2Phase.EnemyCards)
-            StartCoroutine(WrapUpTurn());
+            SafeCoroutine(WrapUpTurn());
     }
 
     private IEnumerator WrapUpTurn()
@@ -247,4 +247,6 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         if (logProcessSteps)
             DevLog.Write(message);
     }
+
+    private void SafeCoroutine(IEnumerator coroutine) => this.SafeCoroutineOrNothing(coroutine);
 }

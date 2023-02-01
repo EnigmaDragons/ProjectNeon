@@ -63,6 +63,7 @@ public class LoadingController : OnMessage<NavigateToSceneRequested, HideLoadUiR
 
     private void OnLoadFinished(AsyncOperation _)
     {
+        Message.Publish(new HideTooltip());
         Message.Publish(new SceneChanged(_newSceneName));
         _isLoading = false;
         _startedTransitionAt = Time.timeSinceLevelLoad;

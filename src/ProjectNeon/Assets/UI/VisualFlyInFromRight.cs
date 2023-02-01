@@ -16,7 +16,7 @@ public class VisualFlyInFromRight : MonoBehaviour
 
     private void Awake() => _initialPosition = transform.position;
     
-    private void OnEnable() => StartCoroutine(Animate());
+    private void OnEnable() => this.SafeCoroutineOrNothing(Animate());
 
     private IEnumerator Animate()
     {

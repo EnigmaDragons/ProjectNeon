@@ -31,7 +31,7 @@ public class SingleUseCharacterWord : MonoBehaviour
         localize.SetTerm(term);
         _remaining = _duration;
         _remainingBeforeFade = _duration - _fadeDuration;
-        StartCoroutine(FlyAnim());
+        this.SafeCoroutineOrNothing(FlyAnim());
         text.transform.DOPunchScale(new Vector3(2.2f, 2.2f, 2.2f), 0.5f, 1);
         return this;
     }

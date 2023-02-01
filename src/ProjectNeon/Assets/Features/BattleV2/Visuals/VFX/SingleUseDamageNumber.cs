@@ -41,7 +41,7 @@ public class SingleUseDamageNumber : MonoBehaviour
         text.text = Mathf.Abs(damage).ToString();
         _remaining = _duration;
         _remainingBeforeFade = _duration - _fadeDuration;
-        StartCoroutine(DamageAnim());
+        this.SafeCoroutineOrNothing(DamageAnim());
         text.transform.DOPunchScale(new Vector3(2.2f, 2.2f, 2.2f), 0.5f, 1);
     }
 

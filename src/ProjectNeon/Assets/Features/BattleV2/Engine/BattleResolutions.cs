@@ -46,7 +46,7 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
             reactionZone.Clear();
         
         if (Reactions.AnyReactionCards)
-            StartCoroutine(ResolveNextReactionCard());
+            this.SafeCoroutineOrNothing(ResolveNextReactionCard());
         else if (resolutionZone.HasMore)
             resolutionZone.BeginResolvingNext();
         else
@@ -69,7 +69,7 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         var effectResolved = new EffectResolved(true, true, EffectData.Nothing, msg.CycledCard.Owner, new Single(msg.CycledCard.Owner), 
             battleSnapshot, battleSnapshot, false, Maybe<Card>.Missing(), msg.CycledCard, new UnpreventableContext(), ReactionTimingWindow.FirstCause, state.PlayerCardZones);
         FinalizeBattleEffect(Maybe<EffectResolved>.Present(effectResolved));
-        StartCoroutine(FinishEffect());
+        this.SafeCoroutineOrNothing(FinishEffect());
     }
 
     protected override void Execute(ApplyBattleEffect msg)
@@ -195,7 +195,7 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
 
     protected override void Execute(CardResolutionFinished msg)
     {
-        StartCoroutine(FinishEffect());
+        this.SafeCoroutineOrNothing(FinishEffect());
     } 
     
     private IEnumerator FinishEffect()
@@ -224,13 +224,13 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
     protected override void Execute(ResolveReactionCards msg)
     {
         if (!_resolvingEffect && Reactions.AnyReactionCards)
-            StartCoroutine(ResolveNextReactionCard());
+            this.SafeCoroutineOrNothing(ResolveNextReactionCard());
     }
 
     protected override void Execute(ResolveReaction msg)
     {
         Log.Info("Resolve Reaction Message Received");
-        StartCoroutine(ResolveNextReactionCard(msg.Reaction));
+        this.SafeCoroutineOrNothing(ResolveNextReactionCard(msg.Reaction));
     }
 
     protected override void Execute(RandomizeEnemyPositions msg)
@@ -265,13 +265,13 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         {
             Log.Error($"Should not be Queueing instant Effect Reactions. They should already be processed. " +
                       $"Reaction - {r.Source.NameTerm.ToEnglish()} {r.Name} {r.ReactionSequence.CardActions.BattleEffects.First().EffectType}");
-            StartCoroutine(FinishEffect());
+            this.SafeCoroutineOrNothing(FinishEffect());
             yield break;
         }
         
         if (!state.Members.ContainsKey(r.Source.Id) || !r.Target.Members.Any())
         {
-            StartCoroutine(FinishEffect());
+            this.SafeCoroutineOrNothing(FinishEffect());
             yield break;
         }
 
@@ -297,7 +297,7 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         else
         {
             BattleLog.Write($"{r.Source.NameTerm.ToEnglish()} could not afford reaction card {reactionCard.Name}");
-            this.ExecuteAfterDelay(() => StartCoroutine(FinishEffect()), 0.1f);
+            this.ExecuteAfterDelay(() => this.SafeCoroutineOrNothing(FinishEffect()), 0.1f);
         }
     }
 

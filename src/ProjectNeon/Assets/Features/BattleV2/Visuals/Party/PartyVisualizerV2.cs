@@ -104,7 +104,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, Highligh
         if (animator == null)
             Debug.LogError($"No Animator found for {state.GetHeroById(e.MemberId).NameTerm().ToEnglish()}");
         else
-            StartCoroutine(animator.PlayAnimationUntilFinished(e.Animation.AnimationName, elapsed =>
+            this.SafeCoroutineOrNothing(animator.PlayAnimationUntilFinished(e.Animation.AnimationName, elapsed =>
             {
                 DevLog.Write($"Finished {e.Animation} Animation in {elapsed} seconds.");
                 Message.Publish(new Finished<CharacterAnimationRequested>());
@@ -133,7 +133,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, Highligh
             _renderers
                 .Where(kv => kv.Key.NameTerm() == msg.Target.NameTerm)
                 .ForEach(kv => kv.Value.material = evadeMaterial);
-            StartCoroutine(ExecuteAfterDelay(() => RevertMaterial(msg.Target.NameTerm), 1.4f));
+            this.SafeCoroutineOrNothing(ExecuteAfterDelay(() => RevertMaterial(msg.Target.NameTerm), 1.4f));
         }
         else
             Log.Error($"Unknown Sprite Effect Type {msg.EffectType}");
@@ -147,7 +147,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, Highligh
             gameObject.SetActive(true);
         var hero = state.GetHeroById(e.MemberId);
         var s = _speech[hero];
-        s.Display(e.Thought, true, false, () => StartCoroutine(ExecuteAfterDelayRealtime(s.Hide, 6f)));
+        s.Display(e.Thought, true, false, () => this.SafeCoroutineOrNothing(ExecuteAfterDelayRealtime(s.Hide, 6f)));
         s.Proceed(true);
     }
 

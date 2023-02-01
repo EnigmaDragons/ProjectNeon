@@ -15,6 +15,19 @@ public static class GameObjectExtensions
         if (o.gameObject.activeSelf)
             o.StartCoroutine(ExecuteAfterDelayIfGameObjectActive(o, a, secondsDelay));
     }
+
+    public static void SafeCoroutineOrNothing(this MonoBehaviour o, IEnumerator coroutine)
+    {
+        try
+        {
+            if (o.gameObject.activeSelf)
+                o.StartCoroutine(coroutine);
+        }
+        catch (Exception _)
+        {
+            // Ignore on purpose
+        }
+    }
     
     private static IEnumerator ExecuteAfterDelay(Action a, float secondsDelay)
     {

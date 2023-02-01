@@ -203,7 +203,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
             Message.Publish(new Finished<CharacterAnimationRequested>());
         }
         else
-            StartCoroutine(animator.PlayAnimationUntilFinished(e.Animation.AnimationName, elapsed =>
+            this.SafeCoroutineOrNothing(animator.PlayAnimationUntilFinished(e.Animation.AnimationName, elapsed =>
             {
                 DevLog.Write($"Finished {e.Animation} in {elapsed} seconds.");
                 Message.Publish(new Finished<CharacterAnimationRequested>());
@@ -216,7 +216,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
         
         var enemy = state.GetEnemyById(e.MemberId);
         var s = _speech[enemy];
-        s.Display(e.Thought, true, false, () => StartCoroutine(ExecuteAfterDelayRealtime(() =>
+        s.Display(e.Thought, true, false, () => this.SafeCoroutineOrNothing(ExecuteAfterDelayRealtime(() =>
         {
             if (s != null) 
                 s.Hide();

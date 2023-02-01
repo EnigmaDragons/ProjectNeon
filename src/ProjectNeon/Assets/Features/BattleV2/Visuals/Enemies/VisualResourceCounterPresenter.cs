@@ -50,7 +50,7 @@ public sealed class VisualResourceCounterPresenter : OnMessage<MemberStateChange
                 Message.Publish(new StopMovementTweeningRequested(t, MovementDimension.Scale));
                 Message.Publish(new TweenMovementRequested(t, new Vector3(0.4f, 0.4f, 0.4f), animDuration, 
                     MovementDimension.Scale, TweenMovementType.RubberBand, "ResourceGain") { UseScaledTime = false });
-                StartCoroutine(SnapBack(t));
+                this.SafeCoroutineOrNothing(SnapBack(t));
             }
         }
 
