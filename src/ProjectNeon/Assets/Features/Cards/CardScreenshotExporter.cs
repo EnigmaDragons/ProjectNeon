@@ -15,7 +15,7 @@ public class CardScreenshotExporter : MonoBehaviour
     [SerializeField] private bool takeAll = false;
     [SerializeField] private Color transparentColor = Color.black;
 
-    private void Start() => StartCoroutine(Go());
+    private void Start() => this.SafeCoroutineOrNothing(Go());
 
     private IEnumerator Go()
     {

@@ -15,42 +15,42 @@ public class GameObjectRotator : MonoBehaviour
     private void Start()
     {
         if(changeContinuous)
-            StartCoroutine(ChangeContinuous(axis));
+            this.SafeCoroutineOrNothing(ChangeContinuous(axis));
     }
 
     public void RotateAmount(float amount)
     {
         StopAllCoroutines();
         Vector3 targetRotation = transform.eulerAngles + (axis * amount);
-        StartCoroutine(SetRotation(Quaternion.Euler(targetRotation), speedMultiplier));
+        this.SafeCoroutineOrNothing(SetRotation(Quaternion.Euler(targetRotation), speedMultiplier));
     }
 
     public void StartChangeContinuous()
     {
         StopAllCoroutines();
-        StartCoroutine(ChangeContinuous(axis));
+        this.SafeCoroutineOrNothing(ChangeContinuous(axis));
     }
 
     public void StartChangeContinuous(Vector3 axis)
     {
         StopAllCoroutines();
-        StartCoroutine(ChangeContinuous(axis));
+        this.SafeCoroutineOrNothing(ChangeContinuous(axis));
     }
 
     public void SetRotationSmooth()
     {
         StopAllCoroutines();
-        StartCoroutine(SetRotation(Quaternion.Euler(axis), speedMultiplier));
+        this.SafeCoroutineOrNothing(SetRotation(Quaternion.Euler(axis), speedMultiplier));
     }
     public void SetRotationSmooth(float axisMultiplier)
     {
         StopAllCoroutines();
-        StartCoroutine(SetRotation(Quaternion.Euler(axis * axisMultiplier), speedMultiplier));
+        this.SafeCoroutineOrNothing(SetRotation(Quaternion.Euler(axis * axisMultiplier), speedMultiplier));
     }
     public void SetRotationSmooth(Vector3 targetRotation)
     {
         StopAllCoroutines();
-        StartCoroutine(SetRotation(Quaternion.Euler(targetRotation), speedMultiplier));
+        this.SafeCoroutineOrNothing(SetRotation(Quaternion.Euler(targetRotation), speedMultiplier));
     }
 
     public void StopRotation()

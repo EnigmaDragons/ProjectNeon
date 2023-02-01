@@ -37,7 +37,7 @@ public class DamageEffect : OnMessage<MemberStateChanged>
         text.text = Mathf.Abs(damage).ToString();
         text.transform.position = _startPos;
         _remaining = duration;
-        StartCoroutine(DamageAnim());
+        this.SafeCoroutineOrNothing(DamageAnim());
     }
 
     private IEnumerator DamageAnim()

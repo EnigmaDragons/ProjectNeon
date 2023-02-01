@@ -25,10 +25,10 @@ public class BattleGlobalEffectCardsPhase : OnMessage<BattleStateChanged, CardRe
     private void PlayNextGlobalEffectCard()
     {
         DevLog.Info($"Global Effect Cards - Began Playing Next Global Effect Card. {_globalCardsToPlay.Count()} to play.");
-        StartCoroutine(ExecuteAfterReactionsFinished(() =>
+        this.SafeCoroutineOrNothing(ExecuteAfterReactionsFinished(() =>
         {
             if (_globalCardsToPlay.Count == 0)
-                StartCoroutine(WaitForResolutionsFinished(BattleV2Phase.GlobalEffectCards));
+                this.SafeCoroutineOrNothing(WaitForResolutionsFinished(BattleV2Phase.GlobalEffectCards));
             else
             {
                 var cardType = _globalCardsToPlay.Dequeue().Random();

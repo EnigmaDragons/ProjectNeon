@@ -34,7 +34,7 @@ public sealed class BattleLogViewController : OnMessage<WriteBattleLogMessageReq
             return;
 
         view.SetActive(!view.activeSelf);
-        StartCoroutine(ScrollToBottom());
+        this.SafeCoroutineOrNothing(ScrollToBottom());
     }
 
     private IEnumerator ScrollToBottom()

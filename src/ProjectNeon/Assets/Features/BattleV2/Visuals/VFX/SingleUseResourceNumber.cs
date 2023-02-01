@@ -47,7 +47,7 @@ public class SingleUseResourceNumber : MonoBehaviour
             .ExecuteIfPresentOrElse(t => resourceIcon.sprite = t.Icon, () => resourceIcon.enabled = false);
         _remaining = _duration;
         _remainingBeforeFade = _duration - _fadeDuration;
-        StartCoroutine(FloatAnim());
+        this.SafeCoroutineOrNothing(FloatAnim());
         transform.DOPunchScale(new Vector3(2.2f, 2.2f, 2.2f), 0.5f, 1);
     }
 

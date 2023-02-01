@@ -26,8 +26,8 @@ public class HeroShowcaseOrchestrator : OnMessage<BeginHeroShowcaseRequested>
         StopAllCoroutines();
         _isFinished = false;
         
-        StartCoroutine(CameraFlow());
-        StartCoroutine(AnimFlow());
+        this.SafeCoroutineOrNothing(CameraFlow());
+        this.SafeCoroutineOrNothing(AnimFlow());
     }
 
     private void TweenToCameraPosition(Transform target, float duration)

@@ -101,7 +101,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
         var instVFX = o.GetComponent<BattleVFX>();
         SetupEffect(o, instVFX, size, speed, color, shouldFlipHorizontal);
         if (!skipWaitingForCompletion && instVFX.WaitForCompletion)
-            StartCoroutine(AwaitAnimationFinish(instVFX, new WaitForSeconds(f.DurationSeconds)));
+            this.SafeCoroutineOrNothing(AwaitAnimationFinish(instVFX, new WaitForSeconds(f.DurationSeconds)));
         else
             Message.Publish(new Finished<BattleEffectAnimationRequested>());
     }

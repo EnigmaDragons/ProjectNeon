@@ -97,7 +97,7 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
         _currentCoroutine = FinishAnimationInTime(msg);
         
         Log.Info($"Starting Character Animation Requested Message for {msg.MemberId}");
-        StartCoroutine(_currentCoroutine);
+        this.SafeCoroutineOrNothing(_currentCoroutine);
     }
 
     private IEnumerator FinishAnimationInTime(CharacterAnimationRequested2 msg)
