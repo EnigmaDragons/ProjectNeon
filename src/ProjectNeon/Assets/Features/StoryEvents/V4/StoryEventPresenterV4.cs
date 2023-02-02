@@ -98,7 +98,7 @@ public class StoryEventPresenterV4 : MonoBehaviour
             InitFreshMultiChoiceButtons();
             for (var i = _buttons.Length - 1; i > -1; i--)
             {
-                if (i == 1)
+                if (i == 0)
                     _buttons[i].Init("Menu/Done", () =>
                     {
                         _multiChoiceButtons.ForEach(x => x.Apply());
