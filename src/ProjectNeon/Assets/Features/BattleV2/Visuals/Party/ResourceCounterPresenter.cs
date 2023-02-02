@@ -59,8 +59,8 @@ public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerE
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (IsInitialized)
-            Message.Publish(new ShowTooltip(transform, string.Format("Tooltips/HeroHasResources".ToLocalized(), _member.NameTerm.ToLocalized(), $"{_member.State[_resourceType]} {_resourceType.GetTerm().ToLocalized()}")));
+        if (IsInitialized && gameObject.activeSelf)
+            Message.Publish(new ShowTooltip(transform.position, string.Format("Tooltips/HeroHasResources".ToLocalized(), _member.NameTerm.ToLocalized(), $"{_member.State[_resourceType]} {_resourceType.GetTerm().ToLocalized()}")));
     }
 
     public void OnPointerExit(PointerEventData eventData) => Message.Publish(new HideTooltip());

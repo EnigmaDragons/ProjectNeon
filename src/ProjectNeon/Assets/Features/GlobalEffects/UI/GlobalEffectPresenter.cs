@@ -16,7 +16,7 @@ public class GlobalEffectPresenter : MonoBehaviour, IPointerEnterHandler, IPoint
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Message.Publish(new ShowTooltip(transform, _e.FullDescriptionTerm.ToLocalized()));
+        Message.Publish(new ShowTooltip(transform.position, _e.FullDescriptionTerm.ToLocalized()));
     }
 
     public void OnPointerExit(PointerEventData eventData)

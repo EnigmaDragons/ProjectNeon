@@ -25,17 +25,21 @@ public class CycleCardDropTarget : MonoBehaviour, IDropHandler, IPointerEnterHan
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (!gameObject.activeSelf) return;
+        
         if (state.NumberOfRecyclesRemainingThisTurn > 0 && eventData.dragging)
         {
             _shouldRotate = true;
-            Message.Publish(new HoverEntered(transform, UiElementName));
+            Message.Publish(new HoverEntered(UiElementName));
         }
     }
 
     private void Reset()
     {
+        if (!gameObject.activeSelf) return;
+        
         _shouldRotate = false;
-        Message.Publish(new HoverExited(transform, UiElementName));
+        Message.Publish(new HoverExited(UiElementName));
     }
 
     public void OnPointerExit(PointerEventData eventData) => Reset();
