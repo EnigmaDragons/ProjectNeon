@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -18,36 +19,60 @@ public class CutscenePresenter : BaseCutscenePresenter
     
     private void Start()
     {
-        Characters.Clear();
-        Characters.Add(narrator);
-        Characters.Add(you);
-        Characters.Add(player);
+        if (cutscene.Current == null)
+        {
+            Log.Error("Null: CurrentCutscene.Current");
+            Message.Publish(new CutsceneFinished());
+            return;
+        }
 
-        cutscene.Current.Setting.SpawnTo(settingParent);
-        setupParty.Execute(settingParent);
+        if (cutscene.Current.Setting == null)
+        {
+            Log.Error($"Null: Cutscene Setting for {cutscene.Current.name}");
+            Message.Publish(new CutsceneFinished());
+            return;
+        }
 
-        var cameras = settingParent.GetComponentsInChildren<Camera>();
-        if (cameras.Any())
-            defaultCamera.SetActive(false);
-        
-        var characters = settingParent.GetComponentsInChildren<CutsceneCharacter>();
-        characters.Where(c => c.IsInitialized).ForEach(c => Characters.Add(c));
-        settingParent.GetComponentsInChildren<CutsceneCharacterAdditionalVisual>()
-            .ForEach(v => v.OwnerAliases.ForEach(a =>
-            {
-                if (CharacterAdditionalVisuals.TryGetValue(a, out var items))
-                    items.Add(v.gameObject);
-                else
-                    CharacterAdditionalVisuals[a] = new List<GameObject> { v.gameObject };
-            }));
-        
-        DebugLog($"Characters in cutscene: {string.Join(", ", Characters.Select(c => c.PrimaryName))}");
-        
-        DebugLog($"Num Cutscene Segments {cutscene.Current.Segments.Length}");
-        MessageGroup.TerminateAndClear();
-        MessageGroup.Start(
-            new MultiplePayloads("Cutscene Script", cutscene.Current.Segments.Select(s => new ShowCutsceneSegment(s)).Cast<object>().ToArray()), 
-            () => Message.Publish(new CutsceneFinished()));
+        try
+        {
+            Characters.Clear();
+            Characters.Add(narrator);
+            Characters.Add(you);
+            Characters.Add(player);
+
+            cutscene.Current.Setting.SpawnTo(settingParent);
+            setupParty.Execute(settingParent);
+
+            var cameras = settingParent.GetComponentsInChildren<Camera>();
+            if (cameras.Any())
+                defaultCamera.SetActive(false);
+
+            var characters = settingParent.GetComponentsInChildren<CutsceneCharacter>();
+            characters.Where(c => c.IsInitialized).ForEach(c => Characters.Add(c));
+            settingParent.GetComponentsInChildren<CutsceneCharacterAdditionalVisual>()
+                .ForEach(v => v.OwnerAliases.ForEach(a =>
+                {
+                    if (CharacterAdditionalVisuals.TryGetValue(a, out var items))
+                        items.Add(v.gameObject);
+                    else
+                        CharacterAdditionalVisuals[a] = new List<GameObject> { v.gameObject };
+                }));
+
+            DebugLog($"Characters in cutscene: {string.Join(", ", Characters.Select(c => c.PrimaryName))}");
+
+            DebugLog($"Num Cutscene Segments {cutscene.Current.Segments.Length}");
+            MessageGroup.TerminateAndClear();
+            MessageGroup.Start(
+                new MultiplePayloads("Cutscene Script",
+                    cutscene.Current.Segments.Select(s => new ShowCutsceneSegment(s)).Cast<object>().ToArray()),
+                () => Message.Publish(new CutsceneFinished()));
+        }
+        catch (Exception e)
+        {
+            Log.Error("Still got the Null Ref in Cutscene Presenter");
+            Log.Error(e);
+            Message.Publish(new CutsceneFinished());
+        }
     }
 
     protected override void Execute(SkipCutsceneRequested msg) => SkipCutscene();
