@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class ShowTooltip
 {
-    public Transform UiSource { get; }
+    public Vector3 Position { get; }
     public string Text { get; }
     public bool ShowBackground { get; }
 
-    public ShowTooltip(Transform uiSource, string text, bool showBackground = true)
+    public ShowTooltip(Vector3 position, string text, bool showBackground = true)
     {
-        UiSource = uiSource;
+        Position = position;
         Text = text;
         ShowBackground = showBackground;
     }

@@ -27,15 +27,17 @@ public class DiscardCardDropTarget : MonoBehaviour, IDropHandler, IPointerEnterH
     private void Reset()
     {
         _shouldShake = false;
-        Message.Publish(new HoverExited(transform, UiElementName));
+        Message.Publish(new HoverExited(UiElementName));
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (!gameObject.activeSelf) return;
+        
         if (eventData.dragging)
         {
             _shouldShake = true;
-            Message.Publish(new HoverEntered(transform, UiElementName));
+            Message.Publish(new HoverEntered(UiElementName));
         }
     }
 

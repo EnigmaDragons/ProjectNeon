@@ -170,7 +170,7 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
         if (alwaysShowRules)
             return;
         
-        ArrivalSegment.Detail.IfPresent(detail => Message.Publish(new ShowTooltip(transform, detail, true)));
+        ArrivalSegment.Detail.IfPresent(detail => Message.Publish(new ShowTooltip(transform.position, detail, true)));
         _rulesPanel.IfPresent(r => r.SetActive(true));
         transform.SetSiblingIndex(transform.parent.childCount - 2);
     }

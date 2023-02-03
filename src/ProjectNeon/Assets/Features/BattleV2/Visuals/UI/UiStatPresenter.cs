@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UiStatPresenter : OnMessage<MemberStateChanged>, IPointerEnterHandler, IPointerExitHandler
+public class UiStatPresenter : OnMessage<MemberStateChanged>
 {
     [SerializeField] private Image icon;
     [SerializeField] private Image border;
@@ -32,18 +32,6 @@ public class UiStatPresenter : OnMessage<MemberStateChanged>, IPointerEnterHandl
             return;
         
         UpdateUi(msg.State);
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (_member == null)
-            return;
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if (_member == null)
-            return;
     }
     
     private void UpdateUi(MemberState state, bool showChangeAnim = true)

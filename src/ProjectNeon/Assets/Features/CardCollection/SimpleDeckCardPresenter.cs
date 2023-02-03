@@ -103,7 +103,7 @@ public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPoi
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (_cardType == null)
+        if (_cardType == null || !gameObject.activeSelf)
             return;
         
         _hoverCard = Instantiate(hoverCard.gameObject, _canvas.transform);

@@ -10,6 +10,15 @@ public class HoverObjectToggle : MonoBehaviour, IPointerEnterHandler, IPointerEx
     public void OnPointerEnter(PointerEventData eventData) => Show();
     public void OnPointerExit(PointerEventData eventData) => Hide();
     
-    public void Show() => target.SetActive(true);
-    public void Hide() => target.SetActive(false);
+    public void Show()
+    {
+        if (gameObject.activeSelf && target != null)
+            target.SetActive(true);
+    }
+
+    public void Hide()
+    {
+        if (gameObject.activeSelf && target != null)
+            target.SetActive(false);
+    }
 }
