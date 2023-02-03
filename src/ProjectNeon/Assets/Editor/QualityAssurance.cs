@@ -341,6 +341,10 @@ public class QualityAssurance
                 issues.Add($"Broken Card: {i.Name} has Null Cost");
             else if (i.ActionSequences.Any(e => e.CardActions == null))
                 issues.Add($"Broken Card: {i.Name} has a Null Card Action");
+            else if (!i.Archetypes.Contains("Enemy") 
+                  && i.actionSequences.Any(x => x.Group == Group.Ally && (x.Scope == Scope.One || x.Scope == Scope.OneExceptSelf))
+                  && i.actionSequences.Any(x => x.Group == Group.Opponent && (x.Scope == Scope.One || x.Scope == Scope.OneExceptSelf)))
+                issues.Add($"Broken Card: {i.Name} has conflicting targeting scopes");
             if (issues.Any())
                 failures.Add(new ValidationResult($"{i.Name} - {i.id}", issues));
         }
