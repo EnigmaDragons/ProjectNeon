@@ -32,6 +32,7 @@ public static class Formula
     {
         var newExp = string.IsNullOrWhiteSpace(expression) ? "0" : expression;
         newExp = newExp.Replace("PrimaryStat", "Power");
+        newExp = ReplaceNamedVariables(newExp, ctx);
         newExp = ReplaceTags(newExp, ctx);
         newExp = ReplaceShorthandStatNames(newExp);
         newExp = ReplaceResources(newExp, ctx);

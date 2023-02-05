@@ -18,7 +18,7 @@ public class AugmentLevelUpOption : LevelUpOption
     public void SelectAsLevelUp(Hero h)
     {
         _party.Add(_e);
-        h.Equipment.EquipPermanent(_e);
+        h.EquipPermanent(_e);
         h.RecordLevelUpPointSpent(-2);
         Message.Publish(new AutoSaveRequested());
     }

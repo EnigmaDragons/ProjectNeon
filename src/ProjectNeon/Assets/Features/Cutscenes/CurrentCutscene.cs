@@ -21,12 +21,14 @@ public class CurrentCutscene : ScriptableObject
     public void Init(Cutscene c, Maybe<Action> onCutsceneFinished)
     {
         cutscene = c;
+        startBattleCutscene = null;
         _segments = new IndexSelector<CutsceneSegmentData>(cutscene.Segments);
         OnCutsceneFinishedAction = onCutsceneFinished;
     }
 
     public void InitStartBattle(Cutscene c)
     {
+        cutscene = null;
         startBattleCutscene = c;
         _segments = new IndexSelector<CutsceneSegmentData>(startBattleCutscene.Segments);
         startBattleCutsceneFinished = false;

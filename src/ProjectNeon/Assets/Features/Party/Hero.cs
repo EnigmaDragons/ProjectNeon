@@ -89,6 +89,12 @@ public class Hero
 
     public void AddToStats(IStats stats) => UpdateState(() => _statAdditions = _statAdditions.Plus(stats.WithConvertedPower(PrimaryStat)));
     public void Equip(Equipment e) => UpdateState(() => equipment.Equip(e));
+    public void EquipPermanent(Equipment e)
+    {
+        var currentHealth = Stats.MaxHp() - Health.MissingHp;
+        equipment.EquipPermanent(e);
+        Health.SetHp(Math.Min(currentHealth, Stats.MaxHp()));
+    }
     public void Unequip(Equipment e) => UpdateState(() => equipment.Unequip(e));
     public bool CanEquip(Equipment e) => equipment.CanEquip(e);
     public void ApplyPermanent(Equipment e) => UpdateState(() => equipment.EquipPermanent(e));
