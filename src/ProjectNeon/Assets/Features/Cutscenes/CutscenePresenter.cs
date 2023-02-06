@@ -35,31 +35,13 @@ public class CutscenePresenter : BaseCutscenePresenter
 
         try
         {
-            Characters.Clear();
-            Characters.Add(narrator);
-            Characters.Add(you);
-            Characters.Add(player);
-
+            InitBasicCharacters();
             cutscene.Current.Setting.SpawnTo(settingParent);
             setupParty.Execute(settingParent);
-
-            var cameras = settingParent.GetComponentsInChildren<Camera>();
-            if (cameras.Any())
-                defaultCamera.SetActive(false);
-
-            var characters = settingParent.GetComponentsInChildren<CutsceneCharacter>();
-            characters.Where(c => c.IsInitialized).ForEach(c => Characters.Add(c));
-            settingParent.GetComponentsInChildren<CutsceneCharacterAdditionalVisual>()
-                .ForEach(v => v.OwnerAliases.ForEach(a =>
-                {
-                    if (CharacterAdditionalVisuals.TryGetValue(a, out var items))
-                        items.Add(v.gameObject);
-                    else
-                        CharacterAdditionalVisuals[a] = new List<GameObject> { v.gameObject };
-                }));
+            InitCameras();
+            InitSettingCharacters();
 
             DebugLog($"Characters in cutscene: {string.Join(", ", Characters.Select(c => c.PrimaryName))}");
-
             DebugLog($"Num Cutscene Segments {cutscene.Current.Segments.Length}");
             MessageGroup.TerminateAndClear();
             MessageGroup.Start(
@@ -73,6 +55,35 @@ public class CutscenePresenter : BaseCutscenePresenter
             Log.Error(e);
             Message.Publish(new CutsceneFinished());
         }
+    }
+
+    private void InitCameras()
+    {
+        var cameras = settingParent.GetComponentsInChildren<Camera>();
+        if (cameras.Any())
+            defaultCamera.SetActive(false);
+    }
+
+    private void InitSettingCharacters()
+    {
+        var characters = settingParent.GetComponentsInChildren<CutsceneCharacter>();
+        characters.Where(c => c.IsInitialized).ForEach(c => Characters.Add(c));
+        settingParent.GetComponentsInChildren<CutsceneCharacterAdditionalVisual>()
+            .ForEach(v => v.OwnerAliases.ForEach(a =>
+            {
+                if (CharacterAdditionalVisuals.TryGetValue(a, out var items))
+                    items.Add(v.gameObject);
+                else
+                    CharacterAdditionalVisuals[a] = new List<GameObject> { v.gameObject };
+            }));
+    }
+
+    private void InitBasicCharacters()
+    {
+        Characters.Clear();
+        Characters.Add(narrator);
+        Characters.Add(you);
+        Characters.Add(player);
     }
 
     protected override void Execute(SkipCutsceneRequested msg) => SkipCutscene();

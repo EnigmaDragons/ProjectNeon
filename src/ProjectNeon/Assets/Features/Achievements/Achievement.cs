@@ -11,4 +11,11 @@ public class Achievement
     public const string MiscShoppingSpree = "misc-shopping-spree";
     public const string Combat42Damage = "combat-42-dmg";
     public const string Progress9HeroesUnlocked = "progress-9-heroes";
+    
+    public const string DifficultyCasual = "difficulty-casual";
+    public const string DifficultyVeteran = "difficulty-veteran";
+    public const string DifficultyIllegalTech = "difficulty-illegaltech";
+    public const string DifficultyPromotions = "difficulty-promotions";
+    public const string DifficultyOppression = "difficulty-oppression";
+    public const string DifficultyDystopia = "difficulty-dystopia";
 }
