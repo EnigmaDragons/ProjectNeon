@@ -9,7 +9,7 @@ public static class GameWrapup
         p.AdventureProgress.Advance();
         AllMetrics.PublishGameWon(p.AdventureProgress.AdventureId);
         CurrentProgressionData.RecordCompletedAdventure(p.AdventureProgress.AdventureId, 0, heroes.Select(h => h.Character.Id).ToArray());
-        Achievements.RecordAdventureCompleted(p.AdventureProgress.AdventureId, true);
+        Achievements.RecordAdventureCompleted(p.AdventureProgress.AdventureId, true, p.AdventureProgress.Difficulty);
         Message.Publish(new AutoSaveRequested());
         c.RecordFinishedGameAndCleanUp(true, a.Adventure.VictoryConclusionTerm, CurrentGameData.Data.Stats, heroes);
         if (a.Adventure.ShouldRollCreditsBeforeConclusionScene)
