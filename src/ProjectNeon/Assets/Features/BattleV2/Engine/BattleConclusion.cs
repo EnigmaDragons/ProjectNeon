@@ -82,6 +82,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
         else if ((state.IsTutorialCombat && useNewTutorialFlow.Value) || adventureProgress.AdventureProgress.Difficulty.ResetAfterDeath)
         {
             Log.Info("Restarting Battle");
+            Achievements.RecordAdventureCompleted(adventure.Adventure.Id, false);
             saveLoadSystem.LoadSavedGame();
             partyState.Heroes.ForEach(x => x.SetHp(x.Stats.MaxHp()));
             this.ExecuteAfterDelay(() => navigator.NavigateToGameSceneV5(), secondsBeforeGameOverScreen);
