@@ -27,3 +27,19 @@ public class MpZeroGlobalLocalizationParams : MonoBehaviour, ILocalizationParams
         return paramName.FromI2ParamValue();
     }
 }
+
+#if UNITY_EDITOR
+public class MpZeroEditorGlobalLocalizationParams : ILocalizationParamsManager
+{
+    public virtual string GetParameterValue(string paramName)
+    {
+        if (paramName.StartsWith("t:"))
+            return paramName.Substring(2).ToLocalized();
+        if (paramName.Equals("SaveGameVersion"))
+            return CurrentGameData.SaveGameVersion;
+        if (paramName.Equals("GameVersion"))
+            return CurrentGameData.GameVersion;
+        return paramName.FromI2ParamValue();
+    }
+}
+#endif

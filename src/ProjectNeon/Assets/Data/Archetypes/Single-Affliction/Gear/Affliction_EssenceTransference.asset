@@ -26,7 +26,7 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - Id: 0
+  - Id: 20000
     EffectType: 74
     Conditions: []
     BaseAmount:
@@ -46,7 +46,7 @@ MonoBehaviour:
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: 'On Afflict: Gain 1 Primary Resource'
+    StatusDetailText: 'On Afflict: Gain 1 Energy'
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -59,6 +59,7 @@ MonoBehaviour:
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
     ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
     ReactionConditionType: 14
     ReactionEffectScope:
       UseConstant: 0

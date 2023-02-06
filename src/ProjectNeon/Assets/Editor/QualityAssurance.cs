@@ -33,25 +33,39 @@ public class QualityAssurance
 
         var (enemyCount, enemyFailures) = QaAllEnemies();
         var (cardCount, cardFailures) = QaAllCards();
+        var (reactionCount, reactionFailures) = QaAllReactions();
         var (heroCount, heroFailures) = QaAllHeroes();
         var (cutsceneCount, cutsceneFailures) = QaAllCutscenes();
         var (prefabCount, prefabFailures) = QaSpecificPrefabs();
         var (encounterCount, encounterFailures) = QaAllSpecificEncounterSegments();
         var (adventureCount, adventureFailures) = QaAdventures();
         var (stageSegmentCount, stageSegmentFailures) = QaStageSegments();
+        var (equipmentCount, equipmentFailures) = QaAllEquipments();
 
-        var qaPassed = enemyFailures.None() && cardFailures.None() && heroFailures.None() && cutsceneFailures.None() && prefabFailures.None() && encounterFailures.None() && adventureFailures.None();
+        var qaPassed 
+            = enemyFailures.None() 
+            && cardFailures.None() 
+            && reactionFailures.None() 
+            && heroFailures.None() 
+            && cutsceneFailures.None() 
+            && prefabFailures.None() 
+            && encounterFailures.None() 
+            && adventureFailures.None()
+            && stageSegmentFailures.None()
+            && equipmentFailures.None();
         var qaResultTerm = qaPassed ? "Passed" : "Failed - See Details Below";
         Log.Info("--------------------------------------------------------------");
         Log.InfoOrError($"QA - {qaResultTerm}", !qaPassed);
         LogReport("Enemies", enemyCount, enemyFailures);
         LogReport("Cards", cardCount, cardFailures);
+        LogReport("Reactions", reactionCount, reactionFailures);
         LogReport("Heroes", heroCount, heroFailures);
         LogReport("Cutscenes", cutsceneCount, cutsceneFailures);
         LogReport("Prefabs", prefabCount, prefabFailures);
         LogReport("Encounters", encounterCount, encounterFailures);
         LogReport("Adventures", adventureCount, adventureFailures);
         LogReport("StageSegments", stageSegmentCount, stageSegmentFailures);
+        LogReport("Equipment", equipmentCount, equipmentFailures);
         Log.Info("--------------------------------------------------------------");
 
         ErrorReport.ReenableAfterQa();
@@ -328,28 +342,106 @@ public class QualityAssurance
     }
 
     private static (int, List<ValidationResult>) QaAllCards()
-    {
-        var items = ScriptableExtensions.GetAllInstances<CardType>().Where(c => !c.IsWip).ToArray();
-        var failures = new List<ValidationResult>();
-        var itemCount = items.Length;
-        foreach (var i in items)
+        => WithLocalization(() =>
         {
-            var issues = new List<string>();
-            if (i.Name == null)
-                issues.Add($"Broken Card: Missing Name");
-            else if (i.cost == null || i.cost.RawResourceType == null) 
-                issues.Add($"Broken Card: {i.Name} has Null Cost");
-            else if (i.ActionSequences.Any(e => e.CardActions == null))
-                issues.Add($"Broken Card: {i.Name} has a Null Card Action");
-            else if (!i.Archetypes.Contains("Enemy") 
-                  && i.actionSequences.Any(x => x.Group == Group.Ally && (x.Scope == Scope.One || x.Scope == Scope.OneExceptSelf))
-                  && i.actionSequences.Any(x => x.Group == Group.Opponent && (x.Scope == Scope.One || x.Scope == Scope.OneExceptSelf)))
-                issues.Add($"Broken Card: {i.Name} has conflicting targeting scopes");
-            if (issues.Any())
-                failures.Add(new ValidationResult($"{i.Name} - {i.id}", issues));
+            var items = ScriptableExtensions.GetAllInstances<CardType>().Where(c => !c.IsWip).ToArray();
+            var failures = new List<ValidationResult>();
+            var itemCount = items.Length;
+            foreach (var i in items)
+            {
+                var issues = new List<string>();
+                if (string.IsNullOrWhiteSpace(i.NameTerm.ToEnglish()))
+                    issues.Add($"Broken Card: Missing Name");
+                else if (string.IsNullOrWhiteSpace(i.LocalizedDescription(
+                             new Member(1, "quality assurance", "Any Class", MemberMaterialType.Organic, TeamType.Party,
+                                 new StatAddends().With(StatType.Damagability, 1), BattleRole.Unknown, StatType.Attack,
+                                 false), ResourceQuantity.None)))
+                    issues.Add($"Broken Card: Cannot Interpolate Description");
+                else if (i.cost == null || i.cost.RawResourceType == null)
+                    issues.Add($"Broken Card: {i.Name} has Null Cost");
+                else if (i.ActionSequences.Any(e => e.CardActions == null))
+                    issues.Add($"Broken Card: {i.Name} has a Null Card Action");
+                else if (!i.Archetypes.Contains("Enemy")
+                         && i.actionSequences.Any(x =>
+                             x.Group == Group.Ally && (x.Scope == Scope.One || x.Scope == Scope.OneExceptSelf))
+                         && i.actionSequences.Any(x =>
+                             x.Group == Group.Opponent && (x.Scope == Scope.One || x.Scope == Scope.OneExceptSelf)))
+                    issues.Add($"Broken Card: {i.Name} has conflicting targeting scopes");
+                if (issues.Any())
+                    failures.Add(new ValidationResult($"{i.Name} - {i.id}", issues));
+            }
+
+            return (itemCount, failures);
+        });
+
+    private static (int, List<ValidationResult>) QaAllReactions()
+        => WithLocalization(() =>
+        {
+            var items = ScriptableExtensions.GetAllInstances<ReactionCardType>().ToArray();
+            var failures = new List<ValidationResult>();
+            var itemCount = items.Length;
+            foreach (var i in items)
+            {
+                var issues = new List<string>();
+                if (string.IsNullOrWhiteSpace(i.NameTerm.ToEnglish()))
+                    issues.Add($"Broken Card: Missing Name");
+                else if (string.IsNullOrWhiteSpace(i.LocalizedDescription(
+                             new Member(1, "quality assurance", "Any Class", MemberMaterialType.Organic, TeamType.Party,
+                                 new StatAddends().With(StatType.Damagability, 1), BattleRole.Unknown, StatType.Attack,
+                                 false), ResourceQuantity.None)))
+                    issues.Add($"Broken Card: Cannot Interpolate Description");
+                else if (i.Cost == null || i.Cost.ResourceType == null)
+                    issues.Add($"Broken Card: {i.Name} has Null Cost");
+                else if (i.ActionSequences.Any(e => e.CardActions == null))
+                    issues.Add($"Broken Card: {i.Name} has a Null Card Action");
+                if (issues.Any())
+                    failures.Add(new ValidationResult($"{i.Name} - {i.id}", issues));
+            }
+
+            return (itemCount, failures);
+        });
+
+    private static (int, List<ValidationResult>) QaAllEquipments()
+        => WithLocalization(() =>
+        {
+            var items = ScriptableExtensions.GetAllInstances<StaticEquipment>().Where(x => !x.IsWip).ToArray();
+            var failures = new List<ValidationResult>();
+            var itemCount = items.Length;
+            foreach (var i in items)
+            {
+                var issues = new List<string>();
+                if (i.BattleStartEffects.Concat(i.TurnStartEffects).Any(x
+                        => (x.EffectType == EffectType.ReactWithCard || x.EffectType == EffectType.ReactWithEffect ||
+                            x.EffectType == EffectType.ReactOncePerTurnWithEffect ||
+                            x.EffectType == EffectType.ShowCustomTooltip)
+                           && x.StatusTag != StatusTag.None
+                           && (x.Id == 0 || string.IsNullOrWhiteSpace(x.StatusDetailTerm.ToEnglish()))))
+                    issues.Add($"Broken Equipment: {i.Name} has missing status details");
+                if (issues.Any())
+                    failures.Add(new ValidationResult($"{i.Name} - {i.id}", issues));
+            }
+
+            return (itemCount, failures);
+        });
+
+    private static T WithLocalization<T>(Func<T> func)
+    {
+        var editorLocalizationParams = new MpZeroEditorGlobalLocalizationParams();
+        LocalizationManager.ParamManagers.Add(editorLocalizationParams);
+        LocalizationManager.LocalizeAll(true);
+        try
+        {
+            return func();
         }
-        
-        return (itemCount, failures);
+        catch (Exception ex)
+        {
+            Log.Error($"Unexpected Exception of type {ex.GetType().Name}: {ex.Message}");
+            throw;
+        }
+        finally
+        {
+            LocalizationManager.ParamManagers.Remove(editorLocalizationParams);
+        }
     }
 
     private static Regex _specialTag = new Regex(@"{\[(.+?)]}", RegexOptions.IgnoreCase);
