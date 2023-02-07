@@ -8,6 +8,9 @@ public class Achievement
     public const string AdventureWonOrganizedHarvestors = "adv-won-org";
     public const string AdventureLostOrganizedHarvestors = "adv-lost-org";
     public const string AdventureWonAntiRobotSentiments = "adv-won-robot";
+    public const string AdventureWonTrioDraft = "adv-won-draft-trio";
+    public const string AdventureWonDuoDraft = "adv-won-draft-duo";
+    public const string AdventureWonSoloDraft = "adv-won-draft-solo";
     public const string MiscDataAnalyst = "misc-data-analyst"; // NOTE: Referenced from Unity Side
     public const string MiscGirlPower = "misc-girl-power";
     public const string MiscShoppingSpree = "misc-shopping-spree";

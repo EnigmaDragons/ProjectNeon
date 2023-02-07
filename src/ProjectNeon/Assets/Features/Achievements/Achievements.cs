@@ -12,7 +12,12 @@ public static class Achievements
         const int breakIntoMetroplexZeroAdventureId = 10;
         const int organizedHarvestorsAdventureId = 9;
         const int antiRobotSentimentsAdventureId = 14;
-
+        const int soloDraftId = 11;
+        const int duoDraftId = 12;
+        const int trioDraftId = 13;
+        
+        
+        // Core Adventures
         if (adventureId == breakIntoMetroplexZeroAdventureId)
             if (wasVictorious)
                 Record(Achievement.AdventureWonBreakIntoMetroplexZero);
@@ -28,6 +33,14 @@ public static class Achievements
         if (adventureId == antiRobotSentimentsAdventureId && wasVictorious)
             Record(Achievement.AdventureWonAntiRobotSentiments);
 
+        // Draft Adventures
+        if (wasVictorious && adventureId == soloDraftId)
+            Record(Achievement.AdventureWonSoloDraft);
+        if (wasVictorious && adventureId == duoDraftId)
+            Record(Achievement.AdventureWonDuoDraft);
+        if (wasVictorious && adventureId == trioDraftId)
+            Record(Achievement.AdventureWonTrioDraft);
+        
         if (wasVictorious)
         {
             if (difficulty.Id == -1)
