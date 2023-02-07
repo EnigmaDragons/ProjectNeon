@@ -7,7 +7,7 @@ public static class Achievements
 
     public static void Init(IAchievements instance) => Instance = instance;
 
-    public static void RecordAdventureCompleted(int adventureId, bool wasVictorious, Difficulty difficulty)
+    public static void RecordAdventureCompleted(int adventureId, bool wasVictorious, Difficulty difficulty, string[] englishHeroNames)
     {
         const int breakIntoMetroplexZeroAdventureId = 10;
         const int organizedHarvestorsAdventureId = 9;
@@ -42,6 +42,13 @@ public static class Achievements
                 Record(Achievement.DifficultyOppression);
             if (difficulty.Id == 5)
                 Record(Achievement.DifficultyDystopia);
+
+            foreach (var h in englishHeroNames)
+            {
+                Record(Achievement.HeroVictory(h));
+                if (difficulty.Id == 5)
+                    Record(Achievement.HeroMasterVictory(h));
+            }
         }
     }
 }

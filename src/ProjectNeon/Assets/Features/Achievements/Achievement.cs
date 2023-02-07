@@ -1,4 +1,6 @@
 
+using System.Collections.Generic;
+
 public class Achievement
 {
     public const string AdventureWonBreakIntoMetroplexZero = "adv-won-break";
@@ -18,4 +20,8 @@ public class Achievement
     public const string DifficultyPromotions = "difficulty-promotions";
     public const string DifficultyOppression = "difficulty-oppression";
     public const string DifficultyDystopia = "difficulty-dystopia";
+
+    public static string HeroVictory(string heroName) => $"hero-{heroName.ToLowerInvariant()}";
+    public static string HeroMasterVictory(string heroName) => $"hero-master-{heroName.ToLowerInvariant()}";
 }
+
