@@ -10,28 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Ordnance_Armaments
+  m_Name: Nevyn_CoveredReload
   m_EditorClassIdentifier: 
-  id: 91
+  id: 683
   customName: 
-  art: {fileID: 21300000, guid: 628065852d86a214781ebc49ff5e0aef, type: 3}
-  description: Gain <b>1</b> Grenade
-  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
+  art: {fileID: 21300000, guid: 007b46bd034c49b4b991ce5538d44d8f, type: 3}
+  description: 
+  typeDescription: {fileID: 0}
   descriptionV2:
-    text: Gain <b>1</b> Grenade
-    formatArgs: []
+    text: 'Gain Max Ammo
+
+
+      Gives <b>{0} Armor & {0} Resistance</b>'
+    formatArgs:
+    - '{E[1]}'
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
     cost: 0
-    resourceType: {fileID: 11400000, guid: eaf4c3c485af4f542bff69164496f500, type: 2}
+    resourceType: {fileID: 0}
     plusXCost: 0
   rarity: 0
   actionSequences:
   - scope: 0
     group: 0
-    cardActions: {fileID: 11400000, guid: 5cb9470ad9b397847a2d0a28fc27a028, type: 2}
+    cardActions: {fileID: 11400000, guid: 6e44ac43741f6a14f864171a289ef5fe, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -39,10 +43,10 @@ MonoBehaviour:
   functionalityIssues: 
   presentationIssues: 
   archetypes:
-  - {fileID: 11400000, guid: 4b871eacf30af6f428fd307e9e308b4c, type: 2}
+  - {fileID: 11400000, guid: fbcb59caa7d5a114f8b9cf6016d20160, type: 2}
   highlightCondition: []
   unhighlightCondition: []
   targetedHighlightCondition: []
   targetedUnhighlightCondition: []
   isWIP: 0
-  notAvailableForGeneralDistribution: 0
+  notAvailableForGeneralDistribution: 1
