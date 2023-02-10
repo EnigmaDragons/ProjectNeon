@@ -19,11 +19,19 @@ MonoBehaviour:
     <b>Resistance</b> and deal <sprite index=0>
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   descriptionV2:
-    text: <b>Quick:</b> Remove <b>Armor</b> and deal <sprite index=2> or remove <b>Resistance</b>
-      and deal <sprite index=0>
-    formatArgs: []
+    text: 'Give {0} <b>Armor</b> + deal {1}
+
+      OR
+
+      Give {2} <b>Resistance</b>
+      + deal {3}'
+    formatArgs:
+    - '{E[0]}'
+    - '{E[1]}'
+    - '{E[2]}'
+    - '{E[3]}'
   tags: 
-  speed: 1
+  speed: 0
   isSinglePlay: 0
   cost:
     cost: 1
@@ -31,6 +39,11 @@ MonoBehaviour:
     plusXCost: 0
   rarity: 3
   actionSequences:
+  - scope: 0
+    group: 1
+    cardActions: {fileID: 11400000, guid: 35061bad7a7f9fc4fba3075d69ba5c21, type: 2}
+    repeatX: 0
+    repeatCount: 0
   - scope: 0
     group: 0
     cardActions: {fileID: 11400000, guid: 06567020054a9ac4d9e9363fba3e1b47, type: 2}
@@ -44,5 +57,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 079871761aec52040887b3de1c1a19c4, type: 2}
   highlightCondition: []
   unhighlightCondition: []
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 0

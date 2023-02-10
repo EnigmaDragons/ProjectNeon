@@ -126,6 +126,7 @@ public static class AllEffects
         { EffectType.MakeTargetingRough, e => new PlayerEffect((id, p, duration) => p.AddState(new EnemyRetargetingPlayerState(id, duration)), e.DurationFormula) },
         { EffectType.ExitStealth, e => new SimpleEffect(state => state.ExitStealth())},
         { EffectType.RemoveDots, e => new SimpleEffect(m => BattleLoggedItemIf(n => $"{m.NameTerm.ToEnglish()} has been cleansed of {n} damage over time effects", n => n > 0, m.CleanseDots))},
+        { EffectType.ChooseCardToPlay, e => new ChooseCardToPlay(e.EffectScope, e.Formula) },
     };
 
     private static string GainedOrLostTerm(float amount) => amount > 0 ? "gained" : "lost";

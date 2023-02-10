@@ -21,12 +21,12 @@ MonoBehaviour:
     {E[1]} <b>Attack</b> this turn.'
   typeDescription: {fileID: 0}
   descriptionV2:
-    text: 'Gain single use quick <b>Shadow</b> or <b>Mark</b> card.
+    text: 'Gives {0} <b>Attack</b> this turn.
 
-      Gives
-      {0} <b>Attack</b> this turn.'
+
+      Play <b>Mark</b> or <b>Shadow</b>'
     formatArgs:
-    - '{E[1]}'
+    - '{E[0]}'
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -36,6 +36,11 @@ MonoBehaviour:
     plusXCost: 0
   rarity: 5
   actionSequences:
+  - scope: 0
+    group: 1
+    cardActions: {fileID: 11400000, guid: 316264b94c2f85042a7acc7fe364490f, type: 2}
+    repeatX: 0
+    repeatCount: 0
   - scope: 0
     group: 0
     cardActions: {fileID: 11400000, guid: a28691368b47757419f4585bbd006471, type: 2}
@@ -50,5 +55,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1e6b060bb2d10434c8d325b3765125dd, type: 2}
   highlightCondition: []
   unhighlightCondition: []
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 1

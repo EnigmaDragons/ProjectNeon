@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 
 public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsStatusResolved, EndOfTurnStatusEffectsResolved, 
-    ResolutionsFinished, CardAndEffectsResolutionFinished, StartCardSetupRequested>
+    ResolutionsFinished, CardAndEffectsResolutionFinished, StartCardSetupRequested, BonusCardPlayRequested>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private CardPlayZones cards;
@@ -160,6 +160,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     protected override void Execute(EndOfTurnStatusEffectsResolved msg) => BeginStartOfTurn();
     protected override void Execute(CardAndEffectsResolutionFinished msg) => ResolveBattleFinishedOrExecute(() => Message.Publish(new CheckForAutomaticTurnEnd()));
     protected override void Execute(StartCardSetupRequested msg) => SafeCoroutine(ExecuteCardSetupAsync());
+    protected override void Execute(BonusCardPlayRequested msg) => resolutionZone.PlayBonusCard(msg.Member, msg.Details);
 
     protected override void Execute(ResolutionsFinished msg)
     {

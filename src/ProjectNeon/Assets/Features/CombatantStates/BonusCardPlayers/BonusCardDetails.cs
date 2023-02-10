@@ -1,10 +1,10 @@
 
 public class BonusCardDetails
 {
-    public CardType Card { get; }
+    public CardTypeData Card { get; }
     public ResourceQuantity Cost { get; }
 
-    public BonusCardDetails(CardType card, ResourceQuantity cost)
+    public BonusCardDetails(CardTypeData card, ResourceQuantity cost)
     {
         Card = card;
         Cost = cost;

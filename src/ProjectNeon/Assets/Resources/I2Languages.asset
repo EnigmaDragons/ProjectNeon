@@ -7232,15 +7232,14 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>{[t:Keywords/Quick]}:</b> Remove <b>{[t:Stats/Stat-Armor]}</b> and deal
-        <sprite index=2> or remove <b>{[t:Stats/Stat-Resistance]}</b> and deal <sprite
-        index=0>
-      - "<b>{[t:Keywords/Quick]}:</b> \u79FB\u9664 <b>{[t:Stats/Stat-Armor]}</b>
-        \u5E76\u9020\u6210\u70B9\u4F24\u5BB3 <sprite index=2> \u6216\u8005\u79FB\u9664
-        <b>{[t:Stats/Stat-Resistance]}</b> \u5E76\u9020\u6210 <sprite index=0>"
-      - "<b>{[t:Keywords/Quick]}:</b> \u79FB\u9664 <b>{[t:Stats/Stat-Armor]}</b>
-        \u5E76\u9020\u6210\u70B9\u4F24\u5BB3 <sprite index=2> \u6216\u8005\u79FB\u9664
-        <b>{[t:Stats/Stat-Resistance]}</b> \u5E76\u9020\u6210 <sprite index=0>"
+      - 'Gives {[0]} <b>Armor</b> + deal {[1]}
+
+        OR
+
+        Gives {[2]} <b>Resistance</b>
+        + deal {[3]}'
+      - 
+      - 
       - 
       - 
       - 
@@ -8839,10 +8838,15 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>{[t:Keywords/Quick]}:</b> Choose a special card that benefits from enemies
-        hit by grenades or shots
-      - "<b>{[t:Keywords/Quick]}:</b> \u9009\u62E9\u4E00\u5F20\u80FD\u4ECE\u88AB\u624B\u69B4\u5F39\u6216\u5B50\u5F39\u51FB\u4E2D\u7684\u654C\u4EBA\u4E2D\u53D7\u76CA\u7684\u7279\u6B8A\u5361\u7247\u3002"
-      - "<b>{[t:Keywords/Quick]}:</b> \u9009\u62E9\u4E00\u5F20\u80FD\u4ECE\u88AB\u624B\u69B4\u5F39\u6216\u5B50\u5F39\u51FB\u4E2D\u7684\u654C\u4EBA\u4E2D\u53D7\u76CA\u7684\u7279\u6B8A\u5361\u7247\u3002"
+      - '<b>Quick:</b> Choose card to gain:
+
+        Shoot {[0]} +<b> {[t:Keywords/Stun]}
+        1</b> if hit with grenade
+
+        Grenade {[1]} <b>| {[t:Keywords/Critical]}:</b>
+        Has been shot'
+      - 
+      - 
       - 
       - 
       - 
@@ -9152,15 +9156,13 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gain single use {[t:Keywords/Quick]} <b>{[t:CardNames/00053-00-Name]}</b>
-        or <b>{[t:CardNames/00468-00-Name]}</b> card.
+      - 'Gives {[0]} <b>{[t:Stats/Stat-Attack]}</b> this turn.
 
-        Gives {[0]} <b>{[t:Stats/Stat-Attack]}</b>
-        this turn.'
-      - "\u83B7\u5F97\u4E00\u6B21\u6027\u7684{[t:Keywords/Quick]} <b>{[t:CardNames/00053-00-Name]}</b>\u6216\u8005<b>{[t:CardNames/00468-00-Name]}</b>
-        \u3002\n\u672C\u56DE\u5408\u7ED9\u4E88 {[0]} <b>{[t:Stats/Stat-Attack]}</b>\u3002"
-      - "\u83B7\u5F97\u4E00\u6B21\u6027\u7684{[t:Keywords/Quick]} <b>{[t:CardNames/00053-00-Name]}</b>\u6216\u8005<b>{[t:CardNames/00468-00-Name]}</b>
-        \u3002\n\u672C\u56DE\u5408\u7ED9\u4E88 {[0]} <b>{[t:Stats/Stat-Attack]}</b>\u3002"
+
+        Play <b>{[t:CardNames/00053-00-Name]}</b>
+        or <b>{[t:CardNames/00468-00-Name]}</b>'
+      - 
+      - 
       - 
       - 
       - 
@@ -9267,12 +9269,11 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gain single use {[t:Keywords/Quick]} <b>{[t:CardNames/00053-00-Name]}</b>
-        or <b>{[t:CardNames/00468-00-Name]}</b>
+      - 'Play <b>{[t:CardNames/00053-00-Name]}</b> or <b>{[t:CardNames/00468-00-Name]}</b>
 
 
-        Gives {[0]} <b>{[t:Stats/Stat-Attack]}</b>
-        next turn'
+        Gives
+        {[0]} <b>{[t:Stats/Stat-Attack]}</b> next turn'
       - "\u83B7\u5F97\u4E00\u6B21\u6027\u7684 {[t:Keywords/Quick]} <b>{[t:CardNames/00053-00-Name]}</b>
         \u6216\u8005 <b>{[t:CardNames/00468-00-Name]}</b>\u3002\n\n \u4E0B\u56DE\u5408\u7ED9\u4E88{[0]}
         <b>{[t:Stats/Stat-Attack]}</b>\u3002"
@@ -9291,9 +9292,9 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Gain single use {[t:Keywords/Quick]} <b>{[t:CardNames/00053-00-Name]}</b>
-        or <b>{[t:CardNames/00468-00-Name]}</b> or <b>{[t:CardNames/00483-00-Name]}</b>
-        or <b>{[t:CardNames/00484-00-Name]}</b>
+      - Play <b>{[t:CardNames/00053-00-Name]}</b> or <b>{[t:CardNames/00468-00-Name]}</b>
+        or <b>{[t:CardNames/00483-00-Name]}</b> or <b>{[t:CardNames/00484-00-Name]}</b>
+        for free
       - "\u83B7\u5F97\u4E00\u6B21\u6027\u7684 {[t:Keywords/Quick]} <b>{[t:CardNames/00053-00-Name]}</b>\u3001<b>{[t:CardNames/00468-00-Name]}</b>\u6216\u8005<b>{[t:CardNames/00483-00-Name]}</b>\u6216\u8005<b>{[t:CardNames/00484-00-Name]}</b>\u3002"
       - "\u83B7\u5F97\u4E00\u6B21\u6027\u7684 {[t:Keywords/Quick]} <b>{[t:CardNames/00053-00-Name]}</b>\u3001<b>{[t:CardNames/00468-00-Name]}</b>\u6216\u8005<b>{[t:CardNames/00483-00-Name]}</b>\u6216\u8005<b>{[t:CardNames/00484-00-Name]}</b>\u3002"
       - 
@@ -59607,7 +59608,7 @@ MonoBehaviour:
     Google_WebServiceURL: https://script.google.com/macros/s/AKfycbyxEWOh-oly9VUweggR4FE-PJti-q6vB4eiq60gjqN60mMW8pqUSFQDcNZf5paleAfH/exec
     Google_SpreadsheetKey: 1_k0GnzCkReGlY_2s-ODT0hVniGHYfv2qnG9nqRQ4VvU
     Google_SpreadsheetName: I2Loc MetroplexZero Localization
-    Google_LastUpdatedVersion: 1675811473814
+    Google_LastUpdatedVersion: 1676062431522
     Google_Password: 23jh9hj2rjfhj33^$^%^$inhgf9g9j90i
     GoogleUpdateFrequency: 2
     GoogleInEditorCheckFrequency: 2
