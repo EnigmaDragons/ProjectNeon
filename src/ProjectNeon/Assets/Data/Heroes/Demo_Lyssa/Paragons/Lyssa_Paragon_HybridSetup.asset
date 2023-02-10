@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Lyssa_Paragon_TargettedSetup
+  m_Name: Lyssa_Paragon_HybridSetup
   m_EditorClassIdentifier: 
   id: 487
   customName: Targetted Setup
@@ -21,10 +21,10 @@ MonoBehaviour:
     Gives {E[0]}'
   typeDescription: {fileID: 0}
   descriptionV2:
-    text: 'Gain single use quick <b>Shadow</b> or <b>Mark</b>
+    text: 'Gives {0}
 
 
-      Gives {0}'
+      Enter <b>Stealth</b>'
     formatArgs:
     - '{E[0]}'
   tags: 
@@ -43,7 +43,7 @@ MonoBehaviour:
     repeatCount: 0
   - scope: 0
     group: 0
-    cardActions: {fileID: 11400000, guid: 4797b695e4b6c2c4b95c62f51fa46f7b, type: 2}
+    cardActions: {fileID: 11400000, guid: 0d4794f1cba354f4aa4e70a410752c57, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -55,5 +55,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1e6b060bb2d10434c8d325b3765125dd, type: 2}
   highlightCondition: []
   unhighlightCondition: []
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 1

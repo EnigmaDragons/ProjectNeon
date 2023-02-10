@@ -367,6 +367,8 @@ public class QualityAssurance
                          && i.actionSequences.Any(x =>
                              x.Group == Group.Opponent && (x.Scope == Scope.One || x.Scope == Scope.OneExceptSelf)))
                     issues.Add($"Broken Card: {i.Name} has conflicting targeting scopes");
+                else if (i.highlightCondition.Any(x => x == null) || i.unhighlightCondition.Any(x => x == null))
+                    issues.Add($"Broken Card: {i.Name} has null highlight conditions");
                 if (issues.Any())
                     failures.Add(new ValidationResult($"{i.Name} - {i.id}", issues));
             }

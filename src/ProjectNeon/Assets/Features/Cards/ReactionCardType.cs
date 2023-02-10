@@ -39,6 +39,8 @@ public sealed class ReactionCardType : ScriptableObject, CardTypeData, ILocalize
     public HashSet<string> Archetypes => new HashSet<string>(archetypes.Select(x => x.Value));
     public Maybe<CardCondition> HighlightCondition { get; } = Maybe<CardCondition>.Missing();
     public Maybe<CardCondition> UnhighlightCondition { get; } = Maybe<CardCondition>.Missing();
+    public Maybe<TargetedCardCondition> TargetedHighlightCondition { get; } = Maybe<TargetedCardCondition>.Missing();
+    public Maybe<TargetedCardCondition> TargetedUnhighlightCondition { get; } = Maybe<TargetedCardCondition>.Missing();
     public bool IsSinglePlay { get; } = true;
 
     public ReactionCardType Initialized(CardReactionSequence action)

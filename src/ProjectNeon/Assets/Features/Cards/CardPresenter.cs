@@ -83,8 +83,11 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private string _zone;
     private bool _isHand;
     private int _siblingIndex = -1;
-    
+
+    //targeting
     private bool _requiresPlayerTargeting;
+    private bool _isTargeting;
+    private Maybe<Target> _target = Maybe<Target>.Missing();    
 
     public bool Contains(Card c) => HasCard && c.CardId == _card.CardId;
     public bool Contains(CardTypeData c) => HasCard && _cardType.Name.Equals(c.Name);
@@ -100,6 +103,10 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         Message.Subscribe<CardHighlighted>(OnCardHighlighted, this);
         Message.Subscribe<MemberUnconscious>(_ => UpdateCardHighlight(), this);
         Message.Subscribe<LanguageChanged>(_ => RenderCardType(), this);
+        Message.Subscribe<BeginTargetSelectionRequested>(OnTargetingBegun, this);
+        Message.Subscribe<EndTargetSelectionRequested>(_ => OnTargetingEnded(), this);
+        Message.Subscribe<CancelTargetSelectionRequested>(_ => OnTargetingEnded(), this);
+        Message.Subscribe<TargetChanged>(OnTargetChanged, this);
     }
 
     private void OnDisable()
@@ -275,14 +282,14 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         conditionNotMetHighlight.SetActive(false);
     }
     
-    private void SetCanPlayHighlight(bool highlightShouldBeActive, Maybe<bool> highlightCondition, Maybe<bool> unhighlightCondition)
+    private void SetCanPlayHighlight(bool highlightShouldBeActive, bool highlightCondition, bool unhighlightCondition)
     {
         DisableCanPlayHighlight();
         if (!highlightShouldBeActive)
             return;
-        if (unhighlightCondition.IsPresentAnd(c => c))
+        if (unhighlightCondition)
             conditionNotMetHighlight.SetActive(true);
-        else if (highlightCondition.IsPresentAnd(c => c))
+        else if (highlightCondition)
             conditionMetHighlight.SetActive(true);
         else
             canPlayHighlight.SetActive(true);
@@ -437,6 +444,31 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         Message.Publish(new GoToTweenRequested(transform, targetPosition, Vector3.Distance(transform.position, targetPosition) / 1600f, MovementDimension.Spatial));
     }
 
+    private void OnTargetingBegun(BeginTargetSelectionRequested onBeginTargeting)
+    {
+        if (onBeginTargeting.Card == _card)
+            _isTargeting = true;
+    }
+
+    private void OnTargetingEnded()
+    {
+        if (_isTargeting || _target.IsPresent)
+        {
+            _isTargeting = false;
+            _target = Maybe<Target>.Missing();
+            UpdateCardHighlight();
+        }
+    }
+    
+    private void OnTargetChanged(TargetChanged targetChanged)
+    {
+        if (_isTargeting)
+        {
+            _target = targetChanged.Target;
+            UpdateCardHighlight();
+        }
+    }
+
     private void RenderCardType()
     {
         var shouldUseLibraryMode = _card == null || _card.Owner.TeamType == TeamType.Party && (_card.Cost.PlusXCost && !_isHand);
@@ -472,15 +504,18 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     private void UpdateCardHighlight()
     {
-        SetCanPlayHighlight(IsPlayable,
-            _card != null
-                ? _cardType.HighlightCondition.Map(condition =>
-                    condition.ConditionMet(new CardConditionContext(_card, battleState)))
-                : Maybe<bool>.Missing(),
-            _card != null
-                ? _cardType.UnhighlightCondition.Map(condition =>
-                    condition.ConditionMet(new CardConditionContext(_card, battleState)))
-                : Maybe<bool>.Missing());
+        SetCanPlayHighlight(
+            IsPlayable,
+            _card != null 
+                && (_cardType.HighlightCondition.IsPresentAnd(condition => condition.ConditionMet(new CardConditionContext(_card, battleState)))
+                    || (_requiresPlayerTargeting 
+                        && _target.IsPresent
+                        && _cardType.TargetedHighlightCondition.IsPresentAnd(condition => condition.ConditionMet(new TargetedCardConditionContext(_card, battleState, _target.Value))))), 
+            _card != null 
+                && (_cardType.UnhighlightCondition.IsPresentAnd(condition => condition.ConditionMet(new CardConditionContext(_card, battleState)))
+                    || (_requiresPlayerTargeting 
+                        && _target.IsPresent
+                        && _cardType.TargetedUnhighlightCondition.IsPresentAnd(condition => condition.ConditionMet(new TargetedCardConditionContext(_card, battleState, _target.Value))))));
     }
 
     private void SetCardTint()

@@ -13,7 +13,8 @@ public class CardTypeEditor : Editor
     private CardType targetCard;
     private SerializedProperty customName, functionalityIssues, art, description, descriptionV2, typeDescription, tags, 
         cost, rarity, cardAction1, cardAction2, chainedCard, presentationIssues, speed, archetypes, isWip, 
-        highlightCondition, unhighlightCondition, swappedCard, isSinglePlay, id, notAvailableForGeneralDistribution;
+        highlightCondition, unhighlightCondition, targetedHighlightCondition, targetedUnhighlightCondition, 
+        swappedCard, isSinglePlay, id, notAvailableForGeneralDistribution;
 
     public void OnEnable()
     {
@@ -36,6 +37,8 @@ public class CardTypeEditor : Editor
         notAvailableForGeneralDistribution = serializedObject.FindProperty("notAvailableForGeneralDistribution");
         highlightCondition = serializedObject.FindProperty("highlightCondition");
         unhighlightCondition = serializedObject.FindProperty("unhighlightCondition");
+        targetedHighlightCondition = serializedObject.FindProperty("targetedHighlightCondition");
+        targetedUnhighlightCondition = serializedObject.FindProperty("targetedUnhighlightCondition");
         isSinglePlay = serializedObject.FindProperty("isSinglePlay");
         id = serializedObject.FindProperty("id");
     }
@@ -98,6 +101,8 @@ public class CardTypeEditor : Editor
         DrawUILine(Color.black);
         PresentUnchanged(highlightCondition);
         PresentUnchanged(unhighlightCondition);
+        PresentUnchanged(targetedHighlightCondition);
+        PresentUnchanged(targetedUnhighlightCondition);
         DrawUILine(Color.black);
         PresentUnchanged(tags);
         DrawUILine(Color.black);

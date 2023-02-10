@@ -26,11 +26,59 @@ MonoBehaviour:
     Amount: 0
     StatType: 
   resourceModifiers: []
-  turnStartEffects: []
+  turnStartEffects:
+  - Id: 0
+    EffectType: 79
+    Conditions:
+    - {fileID: 11400000, guid: cc6a994bd6d4d714eac0bc744fc8fc40, type: 2}
+    BaseAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      Variable: {fileID: 0}
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    DurationFormula: 
+    EffectScope:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 567892c0029f4214c9f52b55b76d4c4f, type: 2}
+    HitsRandomTargetMember: 0
+    ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
+    StatusTag: 0
+    StatusDetailText: 
+    TurnDelay: 0
+    Formula: 1
+    InterpolatePartialFormula:
+      EvaluationPartialFormula: 
+      Prefix: 
+      Suffix: 
+    FlavorText:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
+    ReactionConditionType: 0
+    ReactionEffectScope:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    ReactionTimingWindow: 0
+    ReactionSequence: {fileID: 0}
+    ReactionEffect:
+      reactor: 0
+      scope: 0
+      cardActions: {fileID: 0}
+    BonusCardType: {fileID: 0}
+    Unpreventable: 0
   turnEndEffects: []
   battleStartEffects:
   - Id: 20024
-    EffectType: 74
+    EffectType: 73
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -39,17 +87,17 @@ MonoBehaviour:
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
-      FloatVariable: {fileID: 11400000, guid: 5921ac0d85df4a2409b82c7f5aee6def, type: 2}
+      FloatVariable: {fileID: 0}
     DurationFormula: -1
     EffectScope:
       UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: 6f09d4af906769b459c8f20406996184, type: 2}
+      Variable: {fileID: 0}
     HitsRandomTargetMember: 0
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: 'On Slay: ReStealth'
+    StatusDetailText: <b>Start of Turn:</b> Gain <b>Double Damage</b> if in <b>Stealth</b>
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -63,9 +111,9 @@ MonoBehaviour:
     ReferencedSequence: {fileID: 0}
     ReferencedSequences: []
     OnlyReactDuringCardPhases: 0
-    ReactionConditionType: 21
+    ReactionConditionType: 0
     ReactionEffectScope:
-      UseConstant: 1
+      UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
     ReactionTimingWindow: 0
@@ -73,7 +121,7 @@ MonoBehaviour:
     ReactionEffect:
       reactor: 0
       scope: 0
-      cardActions: {fileID: 11400000, guid: 769c8ad9c9ba383408874b157647e938, type: 2}
+      cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
     Unpreventable: 0
   battleEndEffects: []

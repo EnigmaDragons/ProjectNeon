@@ -4,7 +4,7 @@
 public class EnemiesBloodied : StaticCardCondition
 {
     public override bool ConditionMet(CardConditionContext ctx)
-        => ctx.AnyEnemy(x => x.IsBloodied());
+        => ctx.AllEnemies(x => x.IsBloodied());
     
     public override string Description => "An enemy is bloodied";
 }

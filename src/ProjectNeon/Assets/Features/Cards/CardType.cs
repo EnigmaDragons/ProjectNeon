@@ -22,8 +22,10 @@ public class CardType : ScriptableObject, CardTypeData, ILocalizeTerms
     [SerializeField] private string functionalityIssues;
     [SerializeField] private string presentationIssues;
     [SerializeField] private StringVariable[] archetypes;
-    [SerializeField] private StaticCardCondition[] highlightCondition;
+    [SerializeField] public StaticCardCondition[] highlightCondition;
     [SerializeField] public StaticCardCondition[] unhighlightCondition;
+    [SerializeField] public StaticTargetedCardCondition[] targetedHighlightCondition;
+    [SerializeField] public StaticTargetedCardCondition[] targetedUnhighlightCondition;
     [SerializeField] private bool isWIP = true;
     [SerializeField] private bool notAvailableForGeneralDistribution = false;
 
@@ -56,6 +58,12 @@ public class CardType : ScriptableObject, CardTypeData, ILocalizeTerms
     public Maybe<CardCondition> UnhighlightCondition => unhighlightCondition != null && unhighlightCondition.Length > 0
         ? new Maybe<CardCondition>(new AndCardCondition(unhighlightCondition.Cast<CardCondition>().ToArray()))
         : Maybe<CardCondition>.Missing();
+    public Maybe<TargetedCardCondition> TargetedHighlightCondition => targetedHighlightCondition != null && targetedHighlightCondition.Length > 0
+        ? new Maybe<TargetedCardCondition>(new AndTargetedCardCondition(targetedHighlightCondition.Cast<TargetedCardCondition>().ToArray()))
+        : Maybe<TargetedCardCondition>.Missing();
+    public Maybe<TargetedCardCondition> TargetedUnhighlightCondition => targetedUnhighlightCondition != null && targetedUnhighlightCondition.Length > 0
+        ? new Maybe<TargetedCardCondition>(new AndTargetedCardCondition(targetedUnhighlightCondition.Cast<TargetedCardCondition>().ToArray()))
+        : Maybe<TargetedCardCondition>.Missing();
     public bool IsSinglePlay => isSinglePlay;
 
     private static string WipWord(bool isWip) => isWip ? "WIP - " : string.Empty;

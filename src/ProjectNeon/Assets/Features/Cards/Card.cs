@@ -48,6 +48,8 @@ public sealed class Card : CardTypeData
     public bool IsAttack => _type.IsAttack();
     public Maybe<CardCondition> HighlightCondition => _type.HighlightCondition;
     public Maybe<CardCondition> UnhighlightCondition => _type.UnhighlightCondition;
+    public Maybe<TargetedCardCondition> TargetedHighlightCondition => _type.TargetedHighlightCondition;
+    public Maybe<TargetedCardCondition> TargetedUnhighlightCondition => _type.TargetedUnhighlightCondition;
     public bool IsSinglePlay => _type.IsSinglePlay;
     public bool IsQuick => Speed == CardSpeed.Quick;
 

@@ -22,6 +22,8 @@ public interface CardTypeData
     HashSet<string> Archetypes { get; }
     Maybe<CardCondition> HighlightCondition { get; }
     Maybe<CardCondition> UnhighlightCondition { get; }
+    Maybe<TargetedCardCondition> TargetedHighlightCondition { get; }
+    Maybe<TargetedCardCondition> TargetedUnhighlightCondition { get; }
     bool IsSinglePlay { get; }
 }
 
