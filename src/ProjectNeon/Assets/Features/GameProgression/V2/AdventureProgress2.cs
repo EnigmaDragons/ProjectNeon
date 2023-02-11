@@ -20,6 +20,7 @@ public class AdventureProgress2 : AdventureProgressBase
     public override CurrentGlobalEffects GlobalEffects => currentGlobalEffects;
     public override int CurrentChapterNumber => currentChapterIndex + 1;
     public int CurrentChapterIndex => currentChapterIndex;
+    public override int TotalSegmentsToBoss => CurrentChapter.SegmentCount;
     public override int CurrentStageProgress => currentMap3.Progress;
     public float ProgressToUnlockChapterBoss => CurrentStageProgress == 0 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCount;
     public override float ProgressToBoss => ProgressToUnlockChapterBoss;

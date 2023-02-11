@@ -193,7 +193,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tooltipTerm: Tooltips/PartyButton
-  tooltipText: 
 --- !u!1 &1743809823474422827
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,7 +461,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tooltipTerm: Tooltips/Menu
-  tooltipText: 
 --- !u!1 &2150300777090371241
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,6 +758,7 @@ MonoBehaviour:
   elementCategoryName: ProgressBarText
   gfxs:
   - {fileID: 7400997116203693255}
+  - {fileID: 5972384827895083849}
 --- !u!114 &7124179383840538317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1484,7 +1483,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 35.2}
-  m_SizeDelta: {x: 600, y: 400}
+  m_SizeDelta: {x: 660, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4652797104358525384
 CanvasRenderer:
@@ -2073,15 +2072,30 @@ PrefabInstance:
       propertyPath: mLocalizeTarget
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2193790534639093884, guid: 22d4987c3662b0b479c49fc951b940fb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 19.899994
+      objectReference: {fileID: 0}
     - target: {fileID: 4338679309353967187, guid: 22d4987c3662b0b479c49fc951b940fb, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -7.9000244
+      value: 14.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22d4987c3662b0b479c49fc951b940fb, type: 3}
 --- !u!114 &7400997116203693255 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7911352795920270099, guid: 22d4987c3662b0b479c49fc951b940fb, type: 3}
+  m_PrefabInstance: {fileID: 828480747107907540}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5972384827895083849 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6457447742410294429, guid: 22d4987c3662b0b479c49fc951b940fb, type: 3}
   m_PrefabInstance: {fileID: 828480747107907540}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
