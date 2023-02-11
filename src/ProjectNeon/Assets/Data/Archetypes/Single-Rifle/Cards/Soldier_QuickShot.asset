@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Soldier_DistractingShot
+  m_Name: Soldier_QuickShot
   m_EditorClassIdentifier: 
   id: 109
   customName: 
@@ -18,17 +18,17 @@ MonoBehaviour:
   description: "Deal {E[0]}. \n\nRemoves <b>All Taunt</b>"
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
   descriptionV2:
-    text: "Deal {0}. \n\nRemoves <b>All Taunt</b>"
+    text: 'Quick: Deal {0} | Crit: If undamaged'
     formatArgs:
-    - '{E[0]}'
+    - '{E[1]}'
   tags: 2a000000
-  speed: 0
+  speed: 1
   isSinglePlay: 0
   cost:
     cost: 1
     resourceType: {fileID: 11400000, guid: 029856820b64438428ee04adda380477, type: 2}
     plusXCost: 0
-  rarity: 1
+  rarity: 2
   actionSequences:
   - scope: 0
     group: 1
@@ -43,5 +43,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fbcb59caa7d5a114f8b9cf6016d20160, type: 2}
   highlightCondition: []
   unhighlightCondition: []
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 0
