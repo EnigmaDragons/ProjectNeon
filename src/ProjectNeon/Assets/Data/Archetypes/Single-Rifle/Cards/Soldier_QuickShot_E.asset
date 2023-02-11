@@ -259,10 +259,10 @@ MonoBehaviour:
     replacing: 0
   - type: 1
     battleEffect:
-      Id: 2935
+      Id: 0
       EffectType: 30
       Conditions:
-      - {fileID: 11400000, guid: 947a8b686df57d340933bddb05646ace, type: 2}
+      - {fileID: 11400000, guid: bf932f862ab5ee04ca1aed221173e6cd, type: 2}
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -282,7 +282,7 @@ MonoBehaviour:
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 1 * Attack
+      Formula: 0.5 * Attack
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
@@ -341,9 +341,10 @@ MonoBehaviour:
     replacing: 0
   - type: 1
     battleEffect:
-      Id: 0
-      EffectType: 0
-      Conditions: []
+      Id: 2935
+      EffectType: 30
+      Conditions:
+      - {fileID: 11400000, guid: 947a8b686df57d340933bddb05646ace, type: 2}
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -363,7 +364,7 @@ MonoBehaviour:
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 
+      Formula: 1 * Attack
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
