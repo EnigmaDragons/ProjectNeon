@@ -128,9 +128,9 @@ public class FindCardsEditor : EditorWindow
                 .Where(c => c.GetArchetypeKey().Equals(_archetype))
                 .OrderBy(e => e.IsWip ? 99 : 0)
                 .ThenBy(e => raritySortOrder.IndexOf(e.Rarity))
-                .Select(e => e.EditorName)
+                .Select(e => (e.EditorName, (ScriptableObject)e))
                 .ToArray();
-            ShowCards($"Archetype {_archetype}", cards);
+            ShowSelectables($"Archetype {_archetype}", cards);
             GUIUtility.ExitGUI();
         }
         DrawUILine();
