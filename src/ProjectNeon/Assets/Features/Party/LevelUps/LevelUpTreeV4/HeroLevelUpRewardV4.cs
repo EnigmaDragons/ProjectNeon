@@ -16,6 +16,10 @@ public class HeroLevelUpRewardV4
     public int BuffStatAmount => buffStatAmount;
     public string OptionsPromptTerm => options.ChoiceDescriptionTerm;
     public IStats StatBoostAmount => new StatAddends().With(StatType.MaxHP, HpGain).With(BuffStat, buffStatAmount);
+
+    #if UNITY_EDITOR
+    public void EditorSetHpGain(int newAmount) => hpGain = newAmount;
+    #endif
     
     public LevelUpOption[] GenerateOptions(Hero h, PartyAdventureState party)
     {
