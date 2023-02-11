@@ -24,10 +24,16 @@ public class FindCardsEditor : EditorWindow
     
     // By Description Search String
     private string _searchString;
-    private string[] GetAllCardsWithDescription(string s) =>
+    private string[] GetAllCardsNamesWithDescription(string s) =>
         GetAllInstances<CardType>()
             .Where(c => c.Description.ContainsAnyCase(s))
             .Select(e => e.name)
+            .ToArray();
+    
+    private (string, ScriptableObject)[] GetAllCardsWithDescription(string s) =>
+        GetAllInstances<CardType>()
+            .Where(c => c.Description.ContainsAnyCase(s))
+            .Select(e => (e.name, (ScriptableObject)e))
             .ToArray();
     
     // By Card Tags
@@ -159,7 +165,7 @@ public class FindCardsEditor : EditorWindow
         if (GUILayout.Button("Find Term in Card Description"))
         {
             var cards = GetAllCardsWithDescription(_searchString);
-            ShowCards($"Description Containing {_searchString}", cards);
+            ShowSelectables($"Description Containing {_searchString}", cards);
             GUIUtility.ExitGUI();
         }
         DrawUILine();
@@ -453,6 +459,11 @@ public class FindCardsEditor : EditorWindow
 
         EditorGUILayout.EndScrollView();
     }
+    
+    private void ShowSelectables(string description, (string, ScriptableObject)[] items)
+        =>  GetWindow<ListDisplayWindow>()
+            .Initialized(description, "Card: ", items.Select(i => i.Item1).ToArray(), items.Select(i => i.Item2).Cast<Object>().ToArray())
+            .Show();
     
     private void ShowSelectables(string description, string[] items, ScriptableObject[] selectables)
         =>  GetWindow<ListDisplayWindow>()
