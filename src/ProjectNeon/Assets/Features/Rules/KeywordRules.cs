@@ -34,6 +34,7 @@ public static class KeywordRules
     public const string SelfDestructHyphen = "Self-Destruct";
     public const string Sneaky = "Sneaky";
     public const string Profitable = "Profitable";
+    public const string Vulnerable = "Vulnerable";
     
     private static readonly string[] RulesByImportanceArr = {
         Injure,
@@ -51,6 +52,7 @@ public static class KeywordRules
         ReStealth,
         TemporalStatType.Marked.ToString(),
         TemporalStatType.DoubleDamage.ToString(),
+        Vulnerable,
         TemporalStatType.Stun.ToString(),
         TemporalStatType.Aegis.ToString(),
         TemporalStatType.Blind.ToString(),
@@ -126,6 +128,7 @@ public static class KeywordRules
         AddTerm(ReStealth, ReStealthHyphen);
         AddTerm(SelfDestruct, SelfDestructHyphen);
         AddTerm(Sneaky);
+        AddTerm(Vulnerable);
     }
 
     public static void AddAllMatchingEffectScopeRules(List<string> rulesToShow, EffectData e, params string[] scopes) 

@@ -24,6 +24,7 @@ public class AdventureProgressV5 : AdventureProgressBase
     public override int CurrentStageProgress => currentSegmentIndex;
     public override int CurrentChapterNumber => currentChapterIndex + 1;
     private float Progress => CurrentStageProgress < 1 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCount;
+    public override int TotalSegmentsToBoss => CurrentChapter.SegmentCountToBoss;
     private bool IsFinalStage => currentChapterIndex >= currentAdventure.Adventure.StagesV5.Length - 1;
     private bool IsLastSegmentOfStage => currentSegmentIndex + 1 == CurrentStageLength;
     public override GameAdventureProgressType AdventureType => GameAdventureProgressType.V5;

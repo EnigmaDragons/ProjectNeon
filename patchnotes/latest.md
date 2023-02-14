@@ -1,4 +1,4 @@
-## Patch Notes - v0.0.59
+## Patch Notes - v0.0.60
 ----
 
 New Content:

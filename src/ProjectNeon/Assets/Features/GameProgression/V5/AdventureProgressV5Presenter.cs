@@ -1,5 +1,6 @@
 using System.Linq;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ public class AdventureProgressV5Presenter : OnMessage<AdventureProgressChanged, 
     [SerializeField] private GameObject minibossMarkerPrototype;
     [SerializeField] private GameObject eliteMarkerPrototype;
     [SerializeField] private GameObject markerParent;
+    [SerializeField] private TextMeshProUGUI progressNumberLabel;
     [SerializeField] private float markerPlacementFactor = 1f;
 
     private readonly float _visualFactor = 1f;
@@ -25,6 +27,7 @@ public class AdventureProgressV5Presenter : OnMessage<AdventureProgressChanged, 
         Log.Info($"Stage Progress {adventure.AdventureProgress.ProgressToBoss}");
         barFill.fillAmount = FillAmount;
         RenderMarkers();
+        RenderProgressNumbers();
     }
 
     private void RenderMarkers()
@@ -40,6 +43,20 @@ public class AdventureProgressV5Presenter : OnMessage<AdventureProgressChanged, 
         });
     }
 
+    private const string progressTemplate = "{0}/{1}";
+    private void RenderProgressNumbers()
+    {
+        if (progressNumberLabel == null)
+            return;
+
+        if (adventure.AdventureProgress.ProgressToBoss >= 1f)
+            progressNumberLabel.text = "";
+        else
+            progressNumberLabel.text = string.Format(progressTemplate,
+                adventure.AdventureProgress.CurrentStageProgress.ToString(),
+                adventure.AdventureProgress.TotalSegmentsToBoss.ToString());
+    }
+
     private void SmoothTransitionTo(float amount) => barFill.DOFillAmount(amount * _visualFactor + _offsetAmount, 1);
 
     protected override void Execute(AdventureProgressChanged msg) => RenderUpdateWithAnim();
@@ -49,6 +66,7 @@ public class AdventureProgressV5Presenter : OnMessage<AdventureProgressChanged, 
         Log.Info($"Stage Progress {adventure.AdventureProgress.ProgressToBoss}");
         SmoothTransitionTo(FillAmount);
         RenderMarkers();
+        RenderProgressNumbers();
     }
 
     protected override void Execute(NodeFinished msg) => this.ExecuteAfterTinyDelay(RenderUpdateWithAnim);
