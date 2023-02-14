@@ -13,6 +13,8 @@ public class InitializeAdventureSelection : MonoBehaviour
     [SerializeField] private AdventureProgressV5 adventureProgress5;
     [SerializeField] private Navigator navigator;
     [SerializeField] private AdventureMode mode = AdventureMode.Standard;
+    [SerializeField] private CurrentBoss boss;
+    [SerializeField] private AllBosses bosses;
 
     private void Start()
     {
@@ -45,6 +47,7 @@ public class InitializeAdventureSelection : MonoBehaviour
             adventureProgress.AdventureProgress = adventureProgress5;
 
         currentAdventure.Adventure = adventure;
+        boss.Boss = bosses.RandomBoss();
         adventureProgress.AdventureProgress.Init(adventure, 0);
         CurrentGameData.Write(s =>
         {
