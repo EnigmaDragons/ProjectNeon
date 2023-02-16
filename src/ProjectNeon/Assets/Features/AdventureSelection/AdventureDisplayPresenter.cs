@@ -20,10 +20,12 @@ public class AdventureDisplayPresenter : MonoBehaviour, ILocalizeTerms
     [SerializeField] private Localize lockReasonLabel;
     [SerializeField] private Image hoverGlow;
     [SerializeField] private GameObject isCompletedView;
+
+    [SerializeField] private SubAdventurePresenter subAdventuere;
     
     private const string ChaptersTerm = "Menu/Chapters";
     
-    public void Init(Adventure adventure, Action onSelect)
+    public void Init(Adventure adventure, Action onSelect, Action onSubAdventureSelect)
     {
         image.sprite = adventure.AdventureImage;
         nameText.SetTerm(adventure.TitleTerm);
@@ -37,6 +39,9 @@ public class AdventureDisplayPresenter : MonoBehaviour, ILocalizeTerms
         isCompletedView.SetActive(!adventure.IsLocked && adventure.IsCompleted);
         if (adventure.IsLocked)
             hoverGlow.color = new Color(0, 0, 0, 0);
+        subAdventuere.gameObject.SetActive(adventure.SubAdventure != null);
+        if (adventure.SubAdventure != null)
+            subAdventuere.Init(adventure.SubAdventure, onSubAdventureSelect);
     }
 
     private void DisplayHeroPool(Adventure adventure)

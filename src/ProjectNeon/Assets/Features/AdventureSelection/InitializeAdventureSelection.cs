@@ -23,7 +23,7 @@ public class InitializeAdventureSelection : MonoBehaviour
         {
             var adventure = adventures[i];
             var adventureInstance = Instantiate(adventureDisplayPrefab, container.transform);
-            adventureInstance.Init(adventure, () => Begin(adventure));
+            adventureInstance.Init(adventure, () => Begin(adventure), () => Begin(adventure.SubAdventure));
         }
     }
 
