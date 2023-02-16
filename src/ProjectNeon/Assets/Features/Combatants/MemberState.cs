@@ -91,7 +91,8 @@ public sealed class MemberState : IStats
             _counters.ToDictionary(c => c.Key, c => c.Value.Amount), ResourceTypes, _tagsPlayedCount, statusTagCounts, PrimaryStat);
     }
 
-    public bool IsConscious => this[TemporalStatType.HP] > 0;
+    public bool HasLeft { get; set; }
+    public bool IsConscious => this[TemporalStatType.HP] > 0 && !HasLeft;
     public bool IsUnconscious => !IsConscious;
     public int this[IResourceType resourceType] => ResourceAmount(resourceType.Name);
     public int ResourceAmount(string resourceType) => _counters.TryGetValue(resourceType, out var r) ? r.Amount : 0;

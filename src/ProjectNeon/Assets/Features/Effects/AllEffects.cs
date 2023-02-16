@@ -20,6 +20,8 @@ public static class AllEffects
         { EffectType.ReactOncePerTurnWithEffect, e => new EffectReactWith(false, e.IntAmount, e.DurationFormula, 
             e.StatusDetail, e.ReactionEffectScope, e.FinalReactionTimingWindow, e.OnlyReactDuringCardPhases, ReactiveTriggerScopeExtensions.Parse(e.EffectScope), 
             e.ReactionConditionType, e.ReactionEffect, Maybe<ReactionCardType>.Missing(), 1)},
+        { EffectType.ReactWithEnoughHealthLost, e => new FullContextEffect((ctx, duration, m) 
+            => m.AddReactiveState(new ReactWithCardAfterEnoughHealthLoss(ctx.Source.Id, e.IntAmount, duration, e.ReactionSequence, Formula.EvaluateToInt(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount, ctx.ScopedData), ctx.BattleMembers[m.MemberId])), e.DurationFormula)},
         { EffectType.RemoveDebuffs, e => new SimpleEffect(m => BattleLoggedItemIf(n => $"{m.NameTerm.ToEnglish()} has been cleansed of {n} debuffs", n => n > 0, m.CleanseDebuffs))},
         { EffectType.AdjustCounterFormula, e => new AdjustCounterFormula(e)},
         { EffectType.ShieldFormula, e => new AegisIfFormulaResult((ctx, amount, m) 

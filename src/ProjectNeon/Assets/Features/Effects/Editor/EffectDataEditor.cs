@@ -17,6 +17,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.ReactWithEffect, new []{ "Id", "FloatAmount", "DurationFormula", "EffectScope", "StatusTag", "StatusDetailText", "ReactionConditionType", "ReactionEffectScope", "ReactionTimingWindow", "ReactionEffect", "OnlyReactDuringCardPhases"}},
         {EffectType.ReactWithCard, new []{ "Id", "FloatAmount", "DurationFormula", "EffectScope", "StatusTag", "StatusDetailText", "ReactionConditionType", "ReactionEffectScope", "ReactionSequence", "ReactionTimingWindow", "OnlyReactDuringCardPhases"}},
         {EffectType.ReactOncePerTurnWithEffect, new []{ "Id", "FloatAmount", "DurationFormula", "EffectScope", "StatusTag", "StatusDetailText", "ReactionConditionType", "ReactionEffectScope", "ReactionTimingWindow", "ReactionEffect", "OnlyReactDuringCardPhases"}},
+        {EffectType.ReactWithEnoughHealthLost, new []{ "Id", "FloatAmount", "DurationFormula", "Formula", "ReactionSequence"}},
         {EffectType.AdjustResourceFlat, new [] { "FloatAmount", "DurationFormula", "EffectScope" }},
         {EffectType.RemoveDebuffs, new string[0]},
         {EffectType.ShieldRemoveAll, new string[0]},
@@ -79,6 +80,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.ExitStealth, new string[0]},
         {EffectType.RemoveDots, new string[0]},
         {EffectType.ChooseCardToPlay, new [] { "EffectScope", "Formula", "InterpolatePartialFormula" }},
+        
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

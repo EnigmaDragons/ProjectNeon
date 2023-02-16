@@ -1,5 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// LAST NUMBER USED: 110
+// LAST NUMBER USED: 111
 
 public enum EffectType
 {
@@ -45,6 +45,7 @@ public enum EffectType
     ReactWithCard = 75,
     ReactOncePerTurnWithEffect = 108,
     OnDeath = 25,
+    ReactWithEnoughHealthLost = 111,
 
     // Transformers
     AddToXCostTransformer = 32,

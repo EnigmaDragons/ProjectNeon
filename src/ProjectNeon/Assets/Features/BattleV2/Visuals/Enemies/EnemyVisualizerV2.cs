@@ -87,7 +87,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
         var enemyObject = Instantiate(enemy.Prefab, transform);
         active.Add(enemyObject);
         var t = enemyObject.transform;
-        var iForIndex = _enemyPositions.Max(x => x.Item1) + 1;
+        var iForIndex = _enemyPositions.Where(x => x.Item2.IsConscious()).Max(x => x.Item1) + 1;
         var iForPositioning = isReplacing.IsPresent
             ? _enemyPositions.First(x => x.Item2.Id == isReplacing.Value.Id).Item1
             : iForIndex;
@@ -160,6 +160,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
     public void Despawn(MemberState enemy)
     {
         DevLog.Write($"Despawning {enemy.NameTerm.ToEnglish()}");
+        enemy.HasLeft = true;
         var index = state.GetEnemyIndexByMemberId(enemy.MemberId);
         state.RemoveEnemy(enemy);
         Destroy(active[index]);

@@ -106,7 +106,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
             return Maybe<ProposedReaction>.Missing();
         };
 
-    private static Target GetReactionTarget(Member possessor, Member reactor, IDictionary<int, Member> members, CardReactionSequence action, Member effectSource, Target effectTarget)
+    protected static Target GetReactionTarget(Member possessor, Member reactor, IDictionary<int, Member> members, CardReactionSequence action, Member effectSource, Target effectTarget)
     {
         Target target = new Single(reactor);
         if (action.Scope == ReactiveTargetScope.Possessor)
@@ -134,7 +134,7 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
         return target;
     }
 
-    private static bool ReactionIsApplicable(Member possessor, bool canReactToReactions, EffectResolved effect, Func<EffectResolved, bool> condition)
+    protected static bool ReactionIsApplicable(Member possessor, bool canReactToReactions, EffectResolved effect, Func<EffectResolved, bool> condition)
     {
         if (effect.IsReaction && !canReactToReactions)
             return false;
