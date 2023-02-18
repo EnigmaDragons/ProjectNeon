@@ -22,19 +22,16 @@ public class SteamAchievements : IAchievements
     
     public void Record(string achievementId)
     {
-        if (_completedAchievements.Contains(achievementId))
-            return;
-        
         try
         {
             if (!SteamManager.Initialized)
                 return;
-            
-            SteamUserStats.GetAchievement(achievementId, out var isRecordedAlready);
-            if (!isRecordedAlready)
-                SteamUserStats.SetAchievement(achievementId);
-            else
-                _completedAchievements.Add(achievementId);
+
+            if (IsCompleted(achievementId))
+                return;
+
+            SteamUserStats.SetAchievement(achievementId);
+            _completedAchievements.Add(achievementId);
             CheckForAllAchievementsCompleted();
         }
         catch (Exception e)
@@ -46,18 +43,32 @@ public class SteamAchievements : IAchievements
 
     private void CheckForAllAchievementsCompleted()
     {
+        if (IsCompleted(Achievement.MiscAllAchievements))
+            return;
+        
         var numAchievements = SteamUserStats.GetNumAchievements();
         for (uint intId = 0; intId < numAchievements; ++intId)
         {
             var achievementId = SteamUserStats.GetAchievementName(intId);
-            SteamUserStats.GetAchievement(achievementId, out var isRecordedAlready);
-            if (isRecordedAlready)
+            if (IsCompleted(achievementId))
                 _completedAchievements.Add(achievementId);
             else
                 return;
         }
         if (_completedAchievements.Count == numAchievements)
             Record(Achievement.MiscAllAchievements);
+    }
+
+    private bool IsCompleted(string achievementId)
+    {
+        if (_completedAchievements.Contains(achievementId))
+            return true;
+        
+        SteamUserStats.GetAchievement(achievementId, out var isCompleted);
+        if (isCompleted)
+            _completedAchievements.Add(achievementId);
+
+        return isCompleted;
     }
 }
 #endif
