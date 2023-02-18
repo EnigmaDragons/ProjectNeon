@@ -1,6 +1,4 @@
 
-using System.Collections.Generic;
-
 public class Achievement
 {
     public const string AdventureWonBreakIntoMetroplexZero = "adv-won-break";
@@ -23,6 +21,7 @@ public class Achievement
     public const string CombatLastOneStanding = "combat-last-standing";
     public const string Combat42Damage = "combat-42-dmg";
     public const string CombatFirstTurnVictory = "combat-first-turn-victory";
+    public const string CombatMultiKill = "combat-multi-kill";
     
     public const string DifficultyCasual = "difficulty-casual";
     public const string DifficultyVeteran = "difficulty-veteran";
@@ -37,8 +36,13 @@ public class Achievement
     public const string MiscBoughtAnEpicCard = "misc-pay-to-win";
     public const string MiscHealedInjury = "misc-healed-injury";
     public const string MiscSkippedCutscene = "misc-skipped-cutscene";
+    public const string MiscAllAchievements = "misc-all-achievements";
 
     public const string PlaystyleOneShot = "playstyle-one-shot";
+    public const string PlaystyleFiveCardPlaysInATurn = "playstyle-cardplays-5";
+    public const string PlaystyleResources32 = "playstyle-resources-32";
+    public const string PlaystyleCycle10 = "playstyle-cycle-10";
+    public const string PlaystyleShields60 = "playstyle-shields-60";
     
     public const string Progress9HeroesUnlocked = "progress-9-heroes";
     public const string Progress50Percent = "progress-50-percent";

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -6,6 +7,8 @@ public class AchievementWatcher : MonoBehaviour
     [SerializeField] private CurrentAdventure adventure;
     [SerializeField] private BattleState battleState;
     [SerializeField] private ProgressionProgress progress;
+
+    private readonly HashSet<int> _consciousEnemiesOnCardResolutionStart = new HashSet<int>();
     
     private void OnDisable()
     {
@@ -20,6 +23,40 @@ public class AchievementWatcher : MonoBehaviour
         Message.Subscribe<SkipCutsceneRequested>(_ => Achievements.Record(Achievement.MiscSkippedCutscene), this);
         Message.Subscribe<GameProgressUpdated>(OnProgressUpdated, this);
         Message.Subscribe<BattleFinished>(OnBattleFinished, this);
+        Message.Subscribe<BattleStateChanged>(OnBattleStateChanged, this);
+        Message.Subscribe<CardResolutionStarted>(OnCardResolutionStarted, this);
+        Message.Subscribe<CardResolutionFinished>(OnCardResolutionFinished, this);
+    }
+
+    private void OnBattleStateChanged(BattleStateChanged msg)
+    {
+        var turnAdvanced = msg.Before.TurnNumber != msg.State.TurnNumber;
+        var notTutorialAndTurnAdvanced = IsNotTutorial && turnAdvanced;
+        if (notTutorialAndTurnAdvanced && msg.Before.PlayedCardHistory.AnyNonAlloc() && msg.Before.PlayedCardHistory.Last().Count(c => c.Card.Speed != CardSpeed.Quick) >= 5)
+            Achievements.Record(Achievement.PlaystyleFiveCardPlaysInATurn);
+        if (turnAdvanced && msg.State.Heroes.AnyNonAlloc(h => h.IsConscious() && h.CurrentShield() >= 60))
+            Achievements.Record(Achievement.PlaystyleShields60);
+        if (turnAdvanced && msg.State.Heroes.AnyNonAlloc(h => h.IsConscious() && h.PrimaryResourceAmount() >= 32))
+            Achievements.Record(Achievement.PlaystyleResources32);
+        if (msg.State.PlayerState.NumberOfCyclesUsedThisTurn >= 10)
+            Achievements.Record(Achievement.PlaystyleCycle10);
+    }
+
+    private void OnCardResolutionFinished(CardResolutionFinished msg)
+    {
+        var beforeConsciousCount = _consciousEnemiesOnCardResolutionStart.Count;
+        var afterSameMemberConsciousCount = battleState.EnemyMembers.Count(x =>
+            x.IsConscious() && _consciousEnemiesOnCardResolutionStart.Contains(x.Id));
+        var numberMadeUnconscious = beforeConsciousCount - afterSameMemberConsciousCount;
+        if (IsNotTutorial && numberMadeUnconscious >= 2)
+            Achievements.Record(Achievement.CombatMultiKill);
+        _consciousEnemiesOnCardResolutionStart.Clear();
+    }
+
+    private void OnCardResolutionStarted(CardResolutionStarted obj)
+    {
+        _consciousEnemiesOnCardResolutionStart.Clear();
+        battleState.ConsciousEnemyMembers.ForEach(m => _consciousEnemiesOnCardResolutionStart.Add(m.Id));
     }
 
     private bool IsNotTutorial => adventure.Adventure.id != AdventureIds.TutorialAdventureId;
