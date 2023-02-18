@@ -12,6 +12,14 @@ public class Achievement
     public const string AdventureWonDuoDraft = "adv-won-draft-duo";
     public const string AdventureWonSoloDraft = "adv-won-draft-solo";
     
+    public const string EndingAntonLive = "ending-org-anton-live";
+    public const string EndingAntonKilled = "ending-org-anton-killed";
+    public const string EndingAntonVirus = "ending-org-virus";
+    public const string EndingMimicsTerminated = "ending-robot-terminated";
+    public const string EndingMimicsEnslaved = "ending-robot-enslaved";
+    public const string EndingMimicsExiled = "ending-robot-exiled";
+    public const string EndingMimicsAllied = "ending-robot-allied";
+    
     public const string CombatLastOneStanding = "combat-last-standing";
     public const string Combat42Damage = "combat-42-dmg";
     public const string CombatFirstTurnVictory = "combat-first-turn-victory";

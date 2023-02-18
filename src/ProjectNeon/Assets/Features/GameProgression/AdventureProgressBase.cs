@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class AdventureProgressBase : ScriptableObject
 {
@@ -30,4 +31,5 @@ public abstract class AdventureProgressBase : ScriptableObject
     public abstract float ProgressToBoss { get; }
     public abstract float[] RisingActionPoints { get; }
     public abstract Difficulty Difficulty { get; set; }
+    public abstract HashSet<string> StoryStates { get; }
 }

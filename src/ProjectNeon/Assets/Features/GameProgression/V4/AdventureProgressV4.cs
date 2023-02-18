@@ -38,6 +38,8 @@ public class AdventureProgressV4 : AdventureProgressBase
         set { }
     }
 
+    public override HashSet<string> StoryStates => new HashSet<string>(_storyStates.Where(x => x.Value).Select(x => x.Key));
+
     public StaticStageV4 CurrentChapter
     {
         get { 
