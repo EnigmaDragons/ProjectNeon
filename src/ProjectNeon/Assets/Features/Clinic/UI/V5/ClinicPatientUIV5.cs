@@ -86,6 +86,7 @@ public class ClinicPatientUIV5 : OnMessage<UpdateClinic, HeroStateChanged, Party
     {
         _hero.HealInjuryByName(injuryName);
         party.UpdateClinicVouchersBy(-InjuryHealCost);
+        Message.Publish(new HealedInjury());
         Message.Publish(new HideTooltip());
         Message.Publish(new UpdateClinic());
     }

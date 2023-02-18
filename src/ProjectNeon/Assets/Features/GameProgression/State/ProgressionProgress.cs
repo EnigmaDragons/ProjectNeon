@@ -19,6 +19,13 @@ public class ProgressionProgress : MonoBehaviour, ILocalizeTerms
         return isUnlocked;
     }
 
+    public float GetProgressCompletionFactor()
+    {
+        var progressItems = GetAllProgress();
+        var completedFactor = progressItems.Count(x => x.Completed) / (float) progressItems.Length;
+        return completedFactor;
+    }
+    
     public ProgressionItem[] GetAllProgress()
     {
         var adventureCompletionRecords = CurrentProgressionData.Data.AdventureCompletions;

@@ -9,36 +9,30 @@ public static class Achievements
 
     public static void RecordAdventureCompleted(int adventureId, bool wasVictorious, Difficulty difficulty, string[] englishHeroNames)
     {
-        const int breakIntoMetroplexZeroAdventureId = 10;
-        const int organizedHarvestorsAdventureId = 9;
-        const int antiRobotSentimentsAdventureId = 14;
-        const int soloDraftId = 11;
-        const int duoDraftId = 12;
-        const int trioDraftId = 13;
-        
+
         
         // Core Adventures
-        if (adventureId == breakIntoMetroplexZeroAdventureId)
+        if (adventureId == AdventureIds.BreakIntoMetroplexZeroAdventureId)
             if (wasVictorious)
                 Record(Achievement.AdventureWonBreakIntoMetroplexZero);
             else
                 Record(Achievement.AdventureLostBreakIntoMetroplexZero);
 
-        if (adventureId == organizedHarvestorsAdventureId)
+        if (adventureId == AdventureIds.OrganizedHarvestorsAdventureId)
             if (wasVictorious)
                 Record(Achievement.AdventureWonOrganizedHarvestors);
             else
                 Record(Achievement.AdventureLostOrganizedHarvestors);
 
-        if (adventureId == antiRobotSentimentsAdventureId && wasVictorious)
+        if (adventureId == AdventureIds.AntiRobotSentimentsAdventureId && wasVictorious)
             Record(Achievement.AdventureWonAntiRobotSentiments);
 
         // Draft Adventures
-        if (wasVictorious && adventureId == soloDraftId)
+        if (wasVictorious && adventureId == AdventureIds.SoloDraftId)
             Record(Achievement.AdventureWonSoloDraft);
-        if (wasVictorious && adventureId == duoDraftId)
+        if (wasVictorious && adventureId == AdventureIds.DuoDraftId)
             Record(Achievement.AdventureWonDuoDraft);
-        if (wasVictorious && adventureId == trioDraftId)
+        if (wasVictorious && adventureId == AdventureIds.TrioDraftId)
             Record(Achievement.AdventureWonTrioDraft);
         
         if (wasVictorious)
