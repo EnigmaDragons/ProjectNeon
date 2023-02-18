@@ -42,6 +42,8 @@ public class AdventureProgress2 : AdventureProgressBase
         set { }
     }
 
+    public override HashSet<string> StoryStates => new HashSet<string>();
+
     public int[] FinishedCurrentStageHeatUpEvents => finishedCurrentStageHeatUpEvents.ToArray();
 
     public Indexed<HeatUpEventV0>[] RemainingHeatUpEvents => CurrentChapter.HeatUpEvents

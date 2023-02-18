@@ -45,6 +45,8 @@ public class AdventureProgressV5 : AdventureProgressBase
         set => difficulty = value;
     }
     
+    public override HashSet<string> StoryStates => new HashSet<string>(_storyStates.Where(x => x.Value).Select(x => x.Key));
+    
     public HybridStageV5 CurrentChapter
     {
         get { 

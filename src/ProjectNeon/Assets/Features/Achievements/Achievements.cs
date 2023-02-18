@@ -1,4 +1,6 @@
 
+using System.Collections.Generic;
+
 public static class Achievements
 {
     private static IAchievements Instance = new NoAchievements();
@@ -7,10 +9,8 @@ public static class Achievements
 
     public static void Init(IAchievements instance) => Instance = instance;
 
-    public static void RecordAdventureCompleted(int adventureId, bool wasVictorious, Difficulty difficulty, string[] englishHeroNames)
+    public static void RecordAdventureCompleted(int adventureId, bool wasVictorious, Difficulty difficulty, string[] englishHeroNames, HashSet<string> storyStates)
     {
-
-        
         // Core Adventures
         if (adventureId == AdventureIds.BreakIntoMetroplexZeroAdventureId)
             if (wasVictorious)
@@ -49,6 +49,24 @@ public static class Achievements
                 Record(Achievement.DifficultyOppression);
             if (difficulty.Id == 5)
                 Record(Achievement.DifficultyDystopia);
+            
+            if (adventureId == AdventureIds.OrganizedHarvestorsAdventureId)
+                if (storyStates.Contains("AntonDies"))
+                    Record(Achievement.EndingAntonKilled);
+                else if (storyStates.Contains("LetAntonLive"))
+                    Record(Achievement.EndingAntonLive);
+                else if (storyStates.Contains("VirusActivated"))
+                    Record(Achievement.EndingAntonVirus);
+            
+            if (adventureId == AdventureIds.AntiRobotSentimentsAdventureId)
+                if (storyStates.Contains("MimicAssistance"))
+                    Record(Achievement.EndingMimicsAllied);
+                else if (storyStates.Contains("MimicExile"))
+                    Record(Achievement.EndingMimicsExiled);
+                else if (storyStates.Contains("MimicTermination"))
+                    Record(Achievement.EndingMimicsTerminated);
+                else if (storyStates.Contains("MimicControl"))
+                    Record(Achievement.EndingMimicsEnslaved);
 
             foreach (var h in englishHeroNames)
             {

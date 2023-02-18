@@ -82,7 +82,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
         else if ((state.IsTutorialCombat && useNewTutorialFlow.Value) || adventureProgress.AdventureProgress.Difficulty.ResetAfterDeath)
         {
             Log.Info("Restarting Battle");
-            Achievements.RecordAdventureCompleted(adventure.Adventure.Id, false, adventureProgress.AdventureProgress.Difficulty, Array.Empty<string>());
+            Achievements.RecordAdventureCompleted(adventure.Adventure.Id, false, adventureProgress.AdventureProgress.Difficulty, Array.Empty<string>(), adventureProgress.AdventureProgress.StoryStates);
             saveLoadSystem.LoadSavedGame();
             partyState.Heroes.ForEach(x => x.SetHp(x.Stats.MaxHp()));
             this.ExecuteAfterDelay(() => navigator.NavigateToGameSceneV5(), secondsBeforeGameOverScreen);
@@ -90,7 +90,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
         else
         {
             Log.Info("Navigating to defeat screen");
-            Achievements.RecordAdventureCompleted(adventure.Adventure.Id, false, adventureProgress.AdventureProgress.Difficulty, Array.Empty<string>());
+            Achievements.RecordAdventureCompleted(adventure.Adventure.Id, false, adventureProgress.AdventureProgress.Difficulty, Array.Empty<string>(), adventureProgress.AdventureProgress.StoryStates);
             AllMetrics.PublishGameLost(adventure.Adventure.Id);
             state.AccumulateRunStats();
             conclusion.RecordFinishedGameAndCleanUp(false, adventure.Adventure.DefeatConclusionTerm, CurrentGameData.Data.Stats, partyState.Heroes);
