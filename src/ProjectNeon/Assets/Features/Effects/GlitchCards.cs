@@ -36,6 +36,7 @@ public class GlitchCards : Effect
             .Shuffled();
         var impactedCards = filteredCards.Take(Math.Min(_maxCards, filteredCards.Length)).ToArray();
         impactedCards.ForEach(c => c.Card.TransitionTo(CardMode.Glitched));
+        BattleLog.Write($"{string.Join(", ", impactedCards.Select(c => c.Card.Name))} glitched by {ctx.Source.NameTerm.ToEnglish()}");
         Message.Publish(new CardsGlitched(impactedCards));
     }
 }
