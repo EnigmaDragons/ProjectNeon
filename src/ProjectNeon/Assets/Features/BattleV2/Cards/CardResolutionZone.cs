@@ -196,6 +196,14 @@ public class CardResolutionZone : ScriptableObject
                     .IfPresent(c => Message.Publish(new PlayRawBattleEffect("StunnedWhenTriedToPlayCard", c.position)));
                 Message.Publish(new CardResolutionFinished(played));
             }
+            else if (card.Owner.IsDisabled() && !card.Is(CardTag.CanPlayThisReactionEvenWhenStunned))
+            {
+                BattleLog.Write($"{card.Owner.NameTerm.ToEnglish()} was disabled, so {card.Name} does not resolve.");
+                Message.Publish(new DisplayCharacterWordRequested(card.Owner, CharacterReactionType.Stunned));
+                battleState.GetMaybeCenterPoint(card.Owner.Id)
+                    .IfPresent(c => Message.Publish(new PlayRawBattleEffect("StunnedWhenTriedToPlayCard", c.position)));
+                Message.Publish(new CardResolutionFinished(played));
+            }
             else if (card.IsAttack && card.Owner.IsBlinded())
             {
                 BattleLog.Write($"{card.Owner.NameTerm.ToEnglish()} was blinded, so {card.Name} does not resolve.");
