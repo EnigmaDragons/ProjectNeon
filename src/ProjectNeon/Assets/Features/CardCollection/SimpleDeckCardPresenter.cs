@@ -28,8 +28,8 @@ public class SimpleDeckCardPresenter : OnMessage<SceneChanged>, IPointerEnterHan
 
     private void Awake() => InitCanvasIfNeeded();
     private void OnDisable() => OnExit();
-    
-    protected override void Execute(SceneChanged msg) => Destroy(gameObject);
+
+    protected override void Execute(SceneChanged msg) => OnExit();
 
     private void OnDestroy() => OnExit();
 

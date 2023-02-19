@@ -45,6 +45,7 @@ public class HybridStageV5 : ScriptableObject, IStage, ILocalizeTerms
     public GameObject Battleground => BattlegroundForSegment(0);
     public int SegmentCount => primarySegments.Length;
     public int SegmentCountToBoss => primarySegments.TakeWhile(s => s.MapNodeType != MapNodeType.Boss).Count();
+    public int NonAutoSegmentCountToBoss => primarySegments.Where(s => !s.ShouldAutoStart).TakeWhile(s => s.MapNodeType != MapNodeType.Boss).Count();
     public StageSegment[] Segments => primarySegments;
     public StageSegment[] MaybeSecondarySegments => maybeSecondarySegments;
     public StageSegment[] MaybeStorySegments => maybeStorySegments;

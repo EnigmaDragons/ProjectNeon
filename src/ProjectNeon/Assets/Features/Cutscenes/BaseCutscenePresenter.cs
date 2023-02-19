@@ -25,7 +25,8 @@ public abstract class BaseCutscenePresenter : MonoBehaviour
     
     private void OnEnable()
     {
-        fadeDarken.color = fadeDarken.color.WithAlpha(0f);
+        if (fadeDarken != null)
+            fadeDarken.color = fadeDarken.color.WithAlpha(0f);
         narrator.Init(new [] { CutsceneCharacterAliases.Narrator });
         you.Init(new [] { CutsceneCharacterAliases.You });
         player.Init(new [] { CutsceneCharacterAliases.Player });
@@ -55,7 +56,7 @@ public abstract class BaseCutscenePresenter : MonoBehaviour
             FinishCurrentSegment();
             return;
         }
-        
+
         var targetAlpha = msg.FadeIn ? 0f : 1f;
         fadeDarken.DOColor(fadeDarken.color.WithAlpha(targetAlpha), msg.Duration);
         this.ExecuteAfterDelay(msg.Duration, FinishCurrentSegment);

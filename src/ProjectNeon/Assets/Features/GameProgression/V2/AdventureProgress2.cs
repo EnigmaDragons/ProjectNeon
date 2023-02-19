@@ -18,6 +18,8 @@ public class AdventureProgress2 : AdventureProgressBase
     public override int AdventureId => currentAdventure.Adventure.Id;
     public Adventure CurrentAdventure => currentAdventure.Adventure;
     public override CurrentGlobalEffects GlobalEffects => currentGlobalEffects;
+    public override int TotalNonAutoSegmentsToBoss { get; } = 0;
+    public override int CurrentNonAutoStageProgress { get; } = 0;
     public override int CurrentChapterNumber => currentChapterIndex + 1;
     public int CurrentChapterIndex => currentChapterIndex;
     public override int TotalSegmentsToBoss => CurrentChapter.SegmentCount;

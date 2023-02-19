@@ -53,8 +53,8 @@ public class AdventureProgressV5Presenter : OnMessage<AdventureProgressChanged, 
             progressNumberLabel.text = "";
         else
             progressNumberLabel.text = string.Format(progressTemplate,
-                adventure.AdventureProgress.CurrentStageProgress.ToString(),
-                adventure.AdventureProgress.TotalSegmentsToBoss.ToString());
+                adventure.AdventureProgress.CurrentNonAutoStageProgress.ToString(),
+                adventure.AdventureProgress.TotalNonAutoSegmentsToBoss.ToString());
     }
 
     private void SmoothTransitionTo(float amount) => barFill.DOFillAmount(amount * _visualFactor + _offsetAmount, 1);

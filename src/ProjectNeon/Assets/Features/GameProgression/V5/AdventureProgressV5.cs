@@ -25,6 +25,9 @@ public class AdventureProgressV5 : AdventureProgressBase
     public override int CurrentChapterNumber => currentChapterIndex + 1;
     private float Progress => CurrentStageProgress < 1 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCount;
     public override int TotalSegmentsToBoss => CurrentChapter.SegmentCountToBoss;
+
+    public override int TotalNonAutoSegmentsToBoss => CurrentChapter.NonAutoSegmentCountToBoss;
+    public override int CurrentNonAutoStageProgress => CurrentChapter.Segments.Take(CurrentStageProgress).Count(s => !s.ShouldAutoStart);
     private bool IsFinalStage => currentChapterIndex >= currentAdventure.Adventure.StagesV5.Length - 1;
     private bool IsLastSegmentOfStage => currentSegmentIndex + 1 == CurrentStageLength;
     public override GameAdventureProgressType AdventureType => GameAdventureProgressType.V5;
@@ -33,7 +36,7 @@ public class AdventureProgressV5 : AdventureProgressBase
     public override float BonusXpLevelFactor => currentAdventure.Adventure.BonusXpFactor;
     public override bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
     public override bool IsFinalBoss => IsFinalStage && currentSegmentIndex < CurrentStageLength && CurrentStageSegment.MapNodeType == MapNodeType.Boss;
-    public override float ProgressToBoss => CurrentStageProgress < 1 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCountToBoss;
+    public override float ProgressToBoss => CurrentStageProgress < 1 ? 0f : (float)CurrentNonAutoStageProgress / TotalNonAutoSegmentsToBoss;
     private int CurrentStageLength => CurrentChapter.SegmentCount;    
     public override float[] RisingActionPoints => CurrentChapter.Segments
         .Select((x, i) => (x, i))

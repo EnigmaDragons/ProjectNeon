@@ -19,6 +19,8 @@ public class AdventureProgressV4 : AdventureProgressBase
     public override CurrentGlobalEffects GlobalEffects => currentGlobalEffects;
     public override int CurrentStageProgress => currentSegmentIndex;
     public override int CurrentChapterNumber => currentChapterIndex + 1;
+    public override int TotalNonAutoSegmentsToBoss { get; } = 0;
+    public override int CurrentNonAutoStageProgress { get; } = 0;
     private float Progress => CurrentStageProgress < 1 || CurrentChapter == null || CurrentChapter.SegmentCount < 1 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCount;
     public override int TotalSegmentsToBoss => CurrentChapter.SegmentCountToBoss;
     public bool IsFinalStage => currentChapterIndex == currentAdventure.Adventure.StagesV4.Length - 1;
