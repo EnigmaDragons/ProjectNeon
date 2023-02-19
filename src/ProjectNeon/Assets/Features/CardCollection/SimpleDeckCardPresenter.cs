@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
+public class SimpleDeckCardPresenter : OnMessage<SceneChanged>, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     [SerializeField] private Localize cardNameText;
     [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI countText;
@@ -28,6 +28,9 @@ public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPoi
 
     private void Awake() => InitCanvasIfNeeded();
     private void OnDisable() => OnExit();
+    
+    protected override void Execute(SceneChanged msg) => Destroy(gameObject);
+
     private void OnDestroy() => OnExit();
 
     public void SetCanvas(Canvas c)
