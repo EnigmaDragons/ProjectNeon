@@ -17,7 +17,7 @@ public class VictoryPrefactoredRewardUI : OnMessage<ShowPrefactoredReward, Proce
         _onFinished = msg.OnProceed;
         view.SetActive(true);
         _triggeredFinish = false;
-        creditsLabel.text = msg.NumCredits.ToString();
+        creditsLabel.text = msg.NumCredits.ToString() + 0;
         clinicVouchersLabel.text = msg.NumClinicVouchers.ToString();
         if (creditsPanel != null)
             creditsPanel.SetActive(msg.NumCredits > 0);

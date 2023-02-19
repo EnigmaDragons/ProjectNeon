@@ -22,7 +22,7 @@ public sealed class VictoryEquipmentSelectionUI : OnMessage<GetUserSelectedEquip
         msg.Options.ForEach(o =>
             Instantiate(equipmentPresenter, optionsParent.transform)
                 .Set(o, () => SelectEquipment(o)));
-        creditsLabel.text = state.RewardCredits.ToString();
+        creditsLabel.text = state.RewardCredits.ToString() + 0;
         view.SetActive(true);
     }
 

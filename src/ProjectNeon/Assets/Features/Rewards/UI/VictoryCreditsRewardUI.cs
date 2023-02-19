@@ -10,7 +10,7 @@ public class VictoryCreditsRewardUI : OnMessage<ShowCreditsGain>
     protected override void Execute(ShowCreditsGain msg)
     {
         view.SetActive(true);
-        creditsLabel.text = msg.NumCredits.ToString();
+        creditsLabel.text = msg.NumCredits.ToString() + 0;
         rarityPresenter.Set(msg.Rarity);
     }
 }

@@ -10,5 +10,5 @@ public class PartyCreditsPresenter : OnMessage<PartyAdventureStateChanged>
     
     protected override void Execute(PartyAdventureStateChanged msg) => Render();
 
-    private void Render() => label.text = party.Credits.ToString();
+    private void Render() => label.text = party.Credits.ToString() + 0;
 }

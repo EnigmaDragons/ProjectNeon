@@ -10,7 +10,7 @@ public class UIRewardsPresenter : MonoBehaviour
 
     private void OnEnable()
     {
-        creditsLabel.text = state.RewardCredits.ToString();
+        creditsLabel.text = state.RewardCredits.ToString() + 0;
         cardParent.DestroyAllChildren();
         state.RewardCards.ForEach(c => 
             Instantiate(cardPrototype, cardParent.transform)

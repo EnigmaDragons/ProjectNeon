@@ -24,7 +24,7 @@ public class VictoryCardSelectionUI : OnMessage<GetUserSelectedCardType, GetUser
         msg.Options.ForEach(o =>
             Instantiate(cardPresenter, optionsParent.transform)
                 .Set(o, () => SelectCard(o)));
-        creditsLabel.text = state.RewardCredits.ToString();
+        creditsLabel.text = state.RewardCredits.ToString() + 0;
         view.SetActive(true);
     }
 
@@ -36,7 +36,7 @@ public class VictoryCardSelectionUI : OnMessage<GetUserSelectedCardType, GetUser
         msg.Options.ForEach(o =>
             Instantiate(cardPresenter, optionsParent.transform)
                 .Set(o, () => SelectCard(o)));
-        creditsLabel.text = state.RewardCredits.ToString();
+        creditsLabel.text = state.RewardCredits.ToString() + 0;
         clinicVouchersLabel.text = state.RewardClinicVouchers.ToString();
         view.SetActive(true);
     }
