@@ -24,7 +24,7 @@ public class Adventure : ScriptableObject, CurrentAdventureData, ILocalizeTerms
     [SerializeField] private BaseHero[] bannedLeaders;
     [SerializeField] private BaseHero[] fixedStartingHeroes;
     [SerializeField] private int baseNumberOfCardCycles = 2;
-    [SerializeField] private float rewardCreditsPerPowerLevel = 1f;
+    [SerializeField] private float rewardCreditsPerPowerLevel = 0.4f;
     [SerializeField] private float xpPerPowerLevel = 0.2f;
     [SerializeField] private float bonusXpFactor = 0.33333f;
     [SerializeField] private int maxHeroLevel = 99;
