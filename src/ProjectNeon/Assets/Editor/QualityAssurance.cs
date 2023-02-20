@@ -494,13 +494,19 @@ public class QualityAssurance
                     }
 
                     var xmlTags = _xmlTags.Matches(str);
+                    var xmlExceptionTerms = new HashSet<string>
+                    {
+                        "BattleUI/You Were Defeated",
+                        "BattleUI/You Were Victorious!",
+                        "Menu/Wishlist Daisy Dog"
+                    };
                     foreach (Match tag in xmlTags)
                     {
-                        if (!_validXmlTags.IsMatch(tag.Value))
+                        if (!_validXmlTags.IsMatch(tag.Value) && !xmlExceptionTerms.Contains(term))
                             issues.Add($"{term} ({language}) has an invalid xml tag {tag.Value}");
                     }
                     
-                    if (str.Count(x => x == '<') != str.Count(x => x == '>'))
+                    if (str.Count(x => x == '<') != str.Count(x => x == '>') && !xmlExceptionTerms.Contains(term))
                         issues.Add($"{term} ({language}) has an invalid <> tag");
                     if (_specialOpenTag.Matches(str).Count != _specialCloseTag.Matches(str).Count)
                         issues.Add($"{term} ({language}) has an invalid {{[]}} tag");

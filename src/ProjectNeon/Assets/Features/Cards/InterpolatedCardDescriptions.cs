@@ -168,14 +168,9 @@ public static class InterpolatedCardDescriptions
         }
 
         result = result.Replace("GlobalPrimaryResource", "Resources");
-
-        if (owner.IsPresent)
-        {
-            var primaryStatText = owner.Value.PrimaryStat().ToString();
-            result = result.Replace("Power", primaryStatText);
-            result = result.Replace("POW", primaryStatText);
-        }
-
+        result = result.Replace("POW", "Power");
+        result = result.Replace("PrimaryStat", "Power");
+        
         foreach (var r in _resourceIcons)
         {
             result = Regex.Replace(result, $" {r.Key}", $" {Sprite(r.Value)}");
