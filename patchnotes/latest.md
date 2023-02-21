@@ -1,42 +1,37 @@
-## Patch Notes - v0.0.60
+## Patch Notes - v0.0.61
 ----
 
 New Content:
-- New Card: Quick Shot (removed distracting shot)
-- VFX: added animation data to all cards
-- VFX: Added new VFX for lots of cards
-
-Achievements:
-- Achivements: Added Difficult Level Achievements
-- Bug Fix: Steam Achievement 'Fatal Mistake' now achievable
+- Achievements: Added Steam Achivement Art & Tracking all 58 Achievements
 
 Balance Changes:
-- Rebalance: Made Rifle Build Viable
+- Rebalance: Reduced All Hero Starting Health. Increased Growth. Minor overall nerf
+- Rebalance: Buff - Increased Adventure MetroCreds Gain
+- Rebalance: Nerfed Insight Stimulator - Only Draw a Card for Non-Quick Cards played
+
+Card Improvements:
+- Card Wording: Replaced Primary Stat language on card with Power for Simplicity
 
 UI Improvements:
-- UI: Now signifigant increase in highlight clarity with hovering taken into account
+- UI: Battle Logs which cards were glitched
+- UI: For choosing generic adventures
+- UI: Hide Beta Objective Tracker from Progress View
+- UI: Increased MetroCreds everywhere by a factor of 10
+- UI: Refined Adventure Progress Numbers to be more intuitive (doesn't include auto-segments)
+- UI: Reverse Polarity Highlights/Unhighlights based on Shield Amount
+- UI: Show Rule Panel for Vulnerable
+- UI: Shows Adventure Progress in Numeric Form on Adventure Progress
+- UI: Verified Highlights for Finisher cards
 
 Art Improvements:
-- Art: Updated Draft Adventure Tile art
+- Art: Medigeneix Facility Battlefield Relight
 
 Bug Fixes:
-- Bug Fix: Another Null Ref Protection Pass on Pointer Events
-- Bug Fix: Hover Tooltips could stay on screen across scene load. Fixed
-- Bug Fix: Missing Character (Helen) for Dialogue Line in Boos Cutscene
-- Bug Fix: Missing Cutscene Characters
-- Bug Fix: More surprise Null Ref prevention
-- Bug Fix: Trying to reduces backend errors for async Coroutine activation issues
-- Fixed Loading Bugs, Fixed Blue Screen Cutscene Bug, Fixed Archon Core, Fixed Sharpen Blade
-- Fixed: Shielding Touch
+- Bug Fix: Breaking News cutscenes now wait for Level Ups to finish first
+- Bug Fix: Deep Analysis now correctly enters Stealth
+- Bug Fix: Draft Hover card could get stuck across scenes
+- Bug Fix: If Hero becomes disabled after queuing cards, the cards no longer resolve
+- Bug Fix: Shopkeeper Line when Skill Shop is inactive now just hides quietly
 
 Project:
-- Project: Added Beta Playtest Build support
-- Project: Art for v0.0.59
-- Project: Updated to latest LTS of 2020.3
-
-Miscellaneous:
-- Acheivements: Added Acheivements for Hero Victories
-- Added some defenses
-- Enemy Description: Mage Duelist
-- Upversion for HotFix 1
-
+- Project: Upversion to V0.0.61

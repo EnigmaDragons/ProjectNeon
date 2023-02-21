@@ -26,10 +26,13 @@ public class CardShopkeeperLines : MonoBehaviour
         "A discerning benefactor like yourself is probably salivating over that [Skill] right now."
     };
 
-    private void OnEnable() => this.ExecuteAfterDelay(0.5f, SaySomething);
+    private void OnEnable() => Async.ExecuteAfterDelay(0.5f, SaySomething);
 
     private void SaySomething()
     {
+        if (!gameObject.activeInHierarchy)
+            return;
+        
         if (shop == null || Rng.Float() < 0.7)
             SaySomeStandardLine();
         else
