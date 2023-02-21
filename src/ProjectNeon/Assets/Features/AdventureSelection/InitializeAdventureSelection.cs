@@ -64,7 +64,6 @@ public class InitializeAdventureSelection : MonoBehaviour
             adventureProgress.AdventureProgress = adventureProgress5;
 
         currentAdventure.Adventure = adventure;
-        boss.Boss = bosses.RandomBoss();
         adventureProgress.AdventureProgress.Init(adventure, 0);
         CurrentGameData.Write(s =>
         {

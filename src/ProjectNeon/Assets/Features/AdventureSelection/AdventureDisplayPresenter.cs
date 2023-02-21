@@ -1,5 +1,4 @@
 ﻿using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using I2.Loc;
@@ -20,6 +19,8 @@ public class AdventureDisplayPresenter : MonoBehaviour, ILocalizeTerms
     [SerializeField] private Localize lockReasonLabel;
     [SerializeField] private Image hoverGlow;
     [SerializeField] private GameObject isCompletedView;
+    [SerializeField] private BossSelectionPresenter bossSelectionPresenter;
+    [SerializeField] private CurrentBoss boss;
     
     private const string ChaptersTerm = "Menu/Chapters";
     
@@ -28,9 +29,15 @@ public class AdventureDisplayPresenter : MonoBehaviour, ILocalizeTerms
         image.sprite = adventure.AdventureImage;
         nameText.SetTerm(adventure.TitleTerm);
         storyText.SetTerm(adventure.StoryTerm);
+        storyText.gameObject.SetActive(!adventure.BossSelection);
+        bossSelectionPresenter.gameObject.SetActive(adventure.BossSelection);
         lengthText.SetTerm(string.Format(ChaptersTerm.ToLocalized(), adventure.DynamicStages.Length));
         DisplayHeroPool(adventure);
-        selectButton.onClick.AddListener(() => onSelect());
+        selectButton.onClick.AddListener(() =>
+        {
+            boss.Boss = bossSelectionPresenter.SelectedBoss;
+            onSelect();
+        });
         selectButton.enabled = !adventure.IsLocked;
         lockVisual.SetActive(adventure.IsLocked);
         lockReasonLabel.SetFinalText(adventure.LockConditionExplanation);

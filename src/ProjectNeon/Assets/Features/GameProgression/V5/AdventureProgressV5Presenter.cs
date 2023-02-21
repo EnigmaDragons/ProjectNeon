@@ -13,6 +13,9 @@ public class AdventureProgressV5Presenter : OnMessage<AdventureProgressChanged, 
     [SerializeField] private GameObject markerParent;
     [SerializeField] private TextMeshProUGUI progressNumberLabel;
     [SerializeField] private float markerPlacementFactor = 1f;
+    [SerializeField] private CurrentAdventure currentAdventure;
+    [SerializeField] private CurrentBoss boss;
+    [SerializeField] private Image bossIcon;
 
     private readonly float _visualFactor = 1f;
     private readonly float _offsetAmount = 0f;
@@ -20,6 +23,8 @@ public class AdventureProgressV5Presenter : OnMessage<AdventureProgressChanged, 
     private void Awake()
     {
         RenderUpdateNoAnim();
+        if (currentAdventure.Adventure.BossSelection)
+            bossIcon.sprite = boss.Boss.Bust;
     }
 
     private void RenderUpdateNoAnim()

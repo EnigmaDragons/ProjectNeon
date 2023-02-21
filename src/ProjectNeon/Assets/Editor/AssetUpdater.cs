@@ -40,6 +40,7 @@ public class AssetUpdater
         UpdateStageIds();
         UpdateAllTutorialSlideshows();
         UpdateAllCorpLoadingScreens();
+        UpdateBossIDs();
         Timed("All Battle VFX", UpdateAllBattleVfx);
         Log.Info("Asset Updates Complete");
     }
@@ -483,6 +484,12 @@ public class AssetUpdater
     private static void UpdateLoadingScreensIDs()
     {
         AssignAllIds(ScriptableExtensions.GetAllInstances<CorpLoadingScreen>(), s => s.id, (s, id) => s.id = id);
+    }
+
+    [MenuItem("Neon/Update/Update Boss IDs")]
+    private static void UpdateBossIDs()
+    {
+        AssignAllIds(ScriptableExtensions.GetAllInstances<Boss>(), b => b.id, (b, id) => b.id = id);
     }
 
     [MenuItem("Neon/Update/Update Blessing IDs")]

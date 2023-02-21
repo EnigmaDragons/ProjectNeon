@@ -39,6 +39,7 @@ public class Adventure : ScriptableObject, CurrentAdventureData, ILocalizeTerms
     [SerializeField] private bool shouldRollCreditsBeforeConclusionScene = false;
     [SerializeField] private bool mapDeckbuildingEnabled = true;
     [SerializeField] private bool allowDifficultySelection = true;
+    [SerializeField] private bool bossSelection = false;
 
     public AdventureMode Mode => mode;
     public int Id => id;
@@ -76,6 +77,7 @@ public class Adventure : ScriptableObject, CurrentAdventureData, ILocalizeTerms
 
     public bool IsCompleted => CurrentProgressionData.Data.Completed(Id);
     public bool MapDeckbuildingEnabled => mapDeckbuildingEnabled;
+    public bool BossSelection => bossSelection;
 
     public string LockConditionExplanationTerm => $"Adventures/Adventure{id}LockCondition";
     public bool IsLocked => !string.IsNullOrWhiteSpace(LockConditionExplanation);
