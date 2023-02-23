@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Tutorial10Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, WinBattleWithRewards>
+public class Tutorial10Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, WinBattleWithRewards>, ILocalizeTerms
 {
     private const string _callerId = "Tutorial10Orchestrator";
     
@@ -29,18 +29,26 @@ public class Tutorial10Orchestrator : OnMessage<StartCardSetupRequested, CardRes
         if (msg.CardName == "Piercing Strike" && !_hasStriked)
         {
             _hasStriked = true;
-            Message.Publish(new ShowHeroBattleThought(4, "Sometimes all you need to be immortal is to be unhittable"));
+            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial10-01".ToLocalized()));
         }
         else if (msg.CardName == "Dodge")
         {
-            Message.Publish(new ShowHeroBattleThought(4, "This fight just got interesting..."));
+            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial10-02".ToLocalized()));
         }
         else if (msg.CardName == "Acid Coating" && _hasAcidCoated)
         {
             _hasAcidCoated = true;
-            Message.Publish(new ShowHeroBattleThought(4, "What did you just get ON ME?!"));
+            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial10-03".ToLocalized()));
         }
     }
 
     protected override void Execute(WinBattleWithRewards msg) => _hasWon = true;
+
+    public string[] GetLocalizeTerms()
+        => new[]
+        {
+            "Thoughts/Tutorial10-01",
+            "Thoughts/Tutorial10-02",
+            "Thoughts/Tutorial10-03",
+        };
 }

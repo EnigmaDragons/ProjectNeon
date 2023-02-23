@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IBeginDragHandler, IEndDragHandler, ILocalizeTerms
 {
     [SerializeField] private BattleState battleState;
     [SerializeField] private RarityPresenter rarity;
@@ -692,15 +692,13 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             // This is crude. Reason for not being able to play a card should flow through
             var owner = _card.Owner;
             if (owner.IsDisabled())
-                Message.Publish(new ShowHeroBattleThought(owner.Id, "I'm disabled this turn. I can only discard, watch an ally play a card, or end the turn early."));
+                Message.Publish(new ShowHeroBattleThought(owner.Id, "Thoughts/Disabled".ToLocalized()));
             else if (_card.Cost.BaseAmount > _card.Owner.ResourceAmount(_card.Cost.ResourceType))
             {
-                var resourceType = _card.Cost.ResourceType.Name;
-                var impliedResourceType = resourceType.Equals("PrimaryResource")
-                    ? _card.Owner.PrimaryResourceType().Name
-                    : resourceType;
-                Message.Publish(new ShowHeroBattleThought(owner.Id,
-                    $"I don't have enough {impliedResourceType} to play this card right now."));
+                var impliedResourceType = _card.Cost.ResourceType.Name.Equals("PrimaryResource")
+                    ? _card.Owner.PrimaryResourceType().GetLocalizedName()
+                    : _card.Cost.ResourceType.GetLocalizedName();
+                Message.Publish(new ShowHeroBattleThought(owner.Id, string.Format("Thoughts/NotEnoughResources".ToLocalized(), impliedResourceType)));
             }
             else if (conditionNotMetHighlight.activeSelf && _card.UnhighlightCondition is { IsPresent: true })
                 Message.Publish(new ShowHeroBattleThought(owner.Id, _card.UnhighlightCondition.Value.UnhighlightMessage));
@@ -768,4 +766,11 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     }
 
     #endregion
+
+    public string[] GetLocalizeTerms()
+        => new []
+        {
+            "Thoughts/Disabled",
+            "Thoughts/NotEnoughResources"
+        };
 }

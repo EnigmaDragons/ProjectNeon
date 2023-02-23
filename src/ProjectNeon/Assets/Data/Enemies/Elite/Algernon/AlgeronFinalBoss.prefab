@@ -170,6 +170,7 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_renderer: {fileID: 679836717698549691}
   m_maskType: 0
+  _SortingLayer: 0
   _SortingLayerID: 1174610067
   _SortingOrder: 1
 --- !u!114 &2781154696882975553
@@ -305,19 +306,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   delay: 4.8
---- !u!114 &-4091854269393125197
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8153677309910649254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f77dae56b7b741aa8203184779468a63, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  showTarget: {fileID: 3878528272211595801}
 --- !u!1 &2452695546695901161
 GameObject:
   m_ObjectHideFlags: 0
@@ -451,6 +439,14 @@ PrefabInstance:
       propertyPath: mLocalizeTarget
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1463298674407503180, guid: 23e20641219fd9a488e449dac9050ca9, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 2380830528442900273, guid: 23e20641219fd9a488e449dac9050ca9, type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3328598920410703291, guid: 23e20641219fd9a488e449dac9050ca9, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -519,3 +515,16 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3328598920410703291, guid: 23e20641219fd9a488e449dac9050ca9, type: 3}
   m_PrefabInstance: {fileID: 2335944197082714216}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &-4091854269393125197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8153677309910649254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f77dae56b7b741aa8203184779468a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showTarget: {fileID: 3878528272211595801}

@@ -29,7 +29,7 @@ public sealed class MemberState : IStats
     private IStats GetCurrentStats() => _baseStats
         .Plus(_additiveMods.Where(x => x.IsActive).Select(x => x.Stats).ToArray())
         .Times(_multiplierMods.Where(x => x.IsActive).Select(x => x.Stats).ToArray())
-        .NotBelowZero()
+        .NotBelowZero(StatExtensions.StatsThatCanGoBelowZero)
         .WithWholeNumbersWhereExpected();
 
     private BattleCounter Counter(string name) => _counters.VerboseGetValue(name, n => $"Counter '{n}'");

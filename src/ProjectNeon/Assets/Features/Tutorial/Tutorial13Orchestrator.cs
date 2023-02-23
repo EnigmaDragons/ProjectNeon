@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Tutorial13Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, WinBattleWithRewards>
+public class Tutorial13Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, WinBattleWithRewards>, ILocalizeTerms
 {
     private const string _callerId = "Tutorial13Orchestrator";
 
@@ -42,4 +42,11 @@ public class Tutorial13Orchestrator : OnMessage<StartCardSetupRequested, CardRes
     }
 
     protected override void Execute(WinBattleWithRewards msg) => _hasWon = true;
+    public string[] GetLocalizeTerms() => new[]
+    {
+        "Thoughts/Tutorial13-01",
+        "Thoughts/Tutorial13-02",
+        "Thoughts/Tutorial13-03",
+        "Thoughts/Tutorial13-04",
+    };
 }

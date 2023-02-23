@@ -111,13 +111,13 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
 
     private void SetupVisualComponents(GameObject obj, Member member)
     {
-        obj.GetCharacterMouseHover(member.NameTerm).Init(member);
+        obj.InitCharacterMouseHover(member);
 
-        var stealth = obj.GetComponentInChildren<StealthTransparency>();
-        if (stealth == null)
+        var stealth = obj.GetComponentsInChildren<StealthTransparency>();
+        if (stealth == null || stealth.Length == 0)
             Log.Info($"{member.NameTerm.ToEnglish()} is missing a {nameof(StealthTransparency)}");
         else
-            stealth.Init(member);
+            stealth.ForEach(x => x.Init(member));
 
         var stealth2 = obj.GetComponentInChildren<CharacterCreatorStealthTransparency>();
         if (stealth2 == null)
@@ -130,6 +130,10 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
             Log.Info($"{member.NameTerm.ToEnglish()} is missing a {nameof(ShieldVisual)}");
         else
             shield.Init(member);
+        
+        var initables = obj.GetComponentsInChildren<MemberInitable>();
+        if (initables != null)
+            initables.ForEach(x => x.Init(member));
         
         InitRequired<TauntEffect>(member, obj);
         InitRequired<StunnedDisabledEffect>(member, obj);

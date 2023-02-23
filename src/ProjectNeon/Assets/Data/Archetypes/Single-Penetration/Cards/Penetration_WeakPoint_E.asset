@@ -177,10 +177,9 @@ MonoBehaviour:
     replacing: 0
   - type: 1
     battleEffect:
-      Id: 2876
-      EffectType: 22
-      Conditions:
-      - {fileID: 11400000, guid: a1323df62032feb4d8b5ac55fee032c2, type: 2}
+      Id: 0
+      EffectType: 30
+      Conditions: []
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -200,9 +199,9 @@ MonoBehaviour:
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 
+      Formula: 1.2 * Attack - Target[Armor]
       InterpolatePartialFormula:
-        EvaluationPartialFormula: 
+        EvaluationPartialFormula: 1.2 * Attack
         Prefix: 
         Suffix: 
       FlavorText:

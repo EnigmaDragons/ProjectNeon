@@ -6,5 +6,6 @@ public class OwnerIsProminent : StaticCardCondition
     public override bool ConditionMet(CardConditionContext ctx)
         => ctx.Card.Owner.IsProminent();
     
-    public override string Description => $"I cannot stealth this turn";
+    public override string Description => "Thoughts/Condition041".ToLocalized();
+    public override string[] GetLocalizeTerms() => new [] { "Thoughts/Condition041" };
 }

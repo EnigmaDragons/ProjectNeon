@@ -8,5 +8,6 @@ public class NoEnemiesWithEnoughMarks : StaticCardCondition
     public override bool ConditionMet(CardConditionContext ctx)
         => ctx.NoEnemy(x => x.State[TemporalStatType.Marked] >= requiredMarks);
     
-    public override string Description => "No enemy has enough marks";
+    public override string Description => "Thoughts/Condition022".ToLocalized();
+    public override string[] GetLocalizeTerms() => new [] { "Thoughts/Condition022" };
 }

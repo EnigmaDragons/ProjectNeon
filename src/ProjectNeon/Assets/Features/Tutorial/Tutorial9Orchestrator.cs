@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Tutorial9Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, WinBattleWithRewards>
+public class Tutorial9Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, WinBattleWithRewards>, ILocalizeTerms
 {
     private const string _callerId = "Tutorial9Orchestrator";
 
@@ -28,13 +28,20 @@ public class Tutorial9Orchestrator : OnMessage<StartCardSetupRequested, CardReso
         if ((msg.CardName == "Strike" || msg.CardName == "Charged Strike") && !_hasStriked)
         {
             _hasStriked = true;
-            Message.Publish(new ShowHeroBattleThought(4, "You are not nearly strong enough to hurt me with those attacks! HAHAHA!"));
+            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial09-01".ToLocalized()));
         }
         else if (msg.CardName == "True Damage")
         {
-            Message.Publish(new ShowHeroBattleThought(4, "Now you see the power of true damage! No armor, resistance, or shields can stop my blade!"));
+            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial09-02".ToLocalized()));
         }
     }
 
     protected override void Execute(WinBattleWithRewards msg) => _hasWon = true;
+
+    public string[] GetLocalizeTerms()
+        => new[]
+        {
+            "Thoughts/Tutorial09-01",
+            "Thoughts/Tutorial09-02",
+        };
 }

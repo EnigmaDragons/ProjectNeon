@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Tutorial2Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, CardResolutionStarted, ResolutionsFinished, WinBattleWithRewards>
+public class Tutorial2Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, CardResolutionStarted, ResolutionsFinished, WinBattleWithRewards>, ILocalizeTerms
 {
     private const string _callerId = "Tutorial2Orchestrator";
     
@@ -34,7 +34,7 @@ public class Tutorial2Orchestrator : OnMessage<StartCardSetupRequested, CardReso
             _timeTilPrompt = Math.Max(0, _timeTilPrompt - Time.deltaTime);
             if (_timeTilPrompt <= 0)
             {
-                Message.Publish(new ShowHeroBattleThought(4, "It is good that you don't know you can right-click & hold cards to swap them to your hero's Basic"));
+                Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial02-01".ToLocalized()));
                 _timeTilPrompt = _notSwappingToBasicPromptDelay;
             }
         }
@@ -59,7 +59,7 @@ public class Tutorial2Orchestrator : OnMessage<StartCardSetupRequested, CardReso
         if (msg.CardName == "Energize" && !_hasWorried)
         {
             _hasWorried = true;
-            Message.Publish(new ShowHeroBattleThought(4, "I hope I don't have to be worried about what you will use that energy for."));
+            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial02-01".ToLocalized()));
         }
         Message.Publish(new SetSuperFocusBasicControl(false));
     }
@@ -79,10 +79,18 @@ public class Tutorial2Orchestrator : OnMessage<StartCardSetupRequested, CardReso
                 _hasCommentedOnGainingResources = true;
                 Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyTechPoints, true, _callerId));
                 Message.Publish(new PunchYourself(BattleUiElement.EnemyTechPoints));
-                Message.Publish(new ShowHeroBattleThought(4, "I can gain energy too! Hah!"));
+                Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial02-01".ToLocalized()));
             }
         }
     }
 
     protected override void Execute(WinBattleWithRewards msg) => _hasWon = true;
+
+    public string[] GetLocalizeTerms()
+        => new[]
+        {
+            "Thoughts/Tutorial02-01",
+            "Thoughts/Tutorial02-02",
+            "Thoughts/Tutorial02-03",
+        };
 }

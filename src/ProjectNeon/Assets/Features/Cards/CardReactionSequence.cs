@@ -15,7 +15,7 @@ public sealed class CardReactionSequence
     public void Perform(string reactionName, Member source, Target target, ResourceQuantity xAmountPaid, ResourceQuantity amountPaid, ReactionTimingWindow timing)
     {
         MessageGroup.Start(cardActions.PlayAsReaction(source, target, xAmountPaid, amountPaid, reactionName, timing), 
-            () => Message.Publish(new CardResolutionFinished(reactionName, -1, NextPlayedCardId.Get(), source.Id)));
+            () => Message.Publish(new CardResolutionFinished(reactionName, -1, NextPlayedCardId.Get(), source.Id, -1)));
     }
 
     public CardReactionSequence() {}

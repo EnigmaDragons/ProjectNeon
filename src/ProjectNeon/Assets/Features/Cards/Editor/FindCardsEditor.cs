@@ -62,6 +62,9 @@ public class FindCardsEditor : EditorWindow
     
     //By Action Type
     private CardBattleActionType _actionType;
+    
+    //By Character Animation
+    private CharacterAnimationType _animationType;
     private string[] GetAllCardsWithActionType(CardBattleActionType actionType) =>
         GetAllInstances<CardType>()
             .Where(e => e?.Actions != null && !e.IsWip && e.Actions.Any(data => data?.Actions != null && data.Actions.Any(action => action?.Type == actionType)))
@@ -456,7 +459,21 @@ public class FindCardsEditor : EditorWindow
                 .Show();
             GUIUtility.ExitGUI();
         }
-
+        
+        DrawUILine();
+        _animationType = (CharacterAnimationType)EditorGUILayout.EnumPopup("CharacterAnimationType", _animationType);
+        if (GUILayout.Button("Find By Animation Type"))
+        {
+            var cards = GetAllInstances<CardType>()
+                .Where(e => e?.Actions != null && !e.IsWip && e.Actions.Any(data => data?.Actions != null && data.Actions.Any(action => action?.Type == CardBattleActionType.AnimateCharacter &&  action.CharacterAnimation2.Type == _animationType)))
+                .Select(e => e.name)
+                .ToArray();
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"{_animationType} - {cards.Length} uses", cards)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+        
         EditorGUILayout.EndScrollView();
     }
     

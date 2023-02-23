@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Tutorial7Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, WinBattleWithRewards>
+public class Tutorial7Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, WinBattleWithRewards>, ILocalizeTerms
 {
     private const string _callerId = "Tutorial7Orchestrator";
 
@@ -27,10 +27,11 @@ public class Tutorial7Orchestrator : OnMessage<StartCardSetupRequested, CardReso
     {
         if (msg.CardName == "Shockwave" && !_hasShowedTip)
         {
-            Message.Publish(new ShowHeroBattleThought(1, "I <b>told</b> you I didn't need to see you to hit you"));
+            Message.Publish(new ShowHeroBattleThought(1, "Thoughts/Tutorial07-01".ToLocalized()));
             _hasShowedTip = true;
         }
     }
 
     protected override void Execute(WinBattleWithRewards msg) => _hasWon = true;
+    public string[] GetLocalizeTerms() => new[] {"Thoughts/Tutorial07-01"};
 }

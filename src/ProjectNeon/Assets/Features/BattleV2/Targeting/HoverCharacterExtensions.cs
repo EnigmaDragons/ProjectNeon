@@ -18,4 +18,18 @@ public static class HoverCharacterExtensions
             result = hoverBasic3d;
         return result;
     }
+    
+    public static void InitCharacterMouseHover(this GameObject obj, Member member)
+    {
+        obj.GetCharacterMouseHover(member.NameTerm);
+        var hover2d = obj.GetComponentsInChildren<HoverSpriteCharacter2D>();
+        if (hover2d != null)
+            hover2d.ForEach(x => x.Init(member));
+        var hover3d = obj.GetComponentsInChildren<HoverSpriteCharacter3D>();
+        if (hover3d != null)
+            hover3d.ForEach(x => x.Init(member));
+        var hoverBasic3d = obj.GetComponentsInChildren<HoverBasicCharacter3D>();
+        if (hoverBasic3d != null)
+            hoverBasic3d.ForEach(x => x.Init(member));
+    }
 }

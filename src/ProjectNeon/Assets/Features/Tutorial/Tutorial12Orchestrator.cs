@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Tutorial12Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, WinBattleWithRewards, CardCycled, CardDiscarded>
+public class Tutorial12Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, WinBattleWithRewards, CardCycled, CardDiscarded>, ILocalizeTerms
 {
     private const string _callerId = "Tutorial12Orchestrator";
     
@@ -34,7 +34,7 @@ public class Tutorial12Orchestrator : OnMessage<StartCardSetupRequested, CardRes
             if (_timeTilPrompt <= 0)
             {
                 _timeTilPrompt = _notCyclingPromptDelay;
-                Message.Publish(new ShowHeroBattleThought(1, "I need to cycle my cards by dragging them over the cycle icon at the top of the screen."));
+                Message.Publish(new ShowHeroBattleThought(1, "Thoughts/Tutorial12-01".ToLocalized()));
             }
         }
         else if (_turn == 2 && !_cardDiscarded)
@@ -43,7 +43,7 @@ public class Tutorial12Orchestrator : OnMessage<StartCardSetupRequested, CardRes
             if (_timeTilPrompt <= 0)
             {
                 _timeTilPrompt = _notDiscardingPromptDelay;
-                Message.Publish(new ShowHeroBattleThought(1, "I can spend actions discarding cards by dragging them over the trash icon at the top of the screen."));
+                Message.Publish(new ShowHeroBattleThought(1, "Thoughts/Tutorial12-02".ToLocalized()));
             }
         }
     }
@@ -62,24 +62,24 @@ public class Tutorial12Orchestrator : OnMessage<StartCardSetupRequested, CardRes
         if (msg.CardName == "Quick Change" && !_quickChangePlayed)
         {
             _quickChangePlayed = true;
-            Message.Publish(new ShowHeroBattleThought(1, "That didn't even cost me an action."));
+            Message.Publish(new ShowHeroBattleThought(1, "Thoughts/Tutorial12-03".ToLocalized()));
         }
         else if (_gilgameshDodges > 0 && _gilgameshDodges != battleState.Members[4].State.GetCounterAmount(TemporalStatType.Dodge))
         {
             var dodgesRemaining = battleState.Members[4].State.GetCounterAmount(TemporalStatType.Dodge);
             if (dodgesRemaining > 0)
-                Message.Publish(new ShowHeroBattleThought(4, $"{dodgesRemaining} dodge{(dodgesRemaining == 1 ? "" : "s")} to go."));
+                Message.Publish(new ShowHeroBattleThought(4, string.Format("Thoughts/Tutorial12-04".ToLocalized(), dodgesRemaining)));
             else
-                Message.Publish(new ShowHeroBattleThought(4, $"No more dodges... impressive."));
+                Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial12-05".ToLocalized()));
         }
         else if (msg.CardName == "Virus" && !_virusLine)
         {
             _virusLine = true;
-            Message.Publish(new ShowHeroBattleThought(4, "Did I just break all your cards... HAHAHA!"));
+            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial12-06".ToLocalized()));
         }
         else if (msg.CardName == "Aegis")
         {
-            Message.Publish(new ShowHeroBattleThought(4, "Using Aegis to save you from my virus?"));
+            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial12-07".ToLocalized()));
         }
         if (_gilgameshDodges > 0)
             _gilgameshDodges =  battleState.Members[4].State.GetCounterAmount(TemporalStatType.Dodge);
@@ -95,7 +95,7 @@ public class Tutorial12Orchestrator : OnMessage<StartCardSetupRequested, CardRes
         if (!_cardCycled)
         {
             _cardCycled = true;
-            Message.Publish(new ShowHeroBattleThought(4, "I can't believe you found a way around my plan!"));
+            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial12-08".ToLocalized()));
         }
     }
 
@@ -104,7 +104,21 @@ public class Tutorial12Orchestrator : OnMessage<StartCardSetupRequested, CardRes
         if (!_cardDiscarded)
         {
             _cardDiscarded = true;
-            Message.Publish(new ShowHeroBattleThought(4, "Getting rid of dead weight I see."));
+            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial12-09".ToLocalized()));
         }
     }
+
+    public string[] GetLocalizeTerms()
+        => new[]
+        {
+            "Thoughts/Tutorial12-01",
+            "Thoughts/Tutorial12-02",
+            "Thoughts/Tutorial12-03",
+            "Thoughts/Tutorial12-04",
+            "Thoughts/Tutorial12-05",
+            "Thoughts/Tutorial12-06",
+            "Thoughts/Tutorial12-07",
+            "Thoughts/Tutorial12-08",
+            "Thoughts/Tutorial12-09",
+        };
 }

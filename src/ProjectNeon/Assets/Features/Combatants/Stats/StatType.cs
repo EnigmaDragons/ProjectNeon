@@ -122,4 +122,11 @@ public static class StatExtensions
 
     public static bool IsScalingStat(string stat) => _map[stat];
     public static bool IsPositive(string stat) => _map[stat];
+
+    public static bool CanGoBelowZero(string stat) => StatsThatCanGoBelowZero.Any(x => x.ToString() == stat);
+    public static StatType[] StatsThatCanGoBelowZero = new[]
+        {
+            StatType.Armor,
+            StatType.Resistance
+        };
 }

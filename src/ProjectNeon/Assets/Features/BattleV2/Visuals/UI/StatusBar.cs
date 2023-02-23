@@ -92,6 +92,8 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>, ILocalizeTerms
         AddStatusIconIfApplicable(statuses, TemporalStatType.Dodge, true, v => string.Format("Tooltips/DodgeAttacks".ToLocalized(), v.ToString()));
         AddStatusIconIfApplicable(statuses, StatType.Armor, true, v => string.Format("Tooltips/ReduceAttackDamage".ToLocalized(), v.ToString()));
         AddStatusIconIfApplicable(statuses, StatType.Resistance, true, v => string.Format("Tooltips/ReduceMagicDamage".ToLocalized(), v.ToString()));
+        AddNegativeStatusIconIfApplicable(statuses, StatType.Armor, true, v => string.Format("Tooltips/IncreaseAttackDamage".ToLocalized(), v.ToString()));
+        AddNegativeStatusIconIfApplicable(statuses, StatType.Resistance, true, v => string.Format("Tooltips/IncreaseMagicDamage".ToLocalized(), v.ToString()));
         AddStatusIconIfApplicable(statuses, TemporalStatType.DoubleDamage, true, v => string.Format("Tooltips/DoubleDamage".ToLocalized(), v.ToString()));
         AddBuffAmountIconIfApplicable(statuses, StatType.Attack);
         AddBuffAmountIconIfApplicable(statuses, StatType.Magic);        
@@ -197,6 +199,14 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>, ILocalizeTerms
         var text = showNumber ? value.GetCeilingIntString() : string.Empty;
         if (value > 0)
             statuses.Add(new CurrentStatusValue { Type = stat.GetString(), Icon = icons[stat].Icon, Text = text, Tooltip =  makeTooltip(value)});
+    }
+    
+    private void AddNegativeStatusIconIfApplicable(List<CurrentStatusValue> statuses, StatType stat, bool showNumber, Func<float, string> makeTooltip)
+    {
+        var value = _member.State[stat];
+        var text = showNumber ? value.GetCeilingIntString() : string.Empty;
+        if (value < 0)
+            statuses.Add(new CurrentStatusValue { Type = stat.GetString(), Icon = icons[stat].Icon, Text = text, Tooltip = makeTooltip(-value)});
     }
 
     protected abstract void UpdateStatuses(List<CurrentStatusValue> statuses);

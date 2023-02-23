@@ -19,5 +19,6 @@ public class NoEnemiesWouldDieWithin3TurnsFromDamageOverTime : StaticCardConditi
             return damage < enemy.CurrentHp();
         });
     
-    public override string Description => "No enemies within killing range";
+    public override string Description => "Thoughts/Condition023".ToLocalized();
+    public override string[] GetLocalizeTerms() => new [] { "Thoughts/Condition023" };
 }

@@ -1,5 +1,6 @@
 
 using System;
+using System.Linq;
 using UnityEngine;
 
 public class AdjustStatsFormula : Effect
@@ -75,7 +76,7 @@ public class AdjustStatsFormula : Effect
                 BattleLog.Write($"{m.UnambiguousEnglishName} prevented {stat} debuff with an Aegis");
             else
             {                
-                var finalAmount = isDebuff 
+                var finalAmount = isDebuff && !StatExtensions.CanGoBelowZero(stat)
                     ? Mathf.Clamp(formulaAmount, -CurrentStatAmount(m, stat), 0) 
                     : formulaAmount;
                 BattleLog.Write($"{m.UnambiguousEnglishName}'s {stat} is adjusted by {finalAmount}");

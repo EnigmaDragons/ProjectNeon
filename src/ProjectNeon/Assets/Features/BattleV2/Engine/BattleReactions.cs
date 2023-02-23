@@ -35,7 +35,7 @@ public class BattleReactions
         if (r.Target.Members.Any())
             r.ReactionSequence.Perform(r.Name, r.Source, r.Target, ResourceQuantity.None, ResourceQuantity.None, r.Timing);
         else
-            Message.Publish(new CardResolutionFinished(r.Name, -1, NextPlayedCardId.Get(), r.Source.Id));
+            Message.Publish(new CardResolutionFinished(r.Name, -1, NextPlayedCardId.Get(), r.Source.Id, -1));
     }
 
     public ProposedReaction DequeueNextReactionCard() => _cardReactions.Dequeue();

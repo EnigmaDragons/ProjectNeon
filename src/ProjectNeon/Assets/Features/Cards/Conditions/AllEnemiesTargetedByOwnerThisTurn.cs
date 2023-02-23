@@ -14,5 +14,6 @@ public class AllEnemiesTargetedByOwnerThisTurn : StaticCardCondition
                             x => x.Id == enemy.Id))
                     && tags.All(x => card.Card.Tags.Contains(x))));
 
-    public override string Description => $"All enemies have been targeted by owner this turn{(tags != null && tags.Any() ? $" with these tags: {string.Join(", ", tags.Select(x => x.ToString()))}" : "")}";
+    public override string Description => "Thoughts/Condition006".ToLocalized();
+    public override string[] GetLocalizeTerms() => new [] { "Thoughts/Condition006" };
 }
