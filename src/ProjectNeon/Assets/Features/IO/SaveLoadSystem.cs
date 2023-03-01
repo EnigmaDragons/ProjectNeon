@@ -219,7 +219,8 @@ public sealed class SaveLoadSystem : ScriptableObject
     
     private bool LoadFailedReason(string reason)
     {
-        Log.Error($"Load Failed - {reason}");
+        if (!reason.Equals("Unknown Adventure 8"))
+            Log.Error($"Load Failed - {reason}");
         return false;
     }
 }
