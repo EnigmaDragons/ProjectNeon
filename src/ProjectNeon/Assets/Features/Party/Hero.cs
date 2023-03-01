@@ -130,7 +130,7 @@ public class Hero
         state.AllCards.GetMap(),
         state.Party.Credits, state.Party.Credits, new Dictionary<int, EnemyType>(), () => state.GetNextCardId(),
         new PlayedCardSnapshot[0],
-        state.OwnerTints, state.OwnerBusts, false, ReactionTimingWindow.Default, new EffectScopedData());
+        state.OwnerTints, state.OwnerBusts, false, ReactionTimingWindow.Default, new EffectScopedData(), new DoubleDamageContext(m, false));
 
     private Member WithEquipmentState(Member m, EffectContext ctx)
     {

@@ -20,7 +20,8 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
     [SerializeField] private AllStageSegments allStageSegments;
     [SerializeField] private FloatReference minDistanceBetweenNodes = new FloatReference(0f);
     [SerializeField] private CurrentTheme currentTheme;
-
+    [SerializeField] private BoolVariable skippingStory;
+ 
     //Nodes
     [SerializeField] private MapNodeGameObject3 combatNode;
     [SerializeField] private MapNodeGameObject3 eliteCombatNode;
@@ -77,7 +78,7 @@ public class MapSpawner5 : OnMessage<RegenerateMapRequested, SkipSegment>
             try
             {
                 var obj = Instantiate(GetNodePrefab(x.Type, x.Corp), mapNodesParent.transform);
-                obj.InitForV5(x, gameMap, allStageSegments.GetStageSegmentById(x.PresetStageId).Value, fx, x.AdvancesAdventure, _ => Message.Publish(new ContinueTraveling()));
+                obj.InitForV5(x, gameMap, allStageSegments.GetStageSegmentById(x.PresetStageId).Value, fx, x.AdvancesAdventure, _ => Message.Publish(new ContinueTraveling()), skippingStory);
                 var rect = (RectTransform) obj.transform;
                 rect.pivot = new Vector2(0.5f, 0.5f);
                 rect.anchoredPosition = x.Position;

@@ -7,7 +7,7 @@ public class TargetHasBeenTargetedByOwnerThisTurnHighlight : StaticTargetedCardC
     [SerializeField] private CardTag[] tags;
 
     public override bool ConditionMet(TargetedCardConditionContext ctx)
-        => ctx.TargetIs(enemy => ctx.BattleState.CurrentTurnCardPlays().Any(
+        => inversed != ctx.TargetIs(enemy => ctx.BattleState.CurrentTurnCardPlays().Any(
             card => card.Member.Id == ctx.Card.Owner.Id
                     && card.Targets.Any(
                         target => target.Members.Any(

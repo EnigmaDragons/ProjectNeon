@@ -140,7 +140,7 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         var ctx = new EffectContext(msg.Source, msg.Target, msg.Card, msg.XPaidAmount, msg.PaidAmount, partyAdventureState, state.PlayerState, state.RewardState,
             state.Members, state.PlayerCardZones, msg.Preventions, new SelectionContext(), allCards.GetMap(), state.CreditsAtStartOfBattle, 
             state.Party.Credits, state.Enemies.ToDictionary(x => x.Member.Id, x => (EnemyType)x.Enemy), () => state.GetNextCardId(), 
-            state.CurrentTurnCardPlays(), state.OwnerTints, state.OwnerBusts, msg.IsReaction, msg.Timing, state.EffectScopedData);
+            state.CurrentTurnCardPlays(), state.OwnerTints, state.OwnerBusts, msg.IsReaction, msg.Timing, state.EffectScopedData, msg.DoubleDamage);
         var battleSnapshotBefore = state.GetSnapshot();
         var res = AllEffects.Apply(msg.Effect, ctx);
         
@@ -167,7 +167,7 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         var ctx = new EffectContext(msg.Source, new NoTarget(), msg.Card, ResourceQuantity.None, msg.PaidAmount, partyAdventureState, state.PlayerState, state.RewardState,
             state.Members, state.PlayerCardZones, new UnpreventableContext(), new SelectionContext(), allCards.GetMap(), state.CreditsAtStartOfBattle, 
             state.Party.Credits, state.Enemies.ToDictionary(x => x.Member.Id, x => (EnemyType)x.Enemy), () => state.GetNextCardId(), 
-            state.CurrentTurnCardPlays(), state.OwnerTints, state.OwnerBusts, msg.IsReaction, msg.Timing, state.EffectScopedData);
+            state.CurrentTurnCardPlays(), state.OwnerTints, state.OwnerBusts, msg.IsReaction, msg.Timing, state.EffectScopedData, new DoubleDamageContext(msg.Source, false));
         if (!msg.Condition.IsPresent || msg.Condition.Value.GetShouldNotApplyReason(ctx).IsMissing)
         {
             var details = enemies.Spawn(msg.Enemy.ForStage(state.Stage), msg.Offset, msg.IsReplacing ? msg.Source : Maybe<Member>.Missing());

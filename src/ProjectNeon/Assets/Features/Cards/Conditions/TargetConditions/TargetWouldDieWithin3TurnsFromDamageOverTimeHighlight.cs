@@ -5,7 +5,7 @@ using UnityEngine;
 public class TargetWouldDieWithin3TurnsFromDamageOverTimeHighlight : StaticTargetedCardCondition
 {
     public override bool ConditionMet(TargetedCardConditionContext ctx)
-        => ctx.TargetIs(enemy =>
+        => inversed != ctx.TargetIs(enemy =>
         {
             var damage = 0;
             var dots = enemy.State.DamageOverTimes().ToArray();
@@ -14,8 +14,8 @@ public class TargetWouldDieWithin3TurnsFromDamageOverTimeHighlight : StaticTarge
                 var isVulnerable = enemy.State[TemporalStatType.Vulnerable] - 1 - i > 0;
                 var dotsThisTurn = dots.Where(x => x.RemainingTurns.Value < 0 || x.RemainingTurns.Value > i).ToArray();
                 damage += dotsThisTurn.Sum(x =>
-                    isVulnerable ? Mathf.CeilToInt(x.Amount.Value * 1.33f) : x.Amount.Value);
+                    isVulnerable ? Mathf.CeilToInt(x.Amount.Value * 1.5f) : x.Amount.Value);
             }
-            return damage < enemy.CurrentHp();
+            return damage >= enemy.CurrentHp();
         });
 }
