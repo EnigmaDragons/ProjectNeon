@@ -39,6 +39,7 @@ public static class InterpolatedCardDescriptions
         }
         catch (Exception)
         {
+            Log.Error($"{card.Name} Description is not Translated Correctly into {LocalizationManager.CurrentLanguage}");
             return $"{card.Name} Description is not Translated Correctly into {LocalizationManager.CurrentLanguage}";
         }
 
