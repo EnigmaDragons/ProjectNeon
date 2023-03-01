@@ -22,6 +22,9 @@ public sealed class FmodGameAudioManager : ScriptableObject
 
     public void Init()
     {
+        // Calling this to get everything rolling
+        var _ = FMODUnity.RuntimeManager.StudioSystem;
+        
         MASTER = FMODUnity.RuntimeManager.GetBus("bus:/MASTER");
         
         MUSIC = FMODUnity.RuntimeManager.GetBus("bus:/Master/MUSIC");
