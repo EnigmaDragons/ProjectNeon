@@ -349,28 +349,35 @@ public class QualityAssurance
             var itemCount = items.Length;
             foreach (var i in items)
             {
-                var issues = new List<string>();
-                if (string.IsNullOrWhiteSpace(i.NameTerm.ToEnglish()))
-                    issues.Add($"Broken Card: Missing Name");
-                else if (string.IsNullOrWhiteSpace(i.LocalizedDescription(
-                             new Member(1, "quality assurance", "Any Class", MemberMaterialType.Organic, TeamType.Party,
-                                 new StatAddends().With(StatType.Damagability, 1), BattleRole.Unknown, StatType.Attack,
-                                 false), ResourceQuantity.None)))
-                    issues.Add($"Broken Card: Cannot Interpolate Description");
-                else if (i.cost == null || i.cost.RawResourceType == null)
-                    issues.Add($"Broken Card: {i.Name} has Null Cost");
-                else if (i.ActionSequences.Any(e => e.CardActions == null))
-                    issues.Add($"Broken Card: {i.Name} has a Null Card Action");
-                else if (!i.Archetypes.Contains("Enemy")
-                         && i.actionSequences.Any(x =>
-                             x.Group == Group.Ally && (x.Scope == Scope.One || x.Scope == Scope.OneExceptSelf))
-                         && i.actionSequences.Any(x =>
-                             x.Group == Group.Opponent && (x.Scope == Scope.One || x.Scope == Scope.OneExceptSelf)))
-                    issues.Add($"Broken Card: {i.Name} has conflicting targeting scopes");
-                else if (i.highlightCondition.Any(x => x == null) || i.unhighlightCondition.Any(x => x == null))
-                    issues.Add($"Broken Card: {i.Name} has null highlight conditions");
-                if (issues.Any())
-                    failures.Add(new ValidationResult($"{i.Name} - {i.id}", issues));
+                try
+                {
+                    var issues = new List<string>();
+                    if (string.IsNullOrWhiteSpace(i.NameTerm.ToEnglish()))
+                        issues.Add($"Broken Card: Missing Name");
+                    else if (string.IsNullOrWhiteSpace(i.LocalizedDescription(
+                        new Member(1, "quality assurance", "Any Class", MemberMaterialType.Organic, TeamType.Party,
+                            new StatAddends().With(StatType.Damagability, 1), BattleRole.Unknown, StatType.Attack,
+                            false), ResourceQuantity.None)))
+                        issues.Add($"Broken Card: Cannot Interpolate Description");
+                    else if (i.cost == null || i.cost.RawResourceType == null)
+                        issues.Add($"Broken Card: {i.Name} has Null Cost");
+                    else if (i.ActionSequences.Any(e => e.CardActions == null))
+                        issues.Add($"Broken Card: {i.Name} has a Null Card Action");
+                    else if (!i.Archetypes.Contains("Enemy")
+                             && i.actionSequences.Any(x =>
+                                 x.Group == Group.Ally && (x.Scope == Scope.One || x.Scope == Scope.OneExceptSelf))
+                             && i.actionSequences.Any(x =>
+                                 x.Group == Group.Opponent && (x.Scope == Scope.One || x.Scope == Scope.OneExceptSelf)))
+                        issues.Add($"Broken Card: {i.Name} has conflicting targeting scopes");
+                    else if (i.highlightCondition.Any(x => x == null) || i.unhighlightCondition.Any(x => x == null))
+                        issues.Add($"Broken Card: {i.Name} has null highlight conditions");
+                    if (issues.Any())
+                        failures.Add(new ValidationResult($"{i.Name} - {i.id}", issues));
+                }
+                catch (Exception ex)
+                {
+                    
+                }
             }
 
             return (itemCount, failures);

@@ -78,7 +78,7 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
             });
     }
 
-    public void InitForV5(MapNode3 mapData, CurrentMapSegmentV5 gameMap, StageSegment stageSegment, AllStaticGlobalEffects allGlobalEffects, bool isEnlarged, Action<Transform> onMidPointArrive)
+    public void InitForV5(MapNode3 mapData, CurrentMapSegmentV5 gameMap, StageSegment stageSegment, AllStaticGlobalEffects allGlobalEffects, bool isEnlarged, Action<Transform> onMidPointArrive, BoolVariable skippingStory)
     {
         MapData = mapData;
         ArrivalSegment = stageSegment;
@@ -101,6 +101,10 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
             {
                 Action action = () =>
                 {
+                    if (mapData.Type != MapNodeType.MainStory && gameMap.CurrentChoices.Any(n => n.Type == MapNodeType.MainStory))
+                        skippingStory.SetValue(true);
+                    else if (mapData.Type == MapNodeType.MainStory)
+                        skippingStory.SetValue(false);
                     gameMap.CurrentNode = mapData;
                     gameMap.CurrentChoices.Remove(mapData);
                     Message.Publish(new TravelToNode

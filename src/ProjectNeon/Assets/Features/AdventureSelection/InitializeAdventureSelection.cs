@@ -19,6 +19,7 @@ public class InitializeAdventureSelection : MonoBehaviour
     [SerializeField] private int adventuresPerPage = 3;
     [SerializeField] private Button nextPageButton;
     [SerializeField] private Button prevPageButton;
+    [SerializeField] private BoolVariable skippingStory;
 
     private int _page;
 
@@ -63,6 +64,7 @@ public class InitializeAdventureSelection : MonoBehaviour
         if (adventure.IsV5)
             adventureProgress.AdventureProgress = adventureProgress5;
 
+        skippingStory.SetValue(false);
         currentAdventure.Adventure = adventure;
         adventureProgress.AdventureProgress.Init(adventure, 0);
         CurrentGameData.Write(s =>

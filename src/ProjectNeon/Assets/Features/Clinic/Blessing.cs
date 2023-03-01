@@ -36,7 +36,8 @@ public class Blessing
             state.OwnerBusts,
             true,
             ReactionTimingWindow.FirstCause, 
-            new EffectScopedData());
+            new EffectScopedData(),
+            new DoubleDamageContext(target.Members[0], false));
         AllEffects.Apply(Effect, ctx);
     }
 }
