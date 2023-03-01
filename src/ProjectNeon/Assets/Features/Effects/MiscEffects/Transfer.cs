@@ -25,7 +25,10 @@ public class Transfer : Effect
         {
             var amount = -_calcAmount(ctx, m);
             if (amount < 0 && statType == TemporalStatType.HP || statType == TemporalStatType.Shield)
+            {
                 ctx.Preventions.RecordPreventionTypeEffect(PreventionType.Dodge, m.AsArray());
+                amount = ctx.DoubleDamage.WithDoubleDamage(amount);
+            }
             else if (amount < 0)
                 ctx.Preventions.RecordPreventionTypeEffect(PreventionType.Aegis, m.AsArray());
             

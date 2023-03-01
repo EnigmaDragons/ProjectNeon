@@ -14,9 +14,9 @@ public class NoEnemiesWouldDieWithin3TurnsFromDamageOverTime : StaticCardConditi
                 var isVulnerable = enemy.State[TemporalStatType.Vulnerable] - 1 - i > 0;
                 var dotsThisTurn = dots.Where(x => x.RemainingTurns.Value < 0 || x.RemainingTurns.Value > i).ToArray();
                 damage += dotsThisTurn.Sum(x =>
-                    isVulnerable ? Mathf.CeilToInt(x.Amount.Value * 1.33f) : x.Amount.Value);
+                    isVulnerable ? Mathf.CeilToInt(x.Amount.Value * 1.5f) : x.Amount.Value);
             }
-            return damage < enemy.CurrentHp();
+            return damage >= enemy.CurrentHp();
         });
     
     public override string Description => "Thoughts/Condition023".ToLocalized();

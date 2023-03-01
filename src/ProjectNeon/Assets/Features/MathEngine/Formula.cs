@@ -14,7 +14,13 @@ public static class Formula
     private static readonly Dictionary<StatType, string> BaseStatSearchTerms = StatTypes.ToDictionary(t => t, t => $"Base[{t}]");
     
     private static int RoundUp(float f) => f > 0 ? Mathf.CeilToInt(f) : Mathf.FloorToInt(f);
-    
+
+    public static int EvaluateToIntWithDoubleDamage(FormulaContext ctx, string expression)
+    {
+        var result = EvaluateToInt(ctx, expression);
+        return ctx.Source.Stats[TemporalStatType.DoubleDamage] > 0 ? result * 2 : result;
+    }
+
     public static int EvaluateToInt(MemberStateSnapshot src, string expression, ResourceQuantity xAmountPaid, EffectScopedData scopedData) 
         => EvaluateToInt(new FormulaContext(src, Maybe<MemberState>.Missing(), xAmountPaid, scopedData), expression);
     

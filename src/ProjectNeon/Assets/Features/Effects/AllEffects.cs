@@ -54,7 +54,7 @@ public static class AllEffects
         { EffectType.DuplicateStatesOfTypeToRandomEnemy, e => new DuplicateStatesOfTypeToRandomEnemy(e.StatusTag)},
         { EffectType.DealTrueDamageFormula, e => new FullContextEffect((ctx, _, m) => 
             BattleLoggedItem(amount => $"{amount} true damage dealt to {m.NameTerm.ToEnglish()}", 
-                m.TakeTrueDamage(Formula.EvaluateToInt(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount, ctx.ScopedData))), e.DurationFormula)},
+                m.TakeTrueDamage(ctx.DoubleDamage.WithDoubleDamage(Formula.EvaluateToInt(new FormulaContext(ctx.SourceStateSnapshot, m, ctx.XPaidAmount, ctx.ScopedData), e.Formula)))), e.DurationFormula)},
         { EffectType.ApplyAdditiveStatInjury, e => new AegisPreventable(new ApplyStatInjury(StatOperation.Add, e.EffectScope, e.TotalAmount, e.FlavorText), "Injury") },
         { EffectType.ApplyMultiplicativeStatInjury, e => new AegisPreventable(new ApplyStatInjury(StatOperation.Multiply, e.EffectScope, e.TotalAmount, e.FlavorText), "Injury") },
         { EffectType.Kill, e => new SimpleEffect(m => m.SetHp(0)) },
@@ -67,9 +67,9 @@ public static class AllEffects
             new PlayBonusCardAfterNoCardPlayedInXTurns(m.MemberId, e.BonusCardType, e.TotalIntAmount, e.StatusDetail)))},
         { EffectType.PlayBonusChainCard, e => new SimpleEffect(m => m.ApplyBonusCardPlayer(new PlayBonusChainCard(m.MemberId, e.BonusCardType, e.StatusDetail)))},
         { EffectType.HealFormula, e => new FullContextEffect((ctx, _, m) => m.GainHp(Formula.EvaluateToInt(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount, ctx.ScopedData)), e.DurationFormula) },
-        { EffectType.AttackFormula, e => new Attack(new PhysicalDamage((ctx, m) => Formula.EvaluateToInt(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount, ctx.ScopedData)), e.HitsRandomTargetMember)},
-        { EffectType.MagicAttackFormula, e => new MagicAttack(new SpellDamage((ctx, m) => Formula.EvaluateToInt(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount, ctx.ScopedData)), e.HitsRandomTargetMember)},
-        { EffectType.TrueDamageAttackFormula, e => new TrueDamageAttack(new TrueDamageCalculation((ctx, m) => Formula.EvaluateToInt(ctx.SourceStateSnapshot, m.State, e.Formula, ctx.XPaidAmount, ctx.ScopedData)), e.HitsRandomTargetMember)},
+        { EffectType.AttackFormula, e => new Attack(new PhysicalDamage((ctx, m) => ctx.DoubleDamage.WithDoubleDamage(Formula.EvaluateToInt(new FormulaContext(ctx.SourceStateSnapshot, m.State, ctx.XPaidAmount, ctx.ScopedData), e.Formula))), e.HitsRandomTargetMember)},
+        { EffectType.MagicAttackFormula, e => new MagicAttack(new SpellDamage((ctx, m) => ctx.DoubleDamage.WithDoubleDamage(Formula.EvaluateToInt(new FormulaContext(ctx.SourceStateSnapshot, m.State, ctx.XPaidAmount, ctx.ScopedData), e.Formula))), e.HitsRandomTargetMember)},
+        { EffectType.TrueDamageAttackFormula, e => new TrueDamageAttack(new TrueDamageCalculation((ctx, m) => ctx.DoubleDamage.WithDoubleDamage(Formula.EvaluateToInt(new FormulaContext(ctx.SourceStateSnapshot, m.State, ctx.XPaidAmount, ctx.ScopedData), e.Formula))), e.HitsRandomTargetMember)},
         { EffectType.AddToXCostTransformer, e => new EffectAddToXCostTransformer(e) },
         { EffectType.CycleAllCardsInHand, e => new FullContextEffect((ctx, _) =>
             {
@@ -110,7 +110,7 @@ public static class AllEffects
         { EffectType.AdjustCardCosts, e => new AdjustCardCosts(e.EffectScope, e.Formula)},
         { EffectType.Drain, e => new Transfer(e.EffectScope.Value.MaybeEnumVal<TemporalStatType>(), 
             (ctx, m) => BattleLoggedItem(v => $"{m.NameTerm.ToEnglish()} {GainedOrLostTerm(v)} {v} {e.EffectScope.Value}", 
-                Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, e.Formula, ctx.XPaidAmount, ctx.ScopedData))) },
+                Formula.EvaluateToInt(new FormulaContext(ctx.SourceSnapshot.State, m.State, ctx.XPaidAmount, ctx.ScopedData), e.Formula))) },
         { EffectType.AdjustOwnersPrimaryResourceBasedOnTargetShieldSum, 
             e => new FullContextEffect((ctx, t) => ctx.Source.State.AdjustPrimaryResource((ctx.Target.TotalShields() 
                 * Formula.EvaluateRaw(ctx.SourceSnapshot.State, ctx.Source.State, e.Formula, ctx.XPaidAmount, ctx.ScopedData)).CeilingInt()))},

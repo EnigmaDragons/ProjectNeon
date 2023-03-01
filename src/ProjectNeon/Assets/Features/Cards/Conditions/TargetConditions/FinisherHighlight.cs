@@ -5,7 +5,7 @@ using UnityEngine;
 public class FinisherHighlight : StaticTargetedCardCondition
 {
     public override bool ConditionMet(TargetedCardConditionContext ctx) 
-        => Evaluate(ctx) && ctx.BattleState.NumberOfCardPlaysRemainingThisTurn == 1;
+        => inversed != (Evaluate(ctx) && ctx.BattleState.NumberOfCardPlaysRemainingThisTurn == 1);
 
     public static bool Evaluate(TargetedCardConditionContext ctx)
     {

@@ -39,7 +39,7 @@ public static class BattleCardExecution
         {
             var seq = sequences[i];
             var selectedTarget = sequenceTargets[i];
-            var ctx = new CardActionContext(card.Owner, selectedTarget, seq.Group, seq.Scope, xPaidAmount, paidAmount, battleStateSnapshot, card);
+            var ctx = new CardActionContext(card.Owner, selectedTarget, seq.Group, seq.Scope, xPaidAmount, paidAmount, battleStateSnapshot, card, new DoubleDamageContext(card.Owner, card.Owner.HasDoubleDamage()));
             var firstSequenceWithABattleEffectWithChosenTarget = i == firstSequenceWithABattleEffectWithChosenTargetIndex;
             payloads.Add(seq.cardActions.Play(ctx, firstSequenceWithABattleEffectWithChosenTarget)); 
         }
@@ -81,14 +81,13 @@ public static class BattleCardExecution
     // Individual Actions
     private static IPayloadProvider Play(this CardActionV2 action, bool isFirstBattleEffectWithChosenTarget, StatusEffectContext ctx)
         => Play(action, isFirstBattleEffectWithChosenTarget, new CardActionContext(ctx.Source, new Single(ctx.Member), 
-            Group.Self, Scope.One, ResourceQuantity.None, ResourceQuantity.None, new BattleStateSnapshot(), Maybe<Card>.Missing()));
+            Group.Self, Scope.One, ResourceQuantity.None, ResourceQuantity.None, new BattleStateSnapshot(), Maybe<Card>.Missing(), new DoubleDamageContext(ctx.Source, false)));
     
     private static IPayloadProvider Play(this CardActionV2 action, bool isFirstBattleEffectOfChosenTarget, CardActionContext ctx)
     {
         var type = action.Type;
         if (type == CardBattleActionType.Battle)
-            return new SinglePayload(new ApplyBattleEffect(isFirstBattleEffectOfChosenTarget, action.BattleEffect, ctx.Source, ctx.Target, ctx.Card, ctx.XAmountPaid, ctx.AmountPaid, ctx.Preventions, ctx.Group, ctx.Scope, isReaction: false, ReactionTimingWindow.FirstCause));
-        
+            return new SinglePayload(new ApplyBattleEffect(isFirstBattleEffectOfChosenTarget, action.BattleEffect, ctx.Source, ctx.Target, ctx.Card, ctx.XAmountPaid, ctx.AmountPaid, ctx.Preventions, ctx.Group, ctx.Scope, isReaction: false, ReactionTimingWindow.FirstCause, ctx.DoubleDamage));
         if (type == CardBattleActionType.SpawnEnemy)
             return new SinglePayload(new SpawnEnemy(action.EnemyToSpawn, action.EnemySpawnOffset, ctx.Source, action.Replacing, ctx.Card, ctx.XAmountPaid, ctx.AmountPaid, false, ReactionTimingWindow.Default, new Maybe<EffectCondition>(action.EnemySpawnCondition)));
         if (type == CardBattleActionType.AnimateCharacter)
@@ -129,7 +128,7 @@ public static class BattleCardExecution
         var type = action.Type;
         if (type == CardBattleActionType.Battle)
             return new SinglePayload(new ApplyBattleEffect(isFirstBattleEffect, action.BattleEffect, source, target, Maybe<Card>.Missing(), xAmountPaid, amountPaid,
-                new PreventionContextMut(target), isReaction: true, timing));
+                new PreventionContextMut(target), isReaction: true, timing, new DoubleDamageContext(source, false)));
         if (type == CardBattleActionType.AnimateCharacter)
             return new SinglePayload(PayloadData.ExactMatch(new CharacterAnimationRequested2(source.Id, action.CharacterAnimation2.Type)
             {

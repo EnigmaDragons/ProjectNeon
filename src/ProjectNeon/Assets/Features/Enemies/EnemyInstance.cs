@@ -119,7 +119,7 @@ public class EnemyInstance : EnemyType
             state.RewardState, state.Members, state.PlayerCardZones, new UnpreventableContext(), new SelectionContext(), new Dictionary<int, CardTypeData>(), 
             state.CreditsAtStartOfBattle, state.Party.Credits, state.Enemies.ToDictionary(x => x.Member.Id, x => (EnemyType)x.Enemy), 
             () => state.GetNextCardId(), new PlayedCardSnapshot[0], new Dictionary<int, Color>(), new Dictionary<int, Sprite>(), 
-            true, ReactionTimingWindow.Default, new EffectScopedData());
+            true, ReactionTimingWindow.Default, new EffectScopedData(), new DoubleDamageContext(m, false));
         m.State.InitResourceAmount(_resourceType, _startingResourceAmount);
         m.State.ApplyPersistentState(
             new EndOfTurnResourceGainPersistentState(new ResourceQuantity { ResourceType = _resourceType.Name, Amount = _resourceGainPerTurn}, m, state.Party));
