@@ -1,13 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public class AdjustCounterFormula : Effect
+public static class EffectScopesSentiments
 {
-    private readonly EffectData _e;
-
-    public AdjustCounterFormula(EffectData e) => _e = e;
-
-    private readonly HashSet<string> _negativeEffectScopes = new HashSet<string>
+    public static readonly HashSet<string> NegativeScopes = new HashSet<string>
     {
         TemporalStatType.Disabled.ToString(),
         TemporalStatType.Blind.ToString(),
@@ -18,20 +14,28 @@ public class AdjustCounterFormula : Effect
         TemporalStatType.AntiHeal.ToString(),
         TemporalStatType.PreventResourceGains.ToString()
     };
-
-    private readonly HashSet<string> _neutralEffectScopes = new HashSet<string>()
+    
+    public static readonly HashSet<string> NeutralScopes = new HashSet<string>()
     {
         TemporalStatType.Prominent.ToString(),
     };
+}
 
+
+public class AdjustCounterFormula : Effect
+{
+    private readonly EffectData _e;
+
+    public AdjustCounterFormula(EffectData e) => _e = e;
+    
     public void Apply(EffectContext ctx)
     {
         ctx.Target.Members.GetConscious().ForEach(m =>
         {
-            var impactSign = _negativeEffectScopes.Contains(_e.EffectScope) ? -1 : 1;
+            var impactSign = EffectScopesSentiments.NegativeScopes.Contains(_e.EffectScope) ? -1 : 1;
             var formulaAmount = Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, _e.Formula, ctx.XPaidAmount, ctx.ScopedData);
 
-            var isDebuff = !_neutralEffectScopes.Contains(_e.EffectScope) && (impactSign * formulaAmount < 0); 
+            var isDebuff = !EffectScopesSentiments.NeutralScopes.Contains(_e.EffectScope) && (impactSign * formulaAmount < 0); 
             if (isDebuff && !_e.Unpreventable)
                 ctx.Preventions.RecordPreventionTypeEffect(PreventionType.Aegis, new [] { m });
             
@@ -42,3 +46,30 @@ public class AdjustCounterFormula : Effect
         });
     }
 }
+
+
+public class AdjustCounterMaxFormula : Effect
+{
+    private readonly EffectData _e;
+
+    public AdjustCounterMaxFormula(EffectData e) => _e = e;
+
+    public void Apply(EffectContext ctx)
+    {
+        ctx.Target.Members.GetConscious().ForEach(m =>
+        {
+            var impactSign = EffectScopesSentiments.NegativeScopes.Contains(_e.EffectScope) ? -1 : 1;
+            var formulaAmount = Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, _e.Formula, ctx.XPaidAmount, ctx.ScopedData);
+
+            var isDebuff = !EffectScopesSentiments.NeutralScopes.Contains(_e.EffectScope) && (impactSign * formulaAmount < 0); 
+            if (isDebuff && !_e.Unpreventable)
+                ctx.Preventions.RecordPreventionTypeEffect(PreventionType.Aegis, new [] { m });
+            
+            if (isDebuff && ctx.Preventions.IsAegising(m))
+                BattleLog.Write($"{m.UnambiguousEnglishName} prevented {_e.EffectType} with an Aegis");
+            else
+                m.State.AdjustCounterMax(_e.EffectScope, formulaAmount);
+        });
+    }
+}
+

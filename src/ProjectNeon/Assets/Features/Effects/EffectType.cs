@@ -1,5 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// LAST NUMBER USED: 111
+// LAST NUMBER USED: 112
 
 public enum EffectType
 {
@@ -15,6 +15,7 @@ public enum EffectType
     AdjustStatAdditivelyFormula = 68,
     AdjustStatMultiplicativelyFormula = 85,
     AdjustCounterFormula = 79,
+    AdjustCounterMaxFormula = 112,
 
     // Timing
     AtStartOfTurn = 54,

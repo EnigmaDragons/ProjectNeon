@@ -10,7 +10,7 @@ public class AutoInitSystemLanguageOnAwake : MonoBehaviour
         if (CurrentAcademyData.Data.HasSelectedLanguage)
             return;
 
-        var d = presenter.Options.Where(x => x.Enabled).ToDictionary(x => x.UnityLanguage);
+        var d = presenter.Options.Where(x => x.Enabled).SafeToDictionary(x => x.UnityLanguage, x => x);
         if (d.TryGetValue(Application.systemLanguage, out var l))
             l.Select();
     }

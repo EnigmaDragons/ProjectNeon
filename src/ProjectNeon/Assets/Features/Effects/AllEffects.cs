@@ -24,6 +24,7 @@ public static class AllEffects
             => m.AddReactiveState(new ReactWithCardAfterEnoughHealthLoss(ctx.Source.Id, e.IntAmount, duration, e.ReactionSequence, Formula.EvaluateToInt(ctx.SourceStateSnapshot, m, e.Formula, ctx.XPaidAmount, ctx.ScopedData), ctx.BattleMembers[m.MemberId])), e.DurationFormula)},
         { EffectType.RemoveDebuffs, e => new SimpleEffect(m => BattleLoggedItemIf(n => $"{m.NameTerm.ToEnglish()} has been cleansed of {n} debuffs", n => n > 0, m.CleanseDebuffs))},
         { EffectType.AdjustCounterFormula, e => new AdjustCounterFormula(e)},
+        { EffectType.AdjustCounterMaxFormula, e => new AdjustCounterMaxFormula(e)},
         { EffectType.ShieldFormula, e => new AegisIfFormulaResult((ctx, amount, m) 
             => BattleLoggedItem(diff => $"{m.NameTerm.ToEnglish()} {GainedOrLostTerm(diff)} {diff} Shield", m.AdjustShield(amount)), e.Formula, amount => amount < 0)},
         { EffectType.ShieldRemoveAll, e => new AegisPreventable(new SimpleEffect(m => BattleLogged($"{m.NameTerm.ToEnglish()} lost all their shields", () => m.AdjustShield(-999))), "Losing All Shields") },

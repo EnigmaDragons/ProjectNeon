@@ -337,6 +337,11 @@ public sealed class MemberState : IStats
             Diff(PublishAfter(() => Counter(counterName).ChangeBy(amount), () => Counter(counterName).Amount)), 
             v => $"{NameTerm.ToEnglish()}'s {counterName} adjusted by {v}", 
             v => v != 0);
+    public void AdjustCounterMax(string counterName, float amount) 
+        => BattleLog.WriteIf(
+            Diff(PublishAfter(() => Counter(counterName).AdjustMax(amount), () => Counter(counterName).Max)), 
+            v => $"{NameTerm.ToEnglish()}'s Max {counterName} adjusted by {v}", 
+            v => v != 0);
     public int Adjust(TemporalStatType t, float amount) => Diff(PublishAfter(() => Counter(t.GetString()).ChangeBy(amount), () => this[t].CeilingInt()));
     public int AdjustShield(float amount) => Adjust(TemporalStatType.Shield, amount);
     private void AdjustShieldNoPublish(float amount) => Counter(TemporalStatType.Shield.GetString()).ChangeBy(amount);
