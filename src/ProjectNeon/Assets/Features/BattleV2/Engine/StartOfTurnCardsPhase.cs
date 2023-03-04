@@ -12,9 +12,12 @@ public class StartOfTurnCardsPhase : OnMessage<BattleStateChanged, CardResolutio
 
     private BattleV2Phase _phase;
     private Queue<BonusCardAndOwner> _startOfTurnCards;
+    
+    private bool _debugLoggingEnabled = false;
 
     public void BeginPlayingAllStartOfTurnCards()
     {
+        _phase = BattleV2Phase.StartOfTurnCards;
         _startOfTurnCards = new Queue<BonusCardAndOwner>();
         foreach (var member in state.MembersWithoutIds)
             foreach (var bonusCard in member.State.GetBonusStartOfTurnCards(state.GetSnapshot()))
@@ -24,7 +27,8 @@ public class StartOfTurnCardsPhase : OnMessage<BattleStateChanged, CardResolutio
     
     private void PlayStartOfTurnCard()
     {
-        DevLog.Info($"Start of Turn Cards - Began Playing Next Start of Turn Card. {_startOfTurnCards.Count()} to play.");
+        if (_debugLoggingEnabled)
+            DebugLog($"Start of Turn Cards - Began Playing Next Start of Turn Card. {_startOfTurnCards.Count} to play.");
         this.SafeCoroutineOrNothing(ExecuteAfterReactionsFinished(() =>
         {
             if (_startOfTurnCards.Count == 0)
@@ -32,10 +36,18 @@ public class StartOfTurnCardsPhase : OnMessage<BattleStateChanged, CardResolutio
             else
             {
                 var bonusCard = _startOfTurnCards.Dequeue();
-                if (!bonusCard.Member.IsConscious())
+                if (!bonusCard.BonusCard.Card.IsPlayableBy(bonusCard.Member, state.Party, 1))
+                {
+                    if (_debugLoggingEnabled)
+                        DebugLog("Not Playing Bonus Card");
                     PlayNextCardInPhase();
+                }
                 else
+                {
+                    if (_debugLoggingEnabled)
+                        DebugLog("Playing Bonus Card");
                     resolutionZone.PlayBonusCard(bonusCard.Member, bonusCard.BonusCard);
+                }
             }
         }));
     }
@@ -56,12 +68,26 @@ public class StartOfTurnCardsPhase : OnMessage<BattleStateChanged, CardResolutio
     
     private void PlayNextCardInPhase()
     {
+        if (_debugLoggingEnabled)
+            DebugLog($"PlayNextCardInPhase - Phase {_phase}");
         if (_phase == BattleV2Phase.StartOfTurnCards)
             PlayStartOfTurnCard();
     }
 
-    protected override void Execute(BattleStateChanged msg) => _phase = state.Phase;
+    protected override void Execute(BattleStateChanged msg)
+    {
+        if (_debugLoggingEnabled)
+            DebugLog("Phase is " + msg.State.Phase);
+        _phase = state.Phase;
+    }
+
     protected override void Execute(CardResolutionFinished msg) => PlayNextCardInPhase();
+
+    private void DebugLog(string msg)
+    {
+        if (_debugLoggingEnabled)
+            DevLog.Info($"StartOfTurnCardsPhase - {msg}");
+    }
 }
 
 [Serializable]
