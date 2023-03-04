@@ -4,13 +4,13 @@ using UnityEngine;
 public class LanguageSelectionPresenter : MonoBehaviour
 {
     [SerializeField] private LanguageButtonPresenter[] optionButtons;
-    [SerializeField] private LanguageOption[] options;
+    [SerializeField] private LanguageConfig config;
 
-    public LanguageOption[] Options => options.ToArray();
+    public LanguageOption[] Options => config.Languages.ToArray();
     
     void Start()
     {
-        var enabledOptions = options.Where(o => o.Enabled).ToArray();
+        var enabledOptions = Options.Where(o => o.Enabled).ToArray();
         for (var i = 0; i < optionButtons.Length; i++)
         {
             var btn = optionButtons[i];
