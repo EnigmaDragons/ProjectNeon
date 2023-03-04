@@ -52,10 +52,10 @@ public class SteamAchievements : IAchievements
             var achievementId = SteamUserStats.GetAchievementName(intId);
             if (IsCompleted(achievementId))
                 _completedAchievements.Add(achievementId);
-            else
+            else if (!achievementId.Equals(Achievement.MiscAllAchievements))
                 return;
         }
-        if (_completedAchievements.Count == numAchievements)
+        if (_completedAchievements.Count + 1 == numAchievements)
             Record(Achievement.MiscAllAchievements);
     }
 
