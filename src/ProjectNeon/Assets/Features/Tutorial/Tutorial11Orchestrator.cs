@@ -29,12 +29,13 @@ public class Tutorial11Orchestrator : OnMessage<StartCardSetupRequested, CardRes
     
     protected override void Execute(CardResolutionFinished msg)
     {
-        if (msg.CardName == "Acid Coating")
-        {
-            _playedAcidCoating = true;
-            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial11-01".ToLocalized()));
-        }
-        else if (msg.CardName == "Aegis")
+        // Outdated: No Longer Required since All-In does it all
+        // if (msg.CardName == "Acid Coating")
+        // {
+        //     _playedAcidCoating = true;
+        //     Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial11-01".ToLocalized()));
+        // }
+        if (msg.CardName == "Aegis")
         {
             _hasPlayedAegis = true;
             Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial11-02".ToLocalized()));
@@ -47,11 +48,12 @@ public class Tutorial11Orchestrator : OnMessage<StartCardSetupRequested, CardRes
         {
             Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial11-04".ToLocalized()));
         }
-        else if (!_hasShowedOutplayHint && _turn == 2 && msg.CardName == "All In" && !_playedAcidCoating)
-        {
-            _hasShowedOutplayHint = true;
-            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial11-05".ToLocalized()));
-        }
+        // Outdated: No Longer Required since All-In does it all
+        // else if (!_hasShowedOutplayHint && _turn == 2 && msg.CardName == "All In" && !_playedAcidCoating)
+        // {
+        //     _hasShowedOutplayHint = true;
+        //     Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial11-05".ToLocalized()));
+        // }
     }
 
     protected override void Execute(WinBattleWithRewards msg) => _hasWon = true;
@@ -62,12 +64,13 @@ public class Tutorial11Orchestrator : OnMessage<StartCardSetupRequested, CardRes
         if (s.Enemies.Length < 1)
             return;
         
-        var aegisCount = s.Enemies[0].Member.Aegis();
-        if (_turn == 2 && aegisCount > 0 && !_turn2AegisShown)
-        {
-            _turn2AegisShown = true;
-            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial11-06".ToLocalized()));
-        }
+        // Outdated: No Longer Required since All-In does it all
+        //var aegisCount = s.Enemies[0].Member.Aegis();
+        // if (_turn == 2 && aegisCount > 0 && !_turn2AegisShown)
+        // {
+        //     _turn2AegisShown = true;
+        //     Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial11-06".ToLocalized()));
+        // }
     }
 
     public string[] GetLocalizeTerms() => new[]
