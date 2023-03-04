@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using I2.Loc;
 using UnityEditor;
@@ -72,11 +73,22 @@ public class QualityAssurance
         return qaPassed;
     }
     
-    private static void LogReport(string qaCategory, int itemCount, List<ValidationResult> failures)
+    private static void LogReport(string qaCategory, int itemCount, List<ValidationResult> failures, bool warnInsteadOfError = false)
     {
-        Log.InfoOrError($"QA - {qaCategory}: {itemCount - failures.Count} out of {itemCount} passed inspection.",
-            failures.Any());
-        failures.ForEach(e => Log.Error($"{e}"));
+        if (warnInsteadOfError)
+        {
+            Log.InfoOrWarn($"QA - {qaCategory}: {itemCount - failures.Count} out of {itemCount} passed inspection.",
+                failures.Any());
+            
+            failures.ForEach(e => Log.Warn($"{e}")); 
+        }
+        else
+        {
+            Log.InfoOrError($"QA - {qaCategory}: {itemCount - failures.Count} out of {itemCount} passed inspection.",
+                failures.Any());
+        
+            failures.ForEach(e => Log.Error($"{e}")); 
+        }
     }
 
     private static int CCount(string haystack, string needle)
@@ -374,7 +386,7 @@ public class QualityAssurance
                     if (issues.Any())
                         failures.Add(new ValidationResult($"{i.Name} - {i.id}", issues));
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     
                 }
@@ -466,8 +478,39 @@ public class QualityAssurance
     {
         var (termCount, termFailures) = QaAllTerms();
         LogReport("Terms", termCount, termFailures);
+        CheckMissingTerms();
     }
+
+    [MenuItem("Neon/QA/Check Missing Terms Per Language")]
+    private static void CheckMissingTerms()
+    {
+        var missingTermsByLanguage = new Dictionary<string, HashSet<string>>();
+        var languageSources = ScriptableExtensions.GetAllInstances<LanguageSourceAsset>();
+        var itemCount = 0;
+        var languages = LocalizationManager.GetAllLanguages();
+        foreach (LanguageSourceAsset source in languageSources)
+        {
+            var terms = source.mSource.mTerms.Select(x => x.Term).ToHashSet();
+            itemCount = terms.Count;
+            foreach (var term in terms)
+            {
+                for (var i = 0; i < languages.Count; i++) { 
+                    var language = languages[i];
+                    if (!missingTermsByLanguage.ContainsKey(language))
+                        missingTermsByLanguage[language] = new HashSet<string>();
+                    if (string.IsNullOrEmpty(source.SourceData.mDictionary[term].Languages[i]))
+                        if (!string.IsNullOrEmpty(LocalizationManager.GetTranslation(term, overrideLanguage: "English")))
+                            missingTermsByLanguage[language].Add(term);
+                }
+            }
+        }
     
+        var failures = missingTermsByLanguage.Where(x => x.Value.Count > 0)
+            .Select(x => new ValidationResult($"{x.Key} - {(1 - (x.Value.Count/(float)itemCount)).ToString("P")} Complete - Missing {x.Value.Count} Terms: ", x.Value.ToList())).ToList();
+
+        LogReport("Incomplete Language Translations - Missing Terms", languages.Count, failures, warnInsteadOfError: true);
+    }
+
     private static (int, List<ValidationResult>) QaAllTerms()
     {
         var languageSources = ScriptableExtensions.GetAllInstances<LanguageSourceAsset>();

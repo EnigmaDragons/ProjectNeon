@@ -36,7 +36,7 @@ public class EffectScopedData
         var index = variableNames.IndexOf(name);
         if (index == -1)
         {
-            Log.Error($"Missing named variable \"{name}\" when resolving formula");
+            Log.Warn($"Missing named variable \"{name}\" when resolving formula");
             return 0;
         }
 
