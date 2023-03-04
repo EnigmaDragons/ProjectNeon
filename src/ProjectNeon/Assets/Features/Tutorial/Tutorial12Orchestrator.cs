@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Tutorial12Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, WinBattleWithRewards, CardCycled, CardDiscarded>, ILocalizeTerms
+public class Tutorial12Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, WinBattleWithRewards, CardCycled, CardDiscarded, BattleStateChanged>, ILocalizeTerms
 {
     private const string _callerId = "Tutorial12Orchestrator";
     
@@ -18,16 +18,31 @@ public class Tutorial12Orchestrator : OnMessage<StartCardSetupRequested, CardRes
     private int _turn;
     private float _timeTilPrompt;
     private bool _cardDiscarded;
+    private bool _activatedCycleHint;
     
     private void Start()
     {
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.ClickableControls, false, _callerId));
         _timeTilPrompt = _notCyclingPromptDelay;
-        _gilgameshDodges = 9;
+        _gilgameshDodges = 6;
     }
-    
+
     private void Update()
     {
+        if (_turn != 2)
+            return;
+        
+        if (!_activatedCycleHint && battleState.PlayerState.CardCycles > 0 && !_cardCycled)
+        {
+            Log.Info("Activated Cycle Hint");
+            _activatedCycleHint = true;
+            Message.Publish(new ToggleNamedTarget("CycleHint"));
+        }
+        else
+        {
+            Log.Info("Did not activate Cycle Hint");
+        }
+        
         if (_turn == 2 && !_cardCycled && _quickChangePlayed)
         {
             _timeTilPrompt = Math.Max(0, _timeTilPrompt - Time.deltaTime);
@@ -91,6 +106,8 @@ public class Tutorial12Orchestrator : OnMessage<StartCardSetupRequested, CardRes
 
     protected override void Execute(CardCycled msg)
     {
+        if (_activatedCycleHint)
+            Message.Publish(new HideNamedTarget("CycleHint"));
         _timeTilPrompt = _notDiscardingPromptDelay;
         if (!_cardCycled)
         {
@@ -107,6 +124,8 @@ public class Tutorial12Orchestrator : OnMessage<StartCardSetupRequested, CardRes
             Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial12-09".ToLocalized()));
         }
     }
+
+    protected override void Execute(BattleStateChanged msg) => _turn = msg.State.TurnNumber;
 
     public string[] GetLocalizeTerms()
         => new[]
