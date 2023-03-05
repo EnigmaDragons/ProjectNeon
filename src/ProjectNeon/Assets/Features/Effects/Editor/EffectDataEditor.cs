@@ -20,7 +20,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.ReactWithEnoughHealthLost, new []{ "Id", "FloatAmount", "DurationFormula", "Formula", "ReactionSequence"}},
         {EffectType.AdjustResourceFlat, new [] { "FloatAmount", "DurationFormula", "EffectScope" }},
         {EffectType.RemoveDebuffs, new string[0]},
-        {EffectType.ShieldRemoveAll, new string[0]},
+        {EffectType.ShieldRemoveAll, new [] { "Unpreventable" }},
         {EffectType.ShieldFormula, new [] {"Formula", "InterpolatePartialFormula"}},
         {EffectType.AdjustStatAdditivelyFormula, new [] { "Formula", "InterpolatePartialFormula", "DurationFormula", "EffectScope" }},
         {EffectType.AdjustStatMultiplicativelyFormula, new [] { "Formula", "InterpolatePartialFormula", "DurationFormula", "EffectScope" }},

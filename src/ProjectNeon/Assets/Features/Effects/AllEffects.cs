@@ -27,7 +27,9 @@ public static class AllEffects
         { EffectType.AdjustCounterMaxFormula, e => new AdjustCounterMaxFormula(e)},
         { EffectType.ShieldFormula, e => new AegisIfFormulaResult((ctx, amount, m) 
             => BattleLoggedItem(diff => $"{m.NameTerm.ToEnglish()} {GainedOrLostTerm(diff)} {diff} Shield", m.AdjustShield(amount)), e.Formula, amount => amount < 0)},
-        { EffectType.ShieldRemoveAll, e => new AegisPreventable(new SimpleEffect(m => BattleLogged($"{m.NameTerm.ToEnglish()} lost all their shields", () => m.AdjustShield(-999))), "Losing All Shields") },
+        { EffectType.ShieldRemoveAll, e => AegisPreventable.If(
+            new SimpleEffect(m => BattleLogged($"{m.NameTerm.ToEnglish()} lost all their shields", () => m.AdjustShield(-999))),
+                !e.Unpreventable, "Losing All Shields") },
         { EffectType.ShieldBasedOnNumberOfOpponentsDoTs, e => new ShieldBasedOnNumberOfOpponentsDoTs(e.FloatAmount) },
         { EffectType.AdjustResourceFlat, e =>  AegisPreventable.If(
             new FullContextEffect((ctx, duration, m) => m.ChangeResource(new ResourceQuantity{ Amount = e.TotalIntAmount, ResourceType = e.EffectScope.Value }, ctx.AdventureState), 
@@ -58,7 +60,7 @@ public static class AllEffects
                 m.TakeTrueDamage(ctx.DoubleDamage.WithDoubleDamage(Formula.EvaluateToInt(new FormulaContext(ctx.SourceStateSnapshot, m, ctx.XPaidAmount, ctx.ScopedData), e.Formula)))), e.DurationFormula)},
         { EffectType.ApplyAdditiveStatInjury, e => new AegisPreventable(new ApplyStatInjury(StatOperation.Add, e.EffectScope, e.TotalAmount, e.FlavorText), "Injury") },
         { EffectType.ApplyMultiplicativeStatInjury, e => new AegisPreventable(new ApplyStatInjury(StatOperation.Multiply, e.EffectScope, e.TotalAmount, e.FlavorText), "Injury") },
-        { EffectType.Kill, e => new SimpleEffect(m => m.SetHp(0)) },
+        { EffectType.Kill, e => new AegisPreventable(new SimpleEffect(m => m.SetHp(0)), "Kill") },
         { EffectType.ShowCustomTooltip, e => new FullContextEffect((ctx, duration, m) => m.AddCustomStatus(
             new CustomStatusIcon(string.IsNullOrWhiteSpace(e.StatusDetailTerm.ToLocalized()) ? e.FlavorText: e.StatusDetailTerm.ToLocalized(), 
                 e.StatusTag == StatusTag.None ? e.EffectScope : e.StatusTag.ToString(), e.IntAmount, 
