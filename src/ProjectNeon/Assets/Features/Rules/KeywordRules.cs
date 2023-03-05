@@ -19,6 +19,7 @@ public static class KeywordRules
     public const string Debuff = "Debuff";
     public const string Defenseless = "Defenseless";
     public const string Drain = "Drain";
+    public const string Finisher = "Finisher";
     public const string Focus = "Focus";
     public const string Glitch = "Glitch";
     public const string Igniting = "Igniting";
@@ -47,6 +48,7 @@ public static class KeywordRules
         Motionless,
         Sneaky,
         TemporalStatType.Prominent.ToString(),
+        Finisher,
         Profitable,
         Defenseless,
         ReStealth,
@@ -111,7 +113,7 @@ public static class KeywordRules
         AddTerm(Afflicted, Afflict);
         AddTerm(Bloodied, Bloody);
         AddTerm(Buyout);
-        AddTerm(Chain);
+        AddTerm(Chain, Finisher);
         AddTerm(Critical, Crit);
         AddTerm(Defenseless);
         AddTerm(Drain);

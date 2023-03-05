@@ -37,6 +37,11 @@ public class GearRulesPresenter : MonoBehaviour
             Hide();
             var rulesToShow = new List<string>();
             AddAllDescriptionFoundRules(rulesToShow, e.LocalizationDescriptionTerm().ToEnglish());
+            if (rulesToShow.Contains(Chain))
+            {
+                rulesToShow.Remove(Chain);
+                rulesToShow.Add("Chain-Gear");
+            }
 
             var battleEffects = e.BattleStartEffects
                 .Concat(e.BattleEndEffects)
