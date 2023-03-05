@@ -10,30 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: DefPro_InspiringSurge
+  m_Name: DefPro_ShieldField
   m_EditorClassIdentifier: 
-  id: 443
+  id: 694
   customName: 
-  art: {fileID: 21300000, guid: cf0bb4b84142aca42a11bb3b5bca2715, type: 3}
-  description: Shield {E[0]}.<br><br>Gives {E[1]}
-  typeDescription: {fileID: 11400000, guid: 04e00f5ae0b6f4748b158ed08748ee83, type: 2}
+  art: {fileID: 21300000, guid: 22c988979ddcf1d498c89192c0234194, type: 3}
+  description: 'At the start of each turn: Gives {0} Shield and MaxShield'
+  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   descriptionV2:
-    text: Shield {0}.<br><br>Gives {1}
+    text: 'Start of each turn: Gives {0} Max Shield and Shield'
     formatArgs:
-    - '{E[0]}'
-    - '{E[1]}'
+    - '{IE[0]}'
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 0
+    cost: 1
     resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
-  rarity: 1
+  rarity: 2
   actionSequences:
-  - scope: 0
+  - scope: 1
     group: 2
-    cardActions: {fileID: 11400000, guid: 53de8157ad6b2ee43af3fd8cf8580f12, type: 2}
+    cardActions: {fileID: 11400000, guid: 9e8226ab42e97264ea0b62d916bc1ed5, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
