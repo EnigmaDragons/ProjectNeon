@@ -200,13 +200,14 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>, ILocalizeTerms
         if (value > 0)
             statuses.Add(new CurrentStatusValue { Type = stat.GetString(), Icon = icons[stat].Icon, Text = text, Tooltip =  makeTooltip(value)});
     }
-    
+
+    private const string Negative = "-Negative";
     private void AddNegativeStatusIconIfApplicable(List<CurrentStatusValue> statuses, StatType stat, bool showNumber, Func<float, string> makeTooltip)
     {
         var value = _member.State[stat];
         var text = showNumber ? value.GetCeilingIntString() : string.Empty;
         if (value < 0)
-            statuses.Add(new CurrentStatusValue { Type = stat.GetString(), Icon = icons[stat].Icon, Text = text, Tooltip = makeTooltip(-value)});
+            statuses.Add(new CurrentStatusValue { Type = stat.GetString(), Icon = icons[stat + Negative].Icon, Text = text, Tooltip = makeTooltip(-value)});
     }
 
     protected abstract void UpdateStatuses(List<CurrentStatusValue> statuses);
