@@ -30,7 +30,8 @@ public class MemberSimplifiedVisualStatPanel : MemberUiBase
     {
         hpBar.Init(m);
         Set(cardPlaysItem, cardPlaysLabel, m.ExtraCardPlays());
-        resourceGainItem.SetActive(false);
+        Set(resourceGainItem, resourceGainLabel, m.ReferenceOnlyEndOfTurnResourceGain);
+        resourceGainIcon.sprite = m.PrimaryResourceType().Icon;
         Set(leadershipItem, leadershipLabel, m.Leadership());
         Set(atkItem, atkLabel, m.Attack());
         Set(magicItem, magicLabel, m.Magic());

@@ -20,6 +20,8 @@ public class Member
     public Maybe<CardTypeData> BasicCard { get; }
     public bool ShouldLive { get; }
     
+    public int ReferenceOnlyEndOfTurnResourceGain { get; set; }
+    
     public override bool Equals(object obj) => obj is Member && ((Member)obj).Id == Id;
     public override int GetHashCode() => Id.GetHashCode();
     public override string ToString() => $"{NameTerm.ToEnglish()} {Id}";

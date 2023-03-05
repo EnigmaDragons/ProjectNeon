@@ -110,7 +110,8 @@ public class EnemyInstance : EnemyType
         var m = new Member(id, NameTerm, "Enemy", _materialType, TeamType.Enemies, stats, Role, stats.DefaultPrimaryStat(stats), ShouldLive);
         m.State.InitResourceAmount(_resourceType, _startingResourceAmount);
         _counterAdjustments.ForEach(c => m.State.Adjust(c.Key, c.Value));
-        return m;
+        m.ReferenceOnlyEndOfTurnResourceGain = _resourceGainPerTurn;
+        return m; 
     }
     
     public Member SetupMemberState(Member m, BattleState state)

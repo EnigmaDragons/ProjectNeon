@@ -371,7 +371,7 @@ public sealed class MemberState : IStats
             GainResource(qty, partyState);
     }
     
-    public void GainResource(ResourceQuantity qty, PartyAdventureState partyState)
+    private void GainResource(ResourceQuantity qty, PartyAdventureState partyState)
     {
         if (qty.Amount == 0)
             return;
