@@ -13,17 +13,20 @@ public static class CurrentGameOptions
         _version = versionNumber;
         _stored = stored;
         _current = _stored.Get();
+        _current.UseAutoAdvance = false;
     }
     
     public static void Write(Func<PlayerOptionsData, PlayerOptionsData> transform)
     {
         _stored.Write(transform);
         _current = transform(_current);
+        _current.UseAutoAdvance = false;
     }
 
     public static void Save() => _stored.Write(_ => _current);
     public static void Clear() => Write(_ => new PlayerOptionsData { VersionNumber = _version });
     
+    [Obsolete]
     public static void SetAutoAdvance(bool shouldUse) => Write(o =>
     {
         o.UseAutoAdvance = shouldUse;
