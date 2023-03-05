@@ -284,6 +284,8 @@ public static class InterpolatedCardDescriptions
             return FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.AdjustCounterFormula)
             return $"{FormulaAmount(data, owner, xCost)} {FriendlyScopeName(data.EffectScope.Value)}";
+        if (data.EffectType == EffectType.AdjustCounterMaxFormula)
+            return $"{FormulaAmount(data, owner, xCost)} Max {FriendlyScopeName(data.EffectScope.Value)}";
         if (data.EffectType == EffectType.AdjustPrimaryResourceFormula)
             return $"{FormulaAmount(data, owner, xCost)} {(owner.IsPresent && showSprites ? owner.Value.PrimaryResourceQuantity().ResourceType : "Resources")}";
         if (data.EffectType == EffectType.ShieldBasedOnNumberOfOpponentsDoTs)
@@ -477,6 +479,8 @@ public static class InterpolatedCardDescriptions
             coreDesc = $"deal {e} {d}";
         if (data.EffectType == EffectType.AdjustCounterFormula)
             coreDesc = GivesOrRemoves(e);
+        if (data.EffectType == EffectType.AdjustCounterMaxFormula)
+            coreDesc = GivesOrRemoves(e);
         if (data.EffectType == EffectType.AdjustStatAdditivelyFormula)
             coreDesc = $"gives {e} {d}";
         if (data.EffectType == EffectType.AdjustStatMultiplicativelyFormula)
@@ -555,6 +559,8 @@ public static class InterpolatedCardDescriptions
             coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))} {DurationDescription(data, owner, xCost)}";
         if (data.EffectType == EffectType.AdjustCounterFormula)
             coreDesc = GivesOrRemoves(Bold(EffectDescription(data, owner, xCost)));
+        if (data.EffectType == EffectType.AdjustCounterMaxFormula)
+            coreDesc = GivesOrRemoves("Max " + Bold(EffectDescription(data, owner, xCost)));
         if (data.EffectType == EffectType.AdjustStatAdditivelyFormula)
             coreDesc = $"gives {Bold(EffectDescription(data, owner, xCost))} {data.EffectScope.Value.WithSpaceBetweenWords()} {DurationDescription(data, owner, xCost)}";
         if (data.EffectType == EffectType.AdjustStatMultiplicativelyFormula)

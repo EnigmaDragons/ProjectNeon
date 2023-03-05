@@ -107,7 +107,7 @@ public sealed class MemberState : IStats
     private bool IsAntiHeal() => Counter(TemporalStatType.AntiHeal).Amount > 0;
     public float this[TemporalStatType statType] => _counters[statType.GetString()].Amount + _currentStats[statType];
     public IResourceType[] ResourceTypes => _currentStats.ResourceTypes;
-    public float Max(string name) => _counters.TryGetValue(name, out var c) ? c.Max : 0;
+    public int Max(string name) => _counters.TryGetValue(name, out var c) ? c.Max : 0;
     public IResourceType PrimaryResource => ResourceTypes.AnyNonAlloc() ? ResourceTypes[0] : new InMemoryResourceType();
     public int PrimaryResourceAmount => ResourceTypes.AnyNonAlloc() ? _counters[PrimaryResource.Name].Amount : 0;
 

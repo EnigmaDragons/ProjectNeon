@@ -1071,7 +1071,7 @@ MonoBehaviour:
       - "\u6B64\u5361\u7D44\u69CB\u7BC9\u5DF2\u9396\u5B9A"
       - 
       - "Esta carta est\xE1 bloqueada"
-      - 
+      - "Travada nessa vers\xE3o do jogo"
       - 
       - 
       - 
@@ -1086,7 +1086,7 @@ MonoBehaviour:
       - "\u4EFB\u610F2\u500B\u82F1\u96C4"
       - 
       - "2 H\xE9roes cualquiera"
-      - 
+      - "Quaisquer 2 her\xF3is"
       - 
       - 
       - 
@@ -1101,7 +1101,7 @@ MonoBehaviour:
       - "\u5192\u96AA\u5931\u6557\u3002"
       - 
       - Perdiste la aventura.
-      - 
+      - "Voc\xEA perdeu a aventura"
       - 
       - 
       - 
@@ -1116,7 +1116,7 @@ MonoBehaviour:
       - "\u5192\u96AA\u6210\u529F\u3002"
       - 
       - Ganaste la aventura.
-      - 
+      - "Voc\xEA venceu a aventura"
       - 
       - 
       - 
@@ -1146,7 +1146,7 @@ MonoBehaviour:
       - "\u642D\u6A94{[t:Adventures/Corp Run]}"
       - 
       - "Compa\xF1eros - {[t:Adventures/Corp Run]}"
-      - 
+      - Parceiros - {[t:Adventures/Corp Run]}
       - 
       - 
       - 
@@ -1161,7 +1161,7 @@ MonoBehaviour:
       - "\u9078\u64C72\u500B\u82F1\u96C4\uFF0C\u6C92\u6709\u5287\u60C5\uFF0C\u96A8\u6A5F\u95DC\u5E95\u982D\u76EE"
       - 
       - "2 h\xE9roes de aventura sin historia y con un jefe final al azar"
-      - 
+      - "Aventura com 2 her\xF3is sem uma hist\xF3ria e um chefe final aleat\xF3rio"
       - 
       - 
       - 
@@ -1176,7 +1176,7 @@ MonoBehaviour:
       - "\u96D9\u4EBA - {[t:Adventures/Corp Run]}"
       - 
       - "D\xFAo - {[t:Adventures/Corp Run]}"
-      - 
+      - Dupla - {[t:Adventures/Corp Run]}
       - 
       - 
       - 
@@ -1191,7 +1191,7 @@ MonoBehaviour:
       - "\u4EFB\u610F3\u500B\u82F1\u96C4"
       - 
       - "3 H\xE9roes Cualquiera"
-      - 
+      - "Quaisquer 3 her\xF3is"
       - 
       - 
       - 
@@ -1206,7 +1206,7 @@ MonoBehaviour:
       - "\u5192\u96AA\u5931\u6557\u3002"
       - 
       - Perdiste la aventura.
-      - 
+      - "Voc\xEA perdeu a aventura"
       - 
       - 
       - 
@@ -1221,7 +1221,7 @@ MonoBehaviour:
       - "\u5192\u96AA\u6210\u529F\u3002"
       - 
       - Ganaste la aventura.
-      - 
+      - "Voc\xEA venceu a aventura"
       - 
       - 
       - 
@@ -1251,7 +1251,7 @@ MonoBehaviour:
       - "\u5C0F\u968A- {[t:Adventures/Corp Run]}"
       - 
       - "Escuadr\xF3n - {[t:Adventures/Corp Run]}"
-      - 
+      - "Esquadr\xE3o - {[t:Adventures/Corp Run]}"
       - 
       - 
       - 
@@ -1266,7 +1266,7 @@ MonoBehaviour:
       - "\u9078\u64C73\u500B\u82F1\u96C4\uFF0C\u6C92\u6709\u5287\u60C5\uFF0C\u96A8\u6A5F\u95DC\u5E95\u982D\u76EE"
       - 
       - "3 h\xE9roes de aventura sin historia y un jefe final al azar"
-      - 
+      - "Aventura com 3 her\xF3is sem uma hist\xF3ria e um chefe final aleat\xF3rio"
       - 
       - 
       - 
@@ -1281,7 +1281,7 @@ MonoBehaviour:
       - "\u4E09\u4EBA - {[t:Adventures/Corp Run]}"
       - 
       - Trio - {[t:Adventures/Corp Run]}
-      - 
+      - Trio - {[t:Adventures/Corp Run]}
       - 
       - 
       - 
@@ -14055,6 +14055,24 @@ MonoBehaviour:
       - 
       Flags: 000000000000000000
       Languages_Touch: []
+    - Term: CardDescriptions/00693-05-Desc
+      TermType: 0
+      Description: 
+      Languages:
+      - 'Gives {[0]} <b>{[t:Stats/Stat-Power]}</b> {[1]}
+
+
+        Gives {[2]}'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      Flags: 000000000000000000
+      Languages_Touch: []
     - Term: CardNames/00001-00-Name
       TermType: 0
       Description: 
@@ -23120,6 +23138,21 @@ MonoBehaviour:
       - 
       - Detonar
       - Detonar
+      - 
+      - 
+      - 
+      Flags: 000000000000000000
+      Languages_Touch: []
+    - Term: CardNames/00693-00-Name
+      TermType: 0
+      Description: 
+      Languages:
+      - Tune Weapon
+      - 
+      - 
+      - 
+      - 
+      - 
       - 
       - 
       - 
@@ -38665,7 +38698,7 @@ MonoBehaviour:
       - "\u7A81\u7834\u9B54\u6CD5\u9632\u79A6\uFF0C\u96C6\u4E2D\u4E00\u500B\u6575\u4EBA\u91CB\u653E\u80FD\u91CF\u3002"
       - 
       - "Atraviesa las defensas m\xE1gicas y enfoca su energ\xEDa en un enemigo"
-      - 
+      - "Atravessa as defesas m\xE1gicas e foca sua energia em um \xFAnico inimigo"
       - 
       - 
       - 
@@ -64444,7 +64477,7 @@ MonoBehaviour:
     Google_WebServiceURL: https://script.google.com/macros/s/AKfycbyxEWOh-oly9VUweggR4FE-PJti-q6vB4eiq60gjqN60mMW8pqUSFQDcNZf5paleAfH/exec
     Google_SpreadsheetKey: 1_k0GnzCkReGlY_2s-ODT0hVniGHYfv2qnG9nqRQ4VvU
     Google_SpreadsheetName: I2Loc MetroplexZero Localization
-    Google_LastUpdatedVersion: 1677904693736
+    Google_LastUpdatedVersion: 1677975622177
     Google_Password: 23jh9hj2rjfhj33^$^%^$inhgf9g9j90i
     GoogleUpdateFrequency: 2
     GoogleInEditorCheckFrequency: 2

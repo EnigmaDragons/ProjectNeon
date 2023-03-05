@@ -16,6 +16,7 @@ public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerE
     private bool IsInitialized => _member != null;
     private bool _ignoreMessages = false;
     private int _lastAmount = -999;
+    private int _lastMaxAmount = -999;
     
     public void Hide()
     {
@@ -42,7 +43,7 @@ public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerE
     
     private void UpdateUi(MemberState state)
     {
-        if (state[_resourceType] == _lastAmount)
+        if (state[_resourceType] == _lastAmount && state.Max(_resourceType.Name) == _lastMaxAmount)
             return;
         
         var max = state.Max(_resourceType.Name);
@@ -55,6 +56,7 @@ public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerE
         transform.DOPunchScale(new Vector3(1.5f, 1.5f, 1.5f), 0.3f, 1);
 
         _lastAmount = state[_resourceType];
+        _lastMaxAmount = max;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
