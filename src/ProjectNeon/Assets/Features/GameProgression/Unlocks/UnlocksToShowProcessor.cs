@@ -36,12 +36,11 @@ public class UnlocksToShowProcessor : MonoBehaviour, ILocalizeTerms
             .Where(x => x.AdventuresPlayedBeforeUnlocked > 0 && progressionData.RunsFinished >= x.AdventuresPlayedBeforeUnlocked && !progressionData.HasShownUnlockForHeroId(x.Id));
 
         var allUnlocksToShow = 
-            unshownAdventureUnlocks.Select(a => new UnlockUiData(ProgressionData.UnlockTypeAdventure, a.id, "Unlocks/UnlockAdventureHeader", a.MapTitleTerm, a.AdventureImage))
-                .Concat(unshownDifficultes.Select(d => new UnlockUiData(ProgressionData.UnlockTypeDifficulty, d.id, "Unlocks/UnlockDifficultyHeader", d.NameTerm, d.Image)))
-                .Concat(unshownHeroUnlocks.Select(h => new UnlockUiData(ProgressionData.UnlockTypeHero, h.id, "Unlocks/UnlockHeroHeader", h.NameTerm(), h.Bust)))
+            unshownHeroUnlocks.Take(1).Select(h => new UnlockUiData(ProgressionData.UnlockTypeHero, h.id, "Unlocks/UnlockHeroHeader", h.NameTerm(), h.Bust))
+                .Concat(unshownAdventureUnlocks.Take(1).Select(a => new UnlockUiData(ProgressionData.UnlockTypeAdventure, a.id, "Unlocks/UnlockAdventureHeader", a.MapTitleTerm, a.AdventureImage)))
+                .Concat(unshownDifficultes.Take(1).Select(d => new UnlockUiData(ProgressionData.UnlockTypeDifficulty, d.id, "Unlocks/UnlockDifficultyHeader", d.NameTerm, d.Image)))
                 .ToArray();
 
-        //allUnlocksToShow.ForEach(a => Log.Info($"To Show Unlock: {a}"));
         _toShow = allUnlocksToShow.ToQueue();
         ShowNext();
     }
