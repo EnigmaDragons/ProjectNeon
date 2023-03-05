@@ -71,6 +71,7 @@ public class StaticEquipment : ScriptableObject, Equipment, ILocalizeTerms
     {
         var stats = new StatAddends();
         modifiers.Where(x => x.ModifierType == StatMathOperator.Additive)
+            .Where(x => !string.IsNullOrEmpty(x.StatType))
             .ForEach(m => stats.WithRaw(m.StatType, m.Amount));
         return stats;
     }

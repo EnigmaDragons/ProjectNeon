@@ -80,9 +80,18 @@ public class AdjustStatsFormula : Effect
                     ? Mathf.Clamp(formulaAmount, -CurrentStatAmount(m, stat), 0) 
                     : formulaAmount;
                 BattleLog.Write($"{m.UnambiguousEnglishName}'s {stat} is adjusted by {finalAmount}");
-                var stats = new AdjustedStats(new StatAddends().WithRaw(stat, finalAmount),
+                if (stat != null && stat.Length == 0)
+                {
+                    var maybeCardDetail = ctx.Card.Select(c => $"Context - Card: {c.NameTerm.ToEnglish()}",
+                        () => "No Supplied Card");
+                    Log.Error("An effect to Adjust Stat Additive has a Blank Stat. " + maybeCardDetail);
+                }
+                else 
+                {
+                    var stats = new AdjustedStats(new StatAddends().WithRaw(stat, finalAmount),
                     _e.ForSimpleDurationStatAdjustment(ctx.Source.Id, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, _e.DurationFormula, ctx.XPaidAmount, ctx.ScopedData)));
-                m.State.ApplyTemporaryAdditive(stats);
+                    m.State.ApplyTemporaryAdditive(stats);
+                }
             }
         });
     }
