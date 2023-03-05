@@ -157,9 +157,9 @@ public class FindCardsEditor : EditorWindow
         {
             var xCostResults = GetAllInstances<CardType>()
                 .Where(c => c.Cost.PlusXCost)
-                .Select(e => e.name)
+                .Select(e => (e.name, (ScriptableObject)e))
                 .ToArray();
-            ShowCards("X Cost Cards", xCostResults);
+            ShowSelectables("X Cost Cards", xCostResults);
             GUIUtility.ExitGUI();
         }
         DrawUILine();
