@@ -56,8 +56,9 @@ public static class AICardSelectionLogic
             .DontGiveAlliesAegisIfTheyAlreadyHaveEnough()
             .DontStealCreditsIfOpponentDoesntHaveAny()
             .DontRemoveDodgeIfOpponentDoesntHaveAny()
-            .DontPlayAttackResistanceIfEnemiesDontHaveResistance()
-            .DontPlayAttackArmorIfEnemiesDontHaveArmor()
+            // Note: Turning These Off After the Negative Armor/Resistance Rework.
+            // .DontPlayAttackResistanceIfEnemiesDontHaveResistance()
+            // .DontPlayAttackArmorIfEnemiesDontHaveArmor()
             .DontPlayCleanseIfNoDebuffsToRemove()
             .DontPlayRequiresMarkIfNoMarkedEnemies();
 
