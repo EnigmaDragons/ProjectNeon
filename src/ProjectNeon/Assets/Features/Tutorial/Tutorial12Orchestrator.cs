@@ -2,7 +2,8 @@
 using System.Collections;
 using UnityEngine;
 
-public class Tutorial12Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, WinBattleWithRewards, CardCycled, CardDiscarded, BattleStateChanged>, ILocalizeTerms
+public class Tutorial12Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, WinBattleWithRewards, 
+    CardCycled, CardDiscarded, BattleStateChanged, ShowCurrentTutorialAgain>, ILocalizeTerms
 {
     private const string _callerId = "Tutorial12Orchestrator";
     
@@ -68,6 +69,13 @@ public class Tutorial12Orchestrator : OnMessage<StartCardSetupRequested, CardRes
     private IEnumerator ShowTutorialAfterDelay()
     {
         yield return new WaitForSeconds(9);
+        ShowTutorial();
+    }
+    
+    protected override void Execute(ShowCurrentTutorialAgain msg) => ShowTutorial();
+
+    private void ShowTutorial()
+    {
         if (!_hasWon)
             Message.Publish(new ShowTutorialByName(_callerId));
     }

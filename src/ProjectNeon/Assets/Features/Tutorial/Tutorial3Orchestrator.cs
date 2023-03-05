@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Tutorial3Orchestrator : OnMessage<StartCardSetupRequested, TurnStarted, CardResolutionFinished, WinBattleWithRewards, MemberUnconscious>, ILocalizeTerms
+public class Tutorial3Orchestrator : OnMessage<StartCardSetupRequested, TurnStarted, CardResolutionFinished, WinBattleWithRewards, MemberUnconscious, ShowCurrentTutorialAgain>, ILocalizeTerms
 {
     private const string _callerId = "Tutorial3Orchestrator";
 
@@ -30,9 +30,17 @@ public class Tutorial3Orchestrator : OnMessage<StartCardSetupRequested, TurnStar
     private IEnumerator ShowTutorialAfterDelay()
     {
         yield return TutorialSettings.BattleTutorialPanelPopupDelay;
+        ShowTutorial();
+    }
+    
+    protected override void Execute(ShowCurrentTutorialAgain msg) => ShowTutorial();
+
+    private void ShowTutorial()
+    {
         if (!_hasWon)
             Message.Publish(new ShowTutorialByName(_callerId));
     }
+
 
     protected override void Execute(TurnStarted msg) => UpdateHealthTotals();
 

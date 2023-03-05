@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCardSelected, CardClicked, CardDragged, CardResolutionStarted, WinBattleWithRewards>, ILocalizeTerms
+public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCardSelected, CardClicked, CardDragged, CardResolutionStarted, WinBattleWithRewards, ShowCurrentTutorialAgain>, ILocalizeTerms
 {
     private const string _callerId = "Tutorial1Orchestrator";
     
@@ -69,6 +69,11 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
     private IEnumerator ShowTutorialAfterDelay()
     {
         yield return TutorialSettings.BattleTutorialPanelPopupDelay;
+        ShowTutorial();
+    }
+
+    private void ShowTutorial()
+    {
         if (!_hasWon)
             Message.Publish(new ShowTutorialByName(_callerId));
     }
@@ -123,6 +128,8 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
 
     protected override void Execute(WinBattleWithRewards msg) => _hasWon = true;
 
+    protected override void Execute(ShowCurrentTutorialAgain msg) => ShowTutorial();
+    
     public string[] GetLocalizeTerms()
         => new[]
         {

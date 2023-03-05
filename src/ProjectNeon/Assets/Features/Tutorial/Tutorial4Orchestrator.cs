@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Tutorial4Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionStarted, WinBattleWithRewards>, ILocalizeTerms
+public class Tutorial4Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionStarted, WinBattleWithRewards, ShowCurrentTutorialAgain>, ILocalizeTerms
 {
     private const string _callerId = "Tutorial4Orchestrator";
 
@@ -23,6 +23,13 @@ public class Tutorial4Orchestrator : OnMessage<StartCardSetupRequested, CardReso
     private IEnumerator ShowTutorialAfterDelay()
     {
         yield return TutorialSettings.BattleTutorialPanelPopupDelay;
+        ShowTutorial();
+    }
+    
+    protected override void Execute(ShowCurrentTutorialAgain msg) => ShowTutorial();
+
+    private void ShowTutorial()
+    {
         if (!_hasWon)
             Message.Publish(new ShowTutorialByName(_callerId));
     }
