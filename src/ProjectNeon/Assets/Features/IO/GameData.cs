@@ -74,6 +74,7 @@ public class BlessingSaveData
 {
     public string Name = "";
     public int[] TargetHeroIds = Array.Empty<int>();
+    public int Duration = 0;
 }
 
 [Serializable]

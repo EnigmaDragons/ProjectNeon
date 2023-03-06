@@ -18,7 +18,7 @@ public sealed class PartyAdventureState : ScriptableObject
     [SerializeField] private Equipment[] globalEquipment;
 
     private List<CorpCostModifier> _corpCostModifiers = new List<CorpCostModifier>();
-    private Queue<Blessing> _blessings = new Queue<Blessing>();
+    private List<Blessing> _blessings = new List<Blessing>();
 
     public Party Party => party;
     
@@ -34,7 +34,7 @@ public sealed class PartyAdventureState : ScriptableObject
     public HashSet<StatType> KeyStats => heroes.SelectMany(h => h.Stats.KeyStatTypes()).ToHashSet();
     public int[] Hp =>  heroes.Select(h => h.CurrentHp).ToArray();
     public RuntimeDeck[] Decks => heroes.Select(h => h.Deck).ToArray();
-    public Blessing[] Blessings => _blessings?.ToArray() ?? (_blessings = new Queue<Blessing>()).ToArray();
+    public Blessing[] Blessings => _blessings?.ToArray() ?? (_blessings = new List<Blessing>()).ToArray();
     public PartyCardCollection Cards => cards;
     public PartyEquipmentCollection Equipment => equipment;
     public Equipment[] GlobalEquipment => globalEquipment ?? new Equipment[0];
@@ -301,13 +301,17 @@ public sealed class PartyAdventureState : ScriptableObject
         }
     }
 
-    public void AddBlessing(Blessing blessing) => _blessings.Enqueue(blessing);
+    public void AddBlessing(Blessing blessing) => _blessings.Add(blessing);
     public void ApplyBlessings(BattleState state)
     {
         if (_blessings.Count > 0)
             Log.Info($"Applying {_blessings.Count} Party Blessings");
-        while (_blessings.Count > 0)
-            _blessings.Dequeue().Apply(state);
+        foreach (var blessing in _blessings)
+        {
+            blessing.Apply(state);
+            blessing.Duration--;
+        }
+        _blessings = _blessings.Where(x => x.Duration > 0).ToList();
     }
 
     public HashSet<int> CardsYouCantHaveMoreOf()
