@@ -28,19 +28,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>, ILocalizeTerms
         if (msg.State.MemberId == _member.Id)
             UpdateUi();
     }
-
-    private void AddCustomTextStatusIcons(Dictionary<StatusTag, ITemporalState[]> states, List<CurrentStatusValue> statuses, StatusTag statusTag, string defaultText)
-    {
-        var s = states.ValueOrDefault(statusTag, Array.Empty<ITemporalState>());
-
-        var combined = Combine(s, x => x.Status.CustomText.OrDefault(() => defaultText)
-            .Replace("{[Originator]}", battleState.Members.TryGetValue(x.OriginatorId, out var m)
-                ? m.TeamType == TeamType.Enemies ? $"{m.NameTerm.ToLocalized()} {m.Id}" : m.NameTerm.ToLocalized()
-                : "Tooltips/Originator".ToLocalized())
-            .Replace("{[PrimaryStat]}", _member.PrimaryStat().GetString()), x => x.Length > 1 ? x.Length : 0);
-        combined.IfPresent(c => statuses.Add(c));
-    }
-
+    
     private Maybe<CurrentStatusValue> Combine(ITemporalState[] statuses, Func<ITemporalState, string> tooltipTemplate, Func<ITemporalState[], int> numberTemplate)
     {
         if (statuses.None())
@@ -71,80 +59,148 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>, ILocalizeTerms
 
     private void UpdateUi()
     {
-        var statuses = new List<CurrentStatusValue>();
-        var memberStatesByTag = _member.State.TemporalStates.GroupBy(s => s.Status.Tag).SafeToDictionary(t => t.Key, t => t.ToArray());
+        try
+        {
+            var statuses = new List<CurrentStatusValue>();
+            var memberStatesByTag = _member.State.TemporalStates.GroupBy(s => s.Status.Tag)
+                .SafeToDictionary(t => t.Key, t => t.ToArray());
 
-        var cardPlayAmount = CeilingInt(_member.State[StatType.ExtraCardPlays]);
-        if (cardPlayAmount > 1)
-            statuses.Add(new CurrentStatusValue { Type = StatType.ExtraCardPlays.GetString(), Icon = icons[StatType.ExtraCardPlays].Icon, Text = cardPlayAmount.GetString(), 
-                Tooltip = string.Format("Tooltips/PlaysCardsPerTurn".ToLocalized(), cardPlayAmount) });
-        
-        if (_member.State.HasStatus(StatusTag.Invulnerable))
-            statuses.Add(new CurrentStatusValue { Type = StatusTag.Invulnerable.GetString(), Icon = icons[StatusTag.Invulnerable].Icon, Tooltip = "Tooltips/Invincible".ToLocalized() });
-        
-        AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.CounterAttack, "Tooltips/Counterattack".ToLocalized());
-        AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.Trap, "Tooltips/SecretTrapPower".ToLocalized());
-        AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.Augment, "Tooltips/UnknownAugmentPower".ToLocalized());
-                
-        foreach (var s in _member.State.CustomStatuses())
-            statuses.Add(new CurrentStatusValue { Type = s.Tooltip, Icon = icons[s.IconName].Icon, Text = s.DisplayNumber, Tooltip = s.Tooltip, OriginatorId = s.OriginatorId });;
+            var cardPlayAmount = CeilingInt(_member.State[StatType.ExtraCardPlays]);
+            if (cardPlayAmount > 1)
+                statuses.Add(new CurrentStatusValue
+                {
+                    Type = StatType.ExtraCardPlays.GetString(), Icon = icons[StatType.ExtraCardPlays].Icon,
+                    Text = cardPlayAmount.GetString(),
+                    Tooltip = string.Format("Tooltips/PlaysCardsPerTurn".ToLocalized(), cardPlayAmount)
+                });
 
-        AddStatusIconIfApplicable(statuses, TemporalStatType.Dodge, true, v => string.Format("Tooltips/DodgeAttacks".ToLocalized(), v.ToString()));
-        AddStatusIconIfApplicable(statuses, StatType.Armor, true, v => string.Format("Tooltips/ReduceAttackDamage".ToLocalized(), v.ToString()));
-        AddStatusIconIfApplicable(statuses, StatType.Resistance, true, v => string.Format("Tooltips/ReduceMagicDamage".ToLocalized(), v.ToString()));
-        AddNegativeStatusIconIfApplicable(statuses, StatType.Armor, true, v => string.Format("Tooltips/IncreaseAttackDamage".ToLocalized(), v.ToString()));
-        AddNegativeStatusIconIfApplicable(statuses, StatType.Resistance, true, v => string.Format("Tooltips/IncreaseMagicDamage".ToLocalized(), v.ToString()));
-        AddStatusIconIfApplicable(statuses, TemporalStatType.DoubleDamage, true, v => string.Format("Tooltips/DoubleDamage".ToLocalized(), v.ToString()));
-        AddBuffAmountIconIfApplicable(statuses, StatType.Attack);
-        AddBuffAmountIconIfApplicable(statuses, StatType.Magic);        
-        AddBuffAmountIconIfApplicable(statuses, StatType.Leadership);
-        AddBuffAmountIconIfApplicable(statuses, StatType.Economy);
-        AddStatusIconIfApplicable(statuses, TemporalStatType.Blind, true, v => string.Format("Tooltips/Blinded".ToLocalized(), v.ToString()));
-        AddStatusIconIfApplicable(statuses, TemporalStatType.Inhibit, true, v => string.Format("Tooltips/Inhibited".ToLocalized(), v.ToString()));
-        AddStatusIconIfApplicable(statuses, TemporalStatType.Taunt, true, v => string.Format("Tooltips/Taunt".ToLocalized(), v.ToString()));
-        if (_member.State[TemporalStatType.Stealth] > 0)
-            statuses.Add(new CurrentStatusValue { Type = TemporalStatType.Stealth.GetString(), Icon = icons[TemporalStatType.Stealth].Icon, Tooltip = "Tooltips/Stealth".ToLocalized()});
-        AddStatusIconIfApplicable(statuses, TemporalStatType.Disabled, true, v => string.Format("Tooltips/Disabled".ToLocalized(), v.ToString()));
-        AddStatusIconIfApplicable(statuses, TemporalStatType.Stun, true, v => string.Format("Tooltips/Stunned".ToLocalized(), v.ToString()));
-        AddStatusIconIfApplicable(statuses, TemporalStatType.Confused, true, v => string.Format("Tooltips/Confused".ToLocalized(), v.ToString()));
-        AddStatusIconIfApplicable(statuses, TemporalStatType.Aegis, true, v => string.Format("Tooltips/Aegis".ToLocalized(), v.ToString()));
-        AddStatusIconIfApplicable(statuses, TemporalStatType.Lifesteal, true, v => "Tooltips/Lifesteal".ToLocalized());
-        AddStatusIconIfApplicable(statuses, TemporalStatType.Vulnerable, true, v => "Tooltips/Vulnerable".ToLocalized());
-        AddStatusIconIfApplicable(statuses, TemporalStatType.AntiHeal, true, v => "Tooltips/AntiHeal".ToLocalized());
-        AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.AfterShielded, "Tooltips/AfterShielded".ToLocalized());
-        AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.OnClipUsed, "Tooltips/ClipUsedEffect".ToLocalized());
-        AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.WhenBloodied, "Tooltips/BloodiedEffect".ToLocalized());
-        AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.WhenShieldBroken, "Tooltips/ShieldBrokenEffect".ToLocalized());
-        AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.OnHpDamageDealt, "Tooltips/HpDamageDealtEffect".ToLocalized());
-        AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.WhenAllyKilled, "Tooltips/AllyKilledEffect".ToLocalized());
-        AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.WhenAfflicted, "Tooltips/AfflictedEffect".ToLocalized());
-        AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.WhenIgnited, "Tooltips/IgnitedEffect".ToLocalized());
-        AddStatusIconIfApplicable(statuses, TemporalStatType.Injury, true, v => string.Format("Tooltips/ReceivedInjuries".ToLocalized(), v.ToString()));
-        AddStatusIconIfApplicable(statuses, TemporalStatType.Marked, true, v => "Tooltips/Marked".ToLocalized());
-        AddStatusIconIfApplicable(statuses, TemporalStatType.PreventResourceGains, true, v => string.Format("Tooltips/PreventResourceGains".ToLocalized(), v.ToString()));
+            if (_member.State.HasStatus(StatusTag.Invulnerable))
+                statuses.Add(new CurrentStatusValue
+                {
+                    Type = StatusTag.Invulnerable.GetString(), Icon = icons[StatusTag.Invulnerable].Icon,
+                    Tooltip = "Tooltips/Invincible".ToLocalized()
+                });
 
-        var dotCombined = Combine(memberStatesByTag.ValueOrDefault(StatusTag.DamageOverTime, Array.Empty<ITemporalState>()),
-            s => s.Status.CustomText.Select(t => t, string.Format("Tooltips/DamageOverTime".ToLocalized(), s.Amount.Value, s.RemainingTurns.Value)),
-            s => s.Sum(x => x.Amount.OrDefault(0)));
-        dotCombined.IfPresent(d => statuses.Add(d));
-        
-        if (_member.State.HasStatus(StatusTag.HealOverTime))
-            statuses.Add(new CurrentStatusValue { Type = StatusTag.HealOverTime.GetString(), Icon = icons[StatusTag.HealOverTime].Icon, Tooltip = "Tooltips/HealsTurnStart".ToLocalized() });
+            AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.CounterAttack,
+                () => "Tooltips/Counterattack".ToLocalized());
+            AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.Trap,
+                () => "Tooltips/SecretTrapPower".ToLocalized());
+            AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.Augment,
+                () => "Tooltips/UnknownAugmentPower".ToLocalized());
 
-        if (_member.State[TemporalStatType.Prominent] > 0)
-            statuses.Add(new CurrentStatusValue { Type = TemporalStatType.Prominent.GetString(), Icon = icons[TemporalStatType.Prominent].Icon, Tooltip = "Tooltips/CannotStealthProminent".ToLocalized() });
+            foreach (var s in _member.State.CustomStatuses())
+                statuses.Add(new CurrentStatusValue
+                {
+                    Type = s.Tooltip, Icon = icons[s.IconName].Icon, Text = s.DisplayNumber, Tooltip = s.Tooltip,
+                    OriginatorId = s.OriginatorId
+                });
+            ;
 
-        AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.WhenHit, "Tooltips/OnHitEffect".ToLocalized());
-        AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.WhenKilled, "Tooltips/WhenKilledEffect".ToLocalized());
-        AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.WhenDamaged, "Tooltips/WhenDamagedEffect".ToLocalized());
-        
-        AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.StartOfTurnTrigger, "Tooltips/TurnStartEffect".ToLocalized());
-        AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.EndOfTurnTrigger, "Tooltips/TurnEndEffect".ToLocalized());
+            AddStatusIconIfApplicable(statuses, TemporalStatType.Dodge, true, v => string.Format("Tooltips/DodgeAttacks".ToLocalized(), v.ToString()));
+            AddStatusIconIfApplicable(statuses, StatType.Armor, true, v => string.Format("Tooltips/ReduceAttackDamage".ToLocalized(), v.ToString()));
+            AddStatusIconIfApplicable(statuses, StatType.Resistance, true, v => string.Format("Tooltips/ReduceMagicDamage".ToLocalized(), v.ToString()));
+            AddNegativeStatusIconIfApplicable(statuses, StatType.Armor, true, v => string.Format("Tooltips/IncreaseAttackDamage".ToLocalized(), v.ToString()));
+            AddNegativeStatusIconIfApplicable(statuses, StatType.Resistance, true, v => string.Format("Tooltips/IncreaseMagicDamage".ToLocalized(), v.ToString()));
+            AddStatusIconIfApplicable(statuses, TemporalStatType.DoubleDamage, true, v => string.Format("Tooltips/DoubleDamage".ToLocalized(), v.ToString()));
+            AddBuffAmountIconIfApplicable(statuses, StatType.Attack);
+            AddBuffAmountIconIfApplicable(statuses, StatType.Magic);
+            AddBuffAmountIconIfApplicable(statuses, StatType.Leadership);
+            AddBuffAmountIconIfApplicable(statuses, StatType.Economy);
+            AddStatusIconIfApplicable(statuses, TemporalStatType.Blind, true, v => string.Format("Tooltips/Blinded".ToLocalized(), v.ToString()));
+            AddStatusIconIfApplicable(statuses, TemporalStatType.Inhibit, true, v => string.Format("Tooltips/Inhibited".ToLocalized(), v.ToString()));
+            AddStatusIconIfApplicable(statuses, TemporalStatType.Taunt, true, v => string.Format("Tooltips/Taunt".ToLocalized(), v.ToString()));
+            if (_member.State[TemporalStatType.Stealth] > 0)
+                statuses.Add(new CurrentStatusValue
+                {
+                    Type = TemporalStatType.Stealth.GetString(), Icon = icons[TemporalStatType.Stealth].Icon,
+                    Tooltip = "Tooltips/Stealth".ToLocalized()
+                });
+            AddStatusIconIfApplicable(statuses, TemporalStatType.Disabled, true, v => string.Format("Tooltips/Disabled".ToLocalized(), v.ToString()));
+            AddStatusIconIfApplicable(statuses, TemporalStatType.Stun, true, v => string.Format("Tooltips/Stunned".ToLocalized(), v.ToString()));
+            AddStatusIconIfApplicable(statuses, TemporalStatType.Confused, true, v => string.Format("Tooltips/Confused".ToLocalized(), v.ToString()));
+            AddStatusIconIfApplicable(statuses, TemporalStatType.Aegis, true, v => string.Format("Tooltips/Aegis".ToLocalized(), v.ToString()));
+            AddStatusIconIfApplicable(statuses, TemporalStatType.Lifesteal, true, v => "Tooltips/Lifesteal".ToLocalized());
+            AddStatusIconIfApplicable(statuses, TemporalStatType.Vulnerable, true, v => "Tooltips/Vulnerable".ToLocalized());
+            AddStatusIconIfApplicable(statuses, TemporalStatType.AntiHeal, true, v => "Tooltips/AntiHeal".ToLocalized());
+            AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.AfterShielded, () => "Tooltips/AfterShielded".ToLocalized());
+            AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.OnClipUsed, () => "Tooltips/ClipUsedEffect".ToLocalized());
+            AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.WhenBloodied, () => "Tooltips/BloodiedEffect".ToLocalized());
+            AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.WhenShieldBroken, () => "Tooltips/ShieldBrokenEffect".ToLocalized());
+            AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.OnHpDamageDealt, () => "Tooltips/HpDamageDealtEffect".ToLocalized());
+            AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.WhenAllyKilled, () => "Tooltips/AllyKilledEffect".ToLocalized());
+            AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.WhenAfflicted, () => "Tooltips/AfflictedEffect".ToLocalized());
+            AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.WhenIgnited, () => "Tooltips/IgnitedEffect".ToLocalized());
+            AddStatusIconIfApplicable(statuses, TemporalStatType.Injury, true, v => string.Format("Tooltips/ReceivedInjuries".ToLocalized(), v.ToString()));
+            AddStatusIconIfApplicable(statuses, TemporalStatType.Marked, true, v => "Tooltips/Marked".ToLocalized());
+            AddStatusIconIfApplicable(statuses, TemporalStatType.PreventResourceGains, true, v => string.Format("Tooltips/PreventResourceGains".ToLocalized(), v.ToString()));
 
-        UpdateComparisonWithPrevious(statuses);
-        UpdateStatuses(statuses);
+            var dotCombined = Combine(
+                memberStatesByTag.ValueOrDefault(StatusTag.DamageOverTime, Array.Empty<ITemporalState>()),
+                s => s.Status.CustomText.Select(t => t,
+                    string.Format("Tooltips/DamageOverTime".ToLocalized(), s.Amount.Value, s.RemainingTurns.Value)),
+                s => s.Sum(x => x.Amount.OrDefault(0)));
+            dotCombined.IfPresent(d => statuses.Add(d));
+
+            if (_member.State.HasStatus(StatusTag.HealOverTime))
+                statuses.Add(new CurrentStatusValue
+                {
+                    Type = StatusTag.HealOverTime.GetString(), Icon = icons[StatusTag.HealOverTime].Icon,
+                    Tooltip = "Tooltips/HealsTurnStart".ToLocalized()
+                });
+
+            if (_member.State[TemporalStatType.Prominent] > 0)
+                statuses.Add(new CurrentStatusValue
+                {
+                    Type = TemporalStatType.Prominent.GetString(), Icon = icons[TemporalStatType.Prominent].Icon,
+                    Tooltip = "Tooltips/CannotStealthProminent".ToLocalized()
+                });
+
+            AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.WhenHit, () => "Tooltips/OnHitEffect".ToLocalized());
+            AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.WhenKilled, () => "Tooltips/WhenKilledEffect".ToLocalized());
+            AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.WhenDamaged, () => "Tooltips/WhenDamagedEffect".ToLocalized());
+            AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.StartOfTurnTrigger, () => "Tooltips/TurnStartEffect".ToLocalized());
+            AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.EndOfTurnTrigger, () => "Tooltips/TurnEndEffect".ToLocalized());
+
+            UpdateComparisonWithPrevious(statuses);
+            UpdateStatuses(statuses);
+        }
+        catch (Exception e)
+        {
+            Log.Error(e);
+        }
     }
 
+    private void AddCustomTextStatusIcons(Dictionary<StatusTag, ITemporalState[]> states, List<CurrentStatusValue> statuses, StatusTag statusTag, Func<string> getDefaultText)
+    {
+        try
+        {
+            var defaultText = getDefaultText();
+            AddCustomTextStatusIcons(states, statuses, statusTag, defaultText);
+        }
+        catch (Exception e)
+        {
+            LogError(statusTag.ToString(), e);
+            AddCustomTextStatusIcons(states, statuses, statusTag, "Developer Error - Unknown");
+        }
+    }
+
+    private static void LogError(string status, Exception e)
+    {
+        Log.Error($"Status Bar - Unable to get default text for '{status}': {e.Message} - {e.StackTrace}");
+    }
+
+    private void AddCustomTextStatusIcons(Dictionary<StatusTag, ITemporalState[]> states, List<CurrentStatusValue> statuses, StatusTag statusTag, string defaultText)
+    {
+        var s = states.ValueOrDefault(statusTag, Array.Empty<ITemporalState>());
+
+        var combined = Combine(s, x => x.Status.CustomText.OrDefault(() => defaultText)
+            .Replace("{[Originator]}", battleState.Members.TryGetValue(x.OriginatorId, out var m)
+                ? m.TeamType == TeamType.Enemies ? $"{m.NameTerm.ToLocalized()} {m.Id}" : m.NameTerm.ToLocalized()
+                : "Tooltips/Originator".ToLocalized())
+            .Replace("{[PrimaryStat]}", _member.PrimaryStat().GetString()), x => x.Length > 1 ? x.Length : 0);
+        combined.IfPresent(c => statuses.Add(c));
+    }
+    
     private void AddBuffAmountIconIfApplicable(List<CurrentStatusValue> statuses, StatType statType)
     {
         if (_member.PrimaryStat() == statType)
@@ -190,15 +246,30 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>, ILocalizeTerms
             ? value.GetCeilingIntString() 
             : string.Empty;
         if (value > 0)
-            statuses.Add(new CurrentStatusValue { Type = stat.GetString(), Icon = icons[stat].Icon, Text = text, Tooltip = makeTooltip(value)});
+            statuses.Add(new CurrentStatusValue { Type = stat.GetString(), Icon = icons[stat].Icon, Text = text, Tooltip = GetTooltipOrDeveloperError(stat.ToString(), makeTooltip, value)});
     }
-    
+
+    private static string GetTooltipOrDeveloperError(string stat, Func<float, string> makeTooltip, float value)
+    {
+        var tooltip = "Developer Error - Unknown";
+        try
+        {
+            tooltip = makeTooltip(value);
+        }
+        catch (Exception e)
+        {
+            LogError(stat, e);
+        }
+
+        return tooltip;
+    }
+
     private void AddStatusIconIfApplicable(List<CurrentStatusValue> statuses, StatType stat, bool showNumber, Func<float, string> makeTooltip)
     {
         var value = _member.State[stat];
         var text = showNumber ? value.GetCeilingIntString() : string.Empty;
         if (value > 0)
-            statuses.Add(new CurrentStatusValue { Type = stat.GetString(), Icon = icons[stat].Icon, Text = text, Tooltip =  makeTooltip(value)});
+            statuses.Add(new CurrentStatusValue { Type = stat.GetString(), Icon = icons[stat].Icon, Text = text, Tooltip = GetTooltipOrDeveloperError(stat.ToString(), makeTooltip, value)});
     }
 
     private const string Negative = "-Negative";
@@ -207,7 +278,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>, ILocalizeTerms
         var value = _member.State[stat];
         var text = showNumber ? value.GetCeilingIntString() : string.Empty;
         if (value < 0)
-            statuses.Add(new CurrentStatusValue { Type = stat.GetString(), Icon = icons[stat + Negative].Icon, Text = text, Tooltip = makeTooltip(-value)});
+            statuses.Add(new CurrentStatusValue { Type = stat.GetString(), Icon = icons[stat + Negative].Icon, Text = text, Tooltip = GetTooltipOrDeveloperError(stat.ToString(), makeTooltip, -value)});
     }
 
     protected abstract void UpdateStatuses(List<CurrentStatusValue> statuses);
