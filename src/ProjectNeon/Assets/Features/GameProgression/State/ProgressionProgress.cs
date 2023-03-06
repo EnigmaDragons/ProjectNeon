@@ -30,7 +30,7 @@ public class ProgressionProgress : MonoBehaviour, ILocalizeTerms
     {
         var adventureCompletionRecords = CurrentProgressionData.Data.AdventureCompletions;
         var heroes = library.UnlockedHeroes;
-        var nonTutorialAdventures = library.UnlockedAdventures.Except(tutorialAdventure).ToArray();
+        var nonTutorialAdventures = library.UnlockedAdventures.Where(x => x.IncludeInProgress).Except(tutorialAdventure).ToArray();
         return GetTutorialProgress()
             .Concat(GetAdventureBaseDifficultyProgress(heroes, nonTutorialAdventures, adventureCompletionRecords))
             .Concat(GetAdventureHigherDifficultyProgress(nonTutorialAdventures, library.UnlockedDifficulties, CurrentProgressionData.Data))
