@@ -81,15 +81,28 @@ public class Adventure : ScriptableObject, CurrentAdventureData, ILocalizeTerms
     public bool BossSelection => bossSelection;
     public bool IncludeInProgress => includeInProgress;
 
+    public bool CanBeUnlocked()
+    {
+        if (CurrentProgressionData.Data.HasShownUnlockForAdventure(id))
+            return false;
+        if (!prerequisiteCompletedAdventures.Any())
+            return false;
+        if (unlockedOverrides != null && unlockedOverrides.Where(x => x != null).Any(x => x.Value))
+            return true;
+        if (lockedOverrides != null && lockedOverrides.Where(x => x != null).Any(x => x))
+            return false;
+        if ((LockConditionExplanationTerm.ToLocalized() ?? "").Length > 0)
+            return false;
+        if (prerequisiteCompletedAdventures.Any(p => !p.IsCompleted))
+            return false;
+        return true;
+    }
     public string LockConditionExplanationTerm => $"Adventures/Adventure{id}LockCondition";
     public bool IsLocked => !string.IsNullOrWhiteSpace(LockConditionExplanation);
     public string LockConditionExplanation
     {
         get
         {
-            if (unlockedOverrides == null && lockedOverrides == null)
-                return "";
-            
             if (unlockedOverrides != null && unlockedOverrides.Where(x => x != null).Any(x => x.Value))
                 return "";
 
@@ -101,7 +114,10 @@ public class Adventure : ScriptableObject, CurrentAdventureData, ILocalizeTerms
                 return staticCondition;
 
             var firstUncompletedRequiredAdventure = prerequisiteCompletedAdventures.Where(p => !p.IsCompleted).FirstAsMaybe();
-            return firstUncompletedRequiredAdventure.Select(a => string.Format("Adventures/DefaultLockedReason".ToLocalized(), a.MapTitleTerm.ToLocalized()), () => "");
+            if (firstUncompletedRequiredAdventure.IsPresent)
+                return string.Format("Adventures/DefaultLockedReason".ToLocalized(), firstUncompletedRequiredAdventure.Value.MapTitleTerm.ToLocalized());
+
+            return CurrentProgressionData.Data.HasShownUnlockForAdventure(id) || !prerequisiteCompletedAdventures.Any() ? "" : "Adventures/PlayMoreToUnlock";
         }
     }
     

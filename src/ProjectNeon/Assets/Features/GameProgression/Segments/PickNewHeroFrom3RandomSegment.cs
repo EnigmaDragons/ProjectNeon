@@ -35,7 +35,7 @@ public class PickNewHeroFrom3RandomSegment : StageSegment, ILocalizeTerms
     public static BaseHero[] GetFeatureHeroOptions(Library library, BaseHero[] currentHeroes, Adventure adventure)
     {
         var existingHeroes = currentHeroes.ToArray();
-        var allOptions = library.UnlockedHeroes.Where(x => CurrentProgressionData.Data.RunsFinished >= x.AdventuresPlayedBeforeUnlocked).ToList();
+        var allOptions = library.UnlockedHeroes.Where(x => x.AdventuresPlayedBeforeUnlocked == 0 || CurrentProgressionData.Data.HasShownUnlockForHeroId(x.Id)).ToList();
         existingHeroes.ForEach(h => allOptions.Remove(h));
         adventure.BannedHeroes.ForEach(h => allOptions.Remove(h));
         if (currentHeroes.Length == 0)

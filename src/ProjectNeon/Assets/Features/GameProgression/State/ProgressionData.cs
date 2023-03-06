@@ -18,7 +18,7 @@ public class ProgressionData
     
     private const int TutorialAdventureId = 10;
     private IEnumerable<AdventureCompletionRecord> NonTutorialCompletions => AdventureCompletions.Where(a => a.AdventureId != TutorialAdventureId);
-    
+
     public int UnlockedDifficulty 
         => NonTutorialCompletions.Any() ? NonTutorialCompletions.Max(x => x.Difficulty) + 1 : 0;
     public int HighestCompletedDifficulty(int adventureId) 
