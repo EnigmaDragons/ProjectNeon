@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: OrdRif_MunitionsCache
+  m_Name: OrdRif_OneManArsenal
   m_EditorClassIdentifier: 
   id: 450
   customName: 
@@ -18,9 +18,9 @@ MonoBehaviour:
   description: "Gives <b>Max Ammo</b>. \n\nGives {E[1]}"
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   descriptionV2:
-    text: "Gives <b>Max Ammo</b>. \n\nGives {0}"
-    formatArgs:
-    - '{E[1]}'
+    text: Next Grenade & Shot played this turn give 1 Card Plays and draw 1 of your
+      cards
+    formatArgs: []
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -44,5 +44,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fbcb59caa7d5a114f8b9cf6016d20160, type: 2}
   highlightCondition: []
   unhighlightCondition: []
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 0

@@ -9641,17 +9641,13 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Gives <b>Max {[t:Resources/Ammo]}</b>
-
-
-        Gives {[0]}'
-      - "\u7ED9\u4E88 <b>\u6700\u5927{[t:Resources/Ammo]}</b>\u3002\n\n\u7ED9\u4E88
-        {[0]}\u3002"
-      - "\u7ED9\u4E88 <b>\u6700\u5927{[t:Resources/Ammo]}</b>\u3002\n\n\u7ED9\u4E88
-        {[0]}\u3002"
+      - Next grenade & shot played this turn give 1 {[t:Keywords/CardPlays]} and
+        draw 1 of your cards
       - 
-      - "Da <b>M\xE1ximo {[t:Resources/Ammo]}</b>\n\nDa {[0]}"
-      - "D\xEA <b>{[t:Resources/Ammo]} M\xE1xima</b>\n\nD\xEA {[0]}"
+      - 
+      - 
+      - 
+      - 
       - 
       - 
       - 
@@ -9688,7 +9684,7 @@ MonoBehaviour:
       - 'Deal {[0]}
 
 
-        <i>(Is a grenade)</i>'
+        <i>(Is a shot and grenade)</i>'
       - "\u9020\u6210{[0]}\u70B9\u4F24\u5BB3\u3002\n\n<i>(\u662F\u624B\u69B4\u5F39)</i>"
       - "\u9020\u6210{[0]}\u70B9\u4F24\u5BB3\u3002\n\n<i>(\u662F\u624B\u69B4\u5F39)</i>"
       - 
@@ -19599,15 +19595,15 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Munitions Cache
-      - "\u5F39\u836F\u5E93"
-      - "\u5F48\u85E5\u5EAB"
-      - "\u0421\u043A\u043B\u0430\u0434 \u0431\u043E\u0435\u043F\u0440\u0438\u043F\u0430\u0441\u043E\u0432"
-      - "Provisi\xF3n de Municiones"
-      - "Cache de Muni\xE7\xF5es"
-      - Munitionscache
-      - Cache des munitions
-      - "\u8ECD\u9700\u54C1\u30AD\u30E3\u30C3\u30B7\u30E5"
+      - One Man Arsenal
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
       Flags: 000000000000000000
       Languages_Touch: []
     - Term: CardNames/00451-00-Name
@@ -23678,6 +23674,21 @@ MonoBehaviour:
       - "\u30EA\u30ED\u30FC\u30C9\u307E\u305F\u306F{[t:Resources/Ammo]}\u304C\u7A7A\u306E\u5834\u5408\uFF1A\u5931\u3046{[t:Stats/Stat-Attack]}\u30DC\u30FC\u30CA\u30B9"
       Flags: 000000000000000000
       Languages_Touch: []
+    - Term: CardStatuses/Effect2320StatusDetail
+      TermType: 0
+      Description: 
+      Languages:
+      - 'Grenade: Gain 1 {[t:Keywords/CardPlays]} and draw one of owner''s cards'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      Flags: 000000000000000000
+      Languages_Touch: []
     - Term: CardStatuses/Effect2341StatusDetail
       TermType: 0
       Description: 
@@ -24109,6 +24120,21 @@ MonoBehaviour:
       Description: 
       Languages:
       - Gain 2 {[t:Stats/Stat-Shield]} and {[t:Stats/Stat-MaxShield]}
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      Flags: 000000000000000000
+      Languages_Touch: []
+    - Term: CardStatuses/Effect4495StatusDetail
+      TermType: 0
+      Description: 
+      Languages:
+      - 'Shoot: Gain 1 {[t:Keywords/CardPlays]} and draw one of owner''s cards'
       - 
       - 
       - 
@@ -25593,12 +25619,12 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Shoot: Also, give -3 Armor for the battle'
+      - 'Shoot: Also, give -2 Armor for the battle'
       - 
       - 
       - 
-      - "Disparar: Tambi\xE9n da -3 Armaduras para la batalla"
-      - "Atire: Al\xE9m disso, d\xE1 -3 de Armadura para esta batalha"
+      - "Disparar: Tambi\xE9n da -2 Armaduras para la batalla"
+      - "Atire: Al\xE9m disso, d\xE1 -2 de Armadura para esta batalha"
       - 
       - 
       - 
@@ -64637,7 +64663,7 @@ MonoBehaviour:
     Google_WebServiceURL: https://script.google.com/macros/s/AKfycbyxEWOh-oly9VUweggR4FE-PJti-q6vB4eiq60gjqN60mMW8pqUSFQDcNZf5paleAfH/exec
     Google_SpreadsheetKey: 1_k0GnzCkReGlY_2s-ODT0hVniGHYfv2qnG9nqRQ4VvU
     Google_SpreadsheetName: I2Loc MetroplexZero Localization
-    Google_LastUpdatedVersion: 1678145165888
+    Google_LastUpdatedVersion: 1678148575753
     Google_Password: 23jh9hj2rjfhj33^$^%^$inhgf9g9j90i
     GoogleUpdateFrequency: 2
     GoogleInEditorCheckFrequency: 2

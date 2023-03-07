@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: OrdRif_MunitionsCache_E
+  m_Name: OrdRif_OneManArsenal_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 30
@@ -48,6 +48,7 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
@@ -74,7 +75,7 @@ MonoBehaviour:
       ReferencedEffect: {fileID: 0}
     characterAnimation: {fileID: 0}
     characterAnimation2:
-      Type: 0
+      Type: 5
       Conditions: []
     atTargetAnimation:
       animation:
@@ -91,6 +92,8 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 31
     battleEffect:
       Id: 2318
@@ -126,6 +129,7 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
@@ -169,88 +173,12 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 1
     battleEffect:
-      Id: 2319
-      EffectType: 7
-      Conditions: []
-      BaseAmount:
-        UseConstant: 1
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 999
-        FloatVariable: {fileID: 0}
-      DurationFormula: 0
-      EffectScope:
-        UseConstant: 1
-        ConstantValue: Ammo
-        Variable: {fileID: 0}
-      HitsRandomTargetMember: 0
-      ReTargetScope: 0
-      ApplyToEachMemberIndividually: 0
-      StatusTag: 0
-      StatusDetailText: 
-      TurnDelay: 0
-      Formula: 
-      InterpolatePartialFormula:
-        EvaluationPartialFormula: 
-        Prefix: 
-        Suffix: 
-      FlavorText:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReferencedSequence: {fileID: 0}
-      ReferencedSequences: []
-      ReactionConditionType: 0
-      ReactionEffectScope:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReactionTimingWindow: 0
-      ReactionSequence: {fileID: 0}
-      ReactionEffect:
-        reactor: 0
-        scope: 0
-        cardActions: {fileID: 0}
-      BonusCardType: {fileID: 0}
-      Unpreventable: 0
-    conditionData:
-      ConditionType: 0
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 0
-        FloatVariable: {fileID: 0}
-      EffectScope:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReferencedEffect: {fileID: 0}
-    characterAnimation: {fileID: 0}
-    characterAnimation2:
-      Type: 0
-      Conditions: []
-    atTargetAnimation:
-      animation:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      size: 1
-      speed: 1
-      color:
-        UseConstant: 1
-        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
-        Variable: {fileID: 0}
-      skipWaitingForCompletion: 0
-      conditions: []
-    enemyToSpawn: {fileID: 0}
-    enemySpawnOffset: {x: 0, y: 0, z: 0}
-  - type: 1
-    battleEffect:
-      Id: 2320
-      EffectType: 7
+      Id: 4495
+      EffectType: 74
       Conditions: []
       BaseAmount:
         UseConstant: 1
@@ -260,16 +188,16 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 1
         FloatVariable: {fileID: 0}
-      DurationFormula: 0
+      DurationFormula: 1
       EffectScope:
         UseConstant: 1
-        ConstantValue: Grenades
+        ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
-      StatusTag: 0
-      StatusDetailText: 
+      StatusTag: 12
+      StatusDetailText: 'Shoot: Gain 1 Card Play and Draw one of owner''s cards'
       TurnDelay: 0
       Formula: 
       InterpolatePartialFormula:
@@ -282,17 +210,18 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
-      ReactionConditionType: 0
+      OnlyReactDuringCardPhases: 0
+      ReactionConditionType: 29
       ReactionEffectScope:
         UseConstant: 1
-        ConstantValue: 
+        ConstantValue: Shot
         Variable: {fileID: 0}
       ReactionTimingWindow: 0
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0
         scope: 0
-        cardActions: {fileID: 0}
+        cardActions: {fileID: 11400000, guid: 6e545d52704d0b940b7c6bbd975179b3, type: 2}
       BonusCardType: {fileID: 0}
       Unpreventable: 0
     conditionData:
@@ -325,3 +254,86 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
+  - type: 1
+    battleEffect:
+      Id: 2320
+      EffectType: 74
+      Conditions: []
+      BaseAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 1
+        FloatVariable: {fileID: 0}
+      DurationFormula: 1
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 12
+      StatusDetailText: 'Grenade: Gain 1 Card Play and Draw 1 of owner''s cards'
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
+      ReactionConditionType: 29
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: Grenade
+        Variable: {fileID: 0}
+      ReactionTimingWindow: 0
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 11400000, guid: 6e545d52704d0b940b7c6bbd975179b3, type: 2}
+      BonusCardType: {fileID: 0}
+      Unpreventable: 0
+    conditionData:
+      ConditionType: 0
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedEffect: {fileID: 0}
+    characterAnimation: {fileID: 0}
+    characterAnimation2:
+      Type: 0
+      Conditions: []
+    atTargetAnimation:
+      animation:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      size: 1
+      speed: 1
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        Variable: {fileID: 0}
+      skipWaitingForCompletion: 0
+      conditions: []
+    enemyToSpawn: {fileID: 0}
+    enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
