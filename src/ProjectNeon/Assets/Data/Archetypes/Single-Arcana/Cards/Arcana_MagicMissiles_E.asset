@@ -48,6 +48,7 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
@@ -75,7 +76,8 @@ MonoBehaviour:
     characterAnimation: {fileID: 0}
     characterAnimation2:
       Type: 3
-      Conditions: []
+      Conditions:
+      - {fileID: 11400000, guid: 05bbc9382db5cb045a410c1213e7d9dd, type: 2}
     atTargetAnimation:
       animation:
         UseConstant: 1
@@ -91,6 +93,8 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 31
     battleEffect:
       Id: 2471
@@ -126,6 +130,7 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
@@ -166,14 +171,18 @@ MonoBehaviour:
         ConstantValue: {r: 1, g: 0, b: 0.45490196, a: 1}
         Variable: {fileID: 0}
       skipWaitingForCompletion: 0
-      conditions: []
+      conditions:
+      - {fileID: 11400000, guid: 05bbc9382db5cb045a410c1213e7d9dd, type: 2}
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 1
     battleEffect:
       Id: 2472
       EffectType: 31
-      Conditions: []
+      Conditions:
+      - {fileID: 11400000, guid: 05bbc9382db5cb045a410c1213e7d9dd, type: 2}
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -204,6 +213,7 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
@@ -247,3 +257,5 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0

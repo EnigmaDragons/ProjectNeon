@@ -121,7 +121,7 @@ public sealed class SaveLoadSystem : ScriptableObject
             maybeBlessingData.IfPresent(b =>
             {
                 var targetHeroes = data.TargetHeroIds.Select(id => heroesById[id]).Cast<HeroCharacter>().ToArray();
-                party.AddBlessing(new Blessing { Name = b.Name, Effect = b.Effect, Targets = targetHeroes });
+                party.AddBlessing(new Blessing { Name = b.Name, Effect = b.Effect, Targets = targetHeroes, Duration = data.Duration });
             });
         }
         

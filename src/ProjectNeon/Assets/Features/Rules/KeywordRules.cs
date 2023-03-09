@@ -18,6 +18,7 @@ public static class KeywordRules
     public const string Debuffs = "Debuffs";
     public const string Debuff = "Debuff";
     public const string Defenseless = "Defenseless";
+    public const string DoubleDamage = "Double Damage";
     public const string Drain = "Drain";
     public const string Finisher = "Finisher";
     public const string Focus = "Focus";
@@ -131,6 +132,7 @@ public static class KeywordRules
         AddTerm(SelfDestruct, SelfDestructHyphen);
         AddTerm(Sneaky);
         AddTerm(Vulnerable);
+        AddTerm(TemporalStatType.DoubleDamage.GetString(), DoubleDamage);
     }
 
     public static void AddAllMatchingEffectScopeRules(List<string> rulesToShow, EffectData e, params string[] scopes) 

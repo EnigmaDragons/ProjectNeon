@@ -8,6 +8,9 @@ public class Blessing
     public string Name;
     public HeroCharacter[] Targets;
     public EffectData Effect;
+    public int Duration;
+    
+    public Blessing() {}
     
     public void Apply(BattleState state)
     {

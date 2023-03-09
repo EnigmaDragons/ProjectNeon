@@ -66,6 +66,7 @@ public class GearRulesPresenter : MonoBehaviour
                     TemporalStatType.Aegis.ToString(),
                     TemporalStatType.Stun.ToString(),
                     TemporalStatType.DoubleDamage.ToString(),
+                    TemporalStatType.DoubleDamage.ToString().WithSpaceBetweenWords(),
                     PlayerStatType.CardCycles.ToString(),
                     TemporalStatType.Disabled.ToString(),
                     TemporalStatType.Stealth.ToString(),

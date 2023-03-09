@@ -28,6 +28,7 @@ public class BlessingClinicServiceProviderV4 : ClinicServiceProvider, ILocalizeT
                 {
                         Name = blessingData.Name,
                         Effect = blessingData.Effect,
+                        Duration = 3,
                         Targets = blessingData.IsSingleTarget
                             ? _party.Heroes
                                 .Where(x => x.Stats[blessingData.StatRequirement] >= blessingData.RequirementThreshold)
