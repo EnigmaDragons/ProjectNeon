@@ -94,7 +94,7 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
             visitedTextLabel.SetFinalText(allGlobalEffects.GetEffectById(mapData.VisitedGlobalEffectId)
                 .Select(e => string.Format(VisitedEffect.ToLocalized(), e.FullDescriptionTerm.ToLocalized()), ""));
         if (description != null)
-            description.Init(NodeName, NodeDetail);
+            description.Init(NodeName, NodeDetail, stageSegment);
         button.enabled = canTravel;
         if (canTravel)
             button.onClick.AddListener(() =>
