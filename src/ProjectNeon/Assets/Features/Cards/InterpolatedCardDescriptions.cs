@@ -37,8 +37,9 @@ public static class InterpolatedCardDescriptions
             if (card.DescriptionV2.IsUsable())
                 desc = Localized.FormatTerm(card.DescriptionTerm, card.DescriptionV2.formatArgs);
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            Log.Error(e);
             Log.Error($"{card.Name} Description is not Translated Correctly into {LocalizationManager.CurrentLanguage}");
             return $"{card.Name} Description is not Translated Correctly into {LocalizationManager.CurrentLanguage}";
         }
