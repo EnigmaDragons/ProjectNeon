@@ -29,6 +29,7 @@ public sealed class MemberState : IStats
     private IStats GetCurrentStats() => _baseStats
         .Plus(_additiveMods.Where(x => x.IsActive).Select(x => x.Stats).ToArray())
         .Times(_multiplierMods.Where(x => x.IsActive).Select(x => x.Stats).ToArray())
+        .WithPowerCountedAs(PrimaryStat)
         .NotBelowZero(StatExtensions.StatsThatCanGoBelowZero)
         .WithWholeNumbersWhereExpected();
 

@@ -4,11 +4,18 @@ using UnityEngine;
 public class NewBasicLevelUpOption : StaticHeroLevelUpOption, ILocalizeTerms
 {
     [SerializeField] private CardType card;
+    [SerializeField] private PartyCardCollection partyCards;
+    [SerializeField] private CardType[] startersAdded;
 
     public override string IconName => "";
     public override string Description => $"{"LevelUps/NewBasic".ToLocalized()}: {card.NameTerm.ToLocalized()}";
 
-    public override void Apply(Hero h) => h.SetBasic(card);
+    public override void Apply(Hero h)
+    {
+        h.SetBasic(card);
+        if (partyCards != null && startersAdded != null)
+            startersAdded.ForEach(x => partyCards.EnsureHasAtLeast(x, 4));
+    }
 
     public override void ShowDetail() => Message.Publish(new ShowDetailedCardView(card));
     public override bool HasDetail => true;
