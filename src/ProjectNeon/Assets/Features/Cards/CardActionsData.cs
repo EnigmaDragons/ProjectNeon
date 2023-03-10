@@ -46,5 +46,16 @@ public class CardActionsData : ScriptableObject, ILocalizeTerms
             .Concat(Actions
                 .Where(x => x.Type == CardBattleActionType.Battle && (x.BattleEffect.EffectType == EffectType.ApplyAdditiveStatInjury || x.BattleEffect.EffectType == EffectType.ApplyMultiplicativeStatInjury))
                 .Select(x => $"Injuries/{x.BattleEffect.FlavorText}"))
+            .Concat(Actions.SelectMany(x =>
+            {
+                var results = new List<string>();
+                if (x.Type != CardBattleActionType.Battle)
+                    return results;
+                if (!string.IsNullOrWhiteSpace(x.BattleEffect.InterpolatePartialFormula.PrefixTerm))
+                    results.Add($"CardInterpolations/Prefix-{x.BattleEffect.InterpolatePartialFormula.PrefixTerm}");
+                if (!string.IsNullOrWhiteSpace(x.BattleEffect.InterpolatePartialFormula.SuffixTerm))
+                    results.Add($"CardInterpolations/Suffix-{x.BattleEffect.InterpolatePartialFormula.SuffixTerm}");
+                return results;
+            }))
             .ToArray();
 }

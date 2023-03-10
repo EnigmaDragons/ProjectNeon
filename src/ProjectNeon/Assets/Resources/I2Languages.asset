@@ -4073,15 +4073,23 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Removes all debuffs.\n\n{[t:Stats/Stat-Shield]} <b>0.25 \xD7 Target[MaxShield]</b>"
-      - "\u6E05\u9664\u6240\u6709\u51CF\u76CA\u6548\u679C\u3002\n\n\u589E\u52A0 <b>0.25
-        \xD7 Target[[MaxShield]</b> {[t:Stats/Stat-Shield]}\u3002"
-      - "\u6E05\u9664\u6240\u6709\u51CF\u76CA\u6548\u679C\u3002\n\n\u589E\u52A0 <b>0.25
-        \xD7 Target[[MaxShield]</b> {[t:Stats/Stat-Shield]}\u3002"
+      - 'Removes all debuffs.
+
+
+        {[t:Stats/Stat-Shield]} {0}'
+      - "\u6E05\u9664\u6240\u6709\u51CF\u76CA\u6548\u679C\u3002\n\n{[t:Stats/Stat-Shield]}
+        {0}"
+      - "\u6E05\u9664\u6240\u6709\u51CF\u76CA\u6548\u679C\u3002\n\n{[t:Stats/Stat-Shield]}
+        {0}"
       - 
-      - "Elimina todos los debuffs.\n\n{[t:Stats/Stat-Shield]} <b>0.25 \xD7 Objetivo[MaxShield]</b>"
-      - "Remova todos os efeitos negativos.\n\n{[t:Stats/Stat-Shield]} <b>0.25 \xD7
-        [MaxShield] do alvo</b>"
+      - 'Elimina todos los debuffs.
+
+
+        {[t:Stats/Stat-Shield]} {0}'
+      - 'Remova todos os efeitos negativos.
+
+
+        {[t:Stats/Stat-Shield]} {0}'
       - 
       - 
       - 
@@ -5418,9 +5426,9 @@ MonoBehaviour:
       Languages:
       - "Deal {[0]}. \nDeal {[1]} for 3 turns. \nDeal {[2]}. \nDeal {[3]} for 3 turns"
       - "\u9020\u6210 {[0]}\u70B9\u4F24\u5BB3.\u3002\n\u9020\u6210 {[1]} \u70B9\u4F24\u5BB3\uFF0C\u6301\u7EED3\u56DE\u5408\u3002\n\u9020\u6210
-        {[3]}\u70B9\u4F24\u5BB3\u3002\n\u9020\u6210 {[4]} \u70B9\u4F24\u5BB3\uFF0C\u6301\u7EED3\u56DE\u5408\u3002"
+        {[2]}\u70B9\u4F24\u5BB3\u3002\n\u9020\u6210 {[3]} \u70B9\u4F24\u5BB3\uFF0C\u6301\u7EED3\u56DE\u5408\u3002"
       - "\u9020\u6210 {[0]}\u70B9\u4F24\u5BB3.\u3002\n\u9020\u6210 {[1]} \u70B9\u4F24\u5BB3\uFF0C\u6301\u7EED3\u56DE\u5408\u3002\n\u9020\u6210
-        {[3]}\u70B9\u4F24\u5BB3\u3002\n\u9020\u6210 {[4]} \u70B9\u4F24\u5BB3\uFF0C\u6301\u7EED3\u56DE\u5408\u3002"
+        {[2]}\u70B9\u4F24\u5BB3\u3002\n\u9020\u6210 {[3]} \u70B9\u4F24\u5BB3\uFF0C\u6301\u7EED3\u56DE\u5408\u3002"
       - 
       - "Inflige {[0]}. \nInflige {[1]} por 3 turnos. \nInflige {[2]}. \nInflige
         {[3]} por 3 turnos"
@@ -6344,7 +6352,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Heal {[0]}
+      - Heal {[0]} everyone except myself
       - "\u6CBB\u7597 {[0]}\u3002"
       - "\u6CBB\u7597 {[0]}\u3002"
       - 
@@ -9495,16 +9503,17 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Now & each turn: Gives <b>(Shield/5) {[t:Keywords/Power]}</b> for this turn'
+      - 'Now & each turn: Gives <b>({[t:Stats/Stat-Shield]}/5) {[t:Keywords/Power]}</b>
+        for this turn'
       - "\u73B0\u5728\u548C\u6BCF\u4E2A\u56DE\u5408\u7684\u5F00\u59CB\uFF1A\u7ED9\u4E88
-        <b>(0.2 \xD7 \u76EE\u6807[Shield]) {[t:Keywords/Power]}</b>"
+        <b>(0.2 \xD7 \u76EE\u6807[{[t:Stats/Stat-Shield]}]) {[t:Keywords/Power]}</b>"
       - "\u73B0\u5728\u548C\u6BCF\u4E2A\u56DE\u5408\u7684\u5F00\u59CB\uFF1A\u7ED9\u4E88
-        <b>(0.2 \xD7 \u76EE\u6807[Shield]) {[t:Keywords/Power]}</b>"
+        <b>(0.2 \xD7 \u76EE\u6807[{[t:Stats/Stat-Shield]}]) {[t:Keywords/Power]}</b>"
       - 
-      - "Ahora y al inicio de cada turno: Da <b>(0.2 \xD7 Objetivo[Escudo]) {[t:Keywords/PrimaryStat]}</b>
-        por este turno"
-      - "Agora e no come\xE7o de cada turno: D\xEA <b>(0.2 \xD7 Alvo[Escudo]) {[t:Keywords/Power]}</b>
-        por neste turno"
+      - "Ahora y al inicio de cada turno: Da <b>(0.2 \xD7 Objetivo[{[t:Stats/Stat-Shield]}])
+        {[t:Keywords/PrimaryStat]}</b> por este turno"
+      - "Agora e no come\xE7o de cada turno: D\xEA <b>(0.2 \xD7 Alvo[{[t:Stats/Stat-Shield]}])
+        {[t:Keywords/Power]}</b> por neste turno"
       - 
       - 
       - 
@@ -11689,15 +11698,18 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>Re-Stealth</b>
+      - '<b>{[t:Keywords/ReStealth]}</b>
 
 
         Gain {[0]}'
-      - "<b>Re-Stealth</b>\u3002\n\n\u83B7\u5F97 {[0]}\u3002"
-      - "<b>Re-Stealth</b>\u3002\n\n\u83B7\u5F97 {[0]}\u3002"
+      - "<b>{[t:Keywords/ReStealth]}</b>\u3002\n\n\u83B7\u5F97 {[0]}\u3002"
+      - "<b>{[t:Keywords/ReStealth]}</b>\u3002\n\n\u83B7\u5F97 {[0]}\u3002"
       - 
-      - "<b>Acci\xF3n Furtiva</b>\n\nGana {[0]}"
-      - '<b>Re-Stealth</b>
+      - '<b>{[t:Keywords/ReStealth]}</b>
+
+
+        Gana {[0]}'
+      - '<b>{[t:Keywords/ReStealth]}</b>
 
 
         Ganhe {[0]}'
@@ -13937,7 +13949,7 @@ MonoBehaviour:
 
 
         Gives <b>{[0]} {[t:Stats/Stat-Armor]}
-        & {[0]} {[t:Stats/Stat-Resistance]}</b>'
+        & {[0]} {[t:Stats/Stat-Resistance]}</b> for this turn'
       - 
       - 
       - 
@@ -14111,6 +14123,21 @@ MonoBehaviour:
       Description: 
       Languages:
       - 'Start of each turn: Gives {0} <b>Max Shield</b> and <b>Shield</b>'
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      Flags: 000000000000000000
+      Languages_Touch: []
+    - Term: CardInterpolations/Suffix-GrenadesThrown
+      TermType: 0
+      Description: 
+      Languages:
+      - '* [Grenades Thrown]'
       - 
       - 
       - 
@@ -16886,8 +16913,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Lethal Intention
-      - "\u6740\u5FC3\u5916\u9732"
-      - "\u6BBA\u5FC3\u5916\u9732"
+      - "\u6740\u610F\u5916\u9732"
+      - "\u6BBA\u610F\u5916\u9732"
       - "\u041D\u0430\u043C\u0435\u0440\u0435\u043D\u0438\u0435 \u0443\u0431\u0438\u0442\u044C"
       - "Intenci\xF3n Letal"
       - "Inten\xE7\xE3o Letal"
@@ -17266,8 +17293,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Inject Poison
-      - "\u6CE8\u5165\u6BD2\u836F"
-      - "\u6CE8\u5165\u6BD2\u85E5"
+      - "\u5267\u6BD2\u6CE8\u5C04"
+      - "\u5287\u6BD2\u6CE8\u5C04"
       - "\u0418\u043D\u044A\u0435\u043A\u0446\u0438\u043E\u043D\u043D\u044B\u0439
         \u044F\u0434"
       - Inyectar Veneno
@@ -18322,8 +18349,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Power Transfer
-      - "\u7535\u529B\u4F20\u8F93"
-      - "\u96FB\u529B\u50B3\u8F38"
+      - "\u80FD\u91CF\u8F6C\u79FB"
+      - "\u80FD\u91CF\u8F49\u79FB"
       - "\u041F\u0435\u0440\u0435\u0434\u0430\u0447\u0430 \u044D\u043D\u0435\u0440\u0433\u0438\u0438"
       - "Transferencia de Energ\xEDa"
       - "Transfer\xEAncia de Energia"
@@ -27711,9 +27738,9 @@ MonoBehaviour:
 
         Anyway, per the ICC immigration policies, we
         have just one final formal step before you are a licensed benefactor.'
-      - "\u516C\u53F8\u76F8\u4E92\u4E4B\u95F4\u6CA1\u6709\u7ADE\u4E89\u5173\u7CFB\u3002\u6211\u4EEC\u90FD\u4E3A\u5171\u540C\u7684\u7E41\u8363\u800C\u5DE5\u4F5C\u3002\n\n\u603B\u4E4B\uFF0C\u6839\u636E\u56FD\u9645\u5546\u4F1A\u7684\u79FB\u6C11\u653F\u7B56\uFF0C\u5728\u4F60\u6210\u4E3A\u8363\u8A89\u5E02\u6C11\u4E4B\u524D\uFF0C\u6211\u4EEC\u53EA\u6709\u6700\u540E\u4E00\u4E2A\u6B63\u5F0F\u6B65\u9AA4\u3002\n"
+      - "\u516C\u53F8\u76F8\u4E92\u4E4B\u95F4\u6CA1\u6709\u7ADE\u4E89\u5173\u7CFB\u3002\u6211\u4EEC\u90FD\u4E3A\u5171\u540C\u7684\u7E41\u8363\u800C\u5DE5\u4F5C\u3002\n\n\u603B\u4E4B\uFF0C\u6839\u636E\u56FD\u9645\u5546\u4F1A\u7684\u79FB\u6C11\u653F\u7B56\uFF0C\u5728\u4F60\u6210\u4E3A\u8363\u8A89\u5E02\u6C11\u4E4B\u524D\uFF0C\u6211\u4EEC\u53EA\u9700\u5B8C\u6210\u6700\u540E\u4E00\u4E2A\u6B65\u9AA4\u3002\n"
       - "\u516C\u53F8\u76F8\u4E92\u4E4B\u9593\u6C92\u6709\u7AF6\u722D\u95DC\u4FC2\u3002\u6211\u5011\u90FD\u70BA\u5171\u540C\u7684\u7E41\u69AE\u800C\u5DE5\u4F5C\u3002\n
-        \n \u7E3D\u4E4B\uFF0C\u6839\u64DA\u570B\u969B\u5546\u6703\u7684\u79FB\u6C11\u653F\u7B56\uFF0C\u5728\u4F60\u6210\u70BA\u69AE\u8B7D\u5E02\u6C11\u4E4B\u524D\uFF0C\u6211\u5011\u53EA\u6709\u6700\u5F8C\u4E00\u500B\u6B63\u5F0F\u6B65\u9A5F\u3002"
+        \n \u7E3D\u4E4B\uFF0C\u6839\u64DA\u570B\u969B\u5546\u6703\u7684\u79FB\u6C11\u653F\u7B56\uFF0C\u5728\u4F60\u6210\u70BA\u69AE\u8B7D\u5E02\u6C11\u4E4B\u524D\uFF0C\u6211\u5011\u53EA\u9700\u5B8C\u6210\u6700\u5F8C\u4E00\u500B\u6B65\u9A5F\u3002"
       - 
       - "Ninguna de las MetroCorps compite entre ellas. Todos trabajamos juntos por
         la prosperidad mutua.\n\nDe todos modos, seg\xFAn las pol\xEDticas de inmigraci\xF3n
@@ -27766,9 +27793,9 @@ MonoBehaviour:
         MetroCorps reign of unchecked corruption is about to be over.
 
 '
-      - "\u6211\u5DF2\u7ECF\u901A\u8FC7\u4E86\u79FB\u6C11\u5C40\uFF0C\u8FDB\u5165\u4E86{[t:LocationName]}\u3002\n\n\u5927\u90FD\u4F1A\u516C\u53F8\u4E0D\u53D7\u7EA6\u675F\u7684\u8150\u8D25\u7EDF\u6CBB\u5373\u5C06\u7ED3\u675F\u3002"
+      - "\u6211\u5DF2\u7ECF\u901A\u8FC7\u4E86\u79FB\u6C11\u5C40\uFF0C\u8FDB\u5165\u4E86{[t:LocationName]}\u3002\n\n\u5DE8\u578B\u516C\u53F8\u522B\u60F3\u518D\u65E0\u6CD5\u65E0\u5929\u4E86\u3002"
       - "\u6211\u5DF2\u7D93\u901A\u904E\u4E86\u79FB\u6C11\u5C40\uFF0C\u9032\u5165\u4E86{[t:LocationName]}\u3002\n
-        \n \u5927\u90FD\u6703\u516C\u53F8\u4E0D\u53D7\u7D04\u675F\u7684\u8150\u6557\u7D71\u6CBB\u5373\u5C07\u7D50\u675F\u3002"
+        \n \u5DE8\u578B\u516C\u53F8\u5225\u60F3\u518D\u7121\u6CD5\u7121\u5929\u4E86\u3002"
       - 
       - "He conseguido pasar la inmigraci\xF3n y llegar a {[t:LocationName]}.\n\nEl
         reino de corrupci\xF3n sin control de MetroCorps est\xE1 a punto de terminar.\n"
@@ -31918,8 +31945,8 @@ MonoBehaviour:
       Languages:
       - But, don't worry, it's not like a place of lawlessness or anarchy either.
         The 8 big MetroCorps each have members on the Inter-Corporate Council.
-      - "\u4F46\u662F\uFF0C\u522B\u62C5\u5FC3\uFF0C\u5B83\u4E5F\u4E0D\u50CF\u662F\u4E00\u4E2A\u65E0\u6CD5\u65E0\u5929\u7684\u5730\u65B9\u30028\u4E2A\u5927\u7684\u516C\u53F8\u5728\u516C\u53F8\u95F4\u59D4\u5458\u4F1A\u4E2D\u90FD\u6709\u6210\u5458\u3002"
-      - "\u4F46\u662F\uFF0C\u5225\u64D4\u5FC3\uFF0C\u5B83\u4E5F\u4E0D\u50CF\u662F\u4E00\u500B\u7121\u6CD5\u7121\u5929\u7684\u5730\u65B9\u30028\u500B\u5927\u7684\u516C\u53F8\u5728\u516C\u53F8\u9593\u59D4\u54E1\u6703\u4E2D\u90FD\u6709\u6210\u54E1\u3002"
+      - "\u4F46\u662F\uFF0C\u522B\u62C5\u5FC3\uFF0C\u5B83\u4E5F\u4E0D\u662F\u4E00\u4E2A\u65E0\u6CD5\u65E0\u5929\u7684\u5730\u65B9\u30028\u5BB6\u5DE8\u578B\u516C\u53F8\u5728\u516C\u53F8\u95F4\u59D4\u5458\u4F1A\u4E2D\u90FD\u6709\u6210\u5458\u3002"
+      - "\u4F46\u662F\uFF0C\u5225\u64D4\u5FC3\uFF0C\u5B83\u4E5F\u4E0D\u662F\u4E00\u500B\u7121\u6CD5\u7121\u5929\u7684\u5730\u65B9\u30028\u5BB6\u5DE8\u578B\u516C\u53F8\u5728\u516C\u53F8\u9593\u59D4\u54E1\u6703\u4E2D\u90FD\u6709\u6210\u54E1\u3002"
       - 
       - "Pero no te preocupes, no es un lugar sin ley ni anarqu\xEDa. Cada una de
         las 8 grandes MetroCorps tiene miembros en el Consejo InterCorporativo."
@@ -31955,8 +31982,8 @@ MonoBehaviour:
       Languages:
       - None of the MetroCorps compete with each other. We all work together for
         mutual prosperity.
-      - "\u6CA1\u6709\u516C\u53F8\u662F\u76F8\u4E92\u7ADE\u4E89\u7684\u3002\u6211\u4EEC\u90FD\u5728\u4E3A\u5171\u540C\u7684\u7E41\u8363\u800C\u52AA\u529B\u3002"
-      - "\u6C92\u6709\u516C\u53F8\u662F\u76F8\u4E92\u7AF6\u722D\u7684\u3002\u6211\u5011\u90FD\u5728\u70BA\u5171\u540C\u7684\u7E41\u69AE\u800C\u52AA\u529B\u3002"
+      - "\u6CA1\u6709\u516C\u53F8\u95F4\u7684\u76F8\u4E92\u7ADE\u4E89\u3002\u6211\u4EEC\u90FD\u5728\u4E3A\u5171\u540C\u7684\u7E41\u8363\u800C\u52AA\u529B\u3002"
+      - "\u6C92\u6709\u516C\u53F8\u9593\u7684\u76F8\u4E92\u7AF6\u722D\u3002\u6211\u5011\u90FD\u5728\u70BA\u5171\u540C\u7684\u7E41\u69AE\u800C\u52AA\u529B\u3002"
       - 
       - Ninguna de las MetroCorps compite entre ellas. Todos trabajamos juntos para
         la prosperidad mutua.
@@ -51150,11 +51177,11 @@ MonoBehaviour:
 
         Whatever their reasons, everyone who is unaffiliated
         in {[t:LocationName]} lives a more challenging and dangerous life.'
-      - "\u4E0D\u96B6\u5C5E\u4E8E\u4EFB\u4F55\u90FD\u5E02\u4E1B\u96F6\u516C\u53F8\u3002\n\n\u867D\u7136\u5728{[t:LocationName]}\u5F3A\u70C8\u7684\u54C1\u724C\u5FE0\u8BDA\u5EA6\u4F1A\u5E26\u6765\u5F88\u5927\u7684\u4F18\u52BF\uFF0C\u4F46\u4E5F\u6709\u5F88\u591A\u4EBA\u559C\u6B22\u5C3D\u53EF\u80FD\u5730\u8868\u73B0\u51FA\u65E0\u96B6\u5C5E\u5173\u7CFB\u3002\u6709\u4E9B\u4EBA\u4E0D\u52A0\u5165\u4F01\u4E1A\uFF0C\u56E0\u4E3A\u4F01\u4E1A\u7684\u751F\u6D3B\u65B9\u5F0F\u5E76\u4E0D\u7B26\u5408\u4ED6\u4EEC\u7684\u613F\u666F\uFF0C\u4ED6\u4EEC\u5B81\u613F\u6309\u7167\u81EA\u5DF1\u7684\u6761\u4EF6\u5728{[t:LocationName]}\u8FC7\u751F\u6D3B\u3002\u8FD9\u5305\u62EC\u4E00\u4E9B\u5BCC\u8C6A\u6216\u6743\u52BF\u8005\uFF0C\u56E0\u4E3A\u4ED6\u4EEC\u4E0D\u592A\u9700\u8981\u4F01\u4E1A\u7684\u5E2E\u52A9\u3002\u5F53\u7136\u66F4\u591A\u7684\u662F\u975E\u5E38\u8D2B\u7A77\u6216\u88AB\u793E\u4F1A\u629B\u5F03\u7684\u4EBA\u3002\u4ED6\u4EEC\u65E0\u6CD5\u6709\u6548\u5229\u7528\u5C31\u4E1A\u6216\u54C1\u724C\u5FE0\u8BDA\u5EA6\u6240\u5E26\u6765\u7684\u4EFB\u4F55\u597D\u5904\u3002\n\n\u8FD8\u6709\u4E00\u4E9B\u4EBA\uFF0C\u5982\u81EA\u7531\u804C\u4E1A\u8005\uFF0C\u5229\u7528\u4ED6\u4EEC\u5FE0\u8BDA\u5EA6\u7684\u7F3A\u4E4F\u4F5C\u4E3A\u8BA8\u4EF7\u8FD8\u4EF7\u7684\u5DE5\u5177\uFF0C\u5728\u4ED6\u4EEC\u901A\u8FC7\u540E\u65B9\u6E20\u9053\u5411\u4F01\u4E1A\u5173\u7CFB\u63D0\u4F9B\u975E\u5E38\u89C4\u7684\u79C1\u4EBA\u670D\u52A1\u65F6\uFF0C\u66F4\u987A\u5229\u5730\u5B8C\u6210\u4EA4\u6613\u3002\u8FD8\u6709\u4E00\u4E9B\u4EBA\u51FA\u4E8E\u53E4\u8001\u7684\u5B97\u6559\u6216\u53E4\u8001\u7684\u9053\u5FB7\u4E49\u52A1\u800C\u4FDD\u6301\u65E0\u515A\u6D3E\u72B6\u6001\u3002\u4ED6\u4EEC\u6000\u7740\u7406\u60F3\u4E3B\u4E49\u7684\u68A6\u60F3\uFF0C\u8981\u5F7B\u5E95\u6539\u53D8{[t:LocationName]}\u793E\u4F1A\uFF0C\u4EE5\u4E0D\u540C\u7684\u5F62\u8C61\u91CD\u5851\u5B83\u3002\n\n\u65E0\u8BBA\u7406\u7531\u662F\u4EC0\u4E48\uFF0C\u6BCF\u4E2A\u5728{[t:LocationName]}\u672A\u52A0\u5165\u4F01\u4E1A\u7684\u4EBA\u90FD\u5C06\u8FC7\u7740\u66F4\u5177\u6311\u6218\u548C\u5371\u9669\u7684\u751F\u6D3B\u3002"
-      - "\u4E0D\u96B8\u5C6C\u4E8E\u4EFB\u4F55\u90FD\u5E02\u53E2\u96F6\u516C\u53F8\u3002\n
-        \n \u96D6\u7136\u5728{[t:LocationName]}\u5F37\u70C8\u7684\u54C1\u724C\u5FE0\u8AA0\u5EA6\u6703\u5E36\u4F86\u5F88\u5927\u7684\u512A\u52E2\uFF0C\u4F46\u4E5F\u6709\u5F88\u591A\u4EBA\u559C\u6B61\u76E1\u53EF\u80FD\u5730\u8868\u73FE\u51FA\u7121\u96B8\u5C6C\u95DC\u4FC2\u3002\u6709\u4E9B\u4EBA\u4E0D\u52A0\u5165\u4F01\u696D\uFF0C\u56E0\u70BA\u4F01\u696D\u7684\u751F\u6D3B\u65B9\u5F0F\u4E26\u4E0D\u7B26\u5408\u4ED6\u5011\u7684\u9858\u666F\uFF0C\u4ED6\u5011\u5BE7\u9858\u6309\u7167\u81EA\u5DF1\u7684\u689D\u4EF6\u5728{[t:LocationName]}\u904E\u751F\u6D3B\u3002\u9019\u5305\u62EC\u4E00\u4E9B\u5BCC\u8C6A\u6216\u6B0A\u52E2\u8005\uFF0C\u56E0\u70BA\u4ED6\u5011\u4E0D\u592A\u9700\u8981\u4F01\u696D\u7684\u8AAC\u660E\u3002\u7576\u7136\u66F4\u591A\u7684\u662F\u975E\u5E38\u8CA7\u7AAE\u6216\u88AB\u793E\u6703\u62CB\u68C4\u7684\u4EBA\u3002\u4ED6\u5011\u7121\u6CD5\u6709\u6548\u5229\u7528\u5C31\u696D\u6216\u54C1\u724C\u5FE0\u8AA0\u5EA6\u6240\u5E36\u4F86\u7684\u4EFB\u4F55\u597D\u8655\u3002\n
-        \n \u9084\u6709\u4E00\u4E9B\u4EBA\uFF0C\u5982\u81EA\u7531\u8077\u696D\u8005\uFF0C\u5229\u7528\u4ED6\u5011\u5FE0\u8AA0\u5EA6\u7684\u7F3A\u4E4F\u4F5C\u70BA\u8A0E\u50F9\u9084\u50F9\u7684\u5DE5\u5177\uFF0C\u5728\u4ED6\u5011\u901A\u904E\u5F8C\u65B9\u7BA1\u9053\u5411\u4F01\u696D\u95DC\u4FC2\u63D0\u4F9B\u975E\u5E38\u898F\u7684\u79C1\u4EBA\u670D\u52D9\u6642\uFF0C\u66F4\u9806\u5229\u5730\u5B8C\u6210\u4EA4\u6613\u3002\u9084\u6709\u4E00\u4E9B\u4EBA\u51FA\u65BC\u53E4\u8001\u7684\u5B97\u6559\u6216\u53E4\u8001\u7684\u9053\u5FB7\u7FA9\u52D9\u800C\u4FDD\u6301\u7121\u9EE8\u6D3E\u72C0\u614B\u3002\u4ED6\u5011\u61F7\u8457\u7406\u60F3\u4E3B\u7FA9\u7684\u5922\u60F3\uFF0C\u8981\u5FB9\u5E95\u6539\u8B8A{[t:LocationName]}\u793E\u6703\uFF0C\u4EE5\u4E0D\u540C\u7684\u5F62\u8C61\u91CD\u5851\u5B83\u3002\n
-        \n \u7121\u8AD6\u7406\u7531\u662F\u4EC0\u9EBC\uFF0C\u6BCF\u500B\u5728{[t:LocationName]}\u672A\u52A0\u5165\u4F01\u696D\u7684\u4EBA\u90FD\u5C07\u904E\u8457\u66F4\u5177\u6311\u6230\u548C\u5371\u96AA\u7684\u751F\u6D3B\u3002"
+      - "\u4E0D\u96B6\u5C5E\u4E8E\u4EFB\u4F55\u5DE8\u578B\u516C\u53F8\u3002\n\n\u867D\u7136\u5728{[t:LocationName]}\u5F3A\u70C8\u7684\u54C1\u724C\u5FE0\u8BDA\u5EA6\u4F1A\u5E26\u6765\u5F88\u5927\u7684\u4F18\u52BF\uFF0C\u4F46\u4E5F\u6709\u5F88\u591A\u4EBA\u559C\u6B22\u5C3D\u53EF\u80FD\u5730\u8868\u73B0\u51FA\u65E0\u96B6\u5C5E\u5173\u7CFB\u3002\u6709\u4E9B\u4EBA\u4E0D\u52A0\u5165\u516C\u53F8\uFF0C\u56E0\u4E3A\u516C\u53F8\u7684\u751F\u6D3B\u65B9\u5F0F\u5E76\u4E0D\u7B26\u5408\u4ED6\u4EEC\u7684\u613F\u666F\uFF0C\u4ED6\u4EEC\u5B81\u613F\u6309\u7167\u81EA\u5DF1\u7684\u6761\u4EF6\u5728{[t:LocationName]}\u8FC7\u751F\u6D3B\u3002\u8FD9\u5305\u62EC\u4E00\u4E9B\u5BCC\u8C6A\u6216\u6743\u52BF\u8005\uFF0C\u56E0\u4E3A\u4ED6\u4EEC\u4E0D\u592A\u9700\u8981\u516C\u53F8\u7684\u5E2E\u52A9\u3002\u5F53\u7136\u66F4\u591A\u7684\u662F\u975E\u5E38\u8D2B\u7A77\u6216\u88AB\u793E\u4F1A\u629B\u5F03\u7684\u4EBA\u3002\u4ED6\u4EEC\u65E0\u6CD5\u6709\u6548\u5229\u7528\u5C31\u4E1A\u6216\u54C1\u724C\u5FE0\u8BDA\u5EA6\u6240\u5E26\u6765\u7684\u4EFB\u4F55\u597D\u5904\u3002\n\n\u8FD8\u6709\u4E00\u4E9B\u4EBA\uFF0C\u5982\u81EA\u7531\u804C\u4E1A\u8005\uFF0C\u5229\u7528\u4ED6\u4EEC\u5FE0\u8BDA\u5EA6\u7684\u7F3A\u4E4F\u4F5C\u4E3A\u8BA8\u4EF7\u8FD8\u4EF7\u7684\u5DE5\u5177\uFF0C\u5728\u4ED6\u4EEC\u901A\u8FC7\u540E\u65B9\u6E20\u9053\u5411\u516C\u53F8\u63D0\u4F9B\u975E\u5E38\u89C4\u7684\u79C1\u4EBA\u670D\u52A1\u65F6\uFF0C\u66F4\u987A\u5229\u5730\u5B8C\u6210\u4EA4\u6613\u3002\u8FD8\u6709\u4E00\u4E9B\u4EBA\u51FA\u4E8E\u53E4\u8001\u7684\u5B97\u6559\u6216\u53E4\u8001\u7684\u9053\u5FB7\u4E49\u52A1\u800C\u4FDD\u6301\u65E0\u515A\u6D3E\u72B6\u6001\u3002\u4ED6\u4EEC\u6000\u7740\u7406\u60F3\u4E3B\u4E49\u7684\u68A6\u60F3\uFF0C\u8981\u5F7B\u5E95\u6539\u53D8{[t:LocationName]}\u793E\u4F1A\uFF0C\u4EE5\u4E0D\u540C\u7684\u5F62\u8C61\u91CD\u5851\u5B83\u3002\n\n\u65E0\u8BBA\u7406\u7531\u662F\u4EC0\u4E48\uFF0C\u6BCF\u4E2A\u5728{[t:LocationName]}\u672A\u52A0\u5165\u516C\u53F8\u7684\u4EBA\u90FD\u5C06\u8FC7\u7740\u66F4\u5177\u6311\u6218\u548C\u5371\u9669\u7684\u751F\u6D3B\u3002"
+      - "\u4E0D\u96B8\u5C6C\u4E8E\u4EFB\u4F55\u5DE8\u578B\u516C\u53F8\u3002\n \n
+        \u96D6\u7136\u5728{[t:LocationName]}\u5F37\u70C8\u7684\u54C1\u724C\u5FE0\u8AA0\u5EA6\u6703\u5E36\u4F86\u5F88\u5927\u7684\u512A\u52E2\uFF0C\u4F46\u4E5F\u6709\u5F88\u591A\u4EBA\u559C\u6B61\u76E1\u53EF\u80FD\u5730\u8868\u73FE\u51FA\u7121\u96B8\u5C6C\u95DC\u4FC2\u3002\u6709\u4E9B\u4EBA\u4E0D\u52A0\u5165\u516C\u53F8\uFF0C\u56E0\u70BA\u516C\u53F8\u7684\u751F\u6D3B\u65B9\u5F0F\u4E26\u4E0D\u7B26\u5408\u4ED6\u5011\u7684\u9858\u666F\uFF0C\u4ED6\u5011\u5BE7\u9858\u6309\u7167\u81EA\u5DF1\u7684\u689D\u4EF6\u5728{[t:LocationName]}\u904E\u751F\u6D3B\u3002\u9019\u5305\u62EC\u4E00\u4E9B\u5BCC\u8C6A\u6216\u6B0A\u52E2\u8005\uFF0C\u56E0\u70BA\u4ED6\u5011\u4E0D\u592A\u9700\u8981\u516C\u53F8\u7684\u5E6B\u52A9\u3002\u7576\u7136\u66F4\u591A\u7684\u662F\u975E\u5E38\u8CA7\u7AAE\u6216\u88AB\u793E\u6703\u62CB\u68C4\u7684\u4EBA\u3002\u4ED6\u5011\u7121\u6CD5\u6709\u6548\u5229\u7528\u5C31\u696D\u6216\u54C1\u724C\u5FE0\u8AA0\u5EA6\u6240\u5E36\u4F86\u7684\u4EFB\u4F55\u597D\u8655\u3002\n
+        \n \u9084\u6709\u4E00\u4E9B\u4EBA\uFF0C\u5982\u81EA\u7531\u8077\u696D\u8005\uFF0C\u5229\u7528\u4ED6\u5011\u5FE0\u8AA0\u5EA6\u7684\u7F3A\u4E4F\u4F5C\u70BA\u8A0E\u50F9\u9084\u50F9\u7684\u5DE5\u5177\uFF0C\u5728\u4ED6\u5011\u901A\u904E\u5F8C\u65B9\u7BA1\u9053\u5411\u516C\u53F8\u63D0\u4F9B\u975E\u5E38\u898F\u7684\u79C1\u4EBA\u670D\u52D9\u6642\uFF0C\u66F4\u9806\u5229\u5730\u5B8C\u6210\u4EA4\u6613\u3002\u9084\u6709\u4E00\u4E9B\u4EBA\u51FA\u65BC\u53E4\u8001\u7684\u5B97\u6559\u6216\u53E4\u8001\u7684\u9053\u5FB7\u7FA9\u52D9\u800C\u4FDD\u6301\u7121\u9EE8\u6D3E\u72C0\u614B\u3002\u4ED6\u5011\u61F7\u8457\u7406\u60F3\u4E3B\u7FA9\u7684\u5922\u60F3\uFF0C\u8981\u5FB9\u5E95\u6539\u8B8A{[t:LocationName]}\u793E\u6703\uFF0C\u4EE5\u4E0D\u540C\u7684\u5F62\u8C61\u91CD\u5851\u5B83\u3002\n
+        \n \u7121\u8AD6\u7406\u7531\u662F\u4EC0\u9EBC\uFF0C\u6BCF\u500B\u5728{[t:LocationName]}\u672A\u52A0\u5165\u516C\u53F8\u7684\u4EBA\u90FD\u5C07\u904E\u8457\u66F4\u5177\u6311\u6230\u548C\u5371\u96AA\u7684\u751F\u6D3B\u3002"
       - "\u041E\u0444\u0438\u0446\u0438\u0430\u043B\u044C\u043D\u043E \u043D\u0435
         \u0441\u0432\u044F\u0437\u0430\u043D \u0441 \u043A\u0430\u043A\u0438\u043C
         -\u043B\u0438\u0431\u043E \u041C\u0435\u0442\u0440\u043E\u043A\u043E\u0440\u043F.\n\n\u041D\u0435\u0441\u043C\u043E\u0442\u0440\u044F
@@ -51322,8 +51349,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Not affiliated with any MetroCorp, officially.
-      - "\u4E0D\u96B6\u5C5E\u4E8E\u4EFB\u4F55\u90FD\u5E02\u4E1B\u96F6\u516C\u53F8\u3002"
-      - "\u4E0D\u96B8\u5C6C\u4E8E\u4EFB\u4F55\u90FD\u5E02\u53E2\u96F6\u516C\u53F8\u3002"
+      - "\u4E0D\u96B6\u5C5E\u4E8E\u4EFB\u4F55\u5DE8\u578B\u516C\u53F8\u3002"
+      - "\u4E0D\u96B8\u5C6C\u4E8E\u4EFB\u4F55\u5DE8\u578B\u516C\u53F8\u3002"
       - "\u041E\u0444\u0438\u0446\u0438\u0430\u043B\u044C\u043D\u043E \u043D\u0435
         \u0441\u0432\u044F\u0437\u0430\u043D \u0441 \u043A\u0430\u043A\u0438\u043C
         -\u043B\u0438\u0431\u043E \u041C\u0435\u0442\u0440\u043E\u043A\u043E\u0440\u043F."
@@ -52986,8 +53013,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - MetroCorps
-      - "\u90FD\u5E02\u516C\u53F8"
-      - "\u90FD\u5E02\u516C\u53F8"
+      - "\u5DE8\u578B\u516C\u53F8"
+      - "\u5DE8\u578B\u516C\u53F8"
       - "\u041C\u0435\u0442\u0440\u043E\u043A\u043E\u0440\u043F\u044B"
       - Metrocorps
       - MetroCorps
@@ -54717,9 +54744,9 @@ MonoBehaviour:
       Description: 
       Languages:
       - Drain 75 Health from the strongest ally and gain +3 {[t:Stats/Stat-Magic]}
-      - "\u5438\u6536\u6700\u5F3A\u53CB\u519B\u768475\u70B9\u751F\u547D\u503C\u5E76\u83B7\u5F973 
+      - "\u5438\u6536\u6700\u5F3A\u7684\u53CB\u519B75\u70B9\u751F\u547D\u503C\u5E76\u83B7\u5F973 
         {[t:Stats/Stat-Magic]}"
-      - "\u5438\u6536\u6700\u5F37\u53CB\u8ECD\u768475\u9EDE\u751F\u547D\u503C\u4E26\u7372\u5F973
+      - "\u5438\u6536\u6700\u5F37\u7684\u53CB\u8ECD75\u9EDE\u751F\u547D\u503C\u4E26\u7372\u5F973
         {[t:Stats/Stat-Magic]}"
       - 
       - "Drena 75 de Salud del aliado m\xE1s fuerte y Gana +3 {[t:Stats/Stat-Magic]}"
@@ -54954,8 +54981,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Double <b>{[t:Stats/Stat-Power]}</b> for this turn
-      - "\u672C\u56DE\u5408\u7FFB\u500D<b>{[t:Stats/Stat-Power]}</b> "
-      - "\u672C\u56DE\u5408\u7FFB\u500D<b>{[t:Stats/Stat-Power]}</b>"
+      - "\u672C\u56DE\u5408<b>{[t:Stats/Stat-Power]}</b> \u7FFB\u500D"
+      - "\u672C\u56DE\u5408<b>{[t:Stats/Stat-Power]}</b>\u7FFB\u500D"
       - 
       - Duplica la <b>{[t:Stats/Stat-Power]}</b> por este turno
       - Dobra sua <b>{[t:Stats/Stat-Power]}</b> neste turno
@@ -55175,8 +55202,8 @@ MonoBehaviour:
 
         Set {[t:Stats/Stat-Attack]}
         to {[0]}'
-      - "\u5931\u53BB<b>1{[t:Keywords/CardPlays]}</b>\r\n\r\n\u5C06{[t:Stats/Stat-Attack]}\u8BBE\u4E3A{[0]}"
-      - "\u5931\u53BB<b>1{[t:Keywords/CardPlays]}</b> \n\u5C07{[t:Stats/Stat-Attack]}\u8A2D\u70BA{[0]}"
+      - "\u5931\u53BB<b>1{[t:Keywords/CardPlays]}</b>\n\n\u5C06{[t:Stats/Stat-Attack]}\u53D8\u4E3A{[0]}"
+      - "\u5931\u53BB<b>1{[t:Keywords/CardPlays]}</b> \n\u5C07{[t:Stats/Stat-Attack]}\u8B8A\u70BA{[0]}"
       - 
       - 'Pierdes <b>1 {[t:Keywords/CardPlays]}</b>
 
@@ -55336,8 +55363,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Misstep
-      - "\u6B65\u9AA4\u9519\u8BEF"
-      - "\u6B65\u9A5F\u932F\u8AA4"
+      - "\u5931\u8DB3"
+      - "\u5931\u8DB3"
       - "\u043E\u043F\u043B\u043E\u0448\u043D\u043E\u0441\u0442\u044C"
       - Paso en Falso
       - Passo em Falso
@@ -56190,6 +56217,21 @@ MonoBehaviour:
       - "\u6280\u8853\u30DD\u30A4\u30F3\u30C8"
       Flags: 000000000000000000
       Languages_Touch: []
+    - Term: Resources/Resources
+      TermType: 0
+      Description: 
+      Languages:
+      - Resources
+      - "\u4E3B\u8981\u8D44\u6E90"
+      - "\u4E3B\u8981\u8CC7\u6E90"
+      - "\u041E\u0441\u043D\u043E\u0432\u043D\u043E\u0439 \u0440\u0435\u0441\u0443\u0440\u0441"
+      - Recurso primario
+      - "Recurso prim\xE1rio"
+      - "Prim\xE4rressource"
+      - Ressource primaire
+      - "\u4E3B\u8981\u306A\u30EA\u30BD\u30FC\u30B9"
+      Flags: 000000000000000000
+      Languages_Touch: []
     - Term: Stages/Stage1Name
       TermType: 0
       Description: 
@@ -56226,8 +56268,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Tower Residential District
-      - "\u5854\u4F4F\u5B85\u533A"
-      - "\u5854\u4F4F\u5B85\u5340"
+      - "\u5854\u697C\u4F4F\u5B85\u533A"
+      - "\u5854\u6A13\u4F4F\u5B85\u5340"
       - "\u0411\u0430\u0448\u043D\u044F \u0436\u0438\u043B\u043E\u0439 \u0440\u0430\u0439\u043E\u043D"
       - Distrito Residencial de la Torre
       - Distrito Residencial da Torre
@@ -56241,8 +56283,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Tower Residential District
-      - "\u5854\u4F4F\u5B85\u533A"
-      - "\u5854\u4F4F\u5B85\u5340"
+      - "\u5854\u697C\u4F4F\u5B85\u533A"
+      - "\u5854\u6A13\u4F4F\u5B85\u5340"
       - "\u0411\u0430\u0448\u043D\u044F \u0436\u0438\u043B\u043E\u0439 \u0440\u0430\u0439\u043E\u043D"
       - Distrito Residencial de la Torre
       - Distrito Residencial da Torre
@@ -56256,8 +56298,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Tower Residential District
-      - "\u5854\u4F4F\u5B85\u533A"
-      - "\u5854\u4F4F\u5B85\u5340"
+      - "\u5854\u697C\u4F4F\u5B85\u533A"
+      - "\u5854\u6A13\u4F4F\u5B85\u5340"
       - "\u0411\u0430\u0448\u043D\u044F \u0436\u0438\u043B\u043E\u0439 \u0440\u0430\u0439\u043E\u043D"
       - Distrito Residencial de la Torre
       - Distrito Residencial da Torre
@@ -64693,7 +64735,7 @@ MonoBehaviour:
     Google_WebServiceURL: https://script.google.com/macros/s/AKfycbyxEWOh-oly9VUweggR4FE-PJti-q6vB4eiq60gjqN60mMW8pqUSFQDcNZf5paleAfH/exec
     Google_SpreadsheetKey: 1_k0GnzCkReGlY_2s-ODT0hVniGHYfv2qnG9nqRQ4VvU
     Google_SpreadsheetName: I2Loc MetroplexZero Localization
-    Google_LastUpdatedVersion: 1678355631496
+    Google_LastUpdatedVersion: 1678489671704
     Google_Password: 23jh9hj2rjfhj33^$^%^$inhgf9g9j90i
     GoogleUpdateFrequency: 2
     GoogleInEditorCheckFrequency: 2

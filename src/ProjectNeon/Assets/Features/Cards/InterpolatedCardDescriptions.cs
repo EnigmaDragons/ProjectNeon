@@ -152,7 +152,7 @@ public static class InterpolatedCardDescriptions
             if (token.Value.StartsWith("{D["))
                 result = result.Replace("{D[" + effectIndex + "]}", DurationDescription(effects[effectIndex], owner, xCost));
             if (token.Value.StartsWith("{F["))
-                result = result.Replace("{F[" + effectIndex + "]}", Bold(effects[effectIndex].Formula));
+                result = result.Replace("{F[" + effectIndex + "]}", Bold(FormattedFormula(effects[effectIndex].Formula)));
             if (forReaction)
                 result = result.Replace("{RE[" + effectIndex + "]}", Bold(EffectDescription(reactionEffects[effectIndex], owner, xCost, cardsInHand, cardCyclesUsedThisTurn)));
             if (token.Value.StartsWith("{RD["))
@@ -288,7 +288,7 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.AdjustCounterMaxFormula)
             return $"{FormulaAmount(data, owner, xCost)} Max {FriendlyScopeName(data.EffectScope.Value)}";
         if (data.EffectType == EffectType.AdjustPrimaryResourceFormula)
-            return $"{FormulaAmount(data, owner, xCost)} {(owner.IsPresent && showSprites ? owner.Value.PrimaryResourceQuantity().ResourceType : "Resources")}";
+            return $"{FormulaAmount(data, owner, xCost)} {(owner.IsPresent && showSprites ? owner.Value.PrimaryResourceQuantity().ResourceType : "Resources/Resources".ToLocalized())}";
         if (data.EffectType == EffectType.ShieldBasedOnNumberOfOpponentsDoTs)
             return owner.IsPresent
                 ? RoundUp(Mathf.Min(owner.Value.MaxShield(),(data.FloatAmount * owner.Value.State[StatType.MaxShield]))).ToString()
@@ -320,10 +320,13 @@ public static class InterpolatedCardDescriptions
     
     private static string FriendlyScopeName(string raw)
     {
+
         var tmp = raw;
-        if (StatTypeAliases.FullNameToAbbreviations.TryGetValue(raw, out var friendly))
+        if (Enum.TryParse(raw, out StatType _) || Enum.TryParse(raw, out TemporalStatType _))
+            tmp = $"Stats/Stat-{raw}".ToLocalized();
+        if (StatTypeAliases.FullNameToAbbreviations.TryGetValue(tmp, out var friendly)) //only applies to english
             tmp = friendly;
-        if (TemporalStatFriendlyNames.TryGetValue(raw, out var friendly2))
+        if (TemporalStatFriendlyNames.TryGetValue(tmp, out var friendly2)) //only applies to english
             tmp = friendly2;
         return tmp.WithSpaceBetweenWords();
     }
@@ -343,7 +346,7 @@ public static class InterpolatedCardDescriptions
                 ? FormulaResult(ipf.EvaluationPartialFormula, owner, xCost).ToString("0.##")
                 : string.Empty;
             formulaResult = formulaResult.Equals("0") ? string.Empty : formulaResult;
-            return FormattedFormula($"{ipf.Prefix} {formulaResult} {ipf.Suffix}".Trim())
+            return FormattedFormula($"{ipf.LocalizedPrefixTerm}{ipf.Prefix} {formulaResult} {ipf.Suffix}{ipf.LocalizedSuffixTerm}".Trim())
                     .Replace("Owner[PrimaryResource]", owner.PrimaryResourceQuantity().ResourceType)
                     .Replace("PrimaryResource", owner.PrimaryResourceQuantity().ResourceType);
         }
@@ -420,7 +423,7 @@ public static class InterpolatedCardDescriptions
         if (f.ShouldUsePartialFormula)
         {
             var ipf = f.InterpolatePartialFormula;
-            return FormattedFormula($"{ipf.Prefix} {FormattedFormula(ipf.EvaluationPartialFormula)} {ipf.Suffix}".Trim());
+            return FormattedFormula($"{ipf.LocalizedPrefixTerm}{ipf.Prefix} {FormattedFormula(ipf.EvaluationPartialFormula)} {ipf.Suffix}{ipf.LocalizedSuffixTerm}".Trim());
         }
 
         return FormattedFormula(data.Formula);
@@ -433,10 +436,13 @@ public static class InterpolatedCardDescriptions
     {
         var newS = s;
         newS = newS.Replace(StarMultiplySymbol, TimesMuliplySymbol);
+        foreach (var stat in StatExtensions.StatNames.Select(x => x.Value).Concat(TemporalStatTypeExtensions.StatNames.Select(x => x.Value)))
+            if (newS.Contains(stat))
+                newS = newS.Replace(stat, $"Stats/Stat-{stat}".ToLocalized());
+        //only applies to english
         foreach (var stat in StatTypeAliases.FullNameToAbbreviations)
             if (newS.Contains(stat.Key))
                 newS = newS.Replace(stat.Key, stat.Value);
-
         return newS;
     }
     

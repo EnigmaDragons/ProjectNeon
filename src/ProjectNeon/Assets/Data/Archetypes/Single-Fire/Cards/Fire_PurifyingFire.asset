@@ -18,8 +18,12 @@ MonoBehaviour:
   description: "Removes all debuffs.\n\nShield <b>0.25 \xD7 Target[MaxShield]</b>"
   typeDescription: {fileID: 11400000, guid: 75170a5ed09ccd446acf355ca119f761, type: 2}
   descriptionV2:
-    text: "Removes all debuffs.\n\nShield <b>0.25 \xD7 Target[MaxShield]</b>"
-    formatArgs: []
+    text: 'Removes all debuffs.
+
+
+      Shield {0}'
+    formatArgs:
+    - '{E[1]}'
   tags: 
   speed: 0
   isSinglePlay: 0
