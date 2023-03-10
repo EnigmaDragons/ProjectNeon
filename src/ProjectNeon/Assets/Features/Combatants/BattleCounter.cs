@@ -22,8 +22,8 @@ public sealed class BattleCounter
         Amount = Round(initialAmount);
     }
 
-    public void ChangeBy(float delta) => Amount = Round(Mathf.Clamp(Amount + Round(delta), 0, _getCurrentMaxAmount()));
-    public void Set(float value) => Amount = Round(Mathf.Clamp(value, 0, _getCurrentMaxAmount()));
+    public void ChangeBy(float delta) => Amount = Round(Mathf.Clamp(Amount + Round(delta), 0, Max));
+    public void Set(float value) => Amount = Round(Mathf.Clamp(value, 0, Max));
     public void AdjustMax(float value) => _maxAdjustment += Round(value);
 
     public override string ToString() => $"{Name} - {Amount}/{Max}";
