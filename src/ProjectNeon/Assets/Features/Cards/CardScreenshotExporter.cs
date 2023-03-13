@@ -19,6 +19,7 @@ public class CardScreenshotExporter : MonoBehaviour
 
     private IEnumerator Go()
     {
+        yield return new WaitForEndOfFrame();
         foreach (var h in heroes.UnlockedHeroes)
         {
             var member = GetHeroCards(h, out var heroCards);
