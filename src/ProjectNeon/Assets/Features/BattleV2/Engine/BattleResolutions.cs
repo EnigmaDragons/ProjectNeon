@@ -203,10 +203,9 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         state.ResetEffectScopedData();
         state.CleanupExpiredMemberStates();
         resolutionZone.ExpirePlayedCards(c => !state.Members.ContainsKey(c.MemberId()));
-        if (Reactions.AnyReactionEffects)
+        if (Reactions.AnyReactionEffects && Reactions.TryResolveNextInstantReaction(state.Members))
         {
             _resolvingEffect = false;
-            Reactions.ResolveNextInstantReaction(state.Members);
         }
         else
         {

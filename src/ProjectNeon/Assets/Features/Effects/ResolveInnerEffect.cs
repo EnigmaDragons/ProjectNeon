@@ -10,7 +10,7 @@ public class ResolveInnerEffect : Effect
     {
         if (_data?.Actions == null)
             return;
-        MessageGroup.Add(new MultiplePayloads("inner effect", _data.Actions
+        MessageGroup.ExtendCurrentGroup(new MultiplePayloads("inner effect", _data.Actions
             .Where(x => x.Type == CardBattleActionType.Battle || x.Type == CardBattleActionType.SpawnEnemy)
             .Select(action => action.Type == CardBattleActionType.SpawnEnemy 
                 ? (object)new SpawnEnemy(action.EnemyToSpawn, action.EnemySpawnOffset, ctx.Source, action.Replacing, ctx.Card, ctx.XPaidAmount, ctx.PaidAmount, ctx.IsReaction, ctx.Timing, new Maybe<EffectCondition>(action.EnemySpawnCondition))

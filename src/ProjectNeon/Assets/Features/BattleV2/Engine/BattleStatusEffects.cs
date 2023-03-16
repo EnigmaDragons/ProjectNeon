@@ -17,6 +17,7 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
 
     private bool _isProcessing;
     private bool _isProcessingStartOfTurn;
+    private bool _isProcessingEndOfTurn;
     
     public void ProcessStartOfTurnEffects()
     {
@@ -30,20 +31,26 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
     public void ProcessEndOfTurnEffects()
     {
         _isProcessing = true;
-        _isProcessingStartOfTurn = false;
+        _isProcessingEndOfTurn = true;
         foreach (var m in state.Members.Where(x => x.Value.IsConscious())) 
             _membersToProcess.Enqueue(m.Value);
         this.ExecuteAfterDelay(() => ResolveNext(nameof(ProcessEndOfTurnEffects)), delay);
     }
 
-    private void ProcessCards()
+    private void ProcessCardsStartOfturn()
     {
         foreach (var card in state.PlayerCardZones.HandZone.Cards.Concat(state.PlayerCardZones.DrawZone.Cards).Concat(state.PlayerCardZones.DiscardZone.Cards))
         {
-            if (_isProcessingStartOfTurn)
-                card.OnTurnStart();
-            else
-                card.OnTurnEnd();
+            card.OnTurnStart();
+            card.CleanExpiredStates();
+        }
+    }
+    
+    private void ProcessCardsEndOfturn()
+    {
+        foreach (var card in state.PlayerCardZones.HandZone.Cards.Concat(state.PlayerCardZones.DrawZone.Cards).Concat(state.PlayerCardZones.DiscardZone.Cards))
+        {
+            card.OnTurnEnd();
             card.CleanExpiredStates();
         }
     }
@@ -54,10 +61,8 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
             return;
         
         Log.Info($"Status Effects Resolve Next - {debugCallerName}");
-        if (!MessageGroup.IsClear)
-            WaitForWrapup();
-        else if (Reactions.AnyReactionEffects)
-            Reactions.ResolveNextInstantReaction(state.Members);
+        if (Reactions.AnyReactionEffects && Reactions.TryResolveNextInstantReaction(state.Members))
+            return;
         else if (Reactions.AnyReactionCards)
             Message.Publish(new ResolveReactionCards());
         else if (_currentMemberEffects.Any())
@@ -66,15 +71,27 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
             ResolveNextMemberStatusEffects();
         else if (!Reactions.Any)
         {
-            _isProcessing = false;
             if (_currentMember.IsPresent)
                 _currentMember.Value.State.CleanExpiredStates();
             _currentMember = Maybe<Member>.Missing();
-            ProcessCards();
-            if (_isProcessingStartOfTurn)
+            if ((_isProcessingStartOfTurn || _isProcessingEndOfTurn) && !MessageGroup.IsClear)
+                WaitForWrapup();
+            else if (_isProcessingStartOfTurn)
+            {
+                ProcessCardsStartOfturn();
+                _isProcessing = false;
+                _isProcessingStartOfTurn = false;
                 Message.Publish(new StartOfTurnEffectsStatusResolved());
+            }
+            else if (_isProcessingEndOfTurn)
+            {
+                ProcessCardsEndOfturn();
+                _isProcessing = false;
+                _isProcessingEndOfTurn = false;
+                Message.Publish(new EndOfTurnStatusEffectsResolved());   
+            }
             else
-                Message.Publish(new EndOfTurnStatusEffectsResolved());
+                _isProcessing = false;
         }
         else
             WaitForWrapup();
