@@ -48,7 +48,8 @@ public class PlayedCardV2 : IPlayedCard
     public void Perform(BattleStateSnapshot beforeCard)
     {
         Log.Info($"Perform {PlayedCardId}");
-        Card.Play(_targets, beforeCard, _lockedXValue, _calculations.PaidQuantity, () => Message.Publish(new CardResolutionFinished(this)));
+        Card.Play(_targets, beforeCard, _lockedXValue, _calculations.PaidQuantity, 
+            () => Message.Publish(new CardResolutionFinished(this)));
     }
 
     public override string ToString() => $"Played - {Card.Name}";

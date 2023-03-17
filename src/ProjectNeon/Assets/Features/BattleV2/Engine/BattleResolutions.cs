@@ -69,7 +69,7 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         var effectResolved = new EffectResolved(true, true, EffectData.Nothing, msg.CycledCard.Owner, new Single(msg.CycledCard.Owner), 
             battleSnapshot, battleSnapshot, false, Maybe<Card>.Missing(), msg.CycledCard, new UnpreventableContext(), ReactionTimingWindow.FirstCause, state.PlayerCardZones);
         FinalizeBattleEffect(Maybe<EffectResolved>.Present(effectResolved));
-        this.SafeCoroutineOrNothing(FinishEffect());
+        this.SafeCoroutineOrNothing(FinishEffect("card cycled"));
     }
 
     protected override void Execute(ApplyBattleEffect msg)
@@ -195,11 +195,12 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
 
     protected override void Execute(CardResolutionFinished msg)
     {
-        this.SafeCoroutineOrNothing(FinishEffect());
+        this.SafeCoroutineOrNothing(FinishEffect("card resolution finished"));
     } 
     
-    private IEnumerator FinishEffect()
+    private IEnumerator FinishEffect(string debugName)
     {
+        //Log.Error($"Finish Effect Called: {debugName}");
         state.ResetEffectScopedData();
         state.CleanupExpiredMemberStates();
         resolutionZone.ExpirePlayedCards(c => !state.Members.ContainsKey(c.MemberId()));
@@ -272,13 +273,13 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         {
             Log.Error($"Should not be Queueing instant Effect Reactions. They should already be processed. " +
                       $"Reaction - {r.Source.NameTerm.ToEnglish()} {r.Name} {r.ReactionSequence.CardActions.BattleEffects.First().EffectType}");
-            this.SafeCoroutineOrNothing(FinishEffect());
+            this.SafeCoroutineOrNothing(FinishEffect("proposed reaction error"));
             yield break;
         }
         
         if (!state.Members.ContainsKey(r.Source.Id) || !r.Target.Members.Any())
         {
-            this.SafeCoroutineOrNothing(FinishEffect());
+            this.SafeCoroutineOrNothing(FinishEffect("no target for proposed reaction"));
             yield break;
         }
 
@@ -304,7 +305,7 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         else
         {
             BattleLog.Write($"{r.Source.NameTerm.ToEnglish()} could not afford reaction card {reactionCard.Name}");
-            this.ExecuteAfterDelay(() => this.SafeCoroutineOrNothing(FinishEffect()), 0.1f);
+            this.ExecuteAfterDelay(() => this.SafeCoroutineOrNothing(FinishEffect("could not afford reaction card")), 0.1f);
         }
     }
 

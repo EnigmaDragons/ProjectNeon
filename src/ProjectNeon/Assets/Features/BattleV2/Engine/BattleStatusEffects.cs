@@ -186,8 +186,7 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
 
         DevLog.Write($"Card Resolution Finished {msg.CardName} {msg.CardId} {msg.PlayedCardId}");
         _processedCardIds.Add(msg.PlayedCardId);
-        if (_isProcessing)
-            ResolveNext("Card Resolution Finished");
+        ResolveNext("Card Resolution Finished");
     }
 
     protected override void Execute(CardAndEffectsResolutionFinished msg) => ResolveNext("Resolve Reaction Cards Finished");

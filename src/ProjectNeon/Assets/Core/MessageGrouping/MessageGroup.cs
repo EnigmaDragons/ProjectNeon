@@ -94,6 +94,7 @@ public static class MessageGroup
             if (_payloadProvider.IsFinished())
             {
                 _onFinished();
+                _onFinished = () => { };
                 IsClear = true;
             }
             else
