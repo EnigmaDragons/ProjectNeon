@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
+using Object = UnityEngine.Object;
 
 public class FindEnemiesEditor : EditorWindow
 {
@@ -169,6 +170,16 @@ public class FindEnemiesEditor : EditorWindow
                 .Initialized($"{_corpName} - {items.Length} Enemies", items)
                 .Show();
             GUIUtility.ExitGUI();
+        }
+
+        if (GUILayout.Button("All Prefabs"))
+        {
+            var prefabs = GetAllInstances<Enemy>()
+                .Where(x => x.IsReadyForPlay)
+                .Select(x => x.Prefab)
+                .Distinct();
+            GetWindow<ListDisplayWindow>()
+                .Initialized("Enemy Prefabs", "Prefab: ", prefabs.Select(x => x.name).ToArray(), prefabs.Select(x => x).Cast<Object>().ToArray());
         }
     }
 
