@@ -60,10 +60,11 @@ public class AdventureCompletionRecord
     public int HeroId;
     public int AdventureId;
     public int Difficulty;
+    public int BossId;
     public string Version;
 
     public bool Matches(AdventureCompletionRecord other) => other.ToString() == ToString();
-    public override string ToString() => $"{HeroId}{AdventureId}{Difficulty}{Version}";
+    public override string ToString() => $"{HeroId}{AdventureId}{BossId}{Difficulty}{Version}";
     public override int GetHashCode() => ToString().GetHashCode();
 }
 

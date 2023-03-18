@@ -41,9 +41,11 @@ public class Adventure : ScriptableObject, CurrentAdventureData, ILocalizeTerms
     [SerializeField] private bool allowDifficultySelection = true;
     [SerializeField] private bool bossSelection = false;
     [SerializeField] private bool includeInProgress = true;
+    [SerializeField] private int sharesProgressId = -1; 
 
     public AdventureMode Mode => mode;
     public int Id => id;
+    public Maybe<int> SharesProgressId => sharesProgressId != -1 ? new Maybe<int>(sharesProgressId) : Maybe<int>.Missing();
     public string TitleTerm => $"Adventures/Adventure{id}Title";
     public string RawMapTitleTerm => $"Adventures/Adventure{id}MapTitle";
     public string MapTitleTerm => string.IsNullOrWhiteSpace(RawMapTitleTerm.ToEnglish()) ? TitleTerm : RawMapTitleTerm;
