@@ -23,7 +23,7 @@ public class AugmentLevelUpOption : LevelUpOption
         Message.Publish(new AutoSaveRequested());
     }
 
-    public void ShowDetail() => throw new NotImplementedException();
+    public void ShowDetail() {}
     public bool HasDetail => false;
     public bool IsFunctional => _e != null;
     public bool UseCustomOptionPresenter => false;
