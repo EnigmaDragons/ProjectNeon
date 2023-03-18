@@ -19,6 +19,18 @@ public class EffectScopedData
         variables.Clear();
     }
     
+    public void SetVariable(string name, float value)
+    {
+        var index = variableNames.IndexOf(name);
+        if (index == -1)
+        {
+            variableNames.Add(name);
+            variables.Add(0);
+            index = variableNames.Count - 1;
+        }
+        variables[index] = value;
+    }
+    
     public void AdjustVariable(string name, float value)
     {
         var index = variableNames.IndexOf(name);

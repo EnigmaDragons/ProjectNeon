@@ -81,6 +81,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.ExitStealth, new string[0]},
         {EffectType.RemoveDots, new string[0]},
         {EffectType.ChooseCardToPlay, new [] { "EffectScope", "Formula", "InterpolatePartialFormula" }},
+        {EffectType.SetScopedVariableToRandom, new [] { "EffectScope", "FloatAmount" }},
     };
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)

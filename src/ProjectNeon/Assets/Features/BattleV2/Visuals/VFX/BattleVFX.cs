@@ -22,7 +22,7 @@ public class BattleVFX : MonoBehaviour
         SetSpeed(1);
         return this;
     }
-    
+
     public void SetSpeed(float speed)
     {
         _liveDurationSeconds = durationSeconds * speed;

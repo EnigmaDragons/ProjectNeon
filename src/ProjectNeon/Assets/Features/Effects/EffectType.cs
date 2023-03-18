@@ -1,5 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// LAST NUMBER USED: 112
+// LAST NUMBER USED: 113
 
 public enum EffectType
 {
@@ -107,4 +107,5 @@ public enum EffectType
     RandomEffect = 101,
     RandomizeEnemyPosition = 105,
     MakeTargetingRough = 106,
+    SetScopedVariableToRandom = 113
 }
