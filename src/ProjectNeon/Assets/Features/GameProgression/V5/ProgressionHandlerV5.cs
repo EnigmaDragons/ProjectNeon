@@ -11,6 +11,7 @@ public class ProgressionHandlerV5 : OnMessage<NodeFinished>
     [SerializeField] private Navigator navigator;
     [SerializeField] private AdventureConclusionState conclusion;
     [SerializeField] private PartyAdventureState partyState;
+    [SerializeField] private CurrentBoss boss;
 
     private void Start()
     {
@@ -35,7 +36,7 @@ public class ProgressionHandlerV5 : OnMessage<NodeFinished>
         {
             if (progress.IsFinalStageSegment)
             {
-                GameWrapup.NavigateToVictoryScreen(adventureProgress, adventure, navigator, conclusion, partyState.Heroes);
+                GameWrapup.NavigateToVictoryScreen(adventureProgress, adventure, boss, navigator, conclusion, partyState.Heroes);
                 return;
             }
             map.CompleteCurrentNode();

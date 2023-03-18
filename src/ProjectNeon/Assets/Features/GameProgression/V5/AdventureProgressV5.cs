@@ -100,6 +100,7 @@ public class AdventureProgressV5 : AdventureProgressBase
         currentMap.SetMap(CurrentChapter.Map);
         rngSeed = ConsumableRngSeed.GenerateNew().Peek.Value;
         difficulty = library.DefaultDifficulty;
+        FinalBoss = null;
         Log.Info($"Init Adventure. {this}");
     }
     
@@ -216,4 +217,5 @@ public class AdventureProgressV5 : AdventureProgressBase
     }
 
     public void ClearStoryState() => _storyStates = new DictionaryWithDefault<string, bool>(false);
+    public override Boss FinalBoss { get; set; }
 }

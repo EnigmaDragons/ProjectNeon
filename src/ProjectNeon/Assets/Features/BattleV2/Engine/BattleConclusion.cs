@@ -13,6 +13,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
     [SerializeField] private BoolReference useNewTutorialFlow;
     [SerializeField] private SaveLoadSystem saveLoadSystem;
     [SerializeField] private PartyAdventureState partyState;
+    [SerializeField] private CurrentBoss boss;
 
     public void GrantVictoryRewardsAndThen(Action onFinished)
     {
@@ -51,7 +52,7 @@ public class BattleConclusion : OnMessage<BattleFinished>
             else
             {
                 state.AccumulateRunStats();
-                this.ExecuteAfterDelay(() => GameWrapup.NavigateToVictoryScreen(adventureProgress, adventure, navigator, conclusion, partyState.Heroes), secondsBeforeGameOverScreen);   
+                this.ExecuteAfterDelay(() => GameWrapup.NavigateToVictoryScreen(adventureProgress, adventure, boss, navigator, conclusion, partyState.Heroes), secondsBeforeGameOverScreen);   
             }
         }
         else

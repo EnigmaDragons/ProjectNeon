@@ -8,7 +8,7 @@ public class Boss : ScriptableObject, ILocalizeTerms
     [SerializeField] private SpecificEncounterSegment stage2;
     [SerializeField] private SpecificEncounterSegment stage3;
     [SerializeField] private Sprite bust;
-
+    
     public SpecificEncounterSegment Stage(int stage)
     {
         if (stage == 1)

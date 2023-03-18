@@ -34,4 +34,5 @@ public abstract class AdventureProgressBase : ScriptableObject
     public abstract float[] RisingActionPoints { get; }
     public abstract Difficulty Difficulty { get; set; }
     public abstract HashSet<string> StoryStates { get; }
+    public abstract Boss FinalBoss { get; set; }
 }

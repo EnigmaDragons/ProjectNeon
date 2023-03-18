@@ -162,4 +162,6 @@ public class AdventureProgressV4 : AdventureProgressBase
         Log.Info("Adventure Progress V4 Story State");
         return _storyStates[state];
     }
+    
+    public override Boss FinalBoss { get; set; }
 }

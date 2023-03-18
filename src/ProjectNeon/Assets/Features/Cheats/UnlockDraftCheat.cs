@@ -6,7 +6,7 @@ public class UnlockDraftCheat : MonoBehaviour
 
     public void Execute()
     {
-        CurrentProgressionData.RecordCompletedAdventure(firstStoryAdventure.id, 0, new int[0]);
+        CurrentProgressionData.RecordCompletedAdventure(firstStoryAdventure.id, 0, -1, new int[0]);
         Message.Publish(new CheatAcceptedSuccessfully());
         Message.Publish(new RefreshDraftButtonAccess());
     }

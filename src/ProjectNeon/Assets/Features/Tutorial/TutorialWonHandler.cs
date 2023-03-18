@@ -13,7 +13,7 @@ public class TutorialWonHandler : OnMessage<TutorialWon>
         Log.Info("Finished Tutorial Adventure");        
         AllMetrics.PublishGameWon(AdventureIds.TutorialAdventureId);
         CurrentAcademyData.Mutate(a => a.TutorialData = new AcademyTutorialData { CompletedTutorialNames = AcademyData.RequiredLicenseTutorials.Concat(AcademyData.SimpleTutorialPanels).ToArray() });
-        CurrentProgressionData.RecordCompletedAdventure(AdventureIds.TutorialAdventureId, TutorialDifficultyLevel, TutorialHeroId.AsArray());
+        CurrentProgressionData.RecordCompletedAdventure(AdventureIds.TutorialAdventureId, TutorialDifficultyLevel, -1, TutorialHeroId.AsArray());
         CurrentGameData.Clear();
         Message.Publish(new ExecuteAfterDelayRequested(delay, () => Message.Publish(new NavigateToNextTutorialFlow())));
     }

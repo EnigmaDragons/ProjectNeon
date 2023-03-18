@@ -16,12 +16,12 @@ public class CurrentProgressionData
         _version = version;
     }
     
-    public static void RecordCompletedAdventure(int adventureId, int difficulty, int[] heroes)
+    public static void RecordCompletedAdventure(int adventureId, int difficulty, int bossId, int[] heroes)
     {
         Write(d =>
         {
             d.CompletedAdventureIds = d.CompletedAdventureIds.Concat(adventureId).Distinct().ToArray();
-            heroes.ForEach(heroId => d.Record(new AdventureCompletionRecord { AdventureId = adventureId, HeroId = heroId, Difficulty = difficulty, Version = _version }));
+            heroes.ForEach(heroId => d.Record(new AdventureCompletionRecord { AdventureId = adventureId, HeroId = heroId, Difficulty = difficulty, BossId = bossId, Version = _version }));
             if (adventureId != 10)
                 d.RunsFinished += 1;
             return d;
