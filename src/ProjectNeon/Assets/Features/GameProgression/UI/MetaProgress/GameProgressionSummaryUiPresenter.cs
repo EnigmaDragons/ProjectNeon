@@ -20,6 +20,6 @@ public class GameProgressionSummaryUiPresenter : MonoBehaviour
         var progressItems = progress.GetAllProgress();
         var percentage = progressItems.Count(x => x.Completed) / (float) progressItems.Length;
         totalPercentLabel.text = $"{percentage:P}";
-        listSummary.SetFinalText(string.Join(Environment.NewLine, progressItems.Select(p => p.FullDescription())));
+        //listSummary.SetFinalText(string.Join(Environment.NewLine, progressItems.Select(p => p.FullDescription())));
     }
 }
