@@ -42,8 +42,6 @@ public class GameProgressionSummaryUiPresenterV3 : MonoBehaviour
             }
 
             var item = items[i];
-            Log.Info(item.FullDescription());
-            Log.Info($"Difficulty Is Present - {item.Difficulty.IsPresent}");
             p.Init(getArt(item), item.Difficulty, item.Completed);
         }
     }
