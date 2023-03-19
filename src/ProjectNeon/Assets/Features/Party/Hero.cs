@@ -38,7 +38,7 @@ public class Hero
     public HeroEquipment Equipment => equipment;
     public HeroHealth Health => health;
     public HeroLevels Levels => levels;
-    public int Level => levels.CurrentLevel;
+    public int Level => IsMaxLevelV4 ? Character.LevelUpTreeV4.MaxLevel : Levels.CurrentLevel;
     public CardTypeData BasicCard => basicCard;
     public StatType PrimaryStat => _primaryStat.OrDefault(NonTemporaryStats.DefaultPrimaryStat(Character.Stats));
     public IResourceType PrimaryResource => _primaryResourceType;

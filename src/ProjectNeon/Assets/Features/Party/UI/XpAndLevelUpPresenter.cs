@@ -6,10 +6,12 @@ public sealed class XpAndLevelUpPresenter : MonoBehaviour, ILocalizeTerms
     [SerializeField] private XpPresenter xp;
     [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI levelLabel;
     [SerializeField] private LocalizedCommandButton levelUpButton;
+    [SerializeField] private GameObject maxLevelLabel;
 
     private Hero _hero;
     
     private const string Levelup2Term = "Menu/LevelUp2";
+    private const string MaxTerm = "Maps/Max";
     
     public void Init(Hero h)
     {
@@ -23,9 +25,11 @@ public sealed class XpAndLevelUpPresenter : MonoBehaviour, ILocalizeTerms
     private void Render()
     {
         xp.Init(_hero);
+        xp.gameObject.SetActive(!_hero.IsMaxLevelV4);
+        maxLevelLabel.SetActive(_hero.IsMaxLevelV4);
         levelLabel.text = _hero.Level.ToString();
         
-        if (levelUpButton == null) 
+        if (levelUpButton == null)
             return;
         
         levelUpButton.gameObject.SetActive(false);
@@ -38,5 +42,9 @@ public sealed class XpAndLevelUpPresenter : MonoBehaviour, ILocalizeTerms
     }
 
     public string[] GetLocalizeTerms()
-        => new[] {Levelup2Term};
+        => new[]
+        {
+            Levelup2Term,
+            MaxTerm
+        };
 }

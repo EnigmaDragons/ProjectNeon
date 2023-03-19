@@ -11,7 +11,7 @@ public class XpPresenter : OnMessage<HeroStateChanged>
     public void Init(Hero h)
     {
         _hero = h;
-        barFill.fillAmount = _hero.Levels.NextLevelProgress;
+        barFill.fillAmount = _hero.IsMaxLevelV4 ? 1f : _hero.Levels.NextLevelProgress;
     }
 
     public void SmoothTransitionTo(float amount)
