@@ -158,6 +158,12 @@ public static class CollectionExtensions
         return maybeNext.AnyNonAlloc() ? new Maybe<T>(maybeNext[0]) : Maybe<T>.Missing();
     }
     
+    public static Maybe<T> FirstAsMaybe<T>(this IEnumerable<T> items, Func<T, bool> condition)
+    {
+        var maybeNext = items.Where(condition).Take(1).ToArray();
+        return maybeNext.AnyNonAlloc() ? new Maybe<T>(maybeNext[0]) : Maybe<T>.Missing();
+    }
+    
     public static Maybe<TValue> ValueOrMaybe<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key) =>
         dictionary.TryGetValue(key, out var val) ? new Maybe<TValue>(val, true) : Maybe<TValue>.Missing();
 

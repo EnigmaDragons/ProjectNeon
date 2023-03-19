@@ -8,14 +8,15 @@ public class CharacterAnimationSoundPlayer : OnMessage<CharacterAnimationRequest
     private CharacterAnimationSoundSet _sounds;
     private Transform _uiSource;
     private bool _active;
-    private bool _loggingEnabled = false;
+    private readonly bool _loggingEnabled = false;
 
     public void Init(int memberId, CharacterAnimationSoundSet sounds, Transform uiSource)
     {
         _memberId = memberId;
         _sounds = sounds;
         _uiSource = uiSource;
-        Log.Info("Init " + nameof(CharacterAnimationSoundPlayer));
+        if (_loggingEnabled)
+            Log.Info($"Init {nameof(CharacterAnimationSoundPlayer)} - Member {memberId}");
     }
 
     public void SetAlwaysActive(bool val) => alwaysActive = val;

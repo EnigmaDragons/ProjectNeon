@@ -88,6 +88,11 @@ public sealed class Maybe<T>
             ? dest.Set(convert(value), true) 
             : dest.Set(default(T2), false);
 
+    public Maybe<T2> Chain<T2>(Func<T, Maybe<T2>> select)
+        => IsPresent
+            ? select(value)
+            : Maybe<T2>.Missing();
+
     public bool Equals(Maybe<T> other)
     {
         if (other.IsMissing && IsMissing)

@@ -279,7 +279,7 @@ public class BattleState : ScriptableObject
         _playedCardHistory = new List<List<PlayedCardSnapshot>> { new List<PlayedCardSnapshot>() };
         turnNumber = 1;
         CreditsAtStartOfBattle = party.Credits;
-        party.ApplyBlessings(this);
+        ExceptionSuppressor.LogAndContinue(() => party.ApplyBlessings(this), "Applying Party Blessings");
 
         DevLog.Write("Finished Battle State Init");
         return result;
@@ -545,6 +545,9 @@ public class BattleState : ScriptableObject
         return bounds.center;
     }
     public Member GetMemberByHero(HeroCharacter hero) => _membersById[_heroesById.First(x => x.Value.Character == hero).Key];
+    public Maybe<Member> GetMaybeMemberByHeroCharacterId(int heroCharacterId) => _heroesById
+        .FirstAsMaybe(x => x.Value.Character.Id == heroCharacterId)
+        .Chain(x => _membersById.ValueOrMaybe(x.Key));
     public Member GetMemberByEnemyIndex(int enemyIndex) => _membersById.VerboseGetValue(enemyIndex + EnemyStartingIndex, nameof(_membersById));
     public int GetEnemyIndexByMemberId(int memberId) => memberId - EnemyStartingIndex;
     public BattleStateSnapshot GetSnapshot() => 

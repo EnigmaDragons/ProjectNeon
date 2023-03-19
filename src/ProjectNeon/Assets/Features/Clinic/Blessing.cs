@@ -14,7 +14,18 @@ public class Blessing
     
     public void Apply(BattleState state)
     {
-        var target = new Multiple(Targets.Select(state.GetMemberByHero));
+        var targetMaybes = Targets.Select(t => state.GetMaybeMemberByHeroCharacterId(t.Id)).ToArray();
+        var presentTargets = targetMaybes.Where(x => x.IsPresent).Select(x => x.Value).ToArray();
+        if (targetMaybes.Length > presentTargets.Length)
+            Log.Error($"Non-Crashing: Blessing {Name} had {targetMaybes.Length} expected targets, and only found {presentTargets} matching targets in Battle State Heroes. Likely a serialization issue.");
+
+        if (presentTargets.Length == 0)
+        {
+            BattleLog.Write($"Unable to apply Blessing {Name} due to developer error. Open a bug ticket.");
+            return;
+        }
+        
+        var target = new Multiple(presentTargets);
         BattleLog.Write($"Applying {Name} Blessing to {target.ToFriendlyString()}");
         var ctx = new EffectContext(
             target.Members[0], 
