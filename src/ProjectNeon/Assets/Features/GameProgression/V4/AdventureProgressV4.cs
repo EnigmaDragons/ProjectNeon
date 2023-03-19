@@ -15,11 +15,14 @@ public class AdventureProgressV4 : AdventureProgressBase
     private DictionaryWithDefault<string, bool> _storyStates = new DictionaryWithDefault<string, bool>(false);
 
     public override int AdventureId => currentAdventure.Adventure.Id;
-    public override string AdventureName => currentAdventure.Adventure.Title;
+    public override string AdventureNameTerm => currentAdventure.Adventure.TitleTerm;
     public override CurrentGlobalEffects GlobalEffects => currentGlobalEffects;
     public override int CurrentStageProgress => currentSegmentIndex;
     public override int CurrentChapterNumber => currentChapterIndex + 1;
+    public override int TotalNonAutoSegmentsToBoss { get; } = 0;
+    public override int CurrentNonAutoStageProgress { get; } = 0;
     private float Progress => CurrentStageProgress < 1 || CurrentChapter == null || CurrentChapter.SegmentCount < 1 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCount;
+    public override int TotalSegmentsToBoss => CurrentChapter.SegmentCountToBoss;
     public bool IsFinalStage => currentChapterIndex == currentAdventure.Adventure.StagesV4.Length - 1;
     public bool IsLastSegmentOfStage => currentSegmentIndex + 1 == CurrentStageLength;
     public override GameAdventureProgressType AdventureType => GameAdventureProgressType.V4;
@@ -36,6 +39,8 @@ public class AdventureProgressV4 : AdventureProgressBase
         get => library.DefaultDifficulty;
         set { }
     }
+
+    public override HashSet<string> StoryStates => new HashSet<string>(_storyStates.Where(x => x.Value).Select(x => x.Key));
 
     public StaticStageV4 CurrentChapter
     {
@@ -152,5 +157,11 @@ public class AdventureProgressV4 : AdventureProgressBase
     }
 
     public override void SetStoryState(string state, bool value) => _storyStates[state] = value;
-    public override bool IsTrue(string state) => _storyStates[state];
+    public override bool IsTrue(string state)
+    {
+        Log.Info("Adventure Progress V4 Story State");
+        return _storyStates[state];
+    }
+    
+    public override Boss FinalBoss { get; set; }
 }

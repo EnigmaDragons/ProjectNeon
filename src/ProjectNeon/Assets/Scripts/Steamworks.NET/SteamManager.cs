@@ -73,11 +73,12 @@ public class SteamManager : MonoBehaviour {
 			// The most common case where this happens is when SteamManager gets destroyed because of Application.Quit(),
 			// and then some Steamworks code in some other OnDestroy gets called afterwards, creating a new SteamManager.
 			// You should never call Steamworks functions in OnDestroy, always prefer OnDisable if possible.
-			throw new System.Exception("Tried to Initialize the SteamAPI twice in one session!");
+			Log.Warn("Tried to Initialize the SteamAPI twice in one session!");
+			return;
 		}
 
 		// We want our SteamManager Instance to persist across scenes.
-		DontDestroyOnLoad(gameObject);
+		//DontDestroyOnLoad(gameObject);
 
 		if (!Packsize.Test()) {
 			Debug.LogError("[Steamworks.NET] Packsize Test returned false, the wrong version of Steamworks.NET is being run in this platform.", this);
@@ -121,8 +122,9 @@ public class SteamManager : MonoBehaviour {
 		// https://partner.steamgames.com/doc/sdk/api#initialization_and_shutdown
 		m_bInitialized = SteamAPI.Init();
 		if (!m_bInitialized) {
+#if !UNITY_EDITOR
 			Debug.LogError("[Steamworks.NET] SteamAPI_Init() failed. Refer to Valve's documentation or the comment above this line for more information.", this);
-
+#endif
 			return;
 		}
 

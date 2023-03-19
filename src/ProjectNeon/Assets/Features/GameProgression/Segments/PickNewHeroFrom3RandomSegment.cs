@@ -2,20 +2,23 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName= "Adventure/HeroPick3")]
-public class PickNewHeroFrom3RandomSegment : StageSegment
+public class PickNewHeroFrom3RandomSegment : StageSegment, ILocalizeTerms
 {
     [SerializeField] private Library library;
     [SerializeField] private Party currentParty;
+    [SerializeField] private CurrentAdventure currentAdventure;
 
     public override string Name => $"Party Change Event";
     public override void Start()
     {
-        var featuredThree = GetFeatureHeroOptions(library, currentParty.Heroes);
-        var prompt = currentParty.Heroes.Length == 0 ? "Choose Your Mission Squad Leader" : "Choose A New Squad Member";
+        var featuredThree = GetFeatureHeroOptions(library, currentParty.Heroes, currentAdventure.Adventure);
+        var prompt = currentParty.Heroes.Length == 0 ? "Menu/ChooseLeader" : "Menu/ChooseMember";
         Message.Publish(new GetUserSelectedHero(prompt, featuredThree, h =>
         {
-            AllMetrics.PublishHeroSelected(h.Name, featuredThree.Select(x => x.Name).ToArray(), currentParty.Heroes.Select(x => x.Name).ToArray());
-            Message.Publish(new AddHeroToPartyRequested(h));
+            AllMetrics.PublishHeroSelected(h.NameTerm().ToEnglish(), featuredThree.Select(x => x.NameTerm().ToEnglish()).ToArray(), currentParty.Heroes.Select(x => x.NameTerm().ToEnglish()).ToArray());
+            Message.Publish(new AddHeroToPartyRequested(h));        
+            if (currentAdventure != null && currentParty.Heroes.Length == currentAdventure.Adventure.PartySize && currentParty.Heroes.All(h => h.Sex == CharacterSex.Female))
+                Achievements.Record(Achievement.MiscGirlPower);
             Async.ExecuteAfterDelay(0.5f, () => Message.Publish(new ToggleNamedTarget("HeroSelectionView")));
         }));
     }
@@ -29,12 +32,15 @@ public class PickNewHeroFrom3RandomSegment : StageSegment
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => this;
     public override bool ShouldSpawnThisOnMap(CurrentAdventureProgress p) => true;
 
-    public static BaseHero[] GetFeatureHeroOptions(Library library, BaseHero[] currentHeroes)
+    public static BaseHero[] GetFeatureHeroOptions(Library library, BaseHero[] currentHeroes, Adventure adventure)
     {
         var existingHeroes = currentHeroes.ToArray();
-        var allOptions = library.UnlockedHeroes.Where(x => CurrentProgressionData.Data.RunsFinished >= x.AdventuresPlayedBeforeUnlocked).ToList();
+        var allOptions = library.UnlockedHeroes.Where(x => x.AdventuresPlayedBeforeUnlocked == 0 || CurrentProgressionData.Data.HasShownUnlockForHeroId(x.Id)).ToList();
         existingHeroes.ForEach(h => allOptions.Remove(h));
-        
+        adventure.BannedHeroes.ForEach(h => allOptions.Remove(h));
+        if (currentHeroes.Length == 0)
+            adventure.BannedLeaders.ForEach(h => allOptions.Remove(h));
+
         var currentArchs = currentHeroes.SelectMany(h => h.Archetypes).ToHashSet();
         var preferredSelection = allOptions.Where(h => !h.Archetypes.Any(a => currentArchs.Contains(a))).ToList();
         var optimizedSelection = preferredSelection.Count() >= 3 ? preferredSelection : allOptions;
@@ -52,4 +58,7 @@ public class PickNewHeroFrom3RandomSegment : StageSegment
         featuredThree = featuredThree.OrderBy(h => h.ComplexityRating).ToArray();
         return featuredThree;
     }
+
+    public string[] GetLocalizeTerms()
+        => new[] { "Menu/ChooseLeader", "Menu/ChooseMember" };
 }

@@ -22,7 +22,7 @@ public class StoryEventValidatorEditor : EditorWindow
             foreach (var storyEvent in storyEvents)
                 foreach (var choice in storyEvent.Choices)
                     if (!choice.OddsTableIsValid)
-                        invalidStoryEventChoices.Add($"Odds: [{choice.OddsTableTotal * 100:F0}%] - Story: [{storyEvent.DisplayName}] - Choice: [{choice.Choice}]");
+                        invalidStoryEventChoices.Add($"Odds: [{choice.OddsTableTotal * 100:F0}%] - Story: [{storyEvent.DisplayNameTerm.ToEnglish()}] - Choice: [{choice.Id}]");
 
             GetWindow<ListDisplayWindow>()
                 .Initialized($"Invalid Story Event Choices Odds Tables", "", invalidStoryEventChoices.ToArray())

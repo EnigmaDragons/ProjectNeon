@@ -18,15 +18,18 @@ public class AdventureProgress2 : AdventureProgressBase
     public override int AdventureId => currentAdventure.Adventure.Id;
     public Adventure CurrentAdventure => currentAdventure.Adventure;
     public override CurrentGlobalEffects GlobalEffects => currentGlobalEffects;
+    public override int TotalNonAutoSegmentsToBoss { get; } = 0;
+    public override int CurrentNonAutoStageProgress { get; } = 0;
     public override int CurrentChapterNumber => currentChapterIndex + 1;
     public int CurrentChapterIndex => currentChapterIndex;
+    public override int TotalSegmentsToBoss => CurrentChapter.SegmentCount;
     public override int CurrentStageProgress => currentMap3.Progress;
     public float ProgressToUnlockChapterBoss => CurrentStageProgress == 0 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCount;
     public override float ProgressToBoss => ProgressToUnlockChapterBoss;
     public override float[] RisingActionPoints => new float[0];
     public bool IsFinalStage => currentChapterIndex == currentAdventure.Adventure.DynamicStages.Length - 1;
     public bool IsLastSegmentOfStage => currentMap3.CompletedNodes.Any() && currentMap3.CompletedNodes[currentMap3.CompletedNodes.Count - 1].Type == MapNodeType.Boss;
-    public override string AdventureName => CurrentAdventure.Title;
+    public override string AdventureNameTerm => CurrentAdventure.TitleTerm;
     public override GameAdventureProgressType AdventureType => GameAdventureProgressType.V2;
     public override int RngSeed => currentMap3.CurrentNodeRngSeed;
     public override bool UsesRewardXp { get; } = true;
@@ -40,6 +43,8 @@ public class AdventureProgress2 : AdventureProgressBase
         get => library.DefaultDifficulty;
         set { }
     }
+
+    public override HashSet<string> StoryStates => new HashSet<string>();
 
     public int[] FinishedCurrentStageHeatUpEvents => finishedCurrentStageHeatUpEvents.ToArray();
 
@@ -186,4 +191,5 @@ public class AdventureProgress2 : AdventureProgressBase
     
     public override void SetStoryState(string state, bool value) {}
     public override bool IsTrue(string state) => false;
+    public override Boss FinalBoss { get; set; }
 }

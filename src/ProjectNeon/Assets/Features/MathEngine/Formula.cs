@@ -14,27 +14,31 @@ public static class Formula
     private static readonly Dictionary<StatType, string> BaseStatSearchTerms = StatTypes.ToDictionary(t => t, t => $"Base[{t}]");
     
     private static int RoundUp(float f) => f > 0 ? Mathf.CeilToInt(f) : Mathf.FloorToInt(f);
+
+    public static int EvaluateToIntWithDoubleDamage(FormulaContext ctx, string expression)
+    {
+        var result = EvaluateToInt(ctx, expression);
+        return ctx.Source.Stats[TemporalStatType.DoubleDamage] > 0 ? result * 2 : result;
+    }
+
+    public static int EvaluateToInt(MemberStateSnapshot src, string expression, ResourceQuantity xAmountPaid, EffectScopedData scopedData) 
+        => EvaluateToInt(new FormulaContext(src, Maybe<MemberState>.Missing(), xAmountPaid, scopedData), expression);
     
-    public static int EvaluateToInt(MemberStateSnapshot src, string expression, ResourceQuantity xAmountPaid) 
-        => EvaluateToInt(new FormulaContext(src, Maybe<MemberState>.Missing(), xAmountPaid), expression);
-    
-    public static int EvaluateToInt(MemberStateSnapshot snapshot, MemberState target, string expression, ResourceQuantity xAmountPaid) 
-        => EvaluateToInt(new FormulaContext(snapshot, target, xAmountPaid), expression);
+    public static int EvaluateToInt(MemberStateSnapshot snapshot, MemberState target, string expression, ResourceQuantity xAmountPaid, EffectScopedData scopedData) 
+        => EvaluateToInt(new FormulaContext(snapshot, target, xAmountPaid, scopedData), expression);
 
     public static int EvaluateToInt(FormulaContext ctx, string expression) => RoundUp(Evaluate(ctx, expression));
 
     public static float EvaluateRaw(FormulaContext ctx, string expression) => Evaluate(ctx, expression);
-    
-    public static float EvaluateRaw(MemberStateSnapshot src, string expression, ResourceQuantity xAmountPaid) 
-        => Evaluate(new FormulaContext(src, Maybe<MemberState>.Missing(), xAmountPaid), expression);
-    
-    public static float EvaluateRaw(MemberStateSnapshot snapshot, MemberState target, string expression, ResourceQuantity xAmountPaid) 
-        => Evaluate(new FormulaContext(snapshot, target, xAmountPaid), expression);
+
+    public static float EvaluateRaw(MemberStateSnapshot snapshot, MemberState target, string expression, ResourceQuantity xAmountPaid, EffectScopedData scopedData) 
+        => Evaluate(new FormulaContext(snapshot, target, xAmountPaid, scopedData), expression);
     
     private static float Evaluate(FormulaContext ctx, string expression)
     {
         var newExp = string.IsNullOrWhiteSpace(expression) ? "0" : expression;
         newExp = newExp.Replace("PrimaryStat", "Power");
+        newExp = ReplaceNamedVariables(newExp, ctx);
         newExp = ReplaceTags(newExp, ctx);
         newExp = ReplaceShorthandStatNames(newExp);
         newExp = ReplaceResources(newExp, ctx);
@@ -162,6 +166,10 @@ public static class Formula
     private static string ReplaceXCost(string expression, FormulaContext ctx)
         => expression.Replace(XString, ctx.XAmountPaid.Amount.GetString());
 
+    private static Regex NamedVariableRegex = new Regex(@"Variable\[(.+?)]");
+    private static string ReplaceNamedVariables(string expression, FormulaContext ctx)
+        => NamedVariableRegex.Replace(expression, x => ctx.ScopedData.GetVariable(x.Groups[1].Value).ToString());
+    
     private const string ConditionalsString = "{(.*):(.*)}";
     private static string ResolveConditionals(string expression, DataTable dataTable) 
         => Regex.Replace(expression, ConditionalsString, x => ResolveCondition(dataTable, x));

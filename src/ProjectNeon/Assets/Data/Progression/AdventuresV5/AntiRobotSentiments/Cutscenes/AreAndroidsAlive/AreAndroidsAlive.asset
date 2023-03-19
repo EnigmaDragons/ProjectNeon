@@ -13,29 +13,40 @@ MonoBehaviour:
   m_Name: AreAndroidsAlive
   m_EditorClassIdentifier: 
   id: 12
+  storyText: Are androids alive? Are we helping stop {[t:MegaCorps/ZantoCorp]}?
   settingType: 0
   corp: {fileID: 0}
   choices:
-  - Choice: 1
+  - Id: 1
+    Choice: "They don\u2019t have a soul. They are not alive. It is not murder."
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
-      Result: {fileID: 0}
-      ResultNumber: 1
+      Result: {fileID: 11400000, guid: 35ed7dae6d0331d4a8399184ec441a33, type: 2}
       StoryText: 
-  - Choice: 2
+  - Id: 2
+    Choice: They deserve to live just as much as us. We are going to help!
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
-      Result: {fileID: 0}
-      ResultNumber: 1
+      Result: {fileID: 11400000, guid: 0ee330c525a288a41930b04d8ab93755, type: 2}
       StoryText: 
-  - Choice: 3
+  - Id: 3
+    Choice: They might be living and have a soul but I don't see why that means we
+      should help.
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
-      Result: {fileID: 0}
-      ResultNumber: 1
+      Result: {fileID: 11400000, guid: 9c339857949f1bf418e4f987f9637d0e, type: 2}
       StoryText: 
   inCutscene: 1
   isMultiChoice: 0

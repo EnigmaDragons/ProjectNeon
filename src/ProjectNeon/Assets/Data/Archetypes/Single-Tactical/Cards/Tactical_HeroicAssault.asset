@@ -15,16 +15,18 @@ MonoBehaviour:
   id: 140
   customName: 
   art: {fileID: 21300000, guid: 6098007a50dab4741824bd00e10101d0, type: 3}
-  description: '{Auto}'
+  description: Gives {E[0]} {D[0]}. Heal {E[1]}. Shield {E[2]}
   typeDescription: {fileID: 11400000, guid: de601aad4442dbe4dbf8257c048e1d22, type: 2}
+  descriptionV2:
+    text: Gives {0} Primary Stat for 3 turns. Heal {1}. Shield {2}
+    formatArgs:
+    - '{E[0]}'
+    - '{E[1]}'
+    - '{E[2]}'
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 0
-    resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
-    plusXCost: 0
-  onPlayGain:
     cost: 0
     resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
     plusXCost: 0
@@ -44,3 +46,4 @@ MonoBehaviour:
   highlightCondition: []
   unhighlightCondition: []
   isWIP: 0
+  notAvailableForGeneralDistribution: 0

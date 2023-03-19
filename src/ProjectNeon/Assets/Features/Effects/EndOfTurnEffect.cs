@@ -12,7 +12,7 @@ public class EndOfTurnEffect : Effect
     {
         ctx.Target.ApplyToAllConsciousMembers(m => m.State.ApplyTemporaryAdditive(
             new AtEndOfTurnState(ctx, m, _source.ReferencedSequence, 
-                TemporalStateMetadata.ForDuration(ctx.Source.Id, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, _source.DurationFormula, ctx.XPaidAmount), 
+                TemporalStateMetadata.ForDuration(ctx.Source.Id, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, _source.DurationFormula, ctx.XPaidAmount, ctx.ScopedData), 
                     _source.EffectScope.Value.Equals("Debuff"), _source.StatusDetail))));
     }
 }

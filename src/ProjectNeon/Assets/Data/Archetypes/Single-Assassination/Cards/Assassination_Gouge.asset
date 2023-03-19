@@ -15,16 +15,21 @@ MonoBehaviour:
   id: 45
   customName: 
   art: {fileID: 21300000, guid: 868e420cb9b8da744b7384b4c7a99f55, type: 3}
-  description: '{Auto}'
+  description: Deal {E[0]}
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  descriptionV2:
+    text: <b>3 Marks:</b> Deal {0} + {1} per Mark
+    formatArgs:
+    - '{E[1]}'
+    - '{E[2]}'
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 1
+    cost: 0
     resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
-  rarity: 1
+  rarity: 2
   actionSequences:
   - scope: 0
     group: 1
@@ -37,7 +42,13 @@ MonoBehaviour:
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 2a9990ef3da432e42acdb151f8669008, type: 2}
-  highlightCondition: []
-  unhighlightCondition: []
+  highlightCondition:
+  - {fileID: 11400000, guid: 7a2154213e21e034797dad173417dfc3, type: 2}
+  unhighlightCondition:
+  - {fileID: 11400000, guid: 217f409050d66d84899777c9562acba7, type: 2}
+  targetedHighlightCondition:
+  - {fileID: 11400000, guid: a6c515695926c42428501a9161fbc52d, type: 2}
+  targetedUnhighlightCondition:
+  - {fileID: 11400000, guid: 63f17f8b156e6fe43bb52b86adb17959, type: 2}
   isWIP: 0
   notAvailableForGeneralDistribution: 0

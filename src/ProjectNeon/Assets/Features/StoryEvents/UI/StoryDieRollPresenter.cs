@@ -1,14 +1,15 @@
 using DG.Tweening;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 
-public class StoryDieRollPresenter : OnMessage<ShowDieRoll, ShowNoDieRollNeeded, HideDieRoll>
+public class StoryDieRollPresenter : OnMessage<ShowDieRoll, ShowNoDieRollNeeded, HideDieRoll>, ILocalizeTerms
 {
     [SerializeField] private GameObject noDieRollNeededPanel;
     [SerializeField] private GameObject panel;
     [SerializeField] private GameObject die;
-    [SerializeField] private TextMeshProUGUI actionLabel;
-    [SerializeField] private TextMeshProUGUI dieRollLabel;
+    [SerializeField] private Localize actionLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI dieRollLabel;
     [SerializeField] private FloatReference dieRollDuration;
     [SerializeField] private AudioClipVolume rollSound;
     [SerializeField] private AudioClipVolume dieShakeSound;
@@ -18,6 +19,9 @@ public class StoryDieRollPresenter : OnMessage<ShowDieRoll, ShowNoDieRollNeeded,
     private string dieResult;
     private float remainingRollDuration;
     private bool rollInProgress;
+
+    private string _rolling => "StoryEvents/Rolling";
+    private string _rolled => "StoryEvents/Rolled";
     
     private void Awake()
     {
@@ -28,7 +32,7 @@ public class StoryDieRollPresenter : OnMessage<ShowDieRoll, ShowNoDieRollNeeded,
     protected override void Execute(ShowDieRoll msg)
     {
         dieResult = msg.Roll.ToString();
-        actionLabel.text = "Rolling";
+        actionLabel.SetTerm(_rolling);
         Hide();
         FlyIn(0.3f);
         rollInProgress = true;
@@ -74,11 +78,14 @@ public class StoryDieRollPresenter : OnMessage<ShowDieRoll, ShowNoDieRollNeeded,
         if (!(remainingRollDuration <= 0f)) 
             return;
 
-        actionLabel.text = "You Rolled";
+        actionLabel.SetTerm(_rolled);
         dieRollLabel.text = dieResult;
         rollInProgress = false;
         die.transform.rotation = Quaternion.identity;
         Message.Publish(new DieThrown(transform));
         player.Play(rollSound);
     }
+
+    public string[] GetLocalizeTerms()
+        => new[] {_rolling, _rolled};
 }

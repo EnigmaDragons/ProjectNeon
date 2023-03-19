@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4046355053636471936}
   - component: {fileID: 5447817536461726233}
   - component: {fileID: 1809914302531499845}
-  - component: {fileID: 3030509350907821110}
+  - component: {fileID: 1648012996652186819}
   m_Layer: 5
   m_Name: PartyButton
   m_TagString: Untagged
@@ -180,7 +180,7 @@ MonoBehaviour:
   PlayOnAwake: 0
   PlayOnDestroy: 0
   hoverEnterSound: event:/DeckBulder_Scene/Hover
---- !u!114 &3030509350907821110
+--- !u!114 &1648012996652186819
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -189,10 +189,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1155945540709156040}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77d005e298df44ca8cca949f2df12ba7, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d38e8cafb944ccbbddbb31ab70c31e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipText: Party
+  tooltipTerm: Tooltips/PartyButton
+  tooltipText: 
 --- !u!1 &1199954632346234758
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,7 +327,7 @@ GameObject:
   - component: {fileID: 3113209880378533227}
   - component: {fileID: 2385201780449524944}
   - component: {fileID: 1362919525170431664}
-  - component: {fileID: 7535852302698398630}
+  - component: {fileID: 1640943437294760884}
   m_Layer: 5
   m_Name: MenuButton
   m_TagString: Untagged
@@ -492,7 +493,7 @@ MonoBehaviour:
   PlayOnAwake: 0
   PlayOnDestroy: 0
   hoverEnterSound: event:/DeckBulder_Scene/Hover
---- !u!114 &7535852302698398630
+--- !u!114 &1640943437294760884
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -501,10 +502,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2135970573812360492}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77d005e298df44ca8cca949f2df12ba7, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d38e8cafb944ccbbddbb31ab70c31e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipText: Menu
+  tooltipTerm: Tooltips/Menu
+  tooltipText: 
 --- !u!1 &2703394579336353635
 GameObject:
   m_ObjectHideFlags: 0
@@ -790,7 +792,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33750a5d09919b847a0b63cea3e83959, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  progress: {fileID: 11400000, guid: 59e065c08405c5b4d8666f75b4216d39, type: 2}
+  progress: {fileID: 0}
   label: {fileID: 5911951689036767554}
 --- !u!1 &3550644243743807829
 GameObject:
@@ -889,6 +891,8 @@ MonoBehaviour:
   party: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
   heroPresenter: {fileID: 1026027646129516315, guid: 067c7bde694dca547b641e7b83648446, type: 3}
   itemParent: {fileID: 4090086134289841056}
+  backPanel: {fileID: 0}
+  backPanelOffsetIfLessThan3Heroes: {x: 0, y: 0}
   active: []
 --- !u!114 &8317083242333002091
 MonoBehaviour:
@@ -1063,6 +1067,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   adventure: {fileID: 11400000, guid: 59e065c08405c5b4d8666f75b4216d39, type: 2}
   gameMap: {fileID: 11400000, guid: 5064fe74d4176254a9e1729682f69c71, type: 2}
+  mapV5: {fileID: 0}
   speed: 350
 --- !u!114 &6724836012008580667
 MonoBehaviour:
@@ -1079,6 +1084,7 @@ MonoBehaviour:
   progress: {fileID: 11400000, guid: 434ca06c911c9fa409030447f7afe341, type: 2}
   battleState: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
   eventPublisher: {fileID: 11400000, guid: af4dd5b2dd944724882b65e6ad0324bc, type: 2}
+  navigator: {fileID: 0}
 --- !u!114 &1375874683532142871
 MonoBehaviour:
   m_ObjectHideFlags: 0

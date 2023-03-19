@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged, SetSuperFocusDeckBuilderControl>
+public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged, SetSuperFocusDeckBuilderControl, StartBattleInitiated>
 {
     [SerializeField] private SimpleDeckCardPresenter presenter;
     [SerializeField] private DeckBuilderState state;
@@ -73,4 +73,7 @@ public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged, SetSupe
             presenter.Initialized(_count, _cardType);
         presenter.BindLeftClickAction(RemoveCard);
     }
+    
+    protected override void Execute(StartBattleInitiated msg)
+        => presenter.DisableInteractions();
 }

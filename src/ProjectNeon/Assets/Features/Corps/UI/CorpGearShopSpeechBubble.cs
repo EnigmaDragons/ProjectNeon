@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 
+[IgnoreForLocalization]
 public class CorpGearShopSpeechBubble : CorpAffinityUiBase
 {
     [SerializeField] private GameObject parent;

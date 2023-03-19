@@ -15,6 +15,7 @@ MonoBehaviour:
   Actions:
   - type: 30
     battleEffect:
+      Id: 3012
       EffectType: 0
       Conditions: []
       BaseAmount:
@@ -31,7 +32,6 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      TargetsSource: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 0
@@ -47,17 +47,21 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReactionTimingWindow: 0
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0
         scope: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     conditionData:
       ConditionType: 0
       FloatAmount:
@@ -85,11 +89,15 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: {r: 0, g: 0, b: 0, a: 0}
         Variable: {fileID: 0}
+      skipWaitingForCompletion: 0
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 31
     battleEffect:
+      Id: 3013
       EffectType: 0
       Conditions: []
       BaseAmount:
@@ -106,7 +114,6 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      TargetsSource: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 0
@@ -122,17 +129,21 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReactionTimingWindow: 0
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0
         scope: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     conditionData:
       ConditionType: 0
       FloatAmount:
@@ -152,22 +163,26 @@ MonoBehaviour:
       animation:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: 8a11407eb8612fe4f86075c5f4ae4ffb, type: 2}
+        Variable: {fileID: 11400000, guid: d95471160d428694d8780d642c7a97ee, type: 2}
       size: 1
       speed: 1
       color:
         UseConstant: 1
-        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        ConstantValue: {r: 0, g: 0, b: 0, a: 1}
         Variable: {fileID: 0}
+      skipWaitingForCompletion: 0
       conditions:
-      - {fileID: 11400000, guid: afb5cfe2146107043baac91d1daf2411, type: 2}
+      - {fileID: 11400000, guid: 15d17f5d760cd4e44bfb26dd94adaafa, type: 2}
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 1
     battleEffect:
+      Id: 3014
       EffectType: 58
       Conditions:
-      - {fileID: 11400000, guid: afb5cfe2146107043baac91d1daf2411, type: 2}
+      - {fileID: 11400000, guid: 15d17f5d760cd4e44bfb26dd94adaafa, type: 2}
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -182,7 +197,6 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      TargetsSource: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 0
@@ -198,17 +212,21 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReactionTimingWindow: 0
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0
         scope: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     conditionData:
       ConditionType: 0
       FloatAmount:
@@ -235,14 +253,18 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: {r: 0, g: 0, b: 0, a: 0}
         Variable: {fileID: 0}
+      skipWaitingForCompletion: 0
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 1
     battleEffect:
+      Id: 3015
       EffectType: 82
       Conditions:
-      - {fileID: 11400000, guid: cc6a994bd6d4d714eac0bc744fc8fc40, type: 2}
+      - {fileID: 11400000, guid: 15d17f5d760cd4e44bfb26dd94adaafa, type: 2}
       BaseAmount:
         UseConstant: 1
         ConstantValue: 0
@@ -257,7 +279,6 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      TargetsSource: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 0
@@ -273,17 +294,21 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
+      ReactionTimingWindow: 0
       ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0
         scope: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     conditionData:
       ConditionType: 0
       FloatAmount:
@@ -310,6 +335,9 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: {r: 0, g: 0, b: 0, a: 0}
         Variable: {fileID: 0}
+      skipWaitingForCompletion: 0
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0

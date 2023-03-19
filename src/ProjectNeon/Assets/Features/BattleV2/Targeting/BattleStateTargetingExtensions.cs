@@ -102,6 +102,9 @@ public static class BattleStateTargetingExtensions
                 .ToArray();
             return targets;
         }
+
+        if (scope == Scope.Random)
+            return Targets(new Single(teamMembers.Shuffled().First()));
         return Targets(new Multiple(teamMembers));
     }
 

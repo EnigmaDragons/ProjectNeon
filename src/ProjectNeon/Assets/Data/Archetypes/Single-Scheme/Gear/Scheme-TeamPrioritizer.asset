@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 12
   displayName: 
-  description: 'Start of Turn: Exclusively make one random enemy Vulnerable'
+  description: 'Start of Turn: Exclusively make one random enemy {[t:Keywords/Vulnerable]}'
   corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: c3bd2cb0d323191448e78929b9cb214e, type: 2}
@@ -27,7 +27,8 @@ MonoBehaviour:
     StatType: 
   resourceModifiers: []
   turnStartEffects:
-  - EffectType: 86
+  - Id: 0
+    EffectType: 86
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -43,8 +44,8 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 21
+    ApplyToEachMemberIndividually: 0
     StatusTag: 0
     StatusDetailText: 
     TurnDelay: 0
@@ -58,18 +59,22 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 11400000, guid: c51ea01d612bf954bb3bd7d35be549fb, type: 2}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
-  - EffectType: 86
+    Unpreventable: 0
+  - Id: 0
+    EffectType: 86
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -85,8 +90,8 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 20
+    ApplyToEachMemberIndividually: 0
     StatusTag: 0
     StatusDetailText: 
     TurnDelay: 0
@@ -100,18 +105,25 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 11400000, guid: 32a677e3fff38724887df702f964f43b, type: 2}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   turnEndEffects: []
   battleStartEffects: []
   battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 

@@ -12,13 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffbe45dc9ae4641b25ee3ad47d7a21b, type: 3}
   m_Name: 16Cutscene_Aftermath
   m_EditorClassIdentifier: 
+  id: 59
   isObsolete: 0
   isPrimaryCutscene: 1
   setting: {fileID: 11400000, guid: c99cd71c592632c45b6ecad54cae75ee, type: 2}
   skipTrueStates: []
   skipFalseStates: []
+  onFinished:
+    m_PersistentCalls:
+      m_Calls: []
   segments:
-  - SegmentType: 1
+  - Id: 513
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: News
@@ -29,6 +34,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -37,17 +46,22 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 514
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: News
       Variable: {fileID: 0}
-    Text: All Medigeneix clinics throughout Metroplex Zero have suffered from some
-      unknown catastrophic failure.
+    Text: All {[t:MegaCorps/Medigeneix]} clinics throughout {[t:LocationName]} have
+      suffered from some unknown catastrophic failure.
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -59,17 +73,22 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 515
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: News
       Variable: {fileID: 0}
-    Text: Medigeneix claims to be working on resolving this issue and is giving no
-      further comment.
+    Text: '{[t:MegaCorps/Medigeneix]} claims to be working on resolving this issue
+      and is giving no further comment.'
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -81,17 +100,22 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 516
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: News
       Variable: {fileID: 0}
-    Text: Tritoonico is setting up additional clinics to take on patients that are
-      forced to find alternatives to Medigeneix.
+    Text: '{[t:MegaCorps/Tritoonico]} is setting up additional clinics to take on
+      patients that are forced to find alternatives to {[t:MegaCorps/Medigeneix]}.'
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -103,17 +127,22 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 517
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: News
       Variable: {fileID: 0}
-    Text: Tritoonico's mystical methods have found some success in fixing people's
-      organs that needed replacing.
+    Text: '{[t:MegaCorps/Tritoonico]}''s mystical methods have found some success
+      in fixing people''s organs that needed replacing.'
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -125,17 +154,22 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 518
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: News
       Variable: {fileID: 0}
-    Text: In almost 100% of the cases, those that had their organs healed by Tritoonico
-      decided to join Tritoonico as permanent members.
+    Text: In almost 100% of the cases, those that had their organs healed by {[t:MegaCorps/Tritoonico]}
+      decided to join {[t:MegaCorps/Tritoonico]} as permanent members.
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -147,17 +181,22 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 519
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: News
       Variable: {fileID: 0}
-    Text: It's looking like Medigeneix might never recover from this incident within
-      Metroplex Zero.
+    Text: It's looking like {[t:MegaCorps/Medigeneix]} might never recover from this
+      incident within {[t:LocationName]}.
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -169,7 +208,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 520
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: News
@@ -179,6 +219,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -190,17 +234,23 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 521
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: News
       Variable: {fileID: 0}
-    Text: Despite that, Anton is going forward with hosting the Medigeneix conference
-      this year. Many of Medigeneix's top executives plan on being attendees.
+    Text: Despite that, Anton is going forward with hosting the {[t:MegaCorps/Medigeneix]}
+      conference this year. Many of {[t:MegaCorps/Medigeneix]}'s top executives plan
+      on being attendees.
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -212,17 +262,22 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 522
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: News
       Variable: {fileID: 0}
-    Text: Anonymous evidence we received showed that Medigeneix was responsible for
-      killing and harvesting targeted benefactors.
+    Text: Anonymous evidence we received showed that {[t:MegaCorps/Medigeneix]} was
+      responsible for killing and harvesting targeted benefactors.
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -234,17 +289,22 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 523
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: News
       Variable: {fileID: 0}
     Text: The monster behind this was Anton, who was found dead, murdered by a terrorist
-      group operating within Metroplex Zero.
+      group operating within {[t:LocationName]}.
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -256,17 +316,22 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 524
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: News
       Variable: {fileID: 0}
-    Text: 'Medigeneix stated: They had no idea about the horrific policies that Anton
-      had implemented.'
+    Text: '{[t:MegaCorps/Medigeneix]} stated: They had no idea about the horrific
+      policies that Anton had implemented.'
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -278,18 +343,23 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 525
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: News
       Variable: {fileID: 0}
-    Text: Medigeneix also provided evidence of Anton being responsible for several
-      murders of their own executives. This should alleviate any concerns about whether
-      Medigeneix was responsible for the organ harvesting.
+    Text: '{[t:MegaCorps/Medigeneix]} also provided evidence of Anton being responsible
+      for several murders of their own executives. This should alleviate any concerns
+      about whether {[t:MegaCorps/Medigeneix]} was responsible for the organ harvesting.'
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -301,18 +371,23 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 526
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: News
       Variable: {fileID: 0}
     Text: 'In recent news: More missing person reports have increased with no discernible
-      pattern in Metroplex Zero. It is believed that the terrorists operating within
-      Metroplex Zero are responsible.'
+      pattern in {[t:LocationName]}. It is believed that the terrorists operating
+      within {[t:LocationName]} are responsible.'
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0

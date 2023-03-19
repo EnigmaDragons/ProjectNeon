@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 public class UiTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [TextArea(1, 10), SerializeField] private string tooltipText;
+    [TextArea(1, 10), SerializeField] public string tooltipText;
 
     public void OnPointerEnter(PointerEventData eventData) => Show();
 
@@ -11,8 +11,8 @@ public class UiTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     
     public void Show()
     {
-        if (!MouseDragState.IsDragging)
-            Message.Publish(new ShowTooltip(transform, tooltipText));
+        if (!MouseDragState.IsDragging && tooltipText != null && gameObject.activeSelf)
+            Message.Publish(new ShowTooltip(transform.position, tooltipText));
     }
 
     public void Hide() => Message.Publish(new HideTooltip());

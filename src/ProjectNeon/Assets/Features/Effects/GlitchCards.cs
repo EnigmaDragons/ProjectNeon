@@ -19,7 +19,7 @@ public class GlitchCards : Effect
         if (ctx.Target.Members.All(x => x.Aegis() > 0))
         {
             ctx.Preventions.RecordPreventionTypeEffect(PreventionType.Aegis, ctx.Target.Members);   
-            BattleLog.Write($"{string.Join(" & ", ctx.Target.Members.Select(x => x.Name))} prevented glitching with an Aegis");
+            BattleLog.Write($"{string.Join(" & ", ctx.Target.Members.Select(x => x.NameTerm.ToEnglish()))} prevented glitching with an Aegis");
             return;
         }
         
@@ -36,6 +36,7 @@ public class GlitchCards : Effect
             .Shuffled();
         var impactedCards = filteredCards.Take(Math.Min(_maxCards, filteredCards.Length)).ToArray();
         impactedCards.ForEach(c => c.Card.TransitionTo(CardMode.Glitched));
+        BattleLog.Write($"{string.Join(", ", impactedCards.Select(c => c.Card.Name))} glitched by {ctx.Source.NameTerm.ToEnglish()}");
         Message.Publish(new CardsGlitched(impactedCards));
     }
 }

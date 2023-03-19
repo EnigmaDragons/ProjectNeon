@@ -8,6 +8,7 @@ public class GainStateIfInZoneAtEndOfTurn : ITemporalCardState
     
     public bool IsActive { get; set; } = true;
     public int CostAdjustment => 0;
+    public bool IsSinglePlay => false;
 
     public GainStateIfInZoneAtEndOfTurn(ITemporalCardState stateToGain, Card card, CardPlayZone zone)
     {

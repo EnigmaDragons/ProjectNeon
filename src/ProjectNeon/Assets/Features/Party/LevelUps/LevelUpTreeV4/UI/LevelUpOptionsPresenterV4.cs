@@ -1,14 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 
-public sealed class LevelUpOptionsPresenterV4 : MonoBehaviour
+public sealed class LevelUpOptionsPresenterV4 : MonoBehaviour, ILocalizeTerms
 {
     [SerializeField] private LevelUpOptions draftOptions;
-    [SerializeField] private TextMeshProUGUI levelLabel;
-    [SerializeField] private TextMeshProUGUI promptLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI levelLabel;
+    [SerializeField] private Localize promptLabel;
     [SerializeField] private GameObject optionParent;
     [SerializeField] private LevelUpOptionPresenterV4 basicOptionPrototype;
     [SerializeField] private CustomLevelUpPresenters presenters;
@@ -21,6 +22,8 @@ public sealed class LevelUpOptionsPresenterV4 : MonoBehaviour
     private bool _initialized;
     private readonly Dictionary<LevelUpOption, GameObject> _options = new Dictionary<LevelUpOption, GameObject>();
 
+    private const string SelectOption = "LevelUps/SelectOption";
+    
     private void Start() => InitComponent();
 
     private void InitComponent()
@@ -39,28 +42,31 @@ public sealed class LevelUpOptionsPresenterV4 : MonoBehaviour
             if (o.Value != null && o.Key != selected)
                 o.Value.SetActive(false);
         });
-        promptLabel.text = string.Empty;
+        promptLabel.SetFinalText(string.Empty);
     }
     
     public void Init(AdventureMode mode, Hero hero)
     {
         if (mode == AdventureMode.Draft && hero.Levels.NextLevelUpLevel != 4) // Only use draft option for non-Basic Card picks
-            Init(hero, hero.Levels.NextLevelUpLevel, "Select An Option!", draftOptions.Generate(hero));
+            Init(hero, hero.Levels.NextLevelUpLevel, SelectOption, draftOptions.Generate(hero));
         else
         {
             var reward = hero.NextLevelUpRewardV4;
-            Init(hero, hero.Levels.NextLevelUpLevel, reward.OptionsPrompt, reward.GenerateOptions(hero, party));
+            Init(hero, hero.Levels.NextLevelUpLevel, reward.OptionsPromptTerm, reward.GenerateOptions(hero, party));
         }
     }
 
-    public void Init(Hero hero, int level, string optionPrompt, LevelUpOption[] options)
+    public void Init(Hero hero, int level, string optionPromptTerm, LevelUpOption[] options)
     {
         InitComponent();
         _options.ForEach(o => DestroyImmediate(o.Value));
         _options.Clear();
         if (levelLabel != null)
             levelLabel.text = level.ToString();
-        promptLabel.text = string.Empty;
+        if (promptLabel != null)
+            promptLabel.SetFinalText(string.Empty);
+        else
+            Log.Error("Prompt Label binding is missing from Level Up Options Presenter V4");
 
         var unfoldDelay = unfoldInitialDelay;
         options.Where(x => x.IsFunctional)
@@ -83,9 +89,12 @@ public sealed class LevelUpOptionsPresenterV4 : MonoBehaviour
 
         this.ExecuteAfterDelay(() =>
         {
-            promptLabel.text = optionPrompt;
+            promptLabel.SetTerm(optionPromptTerm);
             promptLabel.transform.localScale = new Vector3(4, 4, 4);
             promptLabel.transform.DOScale(1, 0.6f);
         }, unfoldDelay);
     }
+
+    public string[] GetLocalizeTerms()
+        => new [] {SelectOption};
 }

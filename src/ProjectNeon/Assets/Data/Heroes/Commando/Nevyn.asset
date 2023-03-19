@@ -17,23 +17,22 @@ MonoBehaviour:
   isDisabled: 0
   bust: {fileID: 21300000, guid: c63fe1ef4eb1df543ad10078fc202727, type: 3}
   body: {fileID: 8044393567867306270, guid: aef21985217ffb94691b9b87bd7fe8a5, type: 3}
-  className:
-    UseConstant: 1
-    ConstantValue: Commando
-    Variable: {fileID: 0}
+  className: Commando
+  sex: 1
   materialType: 1
   battleRole: 1
-  basic: {fileID: 11400000, guid: dbe1782dcf6dc93419ad1e87c84705b1, type: 2}
+  basic: {fileID: 11400000, guid: d8fa6c2d005da9040b00b6eb010c62bb, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 4b871eacf30af6f428fd307e9e308b4c, type: 2}
   - {fileID: 11400000, guid: fbcb59caa7d5a114f8b9cf6016d20160, type: 2}
   startingDeck: {fileID: 11400000, guid: 27702063fd023f346aa3180502cefc9b, type: 2}
   tint: {r: 0.4267978, g: 0.6509434, b: 0.47639334, a: 1}
-  animations: {fileID: 11400000, guid: 2026a6063f0f67340a4f5debc2cd1ad5, type: 2}
+  animations: {fileID: 11400000, guid: ac3d6f66b1b4efc4ab58e90a4c868cc4, type: 2}
   animationSounds: {fileID: 11400000, guid: 320a1f41711f2514e858f7835f7dd049, type: 2}
   startingCredits: 75
   complexityRating: 2
-  maxHp: 174
+  adventuresPlayedBeforeUnlocked: 0
+  maxHp: 127
   maxShield: 22
   startingShield: 0
   attack: 10
@@ -49,17 +48,20 @@ MonoBehaviour:
   resource1GainPerTurn: 0
   resource1StartingAmountOverride: -1
   resource2: {fileID: 11400000, guid: eaf4c3c485af4f542bff69164496f500, type: 2}
-  additionalStartingCards: []
-  excludedStartingCards: []
+  additionalStartingCards:
+  - {fileID: 11400000, guid: 0c04b685c605b7943b9c9e35a5f1c156, type: 2}
+  excludedStartingCards:
+  - {fileID: 11400000, guid: 5ecffafb038b36a419f3b4c8b2e0f2bc, type: 2}
+  - {fileID: 11400000, guid: dbe1782dcf6dc93419ad1e87c84705b1, type: 2}
   flavorDetails:
     RoleDescription: Striker
     HeroDescription: Equally skilled with guns and grenades, he uses the latest weaponry
       to decimate his foes
-    BackStory: He served in one of the elite squads of the Eurasian Peacekeepers
-      before Metroplex Zero became a non-nationalized region. Forced to choose between
-      leaving his family and friends or leaving the Peacekeepers, he chose to resign
-      his post with the Peacekeepers. Angry at being forced to leave behind his military
-      ideals and squadmates, he pursues his own brand of justice and answers to no-one
-      in this corrupt capitalistic economy.
+    BackStory: He served in one of the elite squads of the {[t:RegionName]} Peacekeepers
+      before {[t:LocationName]} became a non-nationalized region. Forced to choose
+      between leaving his family and friends or leaving the Peacekeepers, he chose
+      to resign his post with the Peacekeepers. Angry at being forced to leave behind
+      his military ideals and squadmates, he pursues his own brand of justice and
+      answers to no-one in this corrupt capitalistic economy.
   levelUpTree: {fileID: 0}
   levelUpTreeV4: {fileID: 11400000, guid: 27db14d329ce23c4fa9841c188381919, type: 2}

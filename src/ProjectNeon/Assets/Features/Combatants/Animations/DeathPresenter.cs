@@ -41,6 +41,11 @@ public class DeathPresenter : OnMessage<MemberUnconscious>
     protected override void Execute(MemberUnconscious msg)
     {
         if (msg.Member.Id != _id) return;
+        if (msg.Member.ShouldLive)
+        {
+            Message.Publish(new CharacterAnimationRequested2(_id, CharacterAnimationType.Fall));
+            return;
+        }
         _dying = true;
         var effectType = msg.Member.MaterialType == MemberMaterialType.Organic ? "Death" : "DeathMetallic";
         Message.Publish(new PlayRawBattleEffect(effectType, state.GetCenterPoint(new Single(msg.Member))));

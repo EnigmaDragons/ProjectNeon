@@ -50,6 +50,7 @@ namespace I2.Loc
             else
             {
                 var wwwText = Encoding.UTF8.GetString(bytes, 0, bytes.Length); //www.text
+                //Log.Info($"Err: {errorMsg}. Text: {wwwText}");
                 errorMsg = GoogleTranslation.ParseTranslationResult(wwwText, _requests);
                 if (_OnTranslationReady!=null)
                     _OnTranslationReady(_requests, errorMsg);

@@ -445,7 +445,9 @@ namespace CI.HttpClient
         {
             if (_dispatcher == null)
             {
-                _dispatcher = new GameObject(DISPATCHER_GAMEOBJECT_NAME).AddComponent<Dispatcher>();
+                var go = new GameObject(DISPATCHER_GAMEOBJECT_NAME);
+                go.hideFlags = HideFlags.HideAndDontSave;
+                _dispatcher = go.AddComponent<Dispatcher>();
             }
         }
     }

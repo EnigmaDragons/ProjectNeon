@@ -27,19 +27,17 @@ MonoBehaviour:
     CardTagPriority: 
     UnpreferredCardTags: 
     RotatePlayingCardTags: 
+    IgnoreDesignatedAttackerRole: 0
   preferredTurnOrder: 1
   prefab: {fileID: 2084796812294946461, guid: 1176129cacfeef241a0f005999f1e1b8, type: 3}
   materialType: 1
   libraryCameraOffset: {x: -0.2, y: -0.9, z: 2.8}
-  deathEffect:
-    UseConstant: 1
-    ConstantValue: 
-    Variable: {fileID: 0}
+  shouldLive: 1
   battleRole: 3
   tier: 3
   unique: 1
   isHasty: 1
-  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
   description: Anton has access to powerful combat drugs, that may have the side
     effect of killing their user, no one has ever lived to complain about
   animations: {fileID: 11400000, guid: f4be4445584c15649bef7394b564dd13, type: 2}
@@ -80,7 +78,8 @@ MonoBehaviour:
       estimatedPerTurnTotalValue: 42.28218
       calculatedPowerLevel: 244
     startOfBattleEffects:
-    - EffectType: 74
+    - Id: 10016
+      EffectType: 74
       Conditions: []
       BaseAmount:
         UseConstant: 0
@@ -112,6 +111,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
       ReactionConditionType: 33
       ReactionEffectScope:
         UseConstant: 1
@@ -130,3 +130,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: a82b2d1633dbb6647a206de86997fd34, type: 2}
     - {fileID: 11400000, guid: ba775b9118cc01a41baaa4531af3c118, type: 2}
     - {fileID: 11400000, guid: 32a72c16327a9fa4ca3f3a5d292cf88e, type: 2}
+    CardsTheyAppearsToHave: []
+  maxCopies: 0
+  minimumAllies: 0
+  damageType: 0

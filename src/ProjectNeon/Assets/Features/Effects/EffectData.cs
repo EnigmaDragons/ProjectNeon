@@ -6,8 +6,9 @@ using UnityEngine.Serialization;
 [Serializable]
 public sealed class EffectData
 {
-    public static EffectData Nothing => new EffectData(); 
-    
+    public static EffectData Nothing => new EffectData();
+
+    public int Id;
     public EffectType EffectType;
     public StaticEffectCondition[] Conditions;
     public IntReference BaseAmount = new IntReference(0);
@@ -22,10 +23,11 @@ public sealed class EffectData
     public AutoReTargetScope ReTargetScope = AutoReTargetScope.None;
     public bool ApplyToEachMemberIndividually = false;
     
-    public StatusDetail StatusDetail => new StatusDetail(StatusTag, string.IsNullOrWhiteSpace(StatusDetailText) ? Maybe<string>.Missing() : StatusDetailText);
+    public StatusDetail StatusDetail => new StatusDetail(StatusTag, string.IsNullOrWhiteSpace(StatusDetailTerm.ToLocalized()) ? Maybe<string>.Missing() : StatusDetailTerm.ToLocalized());
     public StatusTag StatusTag;
     public string StatusDetailText;
-    
+    public string StatusDetailTerm => $"CardStatuses/Effect{Id}StatusDetail";
+
     public int TurnDelay;
     
     [TextArea(minLines:1, maxLines:9)] public string Formula = "";
@@ -41,6 +43,7 @@ public sealed class EffectData
         : !ReferenceEquals(ReactionSequence, null) 
             ? ReactionTimingWindow.ReactionCard 
             : ReactionTimingWindow.Default;
+    public bool OnlyReactDuringCardPhases;
     public ReactionConditionType ReactionConditionType;
     public StringReference ReactionEffectScope = new StringReference();
     public ReactionTimingWindow ReactionTimingWindow = ReactionTimingWindow.Default;

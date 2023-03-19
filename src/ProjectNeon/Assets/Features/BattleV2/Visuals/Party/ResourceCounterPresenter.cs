@@ -1,20 +1,22 @@
 ﻿using DG.Tweening;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerEnterHandler, IPointerExitHandler
+public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerEnterHandler, IPointerExitHandler, ILocalizeTerms
 {
     [SerializeField] private Image icon;
-    [SerializeField] private TextMeshProUGUI counter;
-    [SerializeField] private TextMeshProUGUI resourceNameLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI counter;
+    [SerializeField] private Localize resourceNameLabel;
 
     private Member _member;
     private IResourceType _resourceType;
     private bool IsInitialized => _member != null;
     private bool _ignoreMessages = false;
     private int _lastAmount = -999;
+    private int _lastMaxAmount = -999;
     
     public void Hide()
     {
@@ -41,26 +43,30 @@ public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerE
     
     private void UpdateUi(MemberState state)
     {
-        if (state[_resourceType] == _lastAmount)
+        if (state[_resourceType] == _lastAmount && state.Max(_resourceType.Name) == _lastMaxAmount)
             return;
         
         var max = state.Max(_resourceType.Name);
         var maxString = max < 25 ? $"/{max}" : string.Empty;
         counter.text = $"{state[_resourceType]}{maxString}";
         if (resourceNameLabel != null)
-            resourceNameLabel.text = _resourceType.Name;
+            resourceNameLabel.SetTerm(_resourceType.GetTerm());
 
         transform.DOKill(true);
         transform.DOPunchScale(new Vector3(1.5f, 1.5f, 1.5f), 0.3f, 1);
 
         _lastAmount = state[_resourceType];
+        _lastMaxAmount = max;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (IsInitialized)
-            Message.Publish(new ShowTooltip(transform, $"{_member.Name} has {_member.State[_resourceType]} {_resourceType.Name} for paying Card Costs"));
+        if (IsInitialized && gameObject.activeSelf)
+            Message.Publish(new ShowTooltip(transform.position, string.Format("Tooltips/HeroHasResources".ToLocalized(), _member.NameTerm.ToLocalized(), $"{_member.State[_resourceType]} {_resourceType.GetTerm().ToLocalized()}")));
     }
 
     public void OnPointerExit(PointerEventData eventData) => Message.Publish(new HideTooltip());
+
+    public string[] GetLocalizeTerms()
+        => new[] { "Tooltips/HeroHasResources" };
 }

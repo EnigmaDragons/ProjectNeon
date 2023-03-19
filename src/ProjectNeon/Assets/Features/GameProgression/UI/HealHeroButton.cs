@@ -1,12 +1,13 @@
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public sealed class HealHeroButton : MonoBehaviour
+public sealed class HealHeroButton : MonoBehaviour, ILocalizeTerms
 {
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private Button button;
-    [SerializeField] private TextMeshProUGUI costLabel;
+    [SerializeField] private Localize costLabel;
     [SerializeField] private int cost;
     [SerializeField] private int reviveCost;
 
@@ -20,7 +21,7 @@ public sealed class HealHeroButton : MonoBehaviour
         _hero = h;
         _healCost = party.CurrentHpOf(_hero) > 0 ? cost : reviveCost;
         gameObject.SetActive(party.CurrentHpOf(_hero) < _hero.Stats.MaxHp());
-        costLabel.text = $"Heal - {_healCost}";
+        costLabel.SetFinalText($"{"Clinics/Heal".ToLocalized()} - {_healCost}");
     }
 
     private void HealToFullIfCanAfford()
@@ -32,4 +33,7 @@ public sealed class HealHeroButton : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+
+    public string[] GetLocalizeTerms()
+        => new [] {"Clinics/Heal"};
 }

@@ -5,7 +5,7 @@ public class WorldStatPresenter : OnMessage<MemberStateChanged>
 {
     [SerializeField] private SpriteRenderer icon;
     [SerializeField] private SpriteRenderer border;
-    [SerializeField] private TextMeshPro counter;
+    [SerializeField, NoLocalizationNeeded] private TextMeshPro counter;
     [SerializeField] private StatVisuals statVisuals;
     
     private Member _member;

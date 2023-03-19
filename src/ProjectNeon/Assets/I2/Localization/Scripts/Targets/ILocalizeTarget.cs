@@ -4,6 +4,7 @@ namespace I2.Loc
 { 
     public abstract class ILocalizeTarget : ScriptableObject
     {
+        public virtual void Clear() {}
         public abstract bool IsValid(Localize cmp);
         public abstract void GetFinalTerms( Localize cmp, string Main, string Secondary, out string primaryTerm, out string secondaryTerm);
         public abstract void DoLocalize(Localize cmp, string mainTranslation, string secondaryTranslation);

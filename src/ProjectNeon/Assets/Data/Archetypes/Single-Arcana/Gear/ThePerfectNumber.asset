@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 48
   displayName: The Perfect Number
-  description: 'End of Turn: If you have exactly 8 Mana, gain +5 Magic for the battle'
+  description: 'End of Turn: If you have exactly 8 resources, gain +5 {[t:Stats/Stat-Magic]}
+    for the battle'
   corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: c5bd5ff6560fc8b4aa3182fd810a7fd0, type: 2}
@@ -25,7 +26,8 @@ MonoBehaviour:
   resourceModifiers: []
   turnStartEffects: []
   turnEndEffects:
-  - EffectType: 68
+  - Id: 0
+    EffectType: 68
     Conditions:
     - {fileID: 11400000, guid: e7c10c8a2338b8c48ad826aea99fbe87, type: 2}
     BaseAmount:
@@ -57,6 +59,8 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
@@ -69,8 +73,10 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleStartEffects:
-  - EffectType: 73
+  - Id: 20003
+    EffectType: 73
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -102,6 +108,8 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
@@ -114,6 +122,7 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
   requiresStatType: 03000000
   excludeIfPartyHasStatType: 

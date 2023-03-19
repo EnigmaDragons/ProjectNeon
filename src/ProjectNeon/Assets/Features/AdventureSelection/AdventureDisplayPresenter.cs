@@ -1,36 +1,46 @@
 ﻿using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using I2.Loc;
 
-public class AdventureDisplayPresenter : MonoBehaviour
+public class AdventureDisplayPresenter : MonoBehaviour, ILocalizeTerms
 {
     [SerializeField] private Image image;
-    [SerializeField] private TextMeshProUGUI nameText;
-    [SerializeField] private TextMeshProUGUI storyText;
+    [SerializeField] private Localize nameText;
+    [SerializeField] private Localize storyText;
     [SerializeField] private Button selectButton;
     
     [SerializeField] private Image[] heroBusts;
     [SerializeField] private GameObject[] heroIcons;
     [SerializeField] private GameObject allHeroesText;
-    [SerializeField] private TextMeshProUGUI lengthText;
-    [SerializeField] private TextMeshProUGUI heroLimitDescriptionLabel;
+    [SerializeField] private Localize lengthText;
+    [SerializeField] private Localize heroLimitDescriptionLabel;
     [SerializeField] private GameObject lockVisual;
-    [SerializeField] private TextMeshProUGUI lockReasonLabel;
+    [SerializeField] private Localize lockReasonLabel;
     [SerializeField] private Image hoverGlow;
     [SerializeField] private GameObject isCompletedView;
+    [SerializeField] private BossSelectionPresenter bossSelectionPresenter;
+    [SerializeField] private CurrentBoss boss;
+    
+    private const string ChaptersTerm = "Menu/Chapters";
     
     public void Init(Adventure adventure, Action onSelect)
     {
         image.sprite = adventure.AdventureImage;
-        nameText.text = adventure.Title;
-        storyText.text = adventure.Story;
-        lengthText.text = adventure.DynamicStages.Length + " Chapters";
+        nameText.SetTerm(adventure.TitleTerm);
+        storyText.SetTerm(adventure.StoryTerm);
+        storyText.gameObject.SetActive(!adventure.BossSelection);
+        bossSelectionPresenter.gameObject.SetActive(adventure.BossSelection);
+        lengthText.SetTerm(string.Format(ChaptersTerm.ToLocalized(), adventure.DynamicStages.Length));
         DisplayHeroPool(adventure);
-        selectButton.onClick.AddListener(() => onSelect());
+        selectButton.onClick.AddListener(() =>
+        {
+            boss.Boss = bossSelectionPresenter.SelectedBoss;
+            onSelect();
+        });
         selectButton.enabled = !adventure.IsLocked;
         lockVisual.SetActive(adventure.IsLocked);
-        lockReasonLabel.text = adventure.LockConditionExplanation;
+        lockReasonLabel.SetFinalText(adventure.LockConditionExplanation);
         isCompletedView.SetActive(!adventure.IsLocked && adventure.IsCompleted);
         if (adventure.IsLocked)
             hoverGlow.color = new Color(0, 0, 0, 0);
@@ -38,17 +48,18 @@ public class AdventureDisplayPresenter : MonoBehaviour
 
     private void DisplayHeroPool(Adventure adventure)
     {
-        var hasDescription = !string.IsNullOrWhiteSpace(adventure.AllowedHeroesDescription);
+        var hasDescription = !string.IsNullOrWhiteSpace(adventure.AllowedHeroesDescriptionTerm.ToEnglish());
         allHeroesText.SetActive(adventure.RequiredHeroes.Length == 0 && !hasDescription);
 
         if (hasDescription)
         {
-            heroLimitDescriptionLabel.text = adventure.AllowedHeroesDescription;
+            heroLimitDescriptionLabel.SetTerm(adventure.AllowedHeroesDescriptionTerm);
+            heroLimitDescriptionLabel.gameObject.SetActive(true);
             heroIcons.ForEach(h => h.SetActive(false));
         }
         else
         {
-            heroLimitDescriptionLabel.text = string.Empty;
+            heroLimitDescriptionLabel.gameObject.SetActive(false);
             heroIcons[0].SetActive(adventure.RequiredHeroes.Length > 0);
             heroIcons[1].SetActive(adventure.RequiredHeroes.Length > 1);
             heroIcons[2].SetActive(adventure.RequiredHeroes.Length > 2);
@@ -60,4 +71,10 @@ public class AdventureDisplayPresenter : MonoBehaviour
                 heroBusts[2].sprite = adventure.RequiredHeroes[2].Bust;
         }
     }
+
+    public string[] GetLocalizeTerms()
+        => new[]
+        {
+            ChaptersTerm
+        };
 }

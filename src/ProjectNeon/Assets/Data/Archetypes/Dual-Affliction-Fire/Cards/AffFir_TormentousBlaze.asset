@@ -16,7 +16,12 @@ MonoBehaviour:
   customName: 
   art: {fileID: 21300000, guid: 5561ed56db6a187438db28c85c1bd357, type: 3}
   description: Deal {E[0]}.<br><br>Deal {E[1]} {D[1]}
-  typeDescription: {fileID: 0}
+  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  descriptionV2:
+    text: Deal {0}.<br><br>Deal {1} for 3 turns
+    formatArgs:
+    - '{E[0]}'
+    - '{E[1]}'
   tags: 28000000
   speed: 0
   isSinglePlay: 0
@@ -41,3 +46,4 @@ MonoBehaviour:
   highlightCondition: []
   unhighlightCondition: []
   isWIP: 0
+  notAvailableForGeneralDistribution: 0

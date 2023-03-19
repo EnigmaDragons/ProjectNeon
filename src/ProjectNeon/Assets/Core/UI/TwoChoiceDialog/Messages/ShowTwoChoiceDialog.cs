@@ -1,5 +1,6 @@
 using System;
 
+[Obsolete("Is not Localized")]
 public class ShowTwoChoiceDialog
 {
     public bool UseDarken { get; set; } = true;

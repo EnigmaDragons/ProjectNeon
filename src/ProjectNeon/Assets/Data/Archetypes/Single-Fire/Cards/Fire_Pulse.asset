@@ -16,7 +16,11 @@ MonoBehaviour:
   customName: 
   art: {fileID: 21300000, guid: dc80cd75e9cb0be469138bdae595a397, type: 3}
   description: "2 Times: Deal {E[0]}. \n\n<b>Finisher:</b> Pulse"
-  typeDescription: {fileID: 11400000, guid: 26f514ade584bd04da4a542740e478bb, type: 2}
+  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  descriptionV2:
+    text: "2 Times: Deal {0}. \n\n<b>Finisher:</b> Pulse"
+    formatArgs:
+    - '{E[0]}'
   tags: 28000000
   speed: 0
   isSinglePlay: 0
@@ -49,6 +53,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3e862108f48305f4ba0ae1beb666c4b2, type: 2}
   highlightCondition:
   - {fileID: 11400000, guid: 2eeb2268469a74b4a9d34016563badca, type: 2}
-  unhighlightCondition: []
+  unhighlightCondition:
+  - {fileID: 11400000, guid: b4f232b23830d4e4a8f6b8b1ef2981b0, type: 2}
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 0

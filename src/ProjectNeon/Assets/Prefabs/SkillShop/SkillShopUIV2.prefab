@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 102574711032532455}
   - component: {fileID: 1797156350435111202}
   - component: {fileID: 3734272879266220430}
-  - component: {fileID: 1235914714288383557}
+  - component: {fileID: 4753677779739744480}
   m_Layer: 5
   m_Name: PartyButton
   m_TagString: Untagged
@@ -180,7 +180,7 @@ MonoBehaviour:
   PlayOnAwake: 0
   PlayOnDestroy: 0
   hoverEnterSound: event:/DeckBulder_Scene/Hover
---- !u!114 &1235914714288383557
+--- !u!114 &4753677779739744480
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -189,10 +189,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1055587364198810714}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77d005e298df44ca8cca949f2df12ba7, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d38e8cafb944ccbbddbb31ab70c31e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipText: Party
+  tooltipTerm: Tooltips/PartyButton
+  tooltipText: 
 --- !u!1 &1562095870964590054
 GameObject:
   m_ObjectHideFlags: 0
@@ -566,6 +567,7 @@ GameObject:
   - component: {fileID: 1535434600278518141}
   - component: {fileID: 3445632544141460318}
   - component: {fileID: 2444333805732403882}
+  - component: {fileID: 149042646768997020}
   m_Layer: 5
   m_Name: SceneHeaderText
   m_TagString: Untagged
@@ -620,7 +622,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Nikita's \nCyber-Training Dojo"
+  m_text: Nikita's Cyber-Training Dojo
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4950a7183865c8c4585bc7b61b779659, type: 2}
   m_sharedMaterial: {fileID: 4831608367761817795, guid: 4950a7183865c8c4585bc7b61b779659, type: 2}
@@ -689,6 +691,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &149042646768997020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7235070614327788219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: Menu/CardShopName
+  mTermSecondary: UI-Kit2-Header-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &7897937309510996818
 GameObject:
   m_ObjectHideFlags: 0
@@ -1068,6 +1109,14 @@ PrefabInstance:
     - target: {fileID: 614299582971389449, guid: 7c89566c62ed8fb4ba2013c7f1e0c8b9, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1093603376325383325, guid: 7c89566c62ed8fb4ba2013c7f1e0c8b9, type: 3}
+      propertyPath: m_AfterStackBundles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1093603376325383325, guid: 7c89566c62ed8fb4ba2013c7f1e0c8b9, type: 3}
+      propertyPath: m_AfterStackBundles.Array.data[0].assemblyQualifiedName
+      value: Xibanya.Scanline, GameAssembly, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       objectReference: {fileID: 0}
     - target: {fileID: 1093603378245552278, guid: 7c89566c62ed8fb4ba2013c7f1e0c8b9, type: 3}
       propertyPath: m_RootOrder

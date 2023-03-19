@@ -56,8 +56,11 @@ public static class AICardSelectionLogic
             .DontGiveAlliesAegisIfTheyAlreadyHaveEnough()
             .DontStealCreditsIfOpponentDoesntHaveAny()
             .DontRemoveDodgeIfOpponentDoesntHaveAny()
-            .DontPlayAttackResistanceIfEnemiesDontHaveResistance()
-            .DontPlayAttackArmorIfEnemiesDontHaveArmor();
+            // Note: Turning These Off After the Negative Armor/Resistance Rework.
+            // .DontPlayAttackResistanceIfEnemiesDontHaveResistance()
+            // .DontPlayAttackArmorIfEnemiesDontHaveArmor()
+            .DontPlayCleanseIfNoDebuffsToRemove()
+            .DontPlayRequiresMarkIfNoMarkedEnemies();
 
     public static CardSelectionContext DontPlayRequiresFocusCardWithoutAFocusTarget(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(_ => ctx.FocusTarget.IsMissing, CardTag.RequiresFocus);
@@ -98,6 +101,9 @@ public static class AICardSelectionLogic
     public static CardSelectionContext DontPlayMagicalCountersIfOpponentsAreNotMagical(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.Magic() == 0), CardTag.DebuffMagical)
             .IfTrueDontPlayType(x => x.Enemies.All(e => e.Magic() == 0), CardTag.Armor, CardTag.Resistance);
+
+    public static CardSelectionContext DontPlayCleanseIfNoDebuffsToRemove(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => x.Member.State.GetNumDebuffs() == 0, CardTag.RemoveDebuffs);
             
     public static CardSelectionContext DontPlayTauntIfAnyAllyIsPlayingOne(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Strategy.SelectedNonStackingTargets.ContainsKey(CardTag.Taunt), CardTag.Taunt);
@@ -139,7 +145,10 @@ public static class AICardSelectionLogic
 
     private static CardSelectionContext DontRemoveDodgeIfOpponentDoesntHaveAny(this CardSelectionContext ctx)
         => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.State[TemporalStatType.Dodge] < 1f), CardTag.RemoveDodge);
-    
+
+    private static CardSelectionContext DontPlayRequiresMarkIfNoMarkedEnemies(this CardSelectionContext ctx)
+        => ctx.IfTrueDontPlayType(x => x.Enemies.All(e => e.State[TemporalStatType.Marked] == 0), CardTag.RequiresMark);
+
     private static CardTypeData SelectAttackCard(this CardSelectionContext ctx)
     {
         var options = ctx.CardOptions.Where(o => o.Is(CardTag.Attack))
@@ -256,7 +265,8 @@ public static class AICardSelectionLogic
     }
     
     public static CardSelectionContext WithFinalizedSmartCardSelection(this CardSelectionContext ctx)
-        => ctx.WithFinalizedCardSelection((c, index) => SmartCardPreference(ctx, c, index));
+        => ctx.WithFinalizedCardSelection((c, index) => 
+            SmartCardPreference(ctx, c, index));
 
     private static CardTypeData FinalizeCardSelection(this CardSelectionContext ctx, Func<CardTypeData, int, int> typePriority)
     {

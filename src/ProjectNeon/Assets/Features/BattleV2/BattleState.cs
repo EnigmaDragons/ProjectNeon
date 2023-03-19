@@ -36,6 +36,11 @@ public class BattleState : ScriptableObject
     private readonly CurrentBattleStats _currentBattleStats = new CurrentBattleStats();
     private int _numPlayerDiscardsUsedThisTurn = 0;
     private bool _runStatsWritten = false;
+    private EffectScopedData _effectScopedData = new EffectScopedData();
+    public EffectScopedData EffectScopedData => _effectScopedData;
+
+    public void ResetEffectScopedData()
+        => _effectScopedData = new EffectScopedData();
 
     public int CreditsAtStartOfBattle { get; private set; }
     public bool IsSelectingTargets = false;
@@ -136,7 +141,7 @@ public class BattleState : ScriptableObject
         ShowSwapCardForBasic = true;
         AllowRightClickOnCard = true;
         BasicSuperFocusEnabled = false;
-        DevLog.Write($"Next Encounter has {string.Join(", ", nextEnemies.Select(x => x.Name))}");
+        DevLog.Write($"Next Encounter has {string.Join(", ", nextEnemies.Select(x => x.NameTerm.ToEnglish()))}");
     }
 
     public void SetNextBattleStartingCardCount(int cardCount)
@@ -199,6 +204,7 @@ public class BattleState : ScriptableObject
         turnNumber = 0;
         _currentBattleStats.Clear();
         _runStatsWritten = false;
+        ResetEffectScopedData();
     }
 
     public void SetPhase(BattleV2Phase p) => UpdateState(() => phase = p);
@@ -209,8 +215,7 @@ public class BattleState : ScriptableObject
     public int GetNextEnemyId() => _nextEnemyId++;
     public List<Tuple<int, Member>> FinishSetup()
     {
-        var id = 0;      
-        memberNames = new List<string>();
+        var id = 0;
         _uiTransformsById = new Dictionary<int, Transform>();
 
         var heroes = Party.Heroes;
@@ -230,14 +235,13 @@ public class BattleState : ScriptableObject
                 var sound = heroTransform.GetComponentInChildren<CharacterAnimationSoundPlayer>();
                 if (sound == null)
                 {
-                    Log.Warn($"{hero.Name} is missing CharacterAnimationSoundPlayer");
+                    Log.Warn($"{hero.NameTerm.ToEnglish()} is missing CharacterAnimationSoundPlayer");
                     sound = heroTransform.gameObject.AddComponent<CharacterAnimationSoundPlayer>();
                 }
                 if (sound != null)
                     sound.Init(id, hero.Character.AnimationSounds, heroTransform);
                 
             }
-            SetMemberName(id, hero.Character.Name);
         }
 
         id = EnemyStartingIndex - 1;
@@ -255,7 +259,6 @@ public class BattleState : ScriptableObject
             _uiTransformsById[id].GetComponentInChildren<DeathPresenter>()?.Init(id);
             if(enemy.AnimationSounds != null)
                 _uiTransformsById[id].GetComponentInChildren<CharacterAnimationSoundPlayer>()?.Init(id, enemy.AnimationSounds, enemyTransform);
-            SetMemberName(id, enemies.Enemies[i].Name);
             result.Add(new Tuple<int, Member>(i, enemy.AsMember(id)));
         }
         _nextEnemyId = id + 1;
@@ -287,9 +290,19 @@ public class BattleState : ScriptableObject
         if (adventureProgress.HasActiveAdventure)
             adventureProgress.AdventureProgress.GlobalEffects.StartOfBattleEffects.ForEach(e =>
             {
+                if (_membersById.None())
+                    return;
+                
                 var heroLeader = _membersById.First().Value;
+                
                 var possibleTargets = this.GetPossibleConsciousTargets(heroLeader, e.Group, e.Scope);
+                if (possibleTargets.None())
+                    return;
+                
                 var target = possibleTargets.First();
+                if (target.Members.None())
+                    return;
+                
                 var src = target.Members.First();
                 var ctx = EffectContext.ForEffectFromBattleState(this, src, target, ReactionTimingWindow.FirstCause);
                 AllEffects.Apply(e.EffectData, ctx);
@@ -383,7 +396,11 @@ public class BattleState : ScriptableObject
             _enemiesById[member.Id] = e;
             _membersById[member.Id] = member;
             _uiTransformsById[member.Id] = gameObject.transform;
-            SetMemberName(member.Id, e.Name);
+            _uiTransformsById[member.Id].GetComponent<ActiveMemberIndicator>()?.Init(member.Id, false);
+            _uiTransformsById[member.Id].GetComponentInChildren<CharacterCreatorAnimationController>()?.Init(member.Id, _enemiesById[member.Id].Animations, TeamType.Enemies);
+            _uiTransformsById[member.Id].GetComponentInChildren<DeathPresenter>()?.Init(member.Id);
+            if(e.AnimationSounds != null)
+                _uiTransformsById[member.Id].GetComponentInChildren<CharacterAnimationSoundPlayer>()?.Init(member.Id, e.AnimationSounds, gameObject.transform);
             e.SetupMemberState(member, this);
         });
 
@@ -398,13 +415,6 @@ public class BattleState : ScriptableObject
             
         });
 
-    private void SetMemberName(int id, string memberName)
-    {
-        while (memberNames.Count <= id)
-            memberNames.Add(string.Empty);
-        memberNames[id] = memberName;
-    }
-    
     // Battle Wrapup
     public void Wrapup()
     {
@@ -423,7 +433,7 @@ public class BattleState : ScriptableObject
         var xpGranted = GrantXp();
         var battleSummaryReport = new BattleSummaryReport
         {
-            enemies = _battleStartingEnemies.Select(e => e.Name).ToArray(),
+            enemies = _battleStartingEnemies.Select(e => e.NameTerm.ToEnglish()).ToArray(),
             fightTier = (isEliteBattle ? EnemyTier.Elite : EnemyTier.Normal).ToString(),
             totalEnemyPowerLevel = _battleStartingEnemies.Sum(e => e.PowerLevel),
             attritionCreditsChange = battleAttritionReport.TotalCreditsChange,
@@ -492,6 +502,7 @@ public class BattleState : ScriptableObject
 
     public EnemyInstance GetEnemyById(int memberId) => _enemiesById[memberId];
     public Maybe<Transform> GetMaybeTransform(int memberId) => _uiTransformsById.ValueOrMaybe(memberId);
+    
     public AiPreferences GetAiPreferences(int memberId) => _enemiesById.ValueOrMaybe(memberId).Select(e => e.AIPreferences.WithDefaultsBasedOnRole(e.Role), () => new AiPreferences());
 
     public MemberMaterialType GetMaterialType(int memberId) => _membersById.ValueOrMaybe(memberId).Select(m => m.MaterialType, MemberMaterialType.Unknown);
@@ -507,13 +518,13 @@ public class BattleState : ScriptableObject
                 if (centerPoint != null)
                     return centerPoint.transform;
 
-                Log.Warn($"Center Point Missing For: {_membersById[memberId].Name}");
+                Log.Warn($"Center Point Missing For: {_membersById[memberId].NameTerm.ToEnglish()}");
                 return maybeTransform.Value;
             });
         }
         catch (Exception)
         {
-            Log.Warn($"Center Point Missing For: {_membersById[memberId].Name}");
+            Log.Warn($"Center Point Missing For: {_membersById[memberId].NameTerm.ToEnglish()}");
             return Maybe<Transform>.Missing();
         }
     }
@@ -537,7 +548,7 @@ public class BattleState : ScriptableObject
     public Member GetMemberByEnemyIndex(int enemyIndex) => _membersById.VerboseGetValue(enemyIndex + EnemyStartingIndex, nameof(_membersById));
     public int GetEnemyIndexByMemberId(int memberId) => memberId - EnemyStartingIndex;
     public BattleStateSnapshot GetSnapshot() => 
-        new BattleStateSnapshot(Phase, _playedCardHistory.Select(x => x.ToArray()).ToList(), NumberOfCardPlaysRemainingThisTurn, 
+        new BattleStateSnapshot(TurnNumber, Phase, _playedCardHistory.Select(x => x.ToArray()).ToList(), NumberOfCardPlaysRemainingThisTurn, 
             _membersById.ToDictionary(m => m.Key, m => m.Value.GetSnapshot()));
 
     private void UpdateState(Action update)

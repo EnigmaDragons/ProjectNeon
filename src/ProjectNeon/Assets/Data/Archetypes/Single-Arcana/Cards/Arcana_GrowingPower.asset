@@ -17,13 +17,18 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: 2841b90c2b1c74b43b62c37c12fc93b4, type: 3}
   description: "Deal {E[0]} \n\nGives {E[1]}"
   typeDescription: {fileID: 0}
+  descriptionV2:
+    text: "Deal {0} \n\nYou gain {1}"
+    formatArgs:
+    - '{E[0]}'
+    - '{E[1]}'
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
-    plusXCost: 1
+    plusXCost: 0
   rarity: 2
   actionSequences:
   - scope: 0
@@ -44,5 +49,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c5bd5ff6560fc8b4aa3182fd810a7fd0, type: 2}
   highlightCondition: []
   unhighlightCondition: []
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 0

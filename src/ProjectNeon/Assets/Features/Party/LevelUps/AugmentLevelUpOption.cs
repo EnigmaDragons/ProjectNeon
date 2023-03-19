@@ -13,17 +13,17 @@ public class AugmentLevelUpOption : LevelUpOption
     }
 
     public string IconName => "Augment";
-    public string Description => _e.Name;
+    public string Description => _e.LocalizationNameTerm().ToLocalized();
     
     public void SelectAsLevelUp(Hero h)
     {
         _party.Add(_e);
-        h.Equipment.EquipPermanent(_e);
+        h.EquipPermanent(_e);
         h.RecordLevelUpPointSpent(-2);
         Message.Publish(new AutoSaveRequested());
     }
 
-    public void ShowDetail() => throw new NotImplementedException();
+    public void ShowDetail() {}
     public bool HasDetail => false;
     public bool IsFunctional => _e != null;
     public bool UseCustomOptionPresenter => false;

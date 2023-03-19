@@ -17,6 +17,10 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: 42c206c10c7425145ae71f3d5326fe16, type: 3}
   description: Gain {IE[0]} <b>Magic</b> for each Afflicted Enemy {ID[0]}
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
+  descriptionV2:
+    text: Gain {0} Magic for each Afflicted Enemy for 3 turns
+    formatArgs:
+    - '{E[1]}'
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -26,14 +30,14 @@ MonoBehaviour:
     plusXCost: 0
   rarity: 1
   actionSequences:
-  - scope: 0
-    group: 0
-    cardActions: {fileID: 11400000, guid: 67d8317dfc744a34cb7405e428550ed6, type: 2}
-    repeatX: 0
-    repeatCount: 0
   - scope: 1
     group: 1
     cardActions: {fileID: 11400000, guid: 342222da0bf534f42b78748b9ba77b8a, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: 67d8317dfc744a34cb7405e428550ed6, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -43,7 +47,11 @@ MonoBehaviour:
   archetypes:
   - {fileID: 11400000, guid: 85cc99b6a9e2fc3479a63e5161296787, type: 2}
   - {fileID: 11400000, guid: c5bd5ff6560fc8b4aa3182fd810a7fd0, type: 2}
-  highlightCondition: []
-  unhighlightCondition: []
+  highlightCondition:
+  - {fileID: 11400000, guid: 04a0f33c2d609274a94eee30d00b414b, type: 2}
+  unhighlightCondition:
+  - {fileID: 11400000, guid: 62f8c3766746271439a37ad7030631d6, type: 2}
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 0

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 83
   displayName: 
-  description: 'On Hero Combo Card: Draw 1 of your cards'
+  description: 'On Hero {[t:Archetypes/Combo]} Card: Draw 1 of your cards'
   corp: {fileID: 11400000, guid: 635ceb600e2d3cc4eae947d02d89a417, type: 2}
   archetypes:
   - {fileID: 11400000, guid: fa0b1b9aad879d44faf8e5d18ec91d9a, type: 2}
@@ -26,7 +26,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 74
+  - Id: 10057
+    EffectType: 74
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -42,8 +43,8 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 12
     StatusDetailText: 'On Hero Combo Card: Draw 1 of your cards'
     TurnDelay: 0
@@ -57,16 +58,23 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 35
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: fa0b1b9aad879d44faf8e5d18ec91d9a, type: 2}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 11400000, guid: 210bc8262f83b1943853da98b761a383, type: 2}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 

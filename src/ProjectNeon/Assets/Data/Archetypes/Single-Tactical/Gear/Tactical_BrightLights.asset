@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 74
   displayName: 
-  description: 'Start of Battle: Gain Taunt 3'
+  description: 'Start of Battle: Gain {[t:Stats/Stat-Taunt]} 3'
   corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes:
   - {fileID: 11400000, guid: e97bda47e14bfeb49b6a38e814d38a6d, type: 2}
@@ -26,7 +26,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 79
+  - Id: 0
+    EffectType: 79
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -42,8 +43,8 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 5e53e1eb700232049a0c1d2017a544d1, type: 2}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 0
     StatusDetailText: 
     TurnDelay: 0
@@ -57,16 +58,23 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 

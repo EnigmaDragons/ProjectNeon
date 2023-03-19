@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 
 public sealed class BidirectionalDictionary<T1, T2> : IEnumerable<KeyValuePair<T1, T2>>
 {
@@ -27,4 +28,7 @@ public sealed class BidirectionalDictionary<T1, T2> : IEnumerable<KeyValuePair<T
     public Dictionary<T1, T2>.Enumerator GetEnumerator() => _forward.GetEnumerator();
     IEnumerator<KeyValuePair<T1, T2>> IEnumerable<KeyValuePair<T1, T2>>.GetEnumerator() => GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    public Dictionary<T1, T2> Forward => _forward;
+    public Dictionary<T2, T1> Backward => _backward;
 }

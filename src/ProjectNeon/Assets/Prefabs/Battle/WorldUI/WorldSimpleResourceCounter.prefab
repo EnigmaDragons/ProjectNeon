@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6768766185032676692}
   - component: {fileID: 5590156467817011169}
   - component: {fileID: 2430654470408150250}
+  - component: {fileID: 586731409343816216}
   m_Layer: 0
   m_Name: Counter
   m_TagString: Untagged
@@ -35,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.049, y: 0.195}
-  m_SizeDelta: {x: 1, y: 1}
+  m_SizeDelta: {x: 1.9, y: 1.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &5590156467817011169
 MeshRenderer:
@@ -125,12 +126,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16
+  m_fontSize: 15.8
   m_fontSizeBase: 16
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 10
+  m_fontSizeMax: 18
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -141,7 +142,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -169,6 +170,18 @@ MonoBehaviour:
   m_maskType: 0
   _SortingLayerID: -1902919645
   _SortingOrder: 2
+--- !u!114 &586731409343816216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471251392953959647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 863c5aa2de9e49089e0a948ab1da690f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1481800568537221130
 GameObject:
   m_ObjectHideFlags: 0

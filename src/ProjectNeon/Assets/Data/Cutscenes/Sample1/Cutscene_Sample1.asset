@@ -12,9 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffbe45dc9ae4641b25ee3ad47d7a21b, type: 3}
   m_Name: Cutscene_Sample1
   m_EditorClassIdentifier: 
+  id: 1
+  isObsolete: 1
+  isPrimaryCutscene: 0
   setting: {fileID: 11400000, guid: ccd15113b4115064e9a08ddb77ada299, type: 2}
+  skipTrueStates: []
+  skipFalseStates: []
+  onFinished:
+    m_PersistentCalls:
+      m_Calls: []
   segments:
-  - SegmentType: 1
+  - Id: 1
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -22,12 +31,45 @@ MonoBehaviour:
     Text: 'We have some breaking news!
 
 
-      Novoline is invading our building
-      right now!!! Go, go go!'
-  - SegmentType: 2
+      {[t:MegaCorps/Novoline]} is invading
+      our building right now!!! Go, go go!'
+    FloatAmount:
+      UseConstant: 1
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - Id: 2
+    SegmentType: 2
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
     Text: Enemies drop from the skies at high-velocity in drill-equipped drop pods,
-      causing bits fof the roof and ceiling to come crashing down all around!
+      causing bits of the roof and ceiling to come crashing down all around!
+    FloatAmount:
+      UseConstant: 1
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}

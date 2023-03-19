@@ -16,7 +16,6 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
     private bool _hasSwitchedToEnemyTab;
     private bool _hasSwitchedToHeroTab;
     private bool _hasSwitchedHeroes;
-    private bool _hasClearedDeck;
     private bool _hasViewedHeroStats;
     private bool _hasAddedCard;
     private bool _hasRemovedCard;
@@ -28,7 +27,6 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
             return;
         Message.Subscribe<CustomizationTabSwitched>(Execute, this);
         Message.Subscribe<DeckBuilderHeroSelected>(Execute, this);
-        Message.Subscribe<DeckCleared>(Execute, this);
         Message.Subscribe<ShowHeroDetailsView>(Execute, this);
         Message.Subscribe<CardRemovedFromDeck>(Execute, this);
         Message.Subscribe<CardAddedToDeck>(Execute, this);
@@ -37,7 +35,6 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
         SetFocusDeckTabActive(false);
         SetFocusHeroStatsActive(false);
         SetFocusHeroTabActive(false);
-        SetFocusDeckClearActive(false);
         SetFocusAddCardActive(false);
         SetFocusRemoveCardActive(false);
         SetFocusLibraryNextActive(false);
@@ -71,22 +68,13 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
 
     private void Execute(DeckBuilderHeroSelected msg)
     {
-        if (msg.HeroesDeck.Hero.Name != tutorialHero.Name && !_hasSwitchedHeroes)
+        if (msg.HeroesDeck.Hero.NameTerm != tutorialHero.NameTerm() && !_hasSwitchedHeroes)
         {
             _hasSwitchedHeroes = true;
             SetNextFocus();
         }
     }
 
-    private void Execute(DeckCleared msg)
-    {
-        if (!_hasClearedDeck)
-        {
-            _hasClearedDeck = true;
-            SetNextFocus();
-        }
-    }
-    
     private void Execute(ShowHeroDetailsView msg)
     {
         if (!_hasViewedHeroStats)
@@ -125,8 +113,6 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
         hasFocused = !_hasViewedHeroStats || hasFocused;
         SetFocusHeroTabActive(!_hasSwitchedHeroes && !hasFocused);
         hasFocused = !_hasSwitchedHeroes || hasFocused;
-        SetFocusDeckClearActive(!_hasClearedDeck && !hasFocused);
-        hasFocused = !_hasClearedDeck || hasFocused;
         SetFocusAddCardActive(!_hasAddedCard && !hasFocused);
         hasFocused = !_hasAddedCard || hasFocused;
         SetFocusRemoveCardActive(!_hasRemovedCard && !hasFocused);
@@ -139,7 +125,6 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
     private void SetFocusDeckTabActive(bool isActive) => deckTabHighlight.SetActive(isActive);
     private void SetFocusHeroStatsActive(bool isActive) => heroStatsHighlight.SetActive(isActive);
     private void SetFocusHeroTabActive(bool isActive) => Message.Publish(new SetSuperFocusDeckBuilderControl(DeckBuilderControls.HeroTab, isActive));
-    private void SetFocusDeckClearActive(bool isActive) =>  deckClearHighlight.SetActive(isActive && !_hasClearedDeck);
     private void SetFocusAddCardActive(bool isActive) => Message.Publish(new SetSuperFocusDeckBuilderControl(DeckBuilderControls.CardInLibrary, isActive));
     private void SetFocusRemoveCardActive(bool isActive) => Message.Publish(new SetSuperFocusDeckBuilderControl(DeckBuilderControls.CardInDeck, isActive));
     private void SetFocusLibraryNextActive(bool isActive) => libraryNextHighlight.SetActive(isActive);

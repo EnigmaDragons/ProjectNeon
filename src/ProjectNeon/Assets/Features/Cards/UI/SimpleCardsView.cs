@@ -18,7 +18,7 @@ public class SimpleCardsView : MonoBehaviour
         {
             cardPresenters[i].Set(c[i].Item1);
             if (!string.IsNullOrWhiteSpace(c[i].Item2))
-                cardPresenters[i].ShowEnemyCareType(c[i].Item2);
+                cardPresenters[i].ShowEnemyCardType(c[i].Item2);
         }
     }
 }

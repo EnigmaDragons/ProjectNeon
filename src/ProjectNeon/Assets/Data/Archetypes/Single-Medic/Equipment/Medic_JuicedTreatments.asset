@@ -15,6 +15,7 @@ MonoBehaviour:
   id: 5
   displayName: 
   description: When you heal an ally, gives them +1 to all stats for the turn
+  corp: {fileID: 11400000, guid: 635ceb600e2d3cc4eae947d02d89a417, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 0cfa74ebc446153468352fc38ea01644, type: 2}
   rarity: 1
@@ -28,7 +29,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 74
+  - Id: 20010
+    EffectType: 74
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -44,8 +46,8 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 826fe4704cc583945b74f7f805dfb908, type: 2}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 12
     StatusDetailText: When you heal an ally, gives them +1 to all stats for the turn
     TurnDelay: 0
@@ -59,16 +61,24 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
     ReactionConditionType: 15
     ReactionEffectScope:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 1
       scope: 3
       cardActions: {fileID: 11400000, guid: 30dff0f38250a534e8caeac70a849757, type: 2}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
+  battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
-  corp: {fileID: 11400000, guid: 635ceb600e2d3cc4eae947d02d89a417, type: 2}
+  notAvailableForGeneralDistribution: 0
+  designComment: 

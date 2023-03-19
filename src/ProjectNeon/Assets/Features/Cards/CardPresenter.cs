@@ -2,19 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IBeginDragHandler, IEndDragHandler, ILocalizeTerms
 {
     [SerializeField] private BattleState battleState;
     [SerializeField] private RarityPresenter rarity;
     [SerializeField] private CardTargetPresenter target;
-    [SerializeField] private TextMeshProUGUI nameLabel;
-    [SerializeField] private TextMeshProUGUI description;
-    [SerializeField] private TextMeshProUGUI type;
+    
+    [SerializeField] private Localize nameLabel;
+    [SerializeField] private Localize description;
+    [SerializeField] private Localize typeLabel;
     [SerializeField] private Image art;
     [SerializeField] private Image tint;
     [SerializeField] private CardBustPresenter bust;
@@ -81,8 +83,11 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private string _zone;
     private bool _isHand;
     private int _siblingIndex = -1;
-    
+
+    //targeting
     private bool _requiresPlayerTargeting;
+    private bool _isTargeting;
+    private Maybe<Target> _target = Maybe<Target>.Missing();    
 
     public bool Contains(Card c) => HasCard && c.CardId == _card.CardId;
     public bool Contains(CardTypeData c) => HasCard && _cardType.Name.Equals(c.Name);
@@ -97,6 +102,11 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         Message.Subscribe<CardHighlighted>(OnCardHighlighted, this);
         Message.Subscribe<MemberUnconscious>(_ => UpdateCardHighlight(), this);
+        Message.Subscribe<LanguageChanged>(_ => RenderCardType(), this);
+        Message.Subscribe<BeginTargetSelectionRequested>(OnTargetingBegun, this);
+        Message.Subscribe<EndTargetSelectionRequested>(_ => OnTargetingEnded(), this);
+        Message.Subscribe<CancelTargetSelectionRequested>(_ => OnTargetingEnded(), this);
+        Message.Subscribe<TargetChanged>(OnTargetChanged, this);
     }
 
     private void OnDisable()
@@ -207,6 +217,16 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _hoverEnterAction = NoOp;
         _hoverExitAction = NoOp;
     }
+
+    public void DisableInteractions()
+    {
+        _onClick = () => { };
+        _onMiddleMouse = () => { };
+        _onRightClick = () => { };
+        _useCustomHoverActions = false;
+        _hoverEnterAction = NoOp;
+        _hoverExitAction = NoOp;
+    } 
     
     private void NoOp() {}
 
@@ -262,14 +282,14 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         conditionNotMetHighlight.SetActive(false);
     }
     
-    private void SetCanPlayHighlight(bool highlightShouldBeActive, Maybe<bool> highlightCondition, Maybe<bool> unhighlightCondition)
+    private void SetCanPlayHighlight(bool highlightShouldBeActive, bool highlightCondition, bool unhighlightCondition)
     {
         DisableCanPlayHighlight();
         if (!highlightShouldBeActive)
             return;
-        if (unhighlightCondition.IsPresentAnd(c => c))
+        if (unhighlightCondition)
             conditionNotMetHighlight.SetActive(true);
-        else if (highlightCondition.IsPresentAnd(c => c))
+        else if (highlightCondition)
             conditionMetHighlight.SetActive(true);
         else
             canPlayHighlight.SetActive(true);
@@ -424,15 +444,42 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         Message.Publish(new GoToTweenRequested(transform, targetPosition, Vector3.Distance(transform.position, targetPosition) / 1600f, MovementDimension.Spatial));
     }
 
+    private void OnTargetingBegun(BeginTargetSelectionRequested onBeginTargeting)
+    {
+        if (onBeginTargeting.Card == _card)
+            _isTargeting = true;
+    }
+
+    private void OnTargetingEnded()
+    {
+        if (_isTargeting || _target.IsPresent)
+        {
+            _isTargeting = false;
+            _target = Maybe<Target>.Missing();
+            UpdateCardHighlight();
+        }
+    }
+    
+    private void OnTargetChanged(TargetChanged targetChanged)
+    {
+        if (_isTargeting)
+        {
+            _target = targetChanged.Target;
+            UpdateCardHighlight();
+        }
+    }
+
     private void RenderCardType()
     {
         var shouldUseLibraryMode = _card == null || _card.Owner.TeamType == TeamType.Party && (_card.Cost.PlusXCost && !_isHand);
         IsPlayable = CheckIfCanPlay();
-        nameLabel.text = _cardType.Name;
-        description.text = shouldUseLibraryMode
-            ? _cardType.InterpolatedDescription(_card?.Owner ?? Maybe<Member>.Missing(), ResourceQuantity.DontInterpolateX)
-            : _cardType.InterpolatedDescription(_card.Owner, _card.LockedXValue.OrDefault(() => _card.Owner.CalculateResources(_card.Type).XAmountQuantity), handZone.Count, state.PlayerState.NumberOfCyclesUsedThisTurn);
-        type.text = _cardType.ArchetypeDescription();
+        nameLabel.SetTerm(_cardType.NameTerm);
+
+        description.SetFinalText(shouldUseLibraryMode
+            ? _cardType.LocalizedDescription(_card?.Owner ?? Maybe<Member>.Missing(), ResourceQuantity.DontInterpolateX)
+            : _cardType.LocalizedDescription(_card.Owner, _card.LockedXValue.OrDefault(() => _card.Owner.CalculateResources(_card.Type).XAmountQuantity), handZone.Count, state.PlayerState.NumberOfCyclesUsedThisTurn));
+
+        typeLabel.SetFinalText(_cardType.LocalizedArchetypeDescription());
         art.sprite = _cardType.Art;
         rarity.Set(_cardType.Rarity);
         target.Set(_cardType);
@@ -443,7 +490,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         else
             bust.Hide();
         SetCardTint();
-        UpdateCardHighlight();
+        if (_isHand)
+            UpdateCardHighlight();
         if (_card == null || _card.Mode != CardMode.Glitched)
             glitchableComponents.ForEach(x => x.material = null);
         else 
@@ -456,15 +504,18 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     private void UpdateCardHighlight()
     {
-        SetCanPlayHighlight(IsPlayable,
-            _card != null
-                ? _cardType.HighlightCondition.Map(condition =>
-                    condition.ConditionMet(new CardConditionContext(_card, battleState)))
-                : Maybe<bool>.Missing(),
-            _card != null
-                ? _cardType.UnhighlightCondition.Map(condition =>
-                    condition.ConditionMet(new CardConditionContext(_card, battleState)))
-                : Maybe<bool>.Missing());
+        SetCanPlayHighlight(
+            IsPlayable,
+            _card != null 
+                && (_cardType.HighlightCondition.IsPresentAnd(condition => condition.ConditionMet(new CardConditionContext(_card, battleState)))
+                    || (_requiresPlayerTargeting 
+                        && _target.IsPresent
+                        && _cardType.TargetedHighlightCondition.IsPresentAnd(condition => condition.ConditionMet(new TargetedCardConditionContext(_card, battleState, _target.Value))))), 
+            _card != null 
+                && (_cardType.UnhighlightCondition.IsPresentAnd(condition => condition.ConditionMet(new CardConditionContext(_card, battleState)))
+                    || (_requiresPlayerTargeting 
+                        && _target.IsPresent
+                        && _cardType.TargetedUnhighlightCondition.IsPresentAnd(condition => condition.ConditionMet(new TargetedCardConditionContext(_card, battleState, _target.Value))))));
     }
 
     private void SetCardTint()
@@ -502,7 +553,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         return result;
     }
 
-    public void ShowEnemyCareType(string type) => enemyTypePresenter.Init(type);
+    public void ShowEnemyCardType(string typeTerm) => enemyTypePresenter.Init(typeTerm);
 
     private void DebugLog(string msg)
     {
@@ -641,9 +692,14 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             // This is crude. Reason for not being able to play a card should flow through
             var owner = _card.Owner;
             if (owner.IsDisabled())
-                Message.Publish(new ShowHeroBattleThought(owner.Id, "I'm disabled this turn. I can only discard, watch an ally play a card, or end the turn early."));
+                Message.Publish(new ShowHeroBattleThought(owner.Id, "Thoughts/Disabled".ToLocalized()));
             else if (_card.Cost.BaseAmount > _card.Owner.ResourceAmount(_card.Cost.ResourceType))
-                Message.Publish(new ShowHeroBattleThought(owner.Id, $"I don't have enough {_card.Cost.ResourceType.Name} to play this card right now."));
+            {
+                var impliedResourceType = _card.Cost.ResourceType.Name.Equals("PrimaryResource")
+                    ? _card.Owner.PrimaryResourceType().GetLocalizedName()
+                    : _card.Cost.ResourceType.GetLocalizedName();
+                Message.Publish(new ShowHeroBattleThought(owner.Id, string.Format("Thoughts/NotEnoughResources".ToLocalized(), impliedResourceType)));
+            }
             else if (conditionNotMetHighlight.activeSelf && _card.UnhighlightCondition is { IsPresent: true })
                 Message.Publish(new ShowHeroBattleThought(owner.Id, _card.UnhighlightCondition.Value.UnhighlightMessage));
 
@@ -710,4 +766,11 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     }
 
     #endregion
+
+    public string[] GetLocalizeTerms()
+        => new []
+        {
+            "Thoughts/Disabled",
+            "Thoughts/NotEnoughResources"
+        };
 }

@@ -12,13 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffbe45dc9ae4641b25ee3ad47d7a21b, type: 3}
   m_Name: AR_01_AlgeronsDilemma_Cut
   m_EditorClassIdentifier: 
+  id: 4
   isObsolete: 0
   isPrimaryCutscene: 0
   setting: {fileID: 11400000, guid: 1561566c7f2dec341825efb539069dbb, type: 2}
   skipTrueStates: []
   skipFalseStates: []
+  onFinished:
+    m_PersistentCalls:
+      m_Calls: []
   segments:
-  - SegmentType: 1
+  - Id: 20
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -28,6 +33,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -36,7 +45,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 21
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -46,6 +56,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -54,7 +68,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 22
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -64,6 +79,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -72,7 +91,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 23
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -83,6 +103,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -91,7 +115,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 24
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -101,6 +126,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -109,16 +138,22 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 25
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 0e2749204bc06f147b8cc73bb3589c18, type: 2}
-    Text: "You know how ZantoCorp is \"human first\" and doesn\u2019t employ androids?"
+    Text: "You know how {[t:MegaCorps/ZantoCorp]} is \"human first\" and doesn\u2019t
+      employ androids?"
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -127,7 +162,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 26
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -137,6 +173,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -145,16 +185,21 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 27
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 0e2749204bc06f147b8cc73bb3589c18, type: 2}
-    Text: 'Well their next PR stunt is going to be: "Kill all androids."'
+    Text: 'Well their next PR stunt is going to be: Kill all androids.'
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -163,7 +208,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 28
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -173,6 +219,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -181,19 +231,24 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 29
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 0e2749204bc06f147b8cc73bb3589c18, type: 2}
-    Text: A high-ranking ZantoCorp exec and possible future CEO is a fanatic. Her
-      name is Helen DeVries. I have acquired information that she has a plan and
-      method to destroy all androids and leave them as robotic mindless husks, working
-      machines.
+    Text: A high-ranking {[t:MegaCorps/ZantoCorp]} exec and possible future CEO is
+      a fanatic. Her name is Helen DeVries. I have acquired information that she
+      has a plan and method to destroy all androids and leave them as robotic mindless
+      husks, working machines.
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -202,7 +257,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 30
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -212,6 +268,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []

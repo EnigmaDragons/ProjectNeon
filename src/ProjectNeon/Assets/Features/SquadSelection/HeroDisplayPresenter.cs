@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,16 +12,16 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
     [SerializeField] private HeroCharacter currentHero;
     [SerializeField] private GameObject hoverGraphic;
     [SerializeField] private Image heroBust;
-    [SerializeField] private TextMeshProUGUI heroName;
-    [SerializeField] private TextMeshProUGUI heroClassName;
-    [SerializeField] private TextMeshProUGUI heroDescription;
-    [FormerlySerializedAs("roleDescription")] [SerializeField] private TextMeshProUGUI complexityLabel;
+    [SerializeField] private Localize heroName;
+    [SerializeField] private Localize heroClassName;
+    [SerializeField] private Localize heroDescription;
+    [FormerlySerializedAs("roleDescription")] [SerializeField] private Localize complexityLabel;
     [SerializeField] private Slider complexitySlider;
-    [SerializeField] private TextMeshProUGUI backstory;
+    [SerializeField] private Localize backstory;
     [SerializeField] private NamedGameObject[] tabTargets;
     [SerializeField] private ResourceCounterPresenter resource1;
     [SerializeField] private ResourceCounterPresenter resource2;
-    [SerializeField] private TextMeshProUGUI startingCredits;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI startingCredits;
     [SerializeField] private MemberSimplifiedVisualStatPanel statPanel;
     [SerializeField] private GameObject buttonsPanel;
     [SerializeField] private Button statButton;
@@ -58,12 +59,12 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
         _isClickable = isClickable;
         currentHero = c;
         heroBust.sprite = c.Bust;
-        heroName.text = c.DisplayName();
-        heroClassName.text = c.Class;
-        heroDescription.text = c.Flavor.HeroDescription;
-        complexityLabel.text = $"Complexity:";
+        heroName.SetTerm(c.NameTerm());
+        heroClassName.SetTerm(c.ClassTerm());
+        heroDescription.SetTerm(c.DescriptionTerm());
+        complexityLabel.SetFinalText($"{"Menu/Complexity".ToLocalized()}:");
         complexitySlider.value = Mathf.Clamp(c.ComplexityRating / 5f, 0.2f, 1f);
-        backstory.text = c.Flavor.BackStory;
+        backstory.SetTerm(c.BackStoryTerm());
         var member = m;
         if (statPanel != null)
         {

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 80
   displayName: 
-  description: Grenades apply -2 Primary Stat for 2 turns
+  description: Grenades apply -2 {[t:Keywords/PrimaryStat]} for 2 turns
   corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 4b871eacf30af6f428fd307e9e308b4c, type: 2}
@@ -26,7 +26,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 74
+  - Id: 20013
+    EffectType: 74
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -42,8 +43,8 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 12
     StatusDetailText: Grenades apply -2 Primary Stat for 2 turns
     TurnDelay: 0
@@ -57,16 +58,24 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
     ReactionConditionType: 29
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 0bd6c4bf422f6f747b50b4d25e38ed72, type: 2}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 3
       cardActions: {fileID: 11400000, guid: 5ff63a5b290aae64eab45e88f290dc49, type: 2}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 

@@ -673,6 +673,7 @@ GameObject:
   - component: {fileID: 7070644560487130184}
   - component: {fileID: 1695866422190569735}
   - component: {fileID: 4387180311442871951}
+  - component: {fileID: 8696016227341328017}
   m_Layer: 5
   m_Name: CorpNameLabel
   m_TagString: Untagged
@@ -796,6 +797,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8696016227341328017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6042290233400305254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: '-'
+  mTermSecondary: UI-Kit2-Header-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 0
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &6192165155690627637
 GameObject:
   m_ObjectHideFlags: 0
@@ -872,6 +912,7 @@ GameObject:
   - component: {fileID: 116190535495740918}
   - component: {fileID: 7965259079195802690}
   - component: {fileID: 2361539461824583059}
+  - component: {fileID: 4111625479458533816}
   m_Layer: 0
   m_Name: Name
   m_TagString: Untagged
@@ -995,6 +1036,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4111625479458533816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7017939475615600972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: '-'
+  mTermSecondary: UI-Kit2-Sans-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 0
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &7045420740339445031
 GameObject:
   m_ObjectHideFlags: 0
@@ -1322,7 +1402,7 @@ MonoBehaviour:
   party: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
   clinic: {fileID: 11400000, guid: 1b260ced14c955e42ac706a8792d9101, type: 2}
   clinics: {fileID: 11400000, guid: ac611b993fabb3549a187eebc6574986, type: 2}
-  serviceTitle: {fileID: 2361539461824583059}
+  serviceTitleLocalize: {fileID: 4111625479458533816}
   servicesParent: {fileID: 6192165155690627637}
   serviceButtonPrototype: {fileID: 2968646278820877033, guid: b9cd17424f77d4e4fb27365522a8e9ce, type: 3}
   corpUi:
@@ -1366,7 +1446,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gradient: {fileID: 8681107926137777121}
   logo: {fileID: 4570665425938925057}
-  nameLabel: {fileID: 4387180311442871951}
+  nameLabel: {fileID: 8696016227341328017}
 --- !u!1 &7861024837725278868
 GameObject:
   m_ObjectHideFlags: 0
@@ -1508,6 +1588,9 @@ MonoBehaviour:
   clinicUi: {fileID: 7474314073209407389}
   clinic: {fileID: 11400000, guid: 1b260ced14c955e42ac706a8792d9101, type: 2}
   corps: {fileID: 11400000, guid: 88b6eec066e88434b84f9b83598659ff, type: 2}
+  party: {fileID: 0}
+  doneButton: {fileID: 0}
+  eventPublisher: {fileID: 0}
 --- !u!114 &2835141265263767583
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 106
   displayName: 
-  description: 'After Shielded: Gain +2 Shield and +2 Max Shield'
+  description: 'After Shielded: Gain +2 {[t:Stats/Stat-Shield]} and +2 {[t:Stats/Stat-MaxShield]}'
   corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 3b03a1e83bfdbec43a1fa15d87d2f7fa, type: 2}
@@ -26,7 +26,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 74
+  - Id: 10061
+    EffectType: 74
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -42,7 +43,6 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 12
@@ -58,17 +58,20 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 39
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 1
       scope: 0
       cardActions: {fileID: 11400000, guid: 31c0492d53e04c64d9c8e2793dd86add, type: 2}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
   requiresStatType: 
   excludeIfPartyHasStatType: 

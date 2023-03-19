@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 9
   displayName: Cranial Implant
-  description: 'Team: +1 Card Cycle'
+  description: 'Team: +1 {[t:Keywords/CardCycles]}'
   corp: {fileID: 11400000, guid: 635ceb600e2d3cc4eae947d02d89a417, type: 2}
   archetypes:
   - {fileID: 11400000, guid: c3bd2cb0d323191448e78929b9cb214e, type: 2}
@@ -26,7 +26,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 49
+  - Id: 0
+    EffectType: 49
     Conditions: []
     BaseAmount:
       UseConstant: 1
@@ -57,6 +58,7 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 1
@@ -69,6 +71,7 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
   requiresStatType: 
   excludeIfPartyHasStatType: 

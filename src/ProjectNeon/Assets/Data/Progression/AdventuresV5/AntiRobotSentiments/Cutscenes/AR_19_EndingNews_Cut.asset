@@ -12,23 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffbe45dc9ae4641b25ee3ad47d7a21b, type: 3}
   m_Name: AR_19_EndingNews_Cut
   m_EditorClassIdentifier: 
+  id: 27
   isObsolete: 0
-  isPrimaryCutscene: 0
+  isPrimaryCutscene: 1
   setting: {fileID: 11400000, guid: c99cd71c592632c45b6ecad54cae75ee, type: 2}
   skipTrueStates: []
   skipFalseStates: []
+  onFinished:
+    m_PersistentCalls:
+      m_Calls: []
   segments:
-  - SegmentType: 1
+  - Id: 241
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
-    Text: Breaking news! For some strange reason many people all across Metroplex
-      Zero have gone missing.
+    Text: Breaking news! For some strange reason many people all across {[t:LocationName]}
+      have gone missing.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -43,17 +52,21 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 242
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
-    Text: Some camera photoage has shown them leaving their residences and corps
-      with no explanation.
+    Text: Footage has shown them leaving their residences and corps with no explanation.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -68,17 +81,22 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 243
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
-    Text: Rumors claim the missing people were taken on a Secubotics airship to the
-      Sahara desert but those haven't been verified.
+    Text: Rumors claim the missing people were taken on a {[t:MegaCorps/Secubotics]}
+      airship to the Sahara desert but those haven't been verified.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -93,17 +111,22 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 244
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
-    Text: Secubotics has denied any responsibility but did admit one of their canceled
-      projects had a ship that was stolen.
+    Text: '{[t:MegaCorps/Secubotics]} has denied any responsibility but did admit
+      one of their canceled projects had a ship that was stolen.'
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -118,7 +141,8 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 245
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -129,56 +153,70 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
+      Variable: {fileID: 11400000, guid: c7314211ffc411048aa9aa6d687fe95c, type: 2}
     - UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: c7314211ffc411048aa9aa6d687fe95c, type: 2}
+      Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
     ForbiddenStates: []
     Or: 0
     StoryState:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 246
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
-    Text: ' Secubotics has volunteered their swarm of robots to assist in helping
-      and cleaning up the mess in this tragedy.'
+    Text: ' {[t:MegaCorps/Secubotics]} has volunteered their swarm of robots to assist
+      in helping and cleaning up the mess in this tragedy.'
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
+      Variable: {fileID: 11400000, guid: c7314211ffc411048aa9aa6d687fe95c, type: 2}
     - UseConstant: 0
       ConstantValue: 
-      Variable: {fileID: 11400000, guid: c7314211ffc411048aa9aa6d687fe95c, type: 2}
+      Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
     ForbiddenStates: []
     Or: 0
     StoryState:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 247
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
-    Text: At the same time as those deaths, ZantoCorp exec Helen DeVries was viciously
-      murdered.
+    Text: At the same time as those deaths, {[t:MegaCorps/ZantoCorp]} exec Helen
+      DeVries was viciously murdered.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -193,17 +231,22 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 248
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
-    Text: "ZantoCorp\u2019s CEO, Devin Larimov has vowed to spare no expense to find
-      the ones responsible and bring them to justice."
+    Text: "{[t:MegaCorps/ZantoCorp]}\u2019s CEO, Devin Larimov has vowed to spare
+      no expense to find the ones responsible and bring them to justice."
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -218,16 +261,21 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 249
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
-    Text: ZantoCorp provided us photoage of the murderers.
+    Text: '{[t:MegaCorps/ZantoCorp]} provided us footage of the murderers.'
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -242,7 +290,8 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 250
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -252,6 +301,10 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -266,16 +319,22 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 251
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
-    Text: If you have any information about their whereabouts, contact NNZ immediately.
+    Text: If you have any information about their whereabouts, contact {[t:MegaCorps/NNZ]}
+      immediately.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -290,7 +349,8 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 252
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -301,6 +361,10 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -315,7 +379,8 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 253
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -326,6 +391,10 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -340,17 +409,22 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 254
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
-    Text: An advanced virus made by ZantoCorp executive Helen DeVries and her department
-      is responsible.
+    Text: An advanced virus made by {[t:MegaCorps/ZantoCorp]} executive Helen DeVries
+      and her department is responsible.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -365,16 +439,21 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 255
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
-    Text: Thanks to ZantoCorp the threat is no more.
+    Text: Thanks to {[t:MegaCorps/ZantoCorp]} the threat is no more.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -389,22 +468,234 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 256
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
-    Text: There will be new oversight over secubotics operations to ensure this will
-      never happen again.
+    Text: There will be new oversight over {[t:MegaCorps/Secubotics]} operations
+      to ensure this will never happen again.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: c7314211ffc411048aa9aa6d687fe95c, type: 2}
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - Id: 562
+    SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
+    Text: There was an invasion at one of ZantoCorp's facilities last night.
+    FloatAmount:
+      UseConstant: 1
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: ee44b9a8eabb4ac49aa956af7c31521d, type: 2}
+    ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - Id: 563
+    SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
+    Text: Fortunately, the terrorist group involved in the attack was stopped with
+      only a few ZantoCorp employee casualities.
+    FloatAmount:
+      UseConstant: 1
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: ee44b9a8eabb4ac49aa956af7c31521d, type: 2}
+    ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - Id: 564
+    SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
+    Text: In other news lawsuits against Secubotics accusing the corp of replacing
+      people with robotic mimics has been comepletely disproven.
+    FloatAmount:
+      UseConstant: 1
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: ee44b9a8eabb4ac49aa956af7c31521d, type: 2}
+    ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - Id: 565
+    SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
+    Text: It is just another great day in our perfect Metroplex.
+    FloatAmount:
+      UseConstant: 1
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: ee44b9a8eabb4ac49aa956af7c31521d, type: 2}
+    ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - Id: 568
+    SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
+    Text: While a lot of mimics have been destroyed, We have no way of knowing how
+      many of them there are.
+    FloatAmount:
+      UseConstant: 1
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: cef8883581c7aac4cad3fda5c7c9d7cf, type: 2}
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - Id: 569
+    SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
+    Text: Mass paranoia has led to a large increase in violence against comepletely
+      unrelated androids and robots.
+    FloatAmount:
+      UseConstant: 1
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: cef8883581c7aac4cad3fda5c7c9d7cf, type: 2}
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - Id: 570
+    SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 634cbb0dd0b4b9749aaf90e9e2103cbc, type: 2}
+    Text: We will be keeping our loyal watchers updated as the story develops.
+    FloatAmount:
+      UseConstant: 1
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: cef8883581c7aac4cad3fda5c7c9d7cf, type: 2}
     ForbiddenStates:
     - UseConstant: 0
       ConstantValue: 

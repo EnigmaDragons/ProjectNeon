@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 56
   displayName: Pulling The Strings
-  description: 'Start of Battle: Create a <b>Quick</b>, single use, free, I''ve Got
-    Connections in hand'
+  description: 'Start of Battle: Create a <b>{[t:Keywords/Quick]}</b>, {[t:Keywords/SingleUse]},
+    free, {[t:CardNames/00119-00-Name]} in hand'
   corp: {fileID: 11400000, guid: 33641feb13cddf64da66a37831d9c198, type: 2}
   archetypes:
   - {fileID: 11400000, guid: c3bd2cb0d323191448e78929b9cb214e, type: 2}
@@ -27,7 +27,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 43
+  - Id: 0
+    EffectType: 43
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -58,6 +59,7 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
@@ -70,6 +72,7 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
   requiresStatType: 
   excludeIfPartyHasStatType: 

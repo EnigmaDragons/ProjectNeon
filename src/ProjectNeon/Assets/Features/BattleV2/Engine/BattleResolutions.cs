@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnEnemy, DespawnEnemy, CardResolutionFinished, 
-    CardActionPrevented, WaitDuringResolution, ResolveReactionCards, ResolveReaction>
+    CardActionPrevented, WaitDuringResolution, ResolveReactionCards, ResolveReaction, RandomizeEnemyPositions, OverrideCardDelay>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private PartyAdventureState partyAdventureState;
@@ -46,7 +46,7 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
             reactionZone.Clear();
         
         if (Reactions.AnyReactionCards)
-            StartCoroutine(ResolveNextReactionCard());
+            this.SafeCoroutineOrNothing(ResolveNextReactionCard());
         else if (resolutionZone.HasMore)
             resolutionZone.BeginResolvingNext();
         else
@@ -69,7 +69,7 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         var effectResolved = new EffectResolved(true, true, EffectData.Nothing, msg.CycledCard.Owner, new Single(msg.CycledCard.Owner), 
             battleSnapshot, battleSnapshot, false, Maybe<Card>.Missing(), msg.CycledCard, new UnpreventableContext(), ReactionTimingWindow.FirstCause, state.PlayerCardZones);
         FinalizeBattleEffect(Maybe<EffectResolved>.Present(effectResolved));
-        StartCoroutine(FinishEffect());
+        this.SafeCoroutineOrNothing(FinishEffect("card cycled"));
     }
 
     protected override void Execute(ApplyBattleEffect msg)
@@ -98,7 +98,7 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
     {
         var reactions = state.Members
             .Select(x => x.Value)
-            .SelectMany(v => v.State.GetReactions(e)).ToArray();
+            .SelectMany(v => v.State.GetReactions(e, state.Phase == BattleV2Phase.HastyEnemyCards || state.Phase == BattleV2Phase.PlayCards || state.Phase == BattleV2Phase.EnemyCards)).ToArray();
 
         DebugLog($"Reaction Timing {e.Timing}. Effects {reactions.Count(c => c.ReactionCard.IsMissing)}. " +
                      $"Cards: {reactions.Count(c => c.ReactionCard.IsPresent)}");
@@ -120,9 +120,9 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
     protected override void Execute(CardActionPrevented msg)
     {
         if (msg.ToDecrement == TemporalStatType.Blind)
-            BattleLog.Write($"{msg.Source.Name} was blinded, so their attack missed.");
+            BattleLog.Write($"{msg.Source.NameTerm.ToEnglish()} was blinded, so their attack missed.");
         if (msg.ToDecrement == TemporalStatType.Inhibit)
-            BattleLog.Write($"{msg.Source.Name} was inhibited, so their action fizzled.");
+            BattleLog.Write($"{msg.Source.NameTerm.ToEnglish()} was inhibited, so their action fizzled.");
         Message.Publish(new PlayRawBattleEffect("MissedText", Vector3.zero));
         msg.Source.State.Adjust(msg.ToDecrement, -1);
         Message.Publish(new Finished<CardActionPrevented>());
@@ -137,10 +137,10 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
     {
         DebugLog($"Apply Battle Effect {msg.Effect.EffectType} - Is Reaction: {msg.IsReaction} - Reaction Timing {msg.Timing}");
         // Core Execution
-        var ctx = new EffectContext(msg.Source, msg.Target, msg.Card, msg.XPaidAmount, partyAdventureState, state.PlayerState, state.RewardState,
+        var ctx = new EffectContext(msg.Source, msg.Target, msg.Card, msg.XPaidAmount, msg.PaidAmount, partyAdventureState, state.PlayerState, state.RewardState,
             state.Members, state.PlayerCardZones, msg.Preventions, new SelectionContext(), allCards.GetMap(), state.CreditsAtStartOfBattle, 
             state.Party.Credits, state.Enemies.ToDictionary(x => x.Member.Id, x => (EnemyType)x.Enemy), () => state.GetNextCardId(), 
-            state.CurrentTurnCardPlays(), state.OwnerTints, state.OwnerBusts, msg.IsReaction, msg.Timing);
+            state.CurrentTurnCardPlays(), state.OwnerTints, state.OwnerBusts, msg.IsReaction, msg.Timing, state.EffectScopedData, msg.DoubleDamage);
         var battleSnapshotBefore = state.GetSnapshot();
         var res = AllEffects.Apply(msg.Effect, ctx);
         
@@ -152,7 +152,7 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         if (msg.Source.IsStealthed() && StealthBreakingEffectTypes.Contains(msg.Effect.EffectType))
         {
             msg.Source.State.BreakStealth();
-            BattleLog.Write($"{msg.Source.Name} emerged from the shadows.");
+            BattleLog.Write($"{msg.Source.NameTerm.ToEnglish()} emerged from the shadows.");
         }
 
         // Effect Resolved Details
@@ -164,10 +164,17 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
 
     protected override void Execute(SpawnEnemy msg)
     {
-        var details = enemies.Spawn(msg.Enemy.ForStage(state.Stage), msg.Offset);
-        var member = details.Member;
-        BattleLog.Write($"Spawned {member.Name}");
-        Message.Publish(new MemberSpawned(member, details.Transform));
+        var ctx = new EffectContext(msg.Source, new NoTarget(), msg.Card, ResourceQuantity.None, msg.PaidAmount, partyAdventureState, state.PlayerState, state.RewardState,
+            state.Members, state.PlayerCardZones, new UnpreventableContext(), new SelectionContext(), allCards.GetMap(), state.CreditsAtStartOfBattle, 
+            state.Party.Credits, state.Enemies.ToDictionary(x => x.Member.Id, x => (EnemyType)x.Enemy), () => state.GetNextCardId(), 
+            state.CurrentTurnCardPlays(), state.OwnerTints, state.OwnerBusts, msg.IsReaction, msg.Timing, state.EffectScopedData, new DoubleDamageContext(msg.Source, false));
+        if (!msg.Condition.IsPresent || msg.Condition.Value.GetShouldNotApplyReason(ctx).IsMissing)
+        {
+            var details = enemies.Spawn(msg.Enemy.ForStage(state.Stage), msg.Offset, msg.IsReplacing ? msg.Source : Maybe<Member>.Missing());
+            var member = details.Member;
+            BattleLog.Write($"Spawned {member.NameTerm.ToEnglish()}");
+            Message.Publish(new MemberSpawned(member, details.Transform));
+        }
         Message.Publish(new Finished<SpawnEnemy>());
     }
     
@@ -176,21 +183,30 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         var pos = state.GetMaybeTransform(msg.Member.Id).Map(t => t.position).OrDefault(Vector3.zero);
         state.AddEnemyDefeatedRewards(msg.Member.Id);
         enemies.Despawn(msg.Member.State);
-        BattleLog.Write($"Despawned {msg.Member.Name}");
+        BattleLog.Write($"Despawned {msg.Member.NameTerm.ToEnglish()}");
         Message.Publish(new MemberDespawned(msg.Member, pos));
         Message.Publish(new Finished<DespawnEnemy>());
+        if (state.ConsciousEnemyMembers.Length == 0)
+        {
+            BattleLog.Write("All Enemies Defeated!");
+            resolutionZone.ExpirePlayedCards(x => true);
+        }
     }
 
-    protected override void Execute(CardResolutionFinished msg) => StartCoroutine(FinishEffect());
-    
-    private IEnumerator FinishEffect()
+    protected override void Execute(CardResolutionFinished msg)
     {
+        this.SafeCoroutineOrNothing(FinishEffect("card resolution finished"));
+    } 
+    
+    private IEnumerator FinishEffect(string debugName)
+    {
+        //Log.Error($"Finish Effect Called: {debugName}");
+        state.ResetEffectScopedData();
         state.CleanupExpiredMemberStates();
         resolutionZone.ExpirePlayedCards(c => !state.Members.ContainsKey(c.MemberId()));
-        if (Reactions.AnyReactionEffects)
+        if (Reactions.AnyReactionEffects && Reactions.TryResolveNextInstantReaction(state.Members))
         {
             _resolvingEffect = false;
-            Reactions.ResolveNextInstantReaction(state.Members);
         }
         else
         {
@@ -208,13 +224,27 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
     protected override void Execute(ResolveReactionCards msg)
     {
         if (!_resolvingEffect && Reactions.AnyReactionCards)
-            StartCoroutine(ResolveNextReactionCard());
+            this.SafeCoroutineOrNothing(ResolveNextReactionCard());
     }
 
     protected override void Execute(ResolveReaction msg)
     {
         Log.Info("Resolve Reaction Message Received");
-        StartCoroutine(ResolveNextReactionCard(msg.Reaction));
+        this.SafeCoroutineOrNothing(ResolveNextReactionCard(msg.Reaction));
+    }
+
+    protected override void Execute(RandomizeEnemyPositions msg)
+    {
+        enemies.RandomizeEnemyPositions();
+        Message.Publish(new Finished<RandomizeEnemyPositions>());
+    }
+    
+    protected override void Execute(OverrideCardDelay msg)
+    {
+        if (msg.Team == TeamType.Enemies)
+            _enemyWait = new WaitForSeconds(msg.Delay);
+        else
+            _partyWait = new WaitForSeconds(msg.Delay);
     }
 
     private IEnumerator ResolveNextReactionCard()
@@ -242,21 +272,21 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         if (!isReactionCard)
         {
             Log.Error($"Should not be Queueing instant Effect Reactions. They should already be processed. " +
-                      $"Reaction - {r.Source.Name} {r.Name} {r.ReactionSequence.CardActions.BattleEffects.First().EffectType}");
-            StartCoroutine(FinishEffect());
+                      $"Reaction - {r.Source.NameTerm.ToEnglish()} {r.Name} {r.ReactionSequence.CardActions.BattleEffects.First().EffectType}");
+            this.SafeCoroutineOrNothing(FinishEffect("proposed reaction error"));
             yield break;
         }
         
         if (!state.Members.ContainsKey(r.Source.Id) || !r.Target.Members.Any())
         {
-            StartCoroutine(FinishEffect());
+            this.SafeCoroutineOrNothing(FinishEffect("no target for proposed reaction"));
             yield break;
         }
 
         var reactionCard = r.ReactionCard.Value;
         if (reactionCard.IsPlayableBy(r.Source, state.Party, 1))
         {
-            BattleLog.Write($"{r.Source.Name} has reacted with {reactionCard.Name}");
+            BattleLog.Write($"{r.Source.NameTerm.ToEnglish()} has reacted with {reactionCard.Name}");
             Message.Publish(new DisplayCharacterWordRequested(r.Source, CharacterReactionType.ReactionCardPlayed));
             var card = new Card(state.GetNextCardId(), r.Source, reactionCard);
             if (r.Source.TeamType == TeamType.Party)
@@ -274,8 +304,8 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         }
         else
         {
-            BattleLog.Write($"{r.Source.Name} could not afford reaction card {reactionCard.Name}");
-            this.ExecuteAfterDelay(() => StartCoroutine(FinishEffect()), 0.1f);
+            BattleLog.Write($"{r.Source.NameTerm.ToEnglish()} could not afford reaction card {reactionCard.Name}");
+            this.ExecuteAfterDelay(() => this.SafeCoroutineOrNothing(FinishEffect("could not afford reaction card")), 0.1f);
         }
     }
 

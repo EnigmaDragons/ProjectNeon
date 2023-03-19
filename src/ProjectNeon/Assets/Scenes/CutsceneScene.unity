@@ -167,6 +167,7 @@ MonoBehaviour:
   narrator: {fileID: 1354282348}
   you: {fileID: 1583341270}
   player: {fileID: 1583341270}
+  fadeDarken: {fileID: 5315339889129354089}
   navigator: {fileID: 11400000, guid: 416ce0bb8944d864e8f82186d7c340b1, type: 2}
   adventure: {fileID: 11400000, guid: 62e84d9ce18ccb747b8d7d0083704709, type: 2}
   conclusion: {fileID: 11400000, guid: 53c4a96d2b998d14db65167836cac75d, type: 2}
@@ -177,8 +178,10 @@ MonoBehaviour:
   defaultCamera: {fileID: 640967949}
   settingParent: {fileID: 1984705710}
   setupParty: {fileID: 506956602}
+  partyState: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
   disableOnFinished:
   - {fileID: 1971058478}
+  boss: {fileID: 11400000, guid: 1253cc99b1eb9c6409632561866dcec3, type: 2}
 --- !u!4 &506956601
 Transform:
   m_ObjectHideFlags: 0
@@ -1532,3 +1535,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: be8857112f57ca443b6a97fbe2fcb278, type: 3}
+--- !u!114 &5315339889129354089 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3576132375341510776, guid: be8857112f57ca443b6a97fbe2fcb278, type: 3}
+  m_PrefabInstance: {fileID: 5315339889129354088}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

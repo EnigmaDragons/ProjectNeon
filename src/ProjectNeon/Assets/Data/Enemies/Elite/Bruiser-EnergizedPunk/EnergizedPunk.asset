@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnergizedPunk
   m_EditorClassIdentifier: 
   id: 55
-  enemyName: 
+  enemyName: Energized Punk
   allowedForSocialMedia: 1
   excludeFromBestiary: 0
   isTutorialEnemy: 0
@@ -27,14 +27,12 @@ MonoBehaviour:
     CardTagPriority: 
     UnpreferredCardTags: 
     RotatePlayingCardTags: 0f00000004000000
+    IgnoreDesignatedAttackerRole: 0
   preferredTurnOrder: 40
   prefab: {fileID: 8506642138073819228, guid: 9bb512d5184a05d4eb81d7a5866d3d8c, type: 3}
   materialType: 1
   libraryCameraOffset: {x: 0, y: -0.9, z: 2.4}
-  deathEffect:
-    UseConstant: 1
-    ConstantValue: 
-    Variable: {fileID: 0}
+  shouldLive: 0
   battleRole: 1
   tier: 2
   unique: 1
@@ -80,7 +78,8 @@ MonoBehaviour:
       estimatedPerTurnTotalValue: 116.521996
       calculatedPowerLevel: 286
     startOfBattleEffects:
-    - EffectType: 74
+    - Id: 10020
+      EffectType: 74
       Conditions: []
       BaseAmount:
         UseConstant: 0
@@ -111,6 +110,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 0
@@ -128,6 +128,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 7b18c20a3abb2c344b0ba32c74c3f487, type: 2}
     - {fileID: 11400000, guid: 943bc25e79b55d64f83b9b79751aa4a9, type: 2}
     - {fileID: 11400000, guid: 87c5f7470590e8f4796fcf2a66e7fed5, type: 2}
+    CardsTheyAppearsToHave: []
   maxCopies: 1
   minimumAllies: 0
   damageType: 1

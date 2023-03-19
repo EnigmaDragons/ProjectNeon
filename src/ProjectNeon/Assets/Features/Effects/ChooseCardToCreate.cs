@@ -18,13 +18,14 @@ public class ChooseCardToCreate : Effect
     {
         if (_choiceCardIds.Length == 1)
         {
-            ctx.PlayerCardZones.HandZone.PutOnBottom(new Card(ctx.GetNextCardId(), ctx.Source, ctx.AllCards[_choiceCardIds[0]], 
-                ctx.OwnerTints.ContainsKey(ctx.Source.Id) ? ctx.OwnerTints[ctx.Source.Id] : Maybe<Color>.Missing(), 
-                ctx.OwnerBusts.ContainsKey(ctx.Source.Id) ? ctx.OwnerBusts[ctx.Source.Id] : Maybe<Sprite>.Missing()));
+            var owner = ctx.Target.Members[0];
+            ctx.PlayerCardZones.HandZone.PutOnBottom(new Card(ctx.GetNextCardId(), owner, ctx.AllCards[_choiceCardIds[0]], 
+                ctx.OwnerTints.ContainsKey(owner.Id) ? ctx.OwnerTints[owner.Id] : Maybe<Color>.Missing(), 
+                ctx.OwnerBusts.ContainsKey(owner.Id) ? ctx.OwnerBusts[owner.Id] : Maybe<Sprite>.Missing()));
             return;
         }
 
-        var cardsToChoose = Formula.EvaluateToInt(ctx.SourceSnapshot.State, ctx.Source.State, _choicesFormula, ctx.XPaidAmount);
+        var cardsToChoose = Formula.EvaluateToInt(ctx.SourceSnapshot.State, ctx.Source.State, _choicesFormula, ctx.XPaidAmount, ctx.ScopedData);
         
         ctx.Selections.CardSelectionOptions = cardsToChoose >= _choiceCardIds.Length 
             ? _choiceCardIds.Select(x => new Card(ctx.GetNextCardId(), ctx.Source, ctx.AllCards[x], 

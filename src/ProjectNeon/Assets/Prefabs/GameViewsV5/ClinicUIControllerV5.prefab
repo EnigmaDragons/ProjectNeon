@@ -633,6 +633,7 @@ GameObject:
   - component: {fileID: 2023573210063385415}
   - component: {fileID: 8120003516578586082}
   - component: {fileID: 9193224470045417337}
+  - component: {fileID: 3139253263932567890}
   m_Layer: 0
   m_Name: SpeechLabel
   m_TagString: Untagged
@@ -687,8 +688,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Welcome Benefactor. \n\nWe're humbled to have the opportunity to supply
-    you with all your necessities."
+  m_text: Welcome Benefactor.\n\nWe're humbled to have the opportunity to supply
+    you with all your necessities.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: a466fa9b2e60ed44da4dff9d08ee6d86, type: 2}
   m_sharedMaterial: {fileID: -3462019426021366834, guid: a466fa9b2e60ed44da4dff9d08ee6d86, type: 2}
@@ -757,6 +758,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3139253263932567890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3857680080346706044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: Clinics/Speech
+  mTermSecondary: UI-Kit2-Sans-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &5298018111486587572
 GameObject:
   m_ObjectHideFlags: 0
@@ -875,6 +915,7 @@ GameObject:
   - component: {fileID: 9112844472875586761}
   - component: {fileID: 855762572516641158}
   - component: {fileID: 2344914427886724622}
+  - component: {fileID: 853195143017893763}
   m_Layer: 5
   m_Name: CorpNameLabel
   m_TagString: Untagged
@@ -998,6 +1039,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &853195143017893763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5742701901810538215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: '-'
+  mTermSecondary: UI-Kit2-Header-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 0
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &7234794896297747974
 GameObject:
   m_ObjectHideFlags: 0
@@ -1530,7 +1610,7 @@ MonoBehaviour:
   party: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
   clinic: {fileID: 11400000, guid: 1b260ced14c955e42ac706a8792d9101, type: 2}
   clinics: {fileID: 11400000, guid: ac611b993fabb3549a187eebc6574986, type: 2}
-  serviceTitle: {fileID: 4372280146973730066}
+  serviceTitleLocalize: {fileID: 3222336398192938782}
   servicesParent: {fileID: 5298018111486587572}
   serviceButtonPrototype: {fileID: 7391231871707010921, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
   corpUi:
@@ -1575,7 +1655,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gradient: {fileID: 7210781604103756640}
   logo: {fileID: 2523961915097249408}
-  nameLabel: {fileID: 2344914427886724622}
+  nameLabel: {fileID: 853195143017893763}
 --- !u!114 &7241660018814308218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1613,6 +1693,7 @@ GameObject:
   - component: {fileID: 2158456417994923383}
   - component: {fileID: 8278428578847657155}
   - component: {fileID: 4372280146973730066}
+  - component: {fileID: 3222336398192938782}
   m_Layer: 0
   m_Name: Name
   m_TagString: Untagged
@@ -1736,6 +1817,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3222336398192938782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9010595392898851277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: '-'
+  mTermSecondary: UI-Kit2-Sans-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 0
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &9056447299585678758
 GameObject:
   m_ObjectHideFlags: 0
@@ -2009,9 +2129,33 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6711373508937165331}
     m_Modifications:
+    - target: {fileID: 1076769985562069719, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407744503611128001, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1543680105703405290, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2262280942511706564, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2382690526932654238, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2966426610928609227, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
       propertyPath: m_Name
       value: ClinicServicePanelV5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4346031470406322646, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5865775421264917897, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
       propertyPath: m_Pivot.x
@@ -2089,6 +2233,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7938503812375620096, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8104981358370076835, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
 --- !u!224 &8513385842626724512 stripped
@@ -2103,9 +2255,33 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6711373508937165331}
     m_Modifications:
+    - target: {fileID: 1076769985562069719, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407744503611128001, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1543680105703405290, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2262280942511706564, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2382690526932654238, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2966426610928609227, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
       propertyPath: m_Name
       value: ClinicServicePanelV5_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4346031470406322646, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5865775421264917897, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
       propertyPath: m_Pivot.x
@@ -2183,6 +2359,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7938503812375620096, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8104981358370076835, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
 --- !u!224 &8558055305497157811 stripped
@@ -2205,6 +2389,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1044545584332019011, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1671376444008069495, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -2220,6 +2408,14 @@ PrefabInstance:
     - target: {fileID: 1671376444008069495, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -119
+      objectReference: {fileID: 0}
+    - target: {fileID: 2190507643275895655, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3527125271737193294, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4570189658447735256, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
       propertyPath: m_Pivot.x
@@ -2297,6 +2493,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5352482574716539403, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5738395046963362631, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6209246774530397098, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7891686646835198002, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -2313,6 +2521,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -19
       objectReference: {fileID: 0}
+    - target: {fileID: 8153387777859714332, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8207982606611085715, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -2328,6 +2540,10 @@ PrefabInstance:
     - target: {fileID: 8207982606611085715, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -69
+      objectReference: {fileID: 0}
+    - target: {fileID: 8581585718031818504, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
@@ -2347,6 +2563,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PatientViewV5
       objectReference: {fileID: 0}
+    - target: {fileID: 1044545584332019011, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1671376444008069495, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -2362,6 +2582,14 @@ PrefabInstance:
     - target: {fileID: 1671376444008069495, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -119
+      objectReference: {fileID: 0}
+    - target: {fileID: 2190507643275895655, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3527125271737193294, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4570189658447735256, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
       propertyPath: m_Pivot.x
@@ -2439,6 +2667,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5352482574716539403, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5738395046963362631, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6209246774530397098, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7891686646835198002, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -2455,6 +2695,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -19
       objectReference: {fileID: 0}
+    - target: {fileID: 8153387777859714332, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8207982606611085715, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -2470,6 +2714,10 @@ PrefabInstance:
     - target: {fileID: 8207982606611085715, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -69
+      objectReference: {fileID: 0}
+    - target: {fileID: 8581585718031818504, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
@@ -2489,6 +2737,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PatientViewV5_1
       objectReference: {fileID: 0}
+    - target: {fileID: 1044545584332019011, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1671376444008069495, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -2504,6 +2756,14 @@ PrefabInstance:
     - target: {fileID: 1671376444008069495, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -119
+      objectReference: {fileID: 0}
+    - target: {fileID: 2190507643275895655, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3527125271737193294, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4570189658447735256, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
       propertyPath: m_Pivot.x
@@ -2581,6 +2841,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5352482574716539403, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5738395046963362631, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6209246774530397098, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7891686646835198002, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -2596,6 +2868,10 @@ PrefabInstance:
     - target: {fileID: 7891686646835198002, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -19
+      objectReference: {fileID: 0}
+    - target: {fileID: 8153387777859714332, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8207982606611085715, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2613,6 +2889,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -69
       objectReference: {fileID: 0}
+    - target: {fileID: 8581585718031818504, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f3edde6f3d2e3cc4c99feeb9ac79b4cf, type: 3}
 --- !u!224 &6359488284962448956 stripped
@@ -2627,9 +2907,33 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6711373508937165331}
     m_Modifications:
+    - target: {fileID: 1076769985562069719, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407744503611128001, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1543680105703405290, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2262280942511706564, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2382690526932654238, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2966426610928609227, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
       propertyPath: m_Name
       value: ClinicServicePanelV5_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4346031470406322646, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5865775421264917897, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
       propertyPath: m_Pivot.x
@@ -2706,6 +3010,14 @@ PrefabInstance:
     - target: {fileID: 5865775421264917897, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7938503812375620096, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8104981358370076835, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
@@ -2821,6 +3133,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: DoneButton
       objectReference: {fileID: 0}
+    - target: {fileID: 2109954892313273533, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+      propertyPath: mTerm
+      value: Clinics/LeaveClinic
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109954892313273533, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8417788295269649810, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
       propertyPath: m_text
       value: Leave Clinic
@@ -2934,9 +3254,33 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6711373508937165331}
     m_Modifications:
+    - target: {fileID: 1076769985562069719, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1407744503611128001, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1543680105703405290, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2262280942511706564, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2382690526932654238, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2966426610928609227, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
       propertyPath: m_Name
       value: ClinicServicePanelV5_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4346031470406322646, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5865775421264917897, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
       propertyPath: m_Pivot.x
@@ -3013,6 +3357,14 @@ PrefabInstance:
     - target: {fileID: 5865775421264917897, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7938503812375620096, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8104981358370076835, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1057a73d41cb35e4cae6f6810f1a1ea6, type: 3}

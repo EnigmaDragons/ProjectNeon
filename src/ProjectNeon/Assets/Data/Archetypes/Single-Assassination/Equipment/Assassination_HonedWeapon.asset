@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 110
   displayName: 
-  description: 'On Mark: Gain +2 Attack for the battle'
+  description: 'On {[t:Keywords/Marked]}: Gain +2 {[t:Stats/Stat-Attack]} for the
+    battle'
   corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 2a9990ef3da432e42acdb151f8669008, type: 2}
@@ -26,7 +27,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 74
+  - Id: 10049
+    EffectType: 74
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -57,6 +59,7 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 24
     ReactionEffectScope:
       UseConstant: 0
@@ -69,6 +72,7 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 11400000, guid: 4edc8c5de892a7949ab1abd030f532fb, type: 2}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
   requiresStatType: 
   excludeIfPartyHasStatType: 

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 28
   displayName: Shield Generator
-  description: 'Start of Turn: Gain <b>1/6</b> of Max Shield'
+  description: 'Start of Turn: Gain <b>1/6<b> of {[t:Stats/Stat-MaxShield]}'
   corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes: []
   rarity: 1
@@ -28,7 +28,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 54
+  - Id: 10048
+    EffectType: 54
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -44,7 +45,6 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 12
@@ -60,16 +60,23 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 11400000, guid: c80cc43034180f1439fe1fcff46f2b1c, type: 2}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 

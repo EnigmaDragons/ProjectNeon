@@ -303,5 +303,7 @@ const getLevelUpSummary = async (metrics) => {
   return ({ items: itemSummary, heroes: heroItemSummary });
 }
 
+const getAdventureProgressMetrics = async (metrics) => 
+
 module.exports = { getPlaySummary, getHeroSummary, getCardSummary,
   getHeroSelectionDetails, getCardSelectionDetails, getAttritionFactors, getLevelUpSelectionDetails, getLevelUpSummary };

@@ -15,16 +15,17 @@ MonoBehaviour:
   id: 138
   customName: 
   art: {fileID: 21300000, guid: 4f073c1eb3950484d95333cd4f5303b5, type: 3}
-  description: '{Auto}'
+  description: Gives {E[0]}. Gives {E[1]} {D[1]}
   typeDescription: {fileID: 11400000, guid: de601aad4442dbe4dbf8257c048e1d22, type: 2}
+  descriptionV2:
+    text: Gives {0}. Gives {1} Primary Stat for 3 turns
+    formatArgs:
+    - '{E[0]}'
+    - '{E[1]}'
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 0
-    resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
-    plusXCost: 0
-  onPlayGain:
     cost: 0
     resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
     plusXCost: 0
@@ -44,3 +45,4 @@ MonoBehaviour:
   highlightCondition: []
   unhighlightCondition: []
   isWIP: 0
+  notAvailableForGeneralDistribution: 0

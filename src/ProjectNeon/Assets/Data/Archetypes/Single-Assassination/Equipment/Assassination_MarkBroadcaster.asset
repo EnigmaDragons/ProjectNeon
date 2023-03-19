@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2
   displayName: 
-  description: 'On Mark: Give Vulnerable 1'
+  description: 'On {[t:Keywords/Marked]}: Give {[t:Keywords/Vulnerable]} 1'
   corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 2a9990ef3da432e42acdb151f8669008, type: 2}
@@ -29,7 +29,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 74
+  - Id: 10053
+    EffectType: 74
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -60,6 +61,7 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 24
     ReactionEffectScope:
       UseConstant: 0
@@ -72,6 +74,7 @@ MonoBehaviour:
       scope: 3
       cardActions: {fileID: 11400000, guid: 4032de53288919a47b06ba41b7a77dd8, type: 2}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
   requiresStatType: 
   excludeIfPartyHasStatType: 

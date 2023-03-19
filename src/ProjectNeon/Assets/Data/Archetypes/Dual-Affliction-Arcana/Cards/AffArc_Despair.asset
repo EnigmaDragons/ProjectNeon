@@ -16,7 +16,12 @@ MonoBehaviour:
   customName: 
   art: {fileID: 21300000, guid: 7b3df3a02d213664ba75adfff34dab10, type: 3}
   description: '<b>Afflicted</b>: Gives self {IE[1]} shield.<br><br>Deal {E[1]} {D[1]}'
-  typeDescription: {fileID: 0}
+  typeDescription: {fileID: 11400000, guid: 26f514ade584bd04da4a542740e478bb, type: 2}
+  descriptionV2:
+    text: '<b>Afflicted</b>: Gives self {0} Shield.<br><br>Deal {1} for 2 turns'
+    formatArgs:
+    - '{E[1]}'
+    - '{E[2]}'
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -26,6 +31,16 @@ MonoBehaviour:
     plusXCost: 0
   rarity: 3
   actionSequences:
+  - scope: 0
+    group: 1
+    cardActions: {fileID: 11400000, guid: aebb790af290b864aa6775376a60bee3, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: 195aafdf408990b43abe74a49d5f6b86, type: 2}
+    repeatX: 0
+    repeatCount: 0
   - scope: 0
     group: 1
     cardActions: {fileID: 11400000, guid: 996abf42adbf8414cbebee14dbff9121, type: 2}
@@ -38,6 +53,13 @@ MonoBehaviour:
   archetypes:
   - {fileID: 11400000, guid: 85cc99b6a9e2fc3479a63e5161296787, type: 2}
   - {fileID: 11400000, guid: c5bd5ff6560fc8b4aa3182fd810a7fd0, type: 2}
-  highlightCondition: []
-  unhighlightCondition: []
+  highlightCondition:
+  - {fileID: 11400000, guid: 04a0f33c2d609274a94eee30d00b414b, type: 2}
+  unhighlightCondition:
+  - {fileID: 11400000, guid: 62f8c3766746271439a37ad7030631d6, type: 2}
+  targetedHighlightCondition:
+  - {fileID: 11400000, guid: 92dd9bc79566aad43b5983bc8d4b73c6, type: 2}
+  targetedUnhighlightCondition:
+  - {fileID: 11400000, guid: 6cb2af23e0e94994c9743dfd14dfd8c5, type: 2}
   isWIP: 0
+  notAvailableForGeneralDistribution: 0

@@ -5,13 +5,13 @@ using System.Linq;
 public static class BattleCardExecution
 {
     // Card
-    public static void Play(this Card card, Target[] targets, BattleStateSnapshot battleStateSnapshot, ResourceQuantity xPaidAmount, Action onFinished)
+    public static void Play(this Card card, Target[] targets, BattleStateSnapshot battleStateSnapshot, ResourceQuantity xPaidAmount, ResourceQuantity paidAmount, Action onFinished)
     {
-        QueuePayloads(card.Name, GetPayloads(card, targets, battleStateSnapshot, xPaidAmount), onFinished);
+        QueuePayloads(card.Name, GetPayloads(card, targets, battleStateSnapshot, xPaidAmount, paidAmount), onFinished);
         card.OnPlayCard();
     }
 
-    public static List<IPayloadProvider> GetPayloads(this Card card, Target[] targets, BattleStateSnapshot battleStateSnapshot, ResourceQuantity xPaidAmount)
+    public static List<IPayloadProvider> GetPayloads(this Card card, Target[] targets, BattleStateSnapshot battleStateSnapshot, ResourceQuantity xPaidAmount, ResourceQuantity paidAmount)
     {
         if (card.ActionSequences.Length > targets.Length)
             Log.Error($"{card.Name}: For {card.ActionSequences.Length} there are only {targets.Length} targets");
@@ -39,7 +39,7 @@ public static class BattleCardExecution
         {
             var seq = sequences[i];
             var selectedTarget = sequenceTargets[i];
-            var ctx = new CardActionContext(card.Owner, selectedTarget, seq.Group, seq.Scope, xPaidAmount, battleStateSnapshot, card);
+            var ctx = new CardActionContext(card.Owner, selectedTarget, seq.Group, seq.Scope, xPaidAmount, paidAmount, battleStateSnapshot, card, new DoubleDamageContext(card.Owner, card.Owner.HasDoubleDamage()));
             var firstSequenceWithABattleEffectWithChosenTarget = i == firstSequenceWithABattleEffectWithChosenTargetIndex;
             payloads.Add(seq.cardActions.Play(ctx, firstSequenceWithABattleEffectWithChosenTarget)); 
         }
@@ -71,26 +71,25 @@ public static class BattleCardExecution
         return new MultiplePayloads(cardData.Name, cardData.Actions.Select((x, i) => x.Play(i == firstBattleEffectIndex, ctx)));
     }
 
-    public static IPayloadProvider PlayAsReaction(this CardActionsData cardData, Member source, Target target, ResourceQuantity xAmountPaid, string reactionName, ReactionTimingWindow timing)
+    public static IPayloadProvider PlayAsReaction(this CardActionsData cardData, Member source, Target target, ResourceQuantity xAmountPaid, ResourceQuantity amountPaid, string reactionName, ReactionTimingWindow timing)
     {
         var firstBattleEffectIndex = cardData.Actions.FirstIndexOf(x => x.Type == CardBattleActionType.Battle);
-        return new MultiplePayloads(cardData.Name, cardData.Actions.Select((x, i) => x.PlayReaction(i == firstBattleEffectIndex, source,  target, xAmountPaid, timing))
+        return new MultiplePayloads(cardData.Name, cardData.Actions.Select((x, i) => x.PlayReaction(i == firstBattleEffectIndex, source,  target, xAmountPaid, amountPaid, timing))
             .ToArray());
     }
 
     // Individual Actions
     private static IPayloadProvider Play(this CardActionV2 action, bool isFirstBattleEffectWithChosenTarget, StatusEffectContext ctx)
         => Play(action, isFirstBattleEffectWithChosenTarget, new CardActionContext(ctx.Source, new Single(ctx.Member), 
-            Group.Self, Scope.One, ResourceQuantity.None, new BattleStateSnapshot(), Maybe<Card>.Missing()));
+            Group.Self, Scope.One, ResourceQuantity.None, ResourceQuantity.None, new BattleStateSnapshot(), Maybe<Card>.Missing(), new DoubleDamageContext(ctx.Source, false)));
     
     private static IPayloadProvider Play(this CardActionV2 action, bool isFirstBattleEffectOfChosenTarget, CardActionContext ctx)
     {
         var type = action.Type;
         if (type == CardBattleActionType.Battle)
-            return new SinglePayload(new ApplyBattleEffect(isFirstBattleEffectOfChosenTarget, action.BattleEffect, ctx.Source, ctx.Target, ctx.Card, ctx.XAmountPaid, ctx.Preventions, ctx.Group, ctx.Scope, isReaction: false, ReactionTimingWindow.FirstCause));
-        
+            return new SinglePayload(new ApplyBattleEffect(isFirstBattleEffectOfChosenTarget, action.BattleEffect, ctx.Source, ctx.Target, ctx.Card, ctx.XAmountPaid, ctx.AmountPaid, ctx.Preventions, ctx.Group, ctx.Scope, isReaction: false, ReactionTimingWindow.FirstCause, ctx.DoubleDamage));
         if (type == CardBattleActionType.SpawnEnemy)
-            return new SinglePayload(new SpawnEnemy(action.EnemyToSpawn, action.EnemySpawnOffset));
+            return new SinglePayload(new SpawnEnemy(action.EnemyToSpawn, action.EnemySpawnOffset, ctx.Source, action.Replacing, ctx.Card, ctx.XAmountPaid, ctx.AmountPaid, false, ReactionTimingWindow.Default, new Maybe<EffectCondition>(action.EnemySpawnCondition)));
         if (type == CardBattleActionType.AnimateCharacter)
             return new SinglePayload(PayloadData.ExactMatch(new CharacterAnimationRequested2(ctx.Source.Id, action.CharacterAnimation2.Type)
             {
@@ -98,7 +97,8 @@ public static class BattleCardExecution
                 Source = ctx.Source,
                 Target = ctx.Target, 
                 Card = ctx.Card,
-                XPaidAmount = ctx.XAmountPaid
+                XPaidAmount = ctx.XAmountPaid,
+                PaidAmount = ctx.AmountPaid
             }));
         if (type == CardBattleActionType.AnimateAtTarget)
             return new SinglePayload(new BattleEffectAnimationRequested
@@ -115,19 +115,20 @@ public static class BattleCardExecution
                 Condition = action.AtTargetAnimation.Condition,
                 Source = ctx.Source,
                 Card = ctx.Card,
-                XPaidAmount = ctx.XAmountPaid
+                XPaidAmount = ctx.XAmountPaid,
+                PaidAmount = ctx.AmountPaid
             });
         if (type == CardBattleActionType.Condition)
             return new DelayedPayload(() => AllConditions.Resolve(action.ConditionData, ctx));
         throw new Exception($"Unrecognized card battle action type: {type}");
     }
     
-    private static IPayloadProvider PlayReaction(this CardActionV2 action, bool isFirstBattleEffect, Member source, Target target, ResourceQuantity xAmountPaid, ReactionTimingWindow timing)
+    private static IPayloadProvider PlayReaction(this CardActionV2 action, bool isFirstBattleEffect, Member source, Target target, ResourceQuantity xAmountPaid, ResourceQuantity amountPaid, ReactionTimingWindow timing)
     {
         var type = action.Type;
         if (type == CardBattleActionType.Battle)
-            return new SinglePayload(new ApplyBattleEffect(isFirstBattleEffect, action.BattleEffect, source, target, Maybe<Card>.Missing(), xAmountPaid, 
-                new PreventionContextMut(target), isReaction: true, timing));
+            return new SinglePayload(new ApplyBattleEffect(isFirstBattleEffect, action.BattleEffect, source, target, Maybe<Card>.Missing(), xAmountPaid, amountPaid,
+                new PreventionContextMut(target), isReaction: true, timing, new DoubleDamageContext(source, false)));
         if (type == CardBattleActionType.AnimateCharacter)
             return new SinglePayload(PayloadData.ExactMatch(new CharacterAnimationRequested2(source.Id, action.CharacterAnimation2.Type)
             {
@@ -135,7 +136,8 @@ public static class BattleCardExecution
                 Source = source,
                 Target = target, 
                 Card = Maybe<Card>.Missing(),
-                XPaidAmount = xAmountPaid
+                XPaidAmount = xAmountPaid,
+                PaidAmount = amountPaid
             }));
         if (type == CardBattleActionType.AnimateAtTarget)
             return new SinglePayload(new BattleEffectAnimationRequested
@@ -152,10 +154,11 @@ public static class BattleCardExecution
                 Condition = action.AtTargetAnimation.Condition,
                 Source = source,
                 Card = Maybe<Card>.Missing(),
-                XPaidAmount = xAmountPaid
+                XPaidAmount = xAmountPaid,
+                PaidAmount = amountPaid
             });
         if (type == CardBattleActionType.SpawnEnemy)
-            return new SinglePayload(new SpawnEnemy(action.EnemyToSpawn, action.EnemySpawnOffset));
+            return new SinglePayload(new SpawnEnemy(action.EnemyToSpawn, action.EnemySpawnOffset, source, action.Replacing, Maybe<Card>.Missing(), xAmountPaid, amountPaid, true, timing, new Maybe<EffectCondition>(action.EnemySpawnCondition)));
         //if (type == CardBattleActionType.Condition)
             // TODO: Implement Conditional Reactive Effects if needed (probably not needed)
         throw new Exception($"Unhandled card battle action type: {type}");

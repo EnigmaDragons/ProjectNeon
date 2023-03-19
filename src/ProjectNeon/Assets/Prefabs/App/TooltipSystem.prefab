@@ -277,8 +277,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7868853641561422609}
-  - component: {fileID: 7961895113402996924}
   - component: {fileID: 4250790379362315486}
+  - component: {fileID: 4020134841304528489}
   m_Layer: 0
   m_Name: TooltipSystem
   m_TagString: Untagged
@@ -301,21 +301,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7961895113402996924
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3327557286622767152}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fd2ebb946da4fd5820aa7a46196d114, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  panel: {fileID: 29081921891057947}
-  tooltipLabel: {fileID: 1314733103548262847}
-  background: {fileID: 1366581460658198125}
 --- !u!114 &4250790379362315486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,6 +314,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: 288
+--- !u!114 &4020134841304528489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3327557286622767152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 849f97b2452a40f99fc2b0d351c05b0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panel: {fileID: 29081921891057947}
+  tooltipLabel: {fileID: 1534791568940834089}
+  background: {fileID: 1366581460658198125}
 --- !u!1 &7748350755682965628
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,6 +341,7 @@ GameObject:
   - component: {fileID: 8754448987839558803}
   - component: {fileID: 1314733103548262847}
   - component: {fileID: 2269020890915250908}
+  - component: {fileID: 1534791568940834089}
   m_Layer: 0
   m_Name: TooltipText
   m_TagString: Untagged
@@ -479,3 +480,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!114 &1534791568940834089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7748350755682965628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: '-'
+  mTermSecondary: LiberationSans SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 0
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class HeroLevelAndXpPresenter : MonoBehaviour
 {
     [SerializeField] private Image heroBust;
-    [SerializeField] private TextMeshProUGUI levelLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI levelLabel;
     [SerializeField] private XpPresenter xp;
     
     private Hero _hero;

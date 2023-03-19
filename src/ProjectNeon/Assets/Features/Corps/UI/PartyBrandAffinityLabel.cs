@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 
+[IgnoreForLocalization]
 public class PartyBrandAffinityLabel : CorpAffinityUiBase
 {
     [SerializeField] private TextMeshProUGUI label;

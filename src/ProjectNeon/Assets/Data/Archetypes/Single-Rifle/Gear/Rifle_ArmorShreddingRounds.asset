@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 70
   displayName: 
-  description: 'Shoot: Also, give -3 Armor for the battle'
+  description: '{[t:Keywords/Shoot]}: Also, give -3 {[t:Stats/Stat-Armor]} for the
+    battle'
   corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: fbcb59caa7d5a114f8b9cf6016d20160, type: 2}
@@ -26,7 +27,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 74
+  - Id: 20017
+    EffectType: 74
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -45,7 +47,7 @@ MonoBehaviour:
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: 'Shoot: Also, give -3 Armor for the battle'
+    StatusDetailText: 'Shoot: Also, give -2 Armor for the battle'
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -57,6 +59,8 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
     ReactionConditionType: 29
     ReactionEffectScope:
       UseConstant: 1
@@ -69,6 +73,7 @@ MonoBehaviour:
       scope: 3
       cardActions: {fileID: 11400000, guid: 072391e1650ae2a4d984cd2d6d5480bb, type: 2}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
   requiresStatType: 
   excludeIfPartyHasStatType: 

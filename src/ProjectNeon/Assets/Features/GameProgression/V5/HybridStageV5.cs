@@ -2,9 +2,10 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Adventure/Stage V5")]
-public class HybridStageV5 : ScriptableObject, IStage
+public class HybridStageV5 : ScriptableObject, IStage, ILocalizeTerms
 {
-    [SerializeField] private string displayName;
+    [SerializeField] public int id;
+    [SerializeField] public string displayName;
     [SerializeField] private GameMap3 gameMap3;
     [SerializeField] private EncounterBuilderV5 encounterBuilder;
     [SerializeField] private StorySetting storySetting;
@@ -20,7 +21,7 @@ public class HybridStageV5 : ScriptableObject, IStage
     [SerializeField] private float shopOdds = 0.17f;
     [SerializeField] private int noShopsUntilSegment = 3;
 
-    public string DisplayName => displayName;
+    public string DisplayName => $"Stages/Stage{id}Name";
 
     public GameObject BattlegroundForSegment(int segment)
     {
@@ -44,6 +45,7 @@ public class HybridStageV5 : ScriptableObject, IStage
     public GameObject Battleground => BattlegroundForSegment(0);
     public int SegmentCount => primarySegments.Length;
     public int SegmentCountToBoss => primarySegments.TakeWhile(s => s.MapNodeType != MapNodeType.Boss).Count();
+    public int NonAutoSegmentCountToBoss => primarySegments.Where(s => !s.ShouldAutoStart).TakeWhile(s => s.MapNodeType != MapNodeType.Boss).Count();
     public StageSegment[] Segments => primarySegments;
     public StageSegment[] MaybeSecondarySegments => maybeSecondarySegments;
     public StageSegment[] MaybeStorySegments => maybeStorySegments;
@@ -52,4 +54,7 @@ public class HybridStageV5 : ScriptableObject, IStage
     public RarityFactors RewardRarityFactors => rewardRarityFactors != null 
         ? rewardRarityFactors 
         : (RarityFactors)new DefaultRarityFactors();
+
+    public string[] GetLocalizeTerms()
+        => new[] {DisplayName};
 }

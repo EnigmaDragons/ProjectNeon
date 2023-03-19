@@ -3,9 +3,26 @@ using UnityEngine;
 
 public static class TimelessResourceCalculator
 {
-    public static ResourceCalculations CalculateResources(this CardTypeData card, MemberState member) 
-        => CalculateResources(card.Name, card.Cost, member);
-    
+    public static ResourceCalculations CalculateResources(this CardTypeData card, MemberState member)
+    {
+        if (card == null)
+        {
+            Log.Error("Calculate Resources was called with a Null Card");
+            return ResourceCalculations.Free;
+        }
+        try
+        {
+            if (card.Cost.BaseAmount == 0 && !card.Cost.PlusXCost)
+                return ResourceCalculations.Free;
+            return CalculateResources(card.Name, card.Cost, member);
+        }
+        catch (Exception e)
+        {
+            Log.Error(e);
+            return ResourceCalculations.Free;
+        }
+    }
+
     private static ResourceCalculations CalculateResources(string cardName, IResourceAmount cost, MemberState member)
     {
         try
@@ -26,7 +43,7 @@ public static class TimelessResourceCalculator
         catch (Exception e)
         {
             Log.Error(e);
-            return new ResourceCalculations(new InMemoryResourceType(), 0, 0, 0);
+            return ResourceCalculations.Free;
         }
     }
 

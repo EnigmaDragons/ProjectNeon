@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Tutorial7Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, WinBattleWithRewards>
+public class Tutorial7Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, WinBattleWithRewards, ShowCurrentTutorialAgain>, ILocalizeTerms
 {
     private const string _callerId = "Tutorial7Orchestrator";
 
@@ -19,18 +19,26 @@ public class Tutorial7Orchestrator : OnMessage<StartCardSetupRequested, CardReso
     private IEnumerator ShowTutorialAfterDelay()
     {
         yield return new WaitForSeconds(9);
+        ShowTutorial();
+    }
+    
+    protected override void Execute(ShowCurrentTutorialAgain msg) => ShowTutorial();
+
+    private void ShowTutorial()
+    {
         if (!_hasWon)
             Message.Publish(new ShowTutorialByName(_callerId));
     }
-    
+
     protected override void Execute(CardResolutionFinished msg)
     {
         if (msg.CardName == "Shockwave" && !_hasShowedTip)
         {
-            Message.Publish(new ShowHeroBattleThought(1, "I <b>told</b> you I didn't need to see you to hit you"));
+            Message.Publish(new ShowHeroBattleThought(1, "Thoughts/Tutorial07-01".ToLocalized()));
             _hasShowedTip = true;
         }
     }
 
     protected override void Execute(WinBattleWithRewards msg) => _hasWon = true;
+    public string[] GetLocalizeTerms() => new[] {"Thoughts/Tutorial07-01"};
 }

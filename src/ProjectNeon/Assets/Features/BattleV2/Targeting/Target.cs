@@ -15,7 +15,7 @@ public static class TargetExtensions
         => t.Members.Where(x => x.IsConscious()).ForEach(m => m.Apply(effect));
     
     public static string MembersDescriptions(this Target t) 
-        => string.Join(", ", t.Members.Select(m => $"{m.Name} {m.Id}"));
+        => string.Join(", ", t.Members.Select(m => $"{m.NameTerm.ToEnglish()} {m.Id}"));
 
     public static int TotalShields(this Target t) 
         => t.Members.Sum(m => m.CurrentShield());

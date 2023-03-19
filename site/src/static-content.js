@@ -1,12 +1,12 @@
 export const gameDetails = ({
   features: [
-    "Over 250 different cards, allowing for a blend of various playstyles and builds",
-    "Over 70 unique game-changing augments",
+    "Over 360 different cards, allowing for a blend of various playstyles and builds",
+    "Over 80 unique game-changing augments",
     "9 heroes each with very different gameplay",
     "Level up your heroes multiple times in every run",
     "Choose your own level up perks every time you gain enough XP",
     "Emotionally gripping story with impactful moral decisions",
-    "Over 50 different enemies"
+    "Over 80 different enemies"
   ],
   shortDescription: "Neo-Cyberpunk team card battler. Assemble a team that fits your playstyle to take on evil MegaCorps. Customize your decks and choose your cards wisely to defeat tough foes. Power up your heroes with cards, implants, and augments. ",
   descriptionParagraphs: [
@@ -63,7 +63,7 @@ export const presskit = ({
   developer: site.siteOwner,
   location: 'Phoenix, AZ, USA',
   genre: 'Card Battler, Roguelike, Strategy, RPG',
-  releaseDate: 'Q4, 2022',
+  releaseDate: 'March 31, 2023',
   platforms: 'Steam - PC, Steam - Mac',
   website: 'https://www.metroplexzero.com',
   contact: site.email,
@@ -71,7 +71,7 @@ export const presskit = ({
   pdf: './download/presskit.pdf',
   assetKit: site.assetKit,
   logo: site.logo,
-  price: "$24.99",
+  price: "$19.99",
   features: gameDetails.features,
   descriptionParagraphs: gameDetails.descriptionParagraphs,
   trailer: 'https://www.youtube-nocookie.com/embed/L-PdE4qIUok',

@@ -1,15 +1,16 @@
 using System;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 
 public class SingleHeroSelectionUiPresenter : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI promptLabel;
+    [SerializeField] private Localize promptLabel;
     [SerializeField] private HeroDisplayPresenter[] presenters;
 
     public SingleHeroSelectionUiPresenter Initialized(GetUserSelectedHero msg, Action onFinished)
     {
-        promptLabel.text = msg.Prompt;
+        promptLabel.SetTerm(msg.PromptTerm);
         for (var i = 0; i < presenters.Length; i++)
         {
             var capturedIndex = i;

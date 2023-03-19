@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipDraft>
+public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipDraft>, ILocalizeTerms
 {
     [SerializeField] private DraftState draftState;
     [SerializeField] private CurrentAdventure adventure;
@@ -31,7 +31,7 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipD
             for (var i = 0; i < adventure.Adventure.PartySize; i++)
             {
                 var currentParty = party.Party.Heroes;
-                var featuredThree = PickNewHeroFrom3RandomSegment.GetFeatureHeroOptions(library, currentParty);
+                var featuredThree = PickNewHeroFrom3RandomSegment.GetFeatureHeroOptions(library, currentParty, adventure.Adventure);
                 var choice = featuredThree.Random();
                 party.WithAddedDraftHero(choice, CreateBlankDeck());
             }
@@ -70,7 +70,7 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipD
             var gear = e.Value;
             AllMetrics.PublishDraftGearSelection(gear.Name, gearOptions.Select(g => g.Name).ToArray());
             party.Add(gear);
-            currentHero.Equipment.EquipPermanent(gear);
+            currentHero.EquipPermanent(gear);
             Message.Publish(new DraftStepCompleted());
         }));
     }
@@ -109,11 +109,11 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipD
     private void SelectHero()
     {
         var currentParty = party.Party.Heroes;
-        var featuredThree = PickNewHeroFrom3RandomSegment.GetFeatureHeroOptions(library, currentParty);
-        var prompt = currentParty.Length == 0 ? "Choose Your Mission Squad Leader" : "Choose A New Squad Member";
+        var featuredThree = PickNewHeroFrom3RandomSegment.GetFeatureHeroOptions(library, currentParty, adventure.Adventure);
+        var prompt = currentParty.Length == 0 ? "Menu/ChooseLeader" : "Menu/ChooseMember";
         Message.Publish(new GetUserSelectedHero(prompt, featuredThree, h =>
         {
-            AllMetrics.PublishHeroSelected(h.Name, featuredThree.Select(x => x.Name).ToArray(), currentParty.Select(x => x.Name).ToArray());
+            AllMetrics.PublishHeroSelected(h.NameTerm().ToEnglish(), featuredThree.Select(x => x.NameTerm().ToEnglish()).ToArray(), currentParty.Select(x => x.NameTerm().ToEnglish()).ToArray());
             party.WithAddedDraftHero(h, CreateBlankDeck());
             Message.Publish(new AddHeroToPartyRequested(h));
             Async.ExecuteAfterDelay(0.5f, () =>
@@ -122,6 +122,8 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipD
                 Message.Publish(new DraftStepCompleted());
             });
         }));
+        if (party.Party.Heroes.Length >= draftState.HeroIndex && party.Party.Heroes.All(h => h.Sex == CharacterSex.Female))
+            Achievements.Record(Achievement.MiscGirlPower);
     }
     
     private void FinishDraft()
@@ -140,4 +142,7 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipD
         Message.Publish(new HideNamedTarget("DraftCardPicker"));
         Message.Publish(new NodeFinished());
     }
+
+    public string[] GetLocalizeTerms()
+        => new[] { "Menu/ChooseLeader", "Menu/ChooseMember" };
 }

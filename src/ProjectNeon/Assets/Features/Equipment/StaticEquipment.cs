@@ -4,11 +4,11 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Equipment", order = -80)]
-public class StaticEquipment : ScriptableObject, Equipment
+public class StaticEquipment : ScriptableObject, Equipment, ILocalizeTerms
 {
     [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public int id;
     [SerializeField] private string displayName;
-    [SerializeField] private string description;
+    [SerializeField] public string description;
     [SerializeField] private StringVariable corp;
     [SerializeField] private StringVariable[] archetypes = new StringVariable[0];
     [SerializeField] private Rarity rarity;
@@ -71,7 +71,15 @@ public class StaticEquipment : ScriptableObject, Equipment
     {
         var stats = new StatAddends();
         modifiers.Where(x => x.ModifierType == StatMathOperator.Additive)
+            .Where(x => !string.IsNullOrEmpty(x.StatType))
             .ForEach(m => stats.WithRaw(m.StatType, m.Amount));
         return stats;
     }
+
+    public string[] GetLocalizeTerms()
+        => !IsWip && Slot == EquipmentSlot.Augmentation 
+            ? new[] {this.LocalizationNameTerm(), this.LocalizationDescriptionTerm()}
+                .Concat(AllEffects.Where(x => x.StatusTag != StatusTag.None || x.EffectType == EffectType.OnDeath).Select(x => x.StatusDetailTerm))
+                .ToArray()
+            : Array.Empty<string>();
 }

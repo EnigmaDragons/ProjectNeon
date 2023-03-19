@@ -16,8 +16,12 @@ MonoBehaviour:
   customName: 
   art: {fileID: 21300000, guid: f8d07bd405483a445961ca3b5341eede, type: 3}
   description: 'Deal {E[0]}.<br><br><b>Afflicted</b>: Deal {E[1]}.'
-  typeDescription: {fileID: 11400000, guid: 26f514ade584bd04da4a542740e478bb, type: 2}
-  tags: 
+  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  descriptionV2:
+    text: 'Deal {0}. | <b>Crit: Afflicted</b>'
+    formatArgs:
+    - '{E[0]}'
+  tags: 04000000
   speed: 0
   isSinglePlay: 0
   cost:
@@ -37,6 +41,13 @@ MonoBehaviour:
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 85cc99b6a9e2fc3479a63e5161296787, type: 2}
-  highlightCondition: []
-  unhighlightCondition: []
+  highlightCondition:
+  - {fileID: 11400000, guid: 04a0f33c2d609274a94eee30d00b414b, type: 2}
+  unhighlightCondition:
+  - {fileID: 11400000, guid: 62f8c3766746271439a37ad7030631d6, type: 2}
+  targetedHighlightCondition:
+  - {fileID: 11400000, guid: 92dd9bc79566aad43b5983bc8d4b73c6, type: 2}
+  targetedUnhighlightCondition:
+  - {fileID: 11400000, guid: 6cb2af23e0e94994c9743dfd14dfd8c5, type: 2}
   isWIP: 0
+  notAvailableForGeneralDistribution: 0

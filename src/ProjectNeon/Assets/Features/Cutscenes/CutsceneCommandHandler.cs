@@ -7,6 +7,7 @@ public class CutsceneCommandHandler : OnMessage<StartCutsceneRequested, SetStart
     
     protected override void Execute(StartCutsceneRequested msg)
     {
+        Log.Info("Received Start Cutscene Requested Message");
         current.Init(msg.Cutscene,  msg.OnFinished);
         navigator.NavigateToCutsceneScene();
     }
@@ -16,3 +17,4 @@ public class CutsceneCommandHandler : OnMessage<StartCutsceneRequested, SetStart
         current.InitStartBattle(msg.Cutscene);
     }
 }
+ 

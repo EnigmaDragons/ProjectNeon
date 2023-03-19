@@ -431,7 +431,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: {fileID: 11400000, guid: 6d84df3b258b65040a4108a35fc1744b, type: 2}
-  rules: {fileID: 11400000, guid: 11f16ff9c28555849abf2468b59f7b12, type: 2}
+  rules: {fileID: 11400000, guid: 01b4b1940266f3444abd8e507baf2fc7, type: 2}
 --- !u!1 &405654625910904983
 GameObject:
   m_ObjectHideFlags: 0
@@ -1304,8 +1304,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bacecc6a3e224c8396456f703cf1a048, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: {fileID: 11400000, guid: de601aad4442dbe4dbf8257c048e1d22, type: 2}
-  rules: {fileID: 11400000, guid: 11f16ff9c28555849abf2468b59f7b12, type: 2}
+  key: {fileID: 11400000, guid: 88d65c262b0c2b240a5c8915b576c16e, type: 2}
+  rules: {fileID: 11400000, guid: 01b4b1940266f3444abd8e507baf2fc7, type: 2}
 --- !u!1 &1132244813721931646
 GameObject:
   m_ObjectHideFlags: 0
@@ -1468,7 +1468,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: {fileID: 11400000, guid: c1ee77b2fb754624594092a57fc2c569, type: 2}
-  rules: {fileID: 11400000, guid: 11f16ff9c28555849abf2468b59f7b12, type: 2}
+  rules: {fileID: 11400000, guid: 01b4b1940266f3444abd8e507baf2fc7, type: 2}
 --- !u!1 &1269216084834572677
 GameObject:
   m_ObjectHideFlags: 0
@@ -1946,7 +1946,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: {fileID: 11400000, guid: 1085d0ae716f453429fd9122b0f8227c, type: 2}
-  rules: {fileID: 11400000, guid: 11f16ff9c28555849abf2468b59f7b12, type: 2}
+  rules: {fileID: 11400000, guid: 01b4b1940266f3444abd8e507baf2fc7, type: 2}
 --- !u!1 &1383129553251872632
 GameObject:
   m_ObjectHideFlags: 0
@@ -5027,8 +5027,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deckBuilderState: {fileID: 11400000, guid: 7df03e0edb9ca294580e6020e56139d1, type: 2}
   heroBust: {fileID: 7461860315121632778}
-  nameLabel: {fileID: 3386645971542600022}
-  classLabel: {fileID: 5913190338711224413}
+  nameLocalize: {fileID: 3348975743904787098}
+  classLocalize: {fileID: 527681742668130206}
   resources: {fileID: 451556573349959672}
   stats: {fileID: 1858617019147942106}
   equipment: {fileID: 7163230538575081875}
@@ -5071,6 +5071,7 @@ MonoBehaviour:
   previousPageButton: {fileID: 1406174903444722280}
   pageNumText: {fileID: 880929490849372020}
   nextPageButton: {fileID: 5810904641781819512}
+  bindButtons: 0
 --- !u!114 &465088842633669644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5247,6 +5248,7 @@ MonoBehaviour:
   party: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
   state: {fileID: 11400000, guid: 7df03e0edb9ca294580e6020e56139d1, type: 2}
   selectHeroButtonTemplate: {fileID: 3126455269522635599, guid: 4ed0a9882521e0e408b5a51a713b1f74, type: 3}
+  viewHeroDetailsButton: {fileID: 0}
   parent: {fileID: 3284226534916779257}
 --- !u!114 &4034206903828893528
 MonoBehaviour:
@@ -5266,6 +5268,9 @@ MonoBehaviour:
     UseConstant: 0
     ConstantValue: 0
     Variable: {fileID: 11400000, guid: 246dc66e9cf9a9d489cc5486d35823b1, type: 2}
+  prefix: 
+  statusTintTarget: {fileID: 0}
+  invalidStatusColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &8500265126520468578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5301,6 +5306,7 @@ MonoBehaviour:
   previousPageButton: {fileID: 1833533740509650436}
   pageNumText: {fileID: 5837464922933678365}
   nextPageButton: {fileID: 405654625910904983}
+  bindButtons: 0
 --- !u!114 &327551111039500631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5787,7 +5793,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: {fileID: 11400000, guid: 17c8fbf9e2b5f79459e077374380ae85, type: 2}
-  rules: {fileID: 11400000, guid: 11f16ff9c28555849abf2468b59f7b12, type: 2}
+  rules: {fileID: 11400000, guid: 01b4b1940266f3444abd8e507baf2fc7, type: 2}
 --- !u!1 &3284226534916779256
 GameObject:
   m_ObjectHideFlags: 0
@@ -6730,7 +6736,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: {fileID: 11400000, guid: bec0857a6a4f8d649ba1c5ef0b9782f9, type: 2}
-  rules: {fileID: 11400000, guid: 910c410b8d5f4d84bb49861e783960c4, type: 2}
+  rules: {fileID: 11400000, guid: cbc2f4961f4878e438ddb78e51a2d252, type: 2}
 --- !u!1 &3832664882807643708
 GameObject:
   m_ObjectHideFlags: 0
@@ -7444,7 +7450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: {fileID: 11400000, guid: 96cf1c08e7e402b4b904d889d8e179ef, type: 2}
-  rules: {fileID: 11400000, guid: 11f16ff9c28555849abf2468b59f7b12, type: 2}
+  rules: {fileID: 11400000, guid: 01b4b1940266f3444abd8e507baf2fc7, type: 2}
 --- !u!1 &4089089467613221872
 GameObject:
   m_ObjectHideFlags: 0
@@ -7761,6 +7767,7 @@ GameObject:
   - component: {fileID: 4996007736653248957}
   - component: {fileID: 2327563536418087734}
   - component: {fileID: 4248445611279390772}
+  - component: {fileID: 5445289302884667630}
   m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -7893,6 +7900,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5445289302884667630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4320000061214050021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: '-'
+  mTermSecondary: UI-Kit2-Sans-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 0
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &4363273246953891937
 GameObject:
   m_ObjectHideFlags: 0
@@ -8364,8 +8410,8 @@ GameObject:
   - component: {fileID: 4256398036137299828}
   - component: {fileID: 6083171375940605957}
   - component: {fileID: 2071236525949055543}
-  - component: {fileID: 2627423963964568898}
-  - component: {fileID: 7287430771563767222}
+  - component: {fileID: 9144319442863399087}
+  - component: {fileID: 6308016984434377225}
   - component: {fileID: 426982974635782934}
   m_Layer: 0
   m_Name: DeckBuilderUI-V3
@@ -8473,7 +8519,8 @@ MonoBehaviour:
   notHeroObjects: []
   notEnemyObjects:
   - {fileID: 3284226534916779256}
---- !u!114 &2627423963964568898
+  equipmentEnabled: 1
+--- !u!114 &9144319442863399087
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8482,18 +8529,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 4518693809890149358}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b5780950d8a49c1a075799c05c1d5c8, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d7fdc7debec4116a83d5823a2276b29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btn: {fileID: 5392055461166115748}
-  text: Save
+  btn: {fileID: 458173056733527166}
+  term: Menu/Save
   action:
     m_PersistentCalls:
       m_Calls: []
   sounds: {fileID: 0}
   fmodSounds: {fileID: 0}
   isPrimaryActionButton: 1
---- !u!114 &7287430771563767222
+  ignoreText: 0
+--- !u!114 &6308016984434377225
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8502,17 +8550,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 4518693809890149358}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b5780950d8a49c1a075799c05c1d5c8, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d7fdc7debec4116a83d5823a2276b29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btn: {fileID: 4454142683821522612}
-  text: Fight
+  btn: {fileID: 8169502253713287534}
+  term: Menu/Fight
   action:
     m_PersistentCalls:
       m_Calls: []
   sounds: {fileID: 0}
   fmodSounds: {fileID: 0}
   isPrimaryActionButton: 1
+  ignoreText: 0
 --- !u!114 &426982974635782934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8533,11 +8582,10 @@ MonoBehaviour:
   party: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
   parent: {fileID: 2557740840237495083}
   saveButton: {fileID: 1624098157195675332}
-  saveButtonCont: {fileID: 5392055461166115748}
+  saveButtonCont: {fileID: 458173056733527166}
   fightOnlyElements:
   - {fileID: 2570686291739165490}
   fightButton: {fileID: 7029505872687993812}
-  fightButtonCont: {fileID: 4454142683821522612}
   navigator: {fileID: 11400000, guid: 416ce0bb8944d864e8f82186d7c340b1, type: 2}
   equipmentLibraryUI: {fileID: 7318943568565805469}
   cardFilter: {fileID: 327551111039500631}
@@ -8985,6 +9033,7 @@ GameObject:
   - component: {fileID: 230912596506080720}
   - component: {fileID: 2363451174626328851}
   - component: {fileID: 5913190338711224413}
+  - component: {fileID: 527681742668130206}
   m_Layer: 0
   m_Name: ClassLabel
   m_TagString: Untagged
@@ -9108,6 +9157,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &527681742668130206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4794745874456427394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: '-'
+  mTermSecondary: UI-Kit2-Sans-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 0
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &4843204181379846406
 GameObject:
   m_ObjectHideFlags: 0
@@ -10035,7 +10123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: {fileID: 11400000, guid: e04cb353987dbad4094394cb66ac1c6a, type: 2}
-  rules: {fileID: 11400000, guid: 11f16ff9c28555849abf2468b59f7b12, type: 2}
+  rules: {fileID: 11400000, guid: 01b4b1940266f3444abd8e507baf2fc7, type: 2}
 --- !u!1 &5531837579460532321
 GameObject:
   m_ObjectHideFlags: 0
@@ -10707,7 +10795,7 @@ MonoBehaviour:
   enemyDetails: {fileID: 3275873633352688082}
   previous: {fileID: 6146597263660158892}
   next: {fileID: 2248793475191953292}
-  enemyList: {fileID: 4248445611279390772}
+  enemyLocalizedList: {fileID: 5445289302884667630}
 --- !u!1 &5810904641781819512
 GameObject:
   m_ObjectHideFlags: 0
@@ -11372,7 +11460,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: {fileID: 11400000, guid: e7f3f64674ce4c4429003ce12f699980, type: 2}
-  rules: {fileID: 11400000, guid: 11f16ff9c28555849abf2468b59f7b12, type: 2}
+  rules: {fileID: 11400000, guid: 01b4b1940266f3444abd8e507baf2fc7, type: 2}
 --- !u!1 &6059809633326590450
 GameObject:
   m_ObjectHideFlags: 0
@@ -11647,6 +11735,7 @@ GameObject:
   - component: {fileID: 4245628664028770166}
   - component: {fileID: 7323378036677905177}
   - component: {fileID: 3386645971542600022}
+  - component: {fileID: 3348975743904787098}
   m_Layer: 0
   m_Name: NameLabel
   m_TagString: Untagged
@@ -11770,6 +11859,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &3348975743904787098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6291160624292263319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: '-'
+  mTermSecondary: UI-Kit2-Sans-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 0
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &6514887934854941804
 GameObject:
   m_ObjectHideFlags: 0
@@ -15243,7 +15371,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   key: {fileID: 11400000, guid: 028f444c83a8048468e940a793eeed08, type: 2}
-  rules: {fileID: 11400000, guid: 11f16ff9c28555849abf2468b59f7b12, type: 2}
+  rules: {fileID: 11400000, guid: 01b4b1940266f3444abd8e507baf2fc7, type: 2}
 --- !u!1 &8765430311453193105
 GameObject:
   m_ObjectHideFlags: 0
@@ -15720,6 +15848,7 @@ MonoBehaviour:
   previousPageButton: {fileID: 2973623010710711613}
   pageNumText: {fileID: 1924466154689799453}
   nextPageButton: {fileID: 4843204181379846406}
+  bindButtons: 0
 --- !u!1 &8918520821603140882
 GameObject:
   m_ObjectHideFlags: 0
@@ -16251,6 +16380,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+--- !u!114 &8169502253713287534 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7662283224723068775, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_PrefabInstance: {fileID: 1948373065890594313}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55509cb7b084451f8226cc1a94538cef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!224 &2253082945000406558 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_PrefabInstance: {fileID: 1948373065890594313}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7029505872687993812 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8829254996912500189, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
@@ -16262,22 +16407,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4454142683821522612 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
-  m_PrefabInstance: {fileID: 1948373065890594313}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!224 &2253082945000406558 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
-  m_PrefabInstance: {fileID: 1948373065890594313}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2753828232921111437
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17641,11 +17770,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f897b7f088037984696c5ce2634e13ec, type: 3}
---- !u!224 &3275873633352688085 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2248071897158109936, guid: f897b7f088037984696c5ce2634e13ec, type: 3}
-  m_PrefabInstance: {fileID: 3622297955004574501}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3275873633352688082 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2248071897158109943, guid: f897b7f088037984696c5ce2634e13ec, type: 3}
@@ -17657,6 +17781,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38da99b5ab18462fbbb1862672808d30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &3275873633352688085 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2248071897158109936, guid: f897b7f088037984696c5ce2634e13ec, type: 3}
+  m_PrefabInstance: {fileID: 3622297955004574501}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3890168709843732094
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18887,15 +19016,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
---- !u!114 &5392055461166115748 stripped
+--- !u!114 &458173056733527166 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7662283224723068775, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
   m_PrefabInstance: {fileID: 7786200425338514201}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
+  m_Script: {fileID: 11500000, guid: 55509cb7b084451f8226cc1a94538cef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1624098157195675332 stripped

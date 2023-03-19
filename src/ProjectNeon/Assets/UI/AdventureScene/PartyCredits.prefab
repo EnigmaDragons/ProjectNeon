@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 3990627365599036986}
   - component: {fileID: 1379781446564784472}
   - component: {fileID: 4014637220434499930}
-  - component: {fileID: 8668934573563074018}
+  - component: {fileID: 511680526975395696}
   m_Layer: 0
   m_Name: PartyCredits
   m_TagString: Untagged
@@ -155,7 +155,7 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &8668934573563074018
+--- !u!114 &511680526975395696
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,10 +164,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6137574422643328224}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77d005e298df44ca8cca949f2df12ba7, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d38e8cafb944ccbbddbb31ab70c31e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipText: MetroCreds - The most popular digital currency
+  tooltipTerm: Tooltips/PartyCredits
+  tooltipText: 
 --- !u!1 &6822550112529099462
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,6 +180,7 @@ GameObject:
   - component: {fileID: 3720849948325286015}
   - component: {fileID: 3665471578633530012}
   - component: {fileID: 3024489594107320715}
+  - component: {fileID: 7147498437125656478}
   m_Layer: 0
   m_Name: CreditsLabel
   m_TagString: Untagged
@@ -302,3 +304,15 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7147498437125656478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6822550112529099462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 863c5aa2de9e49089e0a948ab1da690f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

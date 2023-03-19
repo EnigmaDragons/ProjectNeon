@@ -15,8 +15,11 @@ MonoBehaviour:
   id: 1
   customName: 
   art: {fileID: 21300000, guid: 19c27f32acfee7845948e419fd881114, type: 3}
-  description: Drain <b>2 Resources</b> from each Afflicted Enemy
+  description: Drain <b>2 Resources</b> from each <b>Afflicted</b> Enemy
   typeDescription: {fileID: 11400000, guid: 26f514ade584bd04da4a542740e478bb, type: 2}
+  descriptionV2:
+    text: Drain 2 resources from each <b>Afflicted Enemy</b>
+    formatArgs: []
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -38,7 +41,11 @@ MonoBehaviour:
   archetypes:
   - {fileID: 11400000, guid: 85cc99b6a9e2fc3479a63e5161296787, type: 2}
   - {fileID: 11400000, guid: c5bd5ff6560fc8b4aa3182fd810a7fd0, type: 2}
-  highlightCondition: []
-  unhighlightCondition: []
+  highlightCondition:
+  - {fileID: 11400000, guid: 04a0f33c2d609274a94eee30d00b414b, type: 2}
+  unhighlightCondition:
+  - {fileID: 11400000, guid: 62f8c3766746271439a37ad7030631d6, type: 2}
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 0

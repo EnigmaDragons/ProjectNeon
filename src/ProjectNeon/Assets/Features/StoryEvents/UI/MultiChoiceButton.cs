@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,7 +10,7 @@ public class MultiChoiceButton : MonoBehaviour
 {
     [SerializeField] private Toggle toggle;
     [SerializeField] private Button button;
-    [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private Localize localize;
 
     private StoryEventChoice2 _choice;
     private StoryEventContext _ctx;
@@ -20,7 +21,7 @@ public class MultiChoiceButton : MonoBehaviour
             Log.Error($"More than one resolution on a multi-choice option on event: {owner.name}");
         _choice = choice;
         _ctx = ctx;
-        text.text = choice.ChoiceFullText(ctx, owner);
+        localize.SetTerm(choice.Term);
         button.onClick.AddListener(() => toggle.isOn = !toggle.isOn);
     }
     

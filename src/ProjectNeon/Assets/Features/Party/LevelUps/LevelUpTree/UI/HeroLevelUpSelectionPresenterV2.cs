@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class HeroLevelUpSelectionPresenterV2 : OnMessage<LevelUpOptionSelected, HeroStateChanged>
 {
-    [SerializeField] private TextMeshProUGUI levelLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI levelLabel;
     [SerializeField] private Image bust;
     [SerializeField] private MemberStatPanel stats;
     [SerializeField] private LevelUpOptionsPresenter optionsPresenter;
@@ -36,7 +36,7 @@ public class HeroLevelUpSelectionPresenterV2 : OnMessage<LevelUpOptionSelected, 
             return;
         
         Log.Info("Level Up Selection Presenter V2 Handling Selection Option");
-        AllMetrics.PublishLevelUpOptionSelection(_hero.Name, _hero.Level, msg.Selected.Description, msg.Options.Select(o => o.Description).ToArray());
+        AllMetrics.PublishLevelUpOptionSelection(_hero.NameTerm.ToEnglish(), _hero.Level, msg.Selected.Description, msg.Options.Select(o => o.Description).ToArray());
         msg.Selected.SelectAsLevelUp(_hero);
         gameObject.SetActive(false);
         Message.Publish(new HeroLevelledUp());

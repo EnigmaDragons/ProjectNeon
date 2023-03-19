@@ -38,6 +38,8 @@ public static class AITargetSelectionLogic
             return actualTargets.MostPowerful();
         }
 
+        if (card.Is(CardTag.RequiresMark))
+            return possibleTargets.MostMarked();
         if (card.Is(CardTag.BuffResource) && action.Group == Group.Ally)
             return possibleTargets.LeastResources();
         if (card.Is(CardTag.BuffAttack) && action.Group == Group.Ally)
@@ -115,7 +117,7 @@ public static class AITargetSelectionLogic
         if (ctx.SelectedCard.IsMissing)
             ctx = ctx.WithFinalizedSmartCardSelection();
         
-        Log($"{ctx.Member.Name} chose {ctx.SelectedCard.Value.Name} out of {ctx.CardOptionsString}");
+        Log($"{ctx.Member.NameTerm.ToEnglish()} chose {ctx.SelectedCard.Value.Name} out of {ctx.CardOptionsString}");
         
         var targets = ctx.SelectedTargets(isPreferredTarget);
 
@@ -211,7 +213,13 @@ public static class AITargetSelectionLogic
         .Shuffled()
         .OrderBy(x => x.Members.Sum(m => (m.CurrentHp() + m.CurrentShield()) / (m.MaxHp() + m.State.StartingShield())))
         .First();
- 
+
+    public static Target MostMarked(this IEnumerable<Target> targets) => targets
+        .ToArray()
+        .Shuffled()
+        .OrderBy(x => x.Members.Sum(m => m.State[TemporalStatType.Marked]))
+        .First();
+    
     private static void Log(string msg)
     {
         if (ShouldLogAiDetails)

@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 16
   displayName: Emergency Tactical Shield
-  description: 'When Vulnerable or Bloodied: Shield 100%'
+  description: 'When becoming {[t:Keywords/Vulnerable]} or {[t:Keywords/Bloodied]}:
+    {[t:Stats/Stat-Shield]} 100%'
   corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes: []
   rarity: 1
@@ -28,7 +29,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 74
+  - Id: 20029
+    EffectType: 74
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -59,6 +61,8 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
     ReactionConditionType: 5
     ReactionEffectScope:
       UseConstant: 1
@@ -71,7 +75,9 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 11400000, guid: 840ff2540f58e084b85881f7975f98d3, type: 2}
     BonusCardType: {fileID: 0}
-  - EffectType: 74
+    Unpreventable: 0
+  - Id: 0
+    EffectType: 74
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -102,6 +108,8 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
     ReactionConditionType: 10
     ReactionEffectScope:
       UseConstant: 1
@@ -114,6 +122,7 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 11400000, guid: 840ff2540f58e084b85881f7975f98d3, type: 2}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
   requiresStatType: 
   excludeIfPartyHasStatType: 

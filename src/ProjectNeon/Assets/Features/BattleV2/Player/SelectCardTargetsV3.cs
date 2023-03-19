@@ -85,7 +85,7 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
         var targetMaps = 0;
         foreach (var sequence in card.ActionSequences)
         {
-            if (sequence.Group == Group.Self || sequence.Scope == Scope.All || sequence.Scope == Scope.AllExceptSelf)
+            if (sequence.Group == Group.Self || sequence.Scope == Scope.All || sequence.Scope == Scope.AllExceptSelf || sequence.Scope == Scope.Random)
             {
                 var target = battleState.GetPossibleConsciousTargets(card.Owner, sequence.Group, sequence.Scope).First();
                 getTargets.Add(() => target);

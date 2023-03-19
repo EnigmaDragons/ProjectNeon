@@ -13,29 +13,40 @@ MonoBehaviour:
   m_Name: HowMuchPrivacyInvasion
   m_EditorClassIdentifier: 
   id: 10
+  storyText: How much privacy invasion is the right amount for determining if it
+    would be socially beneficial to have their organs removed?
   settingType: 0
   corp: {fileID: 0}
   choices:
-  - Choice: 1
+  - Id: 23
+    Choice: Every piece of data is needed for making life and death calls
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 0db301008988eb14f80b8e74d2cb6aa2, type: 2}
-      ResultNumber: 1
       StoryText: 
-  - Choice: 2
+  - Id: 24
+    Choice: Privacy invasion is necessary, only when there is reasonable suspicion
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: b9df4ea2f68e1ac4f88fd401fa90d077, type: 2}
-      ResultNumber: 1
       StoryText: 
-  - Choice: 3
+  - Id: 25
+    Choice: The only data that should be used, is the data publically available
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 6a5dd94eb5bac5f47a03713305c36358, type: 2}
-      ResultNumber: 1
       StoryText: 
   inCutscene: 1
   isMultiChoice: 0

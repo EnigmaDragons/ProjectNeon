@@ -5,10 +5,10 @@ using UnityEngine.UI;
 public class EnemyResourceInfoPresenter : MonoBehaviour
 {
     [SerializeField] private GameObject startingResourcesParent;
-    [SerializeField] private TextMeshProUGUI startingResourcesLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI startingResourcesLabel;
     [SerializeField] private Image icon;
     [SerializeField] private GameObject resourcesPerTurnParent;
-    [SerializeField] private TextMeshProUGUI resourcesPerTurnLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI resourcesPerTurnLabel;
     [SerializeField] private Image resourceIcon2;
 
     public void Init(EnemyInstance e)

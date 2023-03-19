@@ -7,7 +7,7 @@ public static class TestPayloadExecutor
     {
         m.State.GetTurnStartEffects()
             .ForEach(e => e.ExecuteAll(EffectContext.ForTests(m, new Single(m), Maybe<Card>.Missing(),
-                ResourceQuantity.None, new UnpreventableContext())));
+                ResourceQuantity.None, ResourceQuantity.None, new UnpreventableContext())));
         m.State.CleanExpiredStates();
     }
 
@@ -15,7 +15,7 @@ public static class TestPayloadExecutor
     {
         m.State.GetTurnEndEffects()
             .ForEach(e => e.ExecuteAll(EffectContext.ForTests(m, new Single(m), Maybe<Card>.Missing(),
-                ResourceQuantity.None, new UnpreventableContext())));
+                ResourceQuantity.None, ResourceQuantity.None, new UnpreventableContext())));
         m.State.CleanExpiredStates();
     }
 
@@ -31,10 +31,10 @@ public static class TestPayloadExecutor
         }
     }
 
-    public static void Execute(this Card card, Target[] targets, ResourceQuantity xPaidAmount, params Member[] allBattleMembers)
+    public static void Execute(this Card card, Target[] targets, ResourceQuantity xPaidAmount, ResourceQuantity paidAmount, params Member[] allBattleMembers)
     {
-        var payloads = card.GetPayloads(targets, new BattleStateSnapshot(allBattleMembers.Select(m => m.GetSnapshot()).ToArray()), xPaidAmount);
+        var payloads = card.GetPayloads(targets, new BattleStateSnapshot(allBattleMembers.Select(m => m.GetSnapshot()).ToArray()), xPaidAmount, paidAmount);
         for (var i = 0; i < payloads.Count; i++)
-            ExecuteAll(payloads[i], EffectContext.ForTests(card.Owner, targets[i], card, xPaidAmount, new PreventionContextMut(targets[i])));
+            ExecuteAll(payloads[i], EffectContext.ForTests(card.Owner, targets[i], card, xPaidAmount, paidAmount, new PreventionContextMut(targets[i])));
     }
 }

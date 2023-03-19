@@ -15,6 +15,7 @@ MonoBehaviour:
   Actions:
   - type: 30
     battleEffect:
+      Id: 2640
       EffectType: 0
       Conditions: []
       BaseAmount:
@@ -46,6 +47,8 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
@@ -58,6 +61,7 @@ MonoBehaviour:
         scope: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     conditionData:
       ConditionType: 0
       FloatAmount:
@@ -88,8 +92,11 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 31
     battleEffect:
+      Id: 2641
       EffectType: 0
       Conditions: []
       BaseAmount:
@@ -121,6 +128,8 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
@@ -133,6 +142,7 @@ MonoBehaviour:
         scope: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     conditionData:
       ConditionType: 0
       FloatAmount:
@@ -163,8 +173,11 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 1
     battleEffect:
+      Id: 2642
       EffectType: 79
       Conditions:
       - {fileID: 11400000, guid: 0a148ce2d0f114148af55e7f08548de8, type: 2}
@@ -187,7 +200,7 @@ MonoBehaviour:
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 0.1 + X/5
+      Formula: 1
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
@@ -197,6 +210,8 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
@@ -209,6 +224,7 @@ MonoBehaviour:
         scope: 0
         cardActions: {fileID: 0}
       BonusCardType: {fileID: 0}
+      Unpreventable: 0
     conditionData:
       ConditionType: 0
       FloatAmount:
@@ -239,3 +255,5 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0

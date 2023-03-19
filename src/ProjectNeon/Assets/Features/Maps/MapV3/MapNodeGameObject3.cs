@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Linq;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ILocalizeTerms
 {
     [SerializeField] private Button button;
     [SerializeField] private StageSegment segment;
     [SerializeField] private GameObject travelPreventedVisual;
     [SerializeField] private GameObject plotEventVisual;
-    [SerializeField] private TextMeshProUGUI unvisitedTextLabel;
-    [SerializeField] private TextMeshProUGUI visitedTextLabel;
+    [SerializeField] private Localize unvisitedTextLabel;
+    [SerializeField] private Localize visitedTextLabel;
     
     [Header("Enlargement")]
     [SerializeField] private GameObject[] imagesToEnlarge;
@@ -23,13 +24,17 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
     [Header("Hover Description")]
     [SerializeField] private bool alwaysShowRules = false;
     [SerializeField] private MapNodeDescription description;
-    [SerializeField] private string descriptionName;
-    [SerializeField, TextArea(1, 4)] private string descriptionDetail;
+    [SerializeField] private string nodeTerm;
     
     public IStageSegment ArrivalSegment { get; private set; }
     public MapNode3 MapData { get; private set; }
     private Maybe<GameObject> _rulesPanel;
 
+    private string NodeName => $"Maps/{nodeTerm}_Name";
+    private string NodeDetail => $"Maps/{nodeTerm}_Detail";
+    private const string NotVisitedEffect = "Maps/NotVisitedEffect";
+    private const string VisitedEffect = "Maps/VisitedEffect";
+    
     public void Init(MapNode3 mapData, CurrentGameMap3 gameMap, AdventureGenerationContext ctx, AllStaticGlobalEffects allGlobalEffects, Action<Transform> onMidPointArrive)
         => Init(mapData, gameMap, segment.GenerateDeterministic(ctx, mapData), allGlobalEffects, onMidPointArrive);
     
@@ -43,13 +48,13 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
         if (travelPreventedVisual != null)
             travelPreventedVisual.SetActive(!canTravel);
         if (unvisitedTextLabel != null)
-            unvisitedTextLabel.text = allGlobalEffects.GetEffectById(mapData.UnVisitedGlobalEffectId)
-                .Select(e => $"<b>If Not Visited:</b>\n{e.FullDescription}", "");
+            unvisitedTextLabel.SetFinalText(allGlobalEffects.GetEffectById(mapData.UnVisitedGlobalEffectId)
+                .Select(e => string.Format(NotVisitedEffect.ToLocalized(), e.FullDescriptionTerm.ToLocalized()), ""));
         if (visitedTextLabel != null)
-            visitedTextLabel.text = allGlobalEffects.GetEffectById(mapData.VisitedGlobalEffectId)
-                .Select(e => $"<b>If Visited</b>:\n{e.FullDescription}", "");
+            visitedTextLabel.SetFinalText(allGlobalEffects.GetEffectById(mapData.VisitedGlobalEffectId)
+                .Select(e => string.Format(VisitedEffect.ToLocalized(), e.FullDescriptionTerm.ToLocalized()), ""));
         if (description != null)
-            description.Init(descriptionName, descriptionDetail);
+            description.Init(NodeName, NodeDetail);
         button.enabled = canTravel;
         if (canTravel)
             button.onClick.AddListener(() =>
@@ -73,7 +78,7 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
             });
     }
 
-    public void InitForV5(MapNode3 mapData, CurrentMapSegmentV5 gameMap, StageSegment stageSegment, AllStaticGlobalEffects allGlobalEffects, bool isEnlarged, Action<Transform> onMidPointArrive)
+    public void InitForV5(MapNode3 mapData, CurrentMapSegmentV5 gameMap, StageSegment stageSegment, AllStaticGlobalEffects allGlobalEffects, bool isEnlarged, Action<Transform> onMidPointArrive, BoolVariable skippingStory)
     {
         MapData = mapData;
         ArrivalSegment = stageSegment;
@@ -83,19 +88,23 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
         if (travelPreventedVisual != null)
             travelPreventedVisual.SetActive(!canTravel);
         if (unvisitedTextLabel != null)
-            unvisitedTextLabel.text = allGlobalEffects.GetEffectById(mapData.UnVisitedGlobalEffectId)
-                .Select(e => $"<b>If Not Visited:</b>\n{e.FullDescription}", "");
+            unvisitedTextLabel.SetFinalText(allGlobalEffects.GetEffectById(mapData.UnVisitedGlobalEffectId)
+                .Select(e => string.Format(NotVisitedEffect.ToLocalized(), e.FullDescriptionTerm.ToLocalized()), ""));
         if (visitedTextLabel != null)
-            visitedTextLabel.text = allGlobalEffects.GetEffectById(mapData.VisitedGlobalEffectId)
-                .Select(e => $"<b>If Visited</b>:\n{e.FullDescription}", "");
+            visitedTextLabel.SetFinalText(allGlobalEffects.GetEffectById(mapData.VisitedGlobalEffectId)
+                .Select(e => string.Format(VisitedEffect.ToLocalized(), e.FullDescriptionTerm.ToLocalized()), ""));
         if (description != null)
-            description.Init(descriptionName, descriptionDetail);
+            description.Init(NodeName, NodeDetail, stageSegment);
         button.enabled = canTravel;
         if (canTravel)
             button.onClick.AddListener(() =>
             {
                 Action action = () =>
                 {
+                    if (mapData.Type != MapNodeType.MainStory && gameMap.CurrentChoices.Any(n => n.Type == MapNodeType.MainStory))
+                        skippingStory.SetValue(true);
+                    else if (mapData.Type == MapNodeType.MainStory)
+                        skippingStory.SetValue(false);
                     gameMap.CurrentNode = mapData;
                     gameMap.CurrentChoices.Remove(mapData);
                     Message.Publish(new TravelToNode
@@ -116,13 +125,13 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
 
                 if (isEnlarged && !CurrentAcademyData.Data.ConfirmedStorySkipBehavior && mapData.Type != MapNodeType.MainStory && gameMap.CurrentChoices.Any(n => n.Type == MapNodeType.MainStory))
                 {
-                    Message.Publish(new ShowTwoChoiceDialog
-                    {     
-                        UseDarken = true,                   
-                        Prompt = "You are skipping a Main Story segment. If you don't visit the Main Story segment right now, you will miss it for this entire run. Are you sure you wish to skip it?",
-                        PrimaryButtonText = "Oops! Thanks!",
+                    Message.Publish(new ShowLocalizedDialog
+                    {
+                        UseDarken = true,
+                        PromptTerm = DialogTerms.SkipStoryWarning,
+                        PrimaryButtonTerm = DialogTerms.OptionOops,
                         PrimaryAction = () => { },
-                        SecondaryButtonText = "Skip the Story",
+                        SecondaryButtonTerm = DialogTerms.OptionSkipTheStory,
                         SecondaryAction = () =>
                         {
                             CurrentAcademyData.Mutate(d => d.ConfirmedStorySkipBehavior = true);
@@ -165,7 +174,7 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
         if (alwaysShowRules)
             return;
         
-        ArrivalSegment.Detail.IfPresent(detail => Message.Publish(new ShowTooltip(transform, detail, true)));
+        ArrivalSegment.Detail.IfPresent(detail => Message.Publish(new ShowTooltip(transform.position, detail, true)));
         _rulesPanel.IfPresent(r => r.SetActive(true));
         transform.SetSiblingIndex(transform.parent.childCount - 2);
     }
@@ -178,4 +187,15 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
         _rulesPanel.IfPresent(r => r.SetActive(false));
         Message.Publish(new HideTooltip());
     }
+
+    public string[] GetLocalizeTerms() => new []
+    {
+        DialogTerms.OptionOops, 
+        DialogTerms.SkipStoryWarning, 
+        DialogTerms.OptionSkipTheStory,
+        NodeName, 
+        NodeDetail,
+        NotVisitedEffect,
+        VisitedEffect
+    };
 }

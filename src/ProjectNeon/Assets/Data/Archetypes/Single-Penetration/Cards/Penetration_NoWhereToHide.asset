@@ -18,8 +18,14 @@ MonoBehaviour:
   description: <b>Defenseless:</b> Gives <b>Taunt, Prominent,</b> and <b>Vulnerable</b>
     for 3 turns
   typeDescription: {fileID: 11400000, guid: 9899a7b68bc22484e927e10f3ea183b5, type: 2}
+  descriptionV2:
+    text: '<b>Quick</b>
+
+      <b>Defenseless:</b> Gives <b>Taunt, Prominent,</b>
+      and <b>Vulnerable</b> for 3 turns'
+    formatArgs: []
   tags: 
-  speed: 0
+  speed: 1
   isSinglePlay: 0
   cost:
     cost: 0
@@ -38,7 +44,13 @@ MonoBehaviour:
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 079871761aec52040887b3de1c1a19c4, type: 2}
-  highlightCondition: []
-  unhighlightCondition: []
+  highlightCondition:
+  - {fileID: 11400000, guid: 02983808ddbc94c4f9f42b9274968533, type: 2}
+  unhighlightCondition:
+  - {fileID: 11400000, guid: 9745a7008929df745ad60fb8fef4d945, type: 2}
+  targetedHighlightCondition:
+  - {fileID: 11400000, guid: ec7867a53d283b945b6517ccd3950e4c, type: 2}
+  targetedUnhighlightCondition:
+  - {fileID: 11400000, guid: e661d835b25e09948a02bfe2180609f9, type: 2}
   isWIP: 0
   notAvailableForGeneralDistribution: 0

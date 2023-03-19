@@ -1,5 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// LAST NUMBER USED: 101
+// LAST NUMBER USED: 112
 
 public enum EffectType
 {
@@ -15,15 +15,18 @@ public enum EffectType
     AdjustStatAdditivelyFormula = 68,
     AdjustStatMultiplicativelyFormula = 85,
     AdjustCounterFormula = 79,
+    AdjustCounterMaxFormula = 112,
 
     // Timing
     AtStartOfTurn = 54,
     AtEndOfTurn = 66,
     DelayedStartOfTurn = 23,
+    PlayCardAtStartOfTurn = 104,
 
     // Resets
     RemoveDebuffs = 4,
     ResetStatToBase = 83,
+    RemoveDots = 109,
     
     // Shields
     ShieldFormula = 80,
@@ -41,7 +44,9 @@ public enum EffectType
     // Reactions
     ReactWithEffect = 74,
     ReactWithCard = 75,
+    ReactOncePerTurnWithEffect = 108,
     OnDeath = 25,
+    ReactWithEnoughHealthLost = 111,
 
     // Transformers
     AddToXCostTransformer = 32,
@@ -58,10 +63,12 @@ public enum EffectType
     ChooseAndDrawCard = 42,
     ChooseCardToCreate = 43,
     ChooseAndDrawCardOfArchetype = 87,
+    ChooseCardToPlay = 110,
 
     // Statuses
     DisableForTurns = 13,
     EnterStealth = 58,
+    ExitStealth = 107,
     GainDoubleDamage = 57,
     DuplicateStatesOfType = 65,
     DuplicateStatesOfTypeToRandomEnemy = 90,
@@ -80,6 +87,10 @@ public enum EffectType
     ApplyAdditiveStatInjury = 71,
     ApplyMultiplicativeStatInjury = 72,
     
+    //Variables
+    RecordConditionIsTrue = 102,
+    AdjustScopedVariable = 103,
+    
     // Miscellaneous
     Drain = 97,
     SwapLifeForce = 64,
@@ -93,5 +104,7 @@ public enum EffectType
     AdjustBattleRewardFormula = 91,
     TransformCardsIntoCard = 93,
     AdjustOwnersPrimaryResourceBasedOnTargetShieldSum = 98,
-    RandomEffect = 101
+    RandomEffect = 101,
+    RandomizeEnemyPosition = 105,
+    MakeTargetingRough = 106,
 }

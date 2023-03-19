@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 114
   displayName: 
-  description: 'Own Card Play: Draw 1'
+  description: 'Own Non-Quick Card Play: Draw 1'
   corp: {fileID: 11400000, guid: 1c216af8c1977f34dbbb75041357df2d, type: 2}
   archetypes:
   - {fileID: 11400000, guid: c3bd2cb0d323191448e78929b9cb214e, type: 2}
@@ -26,7 +26,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 74
+  - Id: 20019
+    EffectType: 74
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -45,7 +46,7 @@ MonoBehaviour:
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: 'Own Card: Draw 1'
+    StatusDetailText: 'Own Non-Quick Card: Draw 1'
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -57,7 +58,9 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
-    ReactionConditionType: 36
+    ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
+    ReactionConditionType: 50
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 

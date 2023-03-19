@@ -3,6 +3,7 @@ public interface ITemporalState
     StatusDetail Status { get; }
     int OriginatorId { get; }
     bool IsDebuff { get; }
+    bool IsDot { get; }
     bool IsActive { get; }
     Maybe<int> RemainingTurns { get; }
     Maybe<int> Amount { get; }

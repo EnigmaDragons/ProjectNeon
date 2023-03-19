@@ -12,20 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ab0fec448e4349a2a2cfd304e9aa8e, type: 3}
   m_Name: GrizzledVeteran_GoingDownFighting
   m_EditorClassIdentifier: 
+  id: 11
   displayName: 
   art: {fileID: 21300000, guid: d38103936df76c347be712a1707e8e03, type: 3}
   description: '{Auto}'
+  descriptionV2:
+    text: Gives {0}
+    formatArgs:
+    - '{E[0]}'
+  archetypes: []
   cost:
     cost: 0
     resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
     plusXCost: 0
-  onPlayGain:
-    cost: 0
-    resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
-    plusXCost: 0
-  characterClass: {fileID: 0}
   actionSequence:
     reactor: 1
     scope: 0
-    avoidance: 999
     cardActions: {fileID: 11400000, guid: 29f494f5f85c64745b0a991d20a6dd48, type: 2}
+  tags: 

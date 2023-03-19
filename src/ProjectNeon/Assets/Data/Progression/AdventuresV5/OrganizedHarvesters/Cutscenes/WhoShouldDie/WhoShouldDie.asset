@@ -13,36 +13,52 @@ MonoBehaviour:
   m_Name: WhoShouldDie
   m_EditorClassIdentifier: 
   id: 6
+  storyText: Who will you allow to be killed to have their organs harvested to save
+    others?
   settingType: 0
   corp: {fileID: 0}
   choices:
-  - Choice: 1
+  - Id: 30
+    Choice: Suicidal benefactors, predicted not to recover
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 7ecec6f36bddba64f82ffb490b1a17bc, type: 2}
-      ResultNumber: 1
       StoryText: 
-  - Choice: 2
+  - Id: 31
+    Choice: Terminally ill benefactors
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: d44bf51ee4457624586483c828c2350a, type: 2}
-      ResultNumber: 1
       StoryText: 
-  - Choice: 3
+  - Id: 19
+    Choice: Specific {[t:MegaCorps/Medigeneix]} executives, after all they are responsible
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates:
+    - {fileID: 11400000, guid: 296a8946cc73c9d488be6f8bb47936ac, type: 2}
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: d6b9e80295a0d174fbbb6d4639f1f13e, type: 2}
-      ResultNumber: 1
       StoryText: 
-  - Choice: 4
+  - Id: 26
+    Choice: People that bring more harm than good to the world, such as murderers
+      and abusers
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: c1654bd4bbf50d44c9470e95f7cb3f37, type: 2}
-      ResultNumber: 1
       StoryText: 
   inCutscene: 1
   isMultiChoice: 1

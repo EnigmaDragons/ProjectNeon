@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 57
   displayName: 
-  description: 'Start of Turn: Spend 1 Credit.<br>+2 Card Cycles'
+  description: 'Start of Turn: Spend 1 Credit.
+
+    +2 {[t:Keywords/CardCycles]}'
   corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: f3ce0b551899476478f607da76d55580, type: 2}
@@ -24,7 +26,8 @@ MonoBehaviour:
   modifiers: []
   resourceModifiers: []
   turnStartEffects:
-  - EffectType: 52
+  - Id: 0
+    EffectType: 52
     Conditions: []
     BaseAmount:
       UseConstant: 1
@@ -40,7 +43,6 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 0
@@ -56,20 +58,24 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 28
+  - Id: 0
+    EffectType: 28
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -85,7 +91,6 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 38b278e86888e0d4bb759444b59c1d34, type: 2}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 0
@@ -101,19 +106,23 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
   requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
   notAvailableForGeneralDistribution: 1
   designComment: Not relevant in V4

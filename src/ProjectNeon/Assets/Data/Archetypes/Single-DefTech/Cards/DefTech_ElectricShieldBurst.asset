@@ -16,7 +16,12 @@ MonoBehaviour:
   customName: 
   art: {fileID: 21300000, guid: 56d3efdb521ec43488c2ee0370657579, type: 3}
   description: Deal {E[0]} <i>({F[0]})</i>
-  typeDescription: {fileID: 11400000, guid: 26f514ade584bd04da4a542740e478bb, type: 2}
+  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  descriptionV2:
+    text: Deal {0} <i>({1})</i>
+    formatArgs:
+    - '{E[0]}'
+    - '{F[0]}'
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -37,7 +42,9 @@ MonoBehaviour:
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 3b03a1e83bfdbec43a1fa15d87d2f7fa, type: 2}
-  highlightCondition: []
-  unhighlightCondition: []
+  highlightCondition:
+  - {fileID: 11400000, guid: 515d67dee77294d4d92b12b8aaed6d06, type: 2}
+  unhighlightCondition:
+  - {fileID: 11400000, guid: d2f234070ac3a404cba68ea80b29a61b, type: 2}
   isWIP: 0
   notAvailableForGeneralDistribution: 0

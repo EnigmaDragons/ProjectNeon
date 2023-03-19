@@ -1,4 +1,4 @@
-using TMPro;
+using I2.Loc;
 using UnityEngine;
 
 public sealed class EnemyBattleUIPresenter : OnMessage<MemberUnconscious>
@@ -8,12 +8,12 @@ public sealed class EnemyBattleUIPresenter : OnMessage<MemberUnconscious>
     [SerializeField] private VisualResourceCounterPresenter resourceCounter;
     [SerializeField] private SimpleWorldResourceCounterPresenter resourceCounter2;
     [SerializeField] private WorldStatusBar statusBar;
-    [SerializeField] private TextMeshPro nameLabel;
+    [SerializeField] private Localize nameLocalize;
     [SerializeField] private DamageNumbersController numbers;
     [SerializeField] private CharacterWordsController words;
     [SerializeField] private OnlyShowWhenHovered hoverReveal;
     [SerializeField] private WorldStatPresenter primaryStatPresenter;
-    [SerializeField] private WorldTextPresenter descriptionPresenter;
+    [SerializeField] private Localize descriptionLocalize;
 
     private Member _member;
 
@@ -32,12 +32,12 @@ public sealed class EnemyBattleUIPresenter : OnMessage<MemberUnconscious>
         if (resourceCounter2 != null)
             resourceCounter2.Initialized(m);
         statusBar.Initialized(m);
-        nameLabel.text = m.Name.WithSpaceBetweenWords();
+        nameLocalize.SetTerm(m.NameTerm);
         hoverReveal.Initialized(m);
         if (primaryStatPresenter != null)
             primaryStatPresenter.Init(m, m.PrimaryStat());
-        if (descriptionPresenter != null)
-            descriptionPresenter.Init(e.Description);
+        if (descriptionLocalize != null)
+            descriptionLocalize.SetTerm(e.DescriptionTerm);
         return this;
     }
     

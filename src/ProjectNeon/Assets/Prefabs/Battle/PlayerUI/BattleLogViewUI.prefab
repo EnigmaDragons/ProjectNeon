@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 4813685508117435511}
   - component: {fileID: 5609463994117293727}
   - component: {fileID: 7005420890698135844}
+  - component: {fileID: 838842546947434265}
+  - component: {fileID: 8897637262575738126}
   m_Layer: 5
   m_Name: PlayerLogText
   m_TagString: Untagged
@@ -152,6 +154,57 @@ MonoBehaviour:
   maxSize: {x: 610, y: Infinity}
   minSize: {x: 610, y: 0}
   controlAxes: 2
+--- !u!114 &838842546947434265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 478227391408819010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 863c5aa2de9e49089e0a948ab1da690f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8897637262575738126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 478227391408819010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: '-'
+  mTermSecondary: LiberationSans SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &683152368178962493
 GameObject:
   m_ObjectHideFlags: 0
@@ -214,6 +267,7 @@ GameObject:
   - component: {fileID: 2090956735007739184}
   - component: {fileID: 3169629669152775926}
   - component: {fileID: 1213471980613533937}
+  - component: {fileID: 9028751015123781100}
   m_Layer: 0
   m_Name: X
   m_TagString: Untagged
@@ -337,6 +391,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &9028751015123781100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314134946331511455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 863c5aa2de9e49089e0a948ab1da690f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2164292913446858320
 GameObject:
   m_ObjectHideFlags: 0
@@ -459,6 +525,7 @@ GameObject:
   - component: {fileID: 5875863178363197091}
   - component: {fileID: 3937123877343234423}
   - component: {fileID: 2362839304198602848}
+  - component: {fileID: 7420803616396270916}
   m_Layer: 0
   m_Name: X
   m_TagString: Untagged
@@ -582,6 +649,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7420803616396270916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5733249887980479880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 863c5aa2de9e49089e0a948ab1da690f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6020888832276929822
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,6 +675,8 @@ GameObject:
   - component: {fileID: 6323478248922193266}
   - component: {fileID: 4652811576065203246}
   - component: {fileID: 8269186965688156271}
+  - component: {fileID: 4480743407010372484}
+  - component: {fileID: 8139457404916080979}
   m_Layer: 5
   m_Name: PlayerLog
   m_TagString: Untagged
@@ -733,6 +814,34 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4480743407010372484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6020888832276929822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f3abb5b525f47489f4c7e5b762545c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8139457404916080979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6020888832276929822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98a0d17a81384271a6833e3fbca2caec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: {fileID: 11400000, guid: 26e16576502f53c4b96bb33ae9125971, type: 2}
+  modalStateName: Player Log
+  clearOnAwake: 1
+  shouldClearOnDisable: 1
 --- !u!1 &6315853527708179860
 GameObject:
   m_ObjectHideFlags: 0
@@ -746,6 +855,8 @@ GameObject:
   - component: {fileID: 8437855741920341672}
   - component: {fileID: 4413259404610483314}
   - component: {fileID: 3080181820570738180}
+  - component: {fileID: 1141473736721051931}
+  - component: {fileID: 1950312449584339179}
   m_Layer: 5
   m_Name: DevLog
   m_TagString: Untagged
@@ -852,6 +963,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1141473736721051931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6315853527708179860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f3abb5b525f47489f4c7e5b762545c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1950312449584339179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6315853527708179860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98a0d17a81384271a6833e3fbca2caec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: {fileID: 11400000, guid: 26e16576502f53c4b96bb33ae9125971, type: 2}
+  modalStateName: Dev Log
+  clearOnAwake: 1
+  shouldClearOnDisable: 1
 --- !u!1 &6352565280427008203
 GameObject:
   m_ObjectHideFlags: 0
@@ -1113,6 +1252,7 @@ MonoBehaviour:
     ConstantValue: 0
     Variable: {fileID: 11400000, guid: 7503372b17292b9459e3b7160b76c811, type: 2}
   textArea: {fileID: 5609463994117293727}
+  textArea2: {fileID: 8897637262575738126}
   view: {fileID: 6020888832276929822}
   scroll: {fileID: 3279720878022789240}
   maxLines: 40
@@ -1322,6 +1462,7 @@ GameObject:
   - component: {fileID: 3343428477947422326}
   - component: {fileID: 3861167202128522789}
   - component: {fileID: 6400018537234942921}
+  - component: {fileID: 1674928327202641505}
   m_Layer: 5
   m_Name: DevLogText
   m_TagString: Untagged
@@ -1445,6 +1586,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1674928327202641505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8515700350338064180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 863c5aa2de9e49089e0a948ab1da690f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8603931739303254447
 GameObject:
   m_ObjectHideFlags: 0

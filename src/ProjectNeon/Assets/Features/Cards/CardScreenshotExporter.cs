@@ -15,10 +15,11 @@ public class CardScreenshotExporter : MonoBehaviour
     [SerializeField] private bool takeAll = false;
     [SerializeField] private Color transparentColor = Color.black;
 
-    private void Start() => StartCoroutine(Go());
+    private void Start() => this.SafeCoroutineOrNothing(Go());
 
     private IEnumerator Go()
     {
+        yield return new WaitForEndOfFrame();
         foreach (var h in heroes.UnlockedHeroes)
         {
             var member = GetHeroCards(h, out var heroCards);
@@ -58,7 +59,7 @@ public class CardScreenshotExporter : MonoBehaviour
 
     private void ExportCard(BaseHero h, CardTypeData c)
     {
-        var savePath = Path.Combine(baseExportPathDir, h.Name + "-" + c.Name.Replace(" ", "").Replace("\"", "") + ".png");
+        var savePath = Path.Combine(baseExportPathDir, h.NameTerm().ToEnglish() + "-" + c.Name.Replace(" ", "").Replace("\"", "") + ".png");
         var tex = ScreenCapture.CaptureScreenshotAsTexture();
 
         var newTexture = new Texture2D(tex.width, tex.height, TextureFormat.ARGB32, false);

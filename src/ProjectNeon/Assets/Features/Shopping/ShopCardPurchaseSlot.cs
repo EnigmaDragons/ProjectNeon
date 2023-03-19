@@ -4,7 +4,7 @@ using UnityEngine;
 
 public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged, SetSuperFocusBuyControl>
 {
-    [SerializeField] private TextMeshProUGUI costLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI costLabel;
     [SerializeField] private CardPresenter cardPresenter;
     [SerializeField] private GameObject soldVisual;
     [SerializeField] private PartyAdventureState party;
@@ -37,7 +37,7 @@ public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged,
         soldVisual.SetActive(false);
         _card = c;
         _price = c.Rarity.CardShopPrice(globalEffects?.CardShopPriceFactor ?? 1f);
-        costLabel.text = _price.ToString();
+        costLabel.text = _price.ToString() + 0;
         UpdateAffordability();
         return this;
     }

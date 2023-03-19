@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
+  m_Name: AssSte_Domino
+  m_EditorClassIdentifier: 
+  id: 477
+  customName: 
+  art: {fileID: 21300000, guid: 24c51aab28cc3644cabe536f263e5450, type: 3}
+  description: 'This turn, <b>On Slay: Re-Stealth</b>, draw <b>1 Card</b>, gain <b>+1
+    Card Plays</b> and gain {RE[3]}'
+  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
+  descriptionV2:
+    text: '<b>Sneaky:</b> Deal {0} per mark
+
+      <b>On Slay:</b> Re-Stealth and
+      make a quick copy of Domino'
+    formatArgs:
+    - '{E[0]}'
+  tags: 
+  speed: 0
+  isSinglePlay: 1
+  cost:
+    cost: 0
+    resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
+    plusXCost: 0
+  rarity: 4
+  actionSequences:
+  - scope: 0
+    group: 1
+    cardActions: {fileID: 11400000, guid: 9f885bdfd4de3574a8c057f107234af4, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
+  functionalityIssues: 
+  presentationIssues: 
+  archetypes:
+  - {fileID: 11400000, guid: 2a9990ef3da432e42acdb151f8669008, type: 2}
+  - {fileID: 11400000, guid: 1e6b060bb2d10434c8d325b3765125dd, type: 2}
+  highlightCondition:
+  - {fileID: 11400000, guid: e31a0ad53cebd7943bb65ca320c39969, type: 2}
+  - {fileID: 11400000, guid: 55c6e6649e3688f41b7e6191d41a4faa, type: 2}
+  unhighlightCondition:
+  - {fileID: 11400000, guid: f4b925cb22766bd4c8734ed15d347eaf, type: 2}
+  targetedHighlightCondition:
+  - {fileID: 11400000, guid: 6cc2c12552823d646860b6de3618844c, type: 2}
+  - {fileID: 11400000, guid: d0214bf268cfe0348b7a336aa3eb7560, type: 2}
+  targetedUnhighlightCondition:
+  - {fileID: 11400000, guid: 0dcd1e022525b1e4f93bdfc345c3d48c, type: 2}
+  isWIP: 0
+  notAvailableForGeneralDistribution: 0

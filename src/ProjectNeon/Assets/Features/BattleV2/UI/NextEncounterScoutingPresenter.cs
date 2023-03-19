@@ -1,4 +1,5 @@
 using System.Linq;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +10,7 @@ public class NextEncounterScoutingPresenter : MonoBehaviour
     [SerializeField] private EnemyDetailsView enemyDetails;
     [SerializeField] private Button previous;
     [SerializeField] private Button next;
-    [SerializeField] private TextMeshProUGUI enemyList;
+    [SerializeField] private Localize enemyLocalizedList;
 
     private int _enemyIndex;
     
@@ -46,6 +47,6 @@ public class NextEncounterScoutingPresenter : MonoBehaviour
         previous.gameObject.SetActive(_enemyIndex > 0);
         next.gameObject.SetActive(state.NextEncounterEnemies.Length - 1 > _enemyIndex);
         enemyDetails.Show(state.NextEncounterEnemies[_enemyIndex], Maybe<Member>.Missing());
-        enemyList.text = string.Join("\n", state.NextEncounterEnemies.Select(x => x.Name));
+        enemyLocalizedList.SetFinalText(string.Join("\n", state.NextEncounterEnemies.Select(x => x.NameTerm.ToLocalized())));
     }
 }

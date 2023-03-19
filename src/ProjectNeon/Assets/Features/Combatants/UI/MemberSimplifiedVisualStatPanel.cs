@@ -6,31 +6,32 @@ public class MemberSimplifiedVisualStatPanel : MemberUiBase
 {
     [SerializeField] private UIHPBarController hpBar;
     [SerializeField] private GameObject cardPlaysItem;
-    [SerializeField] private TextMeshProUGUI cardPlaysLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI cardPlaysLabel;
     [SerializeField] private GameObject resourceGainItem;
-    [SerializeField] private TextMeshProUGUI resourceGainLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI resourceGainLabel;
     [SerializeField] private Image resourceGainIcon;
     [SerializeField] private GameObject leadershipItem;
-    [SerializeField] private TextMeshProUGUI leadershipLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI leadershipLabel;
     [SerializeField] private GameObject atkItem;
-    [SerializeField] private TextMeshProUGUI atkLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI atkLabel;
     [SerializeField] private GameObject magicItem;
-    [SerializeField] private TextMeshProUGUI magicLabel;
-    [SerializeField] private TextMeshProUGUI armorLabel;
-    [SerializeField] private TextMeshProUGUI resistLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI magicLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI armorLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI resistLabel;
     [SerializeField] private GameObject dodgeItem;
-    [SerializeField] private TextMeshProUGUI dodgeLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI dodgeLabel;
     [SerializeField] private GameObject aegisItem;
-    [SerializeField] private TextMeshProUGUI aegisLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI aegisLabel;
     [SerializeField] private GameObject stealthItem;
     [SerializeField] private GameObject tauntItem;
-    [SerializeField] private TextMeshProUGUI tauntLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI tauntLabel;
 
     public override void Init(Member m)
     {
         hpBar.Init(m);
         Set(cardPlaysItem, cardPlaysLabel, m.ExtraCardPlays());
-        resourceGainItem.SetActive(false);
+        Set(resourceGainItem, resourceGainLabel, m.ReferenceOnlyEndOfTurnResourceGain);
+        resourceGainIcon.sprite = m.PrimaryResourceType().Icon;
         Set(leadershipItem, leadershipLabel, m.Leadership());
         Set(atkItem, atkLabel, m.Attack());
         Set(magicItem, magicLabel, m.Magic());

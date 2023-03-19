@@ -6,24 +6,27 @@ using UnityEngine;
 [Serializable]
 public class CutsceneSegmentData
 {
+    public int Id;
     public CutsceneSegmentType SegmentType;
     public StringReference DialogueCharacterId = new StringReference { UseConstant = false };
     [TextArea(4, 4)] public string Text = "";
     
     public FloatReference FloatAmount = new FloatReference(0);
+    public StringReference CutsceneEventName;
     public StoryEvent2 StoryEvent;
     public StringReference[] RequiredStates;
     public StringReference[] ForbiddenStates;
     public bool Or;
     public StringReference StoryState = new StringReference("");
+    public string Term => $"Cutscenes/Segment{Id.ToString().PadLeft(5, '0')}";
 
     public bool ShouldShow(Func<string, bool> storyState)
         => !ShouldSkip(storyState);
     
     public bool ShouldSkip(Func<string, bool> storyState)
-        => ForbiddenStates.Any(x => storyState(x))
-           || (Or && RequiredStates.None(x => storyState(x)))
-           || (!Or && RequiredStates.Any(x => !storyState(x)));
+        => ForbiddenStates.Any(x => storyState(x)) // Is Forbidden
+           || (Or && RequiredStates.None(x => storyState(x))) // Is Missing All Required
+           || (!Or && RequiredStates.Any(x => !storyState(x))); // Is Missing Any Required
 
     public Maybe<string> GetRequiredConditionsDescription()
     {
@@ -58,21 +61,27 @@ public class CutsceneSegmentData
             return new [] { $"Story State:{StoryState.Value} - true" };
         if (SegmentType == CutsceneSegmentType.PlayerLine)
             return new [] { $"Player: \"{Text}\"" };
+        if (SegmentType == CutsceneSegmentType.FadeOut)
+            return new[] { "Camera Fade Out" };
+        if (SegmentType == CutsceneSegmentType.FadeIn)
+            return new[] { "Camera Fade In" };
+        if (SegmentType == CutsceneSegmentType.TriggerCutsceneEvent)
+            return new[] { $"Trigger Event: {CutsceneEventName}" };
         return new [] { "Unknown Cutscene Segment" };
     }
 
     private string[] GetChoiceDescription()
     {
         var lines = new List<string>();
-        lines.Add($"Present Player Game With {(StoryEvent.IsMultiChoice ? "Multi-Choice" : "Choice")}: {StoryEvent.DisplayName}");
-        lines.Add($"  Choice Prompt: \"{StoryEvent.StoryText}\"");
+        lines.Add($"Present Player Game With {(StoryEvent.IsMultiChoice ? "Multi-Choice" : "Choice")}: {StoryEvent.DisplayNameTerm.ToEnglish()}");
+        lines.Add($"  Choice Prompt: \"{StoryEvent.Term.ToEnglish()}\"");
         for (var i = 0; i < StoryEvent.Choices.Length; i++)
         {
             var choice = StoryEvent.Choices[i];
             if (choice.Resolution.Length == 1 && choice.Resolution[0].Result is RecordChoiceResult)
-                lines.Add($"    {i + 1}. \"{choice.ChoiceText(StoryEvent.id)}\" - {((RecordChoiceResult)choice.Resolution[0].Result).Name} - {((RecordChoiceResult)choice.Resolution[0].Result).state}");
+                lines.Add($"    {i + 1}. \"{choice.Term.ToEnglish()}\" - {((RecordChoiceResult)choice.Resolution[0].Result).Name} - {((RecordChoiceResult)choice.Resolution[0].Result).state}");
             else
-                lines.Add($"    {i + 1}. \"{choice.ChoiceText(StoryEvent.id)}\"");
+                lines.Add($"    {i + 1}. \"{choice.Term.ToEnglish()}\"");
         }
         return lines.ToArray();
     }

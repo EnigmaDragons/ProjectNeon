@@ -24,6 +24,14 @@ public static class Log
         else
             Info(msg);
     });
+    
+    public static void InfoOrWarn(string msg, bool isWarn) => IgnoreExceptions(() =>
+    {
+        if (isWarn)
+            Warn(msg);
+        else
+            Info(msg);
+    });
 
     private static void SinkAnd(string msg, Action a)
     {

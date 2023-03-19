@@ -27,14 +27,12 @@ MonoBehaviour:
     CardTagPriority: 
     UnpreferredCardTags: 
     RotatePlayingCardTags: 
+    IgnoreDesignatedAttackerRole: 0
   preferredTurnOrder: 99
   prefab: {fileID: 7526074207658497168, guid: 0455bcf5db5b246429127bec70bb3f00, type: 3}
   materialType: 1
   libraryCameraOffset: {x: 0, y: -0.8, z: 2.5}
-  deathEffect:
-    UseConstant: 1
-    ConstantValue: 
-    Variable: {fileID: 0}
+  shouldLive: 0
   battleRole: 0
   tier: 0
   unique: 0
@@ -62,24 +60,25 @@ MonoBehaviour:
     maxResourceAmount: 0
     resourceGainPerTurn: 0
     cardsPerTurn: 0
-    powerLevel: 0
+    powerLevel: 100
     calculationVariables:
       startingDefensiveValueAdjustment: 0
       startingValueAdjustment: 0
       perTurnValueAdjustment: 0
       resourceScaledValueOverride: 0
     calculationResults:
-      startingPower: 0
-      perCardValue: 0
-      resourceValue: 0
+      startingPower: 100
+      perCardValue: 5
+      resourceValue: 1.65
       perTurnPower: 0
       maxAndStartingResourcesPower: 0
-      estimatedHeroDamage: 0
-      estimatedTurnsAlive: 0
+      estimatedHeroDamage: 10
+      estimatedTurnsAlive: 6.6666665
       estimatedPerTurnTotalValue: 0
-      calculatedPowerLevel: 0
+      calculatedPowerLevel: 100
     startOfBattleEffects:
-    - EffectType: 74
+    - Id: 10031
+      EffectType: 74
       Conditions: []
       BaseAmount:
         UseConstant: 0
@@ -126,6 +125,7 @@ MonoBehaviour:
       Unpreventable: 0
     Cards:
     - {fileID: 11400000, guid: 26e922cd611ae0342854c9adc33f7c41, type: 2}
+    CardsTheyAppearsToHave: []
   maxCopies: 0
   minimumAllies: 0
   damageType: 0

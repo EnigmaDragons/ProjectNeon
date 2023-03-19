@@ -18,7 +18,9 @@ public static class KeywordRules
     public const string Debuffs = "Debuffs";
     public const string Debuff = "Debuff";
     public const string Defenseless = "Defenseless";
+    public const string DoubleDamage = "Double Damage";
     public const string Drain = "Drain";
+    public const string Finisher = "Finisher";
     public const string Focus = "Focus";
     public const string Glitch = "Glitch";
     public const string Igniting = "Igniting";
@@ -34,6 +36,7 @@ public static class KeywordRules
     public const string SelfDestructHyphen = "Self-Destruct";
     public const string Sneaky = "Sneaky";
     public const string Profitable = "Profitable";
+    public const string Vulnerable = "Vulnerable";
     
     private static readonly string[] RulesByImportanceArr = {
         Injure,
@@ -46,11 +49,13 @@ public static class KeywordRules
         Motionless,
         Sneaky,
         TemporalStatType.Prominent.ToString(),
+        Finisher,
         Profitable,
         Defenseless,
         ReStealth,
         TemporalStatType.Marked.ToString(),
         TemporalStatType.DoubleDamage.ToString(),
+        Vulnerable,
         TemporalStatType.Stun.ToString(),
         TemporalStatType.Aegis.ToString(),
         TemporalStatType.Blind.ToString(),
@@ -109,7 +114,7 @@ public static class KeywordRules
         AddTerm(Afflicted, Afflict);
         AddTerm(Bloodied, Bloody);
         AddTerm(Buyout);
-        AddTerm(Chain);
+        AddTerm(Chain, Finisher);
         AddTerm(Critical, Crit);
         AddTerm(Defenseless);
         AddTerm(Drain);
@@ -126,6 +131,8 @@ public static class KeywordRules
         AddTerm(ReStealth, ReStealthHyphen);
         AddTerm(SelfDestruct, SelfDestructHyphen);
         AddTerm(Sneaky);
+        AddTerm(Vulnerable);
+        AddTerm(TemporalStatType.DoubleDamage.GetString(), DoubleDamage);
     }
 
     public static void AddAllMatchingEffectScopeRules(List<string> rulesToShow, EffectData e, params string[] scopes) 

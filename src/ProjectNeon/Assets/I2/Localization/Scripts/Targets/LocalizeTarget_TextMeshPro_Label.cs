@@ -25,6 +25,7 @@ namespace I2.Loc
         public override bool CanUseSecondaryTerm() { return true; }
         public override bool AllowMainTermToBeRTL() { return true; }
         public override bool AllowSecondTermToBeRTL() { return false; }
+        public override void Clear() => mTarget.text = "";
 
         public override void GetFinalTerms ( Localize cmp, string Main, string Secondary, out string primaryTerm, out string secondaryTerm)
         {

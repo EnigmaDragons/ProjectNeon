@@ -36,7 +36,12 @@ public class GearRulesPresenter : MonoBehaviour
         {
             Hide();
             var rulesToShow = new List<string>();
-            AddAllDescriptionFoundRules(rulesToShow, e.Description);
+            AddAllDescriptionFoundRules(rulesToShow, e.LocalizationDescriptionTerm().ToEnglish());
+            if (rulesToShow.Contains(Chain))
+            {
+                rulesToShow.Remove(Chain);
+                rulesToShow.Add("Chain-Gear");
+            }
 
             var battleEffects = e.BattleStartEffects
                 .Concat(e.BattleEndEffects)
@@ -61,6 +66,7 @@ public class GearRulesPresenter : MonoBehaviour
                     TemporalStatType.Aegis.ToString(),
                     TemporalStatType.Stun.ToString(),
                     TemporalStatType.DoubleDamage.ToString(),
+                    TemporalStatType.DoubleDamage.ToString().WithSpaceBetweenWords(),
                     PlayerStatType.CardCycles.ToString(),
                     TemporalStatType.Disabled.ToString(),
                     TemporalStatType.Stealth.ToString(),

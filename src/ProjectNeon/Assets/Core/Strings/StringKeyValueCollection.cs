@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -14,6 +15,8 @@ public class StringKeyValueCollection : ScriptableObject
     public string ValueOrDefault(string key, string defaultValue) =>
         items.FirstOrMaybe(x => x.Key.Value.Equals(key))
             .Select(x => x.Value, defaultValue);
+
+    public bool Contains(string key) => items.FirstOrMaybe(x => x.Key.Value.Equals(key)).IsPresent;
 
     public IEnumerable<StringKeyValuePair> All => items;
 }

@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 
+[IgnoreForLocalization]
 public class LabelPresenter : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI label;

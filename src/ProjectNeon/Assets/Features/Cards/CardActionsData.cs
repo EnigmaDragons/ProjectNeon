@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Effect", order = -99)]
-public class CardActionsData : ScriptableObject
+public class CardActionsData : ScriptableObject, ILocalizeTerms
 {
     private string _testObjectName;
     
@@ -38,4 +38,24 @@ public class CardActionsData : ScriptableObject
         .Initialized(Actions.Select(x => x.Type == CardBattleActionType.Battle && x.BattleEffect.EffectType == EffectType.BuyoutEnemyById 
             ? x.Clone(buyoutData) 
             : x).ToArray());
+
+    public string[] GetLocalizeTerms()
+        => Actions
+            .Where(x => x.Type == CardBattleActionType.Battle && !string.IsNullOrWhiteSpace(x.BattleEffect.StatusDetailText))
+            .Select(x => x.BattleEffect.StatusDetailTerm)
+            .Concat(Actions
+                .Where(x => x.Type == CardBattleActionType.Battle && (x.BattleEffect.EffectType == EffectType.ApplyAdditiveStatInjury || x.BattleEffect.EffectType == EffectType.ApplyMultiplicativeStatInjury))
+                .Select(x => $"Injuries/{x.BattleEffect.FlavorText}"))
+            .Concat(Actions.SelectMany(x =>
+            {
+                var results = new List<string>();
+                if (x.Type != CardBattleActionType.Battle)
+                    return results;
+                if (!string.IsNullOrWhiteSpace(x.BattleEffect.InterpolatePartialFormula.PrefixTerm))
+                    results.Add($"CardInterpolations/Prefix-{x.BattleEffect.InterpolatePartialFormula.PrefixTerm}");
+                if (!string.IsNullOrWhiteSpace(x.BattleEffect.InterpolatePartialFormula.SuffixTerm))
+                    results.Add($"CardInterpolations/Suffix-{x.BattleEffect.InterpolatePartialFormula.SuffixTerm}");
+                return results;
+            }))
+            .ToArray();
 }

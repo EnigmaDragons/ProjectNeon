@@ -12,13 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffbe45dc9ae4641b25ee3ad47d7a21b, type: 3}
   m_Name: 00AnUnusualSituation
   m_EditorClassIdentifier: 
+  id: 28
   isObsolete: 0
   isPrimaryCutscene: 1
   setting: {fileID: 11400000, guid: 615d57ad1b8af5748b58e24d80e4bb43, type: 2}
   skipTrueStates: []
   skipFalseStates: []
+  onFinished:
+    m_PersistentCalls:
+      m_Calls: []
   segments:
-  - SegmentType: 3
+  - Id: 257
+    SegmentType: 3
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -28,6 +33,10 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 4
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -36,7 +45,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 258
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -46,6 +56,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -54,7 +68,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 259
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -64,6 +79,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -72,7 +91,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 260
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -83,6 +103,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -91,7 +115,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 261
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -102,6 +127,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -110,7 +139,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 262
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -121,6 +151,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -129,17 +163,22 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 263
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 824e873850f5ec045b81b02a7f4f3ba5, type: 2}
     Text: "That's a rather amateur approach you've recommended. \nYou are not seeing
-      the opportunity. \nHow do we at NNZ make profit?"
+      the opportunity. \nHow do we at {[t:MegaCorps/NNZ]} make profit?"
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -148,7 +187,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 264
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -158,6 +198,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -166,7 +210,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 265
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -176,6 +221,10 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -184,7 +233,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 266
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -194,6 +244,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -202,7 +256,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 267
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -212,6 +267,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -220,7 +279,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 268
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -230,6 +290,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -238,7 +302,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 3
+  - Id: 269
+    SegmentType: 3
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -248,6 +313,10 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 1
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []

@@ -9,8 +9,8 @@ public class ChooseBuyoutCardOrDefaultToCreateTests
     [Test]
     public void ChooseBuyoutCardOrDefaultToCreate_HasBuyoutOptionForTheEnemyAndDefaultInSelection()
     {
-        var enemy1 = new InMemoryEnemyType() {Name = "Lavos", PowerLevel = 999, Tier = EnemyTier.Elite};
-        var enemy2 = new InMemoryEnemyType() {Name = "Frog", PowerLevel = 1, Tier = EnemyTier.Minion};
+        var enemy1 = new InMemoryEnemyType() { PowerLevel = 999, Tier = EnemyTier.Elite};
+        var enemy2 = new InMemoryEnemyType() { PowerLevel = 1, Tier = EnemyTier.Minion};
         var enemies = new Dictionary<int,EnemyType>{{1,enemy1},{2,enemy2}};
         var member1 = TestMembers.CreateEnemy(s => s.With(StatType.MaxHP, 10f));
         var member2 = TestMembers.CreateEnemy(s => s.With(StatType.MaxHP, 10f));
@@ -18,10 +18,10 @@ public class ChooseBuyoutCardOrDefaultToCreateTests
         var templateCard = new InMemoryCard() { Name = "default" };
         var defaultCard = new InMemoryCard() { Name = "template", ActionSequences = new CardActionSequence[] { CardActionSequence.Create(Scope.One, Group.Self, ((CardActionsData)FormatterServices.GetUninitializedObject(typeof(CardActionsData))).Initialized(new CardActionV2(new EffectData { EffectType = EffectType.BuyoutEnemyById })), false) }};
         var allCards = new Dictionary<int, CardTypeData> { { 1, templateCard }, { 2, defaultCard } };
-        var effectContext = new EffectContext(TestMembers.Any(), new Single(TestMembers.Any()), Maybe<Card>.Missing(), ResourceQuantity.None, 
+        var effectContext = new EffectContext(TestMembers.Any(), new Single(TestMembers.Any()), Maybe<Card>.Missing(), ResourceQuantity.None, ResourceQuantity.None, 
             PartyAdventureState.InMemory(), new PlayerState(), BattleRewardState.InMemory(), battleMembers, CardPlayZones.InMemory, new UnpreventableContext(),
             new SelectionContext(), allCards, 0, 0, enemies, () => 0, new PlayedCardSnapshot[0], new Dictionary<int, Color>(), 
-            new Dictionary<int, Sprite>(), false, ReactionTimingWindow.FirstCause);
+            new Dictionary<int, Sprite>(), false, ReactionTimingWindow.FirstCause, new EffectScopedData(), new DoubleDamageContext(TestMembers.Any(), false));
 
         AllEffects.Apply(new EffectData
         {

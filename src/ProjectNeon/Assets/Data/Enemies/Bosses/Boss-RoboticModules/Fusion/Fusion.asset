@@ -1,0 +1,232 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
+  m_Name: Fusion
+  m_EditorClassIdentifier: 
+  id: 105
+  enemyName: Fusion
+  allowedForSocialMedia: 0
+  excludeFromBestiary: 1
+  isTutorialEnemy: 0
+  lastBalanceDate: 
+  isCurrentlyWorking: 1
+  corp: {fileID: 11400000, guid: d20c2ade8bbc04c478ee886d55a9b984, type: 2}
+  ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
+  aiPreferences:
+    DesignatedAttackerPriority: 50
+    CardOrderPreferenceFactor: 0
+    CardTagPriority: 
+    UnpreferredCardTags: 
+    RotatePlayingCardTags: 
+    IgnoreDesignatedAttackerRole: 0
+  preferredTurnOrder: 99
+  prefab: {fileID: 6740954349508014962, guid: fdb02b8e5e9487c438f7a4e91c7b6175, type: 3}
+  materialType: 2
+  libraryCameraOffset: {x: 0, y: -0.8, z: 2.5}
+  shouldLive: 0
+  battleRole: 1
+  tier: 3
+  unique: 1
+  isHasty: 0
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+  description: Dealing enough damage will lower card plays and changes power.
+  animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
+  animationSounds: {fileID: 0}
+  stageDetails:
+  - stage: 1
+    maxHp: 800
+    maxShield: 100
+    startingShield: 0
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 0
+    startingTaunt: 0
+    attack: 2
+    magic: 0
+    leadership: 0
+    armor: 3
+    resistance: 3
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 0
+    resourceGainPerTurn: 0
+    cardsPerTurn: 13
+    powerLevel: 500
+    calculationVariables:
+      startingDefensiveValueAdjustment: 0
+      startingValueAdjustment: 0
+      perTurnValueAdjustment: 0
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 0
+      perCardValue: 0
+      resourceValue: 0
+      perTurnPower: 0
+      maxAndStartingResourcesPower: 0
+      estimatedHeroDamage: 0
+      estimatedTurnsAlive: 0
+      estimatedPerTurnTotalValue: 0
+      calculatedPowerLevel: 0
+    startOfBattleEffects:
+    - Id: 10100
+      EffectType: 73
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 12
+      StatusDetailText: 'End of Turn: Gain 1 Attack. Whenever you deal enough damage
+        this attack bonus can be reset.'
+      TurnDelay: 0
+      Formula: 50
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 11400000, guid: a3eefbd76fc241f45a957f1aa4b3c7df, type: 2}
+      ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionTimingWindow: 0
+      ReactionSequence: {fileID: 11400000, guid: 2ce112851ee708d4ba0650e02b4515bc, type: 2}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+      Unpreventable: 0
+    - Id: 0
+      EffectType: 66
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 0
+      StatusDetailText: 
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 11400000, guid: a3eefbd76fc241f45a957f1aa4b3c7df, type: 2}
+      ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionTimingWindow: 0
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+      Unpreventable: 0
+    - Id: 0
+      EffectType: 111
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 12
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 12
+      StatusDetailText: 'End of Turn: Gain 1 Attack'
+      TurnDelay: 0
+      Formula: 50
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 11400000, guid: a3eefbd76fc241f45a957f1aa4b3c7df, type: 2}
+      ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionTimingWindow: 0
+      ReactionSequence: {fileID: 11400000, guid: 2ce112851ee708d4ba0650e02b4515bc, type: 2}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+      Unpreventable: 0
+    Cards:
+    - {fileID: 11400000, guid: c1e8e57af6c2ee443bf9cae707b4fe82, type: 2}
+    - {fileID: 11400000, guid: 6c4d80320f1ba4040ae9d5cdfbc320a4, type: 2}
+    - {fileID: 11400000, guid: fa3d90d0a5b090a42a7b6d517bc2bac2, type: 2}
+    - {fileID: 11400000, guid: 606453f8cceeabc4ca6d5a16f6fc6d9a, type: 2}
+    - {fileID: 11400000, guid: 599c318651d9058488ea2921060401cb, type: 2}
+    - {fileID: 11400000, guid: 79a9a589fde6d384a9c3644dbb0d2326, type: 2}
+    CardsTheyAppearsToHave: []
+  maxCopies: 0
+  minimumAllies: 0
+  damageType: 3

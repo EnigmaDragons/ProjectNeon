@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Tutorial11Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, WinBattleWithRewards, BattleStateChanged>
+public class Tutorial11Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, WinBattleWithRewards, BattleStateChanged, ShowCurrentTutorialAgain>, ILocalizeTerms
 {
     private const string _callerId = "Tutorial11Orchestrator";
 
@@ -23,35 +23,44 @@ public class Tutorial11Orchestrator : OnMessage<StartCardSetupRequested, CardRes
     private IEnumerator ShowTutorialAfterDelay()
     {
         yield return TutorialSettings.BattleTutorialPanelPopupDelay;
+        ShowTutorial();
+    }
+    
+    protected override void Execute(ShowCurrentTutorialAgain msg) => ShowTutorial();
+
+    private void ShowTutorial()
+    {
         if (!_hasWon)
             Message.Publish(new ShowTutorialByName(_callerId));
     }
     
     protected override void Execute(CardResolutionFinished msg)
     {
-        if (msg.CardName == "Acid Coating")
-        {
-            _playedAcidCoating = true;
-            Message.Publish(new ShowHeroBattleThought(4, "My Aegis protects me from that horrible acid you like to use"));
-        }
-        else if (msg.CardName == "Aegis")
+        // Outdated: No Longer Required since All-In does it all
+        // if (msg.CardName == "Acid Coating")
+        // {
+        //     _playedAcidCoating = true;
+        //     Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial11-01".ToLocalized()));
+        // }
+        if (msg.CardName == "Aegis")
         {
             _hasPlayedAegis = true;
-            Message.Publish(new ShowHeroBattleThought(4, "You really are a jack of all trades"));
+            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial11-02".ToLocalized()));
         }
         else if (msg.CardName == "Erase" && !_hasPlayedAegis)
         {
-            Message.Publish(new ShowHeroBattleThought(4, "No tricks to save you this time"));
+            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial11-03".ToLocalized()));
         }
         else if (msg.CardName == "Erase" && _hasPlayedAegis)
         {
-            Message.Publish(new ShowHeroBattleThought(4, "A counter to my best move. Fortunately I'm still impervious"));
+            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial11-04".ToLocalized()));
         }
-        else if (!_hasShowedOutplayHint && _turn == 2 && msg.CardName == "All In" && !_playedAcidCoating)
-        {
-            _hasShowedOutplayHint = true;
-            Message.Publish(new ShowHeroBattleThought(4, "Trying to prevent me from dodging, huh? That sounds like a harmful effect. My Aegis stops that!"));
-        }
+        // Outdated: No Longer Required since All-In does it all
+        // else if (!_hasShowedOutplayHint && _turn == 2 && msg.CardName == "All In" && !_playedAcidCoating)
+        // {
+        //     _hasShowedOutplayHint = true;
+        //     Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial11-05".ToLocalized()));
+        // }
     }
 
     protected override void Execute(WinBattleWithRewards msg) => _hasWon = true;
@@ -62,11 +71,22 @@ public class Tutorial11Orchestrator : OnMessage<StartCardSetupRequested, CardRes
         if (s.Enemies.Length < 1)
             return;
         
-        var aegisCount = s.Enemies[0].Member.Aegis();
-        if (_turn == 2 && aegisCount > 0 && !_turn2AegisShown)
-        {
-            _turn2AegisShown = true;
-            Message.Publish(new ShowHeroBattleThought(4, "HAHAHA! I still have my Aegis. My victory is guaranteed!"));
-        }
+        // Outdated: No Longer Required since All-In does it all
+        //var aegisCount = s.Enemies[0].Member.Aegis();
+        // if (_turn == 2 && aegisCount > 0 && !_turn2AegisShown)
+        // {
+        //     _turn2AegisShown = true;
+        //     Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial11-06".ToLocalized()));
+        // }
     }
+
+    public string[] GetLocalizeTerms() => new[]
+    {
+        "Thoughts/Tutorial11-01",
+        "Thoughts/Tutorial11-02",
+        "Thoughts/Tutorial11-03",
+        "Thoughts/Tutorial11-04",
+        "Thoughts/Tutorial11-05",
+        "Thoughts/Tutorial11-06",
+    };
 }

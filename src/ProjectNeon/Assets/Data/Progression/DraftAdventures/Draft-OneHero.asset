@@ -14,6 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 11
   lockConditionExplanation: 
+  unlockedOverrides: []
+  lockedOverrides:
+  - UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: 854b6389230823a44a1cd3d839d140d8, type: 2}
   prerequisiteCompletedAdventures:
   - {fileID: 11400000, guid: 2642b7482bf88674eab3a4e5bfa7c021, type: 2}
   - {fileID: 11400000, guid: 85a74b866596e1446807f93ec596c90b, type: 2}
@@ -22,18 +27,20 @@ MonoBehaviour:
   stages: []
   v5Stages:
   - {fileID: 11400000, guid: 89ba0a1f6c08d06428ba70b95604b1ba, type: 2}
-  adventureTitle: Solo - Hero Corp Run
-  mapAdventureTitle: Hero Corp Run
-  adventureImage: {fileID: 21300000, guid: baba8ba2d9900964a8e3773039fbb4da, type: 3}
+  adventureTitle: Solo - {[t:Adventures/Corp Run]}
+  mapAdventureTitle: Hero - {[t:Adventures/Corp Run]}
+  adventureImage: {fileID: 21300000, guid: 589e8ccc0ba49334da2545bd0c7c3b21, type: 3}
   partySize: 1
   allowedHeroesDescription: Any One Hero
   requiredHeroes: []
   bannedHeroes: []
+  bannedLeaders: []
   fixedStartingHeroes: []
   baseNumberOfCardCycles: 0
   rewardCreditsPerPowerLevel: 0
   xpPerPowerLevel: 0
   bonusXpFactor: 0.7
+  maxHeroLevel: 99
   normalBattleRewards: {fileID: 11400000, guid: e216879e4f4b37a4e9cc43eff3f619e6, type: 2}
   eliteBattleRewards: {fileID: 11400000, guid: e216879e4f4b37a4e9cc43eff3f619e6, type: 2}
   startingClinicVouchers: 1
@@ -44,4 +51,8 @@ MonoBehaviour:
     Fight through 10 battles culminating in facing one of the adventure bosses"
   defeatConclusion: You lost the draft.
   victoryConclusion: You won the draft.
+  shouldRollCreditsBeforeConclusionScene: 0
   mapDeckbuildingEnabled: 1
+  allowDifficultySelection: 1
+  bossSelection: 1
+  includeInProgress: 0

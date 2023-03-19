@@ -6,5 +6,6 @@ public class NoEnemiesAreDefenseless : StaticCardCondition
     public override bool ConditionMet(CardConditionContext ctx)
         => ctx.AllEnemies(x => x.Stealth() > 0 || x.Armor() > 0 || x.Resistance() > 0);
     
-    public override string Description => "No enemy is defenseless";
+    public override string Description => "Thoughts/Condition018".ToLocalized();
+    public override string[] GetLocalizeTerms() => new [] { "Thoughts/Condition018" };
 }

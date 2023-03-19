@@ -12,12 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffbe45dc9ae4641b25ee3ad47d7a21b, type: 3}
   m_Name: 9Cutscene_DizzyingDialect
   m_EditorClassIdentifier: 
+  id: 52
+  isObsolete: 0
   isPrimaryCutscene: 0
   setting: {fileID: 11400000, guid: 3c274cf6f7957f348b799ba9c65584d4, type: 2}
   skipTrueStates: []
   skipFalseStates: []
+  onFinished:
+    m_PersistentCalls:
+      m_Calls: []
   segments:
-  - SegmentType: 1
+  - Id: 451
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: Weldon
@@ -27,6 +33,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -35,16 +45,21 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 452
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: Hacker
       Variable: {fileID: 0}
-    Text: 'Anton: Rising Medigeneix Corp Exec.'
+    Text: 'Anton: Rising {[t:MegaCorps/Medigeneix]} Corp Exec.'
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -53,35 +68,21 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 453
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
-      ConstantValue: Hacker
-      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: With his dizzying dialect, how is he rising in ranks at Medigeneix?
-    FloatAmount:
-      UseConstant: 0
-      ConstantValue: 0
-      FloatVariable: {fileID: 0}
-    StoryEvent: {fileID: 0}
-    RequiredStates: []
-    ForbiddenStates: []
-    Or: 0
-    StoryState:
-      UseConstant: 1
-      ConstantValue: 
-      Variable: {fileID: 0}
-  - SegmentType: 1
-    DialogueCharacterId:
-      UseConstant: 1
       ConstantValue: Hacker
       Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: I can't tell you jack, except this "curated" data, which is as accurate
-      as NNZ's stories.
+    Text: With his dizzying dialect, how is he rising in ranks at {[t:MegaCorps/Medigeneix]}?
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -90,7 +91,32 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 454
+    SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 1
+      ConstantValue: Hacker
+      Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
+    Text: I can't tell you jack, except this curated" data, which is as accurate
+      as {[t:MegaCorps/NNZ]}'s stories."
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - Id: 455
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: Weldon
@@ -100,6 +126,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -108,16 +138,21 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 456
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: Hacker
       Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: Then just break into Medigeneix's illegal benefactor datastore.
+    Text: Then just break into {[t:MegaCorps/Medigeneix]}'s illegal benefactor datastore.
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -126,7 +161,8 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 457
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: Weldon
@@ -136,6 +172,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -144,7 +184,8 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 458
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: Weldon
@@ -154,6 +195,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []

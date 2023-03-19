@@ -1,13 +1,13 @@
 ﻿public interface EnemyType
 {
-    string Name { get; }
+    public int EnemyId { get; }
     EnemyTier Tier { get; }
     int PowerLevel { get; }
 }
 
 public class InMemoryEnemyType : EnemyType
 {
-    public string Name { get; set; }
+    public int EnemyId => 0;
     public EnemyTier Tier { get; set; }
     public int PowerLevel { get; set; }
 }

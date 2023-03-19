@@ -15,14 +15,19 @@ public class AdventureProgressV5 : AdventureProgressBase
     [SerializeField] private int rngSeed = Rng.NewSeed();
     [SerializeField] private Difficulty difficulty;
 
+    private const bool ShouldDebug = false; 
     private DictionaryWithDefault<string, bool> _storyStates = new DictionaryWithDefault<string, bool>(false);
 
     public override int AdventureId => currentAdventure.Adventure.Id;
-    public override string AdventureName => currentAdventure.Adventure.MapTitle;
+    public override string AdventureNameTerm => currentAdventure.Adventure.MapTitleTerm;
     public override CurrentGlobalEffects GlobalEffects => currentGlobalEffects;
     public override int CurrentStageProgress => currentSegmentIndex;
     public override int CurrentChapterNumber => currentChapterIndex + 1;
     private float Progress => CurrentStageProgress < 1 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCount;
+    public override int TotalSegmentsToBoss => CurrentChapter.SegmentCountToBoss;
+
+    public override int TotalNonAutoSegmentsToBoss => CurrentChapter.NonAutoSegmentCountToBoss;
+    public override int CurrentNonAutoStageProgress => CurrentChapter.Segments.Take(CurrentStageProgress).Count(s => !s.ShouldAutoStart);
     private bool IsFinalStage => currentChapterIndex >= currentAdventure.Adventure.StagesV5.Length - 1;
     private bool IsLastSegmentOfStage => currentSegmentIndex + 1 == CurrentStageLength;
     public override GameAdventureProgressType AdventureType => GameAdventureProgressType.V5;
@@ -30,8 +35,8 @@ public class AdventureProgressV5 : AdventureProgressBase
     public override bool UsesRewardXp => false;
     public override float BonusXpLevelFactor => currentAdventure.Adventure.BonusXpFactor;
     public override bool IsFinalStageSegment => IsFinalStage && IsLastSegmentOfStage;
-    public override bool IsFinalBoss => IsFinalStage && CurrentStageSegment.MapNodeType == MapNodeType.Boss;
-    public override float ProgressToBoss => CurrentStageProgress < 1 ? 0f : (float)CurrentStageProgress / CurrentChapter.SegmentCountToBoss;
+    public override bool IsFinalBoss => IsFinalStage && currentSegmentIndex < CurrentStageLength && CurrentStageSegment.MapNodeType == MapNodeType.Boss;
+    public override float ProgressToBoss => CurrentStageProgress < 1 ? 0f : (float)CurrentNonAutoStageProgress / TotalNonAutoSegmentsToBoss;
     private int CurrentStageLength => CurrentChapter.SegmentCount;    
     public override float[] RisingActionPoints => CurrentChapter.Segments
         .Select((x, i) => (x, i))
@@ -42,6 +47,8 @@ public class AdventureProgressV5 : AdventureProgressBase
         get => difficulty;
         set => difficulty = value;
     }
+    
+    public override HashSet<string> StoryStates => new HashSet<string>(_storyStates.Where(x => x.Value).Select(x => x.Key));
     
     public HybridStageV5 CurrentChapter
     {
@@ -93,6 +100,7 @@ public class AdventureProgressV5 : AdventureProgressBase
         currentMap.SetMap(CurrentChapter.Map);
         rngSeed = ConsumableRngSeed.GenerateNew().Peek.Value;
         difficulty = library.DefaultDifficulty;
+        FinalBoss = null;
         Log.Info($"Init Adventure. {this}");
     }
     
@@ -107,7 +115,7 @@ public class AdventureProgressV5 : AdventureProgressBase
         try
         {
             return
-                $"Adventure: {currentAdventure.Adventure.Id} {currentAdventure.Adventure.Title}. Stage: {currentChapterIndex}. StageProgress: {Progress}." +
+                $"Adventure: {currentAdventure.Adventure.Id} {currentAdventure.Adventure.TitleTerm.ToEnglish()}. Stage: {currentChapterIndex}. StageProgress: {Progress}." +
                 $"Chapter: {currentChapterIndex}/{currentAdventure.Adventure.StagesV5.Length}. Segment: {currentSegmentIndex}. Rng: {RngSeed}";
         }
         catch (Exception e)
@@ -174,7 +182,7 @@ public class AdventureProgressV5 : AdventureProgressBase
              RngSeed = rngSeed,
              States = _storyStates.Keys.ToArray(),
              StateValues = _storyStates.Values.ToArray(),
-             DifficultyId = difficulty == null ? difficulty.Id : 0
+             DifficultyId = difficulty != null ? difficulty.Id : 0
         };
     
     public bool InitAdventure(GameAdventureProgressData d, Adventure adventure)
@@ -195,9 +203,19 @@ public class AdventureProgressV5 : AdventureProgressBase
         currentSegmentIndex++;
         rngSeed = Rng.NewSeed();;
         AdvanceStageIfNeeded();
-        AllMetrics.PublishAdventureProgress(AdventureName, Progress);
+        AllMetrics.PublishAdventureProgress(AdventureNameTerm.ToEnglish(), Progress);
+    }
+    
+    public override void SetStoryState(string state, bool value) => _storyStates[state] = value;
+    public override bool IsTrue(string state)
+    {
+        if (ShouldDebug)
+            _storyStates.ForEach(s => Log.Info($"{s.Key} - {s.Value}"));
+        if (ShouldDebug && _storyStates.Count == 0)
+            Log.Info("No Story States");
+        return _storyStates[state];
     }
 
-    public override void SetStoryState(string state, bool value) => _storyStates[state] = value;
-    public override bool IsTrue(string state) => _storyStates[state];
+    public void ClearStoryState() => _storyStates = new DictionaryWithDefault<string, bool>(false);
+    public override Boss FinalBoss { get; set; }
 }

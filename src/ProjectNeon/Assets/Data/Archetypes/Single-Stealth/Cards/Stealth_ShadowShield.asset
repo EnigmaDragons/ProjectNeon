@@ -20,6 +20,12 @@ MonoBehaviour:
     <b>Sneaky:</b> Lose all <b>Power</b> to
     gain <b>1 Armor & 1 Resistance</b> for each lost this turn'
   typeDescription: {fileID: 0}
+  descriptionV2:
+    text: 'Enter <b>Stealth</b>
+
+      <b>Sneaky:</b> Lose all <b>Power</b> to gain
+      <b>1 Armor & 1 Resistance</b> for each lost this turn'
+    formatArgs: []
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -46,6 +52,9 @@ MonoBehaviour:
   archetypes:
   - {fileID: 11400000, guid: 1e6b060bb2d10434c8d325b3765125dd, type: 2}
   highlightCondition: []
-  unhighlightCondition: []
+  unhighlightCondition:
+  - {fileID: 11400000, guid: 4789d19598838464e801c47edc10315a, type: 2}
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 0

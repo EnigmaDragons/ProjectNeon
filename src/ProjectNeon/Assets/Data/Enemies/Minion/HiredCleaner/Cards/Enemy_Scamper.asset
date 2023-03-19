@@ -15,8 +15,13 @@ MonoBehaviour:
   id: 199
   customName: 
   art: {fileID: 21300000, guid: ffae6c64e7f487f4e95edbfe728445f2, type: 3}
-  description: '{Auto}'
+  description: Gives {E[0]}. Gives {E[1]} {D[1]}
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
+  descriptionV2:
+    text: Gives {0}. Gives {1} Attack for 3 turns
+    formatArgs:
+    - '{E[0]}'
+    - '{E[1]}'
   tags: 26000000
   speed: 0
   isSinglePlay: 0

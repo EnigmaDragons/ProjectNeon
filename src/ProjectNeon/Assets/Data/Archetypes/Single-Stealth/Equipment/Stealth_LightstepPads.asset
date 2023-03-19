@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 78
   displayName: 
-  description: 'Start of Battle: Enter Stealth'
+  description: 'Start of Battle: Enter {[t:Keywords/Stealth]}'
   corp: {fileID: 11400000, guid: 635ceb600e2d3cc4eae947d02d89a417, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 1e6b060bb2d10434c8d325b3765125dd, type: 2}
@@ -26,7 +26,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 58
+  - Id: 0
+    EffectType: 58
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -57,17 +58,20 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
   requiresStatType: 
   excludeIfPartyHasStatType: 

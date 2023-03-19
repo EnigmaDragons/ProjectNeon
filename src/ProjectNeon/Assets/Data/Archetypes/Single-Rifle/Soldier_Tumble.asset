@@ -17,7 +17,11 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: 545418b3f8ac07540ab49ea286420b12, type: 3}
   description: "Deal {E[0]}. \n\nYou gain <b>1 Dodge</b>"
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
-  tags: 
+  descriptionV2:
+    text: "Deal {0}. \n\nYou gain <b>1 Dodge</b>"
+    formatArgs:
+    - '{E[0]}'
+  tags: 2a000000
   speed: 0
   isSinglePlay: 0
   cost:
@@ -44,5 +48,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fbcb59caa7d5a114f8b9cf6016d20160, type: 2}
   highlightCondition: []
   unhighlightCondition: []
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 0

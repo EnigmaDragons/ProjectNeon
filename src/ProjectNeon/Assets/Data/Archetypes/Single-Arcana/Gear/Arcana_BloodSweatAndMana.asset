@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 42
   displayName: Blood, Sweat & Mana
-  description: 'When Bloodied: Gain 8 Primary Resource'
+  description: 'When {[t:Keywords/Bloodied]}: Gain 8 {[t:Stats/Stat-PrimaryResource]}'
   corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: c5bd5ff6560fc8b4aa3182fd810a7fd0, type: 2}
@@ -29,7 +29,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 74
+  - Id: 10046
+    EffectType: 74
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -45,7 +46,6 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 98b50955354afa9449f0880263e12c38, type: 2}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 12
@@ -61,17 +61,23 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 10
     ReactionEffectScope:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 1
       scope: 1
       cardActions: {fileID: 11400000, guid: b683abeee24548641a964f109c7bfceb, type: 2}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
   designComment: 

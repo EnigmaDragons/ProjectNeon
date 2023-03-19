@@ -17,10 +17,8 @@ MonoBehaviour:
   isDisabled: 0
   bust: {fileID: 21300000, guid: f18c8ffda06ed9f47af6f58de4fc22d1, type: 3}
   body: {fileID: 5099891772863461855, guid: d564330f62806dd4a8b5817c361ab9c9, type: 3}
-  className:
-    UseConstant: 1
-    ConstantValue: Cyberninja
-    Variable: {fileID: 0}
+  className: Cyberninja
+  sex: 2
   materialType: 1
   battleRole: 1
   basic: {fileID: 11400000, guid: ed9200ff6f2d6c148a12ca49ebfef6e0, type: 2}
@@ -33,7 +31,8 @@ MonoBehaviour:
   animationSounds: {fileID: 11400000, guid: c144fd0ef6ecbf548980a8e4d17cfb94, type: 2}
   startingCredits: 100
   complexityRating: 1
-  maxHp: 144
+  adventuresPlayedBeforeUnlocked: 0
+  maxHp: 105
   maxShield: 20
   startingShield: 0
   attack: 10
@@ -52,15 +51,16 @@ MonoBehaviour:
   additionalStartingCards: []
   excludedStartingCards:
   - {fileID: 11400000, guid: 0a350c06ea355ca458e9b8bf029d94ee, type: 2}
-  - {fileID: 11400000, guid: 7655f22dc43391a4ca194a3ff7a5e683, type: 2}
+  - {fileID: 11400000, guid: 4513d43ff21494045aeeb14e83373804, type: 2}
   flavorDetails:
     RoleDescription: Striker
     HeroDescription: Strip enemies of their defenses, exploit their vulnerabilities
       and deal loads of blade damage.
-    BackStory: 'Miyara''s parents had a hard time managing money and so they accrued
-      a ton of debt. When they tragically died in a construction accident, Miyara
-      inherited their credit score and lost her job, becoming forever unemployable.
-      As an outcast, Miyara found her way after meeting other disenfranchised souls
-      and now is an activist for overthrowing the InfoCapitalist system. '
+    BackStory: '{[t:Heroes/HeroName13]}''s parents had a hard time managing money
+      and so they accrued a ton of debt. When they tragically died in a construction
+      accident, {[t:Heroes/HeroName13]} inherited their credit score and lost her
+      job, becoming forever unemployable. As an outcast, {[t:Heroes/HeroName13]}
+      found her way after meeting other disenfranchised souls and now is an activist
+      for overthrowing the InfoCapitalist system.'
   levelUpTree: {fileID: 0}
   levelUpTreeV4: {fileID: 11400000, guid: a07676d2b055fb74483983f5540555d8, type: 2}

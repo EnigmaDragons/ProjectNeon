@@ -4,7 +4,7 @@ using UnityEngine;
 [Serializable]
 public class TickerEntry
 {
-    [TextArea(1, 2), SerializeField] private string text;
+    [SerializeField] private string term;
 
-    public string Text => text;
+    public string Term => $"News/{term}";
 }

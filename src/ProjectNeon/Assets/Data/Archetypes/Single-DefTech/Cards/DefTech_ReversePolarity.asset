@@ -19,7 +19,16 @@ MonoBehaviour:
 
 
     Lose {E[1]} your Shield'
-  typeDescription: {fileID: 11400000, guid: 26f514ade584bd04da4a542740e478bb, type: 2}
+  typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  descriptionV2:
+    text: 'Deal {0} <i>({1})</i>
+
+
+      Lose {2} your Shield'
+    formatArgs:
+    - '{E[0]}'
+    - '{F[0]}'
+    - '{E[1]}'
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -40,7 +49,11 @@ MonoBehaviour:
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 3b03a1e83bfdbec43a1fa15d87d2f7fa, type: 2}
-  highlightCondition: []
-  unhighlightCondition: []
+  highlightCondition:
+  - {fileID: 11400000, guid: 2f19dd3eca528bd4aa4d769dcacbd98c, type: 2}
+  unhighlightCondition:
+  - {fileID: 11400000, guid: 8157dbf16b8e74148b5be26cb2969b11, type: 2}
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 0

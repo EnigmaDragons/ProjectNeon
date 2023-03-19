@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Hero/LevelUpsV4/HeroPermanentAugmentOptions")]
-public class HeroPermanentAugmentOptions : LevelUpOptions
+public class HeroPermanentAugmentOptions : LevelUpOptions, ILocalizeTerms
 {
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private EquipmentPool allEquipmentPool;
@@ -11,7 +11,7 @@ public class HeroPermanentAugmentOptions : LevelUpOptions
     [SerializeField] private EquipmentPresenter customPresenterPrototype;
     [SerializeField] private StaticEquipment[] choiceOverride;
 
-    public override string ChoiceDescription => "Choose an Augment";
+    public override string ChoiceDescriptionTerm => "LevelUps/ChooseAugment";
 
     public override LevelUpOption[] Generate(Hero h)
     {
@@ -38,7 +38,7 @@ public class HeroPermanentAugmentOptions : LevelUpOptions
     {
         var archetypes = h.Archetypes;
         var possible = allEquipmentPool.Possible(EquipmentSlot.Augmentation, rarities, h.Archetypes, h.Stats.KeyStatTypes(), party.KeyStats).ToList();
-        Log.Info($"{h.Name}: {possible.Count} Possible Level Up Augment Options - {string.Join(", ", possible.Select(e => e.Name))}");
+        Log.Info($"{h.NameTerm().ToEnglish()}: {possible.Count} Possible Level Up Augment Options - {string.Join(", ", possible.Select(e => e.Name))}");
         
         // Pick one augment matching the character's Archetypes
         var archMatchingAugment = allEquipmentPool.All
@@ -58,4 +58,7 @@ public class HeroPermanentAugmentOptions : LevelUpOptions
 
         return finalSet.ToArray();
     }
+
+    public string[] GetLocalizeTerms()
+        => new[] {ChoiceDescriptionTerm};
 }

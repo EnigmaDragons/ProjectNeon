@@ -13,29 +13,39 @@ MonoBehaviour:
   m_Name: ShouldTheyHaveChoice
   m_EditorClassIdentifier: 
   id: 8
+  storyText: Should they get a choice? Should that choice be incentivized?
   settingType: 0
   corp: {fileID: 0}
   choices:
-  - Choice: 1
+  - Id: 27
+    Choice: No choice, their organs will save someone
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: aec8f26b58a4c6349880b39a6121d7f2, type: 2}
-      ResultNumber: 1
       StoryText: 
-  - Choice: 2
+  - Id: 28
+    Choice: It is their choice, but offering them money for their loved ones is acceptable
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 32e87b6a4147eb4498db500a8e456cf5, type: 2}
-      ResultNumber: 1
       StoryText: 
-  - Choice: 3
+  - Id: 29
+    Choice: Is is their choice and it shouldn't be tampered with money
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 8606c5b7d224c4a4697c064c61c5c00c, type: 2}
-      ResultNumber: 1
       StoryText: 
   inCutscene: 1
   isMultiChoice: 0

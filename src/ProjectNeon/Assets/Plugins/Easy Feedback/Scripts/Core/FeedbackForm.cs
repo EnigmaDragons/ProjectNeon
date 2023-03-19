@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.IO;
+using System.Linq;
 using AeLa.EasyFeedback.APIs;
 using AeLa.EasyFeedback.Utility;
 using UnityEngine;
@@ -101,6 +102,7 @@ namespace AeLa.EasyFeedback
         /// </summary>
         public bool IsOpen => Form.gameObject.activeSelf;
 
+        private bool _wasOpen;
 
         public void Awake()
         {
@@ -125,6 +127,12 @@ namespace AeLa.EasyFeedback
                      && IsOpen
                      && !submitting)
                 Hide();
+            if (!_wasOpen && IsOpen && ssCoroutine == null)
+            {
+                InitCurrentReport();
+                ssCoroutine = StartCoroutine(ScreenshotAndOpenForm());
+            }
+            _wasOpen = IsOpen;
         }
 
         public void InitTrelloAPI()
@@ -138,6 +146,7 @@ namespace AeLa.EasyFeedback
         /// </summary>
         private void InitCurrentReport()
         {
+            ssCoroutine = null;
             CurrentReport = new Report();
         }
 
@@ -178,7 +187,7 @@ namespace AeLa.EasyFeedback
                     CurrentReport.Title ?? "[no summary]",
                     CurrentReport.ToString() ?? "[no detail]",
                     CurrentReport.Labels,
-                    CurrentReport.List.id
+                    CurrentReport.List.id ?? "63388da4f1861e008374d7ab"
                 );
                 
                 // send up attachments 
@@ -341,11 +350,12 @@ namespace AeLa.EasyFeedback
             Cursor.visible = initCursorVisible;
             Cursor.lockState = initCursorLockMode;
         }
-
+        
         private IEnumerator ScreenshotAndOpenForm()
         {
-            if (IncludeScreenshot)
+            if (IncludeScreenshot && !CurrentReport.Attachments.Any(a => a.Name.Equals("screenshot.png")))
             {
+                Form.gameObject.SetActive(false);
 	            // ScreenCapture.CaptureScreenshot doesn't seem to work properly
 	            // see: https://answers.unity.com/questions/1655518/screencapturecapturescreenshotastexture-is-making.html
 	            yield return new WaitForEndOfFrame();

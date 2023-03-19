@@ -1,3 +1,4 @@
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +9,7 @@ public class CorpWorldArtPresenter : MonoBehaviour
     [SerializeField] private Image backgroundImage;
     [SerializeField] private Image[] logoImages;
     [SerializeField] private TextMeshProUGUI corpNameLabel;
+    [SerializeField] private Localize corpNameLocalize;
     [SerializeField] private Button nextButton;
     [SerializeField] private Button prevButton;
 
@@ -30,7 +32,7 @@ public class CorpWorldArtPresenter : MonoBehaviour
         backgroundImage.sprite = screen.Image;
         var corp = screen.Corp;
         logoImages.ForEach(l => l.sprite = corp.Logo);
-        corpNameLabel.text = screen.LocationTitle;
+        corpNameLocalize.SetTerm(screen.Term);
         corpNameLabel.color = screen.LocationTitleColor;
     }
 }

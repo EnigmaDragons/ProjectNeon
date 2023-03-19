@@ -4,6 +4,14 @@ public class ProgressionHandlerV5 : OnMessage<NodeFinished>
 {
     [SerializeField] private AdventureProgressV5 progress;
     [SerializeField] private CurrentMapSegmentV5 map;
+    [SerializeField] private BoolVariable skippingStory;
+    
+    [SerializeField] private CurrentAdventureProgress adventureProgress;
+    [SerializeField] private CurrentAdventure adventure;
+    [SerializeField] private Navigator navigator;
+    [SerializeField] private AdventureConclusionState conclusion;
+    [SerializeField] private PartyAdventureState partyState;
+    [SerializeField] private CurrentBoss boss;
 
     private void Start()
     {
@@ -24,6 +32,20 @@ public class ProgressionHandlerV5 : OnMessage<NodeFinished>
     
     private void Go()
     {
+        if (progress.CurrentStageSegment.ShouldAutoStart && progress.CurrentStageSegment.MapNodeType == MapNodeType.MainStory && skippingStory.Value)
+        {
+            if (progress.IsFinalStageSegment)
+            {
+                GameWrapup.NavigateToVictoryScreen(adventureProgress, adventure, boss, navigator, conclusion, partyState.Heroes);
+                return;
+            }
+            map.CompleteCurrentNode();
+            progress.Advance();
+            map.ClearSegment();
+            Go();
+            return;
+        }
+
         Log.Info("V5 - Regenerating Map");
         Message.Publish(new RegenerateMapRequested());
         Message.Publish(new AutoSaveRequested());

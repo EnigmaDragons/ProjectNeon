@@ -1,10 +1,12 @@
 using System;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 
 public class TickerItem : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private Localize localize;
 
     private const float TickerSpeed = 1.5f;
     
@@ -14,11 +16,11 @@ public class TickerItem : MonoBehaviour
     private Action _onFinished = () => { };
     private float _width;
     
-    public TickerItem Initialized(string newsItem, Action onFinished)
+    public TickerItem Initialized(string newsItemTerm, Action onFinished)
     {
         if (_debugLog)
-            Log.Info($"Display Ticker News Item - {newsItem}");
-        text.text = newsItem;
+            Log.Info($"Display Ticker News Item - {newsItemTerm.ToEnglish()}");
+        localize.SetTerm(newsItemTerm);
         _onFinished = onFinished;
         InitPosition();
         this.ExecuteAfterDelay(0.1f, () =>
@@ -38,7 +40,7 @@ public class TickerItem : MonoBehaviour
     public TickerItem Hidden()
     {
         InitPosition();
-        text.text = "";
+        localize.SetFinalText("");
         return this;
     }
 

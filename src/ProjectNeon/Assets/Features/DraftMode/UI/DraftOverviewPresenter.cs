@@ -1,18 +1,19 @@
 using System.Collections.Generic;
 using System.Linq;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DraftOverviewPresenter : OnMessage<DraftStateUpdated>
+public class DraftOverviewPresenter : OnMessage<DraftStateUpdated>, ILocalizeTerms
 {
     [SerializeField] private DraftState draftState;
     [SerializeField] private PartyAdventureState party;
-    [SerializeField] private TextMeshProUGUI stepLabel;
+    [SerializeField] private Localize stepLabel;
     [SerializeField] private DecklistUIController decklistUi;
     [SerializeField] private Button viewHeroDetailsButton;
     [SerializeField] private Image heroBust;
-    [SerializeField] private TextMeshProUGUI heroName;
+    [SerializeField] private Localize heroName;
     [SerializeField] private GameObject currentHeroUi;
     [SerializeField] private DraftHeroButton[] heroes;
     [SerializeField] private EquipmentPresenter[] gear;
@@ -29,7 +30,7 @@ public class DraftOverviewPresenter : OnMessage<DraftStateUpdated>
     
     protected override void Execute(DraftStateUpdated msg)
     {
-        stepLabel.text = $"Draft Step: {msg.StepNumber}/{msg.TotalStepsCount}";
+        stepLabel.SetFinalText($"{"Menu/DraftStep".ToLocalized()}: {msg.StepNumber}/{msg.TotalStepsCount}");
         Render();
     }
 
@@ -103,7 +104,7 @@ public class DraftOverviewPresenter : OnMessage<DraftStateUpdated>
         
         var currentHero = party.Heroes[draftState.HeroIndex];
         heroBust.sprite = currentHero.Character.Bust;
-        heroName.text = currentHero.Name;
+        heroName.SetTerm(currentHero.NameTerm);
     }
     
     private void ViewHeroDetails()
@@ -114,4 +115,7 @@ public class DraftOverviewPresenter : OnMessage<DraftStateUpdated>
         var currentHero = party.Heroes[draftState.HeroIndex];
         Message.Publish(new ShowHeroDetailsView(currentHero, Maybe<Member>.Missing()));
     }
+
+    public string[] GetLocalizeTerms()
+        => new[] { "Menu/DraftStep" };
 }

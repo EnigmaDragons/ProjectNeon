@@ -21,6 +21,17 @@ MonoBehaviour:
     Gain <b>{E[1]} & {E[2]} Armor & {E[3]} Resistance
     & {E[4]} Shields</b>'
   typeDescription: {fileID: 0}
+  descriptionV2:
+    text: 'Deal {0}
+
+
+      Gain <b>{1} & {2} Armor & {3} Resistance & {4} Shields</b>'
+    formatArgs:
+    - '{E[0]}'
+    - '{E[1]}'
+    - '{E[2]}'
+    - '{E[3]}'
+    - '{E[4]}'
   tags: 0400000003000000
   speed: 0
   isSinglePlay: 0
@@ -44,7 +55,8 @@ MonoBehaviour:
   swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
-  archetypes: []
+  archetypes:
+  - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}
   highlightCondition: []
   unhighlightCondition: []
   isWIP: 0

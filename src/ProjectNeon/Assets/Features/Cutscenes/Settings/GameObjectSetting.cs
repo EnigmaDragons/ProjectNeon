@@ -5,6 +5,8 @@ public class GameObjectSetting : CutsceneSetting
 {
     [SerializeField] private string settingDisplayName;
     [SerializeField] private GameObject battlefield;
+
+    public GameObject Battlefield => battlefield;
     
     public override string GetDisplayName() 
         => string.IsNullOrWhiteSpace(settingDisplayName) ? name.WithSpaceBetweenWords() : settingDisplayName;

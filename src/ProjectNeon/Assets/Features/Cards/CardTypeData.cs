@@ -6,10 +6,13 @@ public interface CardTypeData
 {
     int Id { get; }
     string Name { get; }
+    string NameTerm { get; }
     IResourceAmount Cost { get; }
     CardSpeed Speed { get; }
     Sprite Art  { get; }
     string Description  { get; }
+    string DescriptionTerm { get; }
+    CardDescriptionV2 DescriptionV2 { get; }
     HashSet<CardTag> Tags  { get; }
     string TypeDescription  { get; }
     CardActionSequence[] ActionSequences  { get; }
@@ -19,6 +22,8 @@ public interface CardTypeData
     HashSet<string> Archetypes { get; }
     Maybe<CardCondition> HighlightCondition { get; }
     Maybe<CardCondition> UnhighlightCondition { get; }
+    Maybe<TargetedCardCondition> TargetedHighlightCondition { get; }
+    Maybe<TargetedCardCondition> TargetedUnhighlightCondition { get; }
     bool IsSinglePlay { get; }
 }
 
@@ -29,13 +34,19 @@ public static class CardTypeDataExtensions
 
     public static CardActionsData[] Actions(this CardTypeData c) => c.ActionSequences.Select(a => a.CardActions).ToArray();
     
+    public static string LocalizedArchetypeDescription(this CardTypeData c) 
+        => string.Join(" - ", c.Archetypes().Select(Localized.Archetype));
+    
     public static string ArchetypeDescription(this CardTypeData c) => c.Archetypes.None() 
         ? "General" 
         : string.Join(" - ", c.Archetypes.OrderBy(a => a).Select(a => a.WithSpaceBetweenWords()));
+
+    public static string GetArchetypeKey(this CardTypeData c) => string.Join(" + ", c.Archetypes());
     
-    public static string GetArchetypeKey(this CardTypeData c) => c.Archetypes.AnyNonAlloc() 
-            ? string.Join(" + ", c.Archetypes.OrderBy(a => a)) 
-            : "General";
+    private static List<string> Archetypes(this CardTypeData c) =>
+        c.Archetypes.AnyNonAlloc() 
+            ? c.Archetypes.OrderBy(a => a).ToList() 
+            : new List<string>{"General"};
     
     public static Card CreateInstance(this CardTypeData c, int id, Member owner) => new Card(id, owner, c, Maybe<Color>.Missing(), Maybe<Sprite>.Missing());
     public static Card CreateInstance(this CardTypeData c, int id, Member owner, Maybe<Color> tint, Maybe<Sprite> bust) => new Card(id, owner, c, tint, bust);
@@ -69,7 +80,7 @@ public static class CardTypeDataExtensions
 
     public static Card ToNonBattleCard(this CardTypeData c, Hero hero)
         => ToNonBattleCard(c, hero.Character, hero.Stats);
-    
+
     public static Card ToNonBattleCard(this CardTypeData c, HeroCharacter hero, IStats heroStats) 
         => new Card(-1, hero.AsMemberForLibrary(heroStats), c, c.NonBattleTint(hero), c.NonBattleBust(hero));
 
@@ -78,4 +89,12 @@ public static class CardTypeDataExtensions
     
     private static Maybe<Sprite> NonBattleBust(this CardTypeData c, HeroCharacter h)
         => c.Archetypes.AnyNonAlloc() ? new Maybe<Sprite>(h.Bust) : Maybe<Sprite>.Missing();
+
+    public static CardType[] ReferencedCards(this CardTypeData c)
+    {
+        var list = new List<CardType>();
+        c.ChainedCard.IfPresentAndMatches(x => x is CardType, x => list.Add((CardType)x));
+        c.SwappedCard.IfPresentAndMatches(x => x is CardType, x => list.Add((CardType)x));
+        return list.ToArray();
+    }
 }

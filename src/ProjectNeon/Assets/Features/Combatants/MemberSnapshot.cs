@@ -3,16 +3,16 @@ using System;
 public sealed class MemberSnapshot
 {
     public int Id { get; }
-    public string Name { get; }
-    public string Class { get; }
+    public string NameTerm { get; }
+    public string ClassTerm { get; }
     public TeamType TeamType { get; }
     public MemberStateSnapshot State { get; }
 
-    public MemberSnapshot(int memberId, string name, string memberClass, TeamType teamType, MemberStateSnapshot stateSnapshot)
+    public MemberSnapshot(int memberId, string nameTerm, string memberClassTerm, TeamType teamType, MemberStateSnapshot stateSnapshot)
     {
         Id = memberId;
-        Name = name;
-        Class = memberClass;
+        NameTerm = nameTerm;
+        ClassTerm = memberClassTerm;
         TeamType = teamType;
         State = stateSnapshot;
     }

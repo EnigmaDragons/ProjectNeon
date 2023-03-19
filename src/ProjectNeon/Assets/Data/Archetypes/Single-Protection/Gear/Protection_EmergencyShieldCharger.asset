@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 101
   displayName: 
-  description: The first time each hero becomes bloodied, fully charge their shield
+  description: The first time each hero becomes {[t:Keywords/Bloodied]}, fully charge
+    their shield
   corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 52367da7d75fe6940897f666b23ea1a5, type: 2}
@@ -26,7 +27,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 74
+  - Id: 20016
+    EffectType: 74
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -42,7 +44,6 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 41
     ApplyToEachMemberIndividually: 0
     StatusTag: 14
@@ -58,16 +59,24 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
     ReactionConditionType: 10
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 1
       cardActions: {fileID: 11400000, guid: 4a27fe011d377ce4cb188d5866027d17, type: 2}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 

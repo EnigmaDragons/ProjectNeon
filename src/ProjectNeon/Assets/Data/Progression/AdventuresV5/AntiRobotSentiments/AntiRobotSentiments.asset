@@ -13,7 +13,12 @@ MonoBehaviour:
   m_Name: AntiRobotSentiments
   m_EditorClassIdentifier: 
   id: 14
-  lockConditionExplanation: Unlocked Later In Early Access
+  lockConditionExplanation: 
+  unlockedOverrides:
+  - UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: 854b6389230823a44a1cd3d839d140d8, type: 2}
+  lockedOverrides: []
   prerequisiteCompletedAdventures:
   - {fileID: 11400000, guid: d53c610d05ca7d04a91f30e014f1de10, type: 2}
   mode: 0
@@ -28,9 +33,11 @@ MonoBehaviour:
   allowedHeroesDescription: Any 3 Heroes
   requiredHeroes: []
   bannedHeroes: []
+  bannedLeaders:
+  - {fileID: 11400000, guid: 9eeb14c58d1e86a4da85a0c293211014, type: 2}
   fixedStartingHeroes: []
   baseNumberOfCardCycles: 0
-  rewardCreditsPerPowerLevel: 0.3
+  rewardCreditsPerPowerLevel: 0.4
   xpPerPowerLevel: 0
   bonusXpFactor: 0.34
   maxHeroLevel: 99
@@ -39,14 +46,22 @@ MonoBehaviour:
   startingClinicVouchers: 1
   battleRewardClinicVouchers: 1
   numOfImplantOptions: 4
-  story: "ZantoCorp is one of the biggest corporations in Metroplex Zero and arguably
-    the most powerful MegaCorp in the ICC. They specialize in advertising, surveillance,
-    and information channels. \n\nOne thing that makes ZantoCorp unique is their
-    hiring policy. ZantoCorp is famous for its slogan: \"We hire only humans!\" \n\nBut
-    is this really meant to be pro-human or is it anti-android? There are rumors
-    that someone high up in the corporate hierarchy wants to get rid of androids
-    once and for all. \n\nFind out what is going on at ZantoCorp!\r"
-  defeatConclusion: 
-  victoryConclusion: 
+  story: "{[t:MegaCorps/ZantoCorp]} is one of the biggest corporations in {[t:LocationName]}
+    and arguably the most powerful MegaCorp in the ICC. They specialize in advertising,
+    surveillance, and information channels. \n\nOne thing that makes {[t:MegaCorps/ZantoCorp]}
+    unique is their hiring policy. {[t:MegaCorps/ZantoCorp]} is famous for its slogan:
+    \"We hire only humans!\"\n\nBut is this really meant to be pro-human or is it
+    anti-android? There are rumors that someone high up in the corporate hierarchy
+    wants to get rid of androids once and for all. \n\nFind out what is going on
+    at {[t:MegaCorps/ZantoCorp]}!"
+  defeatConclusion: You lay bleeding out on the ground, reflecting that the only
+    thing that will be left of you is all the data corps like {[t:MegaCorps/ZantoCorp]}
+    illegally collect on you.
+  victoryConclusion: You stopped a robotic nightmare! These corps that are "too big
+    to fail" are also "too big to not fuck up their own projects".
+  shouldRollCreditsBeforeConclusionScene: 1
   mapDeckbuildingEnabled: 1
   allowDifficultySelection: 1
+  bossSelection: 0
+  includeInProgress: 1
+  sharesProgressId: -1

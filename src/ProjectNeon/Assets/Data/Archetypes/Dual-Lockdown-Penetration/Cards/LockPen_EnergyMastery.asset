@@ -18,6 +18,9 @@ MonoBehaviour:
   description: Gain Energy equal to stunned, defenseless, resourceless, & unshielded
     enemies
   typeDescription: {fileID: 0}
+  descriptionV2:
+    text: Gain Energy equal to stunned, defenseless, resourceless, & unshielded enemies
+    formatArgs: []
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -32,6 +35,11 @@ MonoBehaviour:
     cardActions: {fileID: 11400000, guid: 515b98b23d69db943a56fbdb467379c6, type: 2}
     repeatX: 0
     repeatCount: 0
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: 176ac2ba15c61794dbd6017ba84f09cb, type: 2}
+    repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
   swappedCard: {fileID: 0}
   functionalityIssues: 
@@ -39,7 +47,17 @@ MonoBehaviour:
   archetypes:
   - {fileID: 11400000, guid: 9a78785ad807ed4499fd258fc05f8177, type: 2}
   - {fileID: 11400000, guid: 079871761aec52040887b3de1c1a19c4, type: 2}
-  highlightCondition: []
-  unhighlightCondition: []
+  highlightCondition:
+  - {fileID: 11400000, guid: bfaae988113391843a1ddcc344fabdad, type: 2}
+  - {fileID: 11400000, guid: 33bae64901fd7794dbc52964de151e9b, type: 2}
+  - {fileID: 11400000, guid: fde63f620150bc04da415d893562780e, type: 2}
+  - {fileID: 11400000, guid: 02983808ddbc94c4f9f42b9274968533, type: 2}
+  unhighlightCondition:
+  - {fileID: 11400000, guid: 700aa9a85270ba544b458efc0dee6cdf, type: 2}
+  - {fileID: 11400000, guid: 9745a7008929df745ad60fb8fef4d945, type: 2}
+  - {fileID: 11400000, guid: 11b44a3e75c22ea418d6e8d132d2e189, type: 2}
+  - {fileID: 11400000, guid: 4b5634db4d860654dae41dc093947df2, type: 2}
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 0

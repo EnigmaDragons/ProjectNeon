@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Tutorial3Orchestrator : OnMessage<StartCardSetupRequested, TurnStarted, CardResolutionFinished, WinBattleWithRewards, MemberUnconscious>
+public class Tutorial3Orchestrator : OnMessage<StartCardSetupRequested, TurnStarted, CardResolutionFinished, WinBattleWithRewards, MemberUnconscious, ShowCurrentTutorialAgain>, ILocalizeTerms
 {
     private const string _callerId = "Tutorial3Orchestrator";
 
@@ -30,9 +30,17 @@ public class Tutorial3Orchestrator : OnMessage<StartCardSetupRequested, TurnStar
     private IEnumerator ShowTutorialAfterDelay()
     {
         yield return TutorialSettings.BattleTutorialPanelPopupDelay;
+        ShowTutorial();
+    }
+    
+    protected override void Execute(ShowCurrentTutorialAgain msg) => ShowTutorial();
+
+    private void ShowTutorial()
+    {
         if (!_hasWon)
             Message.Publish(new ShowTutorialByName(_callerId));
     }
+
 
     protected override void Execute(TurnStarted msg) => UpdateHealthTotals();
 
@@ -40,36 +48,36 @@ public class Tutorial3Orchestrator : OnMessage<StartCardSetupRequested, TurnStar
     {
         if (msg.MemberId == 1 && (msg.CardName == "Strike" || msg.CardName == "Charged Strike") && mageHealth == battleState.Members[4].State.Hp() && warriorHealth == battleState.Members[5].State.Hp())
         {
-            Message.Publish(new ShowHeroBattleThought(4, "A wasted attack! If only you had used a different type of damage..."));
+            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial03-01".ToLocalized()));
         }
         if (msg.MemberId == 1 && msg.CardName == "Strike" && mageHealth != battleState.Members[4].State.Hp() && !_hitWithPhysicalAttack)
         {
             _hitWithPhysicalAttack = true;
-            Message.Publish(new ShowHeroBattleThought(4, $"Oof! I can't stop your {TextColors.PhysDamageColoredDark("physical damage")}"));
+            Message.Publish(new ShowHeroBattleThought(4, string.Format("Thoughts/Tutorial03-02".ToLocalized(), TextColors.PhysDamageColoredDark("Thoughts/Tutorial03-03".ToLocalized()))));
         }
         if (msg.MemberId == 1 && msg.CardName == "Charged Strike" && warriorHealth != battleState.Members[5].State.Hp() && _hitWithMagicAttack)
         {
             _hitWithMagicAttack = true;
-            Message.Publish(new ShowHeroBattleThought(5, $"Oof! Your {TextColors.MagicDamageColoredDark("magic")} attacks hurt"));
+            Message.Publish(new ShowHeroBattleThought(5, string.Format("Thoughts/Tutorial03-04".ToLocalized(), TextColors.MagicDamageColoredDark("Thoughts/Tutorial03-05".ToLocalized()))));
         }
         var heroHealthChanged = heroHealth != battleState.Members[1].State.Hp();
         if (msg.MemberId == 4 && heroHealthChanged)
         {
-            Message.Publish(new ShowHeroBattleThought(4, $"You have no clue how to resist my {TextColors.MagicDamageColoredDark("magic")} attacks"));
+            Message.Publish(new ShowHeroBattleThought(4, string.Format("Thoughts/Tutorial03-06".ToLocalized(), TextColors.MagicDamageColoredDark("Thoughts/Tutorial03-07".ToLocalized()))));
         }
         if (msg.MemberId == 4 && msg.CardName == "Scorch" && !heroHealthChanged && !_blockedWithResistanceAlready)
         {
             _blockedWithResistanceAlready = true;
-            Message.Publish(new ShowHeroBattleThought(4, "You resisted my entire attack!"));
+            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial03-08".ToLocalized()));
         }
         if (msg.MemberId == 5 && heroHealthChanged)
         {
-            Message.Publish(new ShowHeroBattleThought(5, "Maybe next time bring some armor"));
+            Message.Publish(new ShowHeroBattleThought(5, "Thoughts/Tutorial03-09".ToLocalized()));
         }
         if (msg.MemberId == 5 && msg.CardName == "Devastating Blow" && !heroHealthChanged && !_blockedWithArmorAlready)
         {
             _blockedWithArmorAlready = true;
-            Message.Publish(new ShowHeroBattleThought(5, "Impressive... your armor is strong"));
+            Message.Publish(new ShowHeroBattleThought(5, "Thoughts/Tutorial03-10".ToLocalized()));
         }
         UpdateHealthTotals();
     }
@@ -84,11 +92,11 @@ public class Tutorial3Orchestrator : OnMessage<StartCardSetupRequested, TurnStar
         _hasMadeUnconsciousAllyComment = true;
         if (msg.Member.Id == 4)
         {
-            Message.Publish(new ShowHeroBattleThought(5, "No!!! My Sister!!! \nI'll make you pay for that!"));
+            Message.Publish(new ShowHeroBattleThought(5, "Thoughts/Tutorial03-11".ToLocalized()));
         }
         if (msg.Member.Id == 5)
         {
-            Message.Publish(new ShowHeroBattleThought(4, "Nooooooooo!!! \nBrother! How can this be?!? I'll avenge you!"));
+            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial03-12".ToLocalized()));
         }
     }
 
@@ -98,4 +106,20 @@ public class Tutorial3Orchestrator : OnMessage<StartCardSetupRequested, TurnStar
         mageHealth = battleState.Members[4].State.Hp();
         warriorHealth = battleState.Members[5].State.Hp();
     }
+
+    public string[] GetLocalizeTerms() => new[]
+    {
+        "Thoughts/Tutorial03-01",
+        "Thoughts/Tutorial03-02",
+        "Thoughts/Tutorial03-03",
+        "Thoughts/Tutorial03-04",
+        "Thoughts/Tutorial03-05",
+        "Thoughts/Tutorial03-06",
+        "Thoughts/Tutorial03-07",
+        "Thoughts/Tutorial03-08",
+        "Thoughts/Tutorial03-09",
+        "Thoughts/Tutorial03-10",
+        "Thoughts/Tutorial03-11",
+        "Thoughts/Tutorial03-12",
+    };
 }

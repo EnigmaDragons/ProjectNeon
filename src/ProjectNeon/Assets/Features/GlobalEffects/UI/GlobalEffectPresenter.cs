@@ -1,22 +1,22 @@
-using TMPro;
+using I2.Loc;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class GlobalEffectPresenter : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private TextMeshProUGUI shortDescLabel;
+    [SerializeField] private Localize shortDescLabel;
 
     private GlobalEffect _e;
 
     public void Init(GlobalEffect e)
     {
         _e = e;
-        shortDescLabel.text = e.ShortDescription;
+        shortDescLabel.SetTerm(e.ShortDescriptionTerm);
     }
     
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Message.Publish(new ShowTooltip(transform, _e.FullDescription));
+        Message.Publish(new ShowTooltip(transform.position, _e.FullDescriptionTerm.ToLocalized()));
     }
 
     public void OnPointerExit(PointerEventData eventData)

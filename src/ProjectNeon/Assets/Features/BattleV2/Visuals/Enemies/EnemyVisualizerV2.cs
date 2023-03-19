@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Schema;
 using UnityEngine;
 
 public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequested, ShowHeroBattleThought, SetEnemiesUiVisibility>
@@ -17,7 +18,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
     [ReadOnly, SerializeField] private List<GameObject> active = new List<GameObject>();
     [ReadOnly, SerializeField] private List<EnemyBattleUIPresenter> uis = new List<EnemyBattleUIPresenter>();
     
-    private readonly Dictionary<EnemyInstance, ProgressiveTextRevealWorld> _speech = new Dictionary<EnemyInstance, ProgressiveTextRevealWorld>();
+    private readonly Dictionary<EnemyInstance, I2ProgressiveTextRevealWorld> _speech = new Dictionary<EnemyInstance, I2ProgressiveTextRevealWorld>();
     private List<Tuple<int, Member>> _enemyPositions;
     private bool _enemyVisualsVisible = true;
     private bool _techPointsVisible = true;
@@ -33,6 +34,18 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
             InstantiateEnemyVisuals(enemies[i]);
 
         yield break;
+    }
+
+    public void RandomizeEnemyPositions()
+    {
+        var shuffledEnemies = _enemyPositions.Where(x => x.Item2.IsConscious() && state.GetMaybeTransform(x.Item2.Id).IsPresent).ToArray().Shuffled();
+        for (var i = 0; i < shuffledEnemies.Length; i++)
+        {
+            var x = i * widthBetweenEnemies;
+            var y = rowUsesYAxis ? (i % 2) * rowHeight : 0;
+            var z = !rowUsesYAxis ? (i % 2) * rowHeight : 0;
+            state.GetMaybeTransform(shuffledEnemies[i].Item2.Id).Value.localPosition = transform.localPosition - new Vector3(x, y, z);
+        }
     }
 
     public void Place(List<Tuple<int, Member>> enemyPositions)
@@ -56,37 +69,33 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
             var enemyObject = Instantiate(enemy.Prefab, transform);
             active.Add(enemyObject);
             enemyArea.WithUiTransforms(active.Select(a => a.transform));
-            var speech = enemyObject.GetComponentInChildren<ProgressiveTextRevealWorld>();
+            var speech = enemyObject.GetComponentInChildren<I2ProgressiveTextRevealWorld>();
             if (speech != null)
                 _speech[enemy] = speech;
             return enemyObject;
         }
         catch(Exception e)
         {
-            Log.Error($"Cannot Instantiate {enemy.Name}");
+            Log.Error($"Cannot Instantiate {enemy.NameTerm.ToEnglish()}");
             Log.Error(e);
             return null;
         }
     }
 
-    private GameObject AddEnemy(EnemyInstance enemy, Member member, Vector3 offset)
+    private GameObject AddEnemy(EnemyInstance enemy, Member member, Vector3 offset, Maybe<Member> isReplacing)
     {
         var enemyObject = Instantiate(enemy.Prefab, transform);
         active.Add(enemyObject);
         var t = enemyObject.transform;
-        var i = _enemyPositions.Max(x => x.Item1) + 1;
-        var replacement = _enemyPositions.OrderBy(x => x.Item1).FirstOrDefault(x => !x.Item2.IsConscious());
-        if (replacement != null)
-        {
-            i = replacement.Item1;
-            _enemyPositions.Remove(replacement);
-            _enemyPositions.Add(new Tuple<int, Member>(i, member));
-        }
-        else
-        {
-            _enemyPositions.Add(new Tuple<int, Member>(i, member));
-        }
-        t.localPosition = transform.localPosition - new Vector3(i * widthBetweenEnemies, (i % 2) * rowHeight, (i % 2) == 0 ? 0 : 1) + offset;
+        var iForIndex = _enemyPositions.Where(x => x.Item2.IsConscious()).Max(x => x.Item1) + 1;
+        var iForPositioning = isReplacing.IsPresent
+            ? _enemyPositions.First(x => x.Item2.Id == isReplacing.Value.Id).Item1
+            : iForIndex;
+        _enemyPositions.Add(new Tuple<int, Member>(iForIndex, member));
+        t.localPosition = transform.localPosition - new Vector3(
+            iForPositioning * widthBetweenEnemies, 
+            rowUsesYAxis ? (iForPositioning % 2) * rowHeight : 0, 
+            !rowUsesYAxis ? (iForPositioning % 2) * rowHeight : 0) + offset;
         return enemyObject;
     }
     
@@ -102,44 +111,50 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
 
     private void SetupVisualComponents(GameObject obj, Member member)
     {
-        obj.GetCharacterMouseHover(member.Name).Init(member);
+        obj.InitCharacterMouseHover(member);
 
-        var stealth = obj.GetComponentInChildren<StealthTransparency>();
-        if (stealth == null)
-            Log.Info($"{member.Name} is missing a {nameof(StealthTransparency)}");
+        var stealth = obj.GetComponentsInChildren<StealthTransparency>();
+        if (stealth == null || stealth.Length == 0)
+            Log.Info($"{member.NameTerm.ToEnglish()} is missing a {nameof(StealthTransparency)}");
         else
-            stealth.Init(member);
-        
+            stealth.ForEach(x => x.Init(member));
+
         var stealth2 = obj.GetComponentInChildren<CharacterCreatorStealthTransparency>();
         if (stealth2 == null)
-            Log.Info($"{member.Name} is missing a {nameof(CharacterCreatorStealthTransparency)}");
+            Log.Info($"{member.NameTerm.ToEnglish()} is missing a {nameof(CharacterCreatorStealthTransparency)}");
         else
             stealth2.Init(member);
 
         var shield = obj.GetComponentInChildren<ShieldVisual>();
         if (shield == null)
-            Log.Info($"{member.Name} is missing a {nameof(ShieldVisual)}");
+            Log.Info($"{member.NameTerm.ToEnglish()} is missing a {nameof(ShieldVisual)}");
         else
             shield.Init(member);
         
-        var highlighter = obj.GetComponentInChildren<MemberHighlighter>();
-        if (highlighter == null)
-            Debug.LogError($"{member.Name} is missing a {nameof(MemberHighlighter)}");
-        else
-            highlighter.Init(member);
+        var initables = obj.GetComponentsInChildren<MemberInitable>();
+        if (initables != null)
+            initables.ForEach(x => x.Init(member));
         
-        var tauntEffect = obj.GetComponentInChildren<TauntEffect>();
-        if (tauntEffect == null)
-            Debug.LogError($"{member.Name} is missing a {nameof(TauntEffect)}");
-        else
-            tauntEffect.Init(member);
+        InitRequired<TauntEffect>(member, obj);
+        InitRequired<StunnedDisabledEffect>(member, obj);
+        InitRequired<BlindedEffect>(member, obj);
+        InitRequired<MemberHighlighter>(member, obj);
     }
     
-    public EnemySpawnDetails Spawn(EnemyInstance enemy, Vector3 offset)
+    private void InitRequired<TComponent>(Member m, GameObject character) where TComponent: IMemberUi
     {
-        DevLog.Write($"Spawning {enemy.Name}");
+        var e = character.GetComponentInChildren<TComponent>();
+        if (e == null)
+            Debug.LogError($"{m.NameTerm.ToEnglish()} is missing a {typeof(TComponent).FullName}");
+        else
+            e.Init(m);
+    }
+    
+    public EnemySpawnDetails Spawn(EnemyInstance enemy, Vector3 offset, Maybe<Member> isReplacing)
+    {
+        DevLog.Write($"Spawning {enemy.NameTerm.ToEnglish()}");
         var member = enemy.AsMember(state.GetNextEnemyId());
-        var enemyObject = AddEnemy(enemy, member, offset);
+        var enemyObject = AddEnemy(enemy, member, offset, isReplacing);
         state.AddEnemy(enemy, enemyObject, member);
         SetupEnemyUi(enemy, member, enemyObject.transform);
         SetupVisualComponents(enemyObject, member);
@@ -148,7 +163,8 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
     
     public void Despawn(MemberState enemy)
     {
-        DevLog.Write($"Despawning {enemy.Name}");
+        DevLog.Write($"Despawning {enemy.NameTerm.ToEnglish()}");
+        enemy.HasLeft = true;
         var index = state.GetEnemyIndexByMemberId(enemy.MemberId);
         state.RemoveEnemy(enemy);
         Destroy(active[index]);
@@ -192,7 +208,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
             Message.Publish(new Finished<CharacterAnimationRequested>());
         }
         else
-            StartCoroutine(animator.PlayAnimationUntilFinished(e.Animation.AnimationName, elapsed =>
+            this.SafeCoroutineOrNothing(animator.PlayAnimationUntilFinished(e.Animation.AnimationName, elapsed =>
             {
                 DevLog.Write($"Finished {e.Animation} in {elapsed} seconds.");
                 Message.Publish(new Finished<CharacterAnimationRequested>());
@@ -205,7 +221,7 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
         
         var enemy = state.GetEnemyById(e.MemberId);
         var s = _speech[enemy];
-        s.Display(e.Thought, true, false, () => StartCoroutine(ExecuteAfterDelayRealtime(() =>
+        s.Display(e.Thought, true, false, () => this.SafeCoroutineOrNothing(ExecuteAfterDelayRealtime(() =>
         {
             if (s != null) 
                 s.Hide();
@@ -218,7 +234,11 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
         if (msg.Component == BattleUiElement.EnemyInfo)
         {
             _enemyVisualsVisible = msg.ShouldShow;
-            uis.ForEach(u => u.gameObject.SetActive(msg.ShouldShow));
+            uis.ForEach(u =>
+            {
+                if (u != null && u.gameObject != null) 
+                    u.gameObject.SetActive(msg.ShouldShow);
+            });
         }
         else if (msg.Component == BattleUiElement.EnemyTechPoints)
         {

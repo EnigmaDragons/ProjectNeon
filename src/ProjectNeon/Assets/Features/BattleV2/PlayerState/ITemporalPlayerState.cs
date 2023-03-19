@@ -5,4 +5,6 @@
     bool IsActive { get; }
     void OnTurnStart();
     void OnTurnEnd();
+    IPlayedCard PossiblyRetargeted(BattleState state, IPlayedCard card);
+    
 }

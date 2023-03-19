@@ -15,6 +15,7 @@ MonoBehaviour:
   Actions:
   - type: 30
     battleEffect:
+      Id: 2630
       EffectType: 0
       Conditions: []
       BaseAmount:
@@ -46,6 +47,8 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
@@ -89,8 +92,11 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 31
     battleEffect:
+      Id: 2631
       EffectType: 0
       Conditions: []
       BaseAmount:
@@ -122,6 +128,8 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
@@ -154,19 +162,22 @@ MonoBehaviour:
       animation:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: 827ee69f817df7e479315afc06a743db, type: 2}
+        Variable: {fileID: 11400000, guid: 7ac1315402c6d014e8437676d744023a, type: 2}
       size: 1
       speed: 1
       color:
         UseConstant: 1
-        ConstantValue: {r: 0.03364185, g: 0.322391, b: 0.7924528, a: 1}
+        ConstantValue: {r: 1, g: 1, b: 1, a: 0}
         Variable: {fileID: 0}
       skipWaitingForCompletion: 0
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 1
     battleEffect:
+      Id: 2632
       EffectType: 31
       Conditions: []
       BaseAmount:
@@ -188,7 +199,7 @@ MonoBehaviour:
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 1.45 * Shield
+      Formula: 1.5 * Shield
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
@@ -198,6 +209,8 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
@@ -241,8 +254,11 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 1
     battleEffect:
+      Id: 2633
       EffectType: 80
       Conditions: []
       BaseAmount:
@@ -274,6 +290,8 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
@@ -317,3 +335,5 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0

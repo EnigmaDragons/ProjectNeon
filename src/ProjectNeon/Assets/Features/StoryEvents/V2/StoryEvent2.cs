@@ -4,20 +4,21 @@ using I2.Loc;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "StoryEvent/StoryEvent2")]
-public class StoryEvent2 : ScriptableObject
+public class StoryEvent2 : ScriptableObject, ILocalizeTerms
 {
-    [SerializeField, ReadOnly] public int id;
+    [SerializeField] public int id;
+    [SerializeField] public string storyText;
     [SerializeField] private StorySetting settingType;
     [SerializeField] private StaticCorp corp;
     [SerializeField] private StoryEventChoice2[] choices;
     [SerializeField] private bool inCutscene;
     [SerializeField] private bool isMultiChoice;
 
-    public string DisplayName => new LocalizedString($"Event{id}");
+    public string DisplayNameTerm => $"StoryEvents/Event{id}";
     
     public StorySetting StorySetting => settingType;
     public StaticCorp Corp => corp;
-    public string StoryText => new LocalizedString($"Event{id} Story");
+    public string Term => $"StoryEvents/Event{id}";
     public StoryEventChoice2[] Choices => choices.ToArray();
     public bool InCutscene => inCutscene;
     public bool IsMultiChoice => isMultiChoice;
@@ -27,11 +28,11 @@ public class StoryEvent2 : ScriptableObject
     private static string ToString(StoryEvent2 s)
     {
         var sb = new StringBuilder();
-        sb.Append(s.StoryText);
+        sb.Append(s.Term.ToEnglish());
         sb.AppendLine();
         foreach (var choice in s.Choices)
         {
-            sb.AppendLine($"Choice: {choice.ChoiceText(s.id)}");
+            sb.AppendLine($"Choice: {choice.Term.ToEnglish()}");
             foreach (var resolution in choice.Resolution)
                 if (!resolution.HasContinuation)
                     sb.AppendLine($"Outcome: {resolution.Result}");
@@ -41,4 +42,7 @@ public class StoryEvent2 : ScriptableObject
 
         return sb.ToString();
     }
+
+    public string[] GetLocalizeTerms()
+        => choices.Select(x => x.Term).Concat(Term).ToArray();
 }

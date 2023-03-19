@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7dab33deee9460b8aab4769accdd7a5, type: 3}
+  m_Name: EndingChoice
+  m_EditorClassIdentifier: 
+  id: 11
+  storyText: How will you choose to end this?
+  settingType: 0
+  corp: {fileID: 0}
+  choices:
+  - Id: 15
+    Choice: Activate the virus embedded in all of {[t:LocationName]}'s {[t:MegaCorps/Medigeneix]}
+      clinics
+    Or: 0
+    RequiredStates:
+    - {fileID: 11400000, guid: 657664c4e9236f84785087e7b38ba10f, type: 2}
+    ForbiddenStates: []
+    Resolution:
+    - Chance: 1
+      ContinueWith: {fileID: 0}
+      Result: {fileID: 11400000, guid: 023cbe10045a81748966be1e6894ec08, type: 2}
+      StoryText: 
+  - Id: 16
+    Choice: Leave Anton and his AI alive, but it is clear he now works with your
+      oversight
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
+    Resolution:
+    - Chance: 1
+      ContinueWith: {fileID: 0}
+      Result: {fileID: 11400000, guid: ee42f4a1b5a64284e8314e697803e657, type: 2}
+      StoryText: 
+  - Id: 17
+    Choice: Kill Anton and his AI, putting an end to his schemes
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
+    Resolution:
+    - Chance: 1
+      ContinueWith: {fileID: 0}
+      Result: {fileID: 11400000, guid: b41b93a3f38c8204ba205796b4b17953, type: 2}
+      StoryText: 
+  inCutscene: 1
+  isMultiChoice: 0

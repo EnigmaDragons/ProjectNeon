@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 65
   displayName: 
-  description: 'On Hero Arcana Card Play: Gain +2 Magic for the battle'
+  description: 'On Hero {[t:Archetypes/Arcana]} Card Play: Gain +2 {[t:Stats/Stat-Magic]}
+    for the battle'
   corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: c5bd5ff6560fc8b4aa3182fd810a7fd0, type: 2}
@@ -26,7 +27,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 74
+  - Id: 20001
+    EffectType: 74
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -42,8 +44,8 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 12
     StatusDetailText: 'On Arcana Card Play: Gain +2 Magic for the battle'
     TurnDelay: 0
@@ -57,15 +59,24 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
     ReactionConditionType: 35
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: c5bd5ff6560fc8b4aa3182fd810a7fd0, type: 2}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 11400000, guid: 39bcffd1535b4df44882ce3fe41ad5d6, type: 2}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
+  battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 

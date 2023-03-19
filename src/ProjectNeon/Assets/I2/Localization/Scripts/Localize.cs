@@ -157,7 +157,7 @@ namespace I2.Loc
             return LocalizeEvent.GetPersistentEventCount() > 0;
         }
 
-		public void OnLocalize( bool Force = false )
+        public void OnLocalize( bool Force = false, string finalMainTranslation = null )
 		{
 			if (!Force && (!enabled || gameObject==null || !gameObject.activeInHierarchy))
 				return;
@@ -182,9 +182,15 @@ namespace I2.Loc
 			CurrentLocalizeComponent = this;
 			CallBackTerm = FinalTerm;
 			CallBackSecondaryTerm = FinalSecondaryTerm;
-			MainTranslation = string.IsNullOrEmpty(FinalTerm) || FinalTerm=="-" ? null : LocalizationManager.GetTranslation (FinalTerm, false);
+			MainTranslation = !string.IsNullOrEmpty(finalMainTranslation) 
+				? finalMainTranslation 
+				: string.IsNullOrEmpty(FinalTerm) || FinalTerm=="-" 
+					? null 
+					: LocalizationManager.GetTranslation (FinalTerm, false);
 			SecondaryTranslation = string.IsNullOrEmpty(FinalSecondaryTerm) || FinalSecondaryTerm == "-" ? null : LocalizationManager.GetTranslation (FinalSecondaryTerm, false);
-
+			
+			DebugLocalization.Write($"Term '{CallBackTerm}' -> '{MainTranslation}' | 2nd '{CallBackSecondaryTerm}' -> '{SecondaryTranslation}'");
+			
 			if (!hasCallback && /*string.IsNullOrEmpty (MainTranslation)*/ string.IsNullOrEmpty(FinalTerm) && string.IsNullOrEmpty (SecondaryTranslation))
 				return;
 
@@ -193,7 +199,7 @@ namespace I2.Loc
                 LocalizeEvent.Invoke();
                 if (AllowParameters)
 					LocalizationManager.ApplyLocalizationParams (ref MainTranslation, gameObject, AllowLocalizedParameters);
-			}
+			} 
 
 			if (!FindTarget())
 				return;
@@ -353,6 +359,8 @@ namespace I2.Loc
 
 		public void SetTerm (string primary)
 		{
+			if (primary == "" && mLocalizeTarget != null)
+				mLocalizeTarget.Clear();
 			if (!string.IsNullOrEmpty(primary))
 				FinalTerm = mTerm = primary;
 
@@ -366,6 +374,13 @@ namespace I2.Loc
 			FinalSecondaryTerm = mTermSecondary = secondary;
 
 			OnLocalize(true);
+		}
+
+		public void SetFinalText(string finalText)
+		{
+			if (finalText == "" && mLocalizeTarget != null)
+				mLocalizeTarget.Clear();
+			OnLocalize(true, finalText);
 		}
 
 		internal T GetSecondaryTranslatedObj<T>( ref string mainTranslation, ref string secondaryTranslation ) where T: Object

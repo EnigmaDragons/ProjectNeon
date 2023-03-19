@@ -8,7 +8,7 @@ public class TargetIsNotMarked : StaticEffectCondition
     {
         var markedMembers = ctx.Target.Members.Where(m => m.IsMarked());
         return markedMembers.Any()
-            ? new Maybe<string>($"{markedMembers.Names()} are Marked")
+            ? new Maybe<string>($"{markedMembers.EnglishNames()} are Marked")
             : Maybe<string>.Missing();
     }
 }

@@ -19,6 +19,8 @@ public class Hero
 
     public Hero(HeroCharacter character, RuntimeDeck deck)
     {
+        if (character == null)
+            Log.Error("Hero Ctor Character is null! WTF!");
         this.character = character;
         this.deck = deck;
         levels = new HeroLevels();
@@ -28,9 +30,8 @@ public class Hero
         _primaryResourceType = character.Stats.ResourceTypes.FirstAsMaybe().Select(r => r, () => new InMemoryResourceType());
     }
 
-    public string Name => character.Name;
-    public string DisplayName => character.DisplayName();
-    public string Class => character.Class;
+    public string NameTerm => character == null ? "" : character.NameTerm();
+    public string ClassTerm => character.ClassTerm();
     public HeroCharacter Character => character;
     public RuntimeDeck Deck => deck;
     public int CurrentHp => Stats.MaxHp() - health.MissingHp;
@@ -88,6 +89,12 @@ public class Hero
 
     public void AddToStats(IStats stats) => UpdateState(() => _statAdditions = _statAdditions.Plus(stats.WithConvertedPower(PrimaryStat)));
     public void Equip(Equipment e) => UpdateState(() => equipment.Equip(e));
+    public void EquipPermanent(Equipment e)
+    {
+        var currentHealth = Stats.MaxHp() - Health.MissingHp;
+        equipment.EquipPermanent(e);
+        Health.SetHp(Math.Min(currentHealth, Stats.MaxHp()));
+    }
     public void Unequip(Equipment e) => UpdateState(() => equipment.Unequip(e));
     public bool CanEquip(Equipment e) => equipment.CanEquip(e);
     public void ApplyPermanent(Equipment e) => UpdateState(() => equipment.EquipPermanent(e));
@@ -104,8 +111,8 @@ public class Hero
 
     public Member AsMember(int id)
     {
-        var m = new Member(id, Character.Name, Character.Class, Character.MaterialType, TeamType.Party,
-            Stats, Character.BattleRole, PrimaryStat, CurrentHp, new Maybe<CardTypeData>(basicCard));
+        var m = new Member(id, Character.NameTerm(), Character.ClassTerm(), Character.MaterialType, TeamType.Party,
+            Stats, Character.BattleRole, PrimaryStat, true, CurrentHp, new Maybe<CardTypeData>(basicCard));
         Character.CounterAdjustments.ForEach(c => m.State.Adjust(c.Key, c.Value));
         return m;
     }
@@ -118,12 +125,12 @@ public class Hero
             .ForEach(x => AllEffects.Apply(x, CreateEffectContext(m, state)));
 
     private EffectContext CreateEffectContext(Member m, BattleState state) => new EffectContext(m, new Single(m),
-        Maybe<Card>.Missing(), ResourceQuantity.None, state.Party, state.PlayerState, state.RewardState, 
+        Maybe<Card>.Missing(), ResourceQuantity.None, ResourceQuantity.None, state.Party, state.PlayerState, state.RewardState, 
         state.Members, state.PlayerCardZones, new UnpreventableContext(), new SelectionContext(),
         state.AllCards.GetMap(),
         state.Party.Credits, state.Party.Credits, new Dictionary<int, EnemyType>(), () => state.GetNextCardId(),
         new PlayedCardSnapshot[0],
-        state.OwnerTints, state.OwnerBusts, false, ReactionTimingWindow.Default);
+        state.OwnerTints, state.OwnerBusts, false, ReactionTimingWindow.Default, new EffectScopedData(), new DoubleDamageContext(m, false));
 
     private Member WithEquipmentState(Member m, EffectContext ctx)
     {

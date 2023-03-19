@@ -8,7 +8,6 @@ public class CutsceneSegmentCreationTests
     public void CutsceneSegments_CanCreateAll()
     {
         var types = Enum.GetValues(typeof(CutsceneSegmentType)).Cast<CutsceneSegmentType>().Select(t => new CutsceneSegmentData { SegmentType = t});
-
         foreach (var segmentData in types)
         {
             try

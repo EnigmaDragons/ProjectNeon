@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 59
   displayName: 
-  description: 'On Afflict: Draw 1 Card, Gain 1 Card Play <i>(2x / turn)</i>'
+  description: 'On Afflict: Draw 1 Card, Gain 1 {[t:Keywords/CardPlays]} <i>(2x /
+    turn)</i>'
   corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 85cc99b6a9e2fc3479a63e5161296787, type: 2}
@@ -24,7 +25,8 @@ MonoBehaviour:
   modifiers: []
   resourceModifiers: []
   turnStartEffects:
-  - EffectType: 74
+  - Id: 10039
+    EffectType: 74
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -55,6 +57,7 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 14
     ReactionEffectScope:
       UseConstant: 0
@@ -67,6 +70,7 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 11400000, guid: 07e4a67103adc1940957d19b384fdf6b, type: 2}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   turnEndEffects: []
   battleStartEffects: []
   battleEndEffects: []

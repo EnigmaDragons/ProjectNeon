@@ -12,13 +12,123 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffbe45dc9ae4641b25ee3ad47d7a21b, type: 3}
   m_Name: AR_03_DevriesOfficeFootage_Cut
   m_EditorClassIdentifier: 
+  id: 6
   isObsolete: 0
   isPrimaryCutscene: 0
   setting: {fileID: 11400000, guid: e63e60c49ecf3e24490e18218779a0f6, type: 2}
   skipTrueStates: []
   skipFalseStates: []
+  onFinished:
+    m_PersistentCalls:
+      m_Calls: []
   segments:
-  - SegmentType: 1
+  - Id: 541
+    SegmentType: 3
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    Text: 
+    FloatAmount:
+      UseConstant: 1
+      ConstantValue: 1.5
+      FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - Id: 542
+    SegmentType: 10
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    Text: 
+    FloatAmount:
+      UseConstant: 1
+      ConstantValue: 1
+      FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - Id: 543
+    SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: e4448d6f7fbaa0141a8c686e37c976a3, type: 2}
+    Text: ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ... ...
+      ... ... ... ... ...
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 1
+      FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - Id: 544
+    SegmentType: 11
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    Text: 
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 1
+      FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - Id: 46
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -28,6 +138,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -36,17 +150,23 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 47
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 4485651856b79a341b095f11a3cfc081, type: 2}
-    Text: You need to upload it at ZantoCorp's master data core and after a while
-      it will have located and sent itself to each of the androids in the system.
+    Text: You need to upload it at {[t:MegaCorps/ZantoCorp]}'s master data core and
+      after a while it will have located and sent itself to each of the androids
+      in the system.
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -55,7 +175,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 48
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -70,6 +191,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -78,7 +203,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 49
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -88,6 +214,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -96,7 +226,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 50
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -106,6 +237,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -114,7 +249,77 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 545
+    SegmentType: 10
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    Text: 
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - Id: 546
+    SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: e4448d6f7fbaa0141a8c686e37c976a3, type: 2}
+    Text: ... ... ... ... ... ... ... ... ...
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - Id: 547
+    SegmentType: 11
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    Text: 
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates: []
+    Or: 0
+    StoryState:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - Id: 51
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -124,6 +329,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -132,7 +341,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 52
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 
@@ -142,6 +352,62 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - Id: 548
+    SegmentType: 10
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+    Text: 
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
+    StoryEvent: {fileID: 0}
+    RequiredStates: []
+    ForbiddenStates:
+    - UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 7da1bc35fdf6a5a4b8ccd52661ca2119, type: 2}
+    Or: 0
+    StoryState:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 0}
+  - Id: 549
+    SegmentType: 1
+    DialogueCharacterId:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: e4448d6f7fbaa0141a8c686e37c976a3, type: 2}
+    Text: ... ... ... ... ... ... ... ... ... ... ... ... ...
+    FloatAmount:
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates:

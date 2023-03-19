@@ -323,7 +323,7 @@ namespace I2.Loc
 
         private void OnGUI_ExportButtons()
         {
-            eSpreadsheetUpdateMode Mode = SynchronizationButtons("Export");
+            /*eSpreadsheetUpdateMode Mode = SynchronizationButtons("Export");
             if (Mode != eSpreadsheetUpdateMode.None || InTestAction(eTest_ActionType.Button_GoogleSpreadsheet_Export))
             {
                 if (mTestAction == eTest_ActionType.Button_GoogleSpreadsheet_Export)
@@ -333,7 +333,7 @@ namespace I2.Loc
 
                 var modeCopy = Mode;
                 GUITools.DelayedCall(() => Export_Google(modeCopy));
-            }
+            }*/
         }
 
         void OnGUI_GoogleButtons_ImportExport( string SpreadsheetKey )

@@ -7,3 +7,4 @@ public interface IResourceType
     int MaxAmount { get; }
     int StartingAmount { get; }
 }
+

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 91
   displayName: 
-  description: 'On Damage Dealt: Give -1 Resist for the battle'
+  description: 'On Damage Dealt: Give -1 {[t:Stats/Stat-Resistance]} for the battle'
   corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 079871761aec52040887b3de1c1a19c4, type: 2}
@@ -26,7 +26,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 74
+  - Id: 20014
+    EffectType: 74
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -42,7 +43,6 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 12
@@ -58,16 +58,24 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
     ReactionConditionType: 22
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 3
       cardActions: {fileID: 11400000, guid: ce0e91c96bebf594d9d85d1012f04b21, type: 2}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 

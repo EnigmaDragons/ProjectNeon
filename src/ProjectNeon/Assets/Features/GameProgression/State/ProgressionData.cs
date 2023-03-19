@@ -10,6 +10,7 @@ public class ProgressionData
     public List<UnlockItemDisplayRecord> ShownUnlocks = new List<UnlockItemDisplayRecord>();
     public int RunsFinished;
     public bool HasShownWishlistScene;
+    public bool HasSeenAlgeronFinalBoss;
 
     public bool Completed(int adventureId) => CompletedAdventureIds.Any(a => a == adventureId);
     public bool Completed(int adventureId, int heroId) 
@@ -17,7 +18,7 @@ public class ProgressionData
     
     private const int TutorialAdventureId = 10;
     private IEnumerable<AdventureCompletionRecord> NonTutorialCompletions => AdventureCompletions.Where(a => a.AdventureId != TutorialAdventureId);
-    
+
     public int UnlockedDifficulty 
         => NonTutorialCompletions.Any() ? NonTutorialCompletions.Max(x => x.Difficulty) + 1 : 0;
     public int HighestCompletedDifficulty(int adventureId) 
@@ -59,10 +60,11 @@ public class AdventureCompletionRecord
     public int HeroId;
     public int AdventureId;
     public int Difficulty;
+    public int BossId;
     public string Version;
 
     public bool Matches(AdventureCompletionRecord other) => other.ToString() == ToString();
-    public override string ToString() => $"{HeroId}{AdventureId}{Difficulty}{Version}";
+    public override string ToString() => $"{HeroId}{AdventureId}{BossId}{Difficulty}{Version}";
     public override int GetHashCode() => ToString().GetHashCode();
 }
 

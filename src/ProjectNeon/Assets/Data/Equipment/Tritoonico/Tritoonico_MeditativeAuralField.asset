@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 15
   displayName: Meditative Aural Field
-  description: 'Start of Battle: Reduce everyone''s Resistance by 1 '
+  description: 'Start of Battle: Reduce everyone''s {[t:Stats/Stat-Resistance]} by
+    1'
   corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 079871761aec52040887b3de1c1a19c4, type: 2}
@@ -26,7 +27,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 68
+  - Id: 0
+    EffectType: 68
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -42,8 +44,8 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 1085d0ae716f453429fd9122b0f8227c, type: 2}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 60
+    ApplyToEachMemberIndividually: 0
     StatusTag: 0
     StatusDetailText: 
     TurnDelay: 0
@@ -57,17 +59,23 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
-    ApplyToEachMemberIndividually: 0
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 

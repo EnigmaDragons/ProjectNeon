@@ -10,7 +10,7 @@ public class StoryEventUIControllerV4 : OnMessage<BeginStoryEvent2, MarkStoryEve
     protected override void Execute(BeginStoryEvent2 msg)
     {
         presenter.Present(msg.StoryEvent);
-        ui.SetActive(true);
+        this.ExecuteAfterTinyDelay(() => ui.SetActive(true));
     }
 
     protected override void Execute(MarkStoryEventCompleted msg)
@@ -25,7 +25,7 @@ public class StoryEventUIControllerV4 : OnMessage<BeginStoryEvent2, MarkStoryEve
         else
         {
             Message.Publish(new FinishedStoryEvent());
-            ui.SetActive(false);   
+            ui.SetActive(false);
         }
     }
 

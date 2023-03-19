@@ -17,6 +17,11 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: 6992fd170aea3564e9b97113ea51d4be, type: 3}
   description: "Next turn, gives {E[1]}\n<b>Defenseless:</b> \nDeal {E[0]}"
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  descriptionV2:
+    text: "Next turn, gives {0}\n<b>Defenseless:</b> \nDeal {1}"
+    formatArgs:
+    - '{E[1]}'
+    - '{E[0]}'
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -41,5 +46,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 02983808ddbc94c4f9f42b9274968533, type: 2}
   unhighlightCondition:
   - {fileID: 11400000, guid: 9745a7008929df745ad60fb8fef4d945, type: 2}
+  targetedHighlightCondition:
+  - {fileID: 11400000, guid: ec7867a53d283b945b6517ccd3950e4c, type: 2}
+  targetedUnhighlightCondition:
+  - {fileID: 11400000, guid: e661d835b25e09948a02bfe2180609f9, type: 2}
   isWIP: 0
   notAvailableForGeneralDistribution: 0

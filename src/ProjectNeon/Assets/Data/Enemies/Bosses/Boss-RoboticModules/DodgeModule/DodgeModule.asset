@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
+  m_Name: DodgeModule
+  m_EditorClassIdentifier: 
+  id: 104
+  enemyName: Dodge Module
+  allowedForSocialMedia: 0
+  excludeFromBestiary: 1
+  isTutorialEnemy: 0
+  lastBalanceDate: 
+  isCurrentlyWorking: 1
+  corp: {fileID: 11400000, guid: d20c2ade8bbc04c478ee886d55a9b984, type: 2}
+  ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
+  aiPreferences:
+    DesignatedAttackerPriority: 40
+    CardOrderPreferenceFactor: 0
+    CardTagPriority: 
+    UnpreferredCardTags: 
+    RotatePlayingCardTags: 
+    IgnoreDesignatedAttackerRole: 1
+  preferredTurnOrder: 99
+  prefab: {fileID: 1728564381236411220, guid: 494b088d6341cbd4293321b2540b8b32, type: 3}
+  materialType: 2
+  libraryCameraOffset: {x: 0, y: -0.8, z: 2.5}
+  shouldLive: 0
+  battleRole: 3
+  tier: 3
+  unique: 0
+  isHasty: 0
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+  description: Will detonate giving -1 Power Injuries!
+  animations: {fileID: 11400000, guid: 226e753214732f542aedfc833ce80548, type: 2}
+  animationSounds: {fileID: 0}
+  stageDetails:
+  - stage: 1
+    maxHp: 1
+    maxShield: 0
+    startingShield: 0
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 3
+    startingTaunt: 0
+    attack: 0
+    magic: 0
+    leadership: 0
+    armor: 0
+    resistance: 0
+    nonStatCardValueFactor: 0
+    startingResourceAmount: 0
+    maxResourceAmount: 0
+    resourceGainPerTurn: 0
+    cardsPerTurn: 1
+    powerLevel: 16
+    calculationVariables:
+      startingDefensiveValueAdjustment: 0
+      startingValueAdjustment: 0
+      perTurnValueAdjustment: 0
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 0
+      perCardValue: 0
+      resourceValue: 0
+      perTurnPower: 0
+      maxAndStartingResourcesPower: 0
+      estimatedHeroDamage: 0
+      estimatedTurnsAlive: 0
+      estimatedPerTurnTotalValue: 0
+      calculatedPowerLevel: 0
+    startOfBattleEffects: []
+    Cards:
+    - {fileID: 11400000, guid: 41e2320ff195d2e4dafd1d95e0cf3d94, type: 2}
+    - {fileID: 11400000, guid: 94af6c0613b4e4b4b8419df67cafbd16, type: 2}
+    CardsTheyAppearsToHave: []
+  maxCopies: 0
+  minimumAllies: 0
+  damageType: 0

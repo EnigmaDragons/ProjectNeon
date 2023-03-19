@@ -29,7 +29,8 @@ public static class GameDataMappingExtensions
                 .Select(b => new BlessingSaveData
                 {
                     Name = b.Name, 
-                    TargetHeroIds = b.Targets.Select(t => t.Id).ToArray()
+                    TargetHeroIds = b.Targets.Select(t => t.Id).ToArray(),
+                    Duration = b.Duration
                 })
                 .ToArray(),
             CorpCostModifiers = s.CorpCostModifiers

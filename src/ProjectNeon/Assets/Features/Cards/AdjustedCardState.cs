@@ -4,14 +4,16 @@
     private int _cardPlaysRemaining;
     
     public int CostAdjustment { get; }
+    public bool IsSinglePlay { get; }
 
     public bool IsActive => _turnsRemaining != 0 && _cardPlaysRemaining != 0;
 
-    public AdjustedCardState(int turnsRemaining, int cardPlaysRemaining, int costAdjustment)
+    public AdjustedCardState(int turnsRemaining, int cardPlaysRemaining, int costAdjustment, bool isSinglePlay = false)
     {
         _turnsRemaining = turnsRemaining;
         _cardPlaysRemaining = cardPlaysRemaining;
         CostAdjustment = costAdjustment;
+        IsSinglePlay = isSinglePlay;
     }
     
     public void OnCardPlay()

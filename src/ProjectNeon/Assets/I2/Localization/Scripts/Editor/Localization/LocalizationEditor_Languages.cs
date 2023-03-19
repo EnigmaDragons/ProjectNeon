@@ -307,6 +307,7 @@ namespace I2.Loc
 
         void TranslateAllToLanguage (string lanName)
 		{
+			Debug.Log($"Began Translate to {lanName}");
 			if (!GoogleTranslation.CanTranslate ()) 
 			{
 				ShowError ("WebService is not set correctly or needs to be reinstalled");
@@ -373,7 +374,7 @@ namespace I2.Loc
 			//	ShowError ("Unable to access Google or not valid request");
 			//	return;
 			//}
-
+			Debug.Log($"Finished Translation Job: {requests.Count}");
 			ClearErrors();
             StopConnectionWWW();
 
@@ -387,6 +388,10 @@ namespace I2.Loc
 				return;
 			
 			var langCode = requests.Values.First().TargetLanguagesCode [0];
+			foreach (var v in requests.Values)
+				if (v.Results != null && v.Results.Length > 0)
+					Debug.Log($"Value: {v.Results[0]}");
+			
             //langCode = GoogleLanguages.GetGoogleLanguageCode(langCode);
 			int langIndex = mLanguageSource.GetLanguageIndexFromCode (langCode, false);
             //if (langIndex >= 0)
@@ -405,7 +410,8 @@ namespace I2.Loc
                     FindTranslationSource(LanguageSourceData.GetKeyFromFullTerm(termData.Term), termData, langCode, null, out sourceText, out sourceCode);
 
                     string result = GoogleTranslation.RebuildTranslation(sourceText, mTranslationRequests, langCode);               // gets the result from google and rebuilds the text from multiple queries if its is plurals
-
+                    if (!string.IsNullOrWhiteSpace(result))
+						Debug.Log($"Translate: {sourceText}. Result: {result}");
                     termData.Languages[langIndex] = result;
                 }
             }

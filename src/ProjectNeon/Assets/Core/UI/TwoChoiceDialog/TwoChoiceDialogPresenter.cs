@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
+[IgnoreForLocalization]
 public class TwoChoiceDialogPresenter : MonoBehaviour
 {
     [SerializeField] private GameObject darken;

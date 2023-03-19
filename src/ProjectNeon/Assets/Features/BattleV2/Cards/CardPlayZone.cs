@@ -81,6 +81,23 @@ public class CardPlayZone : ScriptableObject
     public void Shuffle() => Shuffle(Rng);
     private void Shuffle(DeterministicRng rng) => Mutate(c => rng.Shuffled(c.OrderBy(x => x.Name).ToArray()));
     public void Set(params Card[] val) => Mutate(c => val);
+
+    public Card[] DrawWhere(Func<Card, bool> condition)
+    {
+        var drawn = new List<Card>();
+        var toReturn = new List<Card>();
+        var cardsCopy = cards.ToQueue();
+        while (cardsCopy.AnyNonAlloc())
+        {
+            var c = cardsCopy.Dequeue();
+            if (condition(c))
+                drawn.Add(c);
+            else
+                toReturn.Add(c);
+        }
+        Mutate(_ => toReturn);
+        return drawn.ToArray();
+    }
     
     public void Mutate(Func<Card[], IEnumerable<Card>> update)
     {

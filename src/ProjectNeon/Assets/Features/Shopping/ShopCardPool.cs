@@ -21,7 +21,8 @@ public class ShopCardPool : ScriptableObject
                 .Concat(allCards.Where(card => !unobtainableCards.Contains(card.Id)));
         if (isSelectedPool && includedRarities.Any(raritiesToGet.Contains))
             return subPools.SelectMany(subPool => subPool.Get(archetypesToGet, unobtainableCards, raritiesToGet))
-                .Concat(allCards.Where(card => raritiesToGet.Contains(card.Rarity) && !unobtainableCards.Contains(card.Id)));
+                .Concat(allCards
+                    .Where(card => raritiesToGet.Contains(card.Rarity) && !unobtainableCards.Contains(card.Id)));
         return subPools.SelectMany(subPool => subPool.Get(archetypesToGet, unobtainableCards, raritiesToGet));
     }
 

@@ -12,13 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffbe45dc9ae4641b25ee3ad47d7a21b, type: 3}
   m_Name: 01ImmigrationBot
   m_EditorClassIdentifier: 
+  id: 29
   isObsolete: 0
   isPrimaryCutscene: 0
   setting: {fileID: 0}
   skipTrueStates: []
   skipFalseStates: []
+  onFinished:
+    m_PersistentCalls:
+      m_Calls: []
   segments:
-  - SegmentType: 1
+  - Id: 270
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: enemy1
@@ -27,11 +32,15 @@ MonoBehaviour:
 
 
       While you are waiting to be approved
-      for formal immigration into Metroplex Zero, let me tell you all about it!'
+      for formal immigration into {[t:LocationName]}, let me tell you all about it!'
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -40,12 +49,13 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 271
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: enemy1
       Variable: {fileID: 0}
-    Text: 'Metroplex Zero is the only free and inclusive society on the planet.
+    Text: '{[t:LocationName]} is the only free and inclusive society on the planet.
 
 
       There
@@ -56,6 +66,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -64,7 +78,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 272
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: enemy1
@@ -75,6 +90,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -83,7 +102,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 273
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: enemy1
@@ -94,6 +114,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -102,7 +126,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 274
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: enemy1
@@ -113,6 +138,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -121,7 +150,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 275
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: enemy1
@@ -132,6 +162,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -140,7 +174,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 276
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: enemy1
@@ -151,6 +186,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -159,17 +198,22 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 277
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: enemy1
       Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: 'When I told my hacker to give me new identity, this is quite what I had
-      in mind. '
+    Text: 'When I told my hacker to give me a new identity, this isn''t quite what
+      I had in mind. '
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -178,7 +222,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 278
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: enemy1
@@ -189,6 +234,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -197,7 +246,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 279
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: enemy1
@@ -208,6 +258,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -216,7 +270,8 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 280
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: enemy1
@@ -226,6 +281,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []

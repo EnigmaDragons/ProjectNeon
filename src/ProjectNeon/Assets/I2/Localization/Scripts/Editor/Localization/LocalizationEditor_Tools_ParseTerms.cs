@@ -25,6 +25,9 @@ namespace I2.Loc
 		public static List<ParsedTerm> mShowableTerms = new List<ParsedTerm> ();	// this contains the terms from mParsedTerms that should be shown in the list (filtered by search string, usage, etc)
 		public static bool mParseTermsIn_Scenes = true;
 		public static bool mParseTermsIn_Scripts = true;
+		public static bool mParseTermsIn_ScriptableObjects = true;
+		public static bool mParseTermsIn_PrefabScripts = true;
+		public static bool mParseTermsIn_Terms = true;
 
 		#endregion
 		
@@ -50,6 +53,12 @@ namespace I2.Loc
 					mParseTermsIn_Scenes = GUILayout.Toggle(mParseTermsIn_Scenes, new GUIContent("Parse SCENES", "Opens the selected scenes and finds all the used terms"));
 					GUILayout.FlexibleSpace();
 					mParseTermsIn_Scripts = GUILayout.Toggle(mParseTermsIn_Scripts, new GUIContent("Parse SCRIPTS", "Searches all .cs files and counts all terms like: ScriptLocalization.Get(\"xxx\")"));
+					GUILayout.FlexibleSpace();
+					mParseTermsIn_ScriptableObjects = GUILayout.Toggle(mParseTermsIn_ScriptableObjects, new GUIContent("Parse SCRIPTABLE OBJECTS", "Searches all Scriptable Objects and gets Terms provided by ILocalizeTerms"));
+					GUILayout.FlexibleSpace();
+					mParseTermsIn_PrefabScripts = GUILayout.Toggle(mParseTermsIn_PrefabScripts, new GUIContent("Parse PREFAB SCRIPTS", "Searches all prefabs for ILocalizeTerms and gets Terms"));
+					GUILayout.FlexibleSpace();
+					mParseTermsIn_Terms = GUILayout.Toggle(mParseTermsIn_ScriptableObjects, new GUIContent("Parse SUB TERMS", "Searches all terms for sub terms in them"));
 					GUILayout.EndHorizontal();
 				GUILayout.FlexibleSpace();
 				GUILayout.EndHorizontal();
@@ -122,22 +131,22 @@ namespace I2.Loc
 		public static void ParseTermsInSelectedScenes()
 		{
 			EditorApplication.update -= ParseTermsInSelectedScenes;
-			ParseTerms(false, false, true);
+			ParseTerms(false, false, true, mParseTermsIn_ScriptableObjects, mParseTermsIn_PrefabScripts, mParseTermsIn_Terms);
 		}
 
         public static void DoParseTermsInCurrentScene()
         {
             EditorApplication.update -= DoParseTermsInCurrentScene;
-			ParseTerms(true, false, true);
+			ParseTerms(true, false, true, mParseTermsIn_ScriptableObjects, mParseTermsIn_PrefabScripts, mParseTermsIn_Terms);
         }
 
         public static void DoParseTermsInCurrentSceneAndScripts()
         {
             EditorApplication.update -= DoParseTermsInCurrentSceneAndScripts;
-            ParseTerms(true, true, true);
+            ParseTerms(true, true, true, mParseTermsIn_ScriptableObjects, mParseTermsIn_PrefabScripts, mParseTermsIn_Terms);
         }
 
-        static void ParseTerms(bool OnlyCurrentScene, bool ParseScripts, bool OpenTermsTab)
+        static void ParseTerms(bool OnlyCurrentScene, bool ParseScripts, bool OpenTermsTab, bool ParseScriptableObjects = true, bool ParsePrefabScriptTerms = true, bool ParseSubTerms = false)
         {
             mIsParsing = true;
 
@@ -150,6 +159,17 @@ namespace I2.Loc
                 ParseTermsInScripts();
                 FindTermsInLocalizedStrings();
             }
+
+            if (ParseScriptableObjects)
+            {
+	            FindScriptableObjectReferences();
+            }
+
+            if (ParsePrefabScriptTerms)
+	            FindTermsInPrefabs();
+
+            if (ParseSubTerms)
+	            FindTermsInTerms();
 
             if (mParseTermsIn_Scenes)
             {
@@ -196,8 +216,43 @@ namespace I2.Loc
 			}
 			mIsParsing = false;
 		}
-		
-		static void FindTermsInCurrentScene()
+
+        private static void FindScriptableObjectReferences()
+        {
+	        var scriptableObjects = AssetDatabase.FindAssets("t:ScriptableObject")
+		        .Select(x => AssetDatabase.LoadAssetAtPath<ScriptableObject>(AssetDatabase.GUIDToAssetPath(x)))
+		        .Where(x => x is ILocalizeTerms)
+		        .Cast<ILocalizeTerms>()
+		        .ToList();
+
+	        Debug.Log($"Metroplex Zero ILocalizeTerms Count {scriptableObjects.Count}");
+	        foreach (var s in scriptableObjects)
+				foreach (var t in s.GetLocalizeTerms())
+			        if (!string.IsNullOrEmpty(t))
+				        GetParsedTerm(t).Usage++;
+        }
+
+        private static void FindTermsInPrefabs()
+        {
+	        var assetPaths = AssetDatabase.GetAllAssetPaths();
+	        foreach (var path in assetPaths.Where(x => x.EndsWith(".prefab")))
+	        {
+		        var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+		        var components = prefab.GetComponentsInChildren<ILocalizeTerms>(true);
+		        foreach (var component in components)
+					foreach (var t in component.GetLocalizeTerms())
+				        GetParsedTerm(t).Usage++;
+	        }
+        }
+        
+        private static void FindTermsInTerms()
+        {
+	        foreach (TermData termData in mLanguageSource.mTerms)
+				foreach (Match match in Regex.Matches(termData.Term.ToEnglish(), @"{\[t:(.+?)\]}"))
+					GetParsedTerm(match.Groups[1].Value).Usage++;
+        }
+
+        static void FindTermsInCurrentScene()
 		{
 			Localize[] Locals = (Localize[])Resources.FindObjectsOfTypeAll(typeof(Localize));
 			

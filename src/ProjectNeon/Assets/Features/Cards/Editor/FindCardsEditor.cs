@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
+using Object = UnityEngine.Object;
 
 public class FindCardsEditor : EditorWindow
 {
@@ -23,10 +24,16 @@ public class FindCardsEditor : EditorWindow
     
     // By Description Search String
     private string _searchString;
-    private string[] GetAllCardsWithDescription(string s) =>
+    private string[] GetAllCardsNamesWithDescription(string s) =>
         GetAllInstances<CardType>()
             .Where(c => c.Description.ContainsAnyCase(s))
             .Select(e => e.name)
+            .ToArray();
+    
+    private (string, ScriptableObject)[] GetAllCardsWithDescription(string s) =>
+        GetAllInstances<CardType>()
+            .Where(c => c.Description.ContainsAnyCase(s))
+            .Select(e => (e.name, (ScriptableObject)e))
             .ToArray();
     
     // By Card Tags
@@ -50,17 +57,66 @@ public class FindCardsEditor : EditorWindow
     // By Formula Text
     private string _formulaText;
     
+    //By Resource Type
+    private string _resourceType;
+    
+    //By Action Type
+    private CardBattleActionType _actionType;
+    
+    //By Character Animation
+    private CharacterAnimationType _animationType;
+    private string[] GetAllCardsWithActionType(CardBattleActionType actionType) =>
+        GetAllInstances<CardType>()
+            .Where(e => e?.Actions != null && !e.IsWip && e.Actions.Any(data => data?.Actions != null && data.Actions.Any(action => action?.Type == actionType)))
+            .Select(e => e.name)
+            .ToArray();
+    private string[] GetAllCardsWithoutActionType(CardBattleActionType actionType) =>
+        GetAllInstances<CardType>()
+            .Where(e => e?.Actions != null && !e.IsWip && e.Actions.All(data => data?.Actions == null || data.Actions.All(action => action?.Type != actionType)))
+            .Select(e => e.name)
+            .ToArray();
+    private string[] GetAllReactionCardsWithActionType(CardBattleActionType actionType) =>
+        GetAllInstances<ReactionCardType>()
+            .Where(e => e?.ActionSequence != null && e.ActionSequence.CardActions.Actions.Any(action => action?.Type == actionType))
+            .Select(e => e.name)
+            .ToArray();
+    private string[] GetAllReactionCardsWithoutActionType(CardBattleActionType actionType) =>
+        GetAllInstances<ReactionCardType>()
+            .Where(e => e?.ActionSequence != null && e.ActionSequence.CardActions.Actions.All(action => action?.Type != actionType))
+            .Select(e => e.name)
+            .ToArray();
+
+    private Vector2 _scrollPos;
+    
     void OnGUI()
     {
-        _effectType = (EffectType)EditorGUILayout.EnumPopup("EffectType", _effectType);
-        if (GUILayout.Button("Search By Effect Type")) 
+        _scrollPos = EditorGUILayout.BeginScrollView(_scrollPos);
+        
+        if (GUILayout.Button("All By IsAttack"))
         {
-            var effects = GetAllInstances<CardActionsData>()
-                .Where(e => e.Actions.Any(x => x.Type == CardBattleActionType.Battle && x.BattleEffect.EffectType == _effectType))
-                .Select(e => e.name)
+            var effects = GetAllInstances<CardType>()
+                .Where(c => !c.IsWip)
+                .Where(c => c.Actions != null)
+                .OrderBy(c => c.Name)
+                .Select(e => ($"IsAttack {e.IsAttack()} - {e.Name} - {e.name} - {e.DescriptionV2.Preview().Replace("\r\n", " ").Replace("\n", " ").Replace("<br>", " ")}", e))
                 .ToArray();
             GetWindow<ListDisplayWindow>()
-                .Initialized($"{_effectType} - {effects.Length} uses", effects)
+                .Initialized($"Card Database - IsAttack", "Effect: ", effects.Select(e => e.Item1).ToArray(), effects.Select(e => e.Item2).Cast<Object>().ToArray())
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+        DrawUILine();
+        
+        _effectType = (EffectType)EditorGUILayout.EnumPopup("EffectType", _effectType);
+        if (GUILayout.Button("Search By Effect Type"))
+        {
+            var effects = GetAllInstances<CardType>()
+                .Where(c => c?.Actions != null && !c.IsWip)
+                .Where(c => c.Actions != null && c.Actions.Any(e => e.Actions.Any(x => x.Type == CardBattleActionType.Battle && x.BattleEffect.EffectType == _effectType)))
+                .Select(e => ($"{e.name} - Type: '{e.TypeDescription}'", e))
+                .ToArray();
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"{_effectType} - {effects.Length} uses", "Effect: ", effects.Select(e => e.Item1).ToArray(), effects.Select(e => e.Item2).Cast<Object>().ToArray())
                 .Show();
             GUIUtility.ExitGUI();
         }
@@ -75,9 +131,9 @@ public class FindCardsEditor : EditorWindow
                 .Where(c => c.GetArchetypeKey().Equals(_archetype))
                 .OrderBy(e => e.IsWip ? 99 : 0)
                 .ThenBy(e => raritySortOrder.IndexOf(e.Rarity))
-                .Select(e => e.EditorName)
+                .Select(e => (e.EditorName, (ScriptableObject)e))
                 .ToArray();
-            ShowCards($"Archetype {_archetype}", cards);
+            ShowSelectables($"Archetype {_archetype}", cards);
             GUIUtility.ExitGUI();
         }
         DrawUILine();
@@ -101,9 +157,9 @@ public class FindCardsEditor : EditorWindow
         {
             var xCostResults = GetAllInstances<CardType>()
                 .Where(c => c.Cost.PlusXCost)
-                .Select(e => e.name)
+                .Select(e => (e.name, (ScriptableObject)e))
                 .ToArray();
-            ShowCards("X Cost Cards", xCostResults);
+            ShowSelectables("X Cost Cards", xCostResults);
             GUIUtility.ExitGUI();
         }
         DrawUILine();
@@ -112,7 +168,7 @@ public class FindCardsEditor : EditorWindow
         if (GUILayout.Button("Find Term in Card Description"))
         {
             var cards = GetAllCardsWithDescription(_searchString);
-            ShowCards($"Description Containing {_searchString}", cards);
+            ShowSelectables($"Description Containing {_searchString}", cards);
             GUIUtility.ExitGUI();
         }
         DrawUILine();
@@ -157,9 +213,9 @@ public class FindCardsEditor : EditorWindow
         {
             var cards = GetAllInstances<CardType>()
                 .Where(c => c.TypeDescription.Equals(_cardTypeDescription, StringComparison.InvariantCultureIgnoreCase))
-                .Select(e => e.name)
+                .Select(c => (c.name, c))
                 .ToArray();
-            ShowCards($"Card Type Description Is {_searchString}", cards);
+            ShowSelectables($"Card Type Description Is {_cardTypeDescription}", cards.Select(c => c.name).ToArray(), cards.Select(c => c.c).Cast<ScriptableObject>().ToArray());
             GUIUtility.ExitGUI();
         }
         DrawUILine();
@@ -204,7 +260,7 @@ public class FindCardsEditor : EditorWindow
         if (GUILayout.Button("Find By Hero"))
         {
             var heroes = GetAllInstances<BaseHero>()
-                .Where(h => h.Name.Equals(_heroString, StringComparison.InvariantCultureIgnoreCase));
+                .Where(h => h.NameTerm().ToEnglish().Equals(_heroString, StringComparison.InvariantCultureIgnoreCase));
             if (!heroes.Any())
                 GUIUtility.ExitGUI();
 
@@ -227,7 +283,7 @@ public class FindCardsEditor : EditorWindow
         {
             var cards = GetAllInstances<CardType>()
                 .Where(c => c.id == _id)
-                .Select(e => e.EditorName)
+                .Select(e => e.name)
                 .ToArray();
             ShowCards($"ID {_id}", cards);
             GUIUtility.ExitGUI();
@@ -276,7 +332,160 @@ public class FindCardsEditor : EditorWindow
             ShowCards($"Total Items: {items.Length}", items);
             GUIUtility.ExitGUI();
         }
+        
+        DrawUILine();
+        
+        _resourceType = GUILayout.TextField(_resourceType);
+        if (GUILayout.Button("Find By Resource"))
+        {
+            var items = GetAllInstances<CardType>()
+                .Where(c => !c.IsWip)
+                .Where(c => c.Cost.ResourceType.Name == _resourceType)
+                .Select(e => $"{e.GetArchetypeKey()} - {e.Name}")
+                .OrderBy(e => e)
+                .ToArray();
+            ShowCards($"Total Items: {items.Length}", items);
+            GUIUtility.ExitGUI();
+        }
+        
+        DrawUILine();
+
+        if (GUILayout.Button("Find Referenced Cards Marked as WIP"))
+        {
+            var augments = GetAllInstances<StaticEquipment>()
+                .Where(e => e.IncludeInPools && e.Slot == EquipmentSlot.Augmentation)
+                .Where(e => e.ReferencedCard.IsPresentAnd(c => c is CardType { IsWip: true }))
+                .Select(e => (CardType)e.ReferencedCard.Value);
+            
+            var linkedCards = GetAllInstances<CardType>()
+                .Where(e => e.IncludeInPools && e.ChainedCard || e.SwappedCard)
+                .SelectMany(e => e.ReferencedCards());
+
+            var linkedReactionCards = GetAllInstances<ReactionCardType>()
+                .Where(e => e.ChainedCard || e.SwappedCard)
+                .SelectMany(e => e.ReferencedCards());
+
+            var items = augments
+                .Concat(linkedCards)
+                .Concat(linkedReactionCards)
+                .Where(e => e.IsWip)
+                .Select(e => $"{e.GetArchetypeKey()} - {e.Name}")
+                .Distinct()
+                .OrderBy(e => e)
+                .ToArray();
+
+            ShowCards($"Total Items: {items.Length}", items);
+            GUIUtility.ExitGUI();
+        }
+
+        if (GUILayout.Button("Find Orphaned Enemy Cards"))
+        {
+            var enemies = GetAllInstances<Enemy>().Where(e => e.IsCurrentlyWorking);
+            var enemyCardsUsed = GetAllInstances<CardType>().Where(e => e.GetArchetypeKey().Equals("Enemy"))
+                .SafeToDictionary(c => c.name, c => false);
+            foreach (var e in enemies)
+            {
+                var stages = e.Stages;
+                foreach (var s in stages)
+                {
+                    var enemy = e.ForStage(s);
+                    enemy.Cards.ForEach(c => enemyCardsUsed[c.name] = true);
+                }
+            }
+
+            var orphanedCards = enemyCardsUsed.Where(e => !e.Value).Where(e => !e.Key.StartsWith("MimicTrickster_"));
+            ShowCards("Orphaned Enemy Cards", orphanedCards
+                .Where(c => !c.Key.StartsWith("Basic_"))
+                .Select(c => c.Key).ToArray());
+            
+        }
+
+        if (GUILayout.Button("Find Conditioned Cards"))
+        {
+            var effects = GetAllInstances<CardActionsData>()
+                .Where(e => e.Actions.Any(x => x.Type == CardBattleActionType.Battle && x.BattleEffect.Conditions.Any()))
+                .Select(e => e.name)
+                .ToArray();
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"{_effectType} - {effects.Length} uses", effects)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+
+        DrawUILine();
+        _actionType = (CardBattleActionType)EditorGUILayout.EnumPopup("BattleActionType", _actionType);
+        if (GUILayout.Button("Find By Action Type"))
+        {
+            var cards = GetAllCardsWithActionType(_actionType);
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"{_actionType} - {cards.Length} uses", cards)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+        if (GUILayout.Button("Find By Missing Action Type"))
+        {
+            var cards = GetAllCardsWithoutActionType(_actionType);
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"{_actionType} - {cards.Length} missing", cards)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+        if (GUILayout.Button("Find Reaction By Action Type"))
+        {
+            var cards = GetAllReactionCardsWithActionType(_actionType);
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"{_actionType} - {cards.Length} uses", cards)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+        if (GUILayout.Button("Find Reaction By Missing Action Type"))
+        {
+            var cards = GetAllReactionCardsWithoutActionType(_actionType);
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"{_actionType} - {cards.Length} missing", cards)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+        
+        DrawUILine();
+        if (GUILayout.Button("Find Cards Missing Action Data"))
+        {
+            var cards = GetAllInstances<CardType>()
+                .Where(x => !x.IsWip && x.ActionSequences.Any(sequence => sequence.CardActions == null))
+                .Select(x => x.name)
+                .ToArray();
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"{cards.Length}", cards)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+        
+        DrawUILine();
+        _animationType = (CharacterAnimationType)EditorGUILayout.EnumPopup("CharacterAnimationType", _animationType);
+        if (GUILayout.Button("Find By Animation Type"))
+        {
+            var cards = GetAllInstances<CardType>()
+                .Where(e => e?.Actions != null && !e.IsWip && e.Actions.Any(data => data?.Actions != null && data.Actions.Any(action => action?.Type == CardBattleActionType.AnimateCharacter &&  action.CharacterAnimation2.Type == _animationType)))
+                .Select(e => e.name)
+                .ToArray();
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"{_animationType} - {cards.Length} uses", cards)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+        
+        EditorGUILayout.EndScrollView();
     }
+    
+    private void ShowSelectables(string description, (string, ScriptableObject)[] items)
+        =>  GetWindow<ListDisplayWindow>()
+            .Initialized(description, "Card: ", items.Select(i => i.Item1).ToArray(), items.Select(i => i.Item2).Cast<Object>().ToArray())
+            .Show();
+    
+    private void ShowSelectables(string description, string[] items, ScriptableObject[] selectables)
+        =>  GetWindow<ListDisplayWindow>()
+            .Initialized(description, "Card: ", items, selectables.Cast<Object>().ToArray())
+            .Show();
     
     private void ShowCards(string description, string[] cards) 
         => GetWindow<ListDisplayWindow>()

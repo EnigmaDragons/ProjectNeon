@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 105
   displayName: 
-  description: If you have 10+ cards in hand, gain +1 Card Play <i>(1x per turn)</i>
+  description: If you have 10+ cards in hand, gain +1 {[t:Keywords/CardPlays]} <i>(1x
+    per turn)</i>
   corp: {fileID: 11400000, guid: 1c216af8c1977f34dbbb75041357df2d, type: 2}
   archetypes:
   - {fileID: 11400000, guid: c3bd2cb0d323191448e78929b9cb214e, type: 2}
@@ -24,7 +25,8 @@ MonoBehaviour:
   modifiers: []
   resourceModifiers: []
   turnStartEffects:
-  - EffectType: 28
+  - Id: 0
+    EffectType: 28
     Conditions:
     - {fileID: 11400000, guid: 4f75b996620f5334e9bf13a4f029d2ef, type: 2}
     BaseAmount:
@@ -56,6 +58,8 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
@@ -69,7 +73,8 @@ MonoBehaviour:
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
     Unpreventable: 0
-  - EffectType: 74
+  - Id: 20020
+    EffectType: 74
     Conditions:
     - {fileID: 11400000, guid: 8494263a6b3077a45a40b8ec2671a32d, type: 2}
     BaseAmount:
@@ -101,6 +106,8 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
     ReactionConditionType: 105
     ReactionEffectScope:
       UseConstant: 0

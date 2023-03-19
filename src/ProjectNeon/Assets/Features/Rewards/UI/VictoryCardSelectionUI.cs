@@ -8,8 +8,8 @@ public class VictoryCardSelectionUI : OnMessage<GetUserSelectedCardType, GetUser
     [SerializeField] private CardPresenter cardPresenter;
     [SerializeField] private GameObject optionsParent;
     [SerializeField] private BattleState state;
-    [SerializeField] private TextMeshProUGUI creditsLabel;
-    [SerializeField] private TextMeshProUGUI clinicVouchersLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI creditsLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI clinicVouchersLabel;
 
     private bool _hasSelected = false;
     private Action<Maybe<CardTypeData>> _onSelectedType = _ => { };
@@ -24,7 +24,7 @@ public class VictoryCardSelectionUI : OnMessage<GetUserSelectedCardType, GetUser
         msg.Options.ForEach(o =>
             Instantiate(cardPresenter, optionsParent.transform)
                 .Set(o, () => SelectCard(o)));
-        creditsLabel.text = state.RewardCredits.ToString();
+        creditsLabel.text = state.RewardCredits.ToString() + 0;
         view.SetActive(true);
     }
 
@@ -36,7 +36,7 @@ public class VictoryCardSelectionUI : OnMessage<GetUserSelectedCardType, GetUser
         msg.Options.ForEach(o =>
             Instantiate(cardPresenter, optionsParent.transform)
                 .Set(o, () => SelectCard(o)));
-        creditsLabel.text = state.RewardCredits.ToString();
+        creditsLabel.text = state.RewardCredits.ToString() + 0;
         clinicVouchersLabel.text = state.RewardClinicVouchers.ToString();
         view.SetActive(true);
     }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7022743149702873186}
   - component: {fileID: 639002597413816875}
   - component: {fileID: 4791989002277241529}
+  - component: {fileID: 2747761919803107628}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -134,6 +135,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2747761919803107628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876192738726045388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: '-'
+  mTermSecondary: LiberationSans SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 0
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &2059873364982563037
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,6 +260,7 @@ GameObject:
   - component: {fileID: 4015014273700007784}
   - component: {fileID: 3224095791776757858}
   - component: {fileID: 1220694407732326945}
+  - component: {fileID: 6858489563156141969}
   m_Layer: 5
   m_Name: LevelLabel
   m_TagString: Untagged
@@ -343,6 +384,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6858489563156141969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2537198406598386691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 863c5aa2de9e49089e0a948ab1da690f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3602016757151141230
 GameObject:
   m_ObjectHideFlags: 0
@@ -557,7 +610,7 @@ GameObject:
   - component: {fileID: 746862047672204088}
   - component: {fileID: 5097252725502522596}
   - component: {fileID: 1178980151656827963}
-  - component: {fileID: 4507001106427234689}
+  - component: {fileID: 2492567981084845696}
   m_Layer: 5
   m_Name: InjuryIcon
   m_TagString: Untagged
@@ -623,7 +676,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4507001106427234689
+--- !u!114 &2492567981084845696
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -632,10 +685,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6889315508494221857}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77d005e298df44ca8cca949f2df12ba7, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d38e8cafb944ccbbddbb31ab70c31e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipText: Number of Injuries
+  tooltipTerm: Tooltips/InjuryCount
+  tooltipText: 
 --- !u!1 &7705865179974861101
 GameObject:
   m_ObjectHideFlags: 0
@@ -647,6 +701,7 @@ GameObject:
   - component: {fileID: 8342911279222077505}
   - component: {fileID: 8460547401049545314}
   - component: {fileID: 5486813192866999920}
+  - component: {fileID: 5097559472544247126}
   m_Layer: 5
   m_Name: HpText
   m_TagString: Untagged
@@ -770,6 +825,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5097559472544247126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7705865179974861101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 863c5aa2de9e49089e0a948ab1da690f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8857077855621246480
 GameObject:
   m_ObjectHideFlags: 0
@@ -781,6 +848,7 @@ GameObject:
   - component: {fileID: 6536792530494468026}
   - component: {fileID: 6990359235401704558}
   - component: {fileID: 5078719763306363581}
+  - component: {fileID: 7816694262857289737}
   m_Layer: 5
   m_Name: InjuryCountLabel
   m_TagString: Untagged
@@ -906,6 +974,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7816694262857289737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8857077855621246480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 863c5aa2de9e49089e0a948ab1da690f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9158314163105524337
 GameObject:
   m_ObjectHideFlags: 0
@@ -1096,7 +1176,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   party: {fileID: 11400000, guid: a44d8d6eac75b7c44adfd576f2808b4f, type: 2}
   button: {fileID: 2509107360930107435}
-  costLabel: {fileID: 4791989002277241529}
+  costLabel: {fileID: 2747761919803107628}
   cost: 30
   reviveCost: 100
 --- !u!1001 &698095998216452877
@@ -1106,6 +1186,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3541395153576993883}
     m_Modifications:
+    - target: {fileID: 2031086931488379718, guid: 1666d91348a7b8644b300031d2e3b211, type: 3}
+      propertyPath: m_text
+      value: XP
+      objectReference: {fileID: 0}
     - target: {fileID: 2031086931488379718, guid: 1666d91348a7b8644b300031d2e3b211, type: 3}
       propertyPath: m_textAlignment
       value: 65535

@@ -9,6 +9,6 @@ public class SourcePlayedCardOfArchetype : StaticEffectCondition
     {
         return ctx.Card.IsPresentAnd(c => c.Archetypes.Contains(archetype.Value))
             ? Maybe<string>.Missing()
-            : new Maybe<string>($"{ctx.Source.Name} did not play a card of archetype {archetype}.");
+            : new Maybe<string>($"{ctx.Source.NameTerm.ToEnglish()} did not play a card of archetype {archetype}.");
     }
 }

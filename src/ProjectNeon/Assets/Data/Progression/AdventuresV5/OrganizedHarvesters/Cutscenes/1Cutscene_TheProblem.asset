@@ -12,22 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffbe45dc9ae4641b25ee3ad47d7a21b, type: 3}
   m_Name: 1Cutscene_TheProblem
   m_EditorClassIdentifier: 
+  id: 45
+  isObsolete: 0
   isPrimaryCutscene: 0
   setting: {fileID: 11400000, guid: 3c274cf6f7957f348b799ba9c65584d4, type: 2}
   skipTrueStates: []
   skipFalseStates: []
+  onFinished:
+    m_PersistentCalls:
+      m_Calls: []
   segments:
-  - SegmentType: 9
+  - Id: 358
+    SegmentType: 9
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: You
       Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: Our target is Medigeneix, the biggest medical corporation within Metroplex
-      Zero and one of the 8 Mega Corps of the ICC.
+    Text: Our target is {[t:MegaCorps/Medigeneix]}, the biggest medical corporation
+      within {[t:LocationName]} and one of the 8 Mega Corps of the ICC.
     FloatAmount:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -36,12 +46,13 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 9
+  - Id: 359
+    SegmentType: 9
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: You
       Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: 'Medigeneix partakes in a variety of profitable corruptions:
+    Text: '{[t:MegaCorps/Medigeneix]} partakes in a variety of profitable corruptions:
 
       From
       selling addictive recreational drugs to planned obsolescence on their augments
@@ -50,6 +61,10 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -58,7 +73,8 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 9
+  - Id: 360
+    SegmentType: 9
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: You
@@ -69,6 +85,10 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -77,7 +97,8 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 361
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: Weldon
@@ -87,6 +108,10 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -95,7 +120,8 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 362
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: Hacker
@@ -107,6 +133,10 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -115,7 +145,8 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 363
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: Weldon
@@ -126,6 +157,10 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []
@@ -134,7 +169,8 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 364
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: 1
@@ -144,6 +180,10 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates: []

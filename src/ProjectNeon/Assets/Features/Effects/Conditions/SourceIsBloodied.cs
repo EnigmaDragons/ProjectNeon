@@ -7,6 +7,6 @@ public class SourceIsBloodied : StaticEffectCondition
     {
         return ctx.Source.IsBloodied()
             ? Maybe<string>.Missing()
-            : new Maybe<string>($"{ctx.Source.Name} is not bloodied");
+            : new Maybe<string>($"{ctx.Source.NameTerm.ToEnglish()} is not bloodied");
     }
 }

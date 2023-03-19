@@ -1,4 +1,6 @@
 using System;
+using I2.Loc;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +9,8 @@ public class HeroFaceSelector : MonoBehaviour
     [SerializeField] private Image bustImage;
     [SerializeField] private Button nextHeroButton;
     [SerializeField] private Button previousHeroButton;
+    [SerializeField] private Localize nameLocalize;
+    [SerializeField] private Localize classLocalize;
 
     private IndexSelector<HeroCharacter> _heroes = new IndexSelector<HeroCharacter>(Array.Empty<HeroCharacter>());
     private Action<HeroCharacter> _onChanged = _ => { };
@@ -21,20 +25,27 @@ public class HeroFaceSelector : MonoBehaviour
     {
         _heroes = new IndexSelector<HeroCharacter>(heroes);
         _onChanged = onChanged;
-        bustImage.sprite = _heroes.Current.Bust;
+        Render();
     }
-    
+
+    private void Render()
+    {
+        bustImage.sprite = _heroes.Current.Bust;
+        nameLocalize.SetTerm(_heroes.Current.NameTerm());
+        classLocalize.SetTerm(_heroes.Current.ClassTerm());
+    }
+
     public void MoveNext()
     {
         _heroes.MoveNext();
-        bustImage.sprite = _heroes.Current.Bust;
+        Render();
         _onChanged(_heroes.Current);
     }
 
     public void MovePrevious()
     {
         _heroes.MovePrevious();
-        bustImage.sprite = _heroes.Current.Bust;
+        Render();
         _onChanged(_heroes.Current);
     }
 }

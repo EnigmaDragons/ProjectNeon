@@ -14,6 +14,7 @@ public abstract class EffectTransformerBase : EffectTransformer
     public StatusDetail Status => _tracker.Status;
     public bool IsDebuff => _tracker.IsDebuff;
     public bool IsActive => _tracker.IsActive;
+    public bool IsDot => false;
     public Maybe<int> RemainingTurns => _tracker.RemainingTurns;
     
     public EffectTransformerBase(int originatorId, bool isDebuff, int maxDurationTurns, int maxUses, StatusDetail status, Func<EffectData, EffectContext, bool> shouldModify, Func<EffectData, EffectContext, EffectData> modify)

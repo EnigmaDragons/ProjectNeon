@@ -40,7 +40,10 @@ public static class StatExtensions
     public static readonly StatType[] StatTypes = Enum.GetValues(typeof(StatType)).Cast<StatType>().ToArray();
     public static readonly Dictionary<StatType, string> StatNames = StatTypes.ToDictionary(s => s, s => s.ToString());
     public static readonly Dictionary<string, StatType> StatTypesByName = StatTypes.ToDictionary(s => s.ToString(), s => s);
-    
+
+    public static string GetLocalizedString(this StatType s) => s.GetTerm().ToLocalized();
+    public static string GetTerm(this StatType s) => $"Stats/{s.GetShortTerm()}";
+    public static string GetShortTerm(this StatType s) => $"Stat-{s}";
     public static string GetString(this StatType s) => StatNames[s];
     
     public static Dictionary<string, bool> _map = new Dictionary<string, bool>
@@ -119,4 +122,11 @@ public static class StatExtensions
 
     public static bool IsScalingStat(string stat) => _map[stat];
     public static bool IsPositive(string stat) => _map[stat];
+
+    public static bool CanGoBelowZero(string stat) => StatsThatCanGoBelowZero.Any(x => x.ToString() == stat);
+    public static StatType[] StatsThatCanGoBelowZero = new[]
+        {
+            StatType.Armor,
+            StatType.Resistance
+        };
 }

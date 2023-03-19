@@ -18,6 +18,16 @@ MonoBehaviour:
   description: <b>Quick:</b> Choose a special card that benefits from enemies hit
     by grenades or shots
   typeDescription: {fileID: 0}
+  descriptionV2:
+    text: 'Quick: Choose card to gain:
+
+      Shoot {0} +<b> Stun 1</b> if hit with
+      grenade
+
+      Grenade {1} <b>| Crit:</b> Has been shot'
+    formatArgs:
+    - '{E[0]}'
+    - '{E[1]}'
   tags: 
   speed: 1
   isSinglePlay: 0
@@ -27,6 +37,11 @@ MonoBehaviour:
     plusXCost: 0
   rarity: 2
   actionSequences:
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: 848b184f746f04842acd1df4fb4a71f8, type: 2}
+    repeatX: 0
+    repeatCount: 0
   - scope: 0
     group: 0
     cardActions: {fileID: 11400000, guid: 2d5bb1af244e48d4998aca73fe6ade62, type: 2}
@@ -41,5 +56,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fbcb59caa7d5a114f8b9cf6016d20160, type: 2}
   highlightCondition: []
   unhighlightCondition: []
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 0

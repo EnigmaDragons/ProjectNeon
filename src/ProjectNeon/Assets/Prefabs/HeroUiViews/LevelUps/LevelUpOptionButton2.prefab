@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 5330127450595688094}
   - component: {fileID: 5330127450595688092}
   - component: {fileID: 5330127450595688093}
+  - component: {fileID: 1969065975971931966}
   m_Layer: 0
   m_Name: OptionText
   m_TagString: Untagged
@@ -246,6 +247,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1969065975971931966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5330127450595688095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: '-'
+  mTermSecondary: UI-Kit2-Sans-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 0
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &5330127451934037330
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,7 +379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c469c92f2e84110a9d399df50e9cece, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 5330127450595688093}
+  text: {fileID: 1969065975971931966}
   button: {fileID: 5330127451934037334}
   hoverImg: {fileID: 21300000, guid: df47266f712503f40854fa2739e9d5f3, type: 3}
   hasDetailPrompt: {fileID: 930873796886577422}
@@ -355,7 +395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af70fbe0639b46d9ac40da378b0bcb0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 5330127450595688093}
+  text: {fileID: 1969065975971931966}
   button: {fileID: 5330127451934037334}
   hoverImg: {fileID: 21300000, guid: df47266f712503f40854fa2739e9d5f3, type: 3}
   hasDetailPrompt: {fileID: 930873796886577422}
@@ -415,6 +455,7 @@ GameObject:
   - component: {fileID: 6639592579555971036}
   - component: {fileID: 1292980236016627520}
   - component: {fileID: 7895145583974595925}
+  - component: {fileID: 7681257092963726830}
   m_Layer: 0
   m_Name: ViewDetails
   m_TagString: Untagged
@@ -538,3 +579,42 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7681257092963726830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5388486896796076355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: LevelUps/View Details
+  mTermSecondary: UI-Kit2-Sans-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI

@@ -1,0 +1,631 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 048dbf930ebe4aab942f774b438631a8, type: 3}
+  m_Name: KeywordRulesV2
+  m_EditorClassIdentifier: 
+  items:
+  - title: Aegis
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: e9066b8cb7e2985498d2da0611e31993, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Aegis_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Aegis]}</b>
+
+
+      Prevent the next harmful effect that
+      would be received.'
+  - title: Afflicted
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: c35fe04b457fedd47bb98900e8a0fbd6, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Afflicted_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Afflicted]}</b>
+
+
+      If target is already suffering
+      from a Damage over Time effect, perform the stated effect.'
+  - title: Blind
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 2a9cacd00d257904eab63601fd900c4a, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Blind_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Blind]}</b>
+
+
+      Guarantees that the next attack card
+      played will miss.'
+  - title: Bloodied
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4ee632d8595bb2641ab23295349c92e0, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Bloodied_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Bloodied]}</b>
+
+
+      The bonus effect applies if the
+      target is at or below half of their maximum health'
+  - title: Buyout
+    Key:
+      UseConstant: 1
+      ConstantValue: Buyout
+      Variable: {fileID: 0}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Buyout_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Buyout]}</b>
+
+
+      The specified enemy leaves the battle.'
+  - title: Card Cycles
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 38b278e86888e0d4bb759444b59c1d34, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/CardCycles_Rule
+      Variable: {fileID: 0}
+    Value: "<b>{[t:Keywords/CardCycles]}</b>\n\nAdjusts the number of Card Cycles
+      you can perform during a turn. \n\nCycling a card discards the selected card
+      and immediately draws a new one."
+  - title: Confused
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 2787b5e273649eb4aabd48d80ce6fa22, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Confused_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Confused]}</b>
+
+
+      <b>{[t:Keywords/Confused]}</b>
+      characters may not choose targets. Card effects will be targeted randomly.'
+  - title: Critical
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 33568825eed4ffd45af9a289708986be, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Critical_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Critical]}</b>
+
+
+      If the condition is met, the attack
+      deals double damage.'
+  - title: Debuffs
+    Key:
+      UseConstant: 1
+      ConstantValue: Debuffs
+      Variable: {fileID: 0}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Debuffs_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Debuffs]}</b>
+
+
+      Any temporary negative effect applied
+      to a character. Includes damage over time, {[t:Keywords/Vulnerable]}, {[t:Keywords/Blind]},
+      {[t:Keywords/Disabled]}, etc...'
+  - title: Defenseless
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: afd021007f9dba64eb969984e3522534, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Defenseless_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Defenseless]}</b>
+
+
+      A character is defenseless
+      if they have no {[t:Stats/Stat-Armor]} or {[t:Stats/Stat-Resistance]}.'
+  - title: Disabled
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 23eac25f0ddcf694a87342b19212581c, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Disabled_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Disabled]}</b>
+
+
+      Character with <b>{[t:Keywords/Disabled]}</b>
+      may not play any cards.'
+  - title: Dodge
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 3459a430f8ca0e343b493262d3756b2e, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Dodge_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Dodge]}</b>
+
+
+      Prevent the next action damage that
+      would be received.'
+  - title: Double Damage
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 567892c0029f4214c9f52b55b76d4c4f, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/DoubleDamage_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/DoubleDamage]}</b>
+
+
+      Doubles the amount of damage
+      done by the next damaging effect. If there are more than 1 damaging effects
+      being applied, only the first is modified.'
+  - title: Drain
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 55fc0ec6651d2ee4abd5347444c1dec9, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Drain_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Drain]}</b>
+
+
+      Remove from targets and gain a corresponding
+      amount for yourself.'
+  - title: ExtraCardPlays
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 85f49375563a056468197eb85a992b6b, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/ExtraCardPlays_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/ExtraCardPlays]}</b>
+
+
+      Allows your team to play
+      to play X additional cards.'
+  - title: Finisher
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: fd1bc03b29650184780e2f8f323906c6, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Chain_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Chain]}</b>
+
+
+      Play a free copy of the <b>{[t:Keywords/Chain]}</b>
+      card if this is the final card play and the 3 most recent cards (including
+      this) match this hero.'
+  - title: Finisher-Gear
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 2e4a5e2d65e7fc14a939fa4b7b6fdf0a, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Chain_Rule_Gear
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Chain]}</b>
+
+
+      Play a free copy of the <b>{[t:Keywords/Chain]}</b>
+      card if the 3 most recent cards match this hero at the end of your turn.'
+  - title: Focus
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: d4c01e0693a7fbe47918d6b9214d9473, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Focus_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Focus]}</b>
+
+
+      The target of this effect becomes
+      the primary target of the attacker for the remainder of the battle.'
+  - title: Glitch
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4bddcc8d9d541a14589b2fc846469ac2, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Glitch_Rule
+      Variable: {fileID: 0}
+    Value: "<b>{[t:Keywords/Glitch]}</b>\n\nGlitched cards cannot be played. They
+      can be debugged or trashed to fix. \n\nSome cards in your Deck/Discard may
+      be glitched by powerful hacking enemies."
+  - title: Igniting
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 4b0b51b4c4c327e48a3da0c002230222, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Igniting_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Igniting]}</b>
+
+
+      When targeted by a {[t:Archetypes/Fire]}
+      Card, <b>{[t:Keywords/Igniting]}</b> effects are triggered and consumed.'
+  - title: Inhibit
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: b489d7b0df32f4d4cac325baba2a39a8, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Inhibit_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Inhibit]}</b>
+
+
+      Guarantees that the next non-attack
+      card played will fizzle.'
+  - title: Injure
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: b5cf1d32f6038a84d901294683d1136c, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Injure_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Injure]}</b>
+
+
+      After battle, the stated injury
+      will be applied and will persist until the character receives treatment for
+      it at a clinic.'
+  - title: Lifesteal
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 8aee5857c9a3d794a8f461309134108c, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Lifesteal_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Lifesteal]}</b>
+
+
+      Next time you deal damage, heal
+      yourself for 25% * Number of <b>{[t:Keywords/Lifesteal]}</b> * the amount of
+      damage dealt.'
+  - title: Marked
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 3c078d6f5df480444bb3edd47b7e81f9, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Marked_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Marked]}</b>
+
+
+      Marks are both used as requirements
+      on cards such as when you see "3 Marks:" and make some assassination card effects
+      stronger'
+  - title: Motionless
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 2edf7827be00ffd4db1b0e27a916c7f7, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Motionless_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Motionless]}</b>
+
+
+      If this hero plays no cards
+      during the Play Cards phase, gain the stated effect or play the stated bonus
+      card.'
+  - title: OnSlay
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 7caa2475e493fe74fa693152459f13e5, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/OnSlay_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/OnSlay]}</b>
+
+
+      When a target is killed by your
+      action, trigger the stated effect.'
+  - title: Power
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 776ba0867ae352c459b9844d0b78d6e2, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Power_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Power]}</b>
+
+
+      {[t:Keywords/Power]} refers to the
+      main card-scaling stat of a character.'
+  - title: Profitable
+    Key:
+      UseConstant: 1
+      ConstantValue: Profitable
+      Variable: {fileID: 0}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Profitable_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Profitable]}</b>
+
+
+      If you have gained more money
+      than lost during the battle than "Profitable" effects will apply, otherwise
+      "Unprofitable" effects will apply'
+  - title: Prominent
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: bc2e1a70d3c68eb468c87038fa8893ba, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Prominent_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Prominent]}</b>
+
+
+      You cannot <b>{[t:Keywords/Stealth]}</b>
+      while prominent, <i>(although you can {[t:Keywords/ReStealth]})</i>.
+
+      After
+      breaking <b>{[t:Keywords/Stealth]}</b>, a character gains <b>{[t:Keywords/Prominent]}</b>
+      for the remainder of the turn.'
+  - title: Primary Stat
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: a961f902c2ecfd54ebfbfe875405e991, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/PrimaryStat_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/PrimaryStat]}</b>
+
+
+      {[t:Keywords/PrimaryStat]}
+      refers to the main card-scaling stat of a character.'
+  - title: Quick
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 5ce2e581031f090468e64b6e75e49c9c, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Quick_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Quick]}</b>
+
+
+      Does not cost a turn card play. You
+      can play this and still play all the other cards you would normally play.'
+  - title: ReStealth
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 1dfa209aa72491b45aa3c27a38739cfd, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/ReStealth_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/ReStealth]}</b>
+
+
+      Immediately gain <b>{[t:Keywords/Stealth]}</b>.
+      Works even if <b>{[t:Keywords/Prominent]}</b>.'
+  - title: Self-Destruct
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 3fdae3a92d71c3c4c9e8b120a918aa16, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/SelfDestruct_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/SelfDestruct]}</b>
+
+
+      The acting character instantly
+      loses all its remaining {[t:Stats/Stat-HP]}.'
+  - title: Shoot
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 55f2478f1ba61af4a842e172341ab08c, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Shoot_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Shoot]}</b>
+
+
+      When you target an enemy with a ranged
+      weapon attack card, trigger the stated effect.'
+  - title: Single Use
+    Key:
+      UseConstant: 1
+      ConstantValue: SingleUse
+      Variable: {fileID: 0}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/SingleUse_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/SingleUse]}</b>
+
+
+      Any card with cracks at the edge
+      of it, is single use. After it resolves it will be removed from that battle
+      instead of being discarded.'
+  - title: Sneaky
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 9dc17b8096c2e604ebb87bf7f8d09730, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Sneaky_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Sneaky]}</b>
+
+
+      If you have {[t:Keywords/Stealth]},
+      apply the stated effect'
+  - title: Stealth
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 054e3937185a0cf41b7264b099d2c6b5, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Stealth_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Stealth]}</b>
+
+
+      Characters with <b>{[t:Keywords/Stealth]}</b>
+      may not be directly targeted. They lose <b>{[t:Keywords/Stealth]}</b> when
+      they perform an offensive action. Heroes cannot <b>{[t:Keywords/Stealth]}</b>
+      while having <b>{[t:Keywords/Prominent]}</b>.'
+  - title: Stun
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: c05ba6d66feae7c47a741c621c3f426a, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Stun_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Stun]}</b>
+
+
+      Negates the next card played by that
+      character.
+
+
+      Also, characters with <b>{[t:Keywords/Stun]}</b> cannot
+      perform reactions.'
+  - title: Swap
+    Key:
+      UseConstant: 1
+      ConstantValue: Swap
+      Variable: {fileID: 0}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Swap_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Swap]}</b>
+
+
+      After this card is resolved it will
+      swap with the specified card'
+  - title: TagPlayed
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 8fd06c4c4bed69e4ab9987561080fa5f, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/TagPlayed_Rule
+      Variable: {fileID: 0}
+    Value: '<b>(Condition)</b>
+
+
+      This card becomes more powerful for each time
+      you have fulfilled the specified condition inside the "()"'
+  - title: Taunt
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 5e53e1eb700232049a0c1d2017a544d1, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Taunt_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Taunt]}</b>
+
+
+      While an opponent has <b>{[t:Keywords/Taunt]}</b>,
+      all single target cards must target that character.'
+  - title: Vulnerable
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: a44ad20938ad98d4ba2a05ebec66e947, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/Vulnerable_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/Vulnerable]}</b>
+
+
+      A character with <b>{[t:Keywords/Vulnerable]}</b>
+      receives 50% more damage. Applies after all defenses.'
+  - title: X Cost
+    Key:
+      UseConstant: 0
+      ConstantValue: 
+      Variable: {fileID: 11400000, guid: 16649ed163ec1304a9b194f1c7a14f2d, type: 2}
+    Term:
+      UseConstant: 1
+      ConstantValue: Keywords/X-Cost_Rule
+      Variable: {fileID: 0}
+    Value: '<b>{[t:Keywords/X-Cost]}</b>
+
+
+      Expends all of the associated resource.
+      Grants effects that scale off the amount of resources spent.'

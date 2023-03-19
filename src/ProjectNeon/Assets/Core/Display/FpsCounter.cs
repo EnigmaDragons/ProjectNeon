@@ -1,6 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
+[IgnoreForLocalization]
 public class FpsCounter : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI label;

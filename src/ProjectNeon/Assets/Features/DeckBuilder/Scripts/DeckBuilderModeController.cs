@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
+[Obsolete]
 public class DeckBuilderModeController : OnMessage<TogglePartyDetails, DeckBuilderCurrentDeckChanged>
 {
     [SerializeField] private IntReference deckSize;
@@ -9,10 +11,9 @@ public class DeckBuilderModeController : OnMessage<TogglePartyDetails, DeckBuild
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private GameObject parent;
     [SerializeField] private Button saveButton;
-    [SerializeField] private TextCommandButton saveButtonCont;
+    [SerializeField] private LocalizedCommandButton saveButtonCont;
     [SerializeField] private GameObject[] fightOnlyElements;
     [SerializeField] private Button fightButton;
-    [SerializeField] private TextCommandButton fightButtonCont;
     [SerializeField] private Navigator navigator;
     [SerializeField] private EquipmentLibraryUI equipmentLibraryUI;
     [SerializeField] private LibraryFilterUI cardFilter;
@@ -66,18 +67,20 @@ public class DeckBuilderModeController : OnMessage<TogglePartyDetails, DeckBuild
         if (state.HeroesDecks.Any(x => x.Deck.Count != deckSize)) 
             return;
         
-        if (party.HasAnyUnequippedGear())
-            Message.Publish(new ShowTwoChoiceDialog
-            {
-                Prompt = "You have unequipped gear. Are you sure you're ready to fight?",
-                PrimaryButtonText = "Yes",
-                PrimaryAction = BeginFight,
-                SecondaryButtonText = "Go Back",
-                SecondaryAction = () => { },
-                UseDarken = true
-            });
-        else
-            BeginFight();
+        // if (party.HasAnyUnequippedGear())
+        //     Message.Publish(new ShowTwoChoiceDialog
+        //     {
+        //         Prompt = "You have unequipped gear. Are you sure you're ready to fight?",
+        //         PrimaryButtonText = "Yes",
+        //         PrimaryAction = BeginFight,
+        //         SecondaryButtonText = "Go Back",
+        //         SecondaryAction = () => { },
+        //         UseDarken = true
+        //     });
+        // else
+        //     BeginFight();
+        
+        BeginFight();
     }
 
     private void BeginFight()

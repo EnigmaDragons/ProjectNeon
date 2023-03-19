@@ -1,16 +1,15 @@
-
-using TMPro;
+using I2.Loc;
 using UnityEngine;
 
 public class AdventureStoryPresenter : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI title;
-    [SerializeField] private TextMeshProUGUI story;
+    [SerializeField] private Localize title;
+    [SerializeField] private Localize story;
     [SerializeField] private CurrentAdventure current;
 
     private void Awake()
     {
-        title.text = current.Adventure.Title;
-        story.text = current.Adventure.Story;
+        title.SetTerm(current.Adventure.TitleTerm);
+        story.SetTerm(current.Adventure.StoryTerm);
     }
 }

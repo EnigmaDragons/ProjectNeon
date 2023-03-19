@@ -4,7 +4,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public sealed class ProgressiveTextRevealUi : ProgressiveText
+[IgnoreForLocalization]
+public class ProgressiveTextRevealUi : ProgressiveText
 {
     [SerializeField] private Button chatBox;
     [SerializeField] private Image panelBg;
@@ -29,7 +30,7 @@ public sealed class ProgressiveTextRevealUi : ProgressiveText
     private Action _onFullyShown = () => { };
     private Action _onFinished = () => { };
 
-    private static bool _debugLog = false;
+    private static bool _debugLog = true;
     
     private void Awake()
     {

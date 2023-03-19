@@ -64,7 +64,7 @@ public class PartyUiSummaryV2 : MonoBehaviour
         if (!m.Member.TeamType.Equals(TeamType.Party)) return;
         
         active
-            .Where(a => a.Contains(m.Member.Name))
+            .Where(a => a.Contains(m.Member.NameTerm))
             .ForEach(a => a.gameObject.SetActive(false));
     }
 }

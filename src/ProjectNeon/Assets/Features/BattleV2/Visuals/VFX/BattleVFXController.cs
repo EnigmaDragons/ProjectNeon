@@ -28,10 +28,10 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
         if (_loggingEnabled)
             LogInfo($"Requested VFX {e.EffectName}");
         var f = _fxByName.ValueOrMaybe(e.EffectName);
-        var ctx = new EffectContext(e.Source, e.Target, e.Card, e.XPaidAmount, partyAdventureState, state.PlayerState, state.RewardState,
+        var ctx = new EffectContext(e.Source, e.Target, e.Card, e.XPaidAmount, e.PaidAmount, partyAdventureState, state.PlayerState, state.RewardState,
             state.Members, state.PlayerCardZones, new UnpreventableContext(), new SelectionContext(), new Dictionary<int, CardTypeData>(), state.CreditsAtStartOfBattle, 
             state.Party.Credits, state.Enemies.ToDictionary(x => x.Member.Id, x => (EnemyType)x.Enemy), () => state.GetNextCardId(), 
-            state.CurrentTurnCardPlays(), state.OwnerTints, state.OwnerBusts, false, ReactionTimingWindow.NotApplicable);
+            state.CurrentTurnCardPlays(), state.OwnerTints, state.OwnerBusts, false, ReactionTimingWindow.NotApplicable, new EffectScopedData(), new DoubleDamageContext(e.Source, false));
         var conditionResult = e.Condition.GetShouldNotApplyReason(ctx);
         if (conditionResult.IsPresent)
         {
@@ -44,7 +44,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
             Log.Warn($"No VFX of type {e.EffectName}");
             Message.Publish(new Finished<BattleEffectAnimationRequested>());
         }
-        else if (e.Scope.Equals(Scope.One) || e.Scope.Equals(Scope.OneExceptSelf))
+        else if (e.Scope.Equals(Scope.One) || e.Scope.Equals(Scope.OneExceptSelf) || e.Scope.Equals(Scope.Random))
         {
             if (e.Target.Members.None())
             {
@@ -73,7 +73,9 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
         }
         else
         {
-            var performerTeam = state.Members[e.PerformerId].TeamType;
+            var performerTeam = e.PerformerId == AllGlobalEffects.GlobalEffectMemberId 
+                ? TeamType.Party
+                : state.Members[e.PerformerId].TeamType;
             var opponentTeam = performerTeam == TeamType.Enemies ? TeamType.Party : TeamType.Enemies;
             var targetTeam = e.Group == Group.Opponent ? opponentTeam : performerTeam;
             var location = state.GetCenterPoint(targetTeam);
@@ -99,7 +101,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
         var instVFX = o.GetComponent<BattleVFX>();
         SetupEffect(o, instVFX, size, speed, color, shouldFlipHorizontal);
         if (!skipWaitingForCompletion && instVFX.WaitForCompletion)
-            StartCoroutine(AwaitAnimationFinish(instVFX, new WaitForSeconds(f.DurationSeconds)));
+            this.SafeCoroutineOrNothing(AwaitAnimationFinish(instVFX, new WaitForSeconds(f.DurationSeconds)));
         else
             Message.Publish(new Finished<BattleEffectAnimationRequested>());
     }

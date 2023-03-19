@@ -5,9 +5,9 @@ using UnityEngine;
 public sealed class WorldHPBarController : HPBarControllerBase
 {
     [SerializeField] private GameObject bar;
-    [SerializeField] private TextMeshPro hpText;
+    [SerializeField, NoLocalizationNeeded] private TextMeshPro hpText;
     [SerializeField] private GameObject shieldBar;
-    [SerializeField] private TextMeshPro shieldText;
+    [SerializeField, NoLocalizationNeeded] private TextMeshPro shieldText;
 
     private float _scaleX;
 

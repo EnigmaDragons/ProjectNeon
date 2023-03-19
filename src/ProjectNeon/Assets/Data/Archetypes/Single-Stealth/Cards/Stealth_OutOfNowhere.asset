@@ -18,6 +18,12 @@ MonoBehaviour:
   description: '<b>On Death</b>: Gain 6 Owner[PrimaryResource]. Deal {E[1]} <b>|</b>
     <b>Sneaky</b>: {E[2]}.\n <b>Re-Stealth</b>'
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  descriptionV2:
+    text: "<b>On Death</b>: Gain 6 Owner[PrimaryResource]. \nDeal {0} <b>|</b> <b>Sneaky</b>:
+      {1}.\n<b>Re-Stealth</b>"
+    formatArgs:
+    - '{E[2]}'
+    - '{E[3]}'
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -45,6 +51,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1e6b060bb2d10434c8d325b3765125dd, type: 2}
   highlightCondition:
   - {fileID: 11400000, guid: e31a0ad53cebd7943bb65ca320c39969, type: 2}
-  unhighlightCondition: []
+  unhighlightCondition:
+  - {fileID: 11400000, guid: f4b925cb22766bd4c8734ed15d347eaf, type: 2}
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 0

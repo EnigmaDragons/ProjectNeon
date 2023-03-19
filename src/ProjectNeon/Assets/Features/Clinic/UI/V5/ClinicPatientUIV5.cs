@@ -1,17 +1,18 @@
 using System;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ClinicPatientUIV5 : OnMessage<UpdateClinic, HeroStateChanged, PartyAdventureStateChanged, SetSuperFocusHealControl>
 {
-    [SerializeField] private TextMeshProUGUI nameLabel;
+    [SerializeField] private Localize nameLocalize;
     [SerializeField] private HeroHpPresenter hpPresenter;
     [SerializeField] private Button healToFullButton;
     [SerializeField] private GameObject healToFullSuperFocus;
     [SerializeField] private GameObject fullHealth;
     [SerializeField] private Button viewHeroDetailButton;
-    [SerializeField] private TextMeshProUGUI healToFullCostLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI healToFullCostLabel;
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private GameObject injuriesParent;
     [SerializeField] private GameObject noInjuriesPrototype;
@@ -33,7 +34,7 @@ public class ClinicPatientUIV5 : OnMessage<UpdateClinic, HeroStateChanged, Party
     public ClinicPatientUIV5 Initialized(Hero h)
     {
         _hero = h;
-        nameLabel.text = h.DisplayName;
+        nameLocalize.SetTerm(h.NameTerm);
         hpPresenter.Init(h);
         UpdateCosts();
         UpdateButtons();
@@ -85,6 +86,7 @@ public class ClinicPatientUIV5 : OnMessage<UpdateClinic, HeroStateChanged, Party
     {
         _hero.HealInjuryByName(injuryName);
         party.UpdateClinicVouchersBy(-InjuryHealCost);
+        Message.Publish(new HealedInjury());
         Message.Publish(new HideTooltip());
         Message.Publish(new UpdateClinic());
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 public sealed class WorldStatusIconPresenter : StatusIcon
 {
     [SerializeField] private SpriteRenderer icon;
-    [SerializeField] private TextMeshPro label;
+    [SerializeField, NoLocalizationNeeded] private TextMeshPro label;
 
     private Vector3 _originalScale;
     private string _tooltip;
@@ -31,7 +31,7 @@ public sealed class WorldStatusIconPresenter : StatusIcon
     
     public void ShowTooltip()
     {
-        Message.Publish(new ShowTooltip(transform, _tooltip, true));
+        Message.Publish(new ShowTooltip(transform.position, _tooltip, true));
         _originator.IfPresent(id => Message.Publish(new ActivateMemberHighlight(id, MemberHighlightType.StatusOriginator, true)));
     }
 

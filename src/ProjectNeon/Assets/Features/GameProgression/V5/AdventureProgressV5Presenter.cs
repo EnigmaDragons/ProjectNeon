@@ -1,25 +1,38 @@
 using System.Linq;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AdventureProgressV5Presenter : OnMessage<AdventureProgressChanged>
+public class AdventureProgressV5Presenter : OnMessage<AdventureProgressChanged, NodeFinished>
 {
     [SerializeField] private CurrentAdventureProgress adventure;
     [SerializeField] private Image barFill;
     [SerializeField] private GameObject minibossMarkerPrototype;
     [SerializeField] private GameObject eliteMarkerPrototype;
     [SerializeField] private GameObject markerParent;
+    [SerializeField] private TextMeshProUGUI progressNumberLabel;
     [SerializeField] private float markerPlacementFactor = 1f;
+    [SerializeField] private CurrentAdventure currentAdventure;
+    [SerializeField] private CurrentBoss boss;
+    [SerializeField] private Image bossIcon;
 
     private readonly float _visualFactor = 1f;
     private readonly float _offsetAmount = 0f;
 
     private void Awake()
     {
+        RenderUpdateNoAnim();
+        if (currentAdventure.Adventure.BossSelection)
+            bossIcon.sprite = boss.Boss.Bust;
+    }
+
+    private void RenderUpdateNoAnim()
+    {
         Log.Info($"Stage Progress {adventure.AdventureProgress.ProgressToBoss}");
         barFill.fillAmount = FillAmount;
         RenderMarkers();
+        RenderProgressNumbers();
     }
 
     private void RenderMarkers()
@@ -35,14 +48,33 @@ public class AdventureProgressV5Presenter : OnMessage<AdventureProgressChanged>
         });
     }
 
+    private const string progressTemplate = "{0}/{1}";
+    private void RenderProgressNumbers()
+    {
+        if (progressNumberLabel == null)
+            return;
+
+        if (adventure.AdventureProgress.ProgressToBoss >= 1f)
+            progressNumberLabel.text = "";
+        else
+            progressNumberLabel.text = string.Format(progressTemplate,
+                adventure.AdventureProgress.CurrentNonAutoStageProgress.ToString(),
+                adventure.AdventureProgress.TotalNonAutoSegmentsToBoss.ToString());
+    }
+
     private void SmoothTransitionTo(float amount) => barFill.DOFillAmount(amount * _visualFactor + _offsetAmount, 1);
 
-    protected override void Execute(AdventureProgressChanged msg)
+    protected override void Execute(AdventureProgressChanged msg) => RenderUpdateWithAnim();
+
+    private void RenderUpdateWithAnim()
     {
         Log.Info($"Stage Progress {adventure.AdventureProgress.ProgressToBoss}");
         SmoothTransitionTo(FillAmount);
         RenderMarkers();
+        RenderProgressNumbers();
     }
+
+    protected override void Execute(NodeFinished msg) => this.ExecuteAfterTinyDelay(RenderUpdateWithAnim);
 
     private float FillAmount => adventure.AdventureProgress.ProgressToBoss * _visualFactor + _offsetAmount;
 }

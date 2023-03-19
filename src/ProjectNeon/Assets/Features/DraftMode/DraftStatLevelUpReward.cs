@@ -5,7 +5,7 @@ public class DraftStatLevelUpReward : LevelUpOption
 {
     private readonly Action _action;
     
-    public string IconName { get; } = "";
+    public string IconName => "";
     public string Description { get; }
 
     public DraftStatLevelUpReward(string description, Action action)
@@ -21,11 +21,11 @@ public class DraftStatLevelUpReward : LevelUpOption
         Message.Publish(new AutoSaveRequested());
     }
     
-    public bool IsFunctional { get; } = true;
+    public bool IsFunctional => true;
     
-    public bool HasDetail { get; } = false;
-    public void ShowDetail() => throw new System.NotImplementedException();
+    public bool HasDetail => false;
+    public void ShowDetail() {}
     
-    public bool UseCustomOptionPresenter { get; } = false;
+    public bool UseCustomOptionPresenter => false;
     public GameObject CreatePresenter(LevelUpCustomPresenterContext ctx) => throw new System.NotImplementedException();
 }

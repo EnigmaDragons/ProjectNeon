@@ -8,6 +8,9 @@ public class Blessing
     public string Name;
     public HeroCharacter[] Targets;
     public EffectData Effect;
+    public int Duration;
+    
+    public Blessing() {}
     
     public void Apply(BattleState state)
     {
@@ -17,6 +20,7 @@ public class Blessing
             target.Members[0], 
             target,
             Maybe<Card>.Missing(), 
+            ResourceQuantity.None, 
             ResourceQuantity.None, 
             state.Party, 
             state.PlayerState, 
@@ -34,7 +38,9 @@ public class Blessing
             state.OwnerTints,
             state.OwnerBusts,
             true,
-            ReactionTimingWindow.FirstCause);
+            ReactionTimingWindow.FirstCause, 
+            new EffectScopedData(),
+            new DoubleDamageContext(target.Members[0], false));
         AllEffects.Apply(Effect, ctx);
     }
 }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 58
   displayName: 
-  description: 'On Afflict: Gain 1 Primary Resource'
+  description: 'On Afflict: Gain 1 {[t:Stats/Stat-PrimaryResource]}'
   corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 85cc99b6a9e2fc3479a63e5161296787, type: 2}
@@ -26,7 +26,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 74
+  - Id: 20000
+    EffectType: 74
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -42,10 +43,10 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: 'On Afflict: Gain 1 Primary Resource'
+    StatusDetailText: 'On Afflict: Gain 1 Energy'
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -57,15 +58,24 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
     ReactionConditionType: 14
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 11400000, guid: 40da3c26a8fab584fb31137a7a4c7e63, type: 2}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
+  battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 

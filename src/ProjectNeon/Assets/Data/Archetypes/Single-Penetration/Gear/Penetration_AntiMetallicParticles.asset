@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 88
   displayName: 
-  description: 'Start of Battle: Reduce everyone''s armor by 1'
+  description: 'Start of Battle: Reduce everyone''s {[t:Stats/Stat-Armor]} by 1'
   corp: {fileID: 11400000, guid: 635ceb600e2d3cc4eae947d02d89a417, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 079871761aec52040887b3de1c1a19c4, type: 2}
@@ -26,7 +26,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 68
+  - Id: 0
+    EffectType: 68
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -42,8 +43,8 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 17c8fbf9e2b5f79459e077374380ae85, type: 2}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
-    ReTargetScope: 60
+    ReTargetScope: 21
+    ApplyToEachMemberIndividually: 0
     StatusTag: 0
     StatusDetailText: 
     TurnDelay: 0
@@ -57,17 +58,24 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
-    ApplyToEachMemberIndividually: 0
+    ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 

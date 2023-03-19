@@ -27,14 +27,12 @@ MonoBehaviour:
     CardTagPriority: 
     UnpreferredCardTags: 
     RotatePlayingCardTags: 
+    IgnoreDesignatedAttackerRole: 0
   preferredTurnOrder: 99
   prefab: {fileID: 6930989474481609571, guid: 42094e8e596a05b47b2dd41560425c0c, type: 3}
   materialType: 1
   libraryCameraOffset: {x: 0, y: -0.8, z: 2.5}
-  deathEffect:
-    UseConstant: 1
-    ConstantValue: 
-    Variable: {fileID: 0}
+  shouldLive: 0
   battleRole: 1
   tier: 2
   unique: 1
@@ -46,7 +44,7 @@ MonoBehaviour:
   animationSounds: {fileID: 11400000, guid: 4026fc09bc45cb5459b8c7a5ea1cebde, type: 2}
   stageDetails:
   - stage: 1
-    maxHp: 40
+    maxHp: 50
     maxShield: 0
     startingShield: 0
     startingAegis: 0
@@ -57,7 +55,7 @@ MonoBehaviour:
     magic: 0
     leadership: 0
     armor: 20
-    resistance: 0
+    resistance: -5
     nonStatCardValueFactor: 0
     startingResourceAmount: 3
     maxResourceAmount: 3
@@ -83,6 +81,7 @@ MonoBehaviour:
     Cards:
     - {fileID: 11400000, guid: f1e153c0aee7c0a4aad77f466b4c6205, type: 2}
     - {fileID: 11400000, guid: a3519f718c3c0c84abec4c5338b08cdf, type: 2}
+    CardsTheyAppearsToHave: []
   maxCopies: 0
   minimumAllies: 0
   damageType: 0

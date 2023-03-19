@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public sealed class UIStatusIconPresenter : StatusIcon, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Image icon;
-    [SerializeField] private TextMeshProUGUI label;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI label;
 
     private Vector3 _originalScale;
     private string _tooltip = string.Empty;
@@ -33,7 +33,9 @@ public sealed class UIStatusIconPresenter : StatusIcon, IPointerEnterHandler, IP
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Message.Publish(new ShowTooltip(transform, _tooltip, true));
+        if (!gameObject.activeSelf) return;
+        
+        Message.Publish(new ShowTooltip(transform.position, _tooltip, true));
         _originator.IfPresent(id => Message.Publish(new ActivateMemberHighlight(id, MemberHighlightType.StatusOriginator, true)));
     }
 

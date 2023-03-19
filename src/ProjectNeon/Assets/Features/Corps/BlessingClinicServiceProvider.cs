@@ -14,7 +14,7 @@ public class BlessingClinicServiceProvider : ClinicServiceProvider
         _blessings = blessings;
     }
     
-    public string GetTitle() => "Blessings";
+    public string GetTitleTerm() => "Blessings";
 
     public ClinicServiceButtonData[] GetOptions()
     {
@@ -24,6 +24,7 @@ public class BlessingClinicServiceProvider : ClinicServiceProvider
                 {
                     Name = blessingData.Name,
                     Effect = blessingData.Effect, 
+                    Duration = 3,
                     Targets = blessingData.IsSingleTarget 
                         ? _party.Heroes
                             .Where(x => x.Stats[blessingData.StatRequirement] >= blessingData.RequirementThreshold)
@@ -41,13 +42,13 @@ public class BlessingClinicServiceProvider : ClinicServiceProvider
                 .Take(3)
                 .Select(x => new ClinicServiceButtonData(
                     x.blessingData.Name, 
-                    x.blessingData.IsSingleTarget ? string.Format(x.blessingData.Description, x.blessing.Targets[0].DisplayName()) : x.blessingData.Description, 
+                    x.blessingData.IsSingleTarget ? string.Format(x.blessingData.Description, x.blessing.Targets[0].NameTerm().ToEnglish()) : x.blessingData.Description, 
                     0,
                     () =>
                     {
                         _party.AddBlessing(x.blessing);
                         _hasProvidedService = true;
-                    }, x.blessingData.Effect.AsArray(), "Tritoonico", Rarity.Starter))
+                    }, x.blessingData.Effect.AsArray(), "Tritoonico", Rarity.Starter, $"Tritoonico-{x.blessingData.Name}"))
                 .ToArray();
         _generatedOptions.ForEach(x => x.Enabled = !_hasProvidedService);
         return _generatedOptions;

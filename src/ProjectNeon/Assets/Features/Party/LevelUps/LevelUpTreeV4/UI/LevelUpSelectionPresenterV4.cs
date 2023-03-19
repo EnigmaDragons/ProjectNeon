@@ -1,25 +1,27 @@
 using System.Linq;
 using DG.Tweening;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
+public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>, ILocalizeTerms
 {
     [SerializeField] private CurrentAdventure adventure;
     
     [SerializeField] private TextMeshProUGUI headerLabel;
-    [SerializeField] private TextMeshProUGUI levelLabel;
+    [SerializeField] private Localize levelLabel;
     [SerializeField] private GameObject heroNameObject;
-    [SerializeField] private TextMeshProUGUI heroNameLabel;
+    [SerializeField] private Localize heroNameLocalize;
     [SerializeField] private GameObject heroClassObject;
-    [SerializeField] private TextMeshProUGUI heroClassLabel;
+    [SerializeField] private Localize heroClassLocalize;
     [SerializeField] private Image bust;
     [SerializeField] private ResourceCounterPresenter primaryResourceCounter;
     [SerializeField] private ResourceCounterPresenter secondaryResourceCounter;
     
-    [SerializeField] private TextMeshProUGUI faintLevelLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI faintLevelLabel;
     [SerializeField] private Image faintBust;
+    [SerializeField] private Localize faintClassLocalize;
     [SerializeField] private TextMeshProUGUI faintClassName;
     
     [SerializeField] private MemberStatDiffPanel stats;
@@ -69,12 +71,12 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
         faintBust.color = new Color(1, 1, 1, 1 / 255f);
         faintLevelLabel.text = _hero.Level.ToString(); 
         faintLevelLabel.color = new Color(1, 1, 1, 1 / 255f);
-        faintClassName.text = _hero.Class;
+        faintClassLocalize.SetTerm(_hero.ClassTerm);
         faintClassName.color = new Color(1, 1, 1, 1 / 255f);
         stats.Initialized(_hero);
-        heroNameLabel.text = _hero.DisplayName;
-        heroClassLabel.text = _hero.Class;
-        levelLabel.text = $"Level {_hero.Level.ToString()}";
+        heroNameLocalize.SetTerm(_hero.NameTerm);
+        heroClassLocalize.SetTerm(_hero.ClassTerm);
+        levelLabel.SetFinalText($"{"LevelUps/Level".ToLocalized()} {_hero.Level.ToString()}");
         var adventureMode = adventure != null ? adventure.Adventure.Mode : AdventureMode.Standard;
         optionsPresenter.Init(adventureMode, _hero);
         
@@ -101,7 +103,7 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
         faintLevelLabel.DOColor(Color.white, 2.4f).SetEase(Ease.InQuad);
         faintClassName.DOColor(Color.white, 2.4f).SetEase(Ease.Linear);
         optionsPresenter.ClearUnselectedOptions(msg.Selected);
-        AllMetrics.PublishLevelUpOptionSelection(_hero.Name, _hero.Level, msg.Selected.Description, msg.Options.Select(o => o.Description).ToArray());
+        AllMetrics.PublishLevelUpOptionSelection(_hero.NameTerm.ToEnglish(), _hero.Level, msg.Selected.Description, msg.Options.Select(o => o.Description).ToArray());
         msg.Selected.SelectAsLevelUp(_hero);
         Message.Publish(new LevelUpClicked(transform));
         
@@ -111,4 +113,7 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>
             Message.Publish(new HeroLevelledUp());
         }, finishAnimationDuration);
     }
+
+    public string[] GetLocalizeTerms()
+        => new [] {"LevelUps/Level"};
 }

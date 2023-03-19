@@ -54,49 +54,49 @@ public class FormulaTests
         => AssertResultsIs(10, "0.5 * HP", TestMembers.Create(s => s.With(StatType.MaxHP, 20)));
     
     [Test] public void Formula_TargetStat() 
-        => AssertResultsIs(20, "Target[HP]", new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.Create(s => s.With(StatType.MaxHP, 20)), ResourceQuantity.None));
+        => AssertResultsIs(20, "Target[HP]", new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.Create(s => s.With(StatType.MaxHP, 20)), ResourceQuantity.None, new EffectScopedData()));
     
     [Test] public void Formula_ResourceAmount()
         => AssertResultsIs(2, "Flames", TestMembers.Create(s => s.With(new InMemoryResourceType("Flames") { StartingAmount = 2, MaxAmount = 99})));
 
     [Test] public void Formula_XAmountPaid()
-        => AssertResultsIs(1, "X", new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.Any(), new ResourceQuantity { Amount = 1 }));
+        => AssertResultsIs(1, "X", new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.Any(), new ResourceQuantity { Amount = 1 }, new EffectScopedData()));
     
     [Test] public void Formula_DoubleDamageIfStunned()
         => AssertResultsIs(2, "1 {Target[Stun] > 0:* 2}", 
-            new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.Create(x => x.With(TemporalStatType.Stun, 1)), ResourceQuantity.None));
+            new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.Create(x => x.With(TemporalStatType.Stun, 1)), ResourceQuantity.None, new EffectScopedData()));
     
     [Test] public void Formula_PrimaryResource()
         => AssertResultsIs(1, "PrimaryResource", 
-            new FormulaContext(TestMembers.With(new InMemoryResourceType("prime") { MaxAmount = 1, StartingAmount = 1 }).GetSnapshot().State, Maybe<MemberState>.Missing(), ResourceQuantity.None));
+            new FormulaContext(TestMembers.With(new InMemoryResourceType("prime") { MaxAmount = 1, StartingAmount = 1 }).GetSnapshot().State, Maybe<MemberState>.Missing(), ResourceQuantity.None, new EffectScopedData()));
     
     [Test] public void Formula_NamedResource()
         => AssertResultsIs(2, "Ammo", 
             new FormulaContext(TestMembers.With(new InMemoryResourceType("prime") { MaxAmount = 1, StartingAmount = 1 }, 
-                new InMemoryResourceType("Ammo") { MaxAmount = 4, StartingAmount = 2 }).GetSnapshot().State, Maybe<MemberState>.Missing(), ResourceQuantity.None));
+                new InMemoryResourceType("Ammo") { MaxAmount = 4, StartingAmount = 2 }).GetSnapshot().State, Maybe<MemberState>.Missing(), ResourceQuantity.None, new EffectScopedData()));
     
     [Test] public void Formula_TargetPrimaryResource()
         => AssertResultsIs(1, "Target[PrimaryResource]", 
-            new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.With(new InMemoryResourceType("prime") { MaxAmount = 1, StartingAmount = 1 }), ResourceQuantity.None));
+            new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.With(new InMemoryResourceType("prime") { MaxAmount = 1, StartingAmount = 1 }), ResourceQuantity.None, new EffectScopedData()));
     
     [Test] public void Formula_TargetMarked()
         => AssertResultsIs(1, "Target[Marked]", 
-            new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.Create(x => x.With(TemporalStatType.Marked, 1)), ResourceQuantity.None));
+            new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.Create(x => x.With(TemporalStatType.Marked, 1)), ResourceQuantity.None, new EffectScopedData()));
 
     [Test] public void Formula_BasePower()
     {
         var member = TestMembers.Create(x => x.With(StatType.Attack, 10));
         member.State.ApplyTemporaryAdditive(new AdjustedStats(new StatAddends().With(StatType.Attack, 5), TemporalStateMetadata.Unlimited(-1, false)));
         
-        AssertResultsIs(15, "Power", new FormulaContext(member.State.ToSnapshot(), member, ResourceQuantity.None));
-        AssertResultsIs(10, "Base[Power]", new FormulaContext(member.State.ToSnapshot(), member, ResourceQuantity.None));
+        AssertResultsIs(15, "Power", new FormulaContext(member.State.ToSnapshot(), member, ResourceQuantity.None, new EffectScopedData()));
+        AssertResultsIs(10, "Base[Power]", new FormulaContext(member.State.ToSnapshot(), member, ResourceQuantity.None, new EffectScopedData()));
     }
 
     private void AssertResultsIs(float val, string exp) 
-        => AssertResultsIs(val, exp, new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.Any().State, ResourceQuantity.None));
+        => AssertResultsIs(val, exp, new FormulaContext(TestMembers.Any().GetSnapshot().State, TestMembers.Any().State, ResourceQuantity.None, new EffectScopedData()));
     
     private void AssertResultsIs(float val, string exp, Member m) 
-        => AssertResultsIs(val, exp, new FormulaContext(m.GetSnapshot().State, TestMembers.Any().State, ResourceQuantity.None));
+        => AssertResultsIs(val, exp, new FormulaContext(m.GetSnapshot().State, TestMembers.Any().State, ResourceQuantity.None, new EffectScopedData()));
     
     private void AssertResultsIs(float val, string exp, FormulaContext ctx) 
         => Assert.AreEqual(val, Formula.EvaluateRaw(ctx, exp));

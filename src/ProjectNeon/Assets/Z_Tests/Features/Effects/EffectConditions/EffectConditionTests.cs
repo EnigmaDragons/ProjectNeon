@@ -52,5 +52,5 @@ public class EffectConditionTests
             => TestableObjectFactory.Create<T>().GetShouldNotApplyReason(ForTarget(new Single(m)));
 
     private EffectContext ForTarget(Target t) => EffectContext.ForTests(TestMembers.Any(), t, Maybe<Card>.Missing(),
-        ResourceQuantity.None, new UnpreventableContext());
+        ResourceQuantity.None, ResourceQuantity.None, new UnpreventableContext());
 }

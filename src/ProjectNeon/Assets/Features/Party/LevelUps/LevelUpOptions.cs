@@ -2,6 +2,6 @@ using UnityEngine;
 
 public abstract class LevelUpOptions : ScriptableObject
 {
-    public abstract string ChoiceDescription { get; }
+    public abstract string ChoiceDescriptionTerm { get; }
     public abstract LevelUpOption[] Generate(Hero h);
 }

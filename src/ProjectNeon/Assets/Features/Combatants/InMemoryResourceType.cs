@@ -13,6 +13,9 @@ public sealed class InMemoryResourceType : IResourceType
 
 public static class ResourceTypeExtensions
 {
+    public static string GetLocalizedName(this IResourceType r) => r.GetTerm().ToLocalized();
+    public static string GetTerm(this IResourceType r) => $"Resources/{r.Name}";
+    
     public static IResourceType WithMax(this IResourceType r, int max) => r.WithAmounts(r.StartingAmount, max); 
     
     public static IResourceType WithAmounts(this IResourceType r, int starting) => new InMemoryResourceType

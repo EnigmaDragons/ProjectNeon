@@ -8,7 +8,7 @@ public sealed class VictoryEquipmentSelectionUI : OnMessage<GetUserSelectedEquip
     [SerializeField] private EquipmentPresenter equipmentPresenter;
     [SerializeField] private GameObject optionsParent;
     [SerializeField] private BattleState state;
-    [SerializeField] private TextMeshProUGUI creditsLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI creditsLabel;
 
     private Action<Maybe<Equipment>> _onSelected = _ => { };
     private void ClearView() => optionsParent.DestroyAllChildren();
@@ -22,7 +22,7 @@ public sealed class VictoryEquipmentSelectionUI : OnMessage<GetUserSelectedEquip
         msg.Options.ForEach(o =>
             Instantiate(equipmentPresenter, optionsParent.transform)
                 .Set(o, () => SelectEquipment(o)));
-        creditsLabel.text = state.RewardCredits.ToString();
+        creditsLabel.text = state.RewardCredits.ToString() + 0;
         view.SetActive(true);
     }
 

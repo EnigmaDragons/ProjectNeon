@@ -8,5 +8,5 @@ public class AdditiveStatInjury : HeroInjury
     public float Amount;
 
     public string InjuryName => Name;
-    public string Description => $"{Amount} {Stat}";
+    public string Description => $"{Amount} {$"Stats/Stat-{Stat}".ToLocalized()}";
 }

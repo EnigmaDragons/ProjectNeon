@@ -164,7 +164,7 @@ Transform:
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children: []
   m_Father: {fileID: 1678257772280034961}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7379075715620381254
 SpriteRenderer:
@@ -245,9 +245,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.15, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2232485304680333820}
-  - {fileID: 4978930958678960692}
   - {fileID: 6270349022913057318}
+  - {fileID: 4978930958678960692}
+  - {fileID: 2232485304680333820}
   m_Father: {fileID: 4926778540057555374}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -330,7 +330,7 @@ Transform:
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children: []
   m_Father: {fileID: 1678257772280034961}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3429525187948753308
 SpriteRenderer:
@@ -461,6 +461,14 @@ PrefabInstance:
     - target: {fileID: 2269891631927149163, guid: 17e021c883523d54babb8c3f34210313, type: 3}
       propertyPath: m_Name
       value: BattleCamera3D
+      objectReference: {fileID: 0}
+    - target: {fileID: 4867794317770328399, guid: 17e021c883523d54babb8c3f34210313, type: 3}
+      propertyPath: m_AfterStackBundles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4867794317770328399, guid: 17e021c883523d54babb8c3f34210313, type: 3}
+      propertyPath: m_AfterStackBundles.Array.data[0].assemblyQualifiedName
+      value: Xibanya.Scanline, GameAssembly, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17e021c883523d54babb8c3f34210313, type: 3}

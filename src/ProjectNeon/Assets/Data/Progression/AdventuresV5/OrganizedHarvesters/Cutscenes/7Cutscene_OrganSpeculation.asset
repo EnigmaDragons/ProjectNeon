@@ -12,21 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffbe45dc9ae4641b25ee3ad47d7a21b, type: 3}
   m_Name: 7Cutscene_OrganSpeculation
   m_EditorClassIdentifier: 
+  id: 50
+  isObsolete: 0
+  isPrimaryCutscene: 0
   setting: {fileID: 11400000, guid: 3c274cf6f7957f348b799ba9c65584d4, type: 2}
   skipTrueStates: []
   skipFalseStates: []
+  onFinished:
+    m_PersistentCalls:
+      m_Calls: []
   segments:
-  - SegmentType: 1
+  - Id: 396
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: Weldon
       Variable: {fileID: 0}
-    Text: Is Medigeneix holding out organs on purpose or is there actually an organ
-      transplant crisis that we are now a part of?
+    Text: Is {[t:MegaCorps/Medigeneix]} holding out organs on purpose or is there
+      actually an organ transplant crisis that we are now a part of?
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates:
@@ -44,7 +55,8 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 397
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: Hacker
@@ -55,6 +67,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates:
@@ -72,16 +88,21 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 398
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 0
       ConstantValue: Hacker
       Variable: {fileID: 11400000, guid: 0f34406efeaef1547a262632b07391ed, type: 2}
-    Text: Medigeneix knew the demand was going to increase?
+    Text: '{[t:MegaCorps/Medigeneix]} knew the demand was going to increase?'
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates:
@@ -99,7 +120,8 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 399
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: Hacker
@@ -109,6 +131,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates:

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: NnzAssassin
   m_EditorClassIdentifier: 
   id: 61
-  enemyName: 
+  enemyName: Nnz Assassin
   allowedForSocialMedia: 0
   excludeFromBestiary: 1
   isTutorialEnemy: 1
@@ -27,14 +27,12 @@ MonoBehaviour:
     CardTagPriority: 
     UnpreferredCardTags: 
     RotatePlayingCardTags: 
+    IgnoreDesignatedAttackerRole: 0
   preferredTurnOrder: 99
   prefab: {fileID: 4184364340271303729, guid: 1f27007f56b72904fb58d2087b98757d, type: 3}
   materialType: 1
   libraryCameraOffset: {x: 0, y: -0.8, z: 2.5}
-  deathEffect:
-    UseConstant: 1
-    ConstantValue: 
-    Variable: {fileID: 0}
+  shouldLive: 0
   battleRole: 1
   tier: 0
   unique: 0
@@ -82,6 +80,7 @@ MonoBehaviour:
     Cards:
     - {fileID: 11400000, guid: 6a5c897bac46dfe46a7ae3b97b8ce6dd, type: 2}
     - {fileID: 11400000, guid: e3c70b9e5cf99b044abf10a09f96087c, type: 2}
+    CardsTheyAppearsToHave: []
   maxCopies: 0
   minimumAllies: 0
   damageType: 0

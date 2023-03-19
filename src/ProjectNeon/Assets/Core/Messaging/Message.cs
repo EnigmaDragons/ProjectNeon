@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 using System.Linq;
+using UnityEngine;
 
 public static class Message
 {
@@ -82,14 +83,20 @@ public static class Message
             _ownerSubscriptions.Remove(owner);
         }
 
+        private const string ProcessMessageString = "Processed Message Queue in {0}s";
         private void ProcessQueuedMessages()
         {
             if (_isPublishing) return;
-            
+
+            var started = Time.realtimeSinceStartupAsDouble;
             _isPublishing = true;
             while (_eventQueue.AnyNonAlloc()) 
                 Publish(_eventQueue.Dequeue());
             _isPublishing = false;
+            var finished = Time.realtimeSinceStartupAsDouble;
+            var duration = finished - started;
+            if (duration > 0.3)
+                Log.Warn(string.Format(ProcessMessageString, duration.ToString("N3")));
         }
 
         private void Publish(object payload)

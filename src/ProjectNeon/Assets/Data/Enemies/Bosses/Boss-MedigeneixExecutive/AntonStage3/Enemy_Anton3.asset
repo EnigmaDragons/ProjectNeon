@@ -27,19 +27,17 @@ MonoBehaviour:
     CardTagPriority: 
     UnpreferredCardTags: 
     RotatePlayingCardTags: 
+    IgnoreDesignatedAttackerRole: 0
   preferredTurnOrder: 99
   prefab: {fileID: 2084796812294946461, guid: 1176129cacfeef241a0f005999f1e1b8, type: 3}
   materialType: 1
   libraryCameraOffset: {x: -0.2, y: -0.9, z: 2.8}
-  deathEffect:
-    UseConstant: 1
-    ConstantValue: 
-    Variable: {fileID: 0}
+  shouldLive: 1
   battleRole: 1
   tier: 3
   unique: 1
   isHasty: 0
-  resourceType: {fileID: 11400000, guid: 97df1802cb6184747b8be806552a2636, type: 2}
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
   description: Anton's desperate and will do what it takes to win, using unfinished
     prototype drugs and enhancments to finish this
   animations: {fileID: 11400000, guid: f4be4445584c15649bef7394b564dd13, type: 2}
@@ -80,7 +78,8 @@ MonoBehaviour:
       estimatedPerTurnTotalValue: 278.5695
       calculatedPowerLevel: 726
     startOfBattleEffects:
-    - EffectType: 73
+    - Id: 10015
+      EffectType: 73
       Conditions: []
       BaseAmount:
         UseConstant: 0
@@ -98,8 +97,9 @@ MonoBehaviour:
       HitsRandomTargetMember: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
-      StatusTag: 0
-      StatusDetailText: 
+      StatusTag: 12
+      StatusDetailText: Everytime Anton targets someone he also applies a 1 damage
+        dot til end of battle
       TurnDelay: 0
       Formula: 
       InterpolatePartialFormula:
@@ -112,6 +112,7 @@ MonoBehaviour:
           dot til end of battle
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 0
@@ -130,3 +131,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: faa825ecf1e12a84b84cff15ebaa2666, type: 2}
     - {fileID: 11400000, guid: 57f36ac3bc259ad4aa41b86b742ae8eb, type: 2}
     - {fileID: 11400000, guid: 82ae3529e1ee94b4fa2ea5df394f7905, type: 2}
+    CardsTheyAppearsToHave: []
+  maxCopies: 0
+  minimumAllies: 0
+  damageType: 0

@@ -18,14 +18,15 @@ MonoBehaviour:
   description: Gain {E[0]} <b>Card Cycles. End of Turn:</b> Reduce Cost of Cards
     in Hand by 1
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
+  descriptionV2:
+    text: Gain {0} <b>Card Cycles. End of Turn:</b> Reduce Cost of Cards in Hand
+      by 1
+    formatArgs:
+    - '{E[0]}'
   tags: 
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 0
-    resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
-    plusXCost: 0
-  onPlayGain:
     cost: 0
     resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
     plusXCost: 0
@@ -45,3 +46,4 @@ MonoBehaviour:
   highlightCondition: []
   unhighlightCondition: []
   isWIP: 0
+  notAvailableForGeneralDistribution: 0

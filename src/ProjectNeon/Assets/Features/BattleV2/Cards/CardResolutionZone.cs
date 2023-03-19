@@ -52,7 +52,7 @@ public class CardResolutionZone : ScriptableObject
     
     public void PlayImmediately(IPlayedCard played)
     {
-        Log.Info($"{played.Member.Name} played {played.Card.Name}");
+        Log.Info($"{played.Member.NameTerm.ToEnglish()} played {played.Card.Name}");
         var shouldQueue = isResolving || MessageGroup.IsInProgress || currentResolvingCardZone.HasCards;
         RecordCardAndPayCosts(played);
         
@@ -74,7 +74,7 @@ public class CardResolutionZone : ScriptableObject
             played.Card.ClearXValue();
             if (!condition(played)) continue;
             
-            DevLog.Write($"Expired played card {played.Card.Name} by {played.Member.Name}");
+            DevLog.Write($"Expired played card {played.Card.Name} by {played.Member.NameTerm.ToEnglish()}");
             if (_pendingMoves.Count > i)
                 _pendingMoves.RemoveAt(i);
             if (played.Member.TeamType == TeamType.Party && playerPlayArea.HasCards)
@@ -103,11 +103,11 @@ public class CardResolutionZone : ScriptableObject
         _pendingMoves = _pendingMoves.Skip(1).ToList();
         if (physicalZone.HasCards)
             physicalZone.DrawOneCard();
-
+        
         if (move.RetargetingAllowed && move.Targets.FirstAsMaybe().IsPresentAnd(t => t.Members.All(m => battleState.IsMissingOrUnconscious(m.Id))))
         {
             var retargetedCard = move.Retargeted(GetTargets(move.Member, move.Card, Maybe<Target[]>.Missing()));
-            BattleLog.Write($"{move.Member.Name}'s {move.Card.Name} was auto-retargeted.");
+            BattleLog.Write($"{move.Member.NameTerm.ToEnglish()}'s {move.Card.Name} was auto-retargeted.");
             StartResolvingOneNonReactionCard(retargetedCard);
         }
         else
@@ -127,13 +127,13 @@ public class CardResolutionZone : ScriptableObject
     {
         battleState.RecordPlayedCard(played);
         BattleLog.Write(played.Card.IsActive 
-            ? $"{played.Member.Name} played {played.Card.Name}{TargetDescription(played)}"
-            : $"{played.Member.Name} discarded {played.Card.Name}");
+            ? $"{played.Member.NameTerm.ToEnglish()} played {played.Card.Name}{TargetDescription(played)}"
+            : $"{played.Member.NameTerm.ToEnglish()} discarded {played.Card.Name}");
         if (played.Card.IsActive)
         {
             played.Member.State.RecordUsage(played.Card);
             played.Member.Apply(m => m.Spend(played.Spent, battleState.Party));
-            DevLog.Write($"{played.Member.Name} Played {played.Card.Name} - Spent {played.Spent}");
+            DevLog.Write($"{played.Member.NameTerm.ToEnglish()} Played {played.Card.Name} - Spent {played.Spent}");
         }
     }
     
@@ -141,7 +141,7 @@ public class CardResolutionZone : ScriptableObject
     {
         var seq = c.Card.ActionSequences[0];
         if (seq.Scope == Scope.One)
-            return $" on {c.Targets[0].Members[0].Name}";
+            return $" on {c.Targets[0].Members[0].NameTerm.ToEnglish()}";
         if (seq.Group == Group.Self)
             return string.Empty;
         if (seq.Group == Group.Ally && seq.Scope == Scope.All)
@@ -150,6 +150,12 @@ public class CardResolutionZone : ScriptableObject
             return " on all Enemies";
         if (seq.Group == Group.All && seq.Scope == Scope.All)
             return " on everyone";
+        if (seq.Group == Group.Ally && seq.Scope == Scope.Random)
+            return " on random Ally";
+        if (seq.Group == Group.Opponent && seq.Scope == Scope.Random)
+            return " on random Enemy";
+        if (seq.Group == Group.All && seq.Scope == Scope.Random)
+            return " on random character";
         return string.Empty;
     }
     
@@ -161,9 +167,10 @@ public class CardResolutionZone : ScriptableObject
 
     public void StartResolvingOneCard(IPlayedCard played, Action<IPlayedCard> perform)
     {
+        played = battleState.PlayerState.PossiblyRetargeted(battleState, played);
         isResolving = true;
         Message.Publish(new CardResolutionStarted(played));
-        BattleLog.Write($"Resolving {played.Member.Name}'s {played.Card.Name}");
+        BattleLog.Write($"Resolving {played.Member.NameTerm.ToEnglish()}'s {played.Card.Name}");
 
         _current = new Maybe<IPlayedCard>(played);
         _currentCardStartSnapshot = battleState.GetSnapshot();
@@ -182,8 +189,16 @@ public class CardResolutionZone : ScriptableObject
             }
             else if (card.Owner.IsStunnedForCard() && !card.Is(CardTag.CanPlayThisReactionEvenWhenStunned))
             {
-                BattleLog.Write($"{card.Owner.Name} was stunned, so {card.Name} does not resolve.");
+                BattleLog.Write($"{card.Owner.NameTerm.ToEnglish()} was stunned, so {card.Name} does not resolve.");
                 card.Owner.State.Adjust(TemporalStatType.Stun, -1);
+                Message.Publish(new DisplayCharacterWordRequested(card.Owner, CharacterReactionType.Stunned));
+                battleState.GetMaybeCenterPoint(card.Owner.Id)
+                    .IfPresent(c => Message.Publish(new PlayRawBattleEffect("StunnedWhenTriedToPlayCard", c.position)));
+                Message.Publish(new CardResolutionFinished(played));
+            }
+            else if (card.Owner.IsDisabled() && !card.Is(CardTag.CanPlayThisReactionEvenWhenStunned))
+            {
+                BattleLog.Write($"{card.Owner.NameTerm.ToEnglish()} was disabled, so {card.Name} does not resolve.");
                 Message.Publish(new DisplayCharacterWordRequested(card.Owner, CharacterReactionType.Stunned));
                 battleState.GetMaybeCenterPoint(card.Owner.Id)
                     .IfPresent(c => Message.Publish(new PlayRawBattleEffect("StunnedWhenTriedToPlayCard", c.position)));
@@ -191,14 +206,14 @@ public class CardResolutionZone : ScriptableObject
             }
             else if (card.IsAttack && card.Owner.IsBlinded())
             {
-                BattleLog.Write($"{card.Owner.Name} was blinded, so {card.Name} does not resolve.");
+                BattleLog.Write($"{card.Owner.NameTerm.ToEnglish()} was blinded, so {card.Name} does not resolve.");
                 card.Owner.State.Adjust(TemporalStatType.Blind, -1);
                 Message.Publish(new DisplayCharacterWordRequested(card.Owner, CharacterReactionType.Blinded));
                 Message.Publish(new CardResolutionFinished(played));
             }
             else if (!card.IsAttack && card.Owner.IsInhibited())
             {
-                BattleLog.Write($"{card.Owner.Name} was inhibited, so {card.Name} does not resolve.");
+                BattleLog.Write($"{card.Owner.NameTerm.ToEnglish()} was inhibited, so {card.Name} does not resolve.");
                 card.Owner.State.Adjust(TemporalStatType.Inhibit, -1);
                 Message.Publish(new DisplayCharacterWordRequested(card.Owner, CharacterReactionType.Inhibited));
                 Message.Publish(new CardResolutionFinished(played));
@@ -241,27 +256,35 @@ public class CardResolutionZone : ScriptableObject
         foreach (var member in members)
         {
             var bonusCards = member.State.GetBonusCards(snapshot);
-            Log.Info($"Num Bonus Cards {member.Name}: {bonusCards.Length}");
+            Log.Info($"Num Bonus Cards {member.NameTerm.ToEnglish()}: {bonusCards.Length}");
             foreach (var bc in bonusCards)
             {
-                var card = bc.Card;
-                var bcCost = bc.Cost.Amount; 
-                var paidAmount = new ResourceCalculations(card.Cost.ResourceType, bcCost, 0, 0); // Not factoring in X-Cost. Not relevant unless we have X-Cost Chain cards.
-                if (!card.IsPlayableBy(member, battleState.Party, 1, paidAmount))
-                {
-                    Log.Info($"Bonus Card {bc.Card.Name} not playable since {member.Name} could not afford it.");
-                    continue;
-                }
-
-                var lastPlayedMove = _movesThisTurn.LastOrMaybe();
-                var targets = GetTargets(member, card, lastPlayedMove.Map(move => move.Targets));
-                if (member.TeamType == TeamType.Party)
-                    PlayImmediately(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card, battleState.GetHeroById(member.Id).Tint, battleState.GetHeroById(member.Id).Bust), isTransient: true, retargetingAllowed: true, paidAmount));
-                else
-                    PlayImmediately(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card), isTransient: true, retargetingAllowed: true, paidAmount));
+                PlayBonusCard(member, bc);
                 Message.Publish(new DisplayCharacterWordRequested(member, CharacterReactionType.BonusCardPlayed));
             }
         }
+    }
+
+    public void PlayBonusCard(Member member, BonusCardDetails bonusCard)
+    {
+        var card = bonusCard.Card;
+        var bcCost = bonusCard.Cost.Amount; 
+        var paidAmount = new ResourceCalculations(card.Cost.ResourceType, bcCost, 0, 0); // Not factoring in X-Cost. Not relevant unless we have X-Cost Chain cards.
+        if (!card.IsPlayableBy(member, battleState.Party, 1, paidAmount))
+        {
+            Log.Info($"Bonus Card {bonusCard.Card.Name} not playable since {member.NameTerm.ToEnglish()} could not afford it.");
+            return;
+        }
+
+        var lastPlayedMove = _movesThisTurn.LastOrMaybe();
+        var targets = GetTargets(member, card, lastPlayedMove.Map(move => move.Targets));
+        if (targets.Length == 0 || targets[0].Members.Length == 0)
+            return;
+                
+        if (member.TeamType == TeamType.Party)
+            PlayImmediately(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card, battleState.GetHeroById(member.Id).Tint, battleState.GetHeroById(member.Id).Bust), isTransient: true, retargetingAllowed: true, paidAmount));
+        else
+            PlayImmediately(new PlayedCardV2(member, targets, new Card(battleState.GetNextCardId(), member, card), isTransient: true, retargetingAllowed: true, paidAmount));
     }
     
     private void AddChainedCardIfApplicable(IPlayedCard trigger)

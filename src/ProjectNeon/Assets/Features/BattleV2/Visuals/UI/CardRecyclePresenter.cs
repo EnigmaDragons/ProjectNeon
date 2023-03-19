@@ -5,7 +5,7 @@ public sealed class CardRecyclePresenter : OnMessage<BattleStateChanged>
 {
     [SerializeField] private GameObject panel;
     [SerializeField] private BattleState state;
-    [SerializeField] private TextMeshProUGUI counter;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI counter;
 
     private void Awake() => Render();
 

@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class GetUserSelectedHeroOnStart : MonoBehaviour
+public class GetUserSelectedHeroOnStart : MonoBehaviour, ILocalizeTerms
 {
     [SerializeField] private Library library;
     [SerializeField] private PartyAdventureState party;
@@ -26,11 +26,14 @@ public class GetUserSelectedHeroOnStart : MonoBehaviour
         var optimizedSelection = preferredSelection.Count() >= 3 ? preferredSelection : allOptions;
 
         var randomThree = optimizedSelection.Shuffled().Take(3).ToArray();
-        var prompt = currentParty.Heroes.Length == 0 ? "Choose Your Mission Squad Leader" : "Choose A New Squad Member";
+        var prompt = currentParty.Heroes.Length == 0 ? "Menu/ChooseLeader" : "Menu/ChooseMember";
         Message.Publish(new GetUserSelectedHero(prompt, randomThree, h =>
         {
             Message.Publish(new AddHeroToPartyRequested(h));
             Async.ExecuteAfterDelay(0.5f, () => Message.Publish(new ToggleNamedTarget("HeroSelectionView")));
         })); 
     }
+
+    public string[] GetLocalizeTerms()
+        => new[] {"Menu/ChooseLeader", "Menu/ChooseMember"};
 }

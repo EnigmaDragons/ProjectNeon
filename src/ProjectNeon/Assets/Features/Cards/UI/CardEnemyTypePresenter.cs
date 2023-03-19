@@ -1,9 +1,9 @@
-﻿using TMPro;
+﻿using I2.Loc;
 using UnityEngine;
 
 public class CardEnemyTypePresenter : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI label;
+    [SerializeField] private Localize label;
     private bool _hasInit;
     
     public void Hide() => gameObject.SetActive(false);
@@ -14,9 +14,12 @@ public class CardEnemyTypePresenter : MonoBehaviour
             gameObject.SetActive(true);
     }
 
-    public void Init(string type)
+    public void Init(string typeTerm)
     {
-        label.text = type;
+        if (string.IsNullOrWhiteSpace(typeTerm))
+            return;
+        
+        label.SetTerm(typeTerm);
         _hasInit = true;
         Show();
     }

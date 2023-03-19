@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 53
   displayName: Focus Crystal
-  description: 'Own Card Play: Gain +2 Magic for the turn'
+  description: 'Own Card Play: Gain +2 {[t:Stats/Stat-Magic]} for the turn'
   corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: c5bd5ff6560fc8b4aa3182fd810a7fd0, type: 2}
@@ -26,7 +26,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 74
+  - Id: 20002
+    EffectType: 74
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -57,6 +58,8 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
     ReactionConditionType: 36
     ReactionEffectScope:
       UseConstant: 0
@@ -69,6 +72,7 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 11400000, guid: 7aaf8ffdd0a674b4eaffff2eda42edc3, type: 2}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
   requiresStatType: 
   excludeIfPartyHasStatType: 

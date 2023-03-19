@@ -4,14 +4,15 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Hero/1 - HeroCharacter", order = -5)]
-public class BaseHero : ScriptableObject, HeroCharacter
+public class BaseHero : ScriptableObject, HeroCharacter, ILocalizeTerms
 {
     [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public int id;
     [SerializeField] private bool allowedForSocialMedia = false;
     [SerializeField] private bool isDisabled = false;
     [SerializeField] private Sprite bust;
     [SerializeField] private GameObject body;
-    [SerializeField] private StringReference className;
+    [SerializeField] public string className;
+    [SerializeField] private CharacterSex sex;
     [SerializeField] private MemberMaterialType materialType;
     [SerializeField] private BattleRole battleRole;
     [SerializeField] private CardType basic;
@@ -44,17 +45,16 @@ public class BaseHero : ScriptableObject, HeroCharacter
     [SerializeField] private CardType[] additionalStartingCards;
     [SerializeField] private CardType[] excludedStartingCards;
 
-    [SerializeField] private HeroFlavorDetails flavorDetails;
+    [SerializeField] public HeroFlavorDetails flavorDetails;
     [SerializeField] private HeroLevelUpPathway levelUpTree;
     [SerializeField] private HeroLevelUpTreeV4 levelUpTreeV4;
 
     public int Id => id;
-    public string Name => name;
     public int ComplexityRating => complexityRating;
     public Sprite Bust => bust;
     public GameObject Body => body;
+    public CharacterSex Sex => sex;
     public MemberMaterialType MaterialType => materialType;
-    public string Class => className;
     public BattleRole BattleRole => battleRole;
     public Deck Deck => startingDeck;
     public CardTypeData[] AdditionalStartingCards => additionalStartingCards != null ? additionalStartingCards.Cast<CardTypeData>().ToArray() : Array.Empty<CardTypeData>();    
@@ -65,7 +65,6 @@ public class BaseHero : ScriptableObject, HeroCharacter
     public int StartingCredits => startingCredits;
     public HeroLevelUpPathway LevelUpTree => levelUpTree;
     public HeroLevelUpTreeV4 LevelUpTreeV4 => levelUpTreeV4;
-    public HeroFlavorDetails Flavor => flavorDetails;
     public HashSet<string> Archetypes => new HashSet<string>(archetypes.Select(x => x.Value));
     public Color Tint => tint;
     public CharacterAnimations Animations => animations;
@@ -151,4 +150,10 @@ public class BaseHero : ScriptableObject, HeroCharacter
     }
 
     public int AdventuresPlayedBeforeUnlocked => adventuresPlayedBeforeUnlocked;
+
+    public string[] GetLocalizeTerms()
+        => new[] {this.NameTerm(), this.ClassTerm(), this.DescriptionTerm(), this.BackStoryTerm()}
+            .Concat(resource1 == null ? new string[0] : new [] { resource1.GetTerm() })
+            .Concat(resource2 == null ? new string[0] : new [] { resource2.GetTerm() })
+            .ToArray();
 }

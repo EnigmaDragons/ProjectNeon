@@ -23,7 +23,7 @@ public sealed class BattleUnconsciousnessChecker
             state.AddEnemyDefeatedRewards(member.Id);
 
         var idString = member.TeamType == TeamType.Enemies ? $" {member.Id} " : " ";
-        BattleLog.Write($"{member.Name}{idString}is unconscious");
+        BattleLog.Write($"{member.NameTerm.ToEnglish()}{idString} is unconscious");
         Message.Publish(new MemberUnconscious(member));
     }
 
@@ -37,7 +37,7 @@ public sealed class BattleUnconsciousnessChecker
         }
 
         var idString = member.TeamType == TeamType.Enemies ? $" {member.Id} " : " ";
-        BattleLog.Write($"{member.Name}{idString}is revived");
+        BattleLog.Write($"{member.NameTerm.ToEnglish()}{idString} is revived");
         Message.Publish(new MemberRevived(member));
     }
 }

@@ -19,6 +19,7 @@ public class LoadingController : OnMessage<NavigateToSceneRequested, HideLoadUiR
     {
         Application.targetFrameRate = 60;
         loadUi.alpha = 0;
+        loadUi.blocksRaycasts = false;
     }
 
     protected override void Execute(NavigateToSceneRequested msg) => Navigate(msg.SceneName);
@@ -30,6 +31,7 @@ public class LoadingController : OnMessage<NavigateToSceneRequested, HideLoadUiR
             Time.timeScale = 1;
         MouseDragState.Set(false);
         
+        loadUi.blocksRaycasts = true;
         _isLoading = true;
         onStartedLoading.Invoke();
         _startedTransitionAt = Time.timeSinceLevelLoad;
@@ -44,7 +46,10 @@ public class LoadingController : OnMessage<NavigateToSceneRequested, HideLoadUiR
     protected override void Execute(HideLoadUiRequested msg)
     {
         if (!_isLoading && loadUi.alpha <= 0f)
+        {
             loadUi.alpha = 0f;
+            loadUi.blocksRaycasts = false;
+        }
     }
 
     private void Update()
@@ -57,12 +62,14 @@ public class LoadingController : OnMessage<NavigateToSceneRequested, HideLoadUiR
         loadUi.alpha = _isLoading 
             ? Math.Max(loadUi.alpha, Mathf.Lerp(0f, 1f, fadeProgress))
             : Mathf.Lerp(1f, 0f, fadeProgress);
+        loadUi.blocksRaycasts = loadUi.alpha > 0;
         if (debugLoggingEnabled)
             Debug.Log($"Loader - Alpha {loadUi.alpha} - Fade Progress {fadeProgress}");
     }
 
     private void OnLoadFinished(AsyncOperation _)
     {
+        Message.Publish(new HideTooltip());
         Message.Publish(new SceneChanged(_newSceneName));
         _isLoading = false;
         _startedTransitionAt = Time.timeSinceLevelLoad;

@@ -44,6 +44,7 @@ public sealed class HandVisualizerV2 : HandVisualizerBase
         Message.Subscribe<PlayerCardCanceled>(_ => _isDirty = true, this);
         Message.Subscribe<EndTargetSelectionRequested>(_ => _isDirty = true, this);
         Message.Subscribe<CancelTargetSelectionRequested>(_ => CancelCardPlays(), this);
+        Message.Subscribe<RefreshCardsInHand>(_ => _isDirty = true, this);
     }
 
     void OnDisable()

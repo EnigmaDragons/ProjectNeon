@@ -18,6 +18,12 @@ MonoBehaviour:
   description: 'For <b>2</b> turns, <b>When Damaged</b>: {Owner} gains {RE[0]}<br>You
     gain {E[0]}'
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
+  descriptionV2:
+    text: 'For <b>2</b> turns, <b>When Damaged</b>: {0} gains {1}<br>You gain {2}'
+    formatArgs:
+    - '{Owner}'
+    - '{RE[0]}'
+    - '{E[0]}'
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -41,3 +47,4 @@ MonoBehaviour:
   highlightCondition: []
   unhighlightCondition: []
   isWIP: 0
+  notAvailableForGeneralDistribution: 0

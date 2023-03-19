@@ -10,6 +10,8 @@ public enum BattleV2Phase
     Cutscene = 22,
     SetupPlayerCards = 24,
     StartOfTurnEffects = 30,
+    StartOfTurnCards = 31,
+    GlobalEffectCards = 33,
     HastyEnemyCards = 35,
     PlayCards = 40,
     EnemyCards = 50,

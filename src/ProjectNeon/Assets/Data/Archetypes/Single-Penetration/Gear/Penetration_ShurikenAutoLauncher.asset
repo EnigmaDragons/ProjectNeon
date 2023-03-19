@@ -24,7 +24,8 @@ MonoBehaviour:
   modifiers: []
   resourceModifiers: []
   turnStartEffects:
-  - EffectType: 30
+  - Id: 0
+    EffectType: 30
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -40,7 +41,6 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 20
     ApplyToEachMemberIndividually: 0
     StatusTag: 0
@@ -56,18 +56,22 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
-  - EffectType: 30
+    Unpreventable: 0
+  - Id: 0
+    EffectType: 30
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -83,7 +87,6 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 20
     ApplyToEachMemberIndividually: 0
     StatusTag: 0
@@ -99,18 +102,22 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
-  - EffectType: 30
+    Unpreventable: 0
+  - Id: 0
+    EffectType: 30
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -126,7 +133,6 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 20
     ApplyToEachMemberIndividually: 0
     StatusTag: 0
@@ -142,20 +148,24 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 73
+  - Id: 0
+    EffectType: 73
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -171,7 +181,6 @@ MonoBehaviour:
       ConstantValue: Augment
       Variable: {fileID: 11400000, guid: 0c09abf54a6dc1e49afec8539b1cc13c, type: 2}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 0
@@ -187,16 +196,23 @@ MonoBehaviour:
       ConstantValue: 'Start of Turn: Deal 2 damage to a random enemy, three times'
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
+  notAvailableForGeneralDistribution: 0
+  designComment: 

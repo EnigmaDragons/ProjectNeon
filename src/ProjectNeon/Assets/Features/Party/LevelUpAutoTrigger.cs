@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class LevelUpAutoTrigger : OnMessage<PartyAdventureStateChanged, HeroLevelledUp>
@@ -11,10 +12,11 @@ public class LevelUpAutoTrigger : OnMessage<PartyAdventureStateChanged, HeroLeve
 
     private void TriggerNextLevelUpIfApplicable()
     {
-        foreach (var hero in party.Heroes)
+        foreach (var hero in party.Heroes.Where(h => h != null))
             if (hero.Levels.UnspentLevelUpPoints > 0)
             {
-                Log.Info($"{hero.Name} - XP {hero.Levels.Xp} - Unspent Points {hero.Levels.UnspentLevelUpPoints}");
+                Log.Info($"Hero is null {hero == null}. Hero Name is Null {hero.NameTerm == null}. Hero Character is Null {hero.Character == null}");
+                Log.Info($"{hero.NameTerm.ToEnglish()} - XP {hero.Levels.Xp} - Unspent Points {hero.Levels.UnspentLevelUpPoints}");
                 Message.Publish(new LevelUpHero(hero));
                 return;
             }

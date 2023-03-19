@@ -1,6 +1,6 @@
 using System;
 using DG.Tweening;
-using TMPro;
+using I2.Loc;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,8 +10,8 @@ public class UnlockPresenter : OnMessage<DismissUnlockDisplay>
     [SerializeField] private Image darken;
     [SerializeField] private Graphic arrowsAnim;
     [SerializeField] private GameObject itemParent;
-    [SerializeField] private TextMeshProUGUI headerLabel;
-    [SerializeField] private TextMeshProUGUI itemLabel;
+    [SerializeField] private Localize headerLabel;
+    [SerializeField] private Localize itemLabel;
     [SerializeField] private Image itemImage;
 
     private float _duration = 0.4f;
@@ -30,8 +30,8 @@ public class UnlockPresenter : OnMessage<DismissUnlockDisplay>
 
     public void Show(UnlockUiData u, Action onFinished)
     {
-        headerLabel.text = u.Header;
-        itemLabel.text = u.Title;
+        headerLabel.SetTerm(u.HeaderTerm);
+        itemLabel.SetTerm(u.TitleTerm);
         itemImage.sprite = u.Image;
         _onFinished = onFinished;
         arrowsAnim.color = Color.white.Transparent();

@@ -1,21 +1,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+[IgnoreForLocalization]
 public sealed class BattleLogViewController : OnMessage<WriteBattleLogMessageRequested, ToggleBattleLogView>
 {
     [SerializeField] private BoolReference loggingEnabled;
-    [SerializeField] private TextMeshProUGUI textArea;
+    [SerializeField] private Localize textArea2;
     [SerializeField] private GameObject view;
     [SerializeField] private Scrollbar scroll;
     [SerializeField] private int maxLines = 40;
     
     private readonly List<string> _battleLogMessages = new List<string>();
 
-    private void Awake() => textArea.text = string.Empty;
+    private void Awake() => textArea2.SetFinalText(string.Empty);
     
     protected override void Execute(WriteBattleLogMessageRequested msg)
     {
@@ -23,7 +25,7 @@ public sealed class BattleLogViewController : OnMessage<WriteBattleLogMessageReq
             return;
         
         _battleLogMessages.Add(msg.Message);
-        textArea.text = string.Join("\n", _battleLogMessages);
+        textArea2.SetFinalText(string.Join("\n", _battleLogMessages));
     }
 
     protected override void Execute(ToggleBattleLogView msg)
@@ -32,7 +34,7 @@ public sealed class BattleLogViewController : OnMessage<WriteBattleLogMessageReq
             return;
 
         view.SetActive(!view.activeSelf);
-        StartCoroutine(ScrollToBottom());
+        this.SafeCoroutineOrNothing(ScrollToBottom());
     }
 
     private IEnumerator ScrollToBottom()

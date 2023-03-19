@@ -27,11 +27,14 @@ public sealed class Card : CardTypeData
     public int CardId => id;
     public int Id => _type.Id;
     public string Name => _type?.Name ?? "Card Not Initialized";
+    public string NameTerm => _type?.NameTerm ?? "Card Not Initialized";
+    public string DescriptionTerm => _type?.DescriptionTerm ?? "Card Not Initialized";
     public IResourceAmount Cost => new InMemoryResourceAmount(
         Math.Max(_type.Cost.BaseAmount + _temporalStates.Where(x => x.IsActive).Sum(x => x.CostAdjustment), 0), _type.Cost.ResourceType, _type.Cost.PlusXCost);
     public CardSpeed Speed => _type.Speed;
     public Sprite Art => _type.Art;
     public string Description => _type.Description;
+    public CardDescriptionV2 DescriptionV2 => _type.DescriptionV2;
     public HashSet<CardTag> Tags => _type.Tags;
     public string TypeDescription => _type.TypeDescription;
     public CardActionSequence[] ActionSequences => _type.ActionSequences ?? new CardActionSequence[0];
@@ -42,10 +45,12 @@ public sealed class Card : CardTypeData
     public Maybe<Color> OwnerTint => tint;
     public Maybe<Sprite> OwnerBust => ownerBust;
     public HashSet<string> Archetypes => _type.Archetypes;
-    public bool IsAttack => _type.Tags.Contains(CardTag.Attack) || _type.TypeDescription.Equals("Attack") || _type.Description.Contains("Deal");
+    public bool IsAttack => _type.IsAttack();
     public Maybe<CardCondition> HighlightCondition => _type.HighlightCondition;
     public Maybe<CardCondition> UnhighlightCondition => _type.UnhighlightCondition;
-    public bool IsSinglePlay => _type.IsSinglePlay;
+    public Maybe<TargetedCardCondition> TargetedHighlightCondition => _type.TargetedHighlightCondition;
+    public Maybe<TargetedCardCondition> TargetedUnhighlightCondition => _type.TargetedUnhighlightCondition;
+    public bool IsSinglePlay => _temporalStates.Any(x => x.IsSinglePlay) || _type.IsSinglePlay;
     public bool IsQuick => Speed == CardSpeed.Quick;
 
     public Card(int id, Member owner, CardTypeData type)
@@ -87,4 +92,17 @@ public sealed class Card : CardTypeData
     public void OnTurnEnd() => _temporalStates.Where(x => x.IsActive).ToArray().ForEach(x => x.OnTurnEnd());
     public void OnPlayCard() => _temporalStates.Where(x => x.IsActive).ToArray().ForEach(x => x.OnCardPlay());
     public void CleanExpiredStates() => _temporalStates.RemoveAll(x => !x.IsActive);
+}
+
+public static class CardRuleExtensions
+{
+    public static bool IsAttack(this CardTypeData c) 
+        => !c.TypeDescription.Equals("Spell")
+           && !c.TargetsOnlyFriendlies()
+           && (c.Tags.Contains(CardTag.Attack) 
+                || c.TypeDescription.Equals("Attack") 
+                || (c.Description.Contains("Deal") && !c.Tags.Contains(CardTag.DamageOverTime)));
+
+    public static bool TargetsOnlyFriendlies(this CardTypeData c)
+        => c.ActionSequences.AllNonAlloc(a => a.Group == Group.Self || a.Group == Group.Ally);
 }

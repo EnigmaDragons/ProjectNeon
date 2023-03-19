@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
+public class SimpleDeckCardPresenter : OnMessage<SceneChanged>, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
-    [SerializeField] private TextMeshProUGUI cardNameText;
-    [SerializeField] private TextMeshProUGUI countText;
+    [SerializeField] private Localize cardNameText;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI countText;
     [SerializeField] private Image cardArt;
     [SerializeField] private HoverCard hoverCard;
     [SerializeField] private CardCostPresenter costPresenter;
@@ -27,6 +28,9 @@ public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPoi
 
     private void Awake() => InitCanvasIfNeeded();
     private void OnDisable() => OnExit();
+
+    protected override void Execute(SceneChanged msg) => OnExit();
+
     private void OnDestroy() => OnExit();
 
     public void SetCanvas(Canvas c)
@@ -82,12 +86,12 @@ public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPoi
 
     private void Render()
     {
-        cardNameText.text = _cardType.Name;
+        cardNameText.SetTerm(_cardType.NameTerm);
         countText.text = _isBasic 
             ? "B" 
             : _count > -1 
                 ? _count.ToString() 
-                : "";
+                : string.Empty;
         if (cardArt != null)
         {
             cardArt.gameObject.SetActive(true);
@@ -102,7 +106,7 @@ public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPoi
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (_cardType == null)
+        if (_cardType == null || !gameObject.activeSelf)
             return;
         
         _hoverCard = Instantiate(hoverCard.gameObject, _canvas.transform);
@@ -146,5 +150,10 @@ public class SimpleDeckCardPresenter : MonoBehaviour, IPointerEnterHandler, IPoi
     {
         tintGradient.Vertex1 = cTwo;
         tintGradient.Vertex2 = cOne;
+    }
+
+    public void DisableInteractions()
+    {
+        _leftClickAction = () => { };
     }
 }

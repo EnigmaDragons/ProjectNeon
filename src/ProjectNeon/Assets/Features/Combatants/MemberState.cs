@@ -29,7 +29,8 @@ public sealed class MemberState : IStats
     private IStats GetCurrentStats() => _baseStats
         .Plus(_additiveMods.Where(x => x.IsActive).Select(x => x.Stats).ToArray())
         .Times(_multiplierMods.Where(x => x.IsActive).Select(x => x.Stats).ToArray())
-        .NotBelowZero()
+        .WithPowerCountedAs(PrimaryStat)
+        .NotBelowZero(StatExtensions.StatsThatCanGoBelowZero)
         .WithWholeNumbersWhereExpected();
 
     private BattleCounter Counter(string name) => _counters.VerboseGetValue(name, n => $"Counter '{n}'");
@@ -38,24 +39,24 @@ public sealed class MemberState : IStats
     public int GetCounterAmount(TemporalStatType statType) => _counters[statType.GetString()].Amount;
 
     public int MemberId { get; }
-    public string Name { get; }
+    public string NameTerm { get; }
 
     public MemberState(int id, string name, IStats baseStats, StatType primaryStat)
         : this(id, name, baseStats, primaryStat, baseStats.MaxHp())
     {
     }
 
-    public MemberState(int id, string name, IStats baseStats, StatType primaryStat, int initialHp)
+    public MemberState(int id, string nameTerm, IStats baseStats, StatType primaryStat, int initialHp)
     {
         MemberId = id;
-        Name = name;
+        NameTerm = nameTerm;
         PrimaryStat = primaryStat;
         _baseStats = baseStats;
 
         _counters[TemporalStatType.HP.GetString()] =
             new BattleCounter(TemporalStatType.HP, initialHp, () => _currentStats.MaxHp());
         _counters[TemporalStatType.Shield.GetString()] =
-            new BattleCounter(TemporalStatType.Shield, baseStats[StatType.StartingShield], () => _baseStats.MaxShield());
+            new BattleCounter(TemporalStatType.Shield, Math.Min(baseStats[StatType.StartingShield], _baseStats.MaxShield()), () => _currentStats.MaxShield());
         Enum.GetValues(typeof(TemporalStatType))
             .Cast<TemporalStatType>()
             .Skip(2)
@@ -91,7 +92,8 @@ public sealed class MemberState : IStats
             _counters.ToDictionary(c => c.Key, c => c.Value.Amount), ResourceTypes, _tagsPlayedCount, statusTagCounts, PrimaryStat);
     }
 
-    public bool IsConscious => this[TemporalStatType.HP] > 0;
+    public bool HasLeft { get; set; }
+    public bool IsConscious => this[TemporalStatType.HP] > 0 && !HasLeft;
     public bool IsUnconscious => !IsConscious;
     public int this[IResourceType resourceType] => ResourceAmount(resourceType.Name);
     public int ResourceAmount(string resourceType) => _counters.TryGetValue(resourceType, out var r) ? r.Amount : 0;
@@ -106,7 +108,7 @@ public sealed class MemberState : IStats
     private bool IsAntiHeal() => Counter(TemporalStatType.AntiHeal).Amount > 0;
     public float this[TemporalStatType statType] => _counters[statType.GetString()].Amount + _currentStats[statType];
     public IResourceType[] ResourceTypes => _currentStats.ResourceTypes;
-    public float Max(string name) => _counters.TryGetValue(name, out var c) ? c.Max : 0;
+    public int Max(string name) => _counters.TryGetValue(name, out var c) ? c.Max : 0;
     public IResourceType PrimaryResource => ResourceTypes.AnyNonAlloc() ? ResourceTypes[0] : new InMemoryResourceType();
     public int PrimaryResourceAmount => ResourceTypes.AnyNonAlloc() ? _counters[PrimaryResource.Name].Amount : 0;
 
@@ -131,11 +133,17 @@ public sealed class MemberState : IStats
             .Where(x => x.IsPresent)
             .Select(x => x.Value)
             .ToArray();
+    public BonusCardDetails[] GetBonusStartOfTurnCards(BattleStateSnapshot snapshot)
+        => _bonusCardPlayers
+            .Select(x => x.GetBonusCardOnStartOfTurnPhase(snapshot))
+            .Where(x => x.IsPresent)
+            .Select(x => x.Value)
+            .ToArray();
 
     // Reaction Commands
-    public ProposedReaction[] GetReactions(EffectResolved e) =>
+    public ProposedReaction[] GetReactions(EffectResolved e, bool duringCardPhases) =>
         ApplicableReactiveStates
-            .Where(x => (int)x.Timing > (int)e.Timing)
+            .Where(x => (int)x.Timing > (int)e.Timing && (duringCardPhases || !x.OnlyReactDuringCardPhases))
             .Select(x => x.OnEffectResolved(e))
             .Where(x => x.IsPresent)
             .Select(x => x.Value)
@@ -251,7 +259,7 @@ public sealed class MemberState : IStats
         .Concat(_additiveResourceCalculators)
         .Concat(_multiplicativeResourceCalculators);
     
-    private int GetNumDebuffs()
+    public int GetNumDebuffs()
     {
         return DebuffStatTypes.Sum(t => _counters[t.GetString()].Amount)
             + _preventedTags.Count 
@@ -264,12 +272,20 @@ public sealed class MemberState : IStats
         _preventedTags = new Dictionary<CardTag, int>();
         RemoveTemporaryEffects(s => s.IsDebuff);
     }, GetNumDebuffs));
+    
+    public int CleanseDots() => -Diff(PublishAfter(() => RemoveTemporaryEffects(s => s.IsDot), GetNumDebuffs));
 
     public void BreakStealth() => PublishAfter(() =>
     {
         RemoveTemporaryEffects(t => t.Status.Tag == StatusTag.Stealth);
         _counters[TemporalStatType.Stealth.GetString()].Set(0);
         _counters[TemporalStatType.Prominent.GetString()].Set(1);
+    });
+
+    public void ExitStealth() => PublishAfter(() =>
+    {
+        RemoveTemporaryEffects(t => t.Status.Tag == StatusTag.Stealth);
+        _counters[TemporalStatType.Stealth.GetString()].Set(0);
     });
     
     public int RemoveTemporaryEffects(Predicate<ITemporalState> condition) => PublishAfter(() => 
@@ -320,7 +336,12 @@ public sealed class MemberState : IStats
     public void Adjust(string counterName, float amount) 
         => BattleLog.WriteIf(
             Diff(PublishAfter(() => Counter(counterName).ChangeBy(amount), () => Counter(counterName).Amount)), 
-            v => $"{Name}'s {counterName} adjusted by {v}", 
+            v => $"{NameTerm.ToEnglish()}'s {counterName} adjusted by {v}", 
+            v => v != 0);
+    public void AdjustCounterMax(string counterName, float amount) 
+        => BattleLog.WriteIf(
+            Diff(PublishAfter(() => Counter(counterName).AdjustMax(amount), () => Counter(counterName).Max)), 
+            v => $"{NameTerm.ToEnglish()}'s Max {counterName} adjusted by {v}", 
             v => v != 0);
     public int Adjust(TemporalStatType t, float amount) => Diff(PublishAfter(() => Counter(t.GetString()).ChangeBy(amount), () => this[t].CeilingInt()));
     public int AdjustShield(float amount) => Adjust(TemporalStatType.Shield, amount);
@@ -351,7 +372,7 @@ public sealed class MemberState : IStats
             GainResource(qty, partyState);
     }
     
-    public void GainResource(ResourceQuantity qty, PartyAdventureState partyState)
+    private void GainResource(ResourceQuantity qty, PartyAdventureState partyState)
     {
         if (qty.Amount == 0)
             return;
@@ -393,11 +414,11 @@ public sealed class MemberState : IStats
         
         Message.Publish(new MemberResourceChanged(MemberId, qty, wasPaidCost));
         if (wasPaidCost)
-            BattleLog.Write($"{Name} spent {qty.Negate()}");
+            BattleLog.Write($"{NameTerm.ToEnglish()} spent {qty.Negate()}");
         else if (qty.Amount > 0) 
-            BattleLog.Write($"{Name} gained {qty}");
+            BattleLog.Write($"{NameTerm.ToEnglish()} gained {qty}");
         else if (qty.Amount < 0)
-            BattleLog.Write($"{Name} lost {qty.Negate()}");
+            BattleLog.Write($"{NameTerm.ToEnglish()} lost {qty.Negate()}");
     });
 
     public bool HasAnyTemporalStates => _additiveMods.AnyNonAlloc() 
@@ -426,9 +447,10 @@ public sealed class MemberState : IStats
                 + _reactiveStates.RemoveAll(m => !m.IsActive)
                 + _transformers.RemoveAll(m => !m.IsActive)
                 + _additiveResourceCalculators.RemoveAll(m => !m.IsActive)
-                + _multiplicativeResourceCalculators.RemoveAll(m => !m.IsActive);
+                + _multiplicativeResourceCalculators.RemoveAll(m => !m.IsActive)
+                + _bonusCardPlayers.RemoveAll(m => !m.IsActive);
             if (count > 0)
-                DevLog.Write($"Cleaned {count} expired states from {Name}");
+                DevLog.Write($"Cleaned {count} expired states from {NameTerm.ToEnglish()}");
         });
 
     private readonly List<TemporalStatType> _temporalStatsToReduceAtEndOfTurn = new List<TemporalStatType>

@@ -7,7 +7,8 @@ public class CanChain : StaticCardCondition
     public override bool ConditionMet(CardConditionContext ctx) 
         => Evaluate(ctx) && ctx.BattleState.NumberOfCardPlaysRemainingThisTurn == 1;
     
-    public override string Description => "This will chain";
+    public override string Description => "Thoughts/Condition010".ToLocalized();
+    public override string[] GetLocalizeTerms() => new [] { "Thoughts/Condition010" };
     
     public static bool Evaluate(CardConditionContext ctx)
     {

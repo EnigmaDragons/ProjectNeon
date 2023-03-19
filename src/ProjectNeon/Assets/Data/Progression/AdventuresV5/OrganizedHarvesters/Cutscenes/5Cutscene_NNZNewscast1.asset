@@ -12,13 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ffbe45dc9ae4641b25ee3ad47d7a21b, type: 3}
   m_Name: 5Cutscene_NNZNewscast1
   m_EditorClassIdentifier: 
+  id: 49
   isObsolete: 0
   isPrimaryCutscene: 0
   setting: {fileID: 11400000, guid: c99cd71c592632c45b6ecad54cae75ee, type: 2}
   skipTrueStates: []
   skipFalseStates: []
+  onFinished:
+    m_PersistentCalls:
+      m_Calls: []
   segments:
-  - SegmentType: 1
+  - Id: 390
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: News
@@ -28,6 +33,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -39,17 +48,22 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 391
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: News
       Variable: {fileID: 0}
-    Text: Medigeneix has reported a shortage of organs as the transplant waitlist
-      grows longer and longer.
+    Text: '{[t:MegaCorps/Medigeneix]} has reported a shortage of organs as the transplant
+      waitlist grows longer and longer.'
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates:
@@ -67,7 +81,8 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 392
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: News
@@ -78,6 +93,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates:
@@ -95,17 +114,22 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 393
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: News
       Variable: {fileID: 0}
-    Text: Medigeneix also has reported an increase in deaths from people dying at
-      failed black market transplant procedures.
+    Text: '{[t:MegaCorps/Medigeneix]} also has reported an increase in deaths from
+      people dying at failed black market transplant procedures.'
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates: []
     ForbiddenStates:
@@ -123,7 +147,8 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 394
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: News
@@ -134,6 +159,10 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0
@@ -145,17 +174,22 @@ MonoBehaviour:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
-  - SegmentType: 1
+  - Id: 395
+    SegmentType: 1
     DialogueCharacterId:
       UseConstant: 1
       ConstantValue: News
       Variable: {fileID: 0}
     Text: Blue-collar crime rates have dropped in the last month by 34%, it is a
-      good day to be a Benefactor of Metroplex Zero.
+      good day to be a Benefactor of {[t:LocationName]}.
     FloatAmount:
       UseConstant: 0
       ConstantValue: 0
       FloatVariable: {fileID: 0}
+    CutsceneEventName:
+      UseConstant: 1
+      ConstantValue: 
+      Variable: {fileID: 0}
     StoryEvent: {fileID: 0}
     RequiredStates:
     - UseConstant: 0

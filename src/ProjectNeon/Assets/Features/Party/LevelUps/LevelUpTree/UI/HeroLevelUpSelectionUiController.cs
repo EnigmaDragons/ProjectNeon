@@ -44,12 +44,12 @@ public class HeroLevelUpSelectionUiController : OnMessage<LevelUpHero>
             if (msg.Hero.IsMaxLevelV4)
                 return;
 
-            StartCoroutine(ExecuteOnceV4CanvasIsHidden(() =>
+            this.SafeCoroutineOrNothing(ExecuteOnceV4CanvasIsHidden(() =>
             {
                 if (msg.Hero.Levels.UnspentLevelUpPoints < 1)
                     return;
                 
-                Log.Info($"Starting Level Up - {msg.Hero.Name}");
+                Log.Info($"Starting Level Up - {msg.Hero.NameTerm.ToEnglish()}");
                 presenterV4.Initialized(msg.Hero);
                 targetV4.SetActive(true);
                 Message.Publish(new HeroLeveledUpSFX(transform));

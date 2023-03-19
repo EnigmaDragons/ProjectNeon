@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Tutorial8Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, WinBattleWithRewards>
+public class Tutorial8Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionFinished, WinBattleWithRewards, ShowCurrentTutorialAgain>, ILocalizeTerms
 {
     private const string _callerId = "Tutorial8Orchestrator";
 
@@ -20,6 +20,13 @@ public class Tutorial8Orchestrator : OnMessage<StartCardSetupRequested, CardReso
     private IEnumerator ShowTutorialAfterDelay()
     {
         yield return TutorialSettings.BattleTutorialPanelPopupDelay;
+        ShowTutorial();
+    }
+    
+    protected override void Execute(ShowCurrentTutorialAgain msg) => ShowTutorial();
+
+    private void ShowTutorial()
+    {
         if (!_hasWon)
             Message.Publish(new ShowTutorialByName(_callerId));
     }
@@ -28,19 +35,26 @@ public class Tutorial8Orchestrator : OnMessage<StartCardSetupRequested, CardReso
     {
         if (msg.CardName != "Energize" && !_hasShowedLine1)
         {
-            Message.Publish(new ShowHeroBattleThought(4, "Can't hit me! I dodged that without a scratch!"));
+            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial08-01".ToLocalized()));
             _hasShowedLine1 = true;
         }
         else if (msg.CardName != "Energize" && !_hasShowedLine2)
         {
-            Message.Publish(new ShowHeroBattleThought(4, "OW! I'm all out of dodge!"));
+            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial08-02".ToLocalized()));
             _hasShowedLine2 = true;
         }
         else if (msg.CardName == "Impale V1" && _hasShowedLine1 && _hasShowedLine2)
         {
-            Message.Publish(new ShowHeroBattleThought(4, "Oh no! Not a finisher!"));
+            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial08-03".ToLocalized()));
         }
     }
 
     protected override void Execute(WinBattleWithRewards msg) => _hasWon = true;
+
+    public string[] GetLocalizeTerms() => new[]
+    {
+        "Thoughts/Tutorial08-01",
+        "Thoughts/Tutorial08-02",
+        "Thoughts/Tutorial08-03",
+    };
 }

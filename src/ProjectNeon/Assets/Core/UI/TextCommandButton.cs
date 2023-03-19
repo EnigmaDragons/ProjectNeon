@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Button))]
+[RequireComponent(typeof(Button)), IgnoreForLocalization]
 public sealed class TextCommandButton : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI label;
@@ -43,19 +43,18 @@ public sealed class TextCommandButton : MonoBehaviour
         return this;
     }
 
-    public void Init(string commandText, Action cmd)
-    {
+    public void Init(Action cmd)
+    {        
         InitButton();
-        label.text = GetLocalizedStringOrDefault(commandText);
         _cmd = cmd;
         _button.interactable = true;
         gameObject.SetActive(true);
     }
-
-    public void InitRaw(string rawCommand, Action cmd)
+    
+    public void Init(string commandText, Action cmd)
     {
         InitButton();
-        label.text = rawCommand;
+        label.text = GetLocalizedStringOrDefault(commandText);
         _cmd = cmd;
         _button.interactable = true;
         gameObject.SetActive(true);

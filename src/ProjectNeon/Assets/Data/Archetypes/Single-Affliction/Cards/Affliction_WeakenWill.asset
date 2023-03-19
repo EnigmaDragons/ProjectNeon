@@ -17,6 +17,10 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: e2d0e305a2e47bd4c8fac7e2cd9702a0, type: 3}
   description: '<b>Afflicted: </b> Gives {E[0]} Primary Stat {D[0]}'
   typeDescription: {fileID: 11400000, guid: 26f514ade584bd04da4a542740e478bb, type: 2}
+  descriptionV2:
+    text: '<b>Afflicted: </b> Gives {0} Primary Stat for 2 turns'
+    formatArgs:
+    - '{E[0]}'
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -37,7 +41,13 @@ MonoBehaviour:
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 85cc99b6a9e2fc3479a63e5161296787, type: 2}
-  highlightCondition: []
+  highlightCondition:
+  - {fileID: 11400000, guid: 04a0f33c2d609274a94eee30d00b414b, type: 2}
   unhighlightCondition:
   - {fileID: 11400000, guid: 62f8c3766746271439a37ad7030631d6, type: 2}
+  targetedHighlightCondition:
+  - {fileID: 11400000, guid: 92dd9bc79566aad43b5983bc8d4b73c6, type: 2}
+  targetedUnhighlightCondition:
+  - {fileID: 11400000, guid: 6cb2af23e0e94994c9743dfd14dfd8c5, type: 2}
   isWIP: 0
+  notAvailableForGeneralDistribution: 0

@@ -1,10 +1,11 @@
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 
 public class CurrentStageNamePresenter : MonoBehaviour
 {
     [SerializeField] private CurrentAdventureProgress progress;
-    [SerializeField] private TextMeshProUGUI label;
+    [SerializeField] private Localize label;
 
-    private void Start() => label.text = $"{progress.AdventureProgress.Stage.DisplayName}";
+    private void Start() => label.SetTerm(progress.AdventureProgress.Stage.DisplayName);
 }

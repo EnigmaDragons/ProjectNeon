@@ -17,6 +17,10 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: 116de1eb7bd9efd4990191b1c5e40f5b, type: 3}
   description: "Deal {E[0]}. \n\nDraw <b>1</b> of your cards for each <b>Mark</b>"
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  descriptionV2:
+    text: "Deal {0}. \n\nDraw <b>1</b> of your cards for each <b>Mark</b>"
+    formatArgs:
+    - '{E[0]}'
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -41,3 +45,4 @@ MonoBehaviour:
   highlightCondition: []
   unhighlightCondition: []
   isWIP: 0
+  notAvailableForGeneralDistribution: 0

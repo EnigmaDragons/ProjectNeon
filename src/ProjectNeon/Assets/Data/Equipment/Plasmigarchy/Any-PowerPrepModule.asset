@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 22
   displayName: 
-  description: 'Start of Battle: Gain Double Damage'
+  description: 'Start of Battle: Gain {[t:Keywords/DoubleDamage]}'
   corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes: []
   rarity: 2
@@ -28,7 +28,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 79
+  - Id: 0
+    EffectType: 79
     Conditions: []
     BaseAmount:
       UseConstant: 1
@@ -59,6 +60,7 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 1
@@ -71,6 +73,7 @@ MonoBehaviour:
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
   requiresStatType: 
   excludeIfPartyHasStatType: 

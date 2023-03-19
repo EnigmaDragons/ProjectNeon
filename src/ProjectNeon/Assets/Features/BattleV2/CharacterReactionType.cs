@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-public enum CharacterReactionType
+﻿public enum CharacterReactionType
 {
     Unknown = 0,
     ChainCardPlayed = 1,
@@ -15,27 +13,11 @@ public enum CharacterReactionType
     LeftBattle = 16,
     SpawnedIntoBattle = 17,
     TookZeroDamage = 18,
+    Retargeted = 19
 }
 
 public static class CharacterReactionTypeDisplayWords
 {
-    public static readonly Dictionary<CharacterReactionType, string> DisplayWords =
-        new Dictionary<CharacterReactionType, string>
-        {
-            {CharacterReactionType.ChainCardPlayed, "Finisher!"},
-            {CharacterReactionType.BonusCardPlayed, "Bonus Card!"},
-            {CharacterReactionType.ReactionCardPlayed, "Reaction!"},
-            {CharacterReactionType.Blinded, "Blinded"},
-            {CharacterReactionType.Stunned, "Stunned"},
-            {CharacterReactionType.Inhibited, "Inhibited"},
-            {CharacterReactionType.Dodged, "Dodged!"},
-            {CharacterReactionType.Aegised, "Prevented!"},
-            {CharacterReactionType.DoubleDamaged, "Double Damage!"},
-            {CharacterReactionType.LeftBattle, "Is Fleeing!"},
-            {CharacterReactionType.SpawnedIntoBattle, "Just Appeared!"},
-            {CharacterReactionType.TookZeroDamage, "Zero Damage!"}
-        };
-
-    public static string DisplayWord(this CharacterReactionType reactionType) =>
-        DisplayWords.ValueOrDefault(reactionType, () => reactionType.ToString().WithSpaceBetweenWords());
+    public static string DisplayTerm(this CharacterReactionType reactionType) 
+        => $"Reactions/{reactionType.ToString()}_DisplayWords";
 }

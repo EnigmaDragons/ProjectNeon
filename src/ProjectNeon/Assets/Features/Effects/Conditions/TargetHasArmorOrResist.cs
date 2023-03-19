@@ -8,7 +8,7 @@ public class TargetHasArmorOrResist : StaticEffectCondition
     {
         var defenselessMembers = ctx.Target.Members.Where(m => m.Armor() <= 0 && m.Resistance() <= 0);
         return defenselessMembers.Any()
-            ? new Maybe<string>($"{defenselessMembers.Names()} have no Armor or Resistance")
+            ? new Maybe<string>($"{defenselessMembers.EnglishNames()} have no Armor or Resistance")
             : Maybe<string>.Missing();
     }
 }

@@ -1,26 +1,24 @@
 using System;
 using System.Linq;
-using TMPro;
+using I2.Loc;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Object = System.Object;
 
-public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
+public class EquipmentPresenter : OnMessage<LanguageChanged>, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler, ILocalizeTerms
 {
     [SerializeField] private SmoothFocusDarken focusDarken;
     [SerializeField] private GameObject highlight;
-    [SerializeField] private TextMeshProUGUI nameLabel;
-    [SerializeField] private TextMeshProUGUI slotLabel;
-    [SerializeField] private TextMeshProUGUI descriptionLabel;
-    [SerializeField] private TextMeshProUGUI classesLabel;
+    [SerializeField] private Localize nameLabel;
+    [SerializeField] private Localize descriptionLabel;
+    [SerializeField] private Localize classesLabel;
     [SerializeField] private RarityPresenter rarity;
     [SerializeField] private Image slotIcon;
     [SerializeField] private EquipmentSlotIcons slotIcons;
     [SerializeField] private CorpUiBase corpBranding;
     [SerializeField] private AllCorps allCorps;
     [SerializeField] private GearRulesPresenter rulesPresenter;
-    [SerializeField] private LabelPresenter corpLabel;
+    [SerializeField] private LocalizedLabelPresenter corpLabel;
     [SerializeField] private HoverCard hoverCardPrototype;
 
     private static void NoOp() {}
@@ -36,6 +34,10 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
     private Maybe<CardTypeData> _referencedCard = Maybe<CardTypeData>.Missing();
     private Canvas _canvas;
     private HoverCard _hoverCard;
+    
+    private const string ArchetypesTerm = "Archetypes/Archetypes";
+    private const string AnyTerm = "Archetypes/Any";
+    private const string MadeByTerm = "BattleUI/Made By";
 
     public void Set(Equipment e, Action onClick) => Initialized(e, onClick);
     
@@ -50,18 +52,19 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
         _useHoverHighlight = useHoverHighlight;
         _useAnyHover = useAnyHover;
         _useDarkenOnHover = true;
-        nameLabel.text = e.Name;
-        slotLabel.text = $"{e.Slot}";
+        if (nameLabel != null)
+            nameLabel.SetTerm(e.LocalizationNameTerm());
         var archetypeText = e.Archetypes.Any()
-            ? string.Join(",", e.Archetypes.Select(c => c))
-            : "Any";
-        classesLabel.text = $"Archetypes: {archetypeText}";
-        descriptionLabel.text = e.GetInterpolatedDescription();
+            ? e.LocalizedArchetypeDescription()
+            : AnyTerm.ToLocalized();
+        var labelPrefix = ArchetypesTerm.ToLocalized();
+        classesLabel.SetFinalText($"{labelPrefix} - {archetypeText}");
+        descriptionLabel.SetTerm(e.LocalizationDescriptionTerm());
         rarity.Set(e.Rarity);
         slotIcon.sprite = slotIcons.All[e.Slot];
         var corp = allCorps.GetCorpByNameOrNone(e.Corp);
         corpBranding.Init(corp);
-        corpLabel.Init($"Made By {corp.Name}");
+        corpLabel.Label.SetFinalText($"{MadeByTerm.ToLocalized()} {corp.GetLocalizedName()}");
         
         highlight.SetActive(false);
         rulesPresenter.Hide();
@@ -83,6 +86,12 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
     }
 
     private void OnDisable() => ClearHoverCard();
+    
+    protected override void Execute(LanguageChanged msg)
+    {
+        if (_currentEquipment != null)
+            Initialized(_currentEquipment, _onClick, _useHoverHighlight, _useAnyHover);
+    }
 
     public void SetOnHover(Action onHoverEnter, Action onHoverExit)
     {
@@ -157,4 +166,6 @@ public class EquipmentPresenter : MonoBehaviour, IPointerDownHandler, IPointerEn
             .OrderByDescending(c => c.sortingOrder)
             .FirstOrDefault();
     }
+
+    public string[] GetLocalizeTerms() => new[] { MadeByTerm, ArchetypesTerm, AnyTerm, $"Archetypes/General" };
 }

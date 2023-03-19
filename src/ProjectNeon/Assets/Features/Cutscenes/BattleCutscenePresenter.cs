@@ -17,6 +17,13 @@ public class BattleCutscenePresenter : BaseCutscenePresenter
 
     public IEnumerator Begin()
     {
+        if (cutscene.StartBattleCutscene == null)
+        {
+            Log.Error("Tried to enable BattleCutscenePresenter without a Battle Cutscene");
+            Message.Publish(new CutsceneFinished());
+            yield break;
+        }
+        
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, false, _callerId));
         disableOnStarted.ForEach(d => d.SetActive(false));
         enableOnStarted.ForEach(d => d.SetActive(true));
@@ -36,6 +43,7 @@ public class BattleCutscenePresenter : BaseCutscenePresenter
             enemies[i].Init($"enemy{i+1}");
             Characters.Add(enemies[i]);
         }
+        
         DebugLog($"Num Cutscene Segments {cutscene.StartBattleCutscene.Segments.Length}");
         yield return new WaitForSeconds(1f);
         MessageGroup.Start(

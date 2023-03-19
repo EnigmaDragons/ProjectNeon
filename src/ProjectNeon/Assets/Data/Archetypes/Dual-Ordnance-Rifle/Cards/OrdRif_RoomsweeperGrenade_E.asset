@@ -15,6 +15,7 @@ MonoBehaviour:
   Actions:
   - type: 30
     battleEffect:
+      Id: 2324
       EffectType: 0
       Conditions: []
       BaseAmount:
@@ -46,6 +47,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
@@ -91,6 +93,7 @@ MonoBehaviour:
     enemySpawnOffset: {x: 0, y: 0, z: 0}
   - type: 31
     battleEffect:
+      Id: 2325
       EffectType: 0
       Conditions: []
       BaseAmount:
@@ -122,6 +125,7 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
@@ -165,8 +169,9 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
-  - type: 1
+  - type: 31
     battleEffect:
+      Id: 2326
       EffectType: 30
       Conditions:
       - {fileID: 11400000, guid: c00249086dc15be4688faeb22fded2b4, type: 2}
@@ -199,6 +204,87 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionTimingWindow: 0
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+      Unpreventable: 0
+    conditionData:
+      ConditionType: 0
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedEffect: {fileID: 0}
+    characterAnimation: {fileID: 0}
+    characterAnimation2:
+      Type: 0
+      Conditions: []
+    atTargetAnimation:
+      animation:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 11400000, guid: 905296716948b1b41a38bf7ad3431cf6, type: 2}
+      size: 1
+      speed: 1
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        Variable: {fileID: 0}
+      skipWaitingForCompletion: 0
+      conditions:
+      - {fileID: 11400000, guid: 555b29ff1618aae4fbc89717d4d0f65d, type: 2}
+    enemyToSpawn: {fileID: 0}
+    enemySpawnOffset: {x: 0, y: 0, z: 0}
+  - type: 1
+    battleEffect:
+      Id: 3900
+      EffectType: 30
+      Conditions:
+      - {fileID: 11400000, guid: 555b29ff1618aae4fbc89717d4d0f65d, type: 2}
+      BaseAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      DurationFormula: 0
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 0
+      StatusDetailText: 
+      TurnDelay: 0
+      Formula: 0.5 * Attack * Ammo
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 0.5 * Attack
+        Prefix: 
+        Suffix: 
+      FlavorText:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
@@ -244,7 +330,8 @@ MonoBehaviour:
     enemySpawnOffset: {x: 0, y: 0, z: 0}
   - type: 1
     battleEffect:
-      EffectType: 86
+      Id: 3901
+      EffectType: 68
       Conditions:
       - {fileID: 11400000, guid: 555b29ff1618aae4fbc89717d4d0f65d, type: 2}
       BaseAmount:
@@ -255,18 +342,18 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 0
         FloatVariable: {fileID: 0}
-      DurationFormula: 0
+      DurationFormula: 1
       EffectScope:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 0}
+        Variable: {fileID: 11400000, guid: a961f902c2ecfd54ebfbfe875405e991, type: 2}
       HitsRandomTargetMember: 0
       ReTargetScope: 0
       ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 
+      Formula: -1 * Ammo
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
@@ -275,7 +362,8 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
-      ReferencedSequence: {fileID: 11400000, guid: 4477528fa0517f6469e0fd66daa66260, type: 2}
+      ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1

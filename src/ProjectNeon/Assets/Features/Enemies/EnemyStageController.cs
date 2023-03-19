@@ -47,7 +47,7 @@ public class EnemyStageController : OnMessage<ShowEnemyOnStage>
         }
         catch (Exception ex)
         {
-            Log.Error($"Cannot Setup {e.Name}");
+            Log.Error($"Cannot Setup {e.NameTerm.ToEnglish()}");
             Log.Error(ex);
         }
     }

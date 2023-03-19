@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 5607841792301190662}
   - component: {fileID: 5075930642181206724}
   - component: {fileID: 4828652368078616543}
-  - component: {fileID: 179427712802687213}
+  - component: {fileID: 9023632878534236068}
   m_Layer: 5
   m_Name: XpBar
   m_TagString: Untagged
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &179427712802687213
+--- !u!114 &9023632878534236068
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -161,10 +161,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3278081383087720226}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77d005e298df44ca8cca949f2df12ba7, type: 3}
+  m_Script: {fileID: 11500000, guid: 5d38e8cafb944ccbbddbb31ab70c31e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tooltipText: XP Progress to Next Level Up
+  tooltipTerm: Tooltips/XpBar
+  tooltipText: 
 --- !u!1 &8316587909295600198
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,6 +177,7 @@ GameObject:
   - component: {fileID: 8876770653665716718}
   - component: {fileID: 7311802352394304813}
   - component: {fileID: 2031086931488379718}
+  - component: {fileID: 988564315286880207}
   m_Layer: 5
   m_Name: XpLabel
   m_TagString: Untagged
@@ -299,6 +301,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &988564315286880207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8316587909295600198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: Stats/Xp
+  mTermSecondary: 
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &9164879854139683552
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,6 +17,9 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: c65d20ecc4879b54a865a6e05dc7224a, type: 3}
   description: <b>Quick:</b> Gain 1 Energy for every <b>Defenseless</b> enemy
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
+  descriptionV2:
+    text: <b>Quick:</b> Gain 1 Energy for every <b>Defenseless</b> enemy
+    formatArgs: []
   tags: 
   speed: 1
   isSinglePlay: 0
@@ -31,13 +34,22 @@ MonoBehaviour:
     cardActions: {fileID: 11400000, guid: 68b35fbf7d42fda4f923e4f1596d6477, type: 2}
     repeatX: 0
     repeatCount: 0
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: 3ca06ae0f12dd83458c33f8ef30cab10, type: 2}
+    repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
   swappedCard: {fileID: 0}
   functionalityIssues: 
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 079871761aec52040887b3de1c1a19c4, type: 2}
-  highlightCondition: []
-  unhighlightCondition: []
+  highlightCondition:
+  - {fileID: 11400000, guid: 02983808ddbc94c4f9f42b9274968533, type: 2}
+  unhighlightCondition:
+  - {fileID: 11400000, guid: 9745a7008929df745ad60fb8fef4d945, type: 2}
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 0

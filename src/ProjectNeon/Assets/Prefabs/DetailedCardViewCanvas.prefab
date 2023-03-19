@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3258213199257731240}
   - component: {fileID: 6997222716616059022}
   - component: {fileID: 8137197155761210694}
+  - component: {fileID: 6155811952334015531}
   m_Layer: 5
   m_Name: ControlsReference
   m_TagString: Untagged
@@ -134,6 +135,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6155811952334015531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5327228831334328696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: Menu/Click To Close
+  mTermSecondary: LiberationSans SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &5614417855321931422
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,6 +393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696a8c0e53d8446e877820ad00842749, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  allowedIfCurrentlyDragging: 0
   allowedButtons: 0000000002000000
   action:
     m_PersistentCalls:
@@ -382,6 +423,7 @@ GameObject:
   - component: {fileID: 8561048034208564281}
   - component: {fileID: 966920120065169130}
   - component: {fileID: 8216508133618155409}
+  - component: {fileID: 611650558800658659}
   m_Layer: 0
   m_Name: CardView
   m_TagString: Untagged
@@ -474,6 +516,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   onEnable: event:/DeckBulder_Scene/Card_Shown
   onDisable: event:/DeckBulder_Scene/Card_Close
+--- !u!114 &611650558800658659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8962622773832073432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f3abb5b525f47489f4c7e5b762545c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6091837970066709879
 PrefabInstance:
   m_ObjectHideFlags: 0

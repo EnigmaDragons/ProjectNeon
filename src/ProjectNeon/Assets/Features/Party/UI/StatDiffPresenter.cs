@@ -1,13 +1,14 @@
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StatDiffPresenter : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI statLabel;
-    [SerializeField] private TextMeshProUGUI statBaseAmountLabel;
+    [SerializeField] private Localize statLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI statBaseAmountLabel;
     [SerializeField] private Image diffIcon;
-    [SerializeField] private TextMeshProUGUI diffAmountLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI diffAmountLabel;
     [SerializeField] private Color positiveColor;
     [SerializeField] private Color neutralColor;
 
@@ -18,10 +19,13 @@ public class StatDiffPresenter : MonoBehaviour
         gameObject.SetActive(false);
     }
     
-    public StatDiffPresenter Initialized(string statName, int baseAmount, int diffAmount, float diffDelay, bool showIfZero = false)
+    public StatDiffPresenter Initialized(StatType stat, int baseAmount, int diffAmount, float diffDelay, bool showIfZero = false)
     {
         gameObject.SetActive(true);
-        statLabel.text = ModifiedStatName(statName);
+        if (stat == StatType.StartingShield)
+            statLabel.SetTerm(TemporalStatType.Shield.GetTerm());
+        else
+            statLabel.SetTerm(stat.GetTerm());
         statBaseAmountLabel.text = baseAmount.ToString().PadLeft(2, ' ');
         diffIcon.color = Transparent;
         diffAmountLabel.text = "";
@@ -42,12 +46,5 @@ public class StatDiffPresenter : MonoBehaviour
         diffAmountLabel.transform.DOPunchScaleStandard(new Vector3(1, 1, 1));
         if (diffAmount > 0)
             Message.Publish(new StatLeveledUp(transform));
-    }
-
-    private string ModifiedStatName(string statName)
-    {
-        if (statName.Equals(StatType.StartingShield.ToString()))
-            return "Shield";
-        return statName.Replace("Max", "Max ");
     }
 }

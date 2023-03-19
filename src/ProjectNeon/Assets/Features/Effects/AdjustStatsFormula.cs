@@ -1,5 +1,6 @@
 
 using System;
+using System.Linq;
 using UnityEngine;
 
 public class AdjustStatsFormula : Effect
@@ -30,19 +31,19 @@ public class AdjustStatsFormula : Effect
                 ? m.PrimaryStat().ToString()
                 : _e.EffectScope;
 
-            var formulaAmount = Formula.EvaluateRaw(sourceSnapshot, m.State, _e.Formula, ctx.XPaidAmount);
+            var formulaAmount = Formula.EvaluateRaw(sourceSnapshot, m.State, _e.Formula, ctx.XPaidAmount, ctx.ScopedData);
 
             var isDebuff = StatExtensions.IsPositive(stat) ? formulaAmount < 1 : formulaAmount > 0;
             if (isDebuff) 
                 ctx.Preventions.RecordPreventionTypeEffect(PreventionType.Aegis, m.AsArray());
 
             if (ctx.Preventions.IsAegising(m))
-                BattleLog.Write($"{m.Name} prevented {stat} debuff with an Aegis");
+                BattleLog.Write($"{m.NameTerm.ToEnglish()} prevented {stat} debuff with an Aegis");
             else
             {
-                BattleLog.Write($"{m.Name}'s {stat} is adjusted by x{formulaAmount}");
+                BattleLog.Write($"{m.NameTerm.ToEnglish()}'s {stat} is adjusted by x{formulaAmount}");
                 var stats = new AdjustedStats(new StatMultipliers().WithRaw(stat, formulaAmount), _e.ForSimpleDurationStatAdjustment(ctx.Source.Id,
-                    Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, _e.DurationFormula, ctx.XPaidAmount)));
+                    Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, _e.DurationFormula, ctx.XPaidAmount, ctx.ScopedData)));
                 m.State.ApplyTemporaryMultiplier(stats);
             }
         });
@@ -66,22 +67,31 @@ public class AdjustStatsFormula : Effect
                 ? m.PrimaryStat().ToString()
                 : _e.EffectScope;
 
-            var formulaAmount = Formula.EvaluateToInt(sourceSnapshot, m.State, _e.Formula, ctx.XPaidAmount);
+            var formulaAmount = Formula.EvaluateToInt(sourceSnapshot, m.State, _e.Formula, ctx.XPaidAmount, ctx.ScopedData);
             var isDebuff = formulaAmount < 0;
             if (isDebuff)
                 ctx.Preventions.RecordPreventionTypeEffect(PreventionType.Aegis, m.AsArray());
 
             if (ctx.Preventions.IsAegising(m))
-                BattleLog.Write($"{m.UnambiguousName} prevented {stat} debuff with an Aegis");
+                BattleLog.Write($"{m.UnambiguousEnglishName} prevented {stat} debuff with an Aegis");
             else
             {                
-                var finalAmount = isDebuff 
+                var finalAmount = isDebuff && !StatExtensions.CanGoBelowZero(stat)
                     ? Mathf.Clamp(formulaAmount, -CurrentStatAmount(m, stat), 0) 
                     : formulaAmount;
-                BattleLog.Write($"{m.UnambiguousName}'s {stat} is adjusted by {finalAmount}");
-                var stats = new AdjustedStats(new StatAddends().WithRaw(stat, finalAmount),
-                    _e.ForSimpleDurationStatAdjustment(ctx.Source.Id, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, _e.DurationFormula, ctx.XPaidAmount)));
-                m.State.ApplyTemporaryAdditive(stats);
+                BattleLog.Write($"{m.UnambiguousEnglishName}'s {stat} is adjusted by {finalAmount}");
+                if (stat != null && stat.Length == 0)
+                {
+                    var maybeCardDetail = ctx.Card.Select(c => $"Context - Card: {c.NameTerm.ToEnglish()}",
+                        () => "No Supplied Card");
+                    Log.Error("An effect to Adjust Stat Additive has a Blank Stat. " + maybeCardDetail);
+                }
+                else 
+                {
+                    var stats = new AdjustedStats(new StatAddends().WithRaw(stat, finalAmount),
+                    _e.ForSimpleDurationStatAdjustment(ctx.Source.Id, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m.State, _e.DurationFormula, ctx.XPaidAmount, ctx.ScopedData)));
+                    m.State.ApplyTemporaryAdditive(stats);
+                }
             }
         });
     }

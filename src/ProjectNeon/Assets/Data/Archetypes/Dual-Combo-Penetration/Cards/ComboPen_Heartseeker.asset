@@ -17,6 +17,10 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: c07c750fffc48cb458ae9dd56f25e30d, type: 3}
   description: Deal {E[1]} <b>| Crit:</b> Target has no shields
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  descriptionV2:
+    text: Deal {0} <b>| Crit:</b> Target has no shields
+    formatArgs:
+    - '{E[2]}'
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -38,7 +42,13 @@ MonoBehaviour:
   archetypes:
   - {fileID: 11400000, guid: fa0b1b9aad879d44faf8e5d18ec91d9a, type: 2}
   - {fileID: 11400000, guid: 079871761aec52040887b3de1c1a19c4, type: 2}
-  highlightCondition: []
-  unhighlightCondition: []
+  highlightCondition:
+  - {fileID: 11400000, guid: 33bae64901fd7794dbc52964de151e9b, type: 2}
+  unhighlightCondition:
+  - {fileID: 11400000, guid: 4b5634db4d860654dae41dc093947df2, type: 2}
+  targetedHighlightCondition:
+  - {fileID: 11400000, guid: a44dfa42c457ca94c98efe2043624dba, type: 2}
+  targetedUnhighlightCondition:
+  - {fileID: 11400000, guid: d3aecffcae97ca7479e87a446469ea5f, type: 2}
   isWIP: 0
   notAvailableForGeneralDistribution: 0

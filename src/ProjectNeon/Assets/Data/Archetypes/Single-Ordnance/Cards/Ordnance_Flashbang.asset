@@ -17,6 +17,10 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: f0182d7c44863304d8e1dc9a446c74a9, type: 3}
   description: "One random target: \nGives <b>1 Blind</b>. \nDeal {IE[1]}"
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  descriptionV2:
+    text: "One random target: \nGives <b>1 Blind</b>. \nDeal {0}"
+    formatArgs:
+    - '{E[1]}'
   tags: 25000000
   speed: 0
   isSinglePlay: 0
@@ -26,9 +30,9 @@ MonoBehaviour:
     plusXCost: 0
   rarity: 0
   actionSequences:
-  - scope: 1
+  - scope: 5
     group: 1
-    cardActions: {fileID: 11400000, guid: 5489d278338c2a449a16a48ca24b42f6, type: 2}
+    cardActions: {fileID: 11400000, guid: 4caae26589b62c04da1c3d56f6e0bf7d, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -39,4 +43,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4b871eacf30af6f428fd307e9e308b4c, type: 2}
   highlightCondition: []
   unhighlightCondition: []
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 0
+  notAvailableForGeneralDistribution: 1

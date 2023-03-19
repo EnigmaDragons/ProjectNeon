@@ -13,22 +13,29 @@ MonoBehaviour:
   m_Name: AlgeronsChoice
   m_EditorClassIdentifier: 
   id: 17
+  storyText: What are the mimics fate?
   settingType: 0
   corp: {fileID: 0}
   choices:
-  - Choice: 1
+  - Id: 8
+    Choice: Terminate the mimics.
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 242682f20700e7d49ba372138d82a916, type: 2}
-      ResultNumber: 1
       StoryText: 
-  - Choice: 2
+  - Id: 9
+    Choice: Take control of the mimics.
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 3969e18dc9fc8b34b93ae060743a2806, type: 2}
-      ResultNumber: 1
       StoryText: 
-  inCutscene: 0
+  inCutscene: 1
   isMultiChoice: 0

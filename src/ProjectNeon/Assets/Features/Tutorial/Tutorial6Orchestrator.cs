@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Tutorial6Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionStarted, BeginTargetSelectionRequested, EndOfTurnStatusEffectsResolved, WinBattleWithRewards>
+public class Tutorial6Orchestrator : OnMessage<StartCardSetupRequested, CardResolutionStarted, BeginTargetSelectionRequested, 
+    EndOfTurnStatusEffectsResolved, WinBattleWithRewards, ShowCurrentTutorialAgain>, ILocalizeTerms
 {
     private const string _callerId = "Tutorial6Orchestrator";
     
@@ -20,10 +21,18 @@ public class Tutorial6Orchestrator : OnMessage<StartCardSetupRequested, CardReso
 
     private IEnumerator ShowTutorialAfterDelay()
     {
-        yield return new WaitForSeconds(6);
+        yield return TutorialSettings.BattleTutorialPanelPopupDelay;
+        ShowTutorial();
+    }
+    
+    protected override void Execute(ShowCurrentTutorialAgain msg) => ShowTutorial();
+
+    private void ShowTutorial()
+    {
         if (!_hasWon)
             Message.Publish(new ShowTutorialByName(_callerId));
     }
+
     
     protected override void Execute(CardResolutionStarted msg)
     {
@@ -32,17 +41,24 @@ public class Tutorial6Orchestrator : OnMessage<StartCardSetupRequested, CardReso
             _gainedShields = true;
             Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.PlayerShields, true, _callerId));
             Message.Publish(new PunchYourself(BattleUiElement.PlayerShields));
-            Message.Publish(new ShowHeroBattleThought(4, "Damn shields! This is going to be annoying to get through"));
+            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial06-01".ToLocalized()));
         }
     }
 
     protected override void Execute(BeginTargetSelectionRequested msg)
     {
         if (msg.Card.Name == "Strike" && !_firstTurnFinished)
-            Message.Publish(new ShowHeroBattleThought(5, "Give me your best shot! You can't target anyone else"));
+            Message.Publish(new ShowHeroBattleThought(5, "Thoughts/Tutorial06-02".ToLocalized()));
             
     }
 
     protected override void Execute(EndOfTurnStatusEffectsResolved msg) => _firstTurnFinished = true;
     protected override void Execute(WinBattleWithRewards msg) => _hasWon = true;
+
+    public string[] GetLocalizeTerms()
+        => new[]
+        {
+            "Thoughts/Tutorial06-01",
+            "Thoughts/Tutorial06-02",
+        };
 }

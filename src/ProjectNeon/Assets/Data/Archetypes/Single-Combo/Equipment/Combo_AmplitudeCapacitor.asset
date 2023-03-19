@@ -14,7 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 86
   displayName: 
-  description: 'On Combo Card: +2 Attack this turn<br>Finisher: Gain Double Damage'
+  description: 'On {[t:Archetypes/Combo]} Card: +2 {[t:Stats/Stat-Attack]} this turn
+
+    Finisher:
+    Gain {[t:Keywords/DoubleDamage]}'
   corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes:
   - {fileID: 11400000, guid: fa0b1b9aad879d44faf8e5d18ec91d9a, type: 2}
@@ -26,7 +29,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 74
+  - Id: 10054
+    EffectType: 74
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -57,6 +61,7 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 35
     ReactionEffectScope:
       UseConstant: 0
@@ -70,7 +75,8 @@ MonoBehaviour:
       cardActions: {fileID: 11400000, guid: 2983f8c062ccf3240a3abe87f0199133, type: 2}
     BonusCardType: {fileID: 0}
     Unpreventable: 0
-  - EffectType: 92
+  - Id: 10055
+    EffectType: 92
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -101,6 +107,7 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 35
     ReactionEffectScope:
       UseConstant: 0

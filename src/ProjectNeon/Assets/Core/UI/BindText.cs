@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 
+[IgnoreForLocalization]
 public class BindText : MonoBehaviour
 {
     [SerializeField] private StringReference value;

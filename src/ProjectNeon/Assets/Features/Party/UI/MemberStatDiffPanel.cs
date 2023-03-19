@@ -49,7 +49,7 @@ public class MemberStatDiffPanel : MonoBehaviour
             var diffAmount = difference[s].CeilingInt();
             var willShow = AlwaysShowStatTypes.Contains(s) || originalAmount > 0 || diffAmount > 0;
             Instantiate(diffPresenterPrototype, statParent.transform)
-                .Initialized(s.ToString(), originalAmount, diffAmount, delay, willShow);
+                .Initialized(s, originalAmount, diffAmount, delay, willShow);
             delay += willShow && diffAmount > 0 ? delayBetweenStats : 0f;
         });
 

@@ -13,22 +13,30 @@ MonoBehaviour:
   m_Name: AreAndroidsCritical
   m_EditorClassIdentifier: 
   id: 13
+  storyText: Androids are keeping people alive, will you help save them?
   settingType: 0
   corp: {fileID: 0}
   choices:
-  - Choice: 1
+  - Id: 4
+    Choice: You're right. We are going to help you save lives.
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 0ee330c525a288a41930b04d8ab93755, type: 2}
-      ResultNumber: 1
       StoryText: 
-  - Choice: 2
+  - Id: 5
+    Choice: Androids are keeping the rich corps richer by letting them prosper without
+      hiring people. It lets them ignore the screams of the people.
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: 9c339857949f1bf418e4f987f9637d0e, type: 2}
-      ResultNumber: 1
       StoryText: 
   inCutscene: 1
   isMultiChoice: 0

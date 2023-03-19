@@ -12,11 +12,9 @@
 
     <p>{game.siteOwner} gives permission to any user to monetize their videos when doing Let's Plays, Speedruns, and Reviews of {game.name}.</p>
 
-    <p>However, videos and uploads of the {game.name} Original Soundtrack are not permitted.</p>
+    <p>Logos, heroes, and many other assets can be found in the <a href={game.assetKit}>Content Creator Asset Kit</a></p>
 
-    <a href={game.assetKit}>Content Creator Asset Kit</a>
-
-    <p>{game.siteOwner} retains the right to revoke this license at any time.</p>
+    <p>&nbsp;&nbsp;{game.siteOwner} retains the right to revoke this license at any time.<br><i>(Our lawyers required us to write this. Of course we're never going to)</i></p>
   </div>
 </section>
 

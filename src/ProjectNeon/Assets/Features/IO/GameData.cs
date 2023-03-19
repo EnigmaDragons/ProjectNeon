@@ -32,7 +32,7 @@ public class GameAdventureProgressData
     public int RngSeed = Rng.NewSeed();
     public string[] States = new string[0];
     public bool[] StateValues = new bool[0];
-    public int DifficultyId = 0;
+    public int DifficultyId = -99;
 }
 
 public enum GameAdventureProgressType
@@ -74,6 +74,7 @@ public class BlessingSaveData
 {
     public string Name = "";
     public int[] TargetHeroIds = Array.Empty<int>();
+    public int Duration = 0;
 }
 
 [Serializable]

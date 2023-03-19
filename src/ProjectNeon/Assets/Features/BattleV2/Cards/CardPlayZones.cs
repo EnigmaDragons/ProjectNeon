@@ -15,6 +15,7 @@ public class CardPlayZones : ScriptableObject
     [SerializeField] private CardPlayZone resolutionZone;
     [SerializeField] private CardPlayZone reactionZone;
     [SerializeField] private CardPlayZone currentResolvingCardZone;
+    [SerializeField] private CardPlayZone voidZone;
 
     public CardPlayZone DrawZone => drawZone;
     public CardPlayZone HandZone => handZone;
@@ -22,6 +23,7 @@ public class CardPlayZones : ScriptableObject
     public CardPlayZone DiscardZone => discardZone;
     public CardPlayZone SelectionZone => selectionZone;
     public CardPlayZone ResolutionZone => resolutionZone;
+    public CardPlayZone VoidZone => voidZone;
     public Card[] AllCards => DrawZone.Cards.Concat(HandZone.Cards).Concat(DiscardZone.Cards).ToArray();
     
     public void ClearAll()
@@ -33,6 +35,7 @@ public class CardPlayZones : ScriptableObject
         selectionZone.Clear();
         resolutionZone.Clear();
         reactionZone.Clear();
+        voidZone.Clear();
         currentResolvingCardZone.Clear();
     }
 
@@ -68,8 +71,10 @@ public class CardPlayZones : ScriptableObject
     public void DrawCards(int number) 
         => Enumerable.Range(0, number).ForEach(_ => DrawOneCard());
     
-    public void DrawCards(int number, Func<Card, bool> cardCondition) 
-        => Enumerable.Range(0, number).ForEach(_ => DrawOneCard(cardCondition));
+    public void DrawCards(int number, Func<Card, bool> cardCondition)
+    {
+        Enumerable.Range(0, number).ForEach(_ => DrawOneCard(cardCondition));
+    }
 
     public void DrawOneCard()
     {
@@ -92,7 +97,13 @@ public class CardPlayZones : ScriptableObject
             BattleLog.Write("Hand Is Full. Not Drawing Any More Cards");
             return;
         }
-        
+
+        if (AllCards.None(cardCondition))
+        {
+            BattleLog.Write("Unable to find card of selected type. Not Drawing Any Cards");
+            return;
+        }
+
         if (!DrawZone.Cards.Any(cardCondition))
             Reshuffle();
         HandZone.PutOnBottom(DrawZone.DrawOneCard(cardCondition));

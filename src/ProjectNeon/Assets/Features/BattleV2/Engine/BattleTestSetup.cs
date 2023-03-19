@@ -116,9 +116,9 @@ public class BattleTestSetup : MonoBehaviour
 
         setup.InitParty(hero, hero2, hero3);
         setup.InitPartyDecks(h1Deck, h2Deck, h3Deck);
-        var equipment = hero.Name.Equals(hero1.Name) 
-            ? hero1Equipment : hero.Name.Equals(hero2.Name) 
-            ? hero2Equipment : hero.Name.Equals(hero3.Name) 
+        var equipment = hero.Id.Equals(hero1.Id) 
+            ? hero1Equipment : hero.Id.Equals(hero2.Id) 
+            ? hero2Equipment : hero.Id.Equals(hero3.Id) 
             ? hero3Equipment : new List<StaticEquipment>();
         setup.InitPartyEquipment(equipment, new List<Equipment>(), new List<Equipment>());
 

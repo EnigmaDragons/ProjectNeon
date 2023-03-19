@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5450833320234193381}
   - component: {fileID: 4077539367400144457}
   - component: {fileID: 1331875997427087588}
+  - component: {fileID: 1248689226765302885}
   m_Layer: 0
   m_Name: NameLabel
   m_TagString: Untagged
@@ -134,6 +135,45 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &1248689226765302885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3174405090192935829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: '-'
+  mTermSecondary: UI-Kit2-Sans-SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 0
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!1 &3371881836671285069
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,7 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84c6531aa89f46a0b84755ea6a6d2b18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameLabel: {fileID: 1331875997427087588}
+  nameLabel: {fileID: 1248689226765302885}
   slotIcon: {fileID: 5373615976226641333}
   icons: {fileID: 11400000, guid: 449e7e2ae81f3f349a866f2033c7febf, type: 2}
 --- !u!1 &8095301588236121348

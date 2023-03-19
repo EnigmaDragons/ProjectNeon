@@ -7,7 +7,7 @@ public class BulletSpawner : MonoBehaviour
     [SerializeField] private CurrentAnimationContext animationContext;
     [SerializeField] private BattleState battleState;
     
-    private void OnEnable() => StartCoroutine(Shoot());
+    private void OnEnable() => this.SafeCoroutineOrNothing(Shoot());
 
     private IEnumerator Shoot()
     {

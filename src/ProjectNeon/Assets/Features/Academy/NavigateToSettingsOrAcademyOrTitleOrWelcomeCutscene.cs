@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 using UnityEngine;
 
 public class NavigateToSettingsOrAcademyOrTitleOrWelcomeCutscene : OnMessage<NavigateToNextTutorialFlow>
@@ -26,8 +27,19 @@ public class NavigateToSettingsOrAcademyOrTitleOrWelcomeCutscene : OnMessage<Nav
         // Continue Tutorial Adventure
         else if (!d.IsLicensedBenefactor && useNewTutorialFlow.Value && io.HasSavedGame)
         {
-            io.LoadSavedGame();
-            GameStarter.Navigate(navigator, adventureProgress5);
+            try
+            {
+                var phase = io.LoadSavedGame();
+                if (phase != CurrentGamePhase.LoadError && phase != CurrentGamePhase.NotStarted)
+                    GameStarter.Navigate(navigator, adventureProgress5);
+                else 
+                    navigator.NavigateToTitleScreen();
+            }
+            catch (Exception e)
+            {
+                Log.Error(e);
+                navigator.NavigateToTitleScreen();
+            }
         }
         // Start Tutorial Adventure
         else if (!d.IsLicensedBenefactor && useNewTutorialFlow.Value)

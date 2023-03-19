@@ -13,6 +13,7 @@ public class AdjustedPlayerStats : TemporalStateBase, ITemporalPlayerState
 
     void ITemporalPlayerState.OnTurnStart() {}
     void ITemporalPlayerState.OnTurnEnd() => Tracker.AdvanceTurn();
+    public IPlayedCard PossiblyRetargeted(BattleState state, IPlayedCard card) => card;
 
     public AdjustedPlayerStats(IPlayerStats stats, int duration, bool isDebuff)
         : base(TemporalStateMetadata.ForDuration(-1, duration, isDebuff))

@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class CustomNavigateButton : OnMessage<AcademyDataUpdated>
+public class CustomNavigateButton : OnMessage<AcademyDataUpdated>, ILocalizeTerms
 {
     [SerializeField] private Navigator navigator;
-    [SerializeField] private TextCommandButton button;
+    [SerializeField] private LocalizedCommandButton button;
     [SerializeField] private PlayEnterMetroplexZeroCutscene cutscene;
 
     protected override void AfterEnable() => Render();
@@ -18,10 +18,13 @@ public class CustomNavigateButton : OnMessage<AcademyDataUpdated>
         var data = CurrentAcademyData.Data;
         var wasActive = button.gameObject.activeSelf;
         if (data.HasCompletedWelcomeToMetroplexCutscene)
-            button.Init("Proceed", navigator.NavigateToTitleScreen);
+            button.InitTerm("Menu/Proceed", navigator.NavigateToTitleScreen);
         else
-            button.Init("Proceed", cutscene.Execute);
+            button.InitTerm("Menu/Proceed", cutscene.Execute);
         if (!wasActive)
             button.Hide();
     }
+
+    public string[] GetLocalizeTerms()
+        => new[] {"Menu/Proceed"};
 }

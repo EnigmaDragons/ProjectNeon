@@ -29,6 +29,7 @@ public class FmodMusicPlayer : MonoBehaviour
         Message.Subscribe<GameWonStingerMSG>(Battle_Won_FUNC, this);
         Message.Subscribe<NavigateToSceneRequested>(MusicChanger, this);
         Message.Subscribe<PlayCustomFmodMusic>(f => PlayCustomMusic(f.MusicName), this);
+        Message.Subscribe<StopStandardFmodMusic>(_ => StopStandardMusic(), this);
     }
 
     private void OnDisable() => Message.Unsubscribe(this);
@@ -60,6 +61,7 @@ public class FmodMusicPlayer : MonoBehaviour
         { "AcademyScene", Nothing },
         { "BattleSceneV2", Nothing },
         { "BattleTestScene", Nothing },
+        { "WishlistScene", Nothing },
     };
 
     private void PlayMusicForScene(string sceneName)
@@ -77,15 +79,21 @@ public class FmodMusicPlayer : MonoBehaviour
 
     private void PlayCustomMusic(string musicName)
     {
-        BattleLostStinger.stop(STOP_MODE.ALLOWFADEOUT);
-        GameWonStinger.stop(STOP_MODE.ALLOWFADEOUT);
-        CustomMusic.stop(STOP_MODE.ALLOWFADEOUT);
-        
-        Music.setParameterByName("MUSIC_PROGRESS", Nothing);
-        
+        Log.Info("Play Custom Music");
+        StopStandardMusic();
+
         CustomMusic = FMODUnity.RuntimeManager.CreateInstance(musicName);
         CustomMusic.start();
         CustomMusic.release();
+    }
+
+    private static void StopStandardMusic()
+    {
+        BattleLostStinger.stop(STOP_MODE.ALLOWFADEOUT);
+        GameWonStinger.stop(STOP_MODE.ALLOWFADEOUT);
+        CustomMusic.stop(STOP_MODE.ALLOWFADEOUT);
+
+        Music.setParameterByName("MUSIC_PROGRESS", Nothing);
     }
 
     private void MusicChanger(NavigateToSceneRequested msg) => PlayMusicForScene(msg.SceneName);

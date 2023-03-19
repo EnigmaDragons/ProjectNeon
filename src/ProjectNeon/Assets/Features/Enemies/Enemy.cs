@@ -3,10 +3,10 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "GameContent/Enemy")]
-public class Enemy : ScriptableObject
+public class Enemy : ScriptableObject, ILocalizeTerms
 {
     [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public int id;
-    [SerializeField] private string enemyName;
+    [SerializeField] public string enemyName;
     [SerializeField] private bool allowedForSocialMedia = false;
     [SerializeField] private bool excludeFromBestiary = false;
     [SerializeField] private bool isTutorialEnemy = false;
@@ -19,13 +19,13 @@ public class Enemy : ScriptableObject
     [SerializeField] private GameObject prefab;
     [SerializeField] private MemberMaterialType materialType;
     [SerializeField] private Vector3 libraryCameraOffset = new Vector3(0, -0.8f, 2.5f);
-    [SerializeField] private StringReference deathEffect;
+    [SerializeField] private bool shouldLive;
     [SerializeField] private BattleRole battleRole;
     [SerializeField] private EnemyTier tier; 
     [SerializeField] private bool unique;
     [SerializeField] public bool isHasty;
     [SerializeField] private ResourceType resourceType;
-    [SerializeField, TextArea(2, 4)] private string description;
+    [SerializeField, TextArea(2, 4)] public string description;
     [SerializeField] private CharacterAnimations animations;
     [SerializeField] private CharacterAnimationSoundSet animationSounds;
     [SerializeField] public EnemyStageDetails[] stageDetails = new EnemyStageDetails[0];
@@ -38,8 +38,8 @@ public class Enemy : ScriptableObject
     public bool IsReadyForPlay => isCurrentlyWorking && Prefab != null && ai != null;
     public bool IsTutorialEnemy => isTutorialEnemy;
     
-    public string EnemyName => this.GetName(enemyName);
-    public string Description => description;
+    public string EnemyNameTerm => $"Enemies/EnemyName{id}";
+    public string DescriptionTerm => $"Enemies/EnemyDescription{id}";
     public Corp Corp => corp;
     public EnemyTier Tier => tier;
     public BattleRole BattleRole => battleRole;
@@ -52,18 +52,19 @@ public class Enemy : ScriptableObject
     public int MinimumAllies => minimumAllies;
     public DamageType DamageType => damageType;
     public MemberMaterialType MaterialType => materialType;
+    public ResourceType ResourceType => resourceType;
     public EnemyInstance ForStage(int stage)
     {
         var detail = stageDetails.OrderBy(x => x.stage > stage ? Math.Abs(x.stage - stage) * 2 + 1 : Math.Abs(x.stage - stage) * 2).FirstOrDefault();
         if (detail == null)
-            Log.Error($"Enemy {EnemyName} has no stage details and can not be used");
+            Log.Error($"Enemy {enemyName} has no stage details and can not be used");
         if (enemyName == null)
             Log.Error($"Enemy {name} has no Enemy Name");
         return new EnemyInstance(id, resourceType, detail.startOfBattleEffects, detail.startingResourceAmount, detail.resourceGainPerTurn, 
             detail.maxResourceAmount, detail.maxHp, detail.maxShield, detail.startingShield,  
             detail.attack, detail.magic, detail.leadership, detail.armor, detail.resistance, detail.cardsPerTurn, 
-            prefab, libraryCameraOffset, ai, detail.Cards, battleRole, tier, detail.powerLevel, preferredTurnOrder, EnemyName, deathEffect, 
-            isHasty, unique, detail.CounterAdjustments, corp, animations, animationSounds, materialType, description, 
+            prefab, libraryCameraOffset, ai, detail.Cards, detail.CardsTheyAppearsToHave, battleRole, tier, detail.powerLevel, preferredTurnOrder, shouldLive, 
+            isHasty, unique, detail.CounterAdjustments, corp, animations, animationSounds, materialType, DescriptionTerm, 
             detail.startOfBattleEffects.Where(b => b.ReactionSequence != null).Select(b => b.ReactionSequence),
             aiPreferences ?? new AiPreferences());
     } 
@@ -80,4 +81,10 @@ public class Enemy : ScriptableObject
         this.minimumAllies = minAllies;
         return this;
     }
+
+    public string[] GetLocalizeTerms()
+        => new[] { EnemyNameTerm, DescriptionTerm }
+            .Concat(resourceType == null ? new string[0] : new [] { resourceType.GetTerm() })
+            .Concat(stageDetails.SelectMany(stage => stage.startOfBattleEffects.Where(effect => effect.StatusTag != StatusTag.None || effect.EffectType == EffectType.OnDeath).Select(effect => effect.StatusDetailTerm)))
+            .ToArray();
 }

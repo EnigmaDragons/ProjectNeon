@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-public class BlessingClinicServiceProviderV4 : ClinicServiceProvider
+public class BlessingClinicServiceProviderV4 : ClinicServiceProvider, ILocalizeTerms
 {
     private readonly PartyAdventureState _party;
     private readonly BlessingData[] _blessings;
@@ -15,7 +15,7 @@ public class BlessingClinicServiceProviderV4 : ClinicServiceProvider
         _rng = rng;
     }
     
-    public string GetTitle() => "Blessings";
+    public string GetTitleTerm() => "Clinics/BlessingTitle";
 
     public ClinicServiceButtonData[] GetOptions()
     {
@@ -28,6 +28,7 @@ public class BlessingClinicServiceProviderV4 : ClinicServiceProvider
                 {
                         Name = blessingData.Name,
                         Effect = blessingData.Effect,
+                        Duration = 3,
                         Targets = blessingData.IsSingleTarget
                             ? _party.Heroes
                                 .Where(x => x.Stats[blessingData.StatRequirement] >= blessingData.RequirementThreshold)
@@ -53,11 +54,11 @@ public class BlessingClinicServiceProviderV4 : ClinicServiceProvider
                 var index = i;
                 var d = blessingChoices[i].blessingData;
                 _generatedOptions[i] = new ClinicServiceButtonData(
-                    d.Name,
+                    d.NameTerm,
                     d.IsSingleTarget
-                        ? string.Format(d.Description,
-                            blessingChoices[i].blessing.Targets[0].DisplayName())
-                        : d.Description,
+                        ? string.Format(d.DescriptionTerm.ToLocalized(),
+                            blessingChoices[i].blessing.Targets[0].NameTerm().ToEnglish())
+                        : d.DescriptionTerm.ToLocalized(),
                     1,
                     () =>
                     {
@@ -65,7 +66,8 @@ public class BlessingClinicServiceProviderV4 : ClinicServiceProvider
                         _available[index] = false;
                     }, d.Effect.AsArray(), 
                     "Tritoonico",
-                    Rarity.Starter);
+                    Rarity.Starter,
+                    $"Tritoonico-{d.Name}");
             }
         }
         for (var i = 0; i < _generatedOptions.Length; i++)
@@ -75,4 +77,7 @@ public class BlessingClinicServiceProviderV4 : ClinicServiceProvider
     }
     
     public bool RequiresSelection() => false;
+
+    public string[] GetLocalizeTerms()
+        => _blessings.SelectMany(x => new[] {x.NameTerm, x.DescriptionTerm}).Concat(GetTitleTerm()).ToArray();
 }

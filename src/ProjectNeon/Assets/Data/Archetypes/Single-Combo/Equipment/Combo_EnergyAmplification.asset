@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 84
   displayName: 
-  description: When you gain energy, gain an additional +1 energy
+  description: When you gain {[t:Resources/Energy]}, gain an additional +1 {[t:Resources/Energy]}
   corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes:
   - {fileID: 11400000, guid: fa0b1b9aad879d44faf8e5d18ec91d9a, type: 2}
@@ -26,7 +26,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 74
+  - Id: 10059
+    EffectType: 74
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -57,6 +58,7 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 11
     ReactionEffectScope:
       UseConstant: 0

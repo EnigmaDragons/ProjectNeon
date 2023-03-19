@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3
   displayName: 
-  description: 'On Stealth: Gain +5 Attack until the end of next turn'
+  description: 'On {[t:Keywords/Stealth]}: Gain +5 {[t:Stats/Stat-Attack]} until
+    the end of next turn'
   corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 1e6b060bb2d10434c8d325b3765125dd, type: 2}
@@ -29,7 +30,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 74
+  - Id: 20022
+    EffectType: 74
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -60,17 +62,21 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
     ReactionConditionType: 25
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 11400000, guid: 030343d43667b944a908ac60cd41f087, type: 2}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
   requiresStatType: 
   excludeIfPartyHasStatType: 

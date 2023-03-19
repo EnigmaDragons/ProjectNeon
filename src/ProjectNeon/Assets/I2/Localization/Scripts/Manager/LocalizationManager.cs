@@ -55,6 +55,16 @@ namespace I2.Loc
 			return string.Empty;
 		}
 
+        public static void ForceUpdateLocalizationData(LanguageSource.fnOnSourceUpdated onFinished)
+        {
+            foreach (var s in Sources)
+            {
+                s.Event_OnSourceUpdateFromGoogle -= onFinished;
+                s.Event_OnSourceUpdateFromGoogle += onFinished; 
+                s.Import_Google(true, false, true);
+            }
+        }
+
 #if UNITY_EDITOR
     #if UNITY_2017_2_OR_NEWER
         static void OnEditorPlayModeStateChanged( PlayModeStateChange stateChange )

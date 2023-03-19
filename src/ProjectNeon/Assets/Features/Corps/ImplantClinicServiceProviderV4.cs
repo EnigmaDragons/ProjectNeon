@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
+public class ImplantClinicServiceProviderV4 : ClinicServiceProvider, ILocalizeTerms
 {
     private static readonly Dictionary<StatType, int> StatAmounts = new Dictionary<StatType, int>
     {
@@ -11,38 +11,14 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
         { StatType.Attack, 1 },
         { StatType.Magic, 1 },
         { StatType.Leadership, 1 },
-        { StatType.Economy, 1 },
         { StatType.Armor, 2 },
         { StatType.Resistance, 2 },
-    };
-    private static readonly Dictionary<StatType, string> NegativePrefix = new Dictionary<StatType, string>
-    {
-        { StatType.MaxHP, "Lifeblood" },
-        { StatType.StartingShield, "Powered" },
-        { StatType.Attack, "Dulled" },
-        { StatType.Magic, "Inhibiting" },
-        { StatType.Leadership, "Clouded" },
-        { StatType.Economy, "Costly" },
-        { StatType.Armor, "Fragilizing" },
-        { StatType.Resistance, "Cursed" },
-    };
-    private static readonly Dictionary<StatType, string> PositiveSuffix = new Dictionary<StatType, string>
-    {
-        { StatType.MaxHP, "Vitality" },
-        { StatType.StartingShield, "Barrier" },
-        { StatType.Attack, "Lethality" },
-        { StatType.Magic, "Attunement" },
-        { StatType.Leadership, "Focus" },
-        { StatType.Economy, "Greed" },
-        { StatType.Armor, "Protection" },
-        { StatType.Resistance, "Ward" },
     };
     private static readonly StatType[] PowerStats = 
     {
         StatType.Attack,
         StatType.Magic,
-        StatType.Leadership,
-        StatType.Economy
+        StatType.Leadership
     };
     private static readonly StatType[] TutorialStatTypes =
     {
@@ -70,7 +46,7 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
         _rarityChances = rarityChances;
     }
     
-    public string GetTitle() => "Available Implant Procedures";
+    public string GetTitleTerm() => "Clinics/ImplantTitle";
 
     public ClinicServiceButtonData[] GetOptions()
     {
@@ -81,9 +57,10 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
             {
                 for (var ii = 0; ii < _numOfImplants / _party.Heroes.Length; ii++)
                 {
-                    var option = GetOption(_party.Heroes[i], i * 2 + ii);
+                    var multiplier = (_numOfImplants / _party.Heroes.Length);
+                    var option = GetOption(_party.Heroes[i], i * multiplier + ii);
                     while (newGeneratedOptions.Any(x => x.Description == option.Description))
-                        option = GetOption(_party.Heroes[i], i * 2 + ii);
+                        option = GetOption(_party.Heroes[i], i * multiplier + ii);
                     newGeneratedOptions.Add(option);   
                 }
             }
@@ -117,12 +94,13 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
             cost = 3;
         else if (rarity == Rarity.Epic)
             cost = 4;
+        var nameTerm = $"Clinics/Implant{lossStat.ToString()}{gainStat.ToString()}";
         return new ClinicServiceButtonData(
-            $"{NegativePrefix[lossStat]} {PositiveSuffix[gainStat]}",
+            nameTerm,
             rarity == Rarity.Rare || rarity == Rarity.Epic
-                ? $"Gain <b>{gainAmount} {gainStat.ToString().WithSpaceBetweenWords()}</b> on <b>{hero.DisplayName}"
-                : $"Lose <b>{lossAmount} {lossStat.ToString().WithSpaceBetweenWords()}</b> to gain <b>{gainAmount} {gainStat.ToString().WithSpaceBetweenWords()}</b> on <b>{hero.DisplayName}</b>",
-            cost,
+                ? string.Format("Clinics/ImplantLossless".ToLocalized(), $"<b>{gainAmount} {gainStat.GetLocalizedString()}</b>", $"<b>{hero.NameTerm.ToLocalized()}</b>")
+                : string.Format("Clinics/ImplantTradeOff".ToLocalized(), $"<b>{lossAmount} {lossStat.GetLocalizedString()}</b>", $"<b>{gainAmount} {gainStat.GetLocalizedString()}</b>", $"<b>{hero.NameTerm.ToLocalized()}</b>"),
+        cost,
             () =>
             {
                 if (_available.Length > index)
@@ -133,7 +111,8 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
             }, 
             Array.Empty<EffectData>(),
             "Medigeneix",
-            rarity);
+            rarity,
+            $"Medigeneix-{hero.NameTerm.ToEnglish()}-{nameTerm.ToEnglish()}");
     }
 
     private void AdjustHero(Hero hero, StatType lossStat, int lossAmount, StatType gainStat, int gainAmount)
@@ -151,4 +130,9 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider
     }
 
     public bool RequiresSelection() => false;
+
+    public string[] GetLocalizeTerms()
+        => StatAmounts.SelectMany(loss => StatAmounts.Select(gain => $"Clinics/Implant{loss.Key.ToString()}{gain.Key.ToString()}"))
+            .Concat(new[] { "Clinics/ImplantLossless", "Clinics/ImplantTradeOff", GetTitleTerm() })
+            .ToArray();
 }

@@ -25,12 +25,12 @@ public class HoverSpriteCharacter3D : MonoBehaviour, HoverSpriteCharacter
         
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonUp(0))
         {
-            LogInfo($"UI - Confirmed {Member.Name}");
+            LogInfo($"UI - Confirmed {Member.NameTerm.ToEnglish()}");
             _confirmAction();
         }
         else if (Input.GetMouseButtonDown(1)) 
         {
-            LogInfo($"UI - Cancelled {Member.Name}");
+            LogInfo($"UI - Cancelled {Member.NameTerm.ToEnglish()}");
             _cancelAction();
         }
     }
@@ -41,9 +41,9 @@ public class HoverSpriteCharacter3D : MonoBehaviour, HoverSpriteCharacter
         
         const int characterObjectLayer = 10;
         if (gameObject.layer != characterObjectLayer)
-            Log.Error($"{Member.Name} does not have the correct Game Object Layer. Must be Character.");
+            Log.Error($"{Member.NameTerm.ToEnglish()} does not have the correct Game Object Layer. Must be Character.");
         if (!GetComponent<BoxCollider>().isTrigger)
-            Log.Error($"{Member.Name}'s Box Collider must be a trigger.");
+            Log.Error($"{Member.NameTerm.ToEnglish()}'s Box Collider must be a trigger.");
         _renderer = GetComponent<SpriteRenderer>();
         _originalMaterial = _renderer.material;
     }
@@ -62,7 +62,7 @@ public class HoverSpriteCharacter3D : MonoBehaviour, HoverSpriteCharacter
 
     public void SetAction(Action confirmAction, Action cancelAction)
     {
-        LogInfo($"UI - Set Hover Character Action for {Member.Name}");
+        LogInfo($"UI - Set Hover Character Action for {Member.NameTerm.ToEnglish()}");
         _confirmAction = confirmAction;
         _cancelAction = cancelAction;
     }
@@ -72,7 +72,7 @@ public class HoverSpriteCharacter3D : MonoBehaviour, HoverSpriteCharacter
         if (!IsInitialized)
             return;
     
-        LogInfo($"UI - Cleared Hover Character {Member.Name}");
+        LogInfo($"UI - Cleared Hover Character {Member.NameTerm.ToEnglish()}");
         if (_renderer != null)
             _renderer.material = _originalMaterial;
         _hovered = false;

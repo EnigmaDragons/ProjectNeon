@@ -18,6 +18,11 @@ MonoBehaviour:
   description: Spend all Ammo to deal {E[0]} and give <b>-1 Primary Stat</b> this
     turn for each Ammo spent
   typeDescription: {fileID: 0}
+  descriptionV2:
+    text: Spend all Ammo to deal {0} and give <b>-1 Primary Stat</b> this turn for
+      each Ammo spent
+    formatArgs:
+    - '{E[0]}'
   tags: 250000002a000000
   speed: 0
   isSinglePlay: 0
@@ -32,15 +37,23 @@ MonoBehaviour:
     cardActions: {fileID: 11400000, guid: 37fffe36a865e7845938c29eab060d1c, type: 2}
     repeatX: 0
     repeatCount: 0
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: 4477528fa0517f6469e0fd66daa66260, type: 2}
+    repeatX: 0
+    repeatCount: 0
   chainedCard: {fileID: 0}
   swappedCard: {fileID: 0}
-  functionalityIssues: You have to update how many of the function on the effect
-    their are if there is ways to increase your ammo count
+  functionalityIssues: 
   presentationIssues: 
   archetypes:
   - {fileID: 11400000, guid: 4b871eacf30af6f428fd307e9e308b4c, type: 2}
   - {fileID: 11400000, guid: fbcb59caa7d5a114f8b9cf6016d20160, type: 2}
-  highlightCondition: []
-  unhighlightCondition: []
+  highlightCondition:
+  - {fileID: 11400000, guid: fd555e54bb596bf4a9079945baf44d4e, type: 2}
+  unhighlightCondition:
+  - {fileID: 11400000, guid: 9814e35374247ce48a8882a5c73f3937, type: 2}
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 0

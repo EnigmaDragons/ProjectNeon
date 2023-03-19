@@ -17,6 +17,10 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: c5a0ce97cf214164aa62eb4dce7227d1, type: 3}
   description: 'Deal {E[0]}.<br><br>You gain <b>2</b> Energy. '
   typeDescription: {fileID: 11400000, guid: 9ef2d652f80f60e4eb9ad39c4c1f8a7f, type: 2}
+  descriptionV2:
+    text: 'Deal {0}.<br><br>You gain <b>2</b> Energy. '
+    formatArgs:
+    - '{E[0]}'
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -44,5 +48,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fa0b1b9aad879d44faf8e5d18ec91d9a, type: 2}
   highlightCondition: []
   unhighlightCondition: []
-  isWIP: 0
+  isWIP: 1
   notAvailableForGeneralDistribution: 0

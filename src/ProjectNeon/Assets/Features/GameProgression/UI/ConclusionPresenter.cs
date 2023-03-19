@@ -1,19 +1,22 @@
-using TMPro;
+using I2.Loc;
 using UnityEngine;
 
-public class ConclusionPresenter : MonoBehaviour
+public class ConclusionPresenter : MonoBehaviour, ILocalizeTerms
 {
-    [SerializeField] private TextMeshProUGUI outcomeLabel;
-    [SerializeField] private TextMeshProUGUI adventureTitleLabel;
-    [SerializeField] private TextMeshProUGUI storyTextBox;
+    [SerializeField] private Localize outcomeLabel;
+    [SerializeField] private Localize adventureTitleLabel;
+    [SerializeField] private Localize storyTextBox;
     [SerializeField] private GameObject[] victoryElements;
     [SerializeField] private GameObject[] defeatElements;
 
-    public void Init(bool won, string adventureTitle, string storyText)
+    private const string GameOverTerm = "Menu/Game Over";
+    private const string WonTerm = "Menu/Won";
+    
+    public void Init(bool won, string adventureTitleTerm, string storyTextTerm)
     {
-        outcomeLabel.text = won ? "You Won!" : "Game Over";
-        adventureTitleLabel.text = adventureTitle;
-        storyTextBox.text = storyText;
+        outcomeLabel.SetTerm(won ? WonTerm : GameOverTerm);
+        adventureTitleLabel.SetTerm(adventureTitleTerm);
+        storyTextBox.SetTerm(storyTextTerm);
         HideElements();
         if (won)
         {
@@ -36,4 +39,7 @@ public class ConclusionPresenter : MonoBehaviour
         if (defeatElements != null)
             defeatElements.ForEach(g => g.SetActive(false));
     }
+
+    public string[] GetLocalizeTerms()
+        => new[] {WonTerm, GameOverTerm};
 }

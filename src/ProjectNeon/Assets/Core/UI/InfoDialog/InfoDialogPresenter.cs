@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 
+[IgnoreForLocalization]
 public class InfoDialogPresenter : MonoBehaviour
 {
     [SerializeField] private GameObject darken;

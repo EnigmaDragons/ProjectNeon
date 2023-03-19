@@ -9,17 +9,17 @@ public class DeckBuilderModeControllerV5 : OnMessage<TogglePartyDetails, DeckBui
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private GameObject parent;
     [SerializeField] private Button saveButton;
-    [SerializeField] private TextCommandButton saveButtonCont;
+    [SerializeField] private LocalizedCommandButton saveButtonCont;
     [SerializeField] private GameObject[] fightOnlyElements;
     [SerializeField] private Button fightButton;
-    [SerializeField] private TextCommandButton fightButtonCont;
+    [SerializeField] private LocalizedCommandButton fightButtonCont;
     [SerializeField] private Navigator navigator;
 
     private bool _doneButtonCannotBeInteractive;
     
     private void Start()
     {
-        saveButtonCont.Init("Save", OnFinished);
+        saveButtonCont.Init(OnFinished);
         fightButton.onClick.AddListener(OnFinished);
     }
     
@@ -82,7 +82,7 @@ public class DeckBuilderModeControllerV5 : OnMessage<TogglePartyDetails, DeckBui
     {
         fightButton.gameObject.SetActive(false);
         party.UpdateDecks(state.HeroesDecks.Select(x => x.Deck).ToArray());
-        AllMetrics.PublishDecks(party.Heroes.Select(h => h.Name).ToArray(), 
+        AllMetrics.PublishDecks(party.Heroes.Select(h => h.NameTerm.ToEnglish()).ToArray(), 
             party.Decks.Select(h => h.Cards.Select(c => c.Name).ToArray()).ToArray());
         Message.Publish(new StartBattleInitiated(fightButton.transform));
         Message.Publish(new AutoSaveRequested());

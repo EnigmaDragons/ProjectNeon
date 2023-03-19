@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 
 public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsStatusResolved, EndOfTurnStatusEffectsResolved, 
-    ResolutionsFinished, CardAndEffectsResolutionFinished, StartCardSetupRequested>
+    ResolutionsFinished, CardAndEffectsResolutionFinished, StartCardSetupRequested, BonusCardPlayRequested>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private CardPlayZones cards;
@@ -22,14 +22,17 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     [SerializeField] private CurrentCutscene cutscene;
     [SerializeField] private BattleCutscenePresenter battleCutscenePresenter;
     [SerializeField] private ConfirmPlayerTurnV2 confirm;
+    [SerializeField] private BattleGlobalEffectCardsPhase globalEffectCardsPhases;
+    [SerializeField] private StartOfTurnCardsPhase startOfTurnCardsPhase;
 
     private bool _triggeredBattleFinish;
     private bool _playerTurnConfirmed = false;
-    
+
     private readonly BattleUnconsciousnessChecker _unconsciousness = new BattleUnconsciousnessChecker();
     
     private void Awake()
     {
+        MessageGroup.TerminateAndClear();
         state.SetPhase(BattleV2Phase.NotBegun);
         cards.ClearAll();
         confirm.Init(resolutions);
@@ -41,7 +44,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
             Setup();
     }
     
-    public void Setup() => StartCoroutine(ExecuteSetupAsync());
+    public void Setup() => SafeCoroutine(ExecuteSetupAsync());
     
     private IEnumerator ExecuteSetupAsync()
     {
@@ -73,12 +76,29 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         BattleLog.Write($"--------------  Turn {state.TurnNumber}  --------------");
         BeginPhase(BattleV2Phase.StartOfTurnEffects);
         if (state.TurnNumber == 1)
+        {
             state.ApplyAllGlobalStartOfBattleEffects();
+            Message.Publish(new RefreshCardsInHand());
+        }
         state.StartTurn();
         _playerTurnConfirmed = false;
         Message.Publish(new TurnStarted());
         statusPhase.ProcessStartOfTurnEffects();
     }
+    
+    private void BeginGlobalEffectCardsPhase() =>
+        ResolveBattleFinishedOrExecute(() =>
+        {
+            BeginPhase(BattleV2Phase.GlobalEffectCards);
+            globalEffectCardsPhases.BeginPlayingAllGlobalEffectCards();
+        });
+    
+    private void BeginStartOfTurnCardsPhase() =>
+        ResolveBattleFinishedOrExecute(() =>
+        {
+            BeginPhase(BattleV2Phase.StartOfTurnCards);
+            startOfTurnCardsPhase.BeginPlayingAllStartOfTurnCards();
+        });
 
     private void BeginHastyEnemiesPhase() =>
         ResolveBattleFinishedOrExecute(() =>
@@ -127,28 +147,36 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         Message.Publish(new ResolutionsFinished(BattleV2Phase.PlayCards));
     }
     
-    protected override void Execute(PlayerTurnConfirmed msg) => StartCoroutine(WaitForAllPlayerCardsToFinishResolving());
+    protected override void Execute(PlayerTurnConfirmed msg) => SafeCoroutine(WaitForAllPlayerCardsToFinishResolving());
     protected override void Execute(StartOfTurnEffectsStatusResolved msg)
-    {
+    { 
         Log.Info("StartOfTurnEffectsStatusResolved");
-        BeginHastyEnemiesPhase();
+        if (state.TurnNumber == 1)
+            BeginGlobalEffectCardsPhase();
+        else
+            BeginStartOfTurnCardsPhase();
     }
 
     protected override void Execute(EndOfTurnStatusEffectsResolved msg) => BeginStartOfTurn();
     protected override void Execute(CardAndEffectsResolutionFinished msg) => ResolveBattleFinishedOrExecute(() => Message.Publish(new CheckForAutomaticTurnEnd()));
-    protected override void Execute(StartCardSetupRequested msg) => StartCoroutine(ExecuteCardSetupAsync());
+    protected override void Execute(StartCardSetupRequested msg) => SafeCoroutine(ExecuteCardSetupAsync());
+    protected override void Execute(BonusCardPlayRequested msg) => resolutionZone.PlayBonusCard(msg.Member, msg.Details);
 
     protected override void Execute(ResolutionsFinished msg)
     {
         DevLog.Write($"Resolutions Finished {msg.Phase}");
         if (state.BattleIsOver())
             FinishBattle();
+        else if (msg.Phase == BattleV2Phase.GlobalEffectCards)
+            BeginStartOfTurnCardsPhase();
+        else if (msg.Phase == BattleV2Phase.StartOfTurnCards)
+            BeginHastyEnemiesPhase();
         else if (msg.Phase == BattleV2Phase.HastyEnemyCards)
             BeginPlayerCardsPhase();
         else if (msg.Phase == BattleV2Phase.PlayCards)
-            StartCoroutine(TransitionToEnemyCardsPhase());
+            SafeCoroutine(TransitionToEnemyCardsPhase());
         else if (msg.Phase == BattleV2Phase.EnemyCards)
-            StartCoroutine(WrapUpTurn());
+            SafeCoroutine(WrapUpTurn());
     }
 
     private IEnumerator WrapUpTurn()
@@ -220,4 +248,6 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         if (logProcessSteps)
             DevLog.Write(message);
     }
+
+    private void SafeCoroutine(IEnumerator coroutine) => this.SafeCoroutineOrNothing(coroutine);
 }

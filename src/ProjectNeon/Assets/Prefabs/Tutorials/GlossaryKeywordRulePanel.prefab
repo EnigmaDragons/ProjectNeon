@@ -181,8 +181,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4e26225c3f04c7a9e068ea0584ed73f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textbox: {fileID: 727482797906592578}
-  keywordRules: {fileID: 11400000, guid: 553ac1c069d4e4247ae033e913d260c8, type: 2}
+  textbox: {fileID: 7142586904629319842}
+  keywordRules: {fileID: 11400000, guid: b44eac24ec0dc534f8967c6ce2531514, type: 2}
 --- !u!1 &8332218958254060161
 GameObject:
   m_ObjectHideFlags: 0
@@ -195,6 +195,7 @@ GameObject:
   - component: {fileID: 7014457514610302574}
   - component: {fileID: 727482797906592578}
   - component: {fileID: 530150906594805793}
+  - component: {fileID: 7142586904629319842}
   m_Layer: 0
   m_Name: TooltipText
   m_TagString: Untagged
@@ -336,3 +337,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!114 &7142586904629319842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8332218958254060161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: '-'
+  mTermSecondary: LiberationSans SDF
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 0
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI

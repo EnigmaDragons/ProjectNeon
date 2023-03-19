@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   displayName: 
-  description: 'When you deal HP damage: Apply 1 Mark'
+  description: 'When you deal {[t:Stats/Stat-HP]} damage: Apply 1 {[t:Keywords/Marked]}'
+  corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 2a9990ef3da432e42acdb151f8669008, type: 2}
   rarity: 2
@@ -28,7 +29,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 74
+  - Id: 10050
+    EffectType: 74
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -44,8 +46,8 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 6f09d4af906769b459c8f20406996184, type: 2}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
+    ApplyToEachMemberIndividually: 0
     StatusTag: 12
     StatusDetailText: 'When you deal HP damage: Apply 1 Mark'
     TurnDelay: 0
@@ -59,16 +61,23 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 23
     ReactionEffectScope:
       UseConstant: 1
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 3
       cardActions: {fileID: 11400000, guid: 591190f61b3b07c44b8488dbf0ef3c1f, type: 2}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
+  battleEndEffects: []
+  requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
-  corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
+  notAvailableForGeneralDistribution: 0
+  designComment: 

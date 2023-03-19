@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 6
   data:
-    OriginatingId: -1
+    OriginatingId: 6
     ShortDescription: Tritoonico's Water Is Poisoned
     FullDescription: Tritoonico's holy water is poisoned, Tritoonico has shutdown
       it's clinics temporarily before anymore people die
@@ -27,6 +27,7 @@ MonoBehaviour:
       Scope: 1
       Group: 3
       EffectData:
+        Id: 0
         EffectType: 0
         Conditions: []
         BaseAmount:
@@ -43,7 +44,6 @@ MonoBehaviour:
           ConstantValue: 
           Variable: {fileID: 0}
         HitsRandomTargetMember: 0
-        TargetsSource: 0
         ReTargetScope: 0
         ApplyToEachMemberIndividually: 0
         StatusTag: 0
@@ -59,17 +59,20 @@ MonoBehaviour:
           ConstantValue: 
           Variable: {fileID: 0}
         ReferencedSequence: {fileID: 0}
+        ReferencedSequences: []
         ReactionConditionType: 0
         ReactionEffectScope:
           UseConstant: 1
           ConstantValue: 
           Variable: {fileID: 0}
+        ReactionTimingWindow: 0
         ReactionSequence: {fileID: 0}
         ReactionEffect:
           reactor: 0
           scope: 0
           cardActions: {fileID: 0}
         BonusCardType: {fileID: 0}
+        Unpreventable: 0
     CorpName:
       UseConstant: 0
       ConstantValue: 
@@ -78,3 +81,5 @@ MonoBehaviour:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 11400000, guid: 24c3a88f15c10c54ba974aa3c916ff93, type: 2}
+    Equipment: {fileID: 0}
+    Cards: []

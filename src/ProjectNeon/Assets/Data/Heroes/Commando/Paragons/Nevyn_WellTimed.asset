@@ -17,6 +17,10 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: 628065852d86a214781ebc49ff5e0aef, type: 3}
   description: Shield {E[0]}
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
+  descriptionV2:
+    text: Shield {0}
+    formatArgs:
+    - '{E[0]}'
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -37,6 +41,11 @@ MonoBehaviour:
   presentationIssues: Needs new Art
   archetypes:
   - {fileID: 11400000, guid: 4b871eacf30af6f428fd307e9e308b4c, type: 2}
-  highlightCondition: []
-  unhighlightCondition: []
-  isWIP: 1
+  highlightCondition:
+  - {fileID: 11400000, guid: 2eeb2268469a74b4a9d34016563badca, type: 2}
+  unhighlightCondition:
+  - {fileID: 11400000, guid: b4f232b23830d4e4a8f6b8b1ef2981b0, type: 2}
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
+  isWIP: 0
+  notAvailableForGeneralDistribution: 1

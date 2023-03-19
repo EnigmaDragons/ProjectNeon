@@ -20,18 +20,31 @@ MonoBehaviour:
 
     You gain Shield {E[1]}'
   typeDescription: {fileID: 11400000, guid: 26f514ade584bd04da4a542740e478bb, type: 2}
-  tags: 
+  descriptionV2:
+    text: 'Deal {0} for 3 turns
+
+
+      You gain Shield {1}'
+    formatArgs:
+    - '{E[0]}'
+    - '{E[1]}'
+  tags: 30000000
   speed: 0
   isSinglePlay: 0
   cost:
     cost: 0
-    resourceType: {fileID: 11400000, guid: 53960a2c6da46824b888f53c88386b5f, type: 2}
+    resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
     plusXCost: 0
   rarity: 1
   actionSequences:
   - scope: 0
     group: 1
     cardActions: {fileID: 11400000, guid: 40778fa8df499a24b85ed6303a9dd47e, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: 4632457ced53e51429d2cd3959755f43, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -42,4 +55,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 85cc99b6a9e2fc3479a63e5161296787, type: 2}
   highlightCondition: []
   unhighlightCondition: []
-  isWIP: 1
+  isWIP: 0
+  notAvailableForGeneralDistribution: 1

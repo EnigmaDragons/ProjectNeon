@@ -7,6 +7,6 @@ public class SourceIsOutOfPrimaryResource : StaticEffectCondition
     {
         return ctx.Source.PrimaryResourceAmount() <= 0
             ? Maybe<string>.Missing()
-            : new Maybe<string>($"{ctx.Source.Name} still has some Primary Resources");
+            : new Maybe<string>($"{ctx.Source.NameTerm.ToEnglish()} still has some Primary Resources");
     }
 }

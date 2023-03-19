@@ -12,7 +12,7 @@ public class RandomPlayAnimation : MonoBehaviour
 		spriteR = gameObject.GetComponent<SpriteRenderer>();
 		
 		this.spriteR.enabled = false;
-		StartCoroutine(Wait());
+		this.SafeCoroutineOrNothing(Wait());
 	}     
 
 	 private IEnumerator  Wait()
@@ -25,12 +25,12 @@ public class RandomPlayAnimation : MonoBehaviour
     { 
 		if (this.spriteR.enabled == true) {
 			this.spriteR.enabled = false; 
-			StartCoroutine(Wait());
+			this.SafeCoroutineOrNothing(Wait());
 			} 	
 		 else
 			{ 
 			this.spriteR.enabled = true;
-			StartCoroutine(Wait());
+			this.SafeCoroutineOrNothing(Wait());
 			} 
 	 } 
 	 

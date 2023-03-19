@@ -17,6 +17,10 @@ MonoBehaviour:
   art: {fileID: 21300000, guid: 08d17d47c6578a54faeb4c3d7adce7ad, type: 3}
   description: 'Deal {E[0]} Crit: Has been shot by you this turn'
   typeDescription: {fileID: 0}
+  descriptionV2:
+    text: 'Deal {0} Crit: Has been shot by you this turn'
+    formatArgs:
+    - '{E[1]}'
   tags: 25000000
   speed: 0
   isSinglePlay: 1
@@ -38,6 +42,11 @@ MonoBehaviour:
   archetypes:
   - {fileID: 11400000, guid: 4b871eacf30af6f428fd307e9e308b4c, type: 2}
   - {fileID: 11400000, guid: fbcb59caa7d5a114f8b9cf6016d20160, type: 2}
-  highlightCondition: []
-  unhighlightCondition: []
-  isWIP: 1
+  highlightCondition:
+  - {fileID: 11400000, guid: 606feffa397a59a4f805edb6cecf1979, type: 2}
+  unhighlightCondition:
+  - {fileID: 11400000, guid: 54b883bac0fce2844951a1af712899d5, type: 2}
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
+  isWIP: 0
+  notAvailableForGeneralDistribution: 1

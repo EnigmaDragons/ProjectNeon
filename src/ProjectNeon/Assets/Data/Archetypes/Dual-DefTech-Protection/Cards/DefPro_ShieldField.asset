@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
+  m_Name: DefPro_ShieldField
+  m_EditorClassIdentifier: 
+  id: 694
+  customName: 
+  art: {fileID: 21300000, guid: 22c988979ddcf1d498c89192c0234194, type: 3}
+  description: 'At the start of each turn: Gives {0} Shield and MaxShield'
+  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
+  descriptionV2:
+    text: 'Start of each turn: Gives {0} Max Shield and Shield'
+    formatArgs:
+    - '{IE[0]}'
+  tags: 
+  speed: 0
+  isSinglePlay: 0
+  cost:
+    cost: 1
+    resourceType: {fileID: 11400000, guid: faedf2019522f5a40bab6c3af5ad3361, type: 2}
+    plusXCost: 0
+  rarity: 2
+  actionSequences:
+  - scope: 1
+    group: 2
+    cardActions: {fileID: 11400000, guid: 9e8226ab42e97264ea0b62d916bc1ed5, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
+  functionalityIssues: 
+  presentationIssues: 
+  archetypes:
+  - {fileID: 11400000, guid: 3b03a1e83bfdbec43a1fa15d87d2f7fa, type: 2}
+  - {fileID: 11400000, guid: 52367da7d75fe6940897f666b23ea1a5, type: 2}
+  highlightCondition: []
+  unhighlightCondition: []
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
+  isWIP: 0
+  notAvailableForGeneralDistribution: 0

@@ -42,7 +42,7 @@ public class CardRulesPresenter : MonoBehaviour
             rulesToShow.AddIf("SingleUse", d.IsSinglePlay);
             rulesToShow.AddIf("Afflicted", d.Conditions().Any(x => x.ConditionType == ActionConditionType.TargetHasDamageOverTime));
             
-            AddAllDescriptionFoundRules(rulesToShow, d.Description);
+            AddAllDescriptionFoundRules(rulesToShow, d.DescriptionTerm.ToEnglish());
             
             var battleEffects = d.BattleEffects().Concat(d.ReactionBattleEffects());
             

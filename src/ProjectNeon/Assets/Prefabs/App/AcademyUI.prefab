@@ -879,8 +879,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8527951009271312849}
-  - component: {fileID: 191870427150842890}
   - component: {fileID: 1045932608761959187}
+  - component: {fileID: 6844665596308228541}
   m_Layer: 0
   m_Name: TutorialCard_2
   m_TagString: Untagged
@@ -909,38 +909,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 400, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &191870427150842890
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1230405892912050597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b5780950d8a49c1a075799c05c1d5c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  btn: {fileID: 8846141809657269297}
-  text: Deck Building
-  action:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: af4dd5b2dd944724882b65e6ad0324bc, type: 2}
-        m_TargetAssemblyTypeName: EventPublisher, GameAssembly
-        m_MethodName: ToggleNamedUiElement
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: DeckBuilder
-          m_BoolArgument: 0
-        m_CallState: 2
-  sounds: {fileID: 0}
-  fmodSounds: {fileID: 0}
-  isPrimaryActionButton: 0
 --- !u!114 &1045932608761959187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -960,6 +928,39 @@ MonoBehaviour:
     UseConstant: 1
     ConstantValue: DeckBuilder
     Variable: {fileID: 0}
+--- !u!114 &6844665596308228541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230405892912050597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d7fdc7debec4116a83d5823a2276b29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btn: {fileID: 3912611248937180139}
+  term: Menu/Deck Building
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: af4dd5b2dd944724882b65e6ad0324bc, type: 2}
+        m_TargetAssemblyTypeName: EventPublisher, GameAssembly
+        m_MethodName: ToggleNamedUiElement
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: DeckBuilder
+          m_BoolArgument: 0
+        m_CallState: 2
+  sounds: {fileID: 0}
+  fmodSounds: {fileID: 0}
+  isPrimaryActionButton: 0
+  ignoreText: 0
 --- !u!1 &1852940825046215957
 GameObject:
   m_ObjectHideFlags: 0
@@ -1541,10 +1542,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3034457169491597204}
-  - component: {fileID: 9165161573603611603}
   - component: {fileID: 6201152037556033148}
   - component: {fileID: 8018220918066209058}
   - component: {fileID: 3132752563015863911}
+  - component: {fileID: 2509069540365454301}
   m_Layer: 0
   m_Name: TutorialCard_1
   m_TagString: Untagged
@@ -1573,38 +1574,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 400, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &9165161573603611603
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3357156405456097481}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b5780950d8a49c1a075799c05c1d5c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  btn: {fileID: 7897634271246614070}
-  text: Combat Training
-  action:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6201152037556033148}
-        m_TargetAssemblyTypeName: StageSegmentStarter, GameAssembly
-        m_MethodName: StartSegment
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Card
-          m_BoolArgument: 0
-        m_CallState: 2
-  sounds: {fileID: 0}
-  fmodSounds: {fileID: 0}
-  isPrimaryActionButton: 0
 --- !u!114 &6201152037556033148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1666,6 +1635,39 @@ MonoBehaviour:
     UseConstant: 1
     ConstantValue: BattleV4
     Variable: {fileID: 0}
+--- !u!114 &2509069540365454301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3357156405456097481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d7fdc7debec4116a83d5823a2276b29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btn: {fileID: 2383992647809870316}
+  term: Menu/Combat Training
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6201152037556033148}
+        m_TargetAssemblyTypeName: StageSegmentStarter, GameAssembly
+        m_MethodName: StartSegment
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  sounds: {fileID: 0}
+  fmodSounds: {fileID: 0}
+  isPrimaryActionButton: 0
+  ignoreText: 0
 --- !u!1 &3409037412379234446
 GameObject:
   m_ObjectHideFlags: 0
@@ -1860,7 +1862,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   navigator: {fileID: 11400000, guid: 416ce0bb8944d864e8f82186d7c340b1, type: 2}
-  button: {fileID: 1844563006884428612}
+  button: {fileID: 6131255481725840542}
   cutscene: {fileID: 851407757586627189}
 --- !u!1 &3853911615401220136
 GameObject:
@@ -2097,7 +2099,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7624249794138895655}
-  - component: {fileID: 4201979411050630958}
+  - component: {fileID: 6664253708117906614}
   m_Layer: 0
   m_Name: TutorialCard_2
   m_TagString: Untagged
@@ -2125,7 +2127,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4201979411050630958
+--- !u!114 &6664253708117906614
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2134,11 +2136,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4124781628067628210}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b5780950d8a49c1a075799c05c1d5c8, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d7fdc7debec4116a83d5823a2276b29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btn: {fileID: 3344661174372402104}
-  text: Enemies
+  btn: {fileID: 7126158842576065634}
+  term: Menu/Enemies
   action:
     m_PersistentCalls:
       m_Calls:
@@ -2151,12 +2153,13 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Glossary
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
   sounds: {fileID: 0}
   fmodSounds: {fileID: 0}
   isPrimaryActionButton: 0
+  ignoreText: 0
 --- !u!1 &4383219277604483672
 GameObject:
   m_ObjectHideFlags: 0
@@ -2241,7 +2244,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6744841886119073025}
-  - component: {fileID: 7412171903726882257}
+  - component: {fileID: 5809455147428119956}
   m_Layer: 0
   m_Name: TutorialCard_4
   m_TagString: Untagged
@@ -2268,7 +2271,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7412171903726882257
+--- !u!114 &5809455147428119956
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2277,11 +2280,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4734126044109704066}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b5780950d8a49c1a075799c05c1d5c8, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d7fdc7debec4116a83d5823a2276b29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   btn: {fileID: 0}
-  text: Keywords
+  term: Menu/Keywords
   action:
     m_PersistentCalls:
       m_Calls:
@@ -2300,6 +2303,7 @@ MonoBehaviour:
   sounds: {fileID: 0}
   fmodSounds: {fileID: 0}
   isPrimaryActionButton: 0
+  ignoreText: 0
 --- !u!1 &4757947736107390595
 GameObject:
   m_ObjectHideFlags: 0
@@ -2727,7 +2731,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6349355144531330188}
-  - component: {fileID: 3397785749810447520}
+  - component: {fileID: 8952634253924424062}
   m_Layer: 0
   m_Name: TutorialCard
   m_TagString: Untagged
@@ -2755,7 +2759,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3397785749810447520
+--- !u!114 &8952634253924424062
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2764,11 +2768,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5071030020065989588}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b5780950d8a49c1a075799c05c1d5c8, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d7fdc7debec4116a83d5823a2276b29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btn: {fileID: 5766180289269569070}
-  text: Keywords
+  btn: {fileID: 2056520244595704308}
+  term: Menu/Keywords
   action:
     m_PersistentCalls:
       m_Calls:
@@ -2787,6 +2791,7 @@ MonoBehaviour:
   sounds: {fileID: 0}
   fmodSounds: {fileID: 0}
   isPrimaryActionButton: 0
+  ignoreText: 0
 --- !u!1 &5386406396087638776
 GameObject:
   m_ObjectHideFlags: 0
@@ -2991,7 +2996,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3744115925895978591}
-  - component: {fileID: 6548055820468627870}
+  - component: {fileID: 5023794073602202091}
   m_Layer: 0
   m_Name: TutorialCard_3
   m_TagString: Untagged
@@ -3019,7 +3024,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6548055820468627870
+--- !u!114 &5023794073602202091
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3028,11 +3033,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5498009023363414789}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b5780950d8a49c1a075799c05c1d5c8, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d7fdc7debec4116a83d5823a2276b29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btn: {fileID: 5856449833627192063}
-  text: Gear
+  btn: {fileID: 2146499792769768741}
+  term: Menu/Gear
   action:
     m_PersistentCalls:
       m_Calls:
@@ -3045,12 +3050,13 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Glossary
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
   sounds: {fileID: 0}
   fmodSounds: {fileID: 0}
   isPrimaryActionButton: 0
+  ignoreText: 0
 --- !u!1 &5581536149715404725
 GameObject:
   m_ObjectHideFlags: 0
@@ -3060,8 +3066,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8245119695413613804}
-  - component: {fileID: 5651121970742711146}
   - component: {fileID: 2364172265429438429}
+  - component: {fileID: 7049867324490066640}
   m_Layer: 0
   m_Name: TutorialCard
   m_TagString: Untagged
@@ -3090,38 +3096,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 400, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5651121970742711146
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5581536149715404725}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b5780950d8a49c1a075799c05c1d5c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  btn: {fileID: 8501786533881575381}
-  text: Reading Cards
-  action:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: af4dd5b2dd944724882b65e6ad0324bc, type: 2}
-        m_TargetAssemblyTypeName: EventPublisher, GameAssembly
-        m_MethodName: ShowTutorial
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Card
-          m_BoolArgument: 0
-        m_CallState: 2
-  sounds: {fileID: 0}
-  fmodSounds: {fileID: 0}
-  isPrimaryActionButton: 0
 --- !u!114 &2364172265429438429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3141,6 +3115,39 @@ MonoBehaviour:
     UseConstant: 1
     ConstantValue: Card
     Variable: {fileID: 0}
+--- !u!114 &7049867324490066640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5581536149715404725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d7fdc7debec4116a83d5823a2276b29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  btn: {fileID: 4139870078218182671}
+  term: Menu/Reading Cards
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: af4dd5b2dd944724882b65e6ad0324bc, type: 2}
+        m_TargetAssemblyTypeName: EventPublisher, GameAssembly
+        m_MethodName: ShowTutorial
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Card
+          m_BoolArgument: 0
+        m_CallState: 2
+  sounds: {fileID: 0}
+  fmodSounds: {fileID: 0}
+  isPrimaryActionButton: 0
+  ignoreText: 0
 --- !u!1 &5813790549179081498
 GameObject:
   m_ObjectHideFlags: 0
@@ -3596,7 +3603,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7050254996406353641}
-  - component: {fileID: 792687488082266795}
+  - component: {fileID: 8399962460810663790}
   m_Layer: 0
   m_Name: TutorialCard_1
   m_TagString: Untagged
@@ -3624,7 +3631,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &792687488082266795
+--- !u!114 &8399962460810663790
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3633,11 +3640,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6430514071141216947}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b5780950d8a49c1a075799c05c1d5c8, type: 3}
+  m_Script: {fileID: 11500000, guid: 3d7fdc7debec4116a83d5823a2276b29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  btn: {fileID: 465661075239811613}
-  text: Hero Cards
+  btn: {fileID: 5402613591015058887}
+  term: Menu/Hero Cards
   action:
     m_PersistentCalls:
       m_Calls:
@@ -3650,12 +3657,13 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Glossary
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
   sounds: {fileID: 0}
   fmodSounds: {fileID: 0}
   isPrimaryActionButton: 0
+  ignoreText: 0
 --- !u!1 &6610458285325491425
 GameObject:
   m_ObjectHideFlags: 0
@@ -4175,15 +4183,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
---- !u!114 &3344661174372402104 stripped
+--- !u!114 &7126158842576065634 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7662283224723068775, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
   m_PrefabInstance: {fileID: 626235957406647045}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
+  m_Script: {fileID: 11500000, guid: 55509cb7b084451f8226cc1a94538cef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &936286593720337170 stripped
@@ -4313,15 +4321,15 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
   m_PrefabInstance: {fileID: 2354280417138047648}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &465661075239811613 stripped
+--- !u!114 &5402613591015058887 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7662283224723068775, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
   m_PrefabInstance: {fileID: 2354280417138047648}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
+  m_Script: {fileID: 11500000, guid: 55509cb7b084451f8226cc1a94538cef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &3215770906916246669
@@ -4655,15 +4663,15 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
   m_PrefabInstance: {fileID: 4558625370309590009}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1844563006884428612 stripped
+--- !u!114 &6131255481725840542 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7662283224723068775, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
   m_PrefabInstance: {fileID: 4558625370309590009}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2525278246634408306}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
+  m_Script: {fileID: 11500000, guid: 55509cb7b084451f8226cc1a94538cef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &5422405770552819339
@@ -4775,15 +4783,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
---- !u!114 &7897634271246614070 stripped
+--- !u!114 &2383992647809870316 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7662283224723068775, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
   m_PrefabInstance: {fileID: 5422405770552819339}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
+  m_Script: {fileID: 11500000, guid: 55509cb7b084451f8226cc1a94538cef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &5696715613443047068 stripped
@@ -4905,15 +4913,15 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
   m_PrefabInstance: {fileID: 5991511649876129640}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8501786533881575381 stripped
+--- !u!114 &4139870078218182671 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7662283224723068775, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
   m_PrefabInstance: {fileID: 5991511649876129640}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
+  m_Script: {fileID: 11500000, guid: 55509cb7b084451f8226cc1a94538cef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &6636483738367986828
@@ -5025,15 +5033,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
---- !u!114 &8846141809657269297 stripped
+--- !u!114 &3912611248937180139 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7662283224723068775, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
   m_PrefabInstance: {fileID: 6636483738367986828}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
+  m_Script: {fileID: 11500000, guid: 55509cb7b084451f8226cc1a94538cef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &6365568929958530203 stripped
@@ -5155,15 +5163,15 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
   m_PrefabInstance: {fileID: 8565811011314734739}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5766180289269569070 stripped
+--- !u!114 &2056520244595704308 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7662283224723068775, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
   m_PrefabInstance: {fileID: 8565811011314734739}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
+  m_Script: {fileID: 11500000, guid: 55509cb7b084451f8226cc1a94538cef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &8618767975688718914
@@ -5288,14 +5296,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 310341534726062103, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
   m_PrefabInstance: {fileID: 8618767975688718914}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5856449833627192063 stripped
+--- !u!114 &2146499792769768741 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2799631306169696445, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_CorrespondingSourceObject: {fileID: 7662283224723068775, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
   m_PrefabInstance: {fileID: 8618767975688718914}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dbce08b9f3744d9a1b36f0b8747a28f, type: 3}
+  m_Script: {fileID: 11500000, guid: 55509cb7b084451f8226cc1a94538cef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

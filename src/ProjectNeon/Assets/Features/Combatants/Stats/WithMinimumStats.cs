@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -5,19 +6,21 @@ public sealed class WithMinimumStats : IStats
 {
     private float _minimum;
     private IStats _inner;
+    private StatType[] _exceptions;
 
-    public float this[StatType statType] => Mathf.Max(_inner[statType], _minimum);
+    public float this[StatType statType] => _exceptions.Contains(statType) ? _inner[statType] : Mathf.Max(_inner[statType], _minimum);
     public float this[TemporalStatType statType] => Mathf.Max(_inner[statType], _minimum);
 
     public IResourceType[] ResourceTypes => _inner.ResourceTypes;
 
-    public WithMinimumStats() : this(0, new StatAddends()) {}
-    public WithMinimumStats(float minimum, IStats inner) => Initialized(minimum, inner);
+    public WithMinimumStats() : this(0, new StatAddends(), Array.Empty<StatType>()) {}
+    public WithMinimumStats(float minimum, IStats inner, StatType[] exceptions) => Initialized(minimum, inner, exceptions);
 
-    public WithMinimumStats Initialized(float minimum, IStats inner)
+    public WithMinimumStats Initialized(float minimum, IStats inner, StatType[] exceptions)
     {
         _minimum = minimum;
         _inner = inner;
+        _exceptions = exceptions;
         return this;
     }
 }
@@ -35,6 +38,5 @@ public static class WithMinimumStatsExtensions
 
     public static bool Init = true;
     
-    public static IStats NotBelowZero(this IStats s) => GetNext().Initialized(0, s);
-    public static IStats NotBelow(this IStats s, int amount) => GetNext().Initialized(amount, s);
+    public static IStats NotBelowZero(this IStats s, params StatType[] exceptions) => GetNext().Initialized(0, s, exceptions);
 }

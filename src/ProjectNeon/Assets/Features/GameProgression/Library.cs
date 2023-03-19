@@ -4,18 +4,20 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "GameState/Library")]
 public class Library : ScriptableObject
 {
-    [SerializeField] private BaseHero[] unlockedHeroes;
     [SerializeField] private BaseHero featuredHero;
     [SerializeField] private AllHeroes allHeroes;
     [SerializeField] private AllCards allCards;
     [SerializeField] private AllEquipment allEquipment;
     [SerializeField] private AllLevelUpOptions allLevelUps;
+    [SerializeField] private AllBosses allBosses;
+    [SerializeField] private BaseHero noHero;
+    [SerializeField] private BaseHero[] unlockedHeroes;
     [SerializeField] private Adventure[] unlockedAdventures;
     [SerializeField] private Difficulty[] unlockedDifficulties;
-    [SerializeField] private BaseHero noHero;
 
     public BaseHero NoHero => noHero;
     public Maybe<BaseHero> MaybeFeaturedHero => featuredHero != null ? featuredHero : Maybe<BaseHero>.Missing();
+    public Boss[] AllBosses => allBosses.bosses.ToArray();
     public BaseHero[] UnlockedHeroes => unlockedHeroes.Where(h => !h.IsDisabled).ToArray();
     public Adventure[] UnlockedAdventures => unlockedAdventures;
     public Difficulty[] UnlockedDifficulties => unlockedDifficulties;

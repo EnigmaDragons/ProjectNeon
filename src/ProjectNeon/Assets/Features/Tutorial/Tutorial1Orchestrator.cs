@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCardSelected, CardClicked, CardDragged, CardResolutionStarted, WinBattleWithRewards>
+public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCardSelected, CardClicked, CardDragged, CardResolutionStarted, WinBattleWithRewards, ShowCurrentTutorialAgain>, ILocalizeTerms
 {
     private const string _callerId = "Tutorial1Orchestrator";
     
@@ -44,17 +44,17 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
                 if (!_hasClickedCard)
                 {
                     _timeTilPrompt = _notClickingCardPromptDelay;
-                    Message.Publish(new ShowHeroBattleThought(4, "I knew you would be easy to take. You can't even figure out that you need to click and hold your card."));
+                    Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial01-01".ToLocalized()));
                 }
                 else if (!_hasDraggedCard)
                 {
                     _timeTilPrompt = _notDraggingCardPromptDelay;
-                    Message.Publish(new ShowHeroBattleThought(4, "You'll never beat me if you don't figure out you need to drag the card you click"));
+                    Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial01-02".ToLocalized()));
                 }
                 else
                 {
                     _timeTilPrompt = _notTargetingEnemyPromptDelay;
-                    Message.Publish(new ShowHeroBattleThought(4, "Too afraid to actually target me with that card?"));
+                    Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial01-03".ToLocalized()));
                 }
             }
         }
@@ -69,6 +69,11 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
     private IEnumerator ShowTutorialAfterDelay()
     {
         yield return TutorialSettings.BattleTutorialPanelPopupDelay;
+        ShowTutorial();
+    }
+
+    private void ShowTutorial()
+    {
         if (!_hasWon)
             Message.Publish(new ShowTutorialByName(_callerId));
     }
@@ -110,16 +115,28 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
             _firstCardResolved = true;
             Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyInfo, true, _callerId));
             Message.Publish(new PunchYourself(BattleUiElement.EnemyInfo));
-            Message.Publish(new ShowHeroBattleThought(4, "<i>Ouch</i> is what I would have said if I didn't have anti-pain implants!"));
+            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial01-04".ToLocalized()));
         }
         if (!_firstEnemyCardResolved && msg.Originator == 4)
         {
             _firstEnemyCardResolved = true;
             Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.SquadInfo, true, _callerId));
             Message.Publish(new PunchYourself(BattleUiElement.SquadInfo));
-            Message.Publish(new ShowHeroBattleThought(4, "Now look who is hurting!"));
+            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial01-05".ToLocalized()));
         }
     }
 
     protected override void Execute(WinBattleWithRewards msg) => _hasWon = true;
+
+    protected override void Execute(ShowCurrentTutorialAgain msg) => ShowTutorial();
+    
+    public string[] GetLocalizeTerms()
+        => new[]
+        {
+            "Thoughts/Tutorial01-01",
+            "Thoughts/Tutorial01-02",
+            "Thoughts/Tutorial01-03",
+            "Thoughts/Tutorial01-04",
+            "Thoughts/Tutorial01-05",
+        };
 }

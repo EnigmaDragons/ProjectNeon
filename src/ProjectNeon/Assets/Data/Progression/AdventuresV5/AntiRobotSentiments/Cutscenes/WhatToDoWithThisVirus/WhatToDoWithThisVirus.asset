@@ -13,22 +13,29 @@ MonoBehaviour:
   m_Name: WhatToDoWithThisVirus
   m_EditorClassIdentifier: 
   id: 15
+  storyText: What is the plan?
   settingType: 0
   corp: {fileID: 0}
   choices:
-  - Choice: 1
+  - Id: 13
+    Choice: We are going to use this virus. I believed Helen DeVries.
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: b8adde38b38c30f4aa8a2200257aece7, type: 2}
-      ResultNumber: 1
       StoryText: 
-  - Choice: 2
+  - Id: 14
+    Choice: We need to find out more information before making a big decision.
+    Or: 0
+    RequiredStates: []
+    ForbiddenStates: []
     Resolution:
     - Chance: 1
       ContinueWith: {fileID: 0}
       Result: {fileID: 11400000, guid: c498fdb7f968ad242bfcd0b70dddf5a5, type: 2}
-      ResultNumber: 1
       StoryText: 
   inCutscene: 1
   isMultiChoice: 0

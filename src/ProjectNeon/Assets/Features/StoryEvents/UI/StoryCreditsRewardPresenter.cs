@@ -1,14 +1,18 @@
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 
-public class StoryCreditsRewardPresenter : MonoBehaviour
+public class StoryCreditsRewardPresenter : MonoBehaviour, ILocalizeTerms
 {
-    [SerializeField] private TextMeshProUGUI descLabel;
-    [SerializeField] private TextMeshProUGUI amountLabel;
+    [SerializeField] private Localize descLabel;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI amountLabel;
 
     public void Init(int rewardAmount)
     {
         amountLabel.text = rewardAmount.ToString();
-        descLabel.text = rewardAmount > 0 ? "You Gained" : "You Lost";
+        descLabel.SetTerm(rewardAmount > 0 ? "StoryEvents/Gained" : "StoryEvents/Lost");
     }
+
+    public string[] GetLocalizeTerms()
+        => new[] { "StoryEvents/Gained", "StoryEvents/Lost" };
 }

@@ -2,26 +2,29 @@
 using TMPro;
 using UnityEngine;
 using System.Linq;
+using I2.Loc;
 using UnityEngine.EventSystems;
 
-public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl>, IPointerEnterHandler, IPointerExitHandler
+public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl, StartBattleInitiated>, IPointerEnterHandler, IPointerExitHandler, ILocalizeTerms
 {
     [SerializeField] private CardPresenter presenter;
     [SerializeField] private DeckBuilderState state;
-    [SerializeField] private TextMeshProUGUI numCopiesLabel;
+    [SerializeField] private Localize numCopiesLabel;
     [SerializeField] private GameObject superFocus;
 
+    private const string Basic = "Menu/Basic";
+    
     public CardInLibraryButton InitInfoOnly(Card card, Action action)
     {
         presenter.Set(card, action);
-        numCopiesLabel.text = "";
+        numCopiesLabel.SetFinalText(string.Empty);
         return this;
     }
 
     public CardInLibraryButton InitInfoOnly(CardTypeData card)
     {
         presenter.Set(card, () => { });
-        numCopiesLabel.text = "";
+        numCopiesLabel.SetFinalText(string.Empty);
         return this;
     }
 
@@ -49,21 +52,19 @@ public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl>, I
             : () => Message.Publish(new CardAddToDeckAttemptRejected(transform));
     
     private void UpdateNumberText(int numTotal, int numAvailable) 
-        => numCopiesLabel.text = $"{numAvailable}/{numTotal}";
-
-    public void SetNumberText(string value) => numCopiesLabel.text = value;
+        => numCopiesLabel.SetFinalText($"{numAvailable}/{numTotal}");
     
     public CardInLibraryButton InitBasic(CardTypeData card)
     {
         presenter.Set(card, () => { });
-        numCopiesLabel.text = "Basic";
+        numCopiesLabel.SetTerm(Basic);
         return this;
     }
     
     public CardInLibraryButton InitBasic(Card card)
     {
         presenter.Set(card, () => { });
-        numCopiesLabel.text = "Basic";
+        numCopiesLabel.SetTerm(Basic);
         return this;
     }
 
@@ -72,8 +73,7 @@ public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl>, I
         if (card.Rarity == Rarity.Starter && card.Archetypes.None() && !CurrentAcademyData.Data.ReceivedNoticeAboutGeneralStarterCards)
         {
             CurrentAcademyData.Mutate(a => a.ReceivedNoticeAboutGeneralStarterCards = true);
-            Message.Publish(new ShowInfoDialog("The general starter cards (Lite Charge Shield/Improvise/Scrounge) are playable, but usually weaker than your hero's card set. " +
-                                               "Choose wisely! Be sure you want them.", "Got it!"));
+            Message.Publish(ShowLocalizedDialog.Info(DialogTerms.StarterCardsWarning, DialogTerms.OptionGotIt));
         }
         state.SelectedHeroesDeck.Deck.Add(card);
         Message.Publish(new DeckBuilderCurrentDeckChanged(state.SelectedHeroesDeck));
@@ -94,4 +94,12 @@ public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl>, I
         if (msg.Name == DeckBuilderControls.CardInLibrary)
             superFocus.SetActive(msg.Enabled);
     }
+    
+    protected override void Execute(StartBattleInitiated msg)
+    {
+        presenter.DisableInteractions();
+    }
+
+    public string[] GetLocalizeTerms()
+        => new[] {DialogTerms.StarterCardsWarning, DialogTerms.OptionGotIt};
 }

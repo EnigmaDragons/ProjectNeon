@@ -25,7 +25,8 @@ MonoBehaviour:
   turnStartEffects: []
   turnEndEffects: []
   battleStartEffects:
-  - EffectType: 91
+  - Id: 0
+    EffectType: 91
     Conditions: []
     BaseAmount:
       UseConstant: 0
@@ -41,7 +42,6 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 11400000, guid: afe054fcf07ddbb479ed0629a53b74d8, type: 2}
     HitsRandomTargetMember: 0
-    TargetsSource: 0
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 0
@@ -57,19 +57,23 @@ MonoBehaviour:
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
+    ReferencedSequences: []
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
+    ReactionTimingWindow: 0
     ReactionSequence: {fileID: 0}
     ReactionEffect:
       reactor: 0
       scope: 0
       cardActions: {fileID: 0}
     BonusCardType: {fileID: 0}
+    Unpreventable: 0
   battleEndEffects: []
   requiresStatType: 
+  excludeIfPartyHasStatType: 
   isWIP: 0
   notAvailableForGeneralDistribution: 1
   designComment: Not relevant in V4

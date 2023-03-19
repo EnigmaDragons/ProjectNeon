@@ -17,10 +17,8 @@ MonoBehaviour:
   isDisabled: 0
   bust: {fileID: 21300000, guid: 0eec81eb9a51eac4aae35ee430c1a14a, type: 3}
   body: {fileID: 3972459472616288011, guid: 73d23a7ba7701f1419dbf054522e3d77, type: 3}
-  className:
-    UseConstant: 1
-    ConstantValue: Enforcer
-    Variable: {fileID: 0}
+  className: Enforcer
+  sex: 0
   materialType: 1
   battleRole: 7
   basic: {fileID: 11400000, guid: 1b8396122a54c4f418fa08b127a64199, type: 2}
@@ -33,7 +31,8 @@ MonoBehaviour:
   animationSounds: {fileID: 11400000, guid: 1bd3746881b800a4585ce7f8d21aac46, type: 2}
   startingCredits: 100
   complexityRating: 5
-  maxHp: 68
+  adventuresPlayedBeforeUnlocked: 0
+  maxHp: 50
   maxShield: 24
   startingShield: 4
   attack: 10
@@ -56,10 +55,10 @@ MonoBehaviour:
     RoleDescription: Controller
     HeroDescription: Tactically disrupt enemy plans with stuns and resource maniuplations.
       Dismantles enemy defenses.
-    BackStory: 'Ionus used to work a cushy job at Plasmigarchy as an electrical engineer.
-      However, he had a strong affinity for wearing Novoline attire, and always wore
-      his favorite outfits to work. He was fired and blacklisted for his fashion
-      preferences. Now, he works as a freelancer using his engineering skills to
-      fight against systemic corporate discrimination. '
+    BackStory: '{[t:Heroes/HeroName14]} used to work a cushy job at {[t:MegaCorps/Plasmigarchy]}
+      as an electrical engineer. However, he had a strong affinity for wearing {[t:MegaCorps/Novoline]}
+      attire, and always wore his favorite outfits to work. He was fired and blacklisted
+      for his fashion preferences. Now, he works as a freelancer using his engineering
+      skills to fight against systemic corporate discrimination.'
   levelUpTree: {fileID: 0}
   levelUpTreeV4: {fileID: 11400000, guid: f229a647ff9941d4f9cf6a01851393f0, type: 2}

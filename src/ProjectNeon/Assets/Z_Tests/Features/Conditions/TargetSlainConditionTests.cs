@@ -9,7 +9,7 @@ public sealed class TargetSlainConditionTests
         var condition = new TargetSlainCondition(TestEffects.EmptyCardActionsData());
 
         var payload = condition.Resolve(new CardActionContext(TestMembers.Any(), new Single(TestMembers.Any()),
-            Group.Opponent, Scope.One, ResourceQuantity.None, new BattleStateSnapshot(), Maybe<Card>.Missing()));
+            Group.Opponent, Scope.One, ResourceQuantity.None, ResourceQuantity.None, new BattleStateSnapshot(), Maybe<Card>.Missing(), new DoubleDamageContext(TestMembers.Any(), false)));
         
         Assert.IsTrue(payload.IsFinished());
     }
@@ -20,7 +20,7 @@ public sealed class TargetSlainConditionTests
         var condition = new TargetSlainCondition(TestEffects.EmptyCardActionsData());
 
         var payload = condition.Resolve(new CardActionContext(TestMembers.Any(), new Single(TestMembers.Any().Apply(m => m.TakeDamage(20))), 
-            Group.Opponent, Scope.One, ResourceQuantity.None, new BattleStateSnapshot(), Maybe<Card>.Missing()));
+            Group.Opponent, Scope.One, ResourceQuantity.None, ResourceQuantity.None, new BattleStateSnapshot(), Maybe<Card>.Missing(), new DoubleDamageContext(TestMembers.Any(), false)));
         
         Assert.IsFalse(payload.IsFinished());
     }

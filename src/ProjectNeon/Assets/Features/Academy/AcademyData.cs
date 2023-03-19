@@ -7,6 +7,7 @@ public class AcademyDataSnapshot
 {
     public bool IsLicensedBenefactor { get; private set; }
     public List<string> CompletedTutorials { get; private set; }
+    public bool HasSelectedLanguage { get; private set; }
     public bool HasConfiguredSettings { get; private set; }
     public bool HasCompletedWelcomeToMetroplexCutscene { get; private set; }
     public bool ConfirmedStorySkipBehavior { get; private set; }
@@ -16,6 +17,7 @@ public class AcademyDataSnapshot
     {
         IsLicensedBenefactor = src.IsLicensedBenefactor;
         CompletedTutorials = src.TutorialData.CompletedTutorialNames.ToList();
+        HasSelectedLanguage = src.HasSelectedLanguage;
         HasConfiguredSettings = src.HasConfiguredSettings;
         HasCompletedWelcomeToMetroplexCutscene = src.HasCompletedWelcomeToMetroplexCutscene;
         ConfirmedStorySkipBehavior = src.ConfirmedStorySkipBehavior;
@@ -27,6 +29,7 @@ public class AcademyDataSnapshot
 public class AcademyData
 {
     public AcademyTutorialData TutorialData = new AcademyTutorialData();
+    public bool HasSelectedLanguage = false;
     public bool HasConfiguredSettings = false;
     public bool HasCompletedWelcomeToMetroplexCutscene = false;
     public bool ConfirmedStorySkipBehavior = false;

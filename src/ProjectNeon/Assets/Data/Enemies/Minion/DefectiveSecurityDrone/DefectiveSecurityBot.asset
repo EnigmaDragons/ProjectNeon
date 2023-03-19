@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DefectiveSecurityBot
   m_EditorClassIdentifier: 
   id: 53
-  enemyName: 
+  enemyName: Defective Security Bot
   allowedForSocialMedia: 0
   excludeFromBestiary: 0
   isTutorialEnemy: 0
@@ -27,14 +27,12 @@ MonoBehaviour:
     CardTagPriority: 04000000
     UnpreferredCardTags: 
     RotatePlayingCardTags: 
+    IgnoreDesignatedAttackerRole: 0
   preferredTurnOrder: 99
   prefab: {fileID: 8479632304954044795, guid: d8e4dfe3008d6374a9b6097dbfa1afc6, type: 3}
   materialType: 2
   libraryCameraOffset: {x: 0, y: -0.8, z: 2.5}
-  deathEffect:
-    UseConstant: 1
-    ConstantValue: 
-    Variable: {fileID: 0}
+  shouldLive: 0
   battleRole: 1
   tier: 1
   unique: 0
@@ -79,7 +77,8 @@ MonoBehaviour:
       estimatedPerTurnTotalValue: 29.976202
       calculatedPowerLevel: 92
     startOfBattleEffects:
-    - EffectType: 66
+    - Id: 10013
+      EffectType: 66
       Conditions: []
       BaseAmount:
         UseConstant: 0
@@ -128,6 +127,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: e3c70b9e5cf99b044abf10a09f96087c, type: 2}
     - {fileID: 11400000, guid: eaf631b5c07a72e4195f45094a5e59ca, type: 2}
     - {fileID: 11400000, guid: 761950a3d56290744807009265401c22, type: 2}
+    CardsTheyAppearsToHave: []
   maxCopies: 2
   minimumAllies: 0
   damageType: 1

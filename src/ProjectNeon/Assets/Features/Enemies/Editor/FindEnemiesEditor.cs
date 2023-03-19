@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
+using Object = UnityEngine.Object;
 
 public class FindEnemiesEditor : EditorWindow
 {
@@ -11,6 +12,7 @@ public class FindEnemiesEditor : EditorWindow
     static void Open() => GetWindow(typeof(FindEnemiesEditor)).Show();
 
     private string _corpName;
+    private string _resourceType;
     
     void OnGUI()
     {
@@ -56,7 +58,7 @@ public class FindEnemiesEditor : EditorWindow
         if (GUILayout.Button("Enemy Descriptions"))
         {
             var items = GetAllWorkingEnemies()
-                .Select(e => $"{e.name} - {e.Description}")
+                .Select(e => $"{e.name} - {e.DescriptionTerm.ToEnglish()}")
                 .OrderBy(e => e)
                 .ToArray();
             GetWindow<ListDisplayWindow>()
@@ -131,7 +133,7 @@ public class FindEnemiesEditor : EditorWindow
                     if (e.Prefab == null)
                         return false;
 
-                    var texts = e.Prefab.GetComponentsInChildren<ProgressiveTextRevealWorld>();
+                    var texts = e.Prefab.GetComponentsInChildren<I2ProgressiveTextRevealWorld>();
                     return texts.Any() 
                            && texts.Count(t => t.name.Equals("EnemySpeechBubble", StringComparison.InvariantCultureIgnoreCase)) == 0;
                 })
@@ -156,6 +158,29 @@ public class FindEnemiesEditor : EditorWindow
             GUIUtility.ExitGUI();
         }
         DrawUILine();
+        _resourceType = GUILayout.TextField(_resourceType);
+        if (GUILayout.Button("By Resource")) 
+        {
+            var items = GetAllInstances<Enemy>()
+                .Where(e => string.IsNullOrWhiteSpace(_resourceType) || e.ResourceType.Name.Equals(_resourceType, StringComparison.InvariantCultureIgnoreCase))
+                .Select(e => $"{e.ResourceType.Name} - {e.name}")
+                .OrderBy(e => e)
+                .ToArray();
+            GetWindow<ListDisplayWindow>()
+                .Initialized($"{_corpName} - {items.Length} Enemies", items)
+                .Show();
+            GUIUtility.ExitGUI();
+        }
+
+        if (GUILayout.Button("All Prefabs"))
+        {
+            var prefabs = GetAllInstances<Enemy>()
+                .Where(x => x.IsReadyForPlay)
+                .Select(x => x.Prefab)
+                .Distinct();
+            GetWindow<ListDisplayWindow>()
+                .Initialized("Enemy Prefabs", "Prefab: ", prefabs.Select(x => x.name).ToArray(), prefabs.Select(x => x).Cast<Object>().ToArray());
+        }
     }
 
     private IEnumerable<Enemy> GetAllWorkingEnemies() => GetAllInstances<Enemy>().Where(e => e.IsCurrentlyWorking);

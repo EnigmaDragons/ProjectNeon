@@ -10,4 +10,5 @@
     WhenHit = 7,
     Shoot = 8,
     RapidShoot = 9,
+    Fall = 10,
 }

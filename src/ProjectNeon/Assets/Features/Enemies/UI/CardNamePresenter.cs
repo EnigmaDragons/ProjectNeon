@@ -1,10 +1,11 @@
+using I2.Loc;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class CardNamePresenter : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
-    [SerializeField] private TextMeshProUGUI cardNameText;
+    [SerializeField] private Localize cardNameText;
     [SerializeField] private GameObject hoverCardArea;
 
     private CardType _card;
@@ -19,7 +20,7 @@ public class CardNamePresenter : MonoBehaviour, IPointerEnterHandler, IPointerEx
         UpdateInfo();
     }
 
-    private void UpdateInfo() => cardNameText.text = _card.Name;
+    private void UpdateInfo() => cardNameText.SetTerm(_card.NameTerm);
 
     public void OnPointerEnter(PointerEventData eventData) => OnHover();
     public void OnPointerExit(PointerEventData eventData) => OnExit();

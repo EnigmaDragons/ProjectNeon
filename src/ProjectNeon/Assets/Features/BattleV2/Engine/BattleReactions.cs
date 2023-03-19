@@ -3,7 +3,7 @@ using System.Linq;
 
 public class BattleReactions
 {
-    private bool _loggingEnabled = false;
+    private bool _loggingEnabled = true;
     private readonly Queue<ProposedReaction> _instantReactions;
     private readonly Queue<ProposedReaction> _cardReactions;
     
@@ -29,13 +29,14 @@ public class BattleReactions
             _cardReactions.Enqueue(p);
     }
     
-    public void ResolveNextInstantReaction(IDictionary<int, Member> allBattleMembers)
+    public bool TryResolveNextInstantReaction(IDictionary<int, Member> allBattleMembers)
     {
         var r = _instantReactions.Dequeue().WithPresentAndConsciousTargets(allBattleMembers);
         if (r.Target.Members.Any())
-            r.ReactionSequence.Perform(r.Name, r.Source, r.Target, ResourceQuantity.None, r.Timing);
+            r.ReactionSequence.Perform(r.Name, r.Source, r.Target, ResourceQuantity.None, ResourceQuantity.None, r.Timing);
         else
-            Message.Publish(new CardResolutionFinished(r.Name, -1, NextPlayedCardId.Get(), r.Source.Id));
+            return false;
+        return true;
     }
 
     public ProposedReaction DequeueNextReactionCard() => _cardReactions.Dequeue();

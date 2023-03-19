@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Adventure/FixedEncounter")]
@@ -11,6 +12,7 @@ public class SpecificEncounterSegment : StageSegment
     [SerializeField] private MapNodeType mapNodeType;
     [SerializeField] private Cutscene cutscene;
     [SerializeField] private bool shouldAutoStart = false;
+    [SerializeField] private Boss finalBoss;
 
     [Header("Tutorial Settings")]
     [SerializeField] private bool isTutorial;
@@ -19,6 +21,8 @@ public class SpecificEncounterSegment : StageSegment
     [SerializeField] private bool allowBasic = true;
     [SerializeField] private CardType[] overrideDeck;
 
+    public GameObject Battlefield => battlefield;
+    
     public override string Name => "Specific Encounter";
     public override bool ShouldCountTowardsEnemyPowerLevel => true;
     public override bool ShouldAutoStart => shouldAutoStart;
@@ -34,6 +38,8 @@ public class SpecificEncounterSegment : StageSegment
     
     public override void Start()
     {
+        if (finalBoss != null)
+            currentAdventureProgress.AdventureProgress.FinalBoss = finalBoss;
         var stage = currentAdventureProgress.HasActiveAdventure
             ? currentAdventureProgress.AdventureProgress.CurrentChapterNumber
             : 0;

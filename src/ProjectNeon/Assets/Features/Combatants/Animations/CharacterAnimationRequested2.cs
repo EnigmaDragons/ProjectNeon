@@ -8,6 +8,7 @@
     public Target Target { get; set; }
     public Maybe<Card> Card { get; set; } = Maybe<Card>.Missing();
     public ResourceQuantity XPaidAmount { get; set; } = ResourceQuantity.None;
+    public ResourceQuantity PaidAmount { get; set; } = ResourceQuantity.None;
 
     public CharacterAnimationRequested2(int memberId, CharacterAnimationType animation)
     {

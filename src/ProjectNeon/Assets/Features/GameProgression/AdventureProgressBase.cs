@@ -1,15 +1,19 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class AdventureProgressBase : ScriptableObject
 {
     public abstract int AdventureId { get; }
-    public abstract string AdventureName { get; }
+    public abstract string AdventureNameTerm { get; }
     public abstract GameAdventureProgressType AdventureType { get; }
     public abstract int RngSeed { get; }
     public abstract bool UsesRewardXp { get; }
     public abstract float BonusXpLevelFactor { get; }
     public abstract bool IsFinalStageSegment { get; }
     public abstract int CurrentStageProgress { get; }
+    public abstract int CurrentNonAutoStageProgress { get; }
+    public abstract int TotalSegmentsToBoss { get; }
+    public abstract int TotalNonAutoSegmentsToBoss { get; }
     public abstract int CurrentChapterNumber { get; }
     public abstract int CurrentPowerLevel { get; }
     public abstract int CurrentElitePowerLevel { get; }
@@ -29,4 +33,6 @@ public abstract class AdventureProgressBase : ScriptableObject
     public abstract float ProgressToBoss { get; }
     public abstract float[] RisingActionPoints { get; }
     public abstract Difficulty Difficulty { get; set; }
+    public abstract HashSet<string> StoryStates { get; }
+    public abstract Boss FinalBoss { get; set; }
 }

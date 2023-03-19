@@ -1,50 +1,96 @@
-using TMPro;
+using I2.Loc;
 using UnityEngine;
 
-public class CardTargetRulePresenter : MonoBehaviour
+public class CardTargetRulePresenter : MonoBehaviour, ILocalizeTerms
 {
-    [SerializeField] private TextMeshProUGUI label;
+    [SerializeField] private Localize label;
 
+    private const string TargetsOwner = "BattleUI/Targets Owner";
+    private const string TargetsSingleEnemy = "BattleUI/Targets One Enemy";
+    private const string TargetsAllEnemies = "BattleUI/Targets All Enemies";
+    private const string TargetsAllEnemiesExcept = "BattleUI/Targets All Enemies Except";
+    private const string TargetsAllEnemiesExceptOwner = "BattleUI/Targets All Enemies Except Owner";
+    private const string TargetsSingleAlly = "BattleUI/Targets One Ally";
+    private const string TargetsAllAllies = "BattleUI/Targets All Allies";
+    private const string TargetsAllAlliesExcept = "BattleUI/Targets All Allies Except";
+    private const string TargetsAllAlliesExceptOwner = "BattleUI/Targets All Allies Except Owner";
+    private const string TargetsSingleNonOwnerAlly = "BattleUI/Targets One Non-Owner Ally";
+    private const string TargetsEveryone = "BattleUI/Targets Everyone";
+    private const string TargetsAnyone = "BattleUI/Targets Anyone";
+    private const string TargetsAnyoneExceptOwner = "BattleUI/Targets Anyone Except Owner";
+    private const string TargetsEveryoneExcept = "BattleUI/Targets Everyone Except";
+    private const string TargetsEveryoneExceptOwner = "BattleUI/Targets Everyone Except Owner";
+    private const string TargetsRandomEnemy = "BattleUI/Targets Random Enemy";
+    private const string TargetsRandomAlly = "BattleUI/Targets Random Ally";
+    private const string TargetsRandom = "BattleUI/Targets Random Character";
+    
     public void Hide() => gameObject.SetActive(false);
 
     public void Show(CardActionSequence seq) => Show(seq.Scope, seq.Group);
     public void Show(Scope scope, Group group)
     {
-        gameObject.SetActive(false);
-        var text = "";
+        var term = string.Empty;
         if (group == Group.Self)
-            text = "Owner";
+            term = TargetsOwner;
         else if (scope == Scope.One && group == Group.Opponent)
-            text = "One Enemy";
+            term = TargetsSingleEnemy;
         else if (scope == Scope.All && group == Group.Opponent)
-            text = "All Enemies";
+            term = TargetsAllEnemies;
         else if (scope == Scope.AllExcept && group == Group.Opponent)
-            text = "All Enemies Except";
+            term = TargetsAllEnemiesExcept;
         else if (scope == Scope.AllExceptSelf && group == Group.Opponent)
-            text = "All Enemies Except Owner";
+            term = TargetsAllEnemiesExceptOwner;
         else if (scope == Scope.One && group == Group.Ally)
-            text = "One Ally";
+            term = TargetsSingleAlly;
         else if (scope == Scope.All && group == Group.Ally)
-            text = "All Allies";
+            term = TargetsAllAllies;
         else if (scope == Scope.AllExcept && group == Group.Ally)
-            text = "All Allies Except";
+            term = TargetsAllAlliesExcept;
         else if (scope == Scope.AllExceptSelf && group == Group.Ally)
-            text = "All Allies Except Owner";
+            term = TargetsAllAlliesExceptOwner;
         else if (scope == Scope.OneExceptSelf && group == Group.Ally)
-            text = "One Non-Owner Ally";
+            term = TargetsSingleNonOwnerAlly;
         else if (scope == Scope.All && group == Group.All)
-            text = "Everyone";
+            term = TargetsEveryone;
         else if (scope == Scope.One && group == Group.All)
-            text = "Anyone";
+            term = TargetsAnyone;
         else if (scope == Scope.OneExceptSelf && group == Group.All)
-            text = "Anyone Except Owner";
+            term = TargetsAnyoneExceptOwner;
         else if (scope == Scope.AllExcept && group == Group.All)
-            text = "Everyone Except";
+            term = TargetsEveryoneExcept;
         else if (scope == Scope.AllExceptSelf && group == Group.All)
-            text = "Everyone Except Owner";
-        
-        label.text = $"Targets {text}";
-        if (text.Length > 0)
-            gameObject.SetActive(true);
+            term = TargetsEveryoneExceptOwner;
+        else if (scope == Scope.Random && group == Group.Ally)
+            term = TargetsRandomAlly;
+        else if (scope == Scope.Random && group == Group.Opponent)
+            term = TargetsRandomEnemy;
+        else if (scope == Scope.Random && group == Group.All)
+            term = TargetsRandom;
+
+        label.SetTerm(term);
+        gameObject.SetActive(term.Length > 0);
     }
+
+    public string[] GetLocalizeTerms()
+        => new[]
+        {
+            TargetsOwner,
+            TargetsSingleEnemy,
+            TargetsAllEnemies,
+            TargetsAllEnemiesExcept,
+            TargetsAllEnemiesExceptOwner,
+            TargetsSingleAlly,
+            TargetsAllAllies,
+            TargetsAllAlliesExcept,
+            TargetsAllAlliesExceptOwner,
+            TargetsSingleNonOwnerAlly,
+            TargetsEveryone,
+            TargetsAnyone,
+            TargetsAnyoneExceptOwner,
+            TargetsEveryoneExcept,
+            TargetsEveryoneExceptOwner,
+            TargetsRandom,
+            TargetsRandomAlly,
+            TargetsRandomEnemy
+        };
 }

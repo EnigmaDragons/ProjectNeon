@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class HighestPreTurn4SingleCardDamagePresenter : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI label;
+    [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI label;
 
     private void OnEnable()
     {
