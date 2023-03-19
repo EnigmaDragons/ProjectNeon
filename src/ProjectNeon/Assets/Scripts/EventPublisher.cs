@@ -60,6 +60,8 @@ public class EventPublisher : ScriptableObject
     public void AdvanceCutscene() => Message.Publish(new AdvanceCutsceneRequested());
     public void HideHeroDetailsView() => Message.Publish(new HideHeroDetailsView());
     public void ToggleNamedUiElement(string elementName) => Message.Publish(new ToggleNamedTarget(elementName));
+    public void ShowNamedUiElement(string elementName) => Message.Publish(new ShowNamedTarget(elementName));
+    public void HideNamedUiElement(string elementName) => Message.Publish(new HideNamedTarget(elementName));
     public void SaveGame() => Message.Publish(new AutoSaveRequested());
     public void SwitchToDayEnvironment() => Message.Publish(new SetNightMode(false));
     public void SwitchToNightEnvironment() => Message.Publish(new SetNightMode(true));
