@@ -30,4 +30,6 @@ public class Library : ScriptableObject
     public Maybe<StaticHeroLevelUpOption> GetLevelUpPerkById(int id) => allLevelUps.GetLevelUpPerkById(id);
 
     public Maybe<Adventure> GetAdventureById(int adventureId) => unlockedAdventures.Where(a => a.id == adventureId).FirstAsMaybe();
+
+    public Difficulty GetDifficulty(int id) => UnlockedDifficulties.FirstOrDefault(x => x.id == id) ?? DefaultDifficulty;
 }

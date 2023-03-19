@@ -194,7 +194,7 @@ public class AdventureProgressV5 : AdventureProgressBase
         _storyStates = new DictionaryWithDefault<string, bool>(false);
         for (var i = 0; i < d.States.Length; i++)
              _storyStates[d.States[i]] = d.StateValues[i];
-        difficulty = library.DefaultDifficulty;
+        difficulty = library.GetDifficulty(d.DifficultyId);
         return true;
     }
 
