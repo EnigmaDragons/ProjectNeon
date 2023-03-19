@@ -17,7 +17,7 @@ public class BattleGlobalEffectCardsPhase : OnMessage<BattleStateChanged, CardRe
 
     public void BeginPlayingAllGlobalEffectCards()
     {
-        _globalMember = new Member(AllGlobalEffects.GlobalEffectMemberId, "Global Effect Member", "Game Master", MemberMaterialType.Metallic, TeamType.Enemies, new StatAddends(new Dictionary<string, float>() { { StatType.Damagability.ToString(), 1f }}), BattleRole.Specialist, StatType.Leadership, false);
+        _globalMember = new Member(AllGlobalEffects.GlobalEffectMemberId, "Global Effect Member", "Game Master", MemberMaterialType.Metallic, TeamType.Enemies, new StatAddends(new Dictionary<string, float>() { { StatType.Damagability.ToString(), 1f }}), BattleRole.Specialist, StatType.Leadership, false, false);
         _globalCardsToPlay = _globalCardsToPlay = new Queue<CardType[]>(globalEffects.StartOfBattleCards.ToArray());
         PlayNextGlobalEffectCard();
     } 

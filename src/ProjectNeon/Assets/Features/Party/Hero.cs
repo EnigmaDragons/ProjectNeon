@@ -112,7 +112,7 @@ public class Hero
     public Member AsMember(int id)
     {
         var m = new Member(id, Character.NameTerm(), Character.ClassTerm(), Character.MaterialType, TeamType.Party,
-            Stats, Character.BattleRole, PrimaryStat, true, CurrentHp, new Maybe<CardTypeData>(basicCard));
+            Stats, Character.BattleRole, PrimaryStat, true, false, CurrentHp, new Maybe<CardTypeData>(basicCard));
         Character.CounterAdjustments.ForEach(c => m.State.Adjust(c.Key, c.Value));
         return m;
     }

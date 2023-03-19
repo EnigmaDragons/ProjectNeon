@@ -64,12 +64,22 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>, ILocalizeTerms
             var statuses = new List<CurrentStatusValue>();
             var memberStatesByTag = _member.State.TemporalStates.GroupBy(s => s.Status.Tag)
                 .SafeToDictionary(t => t.Key, t => t.ToArray());
-
+            
+            if (_member.IsHasty)
+                statuses.Add(new CurrentStatusValue
+                {
+                    Type = "Hasty",
+                    Icon = icons["Hasty"].Icon,
+                    Text = "",
+                    Tooltip = "Tooltips/Hasty".ToLocalized() 
+                });
+            
             var cardPlayAmount = CeilingInt(_member.State[StatType.ExtraCardPlays]);
             if (cardPlayAmount > 1)
                 statuses.Add(new CurrentStatusValue
                 {
-                    Type = StatType.ExtraCardPlays.GetString(), Icon = icons[StatType.ExtraCardPlays].Icon,
+                    Type = StatType.ExtraCardPlays.GetString(), 
+                    Icon = icons[StatType.ExtraCardPlays].Icon,
                     Text = cardPlayAmount.GetString(),
                     Tooltip = string.Format("Tooltips/PlaysCardsPerTurn".ToLocalized(), cardPlayAmount)
                 });
@@ -77,7 +87,8 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>, ILocalizeTerms
             if (_member.State.HasStatus(StatusTag.Invulnerable))
                 statuses.Add(new CurrentStatusValue
                 {
-                    Type = StatusTag.Invulnerable.GetString(), Icon = icons[StatusTag.Invulnerable].Icon,
+                    Type = StatusTag.Invulnerable.GetString(), 
+                    Icon = icons[StatusTag.Invulnerable].Icon,
                     Tooltip = "Tooltips/Invincible".ToLocalized()
                 });
 

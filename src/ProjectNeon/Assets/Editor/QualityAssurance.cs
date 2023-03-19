@@ -369,7 +369,7 @@ public class QualityAssurance
                     else if (string.IsNullOrWhiteSpace(i.LocalizedDescription(
                         new Member(1, "quality assurance", "Any Class", MemberMaterialType.Organic, TeamType.Party,
                             new StatAddends().With(StatType.Damagability, 1), BattleRole.Unknown, StatType.Attack,
-                            false), ResourceQuantity.None)))
+                            false, false), ResourceQuantity.None)))
                         issues.Add($"Broken Card: Cannot Interpolate Description");
                     else if (i.cost == null || i.cost.RawResourceType == null)
                         issues.Add($"Broken Card: {i.Name} has Null Cost");
@@ -409,7 +409,7 @@ public class QualityAssurance
                 else if (string.IsNullOrWhiteSpace(i.LocalizedDescription(
                              new Member(1, "quality assurance", "Any Class", MemberMaterialType.Organic, TeamType.Party,
                                  new StatAddends().With(StatType.Damagability, 1), BattleRole.Unknown, StatType.Attack,
-                                 false), ResourceQuantity.None)))
+                                 false, false), ResourceQuantity.None)))
                     issues.Add($"Broken Card: Cannot Interpolate Description");
                 else if (i.Cost == null || i.Cost.ResourceType == null)
                     issues.Add($"Broken Card: {i.Name} has Null Cost");

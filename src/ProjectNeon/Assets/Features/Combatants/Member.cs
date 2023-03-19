@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using I2.Loc;
 using UnityEngine;
 
 public class Member
@@ -19,6 +18,7 @@ public class Member
     public MemberState State { get; }
     public Maybe<CardTypeData> BasicCard { get; }
     public bool ShouldLive { get; }
+    public bool IsHasty { get; }
     
     public int ReferenceOnlyEndOfTurnResourceGain { get; set; }
     
@@ -26,10 +26,10 @@ public class Member
     public override int GetHashCode() => Id.GetHashCode();
     public override string ToString() => $"{NameTerm.ToEnglish()} {Id}";
     
-    public Member(int id, string nameTerm, string characterClassTerm, MemberMaterialType materialType, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat, bool shouldLive)
-        : this(id, nameTerm, characterClassTerm, materialType, team, baseStats, battleRole, primaryStat, shouldLive, baseStats.MaxHp(), Maybe<CardTypeData>.Missing()) {}
+    public Member(int id, string nameTerm, string characterClassTerm, MemberMaterialType materialType, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat, bool shouldLive, bool isHasty)
+        : this(id, nameTerm, characterClassTerm, materialType, team, baseStats, battleRole, primaryStat, shouldLive, isHasty, baseStats.MaxHp(), Maybe<CardTypeData>.Missing()) {}
     
-    public Member(int id, string nameTerm, string characterClassTerm, MemberMaterialType materialType, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat, bool shouldLive, int initialHp, Maybe<CardTypeData> basicCard)
+    public Member(int id, string nameTerm, string characterClassTerm, MemberMaterialType materialType, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat, bool shouldLive, bool isHasty, int initialHp, Maybe<CardTypeData> basicCard)
     {
         if (id > -1 && baseStats.Damagability() < 0.01)
             throw new InvalidDataException($"Damagability of {NameTerm.ToEnglish()} is 0");
@@ -43,6 +43,7 @@ public class Member
         State = new MemberState(id, nameTerm, baseStats, primaryStat, initialHp);
         BasicCard = basicCard;
         ShouldLive = shouldLive;
+        IsHasty = isHasty;
         _unambiguousEnglishName = new Lazy<string>(() => TeamType == TeamType.Enemies ? $"{NameTerm.ToEnglish()} {Id}" : NameTerm.ToEnglish());
     }
 

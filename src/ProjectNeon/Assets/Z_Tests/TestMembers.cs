@@ -32,6 +32,7 @@ public static class TestMembers
             stats,
             BattleRole.Unknown,
             stats.DefaultPrimaryStat(),
+            false,
             false
         );
     }
@@ -41,6 +42,6 @@ public static class TestMembers
     public static Member AnyEnemy()
     {
         var stats = DefaultStats();
-        return new Member(NextId(), "Any Name", "Any Class", MemberMaterialType.Organic, TeamType.Enemies, stats, BattleRole.Unknown, stats.DefaultPrimaryStat(), false);
+        return new Member(NextId(), "Any Name", "Any Class", MemberMaterialType.Organic, TeamType.Enemies, stats, BattleRole.Unknown, stats.DefaultPrimaryStat(), false, false);
     }
 }
