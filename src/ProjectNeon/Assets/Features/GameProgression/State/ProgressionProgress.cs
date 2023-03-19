@@ -80,7 +80,7 @@ public class ProgressionProgress : MonoBehaviour, ILocalizeTerms
         var items = new List<ProgressionItem>();
         foreach (var x in heroDifficulties)
         {
-            var difficulty = difficultiesDict.ValueOrMaybe(x.Value);
+            var difficulty = difficultiesDict.ContainsKey(x.Value) ? difficultiesDict[x.Value] : Maybe<Difficulty>.Missing();
             var difficultyName = difficulty.Select(d => d.NameTerm.ToEnglish(), () => "Incomplete");
             var hero = heroesDict[x.Key];
             items.Add(new ProgressionItem(x.Value > incompleteDifficulty, $"Hero - {hero.NameTerm().ToEnglish()} - {difficultyName}", 
@@ -89,7 +89,7 @@ public class ProgressionProgress : MonoBehaviour, ILocalizeTerms
 
         foreach (var x in adventureDifficulties)
         {            
-            var difficulty = difficultiesDict.ValueOrMaybe(x.Value);
+            var difficulty = difficultiesDict.ContainsKey(x.Value) ? difficultiesDict[x.Value] : Maybe<Difficulty>.Missing();
             var difficultyName = difficulty.Select(d => d.NameTerm.ToEnglish(), () => "Incomplete");
             var adventure = adventuresDict[x.Key];
             items.Add(new ProgressionItem(x.Value > incompleteDifficulty, $"Adventure - {adventure.MapTitleTerm.ToLocalized()} - {difficultyName}", 
@@ -98,7 +98,7 @@ public class ProgressionProgress : MonoBehaviour, ILocalizeTerms
 
         foreach (var x in bossDifficulties)
         {
-            var difficulty = difficultiesDict.ValueOrMaybe(x.Value);
+            var difficulty = difficultiesDict.ContainsKey(x.Value) ? difficultiesDict[x.Value] : Maybe<Difficulty>.Missing();
             var difficultyName = difficulty.Select(d => d.NameTerm.ToEnglish(), () => "Incomplete");
             var boss = bossesDict[x.Key];
             items.Add(new ProgressionItem(x.Value > incompleteDifficulty, $"Boss - {boss.NameTerm.ToEnglish()} - {difficultyName}", 
@@ -109,7 +109,8 @@ public class ProgressionProgress : MonoBehaviour, ILocalizeTerms
         {
             var difficulty = x.Value;
             var completedWord = highestDifficultyId >= x.Key ? "Complete" : "Incomplete";
-            items.Add(new ProgressionItem(highestDifficultyId >= x.Key, $"Difficulty - {difficulty.NameTerm.ToEnglish()} - {completedWord}", Maybe<BaseHero>.Missing(), Maybe<Adventure>.Missing(), difficulty, Maybe<Boss>.Missing()));
+            items.Add(new ProgressionItem(highestDifficultyId >= x.Key, $"Difficulty - {difficulty.NameTerm.ToEnglish()} - {completedWord}", 
+                Maybe<BaseHero>.Missing(), Maybe<Adventure>.Missing(), difficulty, Maybe<Boss>.Missing()));
         }
 
         return items.ToArray();

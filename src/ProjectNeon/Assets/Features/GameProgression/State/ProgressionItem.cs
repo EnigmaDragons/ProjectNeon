@@ -13,6 +13,8 @@ public class ProgressionItem
         var completedWord = (Completed ? "Progressions/Complete" : "Progressions/Incomplete").ToLocalized();
         return $"{completedWord} - {Description}";
     }
+
+    public bool IsDifficultyOnly => Difficulty.IsPresent && !Hero.IsPresent && !Adventure.IsPresent && !Boss.IsPresent;
     
     public ProgressionItem(bool completed, string description, Maybe<BaseHero> hero, Maybe<Adventure> adventure, Maybe<Difficulty> difficulty, Maybe<Boss> boss)
     {
