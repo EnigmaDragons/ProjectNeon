@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 34
   displayName: Static Discharge
-  description: When attacked, if you have 3+ {[t:Resources/Energy]} expend 3  {[t:Resources/Energy]}
+  description: When attacked, if you have 4+ {[t:Resources/Energy]} expend 3  {[t:Resources/Energy]}
     to stun the attacker
   corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes:
@@ -50,7 +50,7 @@ MonoBehaviour:
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: When attacked, if you have 3+ energy expend 3 energy to stun
+    StatusDetailText: When attacked, if you have 4+ energy expend 3 energy to stun
       the attacker
     TurnDelay: 0
     Formula: 
@@ -58,6 +58,8 @@ MonoBehaviour:
       EvaluationPartialFormula: 
       Prefix: 
       Suffix: 
+      PrefixTerm: 
+      SuffixTerm: 
     FlavorText:
       UseConstant: 0
       ConstantValue: 
