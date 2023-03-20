@@ -698,7 +698,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                 var impliedResourceType = _card.Cost.ResourceType.Name.Equals("PrimaryResource")
                     ? _card.Owner.PrimaryResourceType().GetLocalizedName()
                     : _card.Cost.ResourceType.GetLocalizedName();
-                Message.Publish(new ShowHeroBattleThought(owner.Id, string.Format("Thoughts/NotEnoughResources".ToLocalized(), impliedResourceType)));
+                Message.Publish(new ShowHeroBattleThought(owner.Id, "Thoughts/NotEnoughResources".ToLocalized().SafeFormatWithDefault("I don't have enough {0} to play this card right now.", impliedResourceType)));
             }
             else if (conditionNotMetHighlight.activeSelf && _card.UnhighlightCondition is { IsPresent: true })
                 Message.Publish(new ShowHeroBattleThought(owner.Id, _card.UnhighlightCondition.Value.UnhighlightMessage));

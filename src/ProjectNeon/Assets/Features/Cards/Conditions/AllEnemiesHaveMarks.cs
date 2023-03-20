@@ -8,6 +8,6 @@ public class AllEnemiesHaveMarks : StaticCardCondition
     public override bool ConditionMet(CardConditionContext ctx)
         => ctx.AllEnemies(x => x.State[TemporalStatType.Marked] >= marks);
     
-    public override string Description => string.Format("Thoughts/Condition003".ToLocalized(), marks);
+    public override string Description => "Thoughts/Condition003".ToLocalized().SafeFormatWithDefault("All enemies have at least {0} marks", marks);
     public override string[] GetLocalizeTerms() => new [] { "Thoughts/Condition003" };
 }

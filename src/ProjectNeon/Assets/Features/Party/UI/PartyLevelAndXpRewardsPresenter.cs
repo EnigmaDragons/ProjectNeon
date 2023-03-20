@@ -19,7 +19,7 @@ public class PartyLevelAndXpRewardsPresenter : MonoBehaviour, ILocalizeTerms
         _presenters = new List<HeroLevelAndXpPresenter>();
         _presenters = state.Party.Heroes.Select(h => Instantiate(heroPrototype, heroParent.transform).Initialized(h)).ToList();
         var totalXp = state.PredictedTotalRewardXp;
-        partyXpGainLabel.SetFinalText(string.Format(GainedXpTerm.ToLocalized(), totalXp));
+        partyXpGainLabel.SetFinalText(GainedXpTerm.ToLocalized().SafeFormatWithDefault("Heroes Gained {0} XP", totalXp));
         this.ExecuteAfterDelay(() => ShowXpPreview(totalXp), 2f);
     }
 

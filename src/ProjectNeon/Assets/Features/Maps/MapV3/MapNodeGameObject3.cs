@@ -49,10 +49,10 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
             travelPreventedVisual.SetActive(!canTravel);
         if (unvisitedTextLabel != null)
             unvisitedTextLabel.SetFinalText(allGlobalEffects.GetEffectById(mapData.UnVisitedGlobalEffectId)
-                .Select(e => string.Format(NotVisitedEffect.ToLocalized(), e.FullDescriptionTerm.ToLocalized()), ""));
+                .Select(e => NotVisitedEffect.ToLocalized().SafeFormatWithDefault("<b>If Not Visited:</b>\n{0}", e.FullDescriptionTerm.ToLocalized()), ""));
         if (visitedTextLabel != null)
             visitedTextLabel.SetFinalText(allGlobalEffects.GetEffectById(mapData.VisitedGlobalEffectId)
-                .Select(e => string.Format(VisitedEffect.ToLocalized(), e.FullDescriptionTerm.ToLocalized()), ""));
+                .Select(e => VisitedEffect.ToLocalized().SafeFormatWithDefault("<b>If Visited:</b>\n{0}", e.FullDescriptionTerm.ToLocalized()), ""));
         if (description != null)
             description.Init(NodeName, NodeDetail);
         button.enabled = canTravel;
@@ -89,10 +89,10 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
             travelPreventedVisual.SetActive(!canTravel);
         if (unvisitedTextLabel != null)
             unvisitedTextLabel.SetFinalText(allGlobalEffects.GetEffectById(mapData.UnVisitedGlobalEffectId)
-                .Select(e => string.Format(NotVisitedEffect.ToLocalized(), e.FullDescriptionTerm.ToLocalized()), ""));
+                .Select(e => NotVisitedEffect.ToLocalized().SafeFormatWithDefault("<b>If Not Visited:</b>\n{0}", e.FullDescriptionTerm.ToLocalized()), ""));
         if (visitedTextLabel != null)
             visitedTextLabel.SetFinalText(allGlobalEffects.GetEffectById(mapData.VisitedGlobalEffectId)
-                .Select(e => string.Format(VisitedEffect.ToLocalized(), e.FullDescriptionTerm.ToLocalized()), ""));
+                .Select(e => VisitedEffect.ToLocalized().SafeFormatWithDefault("<b>If Visited:</b>\n{0}", e.FullDescriptionTerm.ToLocalized()), ""));
         if (description != null)
             description.Init(NodeName, NodeDetail, stageSegment);
         button.enabled = canTravel;

@@ -42,7 +42,7 @@ public class BlessingClinicServiceProvider : ClinicServiceProvider
                 .Take(3)
                 .Select(x => new ClinicServiceButtonData(
                     x.blessingData.Name, 
-                    x.blessingData.IsSingleTarget ? string.Format(x.blessingData.Description, x.blessing.Targets[0].NameTerm().ToEnglish()) : x.blessingData.Description, 
+                    x.blessingData.IsSingleTarget ? x.blessingData.Description.SafeFormat(x.blessing.Targets[0].NameTerm().ToLocalized()) : x.blessingData.Description, 
                     0,
                     () =>
                     {

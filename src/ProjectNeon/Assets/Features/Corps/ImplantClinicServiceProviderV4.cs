@@ -98,8 +98,8 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider, ILocalizeTe
         return new ClinicServiceButtonData(
             nameTerm,
             rarity == Rarity.Rare || rarity == Rarity.Epic
-                ? string.Format("Clinics/ImplantLossless".ToLocalized(), $"<b>{gainAmount}</b>", $"<b>{gainStat.GetLocalizedString()}</b>", $"<b>{hero.NameTerm.ToLocalized()}</b>")
-                : string.Format("Clinics/ImplantTradeOff".ToLocalized(), $"<b>{lossAmount}</b>", $"<b>{lossStat.GetLocalizedString()}</b>", $"<b>{gainAmount}</b>", $"<b>{gainStat.GetLocalizedString()}</b>", $"<b>{hero.NameTerm.ToLocalized()}</b>"),
+                ? "Clinics/ImplantLossless".ToLocalized().SafeFormatWithDefault("Gain {0} {1} on {2}", $"<b>{gainAmount}</b>", $"<b>{gainStat.GetLocalizedString()}</b>", $"<b>{hero.NameTerm.ToLocalized()}</b>")
+                : "Clinics/ImplantTradeOff".ToLocalized().SafeFormatWithDefault("Lose {0} {1} to gain {2} {3} on {4}", $"<b>{lossAmount}</b>", $"<b>{lossStat.GetLocalizedString()}</b>", $"<b>{gainAmount}</b>", $"<b>{gainStat.GetLocalizedString()}</b>", $"<b>{hero.NameTerm.ToLocalized()}</b>"),
         cost,
             () =>
             {

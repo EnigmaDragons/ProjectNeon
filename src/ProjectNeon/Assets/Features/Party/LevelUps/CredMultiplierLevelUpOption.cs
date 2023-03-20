@@ -7,7 +7,7 @@ public class CredMultiplierLevelUpOption : StaticHeroLevelUpOption, ILocalizeTer
     [SerializeField] private float multiplier;
     
     public override string IconName => "";
-    public override string Description => string.Format("LevelUps/CredMultiplier".ToLocalized(), Mathf.CeilToInt(multiplier * 100));
+    public override string Description => "LevelUps/CredMultiplier".ToLocalized().SafeFormatWithDefault("Gain {0}% of your current credits", Mathf.CeilToInt(multiplier * 100));
     public override void Apply(Hero h) => party.UpdateCreditsBy(Mathf.CeilToInt(party.Credits * multiplier));
     public override void ShowDetail() { }
     public override bool HasDetail => false;

@@ -31,7 +31,7 @@ public class AdventureDisplayPresenter : MonoBehaviour, ILocalizeTerms
         storyText.SetTerm(adventure.StoryTerm);
         storyText.gameObject.SetActive(!adventure.BossSelection);
         bossSelectionPresenter.gameObject.SetActive(adventure.BossSelection);
-        lengthText.SetTerm(string.Format(ChaptersTerm.ToLocalized(), adventure.DynamicStages.Length));
+        lengthText.SetTerm(ChaptersTerm.ToLocalized().SafeFormatWithDefault("{0} Chapters", adventure.DynamicStages.Length));
         DisplayHeroPool(adventure);
         selectButton.onClick.AddListener(() =>
         {

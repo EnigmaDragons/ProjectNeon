@@ -35,7 +35,7 @@ public static class StringExtensions
     public static T EnumVal<T>(this string s) => (T)Enum.Parse(typeof(T), s);
     public static Maybe<T> MaybeEnumVal<T>(this string s) where T : struct => Enum.TryParse(s, true, out T r) ? new Maybe<T>(r, true) : Maybe<T>.Missing();
     public static string ToTitleCase(this string s) => System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(s);
-    
+
     public static string SafeFormat(this string str, params object[] args)
     {
         try
@@ -44,8 +44,21 @@ public static class StringExtensions
         }
         catch (Exception ex)
         {
-            Log.Error(ex);
+            Log.Error(new Exception($"String Format Broken! Original English Text: {str}", ex));
             return str;
+        }
+    }
+
+    public static string SafeFormatWithDefault(this string str, string backupStr, params object[] args)
+    {
+        try
+        {
+            return string.Format(str, args);
+        }
+        catch (Exception ex)
+        {
+            Log.Error(new Exception($"String Format Broken! Original English Text: {str}", ex));
+            return string.Format(backupStr, args);;
         }
     }
 }

@@ -91,7 +91,7 @@ public class Tutorial12Orchestrator : OnMessage<StartCardSetupRequested, CardRes
         {
             var dodgesRemaining = battleState.Members[4].State.GetCounterAmount(TemporalStatType.Dodge);
             if (dodgesRemaining > 0)
-                Message.Publish(new ShowHeroBattleThought(4, string.Format("Thoughts/Tutorial12-04".ToLocalized(), dodgesRemaining)));
+                Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial12-04".ToLocalized().SafeFormatWithDefault("{0} dodge to go.", dodgesRemaining)));
             else
                 Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial12-05".ToLocalized()));
         }

@@ -118,7 +118,7 @@ public class Adventure : ScriptableObject, CurrentAdventureData, ILocalizeTerms
 
             var firstUncompletedRequiredAdventure = prerequisiteCompletedAdventures.Where(p => !p.IsCompleted).FirstAsMaybe();
             if (firstUncompletedRequiredAdventure.IsPresent)
-                return string.Format("Adventures/DefaultLockedReason".ToLocalized(), firstUncompletedRequiredAdventure.Value.MapTitleTerm.ToLocalized());
+                return "Adventures/DefaultLockedReason".ToLocalized().SafeFormatWithDefault("Must Complete {0}", firstUncompletedRequiredAdventure.Value.MapTitleTerm.ToLocalized());
 
             return CurrentProgressionData.Data.HasShownUnlockForAdventure(id) || !prerequisiteCompletedAdventures.Any() ? "" : "Adventures/PlayMoreToUnlock";
         }

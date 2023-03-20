@@ -45,7 +45,7 @@ public class CardShopkeeperLines : MonoBehaviour, ILocalizeTerms
     {
         var selection = shop.Selection;
         selection.Cards.OrderByDescending(c => (int)c.Rarity).FirstOrMaybe().ExecuteIfPresentOrElse(
-            c => Say(string.Format(RareSkillsTemplates.Random().ToLocalized(), c.NameTerm.ToLocalized())), 
+            c => Say(RareSkillsTemplates.Random().ToLocalized().SafeFormat(c.NameTerm.ToLocalized())), 
             SaySomeStandardLine);
     }
     

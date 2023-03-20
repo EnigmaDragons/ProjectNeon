@@ -8,6 +8,6 @@ public class OwnerHasLessThanShieldPercentage : StaticCardCondition
     public override bool ConditionMet(CardConditionContext ctx)
         => ctx.Card.Owner.CurrentShield() < ctx.Card.Owner.MaxShield() * percent;
     
-    public override string Description => string.Format("Thoughts/Condition031".ToLocalized(), percent * 100);
+    public override string Description => "Thoughts/Condition031".ToLocalized().SafeFormatWithDefault("I have less than {0}% of my maximum shields", percent * 100);
     public override string[] GetLocalizeTerms() => new [] { "Thoughts/Condition031" };
 }

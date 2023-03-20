@@ -75,17 +75,7 @@ public class TutorialImplantClinicServiceProviderV5 : ClinicServiceProvider
         var gainAmount = gain.Value;
         var nameTerm = $"{_negativePrefix[lossStat]} {_positiveSuffix[gainStat]}";
         
-        var description = $"Lose <b>{lossAmount} {lossStat.ToString().WithSpaceBetweenWords()}</b> to gain <b>{gainAmount} {gainStat.ToString().WithSpaceBetweenWords()}</b> on <b>{hero.NameTerm.ToEnglish()}</b>";
-
-        try
-        {
-            description = string.Format("Clinics/ImplantTradeOff".ToLocalized(), $"<b>{lossAmount} {lossStat.ToString().WithSpaceBetweenWords()}</b>", $"<b>{gainAmount} {gainStat.ToString().WithSpaceBetweenWords()}</b>",
-                $"<b>{hero.NameTerm.ToLocalized()}</b>");
-        }
-        catch (Exception e)
-        {
-            Log.Error(new Exception($"Implant Localization is broken!. Original English Text: {description}", e));
-        }
+        var description = "Clinics/ImplantTradeOff".ToLocalized().SafeFormatWithDefault("Lose {0} {1} to gain {2} {3} on {4}", $"<b>{lossAmount}</b>", $"<b>{lossStat.ToString().WithSpaceBetweenWords()}</b>", $"<b>{gainAmount}</b>", $"<b>{gainStat.ToString().WithSpaceBetweenWords()}</b>", $"<b>{hero.NameTerm.ToLocalized()}</b>");
 
         return new ClinicServiceButtonData(
             nameTerm,

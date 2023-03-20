@@ -81,7 +81,7 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>, ILocalizeTerms
                     Type = StatType.ExtraCardPlays.GetString(), 
                     Icon = icons[StatType.ExtraCardPlays].Icon,
                     Text = cardPlayAmount.GetString(),
-                    Tooltip = string.Format("Tooltips/PlaysCardsPerTurn".ToLocalized(), cardPlayAmount)
+                    Tooltip = "Tooltips/PlaysCardsPerTurn".ToLocalized().SafeFormatWithDefault("Plays {0} Cards per turn", cardPlayAmount)
                 });
 
             if (_member.State.HasStatus(StatusTag.Invulnerable))
@@ -107,29 +107,29 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>, ILocalizeTerms
                 });
             ;
 
-            AddStatusIconIfApplicable(statuses, TemporalStatType.Dodge, true, v => string.Format("Tooltips/DodgeAttacks".ToLocalized(), v.ToString()));
-            AddStatusIconIfApplicable(statuses, StatType.Armor, true, v => string.Format("Tooltips/ReduceAttackDamage".ToLocalized(), v.ToString()));
-            AddStatusIconIfApplicable(statuses, StatType.Resistance, true, v => string.Format("Tooltips/ReduceMagicDamage".ToLocalized(), v.ToString()));
-            AddNegativeStatusIconIfApplicable(statuses, StatType.Armor, true, v => string.Format("Tooltips/IncreaseAttackDamage".ToLocalized(), v.ToString()));
-            AddNegativeStatusIconIfApplicable(statuses, StatType.Resistance, true, v => string.Format("Tooltips/IncreaseMagicDamage".ToLocalized(), v.ToString()));
-            AddStatusIconIfApplicable(statuses, TemporalStatType.DoubleDamage, true, v => string.Format("Tooltips/DoubleDamage".ToLocalized(), v.ToString()));
+            AddStatusIconIfApplicable(statuses, TemporalStatType.Dodge, true, v => "Tooltips/DodgeAttacks".ToLocalized().SafeFormatWithDefault("Dodges the next {0} attacks", v.ToString()));
+            AddStatusIconIfApplicable(statuses, StatType.Armor, true, v => "Tooltips/ReduceAttackDamage".ToLocalized().SafeFormatWithDefault("Reduces attack damage taken by {0}", v.ToString()));
+            AddStatusIconIfApplicable(statuses, StatType.Resistance, true, v => "Tooltips/ReduceMagicDamage".ToLocalized().SafeFormatWithDefault("Reduces magic damage taken by {0}", v.ToString()));
+            AddNegativeStatusIconIfApplicable(statuses, StatType.Armor, true, v => "Tooltips/IncreaseAttackDamage".ToLocalized().SafeFormatWithDefault("Increases attack damage taken by {0}", v.ToString()));
+            AddNegativeStatusIconIfApplicable(statuses, StatType.Resistance, true, v => "Tooltips/IncreaseMagicDamage".ToLocalized().SafeFormatWithDefault("Increases magic damage taken by {0}", v.ToString()));
+            AddStatusIconIfApplicable(statuses, TemporalStatType.DoubleDamage, true, v => "Tooltips/DoubleDamage".ToLocalized().SafeFormatWithDefault("Double Damage for next {0} effects", v.ToString()));
             AddBuffAmountIconIfApplicable(statuses, StatType.Attack);
             AddBuffAmountIconIfApplicable(statuses, StatType.Magic);
             AddBuffAmountIconIfApplicable(statuses, StatType.Leadership);
             AddBuffAmountIconIfApplicable(statuses, StatType.Economy);
-            AddStatusIconIfApplicable(statuses, TemporalStatType.Blind, true, v => string.Format("Tooltips/Blinded".ToLocalized(), v.ToString()));
-            AddStatusIconIfApplicable(statuses, TemporalStatType.Inhibit, true, v => string.Format("Tooltips/Inhibited".ToLocalized(), v.ToString()));
-            AddStatusIconIfApplicable(statuses, TemporalStatType.Taunt, true, v => string.Format("Tooltips/Taunt".ToLocalized(), v.ToString()));
+            AddStatusIconIfApplicable(statuses, TemporalStatType.Blind, true, v => "Tooltips/Blinded".ToLocalized().SafeFormatWithDefault("Blinded (guaranteed miss) for {0} Attacks", v.ToString()));
+            AddStatusIconIfApplicable(statuses, TemporalStatType.Inhibit, true, v => "Tooltips/Inhibited".ToLocalized().SafeFormatWithDefault("Inhibited (guaranteed miss) for {0} Spells", v.ToString()));
+            AddStatusIconIfApplicable(statuses, TemporalStatType.Taunt, true, v => "Tooltips/Taunt".ToLocalized().SafeFormatWithDefault("Taunt for {0} Turns", v.ToString()));
             if (_member.State[TemporalStatType.Stealth] > 0)
                 statuses.Add(new CurrentStatusValue
                 {
                     Type = TemporalStatType.Stealth.GetString(), Icon = icons[TemporalStatType.Stealth].Icon,
                     Tooltip = "Tooltips/Stealth".ToLocalized()
                 });
-            AddStatusIconIfApplicable(statuses, TemporalStatType.Disabled, true, v => string.Format("Tooltips/Disabled".ToLocalized(), v.ToString()));
-            AddStatusIconIfApplicable(statuses, TemporalStatType.Stun, true, v => string.Format("Tooltips/Stunned".ToLocalized(), v.ToString()));
-            AddStatusIconIfApplicable(statuses, TemporalStatType.Confused, true, v => string.Format("Tooltips/Confused".ToLocalized(), v.ToString()));
-            AddStatusIconIfApplicable(statuses, TemporalStatType.Aegis, true, v => string.Format("Tooltips/Aegis".ToLocalized(), v.ToString()));
+            AddStatusIconIfApplicable(statuses, TemporalStatType.Disabled, true, v => "Tooltips/Disabled".ToLocalized().SafeFormatWithDefault("Disabled for {0} Turns", v.ToString()));
+            AddStatusIconIfApplicable(statuses, TemporalStatType.Stun, true, v => "Tooltips/Stunned".ToLocalized().SafeFormatWithDefault("Stunned for {0} Cards. Reactions disabled.", v.ToString()));
+            AddStatusIconIfApplicable(statuses, TemporalStatType.Confused, true, v => "Tooltips/Confused".ToLocalized().SafeFormatWithDefault("Confused for {0} Turns", v.ToString()));
+            AddStatusIconIfApplicable(statuses, TemporalStatType.Aegis, true, v => "Tooltips/Aegis".ToLocalized().SafeFormatWithDefault("Prevents next {0} harmful effects", v.ToString()));
             AddStatusIconIfApplicable(statuses, TemporalStatType.Lifesteal, true, v => "Tooltips/Lifesteal".ToLocalized());
             AddStatusIconIfApplicable(statuses, TemporalStatType.Vulnerable, true, v => "Tooltips/Vulnerable".ToLocalized());
             AddStatusIconIfApplicable(statuses, TemporalStatType.AntiHeal, true, v => "Tooltips/AntiHeal".ToLocalized());
@@ -141,14 +141,14 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>, ILocalizeTerms
             AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.WhenAllyKilled, () => "Tooltips/AllyKilledEffect".ToLocalized());
             AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.WhenAfflicted, () => "Tooltips/AfflictedEffect".ToLocalized());
             AddCustomTextStatusIcons(memberStatesByTag, statuses, StatusTag.WhenIgnited, () => "Tooltips/IgnitedEffect".ToLocalized());
-            AddStatusIconIfApplicable(statuses, TemporalStatType.Injury, true, v => string.Format("Tooltips/ReceivedInjuries".ToLocalized(), v.ToString()));
+            AddStatusIconIfApplicable(statuses, TemporalStatType.Injury, true, v => "Tooltips/ReceivedInjuries".ToLocalized().SafeFormatWithDefault("Received {0} Injuries, applied at end of battle", v.ToString()));
             AddStatusIconIfApplicable(statuses, TemporalStatType.Marked, true, v => "Tooltips/Marked".ToLocalized());
-            AddStatusIconIfApplicable(statuses, TemporalStatType.PreventResourceGains, true, v => string.Format("Tooltips/PreventResourceGains".ToLocalized(), v.ToString()));
+            AddStatusIconIfApplicable(statuses, TemporalStatType.PreventResourceGains, true, v => "Tooltips/PreventResourceGains".ToLocalized().SafeFormatWithDefault("Cannot gain resources for {0} Turns", v.ToString()));
 
             var dotCombined = Combine(
                 memberStatesByTag.ValueOrDefault(StatusTag.DamageOverTime, Array.Empty<ITemporalState>()),
                 s => s.Status.CustomText.Select(t => t,
-                    string.Format("Tooltips/DamageOverTime".ToLocalized(), s.Amount.Value, s.RemainingTurns.Value)),
+                    "Tooltips/DamageOverTime".ToLocalized().SafeFormatWithDefault("Takes {0} at the Start of the next {1} turns", s.Amount.Value, s.RemainingTurns.Value)),
                 s => s.Sum(x => x.Amount.OrDefault(0)));
             dotCombined.IfPresent(d => statuses.Add(d));
 

@@ -56,7 +56,7 @@ public class BlessingClinicServiceProviderV4 : ClinicServiceProvider, ILocalizeT
                 _generatedOptions[i] = new ClinicServiceButtonData(
                     d.NameTerm,
                     d.IsSingleTarget
-                        ? string.Format(d.DescriptionTerm.ToLocalized(),
+                        ? d.DescriptionTerm.ToLocalized().SafeFormat(
                             blessingChoices[i].blessing.Targets[0].NameTerm().ToEnglish())
                         : d.DescriptionTerm.ToLocalized(),
                     1,

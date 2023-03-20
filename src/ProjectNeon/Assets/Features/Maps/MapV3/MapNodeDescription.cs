@@ -16,7 +16,7 @@ public class MapNodeDescription : MonoBehaviour
         {
             var count = bossStages.Length;
             var bossStage = bossStages.FirstIndexOf(x => x == stageSegment);
-            nameLabel.SetFinalText(string.Format(nodeName.ToLocalized(), $"{bossStage + 1}/{count}"));
+            nameLabel.SetFinalText(nodeName.ToLocalized().SafeFormat($"{bossStage + 1}/{count}"));
             detailLabel.SetTerm(nodeDetail);   
         }
         else
