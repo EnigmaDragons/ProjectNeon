@@ -76,7 +76,7 @@ public class TutorialImplantClinicServiceProviderV5 : ClinicServiceProvider
         var nameTerm = $"{_negativePrefix[lossStat]} {_positiveSuffix[gainStat]}";
         return new ClinicServiceButtonData(
             nameTerm,
-            string.Format("Clinics/ImplantTradeOff".ToLocalized(), $"<b>{lossAmount} {lossStat.GetLocalizedString()}</b>", $"<b>{gainAmount} {gainStat.GetLocalizedString()}</b>", $"<b>{hero.NameTerm.ToLocalized()}</b>"),
+            string.Format("Clinics/ImplantTradeOff".ToLocalized(), $"<b>{lossAmount}</b>", $"<b>{lossStat.GetLocalizedString()}</b>", $"<b>{gainAmount}</b>", $"<b>{gainStat.GetLocalizedString()}</b>", $"<b>{hero.NameTerm.ToLocalized()}</b>"),
             1,
             () =>
             {
