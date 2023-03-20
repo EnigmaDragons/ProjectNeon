@@ -17,7 +17,7 @@ public class Blessing
         var targetMaybes = Targets.Select(t => state.GetMaybeMemberByHeroCharacterId(t.Id)).ToArray();
         var presentTargets = targetMaybes.Where(x => x.IsPresent).Select(x => x.Value).ToArray();
         if (targetMaybes.Length > presentTargets.Length)
-            Log.Error($"Non-Crashing: Blessing {Name} had {targetMaybes.Length} expected targets, and only found {presentTargets} matching targets in Battle State Heroes. Likely a serialization issue.");
+            Log.Error($"Non-Crashing: Blessing {Name} had {targetMaybes.Length} expected targets, and only found {presentTargets.Length} matching targets in Battle State Heroes. Likely a serialization issue.");
 
         if (presentTargets.Length == 0)
         {

@@ -96,6 +96,7 @@ public sealed class PartyAdventureState : ScriptableObject
         }).ToArray();
         credits = heroes.Sum(h => h.Character.StartingCredits);
         clinicVouchers = 0;
+        
         numShopRestocks = 2;
         
         heroes.ForEach(h =>
@@ -111,6 +112,8 @@ public sealed class PartyAdventureState : ScriptableObject
         
         equipment = new PartyEquipmentCollection();
         InitArchKeyHeroes();
+        _corpCostModifiers = new List<CorpCostModifier>();
+        _blessings = new List<Blessing>();
         Log.Info("Party Adventure State Initialized");
         return this;
     }
@@ -179,6 +182,7 @@ public sealed class PartyAdventureState : ScriptableObject
         clinicVouchers = numClinicVouchers;
         cards.Initialized(partyCards);
         equipment = new PartyEquipmentCollection(equipments);
+        _blessings = new List<Blessing>();
         InitArchKeyHeroes();
     }
 
