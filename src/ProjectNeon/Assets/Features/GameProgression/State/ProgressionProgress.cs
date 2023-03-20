@@ -29,7 +29,7 @@ public class ProgressionProgress : MonoBehaviour, ILocalizeTerms
     
     public ProgressionItem[] GetAllProgress()
     {
-        var adventureCompletionRecords = CurrentProgressionData.Data.AdventureCompletions;
+        var adventureCompletionRecords = CurrentProgressionData.Data.NonTutorialCompletions.ToList();
         var heroes = library.UnlockedHeroes;
         var nonTutorialAdventures = library.UnlockedAdventures.Where(x => x.IncludeInProgress).Except(tutorialAdventure).ToArray();
         var items = GetProgressItemsV3(heroes, nonTutorialAdventures, adventureCompletionRecords);
