@@ -34,17 +34,17 @@ public class Tutorial13Orchestrator : OnMessage<StartCardSetupRequested, CardRes
         if (msg.CardName == "Zap" && !_hasBeenStunned)
         {
             _hasBeenStunned = true;
-            Message.Publish(new ShowHeroBattleThought(4, "Zrrtt!"));
-            Message.Publish(new ShowHeroBattleThought(1, "You can't react now."));
+            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial13-01".ToLocalized()));
+            Message.Publish(new ShowHeroBattleThought(1, "Thoughts/Tutorial13-02".ToLocalized()));
         }
         else if (msg.CardName == "Piercing Strike" && !_hasCountered)
         {
-            Message.Publish(new ShowHeroBattleThought(4, "You think that is good? Watch this!"));
+            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial13-03".ToLocalized()));
         }
         else if (msg.CardName == "Counter" && !_hasCountered)
         {
             _hasCountered = true;
-            Message.Publish(new ShowHeroBattleThought(4, "I'm as good as new, while you are unable to do anything except discard."));
+            Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial13-04".ToLocalized()));
         }
     }
 
