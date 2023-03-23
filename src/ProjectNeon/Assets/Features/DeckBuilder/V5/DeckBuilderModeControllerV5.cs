@@ -65,7 +65,7 @@ public class DeckBuilderModeControllerV5 : OnMessage<TogglePartyDetails, DeckBui
         if (state.HeroesDecks.All(x => x.Deck.Count == deckSize))
         {
             party.UpdateDecks(state.HeroesDecks.Select(x => x.Deck).ToArray());
-            Message.Publish(new AutoSaveRequested());
+            Message.Publish(new SaveDecksRequested());
             parent.SetActive(false);
         }
     }
@@ -85,7 +85,7 @@ public class DeckBuilderModeControllerV5 : OnMessage<TogglePartyDetails, DeckBui
         AllMetrics.PublishDecks(party.Heroes.Select(h => h.NameTerm.ToEnglish()).ToArray(), 
             party.Decks.Select(h => h.Cards.Select(c => c.Name).ToArray()).ToArray());
         Message.Publish(new StartBattleInitiated(fightButton.transform));
-        Message.Publish(new AutoSaveRequested());
+        Message.Publish(new SaveDecksRequested());
         navigator.NavigateToBattleScene();
     }
 

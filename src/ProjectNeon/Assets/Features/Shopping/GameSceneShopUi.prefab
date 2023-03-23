@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9072203336313701132}
   - component: {fileID: 4006884009159716442}
   - component: {fileID: 1950189818543605807}
+  - component: {fileID: 8095123339387798740}
   m_Layer: 0
   m_Name: GameSceneShopUi
   m_TagString: Untagged
@@ -78,21 +79,9 @@ MonoBehaviour:
   action:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11400000, guid: af4dd5b2dd944724882b65e6ad0324bc, type: 2}
-        m_TargetAssemblyTypeName: EventPublisher, GameAssembly
-        m_MethodName: ToggleCardShop
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 11400000, guid: af4dd5b2dd944724882b65e6ad0324bc, type: 2}
-        m_TargetAssemblyTypeName: EventPublisher, GameAssembly
-        m_MethodName: FinishNode
+      - m_Target: {fileID: 8095123339387798740}
+        m_TargetAssemblyTypeName: ShopButtonHelper, GameAssembly
+        m_MethodName: Execute
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -105,6 +94,20 @@ MonoBehaviour:
   sounds: {fileID: 0}
   fmodSounds: {fileID: 0}
   isPrimaryActionButton: 0
+--- !u!114 &8095123339387798740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7237734930376921010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec714df3e5a040958bc09b7a5d90ec6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  map: {fileID: 11400000, guid: 8b49e4d38d0ddb4498585c4bf00f7852, type: 2}
+  nodeInfo: {fileID: 11400000, guid: 36c8b327d01488141a9ca0ac35c2fa1a, type: 2}
 --- !u!1001 &490946505955905057
 PrefabInstance:
   m_ObjectHideFlags: 0

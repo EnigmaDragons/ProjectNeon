@@ -7,15 +7,22 @@ public class PickNewHeroFrom3RandomSegment : StageSegment, ILocalizeTerms
     [SerializeField] private Library library;
     [SerializeField] private Party currentParty;
     [SerializeField] private CurrentAdventure currentAdventure;
+    [SerializeField] private DeterminedNodeInfo determinedNodeInfo; 
 
     public override string Name => $"Party Change Event";
     public override void Start()
     {
-        var featuredThree = GetFeatureHeroOptions(library, currentParty.Heroes, currentAdventure.Adventure);
+        var featuredThree = new BaseHero[0];
+        if (determinedNodeInfo.PickHeroes.IsMissing)
+        {
+            determinedNodeInfo.PickHeroes = GetFeatureHeroOptions(library, currentParty.Heroes, currentAdventure.Adventure);
+            Message.Publish(new SaveDeterminationsRequested());
+        }
         var prompt = currentParty.Heroes.Length == 0 ? "Menu/ChooseLeader" : "Menu/ChooseMember";
-        Message.Publish(new GetUserSelectedHero(prompt, featuredThree, h =>
+        Message.Publish(new GetUserSelectedHero(prompt, determinedNodeInfo.PickHeroes.Value, h =>
         {
             AllMetrics.PublishHeroSelected(h.NameTerm().ToEnglish(), featuredThree.Select(x => x.NameTerm().ToEnglish()).ToArray(), currentParty.Heroes.Select(x => x.NameTerm().ToEnglish()).ToArray());
+            determinedNodeInfo.PickHeroes = Maybe<BaseHero[]>.Missing();
             Message.Publish(new AddHeroToPartyRequested(h));        
             if (currentAdventure != null && currentParty.Heroes.Length == currentAdventure.Adventure.PartySize && currentParty.Heroes.All(h => h.Sex == CharacterSex.Female))
                 Achievements.Record(Achievement.MiscGirlPower);

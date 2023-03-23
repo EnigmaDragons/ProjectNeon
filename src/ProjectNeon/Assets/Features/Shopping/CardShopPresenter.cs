@@ -9,7 +9,9 @@ public class CardShopPresenter : OnMessage<RefreshShop, CardPurchased>
     [SerializeField] private ShopCardPurchaseSlot cardPurchasePrototype;
     [SerializeField] private GameObject cardParent;
     [SerializeField] private CurrentAdventureProgress adventureProgress;
- 
+    [SerializeField] private DeterminedNodeInfo nodeInfo;
+    [SerializeField] private CurrentMapSegmentV5 map;
+
     private int _numCards;
     private ShopSelection _selection;
     private List<CardTypeData> _purchases = new List<CardTypeData>();
@@ -41,6 +43,8 @@ public class CardShopPresenter : OnMessage<RefreshShop, CardPurchased>
         if (_selection.Cards.Count == _numCards)
             Achievements.Record(Achievement.MiscShoppingSpree);
         _selection = null;
+        map.DisableSavingCurrentNode();
+        nodeInfo.CardShopSelection = Maybe<CardTypeData[]>.Missing();
         Message.Publish(new AutoSaveRequested());
     }
 
@@ -48,8 +52,15 @@ public class CardShopPresenter : OnMessage<RefreshShop, CardPurchased>
     {
         PublishShopPurchaseMetricIfRelevant();
         Clear();
-        _selection = adventureProgress.AdventureProgress.CreateLootPicker(party)
-            .GenerateCardSelection(cards, _numCards);
+        if (nodeInfo.CardShopSelection.IsMissing)
+        {
+            var selection = adventureProgress.AdventureProgress
+                .CreateLootPicker(party)
+                .GenerateCardSelection(cards, _numCards);
+            nodeInfo.CardShopSelection = selection.Cards.ToArray();
+            Message.Publish(new SaveDeterminationsRequested());
+        }
+        _selection = new ShopSelection(new List<Equipment>(), nodeInfo.CardShopSelection.Value.ToList());
         var cardsWithOwners = _selection.Cards.Select(c => c.ToNonBattleCard(party));
         cardsWithOwners.ForEach(c => 
             Instantiate(cardPurchasePrototype, cardParent.transform)

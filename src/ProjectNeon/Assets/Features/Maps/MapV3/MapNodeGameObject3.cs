@@ -107,6 +107,7 @@ public class MapNodeGameObject3 : MonoBehaviour, IPointerEnterHandler, IPointerE
                         skippingStory.SetValue(false);
                     gameMap.CurrentNode = mapData;
                     gameMap.CurrentChoices.Remove(mapData);
+                    gameMap.IncludeCurrentNodeInSaveData = true;
                     Message.Publish(new TravelToNode
                     {
                         Position = mapData.Position, 

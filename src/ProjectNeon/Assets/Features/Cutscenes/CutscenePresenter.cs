@@ -15,6 +15,7 @@ public class CutscenePresenter : BaseCutscenePresenter
     [SerializeField] private PartyAdventureState partyState;
     [SerializeField] private GameObject[] disableOnFinished;
     [SerializeField] private CurrentBoss boss;
+    [SerializeField] private CurrentMapSegmentV5 map;
 
     private bool _skipDelay;
     
@@ -118,6 +119,8 @@ public class CutscenePresenter : BaseCutscenePresenter
                 progress.AdventureProgress.Advance();
             else if (cutscene.Current.IsPrimaryCutscene)
                 progress.AdventureProgress.Advance();
+            else
+                map.DisableSavingCurrentNode();
             Message.Publish(new AutoSaveRequested());
         }
         

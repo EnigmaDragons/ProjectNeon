@@ -14,6 +14,7 @@ public class CorpClinicProvider : ScriptableObject, ILocalizeTerms
     [SerializeField] private BlessingData[] blessings;
     [SerializeField] public BlessingData[] blessingsV4;
     [SerializeField] private ClinicState clinicState;
+    [SerializeField] private DeterminedNodeInfo nodeInfo;
     [SerializeField] private int commonChances;
     [SerializeField] private int uncommonChances;
     [SerializeField] private int rareChances;
@@ -41,13 +42,13 @@ public class CorpClinicProvider : ScriptableObject, ILocalizeTerms
         if (adv.AdventureId == _tutorialAdventureId && gameType == GameAdventureProgressType.V5 && procedureCorps.Contains(corp))
             return new TutorialImplantClinicServiceProviderV5(party, adventure.Adventure.NumOfImplantOptions, rng);
         if (gameType == GameAdventureProgressType.V5 && procedureCorps.Contains(corp))
-            return new ImplantClinicServiceProviderV4(party, adventure.Adventure.NumOfImplantOptions, rng, clinicState.IsTutorial, rarityChances);
+            return new ImplantClinicServiceProviderV4(party, adventure.Adventure.NumOfImplantOptions, rng, clinicState.IsTutorial, rarityChances, nodeInfo);
         if (gameType == GameAdventureProgressType.V5 && blessingCorps.Contains(corp))
-            return new BlessingClinicServiceProviderV4(party, blessingsV4, rng);
+            return new BlessingClinicServiceProviderV4(party, blessingsV4, rng, nodeInfo);
         if (gameType == GameAdventureProgressType.V4 && procedureCorps.Contains(corp))
-            return new ImplantClinicServiceProviderV4(party, adventure.Adventure.NumOfImplantOptions, rng, clinicState.IsTutorial, rarityChances);
+            return new ImplantClinicServiceProviderV4(party, adventure.Adventure.NumOfImplantOptions, rng, clinicState.IsTutorial, rarityChances, nodeInfo);
         if (gameType == GameAdventureProgressType.V4 && blessingCorps.Contains(corp))
-            return new BlessingClinicServiceProviderV4(party, blessingsV4, rng);
+            return new BlessingClinicServiceProviderV4(party, blessingsV4, rng, nodeInfo);
         if (procedureCorps.Contains(corp))
             return new ImplantClinicServiceProvider(party);
         if (blessingCorps.Contains(corp))
@@ -76,8 +77,8 @@ public class CorpClinicProvider : ScriptableObject, ILocalizeTerms
 
     public string[] GetLocalizeTerms()
     {
-        var implantProvider = new ImplantClinicServiceProviderV4(party, 1, DeterministicRng.CreateRandom(), clinicState.IsTutorial, GetRarityChances());
-        var blessingProvider = new BlessingClinicServiceProviderV4(party, blessingsV4, DeterministicRng.CreateRandom());
+        var implantProvider = new ImplantClinicServiceProviderV4(party, 1, DeterministicRng.CreateRandom(), clinicState.IsTutorial, GetRarityChances(), nodeInfo);
+        var blessingProvider = new BlessingClinicServiceProviderV4(party, blessingsV4, DeterministicRng.CreateRandom(), nodeInfo);
         return implantProvider.GetLocalizeTerms().Concat(blessingProvider.GetLocalizeTerms()).ToArray();
     }
 }

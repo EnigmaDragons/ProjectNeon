@@ -12,6 +12,7 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
     [SerializeField] private bool allowPlayerToSelectAdventure;
     [SerializeField] private EncounterBuilderHistory encounterHistory;
     [SerializeField] private Library library;
+    [SerializeField] private DeterminedNodeInfo nodeInfo;
     
     protected override void Execute(StartNewGame msg)
     {
@@ -63,12 +64,14 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
         else
             party.Initialized(overrideHeroes.Select(o => o, adventure.FixedStartingHeroes));
         party.UpdateClinicVouchersBy(adventure.StartingClinicVouchers);
+        nodeInfo.InitNewAdventure();
         CurrentGameData.Write(s =>
         {
             s.IsInitialized = true;
             s.Phase = CurrentGamePhase.SelectedSquad;
             s.AdventureProgress = adventureProgress.AdventureProgress.GetData();
             s.PartyData = party.GetData();
+            s.DeterminedData = new DeterminedData();
             return s;
         });
         Navigate(navigator, adventureProgress5);

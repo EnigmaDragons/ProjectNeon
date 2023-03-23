@@ -16,6 +16,8 @@ public class ClinicUIV5 : OnMessage<UpdateClinic, RefreshShop>, ILocalizeTerms
     [SerializeField] private ClinicServiceButtonV5 serviceButtonPrototype;
     [SerializeField] private CorpUiBase[] corpUi = new CorpUiBase[0];
     [SerializeField] private Button doneButton;
+    [SerializeField] private CurrentMapSegmentV5 map;
+    [SerializeField] private DeterminedNodeInfo nodeInfo;
 
     private ClinicServiceProvider _serviceProvider;
     private ClinicServiceButtonV5[] _serviceButtons;
@@ -33,6 +35,9 @@ public class ClinicUIV5 : OnMessage<UpdateClinic, RefreshShop>, ILocalizeTerms
     protected override void AfterDisable()
     {
         AllMetrics.PublishClinicServiceSelection(numInitialVouchers, party.ClinicVouchers, selectedServices.ToArray(), unselectedServices.ToArray());
+        map.DisableSavingCurrentNode();
+        nodeInfo.Implants = Maybe<ImplantData[]>.Missing();
+        nodeInfo.BlessingIds = Maybe<int[]>.Missing();
         Message.Publish(new AutoSaveRequested());
     }
 

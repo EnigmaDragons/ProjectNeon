@@ -17,6 +17,7 @@ public sealed class SaveLoadSystem : ScriptableObject
     [SerializeField] private AllMaps maps;
     [SerializeField] private CorpClinicProvider clinics;
     [SerializeField] private AllStaticGlobalEffects globalEffects;
+    [SerializeField] private DeterminedNodeInfo determinedNodeInfo;
 
     public bool HasSavedGame => CurrentGameData.HasActiveGame;
     public void SaveCheckpoint() => SaveCurrentGame();
@@ -31,6 +32,25 @@ public sealed class SaveLoadSystem : ScriptableObject
             s.PartyData = party.GetData();
             s.GameMap = adventureProgress.AdventureProgress.AdventureType.GetMapData(map, mapV5);
             s.Stats = s.Stats.WithAdditionalElapsedTime(RunTimer.ConsumeElapsedTime());
+            s.DeterminedData = determinedNodeInfo.GetData();
+            return s;
+        });
+    }
+    
+    public void SaveDecks()
+    {
+        CurrentGameData.Write(s =>
+        {
+            s.PartyData = party.GetData();
+            return s;
+        });
+    }
+
+    public void SaveDeterminations()
+    {
+        CurrentGameData.Write(s =>
+        {
+            s.DeterminedData = determinedNodeInfo.GetData();
             return s;
         });
     }
@@ -45,6 +65,8 @@ public sealed class SaveLoadSystem : ScriptableObject
             loadedSuccessfully = InitAdventure(saveData.AdventureProgress);
         if (loadedSuccessfully && saveData.FinishedPhase(CurrentGamePhase.SelectedSquad))
             loadedSuccessfully = InitParty(saveData.PartyData);
+        if (loadedSuccessfully)
+            loadedSuccessfully = determinedNodeInfo.SetData(saveData.DeterminedData);
         if (loadedSuccessfully && saveData.FinishedPhase(CurrentGamePhase.SelectedAdventure))
             loadedSuccessfully = InitMap(saveData.GameMap);
         if (!loadedSuccessfully)
@@ -197,6 +219,7 @@ public sealed class SaveLoadSystem : ScriptableObject
         mapV5.DestinationPosition = mapData.CurrentPosition;
         mapV5.CurrentChoices = mapData.CurrentChoices.ToList();
         mapV5.CurrentNodeRngSeed = ConsumableRngSeed.Init(mapData.CurrentNodeRngSeed);
+        mapV5.IncludeCurrentNodeInSaveData = mapData.IncludeCurrentNodeInSave;
         return true;
     }
     

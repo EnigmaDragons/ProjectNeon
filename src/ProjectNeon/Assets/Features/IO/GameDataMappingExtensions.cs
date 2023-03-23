@@ -54,8 +54,9 @@ public static class GameDataMappingExtensions
                 GameMapId = map.CurrentMap.id,
                 CurrentNode =  map.CurrentNode.Value,
                 CurrentPosition = map.PreviousPosition,
-                CurrentChoices = map.CurrentChoices.ToArray(),
+                CurrentChoices = map.IncludeCurrentNodeInSaveData ? map.CurrentChoices.Concat(map.CurrentNode.Value).ToArray() : map.CurrentChoices.ToArray(),
                 CurrentNodeRngSeed = map.CurrentNodeRngSeed.Peek.OrDefault(Rng.NewSeed),
+                IncludeCurrentNodeInSave = map.IncludeCurrentNodeInSaveData
             };
     
     public static GameMapData GetData(this CurrentGameMap3 map)

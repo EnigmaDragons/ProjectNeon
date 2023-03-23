@@ -14,6 +14,7 @@ public class GameData
     public GameMapData GameMap = new GameMapData();
     public RunStats Stats = new RunStats();
     public FightHistoryData Fights = new FightHistoryData();
+    public DeterminedData DeterminedData = new DeterminedData();
 
     public bool FinishedPhase(CurrentGamePhase phase) => (int)Phase >= (int)phase;
 }
@@ -118,6 +119,7 @@ public class GameMapData
     public bool HasCompletedEventEnRoute;
     public int CurrentNodeRngSeed;
     public int HeatAdjustments;
+    public bool IncludeCurrentNodeInSave;
 }
 
 [Serializable]
@@ -151,6 +153,16 @@ public class RunStats
 public class FightHistoryData
 {
     public string[] Encounters = new string[0];
+}
+
+[Serializable]
+public class DeterminedData
+{
+    public Maybe<int[]> PickHeroIds;
+    public Maybe<int[]> CardShopSelectionIds;
+    public Maybe<ImplantData[]> Implants;
+    public Maybe<int[]> BlessingIds;
+    public Maybe<int[]> CardRewardIds;
 }
 
 public enum GameEquipmentDataType

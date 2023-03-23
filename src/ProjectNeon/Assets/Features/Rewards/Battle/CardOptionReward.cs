@@ -7,6 +7,7 @@ public class CardOptionReward : BattleRewards
 {
     [SerializeField] private BattleState state;
     [SerializeField] private ShopCardPool cardPrizePool;
+    [SerializeField] private DeterminedNodeInfo nodeInfo;
     
     public override void GrantVictoryRewardsAndThen(Action onFinished, LootPicker lootPicker) 
         => GetUserSelectedRewardCard(onFinished, lootPicker);
@@ -18,10 +19,15 @@ public class CardOptionReward : BattleRewards
             Message.Publish(new ExecuteAfterDelayRequested(0.5f, onFinished));
             return;
         }
+
+        if (nodeInfo.CardRewardOptions.IsMissing)
+        {
+            var selectedRarity = rewardPicker.RandomRarity();
+            nodeInfo.CardRewardOptions = rewardPicker.PickCards(cardPrizePool, 3, selectedRarity).Shuffled();
+            Message.Publish(new SaveDeterminationsRequested());
+        }
         
-        var selectedRarity = rewardPicker.RandomRarity();
-        var rewardCardTypes = rewardPicker.PickCards(cardPrizePool, 3, selectedRarity);
-        var rewardCards = rewardCardTypes.Select(c => c.ToNonBattleCard(state.Party)).ToArray().Shuffled();
+        var rewardCards = nodeInfo.CardRewardOptions.Value.Select(c => c.ToNonBattleCard(state.Party)).ToArray();
         Message.Publish(new GetUserSelectedCard(rewardCards, card =>
         {
             card.IfPresent(c =>
@@ -29,6 +35,7 @@ public class CardOptionReward : BattleRewards
                 AllMetrics.PublishCardRewardSelection(c.Name, rewardCards.Select(r => r.Name).ToArray());
                 state.SetRewardCards(c.BaseType);
             });
+            nodeInfo.CardRewardOptions = Maybe<CardTypeData[]>.Missing();
             onFinished();
         }));
     }

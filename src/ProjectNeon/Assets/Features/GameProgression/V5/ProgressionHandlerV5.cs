@@ -29,7 +29,7 @@ public class ProgressionHandlerV5 : OnMessage<NodeFinished>
         }
         Go();
     }
-    
+
     private void Go()
     {
         if (progress.CurrentStageSegment.ShouldAutoStart && progress.CurrentStageSegment.MapNodeType == MapNodeType.MainStory && skippingStory.Value)

@@ -33,17 +33,19 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider, ILocalizeTe
     private readonly DeterministicRng _rng;
     private readonly bool _isTutorial;
     private readonly Rarity[] _rarityChances;
+    private readonly DeterminedNodeInfo _nodeInfo;
     
     private ClinicServiceButtonData[] _generatedOptions;
     private bool[] _available;
 
-    public ImplantClinicServiceProviderV4(PartyAdventureState party, int numOfImplants, DeterministicRng rng, bool isTutorial, Rarity[] rarityChances)
+    public ImplantClinicServiceProviderV4(PartyAdventureState party, int numOfImplants, DeterministicRng rng, bool isTutorial, Rarity[] rarityChances, DeterminedNodeInfo nodeInfo)
     {
         _party = party;
         _numOfImplants = numOfImplants;
         _rng = rng;
         _isTutorial = isTutorial;
         _rarityChances = rarityChances;
+        _nodeInfo = nodeInfo;
     }
     
     public string GetTitleTerm() => "Clinics/ImplantTitle";
@@ -52,18 +54,25 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider, ILocalizeTe
     {
         if (_generatedOptions == null)
         {
-            var newGeneratedOptions = new List<ClinicServiceButtonData>();
-            for (int i = 0; i < _party.Heroes.Length; i++)
+            if (_nodeInfo.Implants.IsMissing)
             {
-                for (var ii = 0; ii < _numOfImplants / _party.Heroes.Length; ii++)
+                var newGeneratedOptionData = new List<ImplantData>();
+                for (int i = 0; i < _party.Heroes.Length; i++)
                 {
-                    var multiplier = (_numOfImplants / _party.Heroes.Length);
-                    var option = GetOption(_party.Heroes[i], i * multiplier + ii);
-                    while (newGeneratedOptions.Any(x => x.Description == option.Description))
-                        option = GetOption(_party.Heroes[i], i * multiplier + ii);
-                    newGeneratedOptions.Add(option);   
+                    for (var ii = 0; ii < _numOfImplants / _party.Heroes.Length; ii++)
+                    {
+                        var option = GetOptionData(_party.Heroes[i]);
+                        while (newGeneratedOptionData.Any(x => x.LossStat == option.LossStat && x.GainStat == option.GainStat))
+                            option = GetOptionData(_party.Heroes[i]);
+                        newGeneratedOptionData.Add(option);   
+                    }
                 }
+                _nodeInfo.Implants = newGeneratedOptionData.ToArray();
+                Message.Publish(new SaveDeterminationsRequested());
             }
+            var newGeneratedOptions = new List<ClinicServiceButtonData>();
+            for (var i = 0; i < _nodeInfo.Implants.Value.Length; i++)
+                newGeneratedOptions.Add(GetOption(_nodeInfo.Implants.Value[i], _party.Heroes, i));
             _generatedOptions = newGeneratedOptions.ToArray();
             _available = _generatedOptions.Select(x => true).ToArray();
         }
@@ -72,32 +81,45 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider, ILocalizeTe
         return _generatedOptions;
     }
 
-    private ClinicServiceButtonData GetOption(Hero hero, int index)
+    private ImplantData GetOptionData(Hero hero)
     {
-        var loss = StatAmounts.Where(x => hero.PermanentStats[x.Key] >= x.Value && (!PowerStats.Contains(x.Key) || x.Key == hero.PrimaryStat) && (!_isTutorial || TutorialStatTypes.Contains(x.Key))).Random(_rng);
+        var lossStat = StatAmounts.Where(x => hero.PermanentStats[x.Key] >= x.Value && (!PowerStats.Contains(x.Key) || x.Key == hero.PrimaryStat) && (!_isTutorial || TutorialStatTypes.Contains(x.Key))).Random(_rng).Key;
+        var gainStat = StatAmounts.Where(x => x.Key != lossStat && (!PowerStats.Contains(x.Key) || x.Key == hero.PrimaryStat) && (!_isTutorial || TutorialStatTypes.Contains(x.Key))).Random(_rng).Key;
+        return new ImplantData()
+        {
+            HeroId = hero.Character.Id,
+            LossStat = lossStat,
+            GainStat = gainStat,
+            Rarity = _rarityChances.Random(_rng)
+        };
+    }
+
+    private ClinicServiceButtonData GetOption(ImplantData implant, Hero[] heroes, int index)
+    {
+        var hero = heroes.First(x => x.Character.Id == implant.HeroId);
+        var loss = StatAmounts.First(x => x.Key == implant.LossStat);
         var lossStat = loss.Key;
         var lossAmount = loss.Value;
-        var gain = StatAmounts.Where(x => x.Key != loss.Key && (!PowerStats.Contains(x.Key) || x.Key == hero.PrimaryStat) && (!_isTutorial || TutorialStatTypes.Contains(x.Key))).Random(_rng);
+        var gain = StatAmounts.First(x => x.Key == implant.GainStat);
         var gainStat = gain.Key;
         var gainAmount = gain.Value;
-        var rarity = _rarityChances.Random(_rng);
-        if (rarity == Rarity.Uncommon || rarity == Rarity.Epic)
+        if (implant.Rarity == Rarity.Uncommon || implant.Rarity == Rarity.Epic)
             gainAmount = gainAmount * 2;
-        if (rarity == Rarity.Rare || rarity == Rarity.Epic)
+        if (implant.Rarity == Rarity.Rare || implant.Rarity == Rarity.Epic)
             lossAmount = 0;
         var cost = 0;
-        if (rarity == Rarity.Common)
+        if (implant.Rarity == Rarity.Common)
             cost = 1;
-        else if (rarity == Rarity.Uncommon)
+        else if (implant.Rarity == Rarity.Uncommon)
             cost = 2;
-        else if (rarity == Rarity.Rare)
+        else if (implant.Rarity == Rarity.Rare)
             cost = 3;
-        else if (rarity == Rarity.Epic)
+        else if (implant.Rarity == Rarity.Epic)
             cost = 4;
         var nameTerm = $"Clinics/Implant{lossStat.ToString()}{gainStat.ToString()}";
         return new ClinicServiceButtonData(
             nameTerm,
-            rarity == Rarity.Rare || rarity == Rarity.Epic
+            implant.Rarity == Rarity.Rare || implant.Rarity == Rarity.Epic
                 ? "Clinics/ImplantLossless".ToLocalized().SafeFormatWithDefault("Gain {0} {1} on {2}", $"<b>{gainAmount}</b>", $"<b>{gainStat.GetLocalizedString()}</b>", $"<b>{hero.NameTerm.ToLocalized()}</b>")
                 : "Clinics/ImplantTradeOff".ToLocalized().SafeFormatWithDefault("Lose {0} {1} to gain {2} {3} on {4}", $"<b>{lossAmount}</b>", $"<b>{lossStat.GetLocalizedString()}</b>", $"<b>{gainAmount}</b>", $"<b>{gainStat.GetLocalizedString()}</b>", $"<b>{hero.NameTerm.ToLocalized()}</b>"),
         cost,
@@ -111,7 +133,7 @@ public class ImplantClinicServiceProviderV4 : ClinicServiceProvider, ILocalizeTe
             }, 
             Array.Empty<EffectData>(),
             "Medigeneix",
-            rarity,
+            implant.Rarity,
             $"Medigeneix-{hero.NameTerm.ToEnglish()}-{nameTerm.ToEnglish()}");
     }
 

@@ -10,6 +10,7 @@ public class CurrentMapSegmentV5 : ScriptableObject
     public Vector2 PreviousPosition { get; set; } = Vector2.zero;
     public Vector2 DestinationPosition { get; set; } = Vector2.zero;
     public OneTimeSeed CurrentNodeRngSeed { get; set; } = ConsumableRngSeed.GetValid();
+    public bool IncludeCurrentNodeInSaveData { get; set; }
 
     public void CompleteCurrentNode()
     {
@@ -17,6 +18,12 @@ public class CurrentMapSegmentV5 : ScriptableObject
             return;
 
         CurrentChoices.Remove(CurrentNode.Value);
+        PreviousPosition = DestinationPosition;
+    }
+
+    public void DisableSavingCurrentNode()
+    {
+        IncludeCurrentNodeInSaveData = false;
         PreviousPosition = DestinationPosition;
     }
 
@@ -36,6 +43,7 @@ public class CurrentMapSegmentV5 : ScriptableObject
         DestinationPosition = CurrentMap.StartingPoint;
         CurrentNode = Maybe<MapNode3>.Missing();
         CurrentChoices = new List<MapNode3>();
+        IncludeCurrentNodeInSaveData = false;
         UpdateSeed();
     }
 
