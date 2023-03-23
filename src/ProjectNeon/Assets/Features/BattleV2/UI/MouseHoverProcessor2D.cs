@@ -5,7 +5,7 @@ public class MouseHoverProcessor2D : MonoBehaviour
     private Camera _cam;
     private readonly RaycastHit2D[] _hits = new RaycastHit2D[100];
     private MouseHoverStatusIcon _statusIcon;
-    private Maybe<HoverSpriteCharacter2D> _lastHover = Maybe<HoverSpriteCharacter2D>.Missing();
+    private Maybe<HoverCharacter> _lastHover = Maybe<HoverCharacter>.Missing();
     
     private void Awake()
     {
@@ -25,7 +25,7 @@ public class MouseHoverProcessor2D : MonoBehaviour
         var v2 = new Vector2(wp.x, wp.y);
         var numHits = Physics2D.RaycastNonAlloc(v2, Vector2.zero, _hits, 100f);
 
-        var hoverCharacter = Maybe<HoverSpriteCharacter2D>.Missing();
+        var hoverCharacter = Maybe<HoverCharacter>.Missing();
         var hoverStatusIcon = Maybe<WorldStatusIconPresenter>.Missing();
         var hoverCharacterPosition = Maybe<Vector3>.Missing();
         if (numHits > 0)
@@ -57,7 +57,7 @@ public class MouseHoverProcessor2D : MonoBehaviour
         var isMouseDragging = MouseDragState.IsDragging;
         if (_lastHover == null || !_lastHover.Map(v => v.Member.Id).Equals(hoverCharacter.Map(v => v.Member.Id)))
         {
-            Message.Publish(new CharacterHoverChanged(hoverCharacter.As<HoverCharacter>(), hoverCharacterPosition, isMouseDragging));
+            Message.Publish(new CharacterHoverChanged(hoverCharacter, hoverCharacterPosition, isMouseDragging));
             _lastHover = hoverCharacter;
         }
         if (!isMouseDragging && _statusIcon != null)

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class MouseTargetHoverCharacterV2 : OnMessage<CharacterHoverChanged, TargetSelectionBegun, TargetSelectionFinished>
 {
@@ -8,12 +9,19 @@ public class MouseTargetHoverCharacterV2 : OnMessage<CharacterHoverChanged, Targ
 
     protected override void Execute(CharacterHoverChanged msg)
     {
-        if (!_isSelectingTargets)
-            return;
-        if (msg.HoverCharacter.IsMissing)
-            targetingState.StopIndicating();
-        else
-            targetingState.IndicateMember(msg.HoverCharacter.Value.Member.Id);
+        try
+        {
+            if (!_isSelectingTargets)
+                return;
+            if (msg.HoverCharacter.IsMissing)
+                targetingState.StopIndicating();
+            else
+                targetingState.IndicateMember(msg.HoverCharacter.Value.Member.Id);
+        }
+        catch (Exception ex)
+        {
+            Log.NonCrashingError(ex);
+        }
     }
 
     protected override void Execute(TargetSelectionBegun msg)
