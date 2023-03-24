@@ -8,7 +8,7 @@ public static class EncounterIdTrackingState
 
     public static void MarkEncounterFinished()
     { 
-        _encounterId.IfPresent(id => CurrentGameData.Mutate(x => x.Fights.Encounters = x.Fights.Encounters.Concat(id).ToArray()));
+        _encounterId.IfPresent(id => CurrentGameData.MutateIfInitialized(x => x.Fights.Encounters = x.Fights.Encounters.Concat(id).ToArray()));
         _encounterId = Maybe<string>.Missing();
     }
 }

@@ -25,9 +25,8 @@ public sealed class SaveLoadSystem : ScriptableObject
 
     private void SaveCurrentGame()
     {
-        CurrentGameData.Write(s =>
+        CurrentGameData.WriteIfInitialized(s =>
         {
-            s.IsInitialized = true;
             s.AdventureProgress = adventureProgress.AdventureProgress.GetData();
             s.PartyData = party.GetData();
             s.GameMap = adventureProgress.AdventureProgress.AdventureType.GetMapData(map, mapV5);
@@ -39,7 +38,7 @@ public sealed class SaveLoadSystem : ScriptableObject
     
     public void SaveDecks()
     {
-        CurrentGameData.Write(s =>
+        CurrentGameData.WriteIfInitialized(s =>
         {
             s.PartyData = party.GetData();
             return s;
@@ -48,7 +47,7 @@ public sealed class SaveLoadSystem : ScriptableObject
 
     public void SaveDeterminations()
     {
-        CurrentGameData.Write(s =>
+        CurrentGameData.WriteIfInitialized(s =>
         {
             s.DeterminedData = determinedNodeInfo.GetData();
             return s;

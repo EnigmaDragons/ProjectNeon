@@ -455,7 +455,7 @@ public class BattleState : ScriptableObject
             return;
 
         _runStatsWritten = true;
-        CurrentGameData.Write(d =>
+        CurrentGameData.WriteIfInitialized(d =>
         {
             d.Stats.TotalTurnsPlayed += TurnNumber;
             d.Stats.TotalCardsPlayed += Stats.CardsPlayed;
