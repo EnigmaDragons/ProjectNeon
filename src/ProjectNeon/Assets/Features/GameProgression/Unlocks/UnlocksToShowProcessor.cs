@@ -29,7 +29,7 @@ public class UnlocksToShowProcessor : MonoBehaviour, ILocalizeTerms
 
         var unshownAdventureUnlocks = adventures
             .Where(x => x.CanBeUnlocked())
-            .OrderBy(x => x.id);
+            .OrderBy(x => x.UnlockOrder);
         
         if (heroes.Count(x => progressionData.RunsFinished >= x.AdventuresPlayedBeforeUnlocked) >= 9)
             Achievements.Record(Achievement.Progress9HeroesUnlocked);

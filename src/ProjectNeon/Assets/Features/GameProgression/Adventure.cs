@@ -42,6 +42,7 @@ public class Adventure : ScriptableObject, CurrentAdventureData, ILocalizeTerms
     [SerializeField] private bool bossSelection = false;
     [SerializeField] private bool includeInProgress = true;
     [SerializeField] private int sharesProgressId = -1;
+    [SerializeField] private int unlockOrder;
 
     public AdventureMode Mode => mode;
     public int Id => id;
@@ -81,6 +82,7 @@ public class Adventure : ScriptableObject, CurrentAdventureData, ILocalizeTerms
     public bool MapDeckbuildingEnabled => mapDeckbuildingEnabled;
     public bool BossSelection => bossSelection;
     public bool IncludeInProgress => includeInProgress;
+    public int UnlockOrder => unlockOrder;
 
     public Maybe<int> SharesProgressId => sharesProgressId != -1 ? new Maybe<int>(sharesProgressId) : Maybe<int>.Missing();
     
@@ -120,7 +122,7 @@ public class Adventure : ScriptableObject, CurrentAdventureData, ILocalizeTerms
             if (firstUncompletedRequiredAdventure.IsPresent)
                 return "Adventures/DefaultLockedReason".ToLocalized().SafeFormatWithDefault("Must Complete {0}", firstUncompletedRequiredAdventure.Value.MapTitleTerm.ToLocalized());
 
-            return CurrentProgressionData.Data.HasShownUnlockForAdventure(id) || !prerequisiteCompletedAdventures.Any() ? "" : "Adventures/PlayMoreToUnlock";
+            return CurrentProgressionData.Data.HasShownUnlockForAdventure(id) || !prerequisiteCompletedAdventures.Any() ? "" : "Adventures/PlayMoreToUnlock".ToLocalized();
         }
     }
     

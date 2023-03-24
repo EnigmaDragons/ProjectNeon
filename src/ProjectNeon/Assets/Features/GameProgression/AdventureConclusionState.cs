@@ -26,6 +26,11 @@ public class AdventureConclusionState : ScriptableObject
     {
         Set(playerWon, storyTextTerm, stats, runHeroes);
         CurrentGameData.Clear();
+        CurrentProgressionData.Write(x =>
+        {
+            x.RunsFinished += 1;
+            return x;
+        });
     }
     
     private void Set(bool playerWon, string storyTextTerm, RunStats stats, Hero[] runHeroes)

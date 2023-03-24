@@ -22,7 +22,6 @@ public class CurrentProgressionData
         {
             d.CompletedAdventureIds = d.CompletedAdventureIds.Concat(adventureId).Distinct().ToArray();
             heroes.ForEach(heroId => d.Record(new AdventureCompletionRecord { AdventureId = adventureId, HeroId = heroId, Difficulty = difficulty, BossId = bossId, Version = _version }));
-            d.RunsFinished += 1;
             return d;
         });
     }
