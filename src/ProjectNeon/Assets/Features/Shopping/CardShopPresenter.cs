@@ -44,7 +44,7 @@ public class CardShopPresenter : OnMessage<RefreshShop, CardPurchased>
             Achievements.Record(Achievement.MiscShoppingSpree);
         _selection = null;
         map.DisableSavingCurrentNode();
-        nodeInfo.CardShopSelection = Maybe<CardTypeData[]>.Missing();
+        nodeInfo.CardShopSelection = Maybe<CardType[]>.Missing();
         Message.Publish(new AutoSaveRequested());
     }
 
@@ -57,10 +57,10 @@ public class CardShopPresenter : OnMessage<RefreshShop, CardPurchased>
             var selection = adventureProgress.AdventureProgress
                 .CreateLootPicker(party)
                 .GenerateCardSelection(cards, _numCards);
-            nodeInfo.CardShopSelection = selection.Cards.ToArray();
+            nodeInfo.CardShopSelection = selection.Cards.Cast<CardType>().ToArray();
             Message.Publish(new SaveDeterminationsRequested());
         }
-        _selection = new ShopSelection(new List<Equipment>(), nodeInfo.CardShopSelection.Value.ToList());
+        _selection = new ShopSelection(new List<Equipment>(), new List<CardTypeData>(nodeInfo.CardShopSelection.Value));
         var cardsWithOwners = _selection.Cards.Select(c => c.ToNonBattleCard(party));
         cardsWithOwners.ForEach(c => 
             Instantiate(cardPurchasePrototype, cardParent.transform)

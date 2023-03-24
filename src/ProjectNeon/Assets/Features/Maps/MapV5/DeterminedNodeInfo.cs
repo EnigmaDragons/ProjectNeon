@@ -8,18 +8,18 @@ public class DeterminedNodeInfo : ScriptableObject
     [SerializeField] private Library library;
     
     [SerializeField] public Maybe<BaseHero[]> PickHeroes;
-    [SerializeField] public Maybe<CardTypeData[]> CardShopSelection;
+    [SerializeField] public Maybe<CardType[]> CardShopSelection;
     [SerializeField] public Maybe<ImplantData[]> Implants;
     [SerializeField] public Maybe<int[]> BlessingIds;
-    [SerializeField] public Maybe<CardTypeData[]> CardRewardOptions;
+    [SerializeField] public Maybe<CardType[]> CardRewardOptions;
 
     public void InitNewAdventure()
     {
         PickHeroes = Maybe<BaseHero[]>.Missing();
-        CardShopSelection = Maybe<CardTypeData[]>.Missing();
+        CardShopSelection = Maybe<CardType[]>.Missing();
         Implants = Maybe<ImplantData[]>.Missing();
         BlessingIds = Maybe<int[]>.Missing();
-        CardRewardOptions = Maybe<CardTypeData[]>.Missing();
+        CardRewardOptions = Maybe<CardType[]>.Missing();
     }
     
     public DeterminedData GetData()
@@ -39,13 +39,13 @@ public class DeterminedNodeInfo : ScriptableObject
             var pickHeroIds = data?.PickHeroIds ?? Maybe<int[]>.Missing();
             PickHeroes = pickHeroIds.IsMissing ? Maybe<BaseHero[]>.Missing() : pickHeroIds.Value.Select(id => library.UnlockedHeroes.First(hero => id == hero.Id)).ToArray();
             var cardIds = data?.CardShopSelectionIds ?? Maybe<int[]>.Missing();
-            CardShopSelection = cardIds.IsMissing ? Maybe<CardTypeData[]>.Missing() : cardIds.Value.Select(x => library.GetCardById(x).Value).ToArray();
+            CardShopSelection = cardIds.IsMissing ? Maybe<CardType[]>.Missing() : cardIds.Value.Select(x => library.GetCardById(x).Value).Cast<CardType>().ToArray();
             var implants = data?.Implants ?? Maybe<ImplantData[]>.Missing();
             Implants = implants.IsMissing ? Maybe<ImplantData[]>.Missing() : implants.Value.Select(x => x).ToArray();
             var blessingIds = data?.BlessingIds ?? Maybe<int[]>.Missing();
             BlessingIds = blessingIds.IsMissing ? Maybe<int[]>.Missing() : blessingIds.Value.Select(x => x).ToArray();
             var cardRewardIds = data?.CardRewardIds ?? Maybe<int[]>.Missing();
-            CardShopSelection = cardRewardIds.IsMissing ? Maybe<CardTypeData[]>.Missing() : cardRewardIds.Value.Select(x => library.GetCardById(x).Value).ToArray();
+            CardShopSelection = cardRewardIds.IsMissing ? Maybe<CardType[]>.Missing() : cardRewardIds.Value.Select(x => library.GetCardById(x).Value).Cast<CardType>().ToArray();
             return true;
         }
         catch (Exception ex)

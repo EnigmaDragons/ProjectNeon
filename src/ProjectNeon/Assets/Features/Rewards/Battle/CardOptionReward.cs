@@ -23,7 +23,7 @@ public class CardOptionReward : BattleRewards
         if (nodeInfo.CardRewardOptions.IsMissing)
         {
             var selectedRarity = rewardPicker.RandomRarity();
-            nodeInfo.CardRewardOptions = rewardPicker.PickCards(cardPrizePool, 3, selectedRarity).Shuffled();
+            nodeInfo.CardRewardOptions = rewardPicker.PickCards(cardPrizePool, 3, selectedRarity).Cast<CardType>().ToArray().Shuffled();
             Message.Publish(new SaveDeterminationsRequested());
         }
         
@@ -35,7 +35,7 @@ public class CardOptionReward : BattleRewards
                 AllMetrics.PublishCardRewardSelection(c.Name, rewardCards.Select(r => r.Name).ToArray());
                 state.SetRewardCards(c.BaseType);
             });
-            nodeInfo.CardRewardOptions = Maybe<CardTypeData[]>.Missing();
+            nodeInfo.CardRewardOptions = Maybe<CardType[]>.Missing();
             onFinished();
         }));
     }
