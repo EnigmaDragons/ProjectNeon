@@ -49,7 +49,7 @@ public class CardShopkeeperLines : MonoBehaviour, ILocalizeTerms
             SaySomeStandardLine);
     }
     
-    private void Say(string line) => Message.Publish(new ShowCharacterDialogueLine("Shopkeeper", line, forceAutoAdvanceBecauseThisIsASingleMessage: true));
+    private void Say(string line) => Message.Publish(new ShowNonCutsceneCharacterDialogueLine("Shopkeeper", line, forceAutoAdvanceBecauseThisIsASingleMessage: true));
 
     public string[] GetLocalizeTerms() => StaticMessages.Concat(RareSkillsTemplates).ToArray();
 }

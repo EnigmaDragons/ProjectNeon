@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GeneralDialoguePresenter : OnMessage<ShowCharacterDialogueLine, HideCharacterSpeechBubbleRequested>
+public class GeneralDialoguePresenter : OnMessage<ShowNonCutsceneCharacterDialogueLine, HideCharacterSpeechBubbleRequested>
 {
     [SerializeField] private CutsceneCharacter[] characters;
     [SerializeField] private FloatReference dialogueWaitDelay;
@@ -13,7 +13,7 @@ public class GeneralDialoguePresenter : OnMessage<ShowCharacterDialogueLine, Hid
         HideAllSpeeches();
     }
     
-    protected override void Execute(ShowCharacterDialogueLine msg)
+    protected override void Execute(ShowNonCutsceneCharacterDialogueLine msg)
     {        
         characters.FirstOrMaybe(c => c.Matches(msg.CharacterAlias))
             .ExecuteIfPresentOrElse(c =>
