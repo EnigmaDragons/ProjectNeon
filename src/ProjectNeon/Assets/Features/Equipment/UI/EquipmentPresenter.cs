@@ -65,14 +65,14 @@ public class EquipmentPresenter : OnMessage<LanguageChanged>, IPointerDownHandle
         var corp = allCorps.GetCorpByNameOrNone(e.Corp);
         corpBranding.Init(corp);
         corpLabel.Label.SetFinalText($"{MadeByTerm.ToLocalized()} {corp.GetLocalizedName()}");
-        
+
         highlight.SetActive(false);
         rulesPresenter.Hide();
         corpLabel.Hide();
         focusDarken.Hide();
 
         _referencedCard = _currentEquipment.ReferencedCard;
-        
+
         gameObject.SetActive(true);
         return this;
     }
@@ -85,7 +85,7 @@ public class EquipmentPresenter : OnMessage<LanguageChanged>, IPointerDownHandle
         return this;
     }
 
-    private void OnDisable() => ClearHoverCard();
+    protected override void AfterDisable() => ClearHoverCard();
     
     protected override void Execute(LanguageChanged msg)
     {
