@@ -77,7 +77,7 @@ public class StaticEquipment : ScriptableObject, Equipment, ILocalizeTerms
     }
 
     public string[] GetLocalizeTerms()
-        => !IsWip && Slot == EquipmentSlot.Augmentation 
+        => !IsWip && (Slot == EquipmentSlot.Augmentation || Slot == EquipmentSlot.Permanent)
             ? new[] {this.LocalizationNameTerm(), this.LocalizationDescriptionTerm()}
                 .Concat(AllEffects.Where(x => x.StatusTag != StatusTag.None || x.EffectType == EffectType.OnDeath).Select(x => x.StatusDetailTerm))
                 .ToArray()

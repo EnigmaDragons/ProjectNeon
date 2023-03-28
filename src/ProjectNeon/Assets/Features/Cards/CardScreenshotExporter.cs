@@ -11,8 +11,14 @@ public class CardScreenshotExporter : MonoBehaviour
     [SerializeField] private Library heroes;
     [SerializeField] private AllCards cards;
     [SerializeField] private CardPresenter cardPresenter;
+    [SerializeField] private GameObject cardBackView;
     [SerializeField] private Vector2 captureSize;
+    [SerializeField] private Deck additionalCards;
     [SerializeField] private bool takeAll = false;
+    [SerializeField] private bool includeExtraSetOfStarters = true;
+    [SerializeField] private bool includeHeroes = true;
+    [SerializeField] private bool includeAdditional = true;
+    [SerializeField] private bool includeBack = true;
     [SerializeField] private Color transparentColor = Color.black;
 
     private void Start() => this.SafeCoroutineOrNothing(Go());
@@ -20,22 +26,105 @@ public class CardScreenshotExporter : MonoBehaviour
     private IEnumerator Go()
     {
         yield return new WaitForEndOfFrame();
-        foreach (var h in heroes.UnlockedHeroes)
+        if (includeBack)
         {
-            var member = GetHeroCards(h, out var heroCards);
+            cardPresenter.gameObject.SetActive(false);
+            cardBackView.SetActive(true);
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForEndOfFrame();
+            ExportCard("CardBack");
+        }
+        
+        cardPresenter.gameObject.SetActive(true);
+        cardBackView.SetActive(false);
 
-            foreach (var c in heroCards)
+        if (includeHeroes)
+        {
+            yield return new WaitForEndOfFrame();
+            foreach (var h in heroes.UnlockedHeroes)
             {
-                var card = new Card(-1, member, c, h.Tint, h.Bust);
+                var member = GetHeroCards(h, out var heroCards);
+
+                foreach (var c in heroCards)
+                {
+                    var card = new Card(-1, member, c, h.Tint, h.Bust);
+                    var err = false;
+                    try
+                    {
+                        cardPresenter.Set(card);
+                    }
+                    catch (Exception e)
+                    {
+                        err = true;
+                        Log.Warn($"Unable to Render {card.Name}");
+                        Log.Error(e);
+                    }
+
+                    if (!err)
+                    {
+                        yield return new WaitForEndOfFrame();
+                        yield return new WaitForEndOfFrame();
+                        yield return new WaitForEndOfFrame();
+                        ExportCard(h, c);
+
+                        if (!takeAll)
+                            yield break;
+                    }
+                }
+            }
+        }
+
+        if (includeExtraSetOfStarters)
+        {
+            yield return new WaitForEndOfFrame();
+            foreach (var h in heroes.UnlockedHeroes)
+            {
+                var member = GetHeroStarterCards(h, out var heroCards);
+
+                foreach (var c in heroCards)
+                {
+                    var card = new Card(-1, member, c, h.Tint, h.Bust);
+                    var err = false;
+                    try
+                    {
+                        cardPresenter.Set(card);
+                    }
+                    catch (Exception e)
+                    {
+                        err = true;
+                        Log.Warn($"Unable to Render {card.Name}");
+                        Log.Error(e);
+                    }
+
+                    if (!err)
+                    {
+                        yield return new WaitForEndOfFrame();
+                        yield return new WaitForEndOfFrame();
+                        yield return new WaitForEndOfFrame();
+                        ExportCard("Starter-" + h.NameTerm().ToEnglish() + "-" + c.Name.Replace(" ", "").Replace("\"", ""));
+
+                        if (!takeAll)
+                            yield break;
+                    }
+                }
+            }
+        }
+
+        
+        if (includeAdditional)
+        {
+            foreach (var c in additionalCards.CardTypes)
+            {
                 var err = false;
                 try
                 {
-                    cardPresenter.Set(card);
+                    cardPresenter.Set(c);
                 }
                 catch (Exception e)
                 {
                     err = true;
-                    Log.Warn($"Unable to Render {card.Name}");
+                    Log.Warn($"Unable to Render {c.Name}");
                     Log.Error(e);
                 }
 
@@ -44,13 +133,14 @@ public class CardScreenshotExporter : MonoBehaviour
                     yield return new WaitForEndOfFrame();
                     yield return new WaitForEndOfFrame();
                     yield return new WaitForEndOfFrame();
-                    ExportCard(h, c);
-                    
+                    ExportCard(c.Name);
+                        
                     if (!takeAll)
                         yield break;
                 }
             }
         }
+        
         Log.Info("Finished Export");
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
@@ -58,8 +148,11 @@ public class CardScreenshotExporter : MonoBehaviour
     }
 
     private void ExportCard(BaseHero h, CardTypeData c)
+        => ExportCard(h.NameTerm().ToEnglish() + "-" + c.Name.Replace(" ", "").Replace("\"", ""));
+    
+    private void ExportCard(string fileName)
     {
-        var savePath = Path.Combine(baseExportPathDir, h.NameTerm().ToEnglish() + "-" + c.Name.Replace(" ", "").Replace("\"", "") + ".png");
+        var savePath = Path.Combine(baseExportPathDir, fileName + ".png");
         var tex = ScreenCapture.CaptureScreenshotAsTexture();
 
         var newTexture = new Texture2D(tex.width, tex.height, TextureFormat.ARGB32, false);
@@ -94,6 +187,26 @@ public class CardScreenshotExporter : MonoBehaviour
             .ThenBy(c => c.Name)
             .Concat(h.BasicCard)
             .Concat(h.ParagonCards);
+        return member;
+    }
+    
+    private Member GetHeroStarterCards(BaseHero h, out IEnumerable<CardTypeData> heroCards)
+    {
+        var member = h.AsMemberForLibrary();
+        var archKeys = h.ArchetypeKeys();
+        var excludedCards = h.ExcludedCards;
+        heroCards = cards.Cards
+            .Where(c => !c.IsWip)
+            .Where(c => archKeys.Contains(c.GetArchetypeKey()) || c.Archetypes.None())
+            .Where(c => c.Rarity == Rarity.Starter)
+            .Where(c => !excludedCards.Contains(c))
+            .Where(c => c.Archetypes.Any())
+            .OrderBy(c => c.Archetypes.None() ? 99 : c.Archetypes.Count)
+            .ThenBy(c => c.GetArchetypeKey())
+            .ThenBy(c => c.Rarity)
+            .ThenBy(c => c.Cost.BaseAmount)
+            .ThenBy(c => c.Name)
+            .ToArray();
         return member;
     }
 }

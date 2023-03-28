@@ -13,7 +13,8 @@ public class SingleUseCharacterWord : MonoBehaviour
     private float _duration = SingleUseObjectDriftConfig.DefaultDuration;
     private float _fadeDuration = SingleUseObjectDriftConfig.DefaultFadeDuration;
     private float _driftDistance = SingleUseObjectDriftConfig.DefaultDriftDistance;
-    
+
+    private string _term;
     private int _value;
     private float _remaining;
     private float _remainingBeforeFade;
@@ -27,13 +28,18 @@ public class SingleUseCharacterWord : MonoBehaviour
             _fadeDuration = driftConfig.FadeDuration;
         }
         
+        _term = term;
+        return this;
+    }
+
+    private void Start()
+    {
         text.gameObject.SetActive(true);
-        localize.SetTerm(term);
+        localize.SetTerm(_term);
         _remaining = _duration;
         _remainingBeforeFade = _duration - _fadeDuration;
         this.SafeCoroutineOrNothing(FlyAnim());
         text.transform.DOPunchScale(new Vector3(2.2f, 2.2f, 2.2f), 0.5f, 1);
-        return this;
     }
     
     private IEnumerator FlyAnim()
