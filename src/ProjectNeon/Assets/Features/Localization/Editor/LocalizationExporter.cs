@@ -152,6 +152,25 @@ public class LocalizationExporter
         WriteCsv("augment-descs", descs);
     }
 
+    [MenuItem("Neon/Localization/Export Permanents For Localization")]
+    private static void ExportPermanentsForLocalization()
+    {
+        var permanents = GetAllInstances<StaticEquipment>()
+            .Where(x => !x.IsWip && x.Slot == EquipmentSlot.Permanent)
+            .OrderBy(x => x.Id);
+
+        var names = new List<string>();
+        var descs = new List<string>();
+        permanents.ForEach(x =>
+        {
+            names.Add($"{x.LocalizationNameKey()}^{x.Name}");
+            var csvDesc = ToSingleLineI2Format(x.Description);
+            descs.Add($"{x.LocalizationDescriptionKey()}^{csvDesc}");
+        });
+        WriteCsv("permanent-names", names);
+        WriteCsv("permanent-descs", descs);
+    } 
+
     [MenuItem("Neon/Localization/Export Archetypes For Localization")]
     public static void ExportArchetypesForLocalization()
     {
