@@ -20,8 +20,8 @@ MonoBehaviour:
   descriptionV2:
     text: "Deal {0}.\n \nGain {1}"
     formatArgs:
-    - '{E[0]}'
     - '{E[1]}'
+    - '{E[0]}'
   tags: 0400000015000000
   speed: 0
   isSinglePlay: 0
@@ -31,6 +31,16 @@ MonoBehaviour:
     plusXCost: 0
   rarity: 2
   actionSequences:
+  - scope: 0
+    group: 1
+    cardActions: {fileID: 11400000, guid: 316264b94c2f85042a7acc7fe364490f, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: ebd1ca531817c5f41b6cff954a9b0dc9, type: 2}
+    repeatX: 0
+    repeatCount: 0
   - scope: 0
     group: 1
     cardActions: {fileID: 11400000, guid: dfdd70294b71cb14d9adcb2c64d894d2, type: 2}
@@ -49,5 +59,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c5bd5ff6560fc8b4aa3182fd810a7fd0, type: 2}
   highlightCondition: []
   unhighlightCondition: []
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 0

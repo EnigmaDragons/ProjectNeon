@@ -20,8 +20,8 @@ MonoBehaviour:
   descriptionV2:
     text: "Deal {0} \n\nYou gain {1}"
     formatArgs:
-    - '{E[0]}'
     - '{E[1]}'
+    - '{E[0]}'
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -31,6 +31,16 @@ MonoBehaviour:
     plusXCost: 0
   rarity: 2
   actionSequences:
+  - scope: 0
+    group: 1
+    cardActions: {fileID: 11400000, guid: 316264b94c2f85042a7acc7fe364490f, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: bff022ab42741f543a46667797ec55dc, type: 2}
+    repeatX: 0
+    repeatCount: 0
   - scope: 0
     group: 1
     cardActions: {fileID: 11400000, guid: 08149e1741333ed4dbfde75e418c1d81, type: 2}

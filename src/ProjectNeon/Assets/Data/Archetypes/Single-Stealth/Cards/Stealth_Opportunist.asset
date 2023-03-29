@@ -28,8 +28,8 @@ MonoBehaviour:
       Otherwise enter <b>Stealth</b> and gain
       {1}'
     formatArgs:
-    - '{E[1]}'
     - '{E[3]}'
+    - '{E[1]}'
   tags: 0c00000004000000
   speed: 0
   isSinglePlay: 0
@@ -41,12 +41,17 @@ MonoBehaviour:
   actionSequences:
   - scope: 0
     group: 1
-    cardActions: {fileID: 11400000, guid: d01f02b21dd4efa47a11c4671cdd232e, type: 2}
+    cardActions: {fileID: 11400000, guid: 153cf8a5b9e0a94439da2992f258b747, type: 2}
     repeatX: 0
     repeatCount: 0
   - scope: 0
     group: 0
     cardActions: {fileID: 11400000, guid: 09d90b6c3b298f147aa7452710ae4455, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 0
+    group: 1
+    cardActions: {fileID: 11400000, guid: d01f02b21dd4efa47a11c4671cdd232e, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}

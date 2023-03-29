@@ -20,7 +20,7 @@ MonoBehaviour:
   descriptionV2:
     text: 'Deal {0}.<br><br>You gain <b>2</b> Energy. '
     formatArgs:
-    - '{E[0]}'
+    - '{E[1]}'
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -32,12 +32,17 @@ MonoBehaviour:
   actionSequences:
   - scope: 0
     group: 1
-    cardActions: {fileID: 11400000, guid: 73c2c7837c0759541976e12278397369, type: 2}
+    cardActions: {fileID: 11400000, guid: 316264b94c2f85042a7acc7fe364490f, type: 2}
     repeatX: 0
     repeatCount: 0
   - scope: 0
     group: 0
     cardActions: {fileID: 11400000, guid: 23e34ce6fce392245b07eb884827a622, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 0
+    group: 1
+    cardActions: {fileID: 11400000, guid: 73c2c7837c0759541976e12278397369, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -48,5 +53,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fa0b1b9aad879d44faf8e5d18ec91d9a, type: 2}
   highlightCondition: []
   unhighlightCondition: []
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 1
   notAvailableForGeneralDistribution: 0

@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Arcana_EternalMana_Self
+  m_Name: Arcana_GrowingPower_Resources
   m_EditorClassIdentifier: 
   Actions:
-  - type: 31
+  - type: 1
     battleEffect:
-      Id: 2457
-      EffectType: 0
+      Id: 0
+      EffectType: 82
       Conditions: []
       BaseAmount:
         UseConstant: 1
@@ -37,7 +37,7 @@ MonoBehaviour:
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 
+      Formula: 2
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
@@ -81,14 +81,14 @@ MonoBehaviour:
       Conditions: []
     atTargetAnimation:
       animation:
-        UseConstant: 0
+        UseConstant: 1
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: 26a733f461dfeab4b82f2d220f287417, type: 2}
+        Variable: {fileID: 0}
       size: 1
-      speed: 0.5
+      speed: 1
       color:
         UseConstant: 1
-        ConstantValue: {r: 1, g: 0, b: 0.45490196, a: 1}
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
         Variable: {fileID: 0}
       skipWaitingForCompletion: 0
       conditions: []

@@ -19,7 +19,7 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
     private BattleReactions Reactions => state.Reactions;
     
     private bool _resolvingEffect;
-    private float _playerDelayFactor = 0.2f;
+    private float _playerDelayFactor = 0.01f;
     private bool _debugLog;
 
     private WaitForSeconds _enemyWait;
