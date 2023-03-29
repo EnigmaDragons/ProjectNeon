@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class SkipTutorialBattleButton : MonoBehaviour, ILocalizeTerms
+public class SkipTutorialBattleButton : OnMessage<WinBattleWithRewards>, ILocalizeTerms
 {
     [SerializeField] private LocalizedCommandButton button;
     [SerializeField] private BattleState battleState;
@@ -27,4 +27,7 @@ public class SkipTutorialBattleButton : MonoBehaviour, ILocalizeTerms
 
     public string[] GetLocalizeTerms()
         => new[] {Term, DialogTerms.OptionSkipBattle, DialogTerms.OptionOops, DialogTerms.SkipTutorialBattleWarning};
+
+    protected override void Execute(WinBattleWithRewards msg)
+        => button.gameObject.SetActive(false);
 }
