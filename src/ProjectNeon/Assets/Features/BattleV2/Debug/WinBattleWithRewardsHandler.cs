@@ -5,6 +5,7 @@ public class WinBattleWithRewardsHandler : OnMessage<WinBattleWithRewards>
 {
     [SerializeField] private BattleConclusion conclusion;
     [SerializeField] private BattleState state;
+    [SerializeField] private Navigator navigator;
 
     private bool _triggered = false;
     
@@ -14,6 +15,12 @@ public class WinBattleWithRewardsHandler : OnMessage<WinBattleWithRewards>
             return;
         
         _triggered = true;
+        if (state.IsSingleTutorialBattle)
+        {
+            state.Wrapup();
+            navigator.NavigateToTitleScreen();
+            return;
+        }
         var rewardCredits = state.EnemyArea.Enemies.Sum(e => e.GetRewardCredits(state.CreditPerPowerLevelRewardFactor));
         var rewardXp = state.EnemyArea.Enemies.Sum(e => e.GetRewardXp(state.XpPerPowerLevelRewardFactor));
         state.AddRewardCredits(rewardCredits);

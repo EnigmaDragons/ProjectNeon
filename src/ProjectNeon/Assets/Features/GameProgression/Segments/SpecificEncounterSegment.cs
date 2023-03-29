@@ -5,9 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Adventure/FixedEncounter")]
 public class SpecificEncounterSegment : StageSegment
 {
-    [SerializeField] private GameObject battlefield;
-    [SerializeField] private bool isElite;
-    [SerializeField] private Enemy[] enemies;
+    //i know this is definitely getting a little hacky making these properties public for StartTutorialBattleButton
+    [SerializeField] public GameObject battlefield;
+    [SerializeField] public bool isElite;
+    [SerializeField] public Enemy[] enemies;
     [SerializeField] private CurrentAdventureProgress currentAdventureProgress;
     [SerializeField] private MapNodeType mapNodeType;
     [SerializeField] private Cutscene cutscene;
@@ -16,10 +17,10 @@ public class SpecificEncounterSegment : StageSegment
 
     [Header("Tutorial Settings")]
     [SerializeField] private bool isTutorial;
-    [SerializeField] private bool shouldOverrideStartingCards;
-    [SerializeField] private int overrideStartingCardsCount;
-    [SerializeField] private bool allowBasic = true;
-    [SerializeField] private CardType[] overrideDeck;
+    [SerializeField] public bool shouldOverrideStartingCards;
+    [SerializeField] public int overrideStartingCardsCount;
+    [SerializeField] public bool allowBasic = true;
+    [SerializeField] public CardType[] overrideDeck;
 
     public GameObject Battlefield => battlefield;
     

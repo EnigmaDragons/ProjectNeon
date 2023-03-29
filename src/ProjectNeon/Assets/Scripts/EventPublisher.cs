@@ -74,4 +74,5 @@ public class EventPublisher : ScriptableObject
     public void ShowNewscast(Cutscene cutscene) => Message.Publish(new ShowNewscast(cutscene));
     public void CloseUiSubMenus() => Message.Publish(new CloseUiSubMenus());
     public void ShowCurrentTutorialAgain() => Message.Publish(new ShowCurrentTutorialAgain());
+    public void ToggleTutorialBattles() => Message.Publish(new ToggleNamedTarget("TutorialBattles"));
 }
