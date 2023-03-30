@@ -37,7 +37,7 @@ public class Tutorial13Orchestrator : OnMessage<StartCardSetupRequested, CardRes
             Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial13-01".ToLocalized()));
             Message.Publish(new ShowHeroBattleThought(1, "Thoughts/Tutorial13-02".ToLocalized()));
         }
-        else if (msg.CardName == "Piercing Strike" && !_hasCountered)
+        else if (msg.CardName == "Piercing Strike" && !_hasCountered && !_hasBeenStunned)
         {
             Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial13-03".ToLocalized()));
         }
