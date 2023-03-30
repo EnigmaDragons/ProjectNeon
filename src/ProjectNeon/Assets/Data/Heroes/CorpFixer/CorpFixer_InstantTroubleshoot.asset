@@ -18,8 +18,9 @@ MonoBehaviour:
   description: "<b>Quick:</b> \nGives <b>1 Resources</b>.\nGain <b>1 Card Cycles</b>"
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   descriptionV2:
-    text: "<b>Quick:</b> \nGives <b>1 Resources</b>.\nGain <b>1 Card Cycles</b>"
-    formatArgs: []
+    text: "<b>Quick:</b> \nGives {0}\nGain <b>1 Card Cycles</b>"
+    formatArgs:
+    - '{E[0]}'
   tags: 
   speed: 1
   isSinglePlay: 0
@@ -42,5 +43,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c3bd2cb0d323191448e78929b9cb214e, type: 2}
   highlightCondition: []
   unhighlightCondition: []
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 1

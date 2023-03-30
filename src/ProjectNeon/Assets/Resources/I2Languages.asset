@@ -9792,15 +9792,15 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '<b>If {[t:Keywords/Sneaky]}: {[t:Keywords/Drain]} 1 Resource</b> per <b>{[t:Keywords/Marked]}</b>
-        and next turn gives {[0]}'
-      - "<b>\u5982\u679C{[t:Keywords/Sneaky]}\uFF1A\u6BCF\u6709\u4E00\u4E2A<b>{[t:Keywords/Marked]}</b>{[t:Keywords/Drain]}1\u8D44\u6E90</b>\uFF0C\u4E0B\u56DE\u5408\u7ED9\u4E88{[0]}"
-      - "<b>\u5982\u679C{[t:Keywords/Sneaky]}\uFF1A\u6BCF\u6709\u4E00\u500B<b>{[t:Keywords/Marked]}</b>{[t:Keywords/Drain]}1\u8CC7\u6E90</b>\uFF0C\u4E0B\u56DE\u5408\u7D66\u4E88{[0]}"
+      - '<b>If {[t:Keywords/Sneaky]}: {[t:Keywords/Drain]} 1 {[t:Resources/Energy]}</b>
+        per <b>{[t:Keywords/Marked]}</b> and next turn gives {[0]}'
+      - "<b>\u5982\u679C{[t:Keywords/Sneaky]}\uFF1A\u6BCF\u6709\u4E00\u4E2A<b>{[t:Keywords/Marked]}</b>{[t:Keywords/Drain]}1{[t:Resources/Energy]}</b>\uFF0C\u4E0B\u56DE\u5408\u7ED9\u4E88{[0]}"
+      - "<b>\u5982\u679C{[t:Keywords/Sneaky]}\uFF1A\u6BCF\u6709\u4E00\u500B<b>{[t:Keywords/Marked]}</b>{[t:Keywords/Drain]}1{[t:Resources/Energy]}</b>\uFF0C\u4E0B\u56DE\u5408\u7D66\u4E88{[0]}"
       - 
-      - '<b>Si {[t:Keywords/Sneaky]}: {[t:Keywords/Drain]} 1 Recurso</b> por <b>{[t:Keywords/Marked]}</b>
-        y el siguiente turno da {[0]}'
-      - "<b>Se {[t:Keywords/Sneaky]}: {[t:Keywords/Drain]} 1 recurso</b> por <b>{[t:Keywords/Marked]}</b>
-        e no pr\xF3ximo turno d\xEA {[0]}"
+      - '<b>Si {[t:Keywords/Sneaky]}: {[t:Keywords/Drain]} 1 {[t:Resources/Energy]}</b>
+        por <b>{[t:Keywords/Marked]}</b> y el siguiente turno da {[0]}'
+      - "<b>Se {[t:Keywords/Sneaky]}: {[t:Keywords/Drain]} 1 {[t:Resources/Energy]}</b>
+        por <b>{[t:Keywords/Marked]}</b> e no pr\xF3ximo turno d\xEA {[0]}"
       - 
       - 
       - 
@@ -10128,18 +10128,18 @@ MonoBehaviour:
       - 'Deal {[0]}.
 
 
-        {[t:Keywords/Drain]} <b>1 Resource</b>'
-      - "\u9020\u6210{[0]}\u4F24\u5BB3\n\n{[t:Keywords/Drain]}<b>1\u8D44\u6E90</b>"
-      - "\u9020\u6210{[0]}\u50B7\u5BB3\n\n{[t:Keywords/Drain]}<b>1\u8CC7\u6E90</b>"
+        {[t:Keywords/Drain]} {[1]}'
+      - "\u9020\u6210{[0]}\u4F24\u5BB3\n\n{[t:Keywords/Drain]}{[1]}"
+      - "\u9020\u6210{[0]}\u50B7\u5BB3\n\n{[t:Keywords/Drain]}{[1]}"
       - 
       - 'Inflige {[0]}.
 
 
-        {[t:Keywords/Drain]} <b>1 Recurso</b>'
+        {[t:Keywords/Drain]} {[1]}'
       - 'Cause {[0]} de dano.
 
 
-        {[t:Keywords/Drain]} <b>1 recurso</b>'
+        {[t:Keywords/Drain]} {[1]}'
       - 
       - 
       - 
@@ -11989,12 +11989,12 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "<b>{[t:Keywords/Quick]}:</b> \nGives <b>1 Resources</b>.\nGain <b>1 {[t:Keywords/CardCycles]}</b>"
-      - "<b>{[t:Keywords/Quick]}:</b>\n\u7ED9\u4E88<b>1\u8D44\u6E90</b>\n\u83B7\u5F97<b>1{[t:Keywords/CardCycles]}</b>"
-      - "<b>{[t:Keywords/Quick]}:</b>\n\u7D66\u4E88<b>1\u8CC7\u6E90</b>\n\u7372\u5F97<b>1{[t:Keywords/CardCycles]}</b>"
+      - "<b>{[t:Keywords/Quick]}:</b> \nGives {[0]}\nGain <b>1 {[t:Keywords/CardCycles]}</b>"
+      - "<b>{[t:Keywords/Quick]}:</b>\n\u7ED9\u4E88{[0]}\n\u83B7\u5F97<b>1{[t:Keywords/CardCycles]}</b>"
+      - "<b>{[t:Keywords/Quick]}:</b>\n\u7D66\u4E88{[0]}\n\u7372\u5F97<b>1{[t:Keywords/CardCycles]}</b>"
       - 
-      - "<b>{[t:Keywords/Quick]}:</b> \nDa <b>1 Recursos</b>.\nGana <b>1 {[t:Keywords/CardCycles]}</b>"
-      - "<b>{[t:Keywords/Quick]}:</b> \nD\xEA <b>1 recurso</b>.\nGanhe <b>1 {[t:Keywords/CardCycles]}</b>"
+      - "<b>{[t:Keywords/Quick]}:</b> \nDa {[0]}\nGana <b>1 {[t:Keywords/CardCycles]}</b>"
+      - "<b>{[t:Keywords/Quick]}:</b> \nD\xEA {[0]}\nGanhe <b>1 {[t:Keywords/CardCycles]}</b>"
       - 
       - 
       - 
@@ -17189,7 +17189,7 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Energy CircuNet
+      - Energized CircuNet
       - "\u80FD\u91CF\u5FAA\u73AF"
       - "\u80FD\u91CF\u5FAA\u74B0"
       - "\u042D\u043D\u0435\u0440\u0433\u0435\u0442\u0438\u0447\u0435\u0441\u043A\u0430\u044F
@@ -27798,8 +27798,8 @@ MonoBehaviour:
       Languages:
       - Good! Then we need to know how Helen DeVries is gonna do it. We got to raid
         her mansion.
-      - "\u5F88\u597D\uFF01\u90A3\u4E48\u6211\u4EEC\u9700\u8981\u77E5\u9053\u6D77\u4F26\xB7\u5FB7\u5F17\u91CC\u65AF\u5230\u5E95\u8981\u505A\u4EC0\u4E48\uFF0C\u6211\u4EEC\u5F97\u7A81\u51FB\u68C0\u67E5\u5979\u7684\u8C6A\u5B85\u3002"
-      - "\u5F88\u597D\uFF01\u90A3\u9EBC\u6211\u5011\u9700\u8981\u77E5\u9053\u6D77\u502B\xB7\u5FB7\u5F17\u88E1\u65AF\u5230\u5E95\u8981\u505A\u4EC0\u9EBC\uFF0C\u6211\u5011\u5F97\u7A81\u64CA\u6AA2\u67E5\u5979\u7684\u8C6A\u5B85\u3002"
+      - "\u5F88\u597D\uFF01\u63A5\u4E0B\u6765\u6211\u4EEC\u9700\u8981\u77E5\u9053\u6D77\u4F26\xB7\u5FB7\u5F17\u91CC\u65AF\u5230\u5E95\u8981\u505A\u4EC0\u4E48\uFF0C\u6211\u4EEC\u5F97\u7A81\u51FB\u68C0\u67E5\u5979\u7684\u8C6A\u5B85\u3002"
+      - "\u5F88\u597D\uFF01\u63A5\u4E0B\u4F86\u6211\u5011\u9700\u8981\u77E5\u9053\u6D77\u502B\xB7\u5FB7\u5F17\u88E1\u65AF\u5230\u5E95\u8981\u505A\u4EC0\u9EBC\uFF0C\u6211\u5011\u5F97\u7A81\u64CA\u6AA2\u67E5\u5979\u7684\u8C6A\u5B85\u3002"
       - 
       - "\xA1Bien! Entonces tenemos que saber c\xF3mo Helen DeVries va a hacerlo.
         Tenemos que asaltar su mansi\xF3n."
@@ -27815,8 +27815,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - "You have turned cold over the years. I\u2019ll find someone else to help."
-      - "\u8FD9\u4E9B\u5E74\u4F60\u5DF2\u7ECF\u53D8\u4E86\uFF0C\u53D8\u5F97\u51B7\u6F20\u4E86\uFF0C\u6211\u8981\u53BB\u627E\u522B\u4EBA\u6765\u5E2E\u5FD9\u3002"
-      - "\u9019\u4E9B\u5E74\u4F60\u5DF2\u7D93\u8B8A\u4E86\uFF0C\u8B8A\u5F97\u51B7\u6F20\u4E86\uFF0C\u6211\u8981\u53BB\u627E\u5225\u4EBA\u4F86\u5E6B\u5FD9\u3002"
+      - "\u8FD9\u4E9B\u5E74\u4F60\u5DF2\u7ECF\u53D8\u4E86\uFF0C\u53D8\u5F97\u51B7\u6F20\u4E86\uFF0C\u6211\u53BB\u627E\u522B\u4EBA\u6765\u5E2E\u5FD9\u3002"
+      - "\u9019\u4E9B\u5E74\u4F60\u5DF2\u7D93\u8B8A\u4E86\uFF0C\u8B8A\u5F97\u51B7\u6F20\u4E86\uFF0C\u6211\u53BB\u627E\u5225\u4EBA\u4F86\u5E6B\u5FD9\u3002"
       - 
       - "Te has vuelto fr\xEDo con los a\xF1os. Encontrar\xE9 a alguien m\xE1s para
         ayudar."
@@ -52207,28 +52207,27 @@ MonoBehaviour:
 
 
         {[t:Game Title]}
-        is still undergoing changes and gameplay tweaks as we continue development.
-        Some of the artwork, fx, sound, gameplay, and balance are still a work in
-        progress and may change.
+        is actively evolving, particular in the areas of gameplay polish, art polish,
+        performance improvements, bug fixes, and gameplay balance.
 
 
-        Be aware, they are still a few bugs to
-        fix and some more optimization work to improve performance on slower machines.
-        We''re working diligently to improve the game and resolve any active issues.
-        You can send us feedback at any time by clicking the Bug button in the Settings
-        panel.
+        Be aware,
+        there is still a bit of performance work to be done to make this game run
+        on very old or slow machines. You can send us feedback at any time by clicking
+        the Bug button in the Settings panel.
 
 
         -----------------------------
 
 
-        No corporations
-        have yet been harmed in the making of this game.
+        No
+        corporations have yet been harmed in the making of this game.
 
 
-        <i>(If you are
-        a corporation and feel that you have been harmed by this game, message us
-        and we will be happy to hack your servers and delete any records of the incident)</i>'
+        <i>(If
+        you are a corporation and feel that you have been harmed by this game, message
+        us and we will be happy to hack your servers and delete any records of the
+        incident)</i>'
       - "\u975E\u5E38\u611F\u8C22\u60A8\u53C2\u4E0E\u62A2\u5148\u4F53\u9A8C\uFF01\n\n{[t:Game
         Title]} \u4ECD\u5904\u4E8E\u5F00\u53D1\u8FC7\u7A0B\u4E2D\uFF0C\u6E38\u620F\u5C06\u968F\u7740\u6211\u4EEC\u7684\u5DE5\u4F5C\u8FDB\u5EA6\u7684\u63A8\u8FDB\u800C\u53D1\u751F\u8C03\u6574\u3002
         \u4E00\u4E9B\u7F8E\u672F\u3001\u7279\u6548\u3001\u58F0\u97F3\u3001\u6E38\u620F\u73A9\u6CD5\u548C\u5E73\u8861\u4ECD\u5728\u8FDB\u884C\u4E2D\uFF0C\u53EF\u80FD\u4F1A\u53D1\u751F\u53D8\u5316\u3002\n\n\u8BF7\u6CE8\u610F\uFF0C\u6E38\u620F\u4E2D\u4ECD\u7136\u6709\u4E00\u4E9Bbug\u9700\u8981\u4FEE\u590D\uFF0C\u8FD8\u9700\u8981\u505A\u4E00\u4E9B\u4F18\u5316\u5DE5\u4F5C\u4EE5\u63D0\u9AD8\u6027\u80FD\u8868\u73B0\u3002
@@ -52527,8 +52526,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Gear
-      - "\u88C5\u5907"
-      - "\u88DD\u5099"
+      - "\u88C5\u7F6E"
+      - "\u88DD\u7F6E"
       - "\u041C\u0435\u0445\u0430\u043D\u0438\u0437\u043C"
       - Equipos
       - Equipamento
@@ -52542,8 +52541,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Gear Library
-      - "\u88C5\u5907\u5E93"
-      - "\u88DD\u5099\u5EAB"
+      - "\u88C5\u7F6E\u5E93"
+      - "\u88DD\u7F6E\u5EAB"
       - "\u0411\u0438\u0431\u043B\u0438\u043E\u0442\u0435\u043A\u0430 \u043F\u0435\u0440\u0435\u0434\u0430\u0447"
       - Biblioteca de Equipos
       - Biblioteca de Equipamento
@@ -53361,8 +53360,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Lessons
-      - 
-      - 
+      - "\u6559\u5B66"
+      - "\u6559\u5B78"
       - 
       - 
       - 
@@ -54322,6 +54321,81 @@ MonoBehaviour:
       - Entsperrt
       - "D\xE9verrouill\xE9"
       - "\u30ED\u30C3\u30AF\u89E3\u9664"
+      Flags: 000000000000000000
+      Languages_Touch: []
+    - Term: Rarities/Starter
+      TermType: 0
+      Description: 
+      Languages:
+      - Starter
+      - "\u521D\u59CB"
+      - "\u521D\u59CB\r"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      Flags: 000000000000000000
+      Languages_Touch: []
+    - Term: Rarities/Common
+      TermType: 0
+      Description: 
+      Languages:
+      - Common
+      - "\u666E\u901A"
+      - "\u666E\u901A"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      Flags: 000000000000000000
+      Languages_Touch: []
+    - Term: Rarities/Uncommon
+      TermType: 0
+      Description: 
+      Languages:
+      - Uncommon
+      - "\u7F55\u89C1"
+      - "\u7F55\u898B"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      Flags: 000000000000000000
+      Languages_Touch: []
+    - Term: Rarities/Rare
+      TermType: 0
+      Description: 
+      Languages:
+      - Rare
+      - "\u7A00\u6709"
+      - "\u7A00\u6709"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
+      Flags: 000000000000000000
+      Languages_Touch: []
+    - Term: Rarities/Epic
+      TermType: 0
+      Description: 
+      Languages:
+      - Epic
+      - "\u53F2\u8BD7"
+      - "\u53F2\u8A69"
+      - 
+      - 
+      - 
+      - 
+      - 
+      - 
       Flags: 000000000000000000
       Languages_Touch: []
     - Term: ReactionCardDescriptions/00001-05-Desc
@@ -60419,8 +60493,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Flow of Play
-      - 
-      - 
+      - "\u6218\u6597\u6D41\u7A0B"
+      - "\u6230\u9B25\u6D41\u7A0B"
       - 
       - 
       - 
@@ -60434,8 +60508,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Basics & Energy
-      - 
-      - 
+      - "\u57FA\u7840&\u80FD\u91CF"
+      - "\u57FA\u790E&\u80FD\u91CF"
       - 
       - 
       - 
@@ -60449,8 +60523,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Armor & Resistance
-      - 
-      - 
+      - "\u62A4\u7532&\u6297\u6027"
+      - "\u8B77\u7532&\u6297\u6027"
       - 
       - 
       - 
@@ -60464,8 +60538,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Power
-      - 
-      - 
+      - "\u89D2\u8272\u7684\u529B\u91CF"
+      - "\u89D2\u8272\u7684\u529B\u91CF"
       - 
       - 
       - 
@@ -60479,8 +60553,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Stealth & Conditions
-      - 
-      - 
+      - "\u9690\u8EAB&\u89E6\u53D1\u6761\u4EF6"
+      - "\u96B1\u8EAB&\u89F8\u767C\u689D\u4EF6"
       - 
       - 
       - 
@@ -60494,8 +60568,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Shield & Taunt
-      - 
-      - 
+      - "\u62A4\u76FE&\u5632\u8BBD"
+      - "\u8B77\u76FE&\u5632\u8AF7"
       - 
       - 
       - 
@@ -60509,8 +60583,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Card Targeting
-      - 
-      - 
+      - "\u5361\u724C\u76EE\u6807"
+      - "\u5361\u724C\u76EE\u6A19"
       - 
       - 
       - 
@@ -60524,8 +60598,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - 'Dodge & Finisher '
-      - 
-      - 
+      - "\u95EA\u907F&\u7EC8\u7ED3\u6280"
+      - "\u9583\u907F&\u7D42\u7D50\u6280"
       - 
       - 
       - 
@@ -60539,8 +60613,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - True Damage
-      - 
-      - 
+      - "\u771F\u5B9E\u4F24\u5BB3"
+      - "\u771F\u5BE6\u50B7\u5BB3"
       - 
       - 
       - 
@@ -60554,8 +60628,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Damage Over Time
-      - 
-      - 
+      - "\u6301\u7EED\u4F24\u5BB3"
+      - "\u6301\u7E8C\u50B7\u5BB3"
       - 
       - 
       - 
@@ -60569,8 +60643,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Aegis & X-Cost
-      - 
-      - 
+      - "\u5E87\u62A4&X\u6D88\u8017\u5361\u724C"
+      - "\u5E87\u8B77&X\u6D88\u8017\u5361\u724C"
       - 
       - 
       - 
@@ -60584,8 +60658,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Quick & Glitch
-      - 
-      - 
+      - "\u95EA\u51FB&\u6545\u969C"
+      - "\u9583\u64CA&\u6545\u969C"
       - 
       - 
       - 
@@ -60599,8 +60673,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Cycle & Discard
-      - 
-      - 
+      - "\u5FAA\u73AF&\u5F03\u7F6E"
+      - "\u8FF4\u5708&\u68C4\u7F6E"
       - 
       - 
       - 
@@ -60614,8 +60688,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Reactions
-      - 
-      - 
+      - "\u53CD\u5E94"
+      - "\u53CD\u61C9"
       - 
       - 
       - 
@@ -60629,8 +60703,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Stun & Disable
-      - 
-      - 
+      - "\u7729\u6655&\u762B\u75EA"
+      - "\u7729\u6688&\u7671\u7613"
       - 
       - 
       - 
@@ -60644,8 +60718,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Skip Tutorial
-      - 
-      - 
+      - "\u8DF3\u8FC7\u6559\u7A0B"
+      - "\u8DF3\u904E\u6559\u7A0B"
       - 
       - 
       - 
@@ -60659,8 +60733,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Play tutorial battles designed to teach you how mechanics work
-      - 
-      - 
+      - "\u6E38\u73A9\u6559\u7A0B\u4EE5\u4E86\u89E3\u6E38\u620F\u4E2D\u7684\u5404\u79CD\u673A\u5236"
+      - "\u904A\u73A9\u6559\u7A0B\u4EE5\u77AD\u89E3\u904A\u6232\u4E2D\u7684\u5404\u7A2E\u6A5F\u5236"
       - 
       - 
       - 
@@ -64681,7 +64755,7 @@ MonoBehaviour:
     Google_WebServiceURL: https://script.google.com/macros/s/AKfycbyxEWOh-oly9VUweggR4FE-PJti-q6vB4eiq60gjqN60mMW8pqUSFQDcNZf5paleAfH/exec
     Google_SpreadsheetKey: 1_k0GnzCkReGlY_2s-ODT0hVniGHYfv2qnG9nqRQ4VvU
     Google_SpreadsheetName: I2Loc MetroplexZero Localization
-    Google_LastUpdatedVersion: 1680154439418
+    Google_LastUpdatedVersion: 1680213213959
     Google_Password: 23jh9hj2rjfhj33^$^%^$inhgf9g9j90i
     GoogleUpdateFrequency: 2
     GoogleInEditorCheckFrequency: 2

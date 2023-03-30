@@ -48,9 +48,17 @@ public class CardActionsDataEditor : Editor
                     EditorUtility.SetDirty(target);
                 });
                 if (refBrokeni > 0)
-                    menu.AddItem(new GUIContent("Move Up"), false, () => _target.Actions.SwapItems(refBrokeni, refBrokeni - 1));
+                    menu.AddItem(new GUIContent("Move Up"), false, () =>
+                    {
+                        _target.Actions.SwapItems(refBrokeni, refBrokeni - 1);
+                        EditorUtility.SetDirty(target);
+                    });
                 if (refBrokeni < actions.Length - 1)
-                    menu.AddItem(new GUIContent("Move Down"), false, () => _target.Actions.SwapItems(refBrokeni, refBrokeni + 1));
+                    menu.AddItem(new GUIContent("Move Down"), false, () =>
+                    {
+                        _target.Actions.SwapItems(refBrokeni, refBrokeni + 1);
+                        EditorUtility.SetDirty(target);
+                    });
                 menu.AddItem(new GUIContent("Delete"), false, () =>
                 {
                     _target.Actions = actions.Where(x => x != action).ToArray();
