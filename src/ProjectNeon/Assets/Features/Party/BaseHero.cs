@@ -10,6 +10,7 @@ public class BaseHero : ScriptableObject, HeroCharacter, ILocalizeTerms
     [SerializeField] private bool allowedForSocialMedia = false;
     [SerializeField] private bool isDisabled = false;
     [SerializeField] private Sprite bust;
+    [SerializeField] private Sprite bodySprite;
     [SerializeField] private GameObject body;
     [SerializeField] public string className;
     [SerializeField] private CharacterSex sex;
@@ -52,6 +53,7 @@ public class BaseHero : ScriptableObject, HeroCharacter, ILocalizeTerms
     public int Id => id;
     public int ComplexityRating => complexityRating;
     public Sprite Bust => bust;
+    public Sprite BodySprite => bodySprite;
     public GameObject Body => body;
     public CharacterSex Sex => sex;
     public MemberMaterialType MaterialType => materialType;

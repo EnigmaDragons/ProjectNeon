@@ -8,6 +8,7 @@ public interface HeroCharacter
     int ComplexityRating { get; }
     
     Sprite Bust { get; }
+    Sprite BodySprite { get; }
     GameObject Body { get; }
     MemberMaterialType MaterialType { get; }
     BattleRole BattleRole { get; }
@@ -36,6 +37,7 @@ public class InMemoryHeroCharacter : HeroCharacter
     public string Name { get; set; } = "Unknown";
     public int ComplexityRating { get; set; } = 0;
     public Sprite Bust { get; set; }
+    public Sprite BodySprite { get; set; }
     public GameObject Body { get; set; }
     public MemberMaterialType MaterialType { get; } = MemberMaterialType.Unknown;
     public string Class { get; set; }

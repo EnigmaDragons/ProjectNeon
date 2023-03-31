@@ -26,6 +26,22 @@ public class MemberSimplifiedVisualStatPanel : MemberUiBase
     [SerializeField] private GameObject tauntItem;
     [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI tauntLabel;
 
+    public void InitForCardExport(Member m)
+    {
+        hpBar.Init(m);
+        Set(cardPlaysItem, cardPlaysLabel, m.ExtraCardPlays());
+        Set(resourceGainItem, resourceGainLabel, m.ReferenceOnlyEndOfTurnResourceGain);
+        resourceGainIcon.sprite = m.PrimaryResourceType().Icon;
+        Set(leadershipItem, leadershipLabel, m.Leadership());
+        Set(atkItem, atkLabel, m.Attack());
+        Set(magicItem, magicLabel, m.Magic());
+        resistLabel.text = m.Resistance().ToString();
+        Set(dodgeItem, dodgeLabel, m.Dodge());
+        Set(aegisItem, aegisLabel, m.Aegis());
+        stealthItem.SetActive(m.Stealth() > 0);
+        Set(tauntItem, tauntLabel, m.Taunt());
+    }
+    
     public override void Init(Member m)
     {
         hpBar.Init(m);
