@@ -52,6 +52,9 @@ public static class StatsExtensions
 
     public static IStats WithConvertedPower(this IStats stats, StatType primaryStat)
     {
+        if (stats == null)
+            return new StatAddends();
+        
         var powerAmount = stats[StatType.Power];
         return new AddedStats(stats,
             new StatAddends().With(primaryStat, powerAmount).With(StatType.Power, -powerAmount));

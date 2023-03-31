@@ -45,7 +45,15 @@ public sealed class SubtractedStats : IStats
 
 public static class AddedStatExtensions
 {
-    public static IStats Plus(this IStats first, params IStats[] others) => Plus(first, (IEnumerable<IStats>) others);
-    public static IStats Plus(this IStats first, IEnumerable<IStats> others) => others.Aggregate(first, (current, other) => new AddedStats(current, other));
+    public static IStats Plus(this IStats first, params IStats[] others)
+    {
+        if (first == null || others.AnyNonAlloc(x => x == null))
+            Log.NonCrashingError("One or more Stats passed to Plus were null");
+        return first == null 
+            ? Plus(new StatAddends(), (IEnumerable<IStats>)others) 
+            : Plus(first, (IEnumerable<IStats>)others);
+    }
+
+    public static IStats Plus(this IStats first, IEnumerable<IStats> others) => others.Where(o => o != null).Aggregate(first, (current, other) => new AddedStats(current, other));
     public static IStats Minus(this IStats first, IStats second) => new SubtractedStats(first, second);
 }
