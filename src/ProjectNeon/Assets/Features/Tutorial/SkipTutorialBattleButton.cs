@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class SkipTutorialBattleButton : OnMessage<BattleFinished>, ILocalizeTerms
 {
@@ -11,18 +12,32 @@ public class SkipTutorialBattleButton : OnMessage<BattleFinished>, ILocalizeTerm
     
     private void Start()
     {
-        button.gameObject.SetActive(adventure.Adventure.Id == AdventureIds.TutorialAdventureId || battleState.IsSingleTutorialBattle);
-        if (battleState.IsSingleTutorialBattle)
-            button.InitTerm(Term, () => eventPublisher.WinBattle());
-        else if (adventure.Adventure.Id == AdventureIds.TutorialAdventureId)
-            button.InitTerm(Term, () => Message.Publish(new ShowLocalizedDialog
+        try
+        {
+            if (adventure.Adventure == null)
             {
-                PrimaryAction = () => eventPublisher.WinBattle(),
-                PrimaryButtonTerm = DialogTerms.OptionSkipBattle,
-                SecondaryAction = () => {},
-                SecondaryButtonTerm = DialogTerms.OptionOops,
-                PromptTerm = DialogTerms.SkipTutorialBattleWarning
-            }));
+                gameObject.SetActive(false);
+                return;
+            }
+
+            button.gameObject.SetActive(adventure.Adventure.Id == AdventureIds.TutorialAdventureId || battleState.IsSingleTutorialBattle);
+            if (battleState.IsSingleTutorialBattle)
+                button.InitTerm(Term, () => eventPublisher.WinBattle());
+            else if (adventure.Adventure.Id == AdventureIds.TutorialAdventureId)
+                button.InitTerm(Term, () => Message.Publish(new ShowLocalizedDialog
+                {
+                    PrimaryAction = () => eventPublisher.WinBattle(),
+                    PrimaryButtonTerm = DialogTerms.OptionSkipBattle,
+                    SecondaryAction = () => { },
+                    SecondaryButtonTerm = DialogTerms.OptionOops,
+                    PromptTerm = DialogTerms.SkipTutorialBattleWarning
+                }));
+        }
+        catch (Exception e)
+        {
+            gameObject.SetActive(false);
+            Log.NonCrashingError(e);
+        }
     }
 
     public string[] GetLocalizeTerms()
