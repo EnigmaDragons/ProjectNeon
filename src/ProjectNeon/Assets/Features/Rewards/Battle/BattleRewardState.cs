@@ -7,20 +7,20 @@ using UnityEngine;
 public class BattleRewardState : ScriptableObject
 {
     [SerializeField, ReadOnly] private int rewardCredits;
-    [SerializeField, ReadOnly] private CardTypeData[] rewardCards = Array.Empty<CardTypeData>();
-    [SerializeField, ReadOnly] private Equipment[] rewardEquipments = Array.Empty<Equipment>();
+    [SerializeField, ReadOnly] private CardTypeDataBox[] rewardCards = Array.Empty<CardTypeDataBox>();
+    [SerializeField, ReadOnly] private EquipmentBox[] rewardEquipments = Array.Empty<EquipmentBox>();
     [SerializeField, ReadOnly] private int rewardXp = 0;
     
     public int RewardCredits => rewardCredits;
     public int RewardXp => rewardXp;
-    public CardTypeData[] RewardCards => rewardCards.ToArray();
-    public Equipment[] RewardEquipments => rewardEquipments.ToArray();
+    public CardTypeData[] RewardCards => rewardCards.FromBoxes();
+    public Equipment[] RewardEquipments => rewardEquipments.FromBoxes();
     
     public void Init()
     {
         rewardCredits = 0;
-        rewardCards = Array.Empty<CardTypeData>();
-        rewardEquipments = Array.Empty<Equipment>();
+        rewardCards = Array.Empty<CardTypeDataBox>();
+        rewardEquipments = Array.Empty<EquipmentBox>();
         rewardXp = 0;
     }
 
@@ -33,8 +33,8 @@ public class BattleRewardState : ScriptableObject
     }
     public void AddRewardCredits(int amount) => UpdateState(() => rewardCredits += amount);
     public void AddRewardXp(int xp) => UpdateState(() => rewardXp += xp); 
-    public void SetRewardCards(params CardTypeData[] cards) => UpdateState(() => rewardCards = cards ?? Array.Empty<CardTypeData>());
-    public void SetRewardEquipment(params Equipment[] equipments) => UpdateState(() => rewardEquipments = equipments);
+    public void SetRewardCards(params CardTypeData[] cards) => UpdateState(() => rewardCards = cards.ToBoxes());
+    public void SetRewardEquipment(params Equipment[] equipments) => UpdateState(() => rewardEquipments = equipments.ToBoxes());
 
     private void UpdateState(Action a)
     {
