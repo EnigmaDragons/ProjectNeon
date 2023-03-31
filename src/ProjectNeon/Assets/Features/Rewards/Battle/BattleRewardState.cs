@@ -7,8 +7,8 @@ using UnityEngine;
 public class BattleRewardState : ScriptableObject
 {
     [SerializeField, ReadOnly] private int rewardCredits;
-    [SerializeField, ReadOnly] private CardTypeData[] rewardCards;
-    [SerializeField, ReadOnly] private Equipment[] rewardEquipments;
+    [SerializeField, ReadOnly] private CardTypeData[] rewardCards = Array.Empty<CardTypeData>();
+    [SerializeField, ReadOnly] private Equipment[] rewardEquipments = Array.Empty<Equipment>();
     [SerializeField, ReadOnly] private int rewardXp = 0;
     
     public int RewardCredits => rewardCredits;
@@ -19,8 +19,8 @@ public class BattleRewardState : ScriptableObject
     public void Init()
     {
         rewardCredits = 0;
-        rewardCards = new CardTypeData[0];
-        rewardEquipments = new Equipment[0];
+        rewardCards = Array.Empty<CardTypeData>();
+        rewardEquipments = Array.Empty<Equipment>();
         rewardXp = 0;
     }
 
@@ -33,7 +33,7 @@ public class BattleRewardState : ScriptableObject
     }
     public void AddRewardCredits(int amount) => UpdateState(() => rewardCredits += amount);
     public void AddRewardXp(int xp) => UpdateState(() => rewardXp += xp); 
-    public void SetRewardCards(params CardTypeData[] cards) => UpdateState(() => rewardCards = cards);
+    public void SetRewardCards(params CardTypeData[] cards) => UpdateState(() => rewardCards = cards ?? Array.Empty<CardTypeData>());
     public void SetRewardEquipment(params Equipment[] equipments) => UpdateState(() => rewardEquipments = equipments);
 
     private void UpdateState(Action a)
