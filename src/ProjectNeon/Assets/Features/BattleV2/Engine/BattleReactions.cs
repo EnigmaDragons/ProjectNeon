@@ -32,6 +32,8 @@ public class BattleReactions
     public bool TryResolveNextInstantReaction(IDictionary<int, Member> allBattleMembers)
     {
         var r = _instantReactions.Dequeue().WithPresentAndConsciousTargets(allBattleMembers);
+        while (_instantReactions.Any() && !r.Target.Members.Any())
+            r = _instantReactions.Dequeue().WithPresentAndConsciousTargets(allBattleMembers);
         if (r.Target.Members.Any())
             r.ReactionSequence.Perform(r.Name, r.Source, r.Target, ResourceQuantity.None, ResourceQuantity.None, r.Timing);
         else
