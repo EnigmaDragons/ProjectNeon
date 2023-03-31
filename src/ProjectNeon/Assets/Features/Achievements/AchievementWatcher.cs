@@ -59,8 +59,8 @@ public class AchievementWatcher : MonoBehaviour
         battleState.ConsciousEnemyMembers.ForEach(m => _consciousEnemiesOnCardResolutionStart.Add(m.Id));
     }
 
-    private bool IsNotTutorial => adventure.Adventure.id != AdventureIds.TutorialAdventureId && !battleState.IsSingleTutorialBattle;
-    
+    private bool IsNotTutorial => adventure == null || adventure.Adventure == null || adventure.Adventure.id != AdventureIds.TutorialAdventureId;
+
     private void OnBattleFinished(BattleFinished msg)
     {
         if (msg.Winner == TeamType.Party && battleState.Heroes.Length > 1 && battleState.Heroes.Count(x => x.IsConscious()) == 1)
