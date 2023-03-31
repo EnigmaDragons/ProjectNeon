@@ -135,7 +135,7 @@ public static class AllMetrics
     private static void OnResponse(HttpResponseMessage resp)
     {
         if (!resp.IsSuccessStatusCode)
-            Log.Error($"Failed to submit Metric: {resp.StatusCode}");
+            Log.Warn($"Failed to submit Metric: {resp.StatusCode}");
     }
 
     [Serializable]
