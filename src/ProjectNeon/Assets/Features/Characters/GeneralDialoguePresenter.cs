@@ -41,7 +41,7 @@ public class GeneralDialoguePresenter : OnMessage<ShowNonCutsceneCharacterDialog
     private void FinishCurrentSegment()
     {
         characters.ForEach(c => c.SetTalkingState(false));
-        this.ExecuteAfterDelay(messageLingerDuration, HideAllSpeeches);
+        Async.ExecuteAfterDelay(messageLingerDuration, HideAllSpeeches);
     }
 
     private void HideAllSpeeches()
