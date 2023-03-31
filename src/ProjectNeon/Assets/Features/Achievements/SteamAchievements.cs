@@ -8,16 +8,23 @@ public class SteamAchievements : IAchievements
 {
     private readonly HashSet<string> _completedAchievements = new HashSet<string>();
 
-    public static SteamAchievements Create() => new SteamAchievements().Initialized();
+    public static IAchievements Create() => new SteamAchievements().Initialized();
 
     private SteamAchievements() { }
     
-    private SteamAchievements Initialized()
+    private IAchievements Initialized()
     {
-        var succeeded = SteamUserStats.RequestCurrentStats();
-        if (!succeeded)
-            Log.Warn("Unable to Get Current Steam Achievement Stats");
-        return this;
+        try
+        {
+            var succeeded = SteamUserStats.RequestCurrentStats();
+            if (!succeeded)
+                Log.Warn("Unable to Get Current Steam Achievement Stats");
+            return this;
+        }
+        catch (Exception ex)
+        {
+            return new NoAchievements();
+        }
     }
     
     public void Record(string achievementId)
