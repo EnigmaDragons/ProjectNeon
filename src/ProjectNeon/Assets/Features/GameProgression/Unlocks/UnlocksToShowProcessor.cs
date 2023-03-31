@@ -15,7 +15,7 @@ public class UnlocksToShowProcessor : MonoBehaviour, ILocalizeTerms
     private void Start()
     {
         var progressionData = CurrentProgressionData.Data;
-        if (progressionData.RunsFinished == progressionData.ShownUnlocks.Count)
+        if (progressionData.RunsFinished == progressionData.ShownUnlocks.Count && CurrentProgressionData.Data.HasShownUnlockForAdventure(AdventureIds.OrganizedHarvestorsAdventureId))
             return;
         
         var difficulties = library.UnlockedDifficulties.Where(x => x.id > 0);

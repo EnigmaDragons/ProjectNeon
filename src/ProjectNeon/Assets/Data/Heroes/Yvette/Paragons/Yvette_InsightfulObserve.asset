@@ -22,7 +22,7 @@ MonoBehaviour:
     text: "Next turn, gives <b>1 Vulnerable</b>. \nYou gain {0}.\nThis turn, when
       an enemy attacks, you gain {1}"
     formatArgs:
-    - '{E[1]}'
+    - '{E[0]}'
     - '{RE[0]}'
   tags: 
   speed: 0
@@ -47,5 +47,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c3bd2cb0d323191448e78929b9cb214e, type: 2}
   highlightCondition: []
   unhighlightCondition: []
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 1

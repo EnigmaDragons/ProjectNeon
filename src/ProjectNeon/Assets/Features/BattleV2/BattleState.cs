@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [CreateAssetMenu(menuName = "GameState/BattleState")]
 public class BattleState : ScriptableObject
@@ -115,6 +116,7 @@ public class BattleState : ScriptableObject
     public bool ShowSwapCardForBasic { get; private set; } = true;
     public bool AllowRightClickOnCard { get; private set; } = true;
     public bool BasicSuperFocusEnabled { get; private set; } = false;
+    public bool IsSingleTutorialBattle { get; set; } = false;
     public CardType[] OverrideDeck { get; private set; }
 
     public MemberMaterialType MaterialTypeOf(int memberId)
@@ -419,11 +421,10 @@ public class BattleState : ScriptableObject
     public void Wrapup()
     {
         EnemyArea.Clear();
-        EncounterIdTrackingState.MarkEncounterFinished();
-
-        if (!adventureProgress.HasActiveAdventure)
+        if (IsSingleTutorialBattle || !adventureProgress.HasActiveAdventure)
             return;
         
+        EncounterIdTrackingState.MarkEncounterFinished();
         RecordPartyAdventureHp();
         var battleAttritionReport = _tracker.Finalize(party);
         GrantRewardCredits();

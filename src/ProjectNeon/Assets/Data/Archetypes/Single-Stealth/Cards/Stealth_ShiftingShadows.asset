@@ -20,8 +20,8 @@ MonoBehaviour:
   descriptionV2:
     text: "Enter <b>Stealth</b>\nGives {0} \nGives {1}"
     formatArgs:
+    - '{E[0]}'
     - '{E[1]}'
-    - '{E[2]}'
   tags: 0c000000
   speed: 0
   isSinglePlay: 0
@@ -33,12 +33,12 @@ MonoBehaviour:
   actionSequences:
   - scope: 0
     group: 0
-    cardActions: {fileID: 11400000, guid: 0d4794f1cba354f4aa4e70a410752c57, type: 2}
+    cardActions: {fileID: 11400000, guid: f582895a575f2064daedc8659f7ac34f, type: 2}
     repeatX: 0
     repeatCount: 0
   - scope: 0
     group: 0
-    cardActions: {fileID: 11400000, guid: f582895a575f2064daedc8659f7ac34f, type: 2}
+    cardActions: {fileID: 11400000, guid: 0d4794f1cba354f4aa4e70a410752c57, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -49,5 +49,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1e6b060bb2d10434c8d325b3765125dd, type: 2}
   highlightCondition: []
   unhighlightCondition: []
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 0

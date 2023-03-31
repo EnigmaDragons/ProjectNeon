@@ -26,7 +26,7 @@ MonoBehaviour:
 
       <b>Drain</b> all resources from all enemies.'
     formatArgs:
-    - '{E[0]}'
+    - '{E[1]}'
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -38,12 +38,17 @@ MonoBehaviour:
   actionSequences:
   - scope: 0
     group: 1
-    cardActions: {fileID: 11400000, guid: e079e260539254642b23d1e083c7f011, type: 2}
+    cardActions: {fileID: 11400000, guid: 316264b94c2f85042a7acc7fe364490f, type: 2}
     repeatX: 0
     repeatCount: 0
   - scope: 1
     group: 1
     cardActions: {fileID: 11400000, guid: eeb5c969e6cac6a4f9117c77a6c0fb51, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 0
+    group: 1
+    cardActions: {fileID: 11400000, guid: e079e260539254642b23d1e083c7f011, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -54,5 +59,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9a78785ad807ed4499fd258fc05f8177, type: 2}
   highlightCondition: []
   unhighlightCondition: []
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 0

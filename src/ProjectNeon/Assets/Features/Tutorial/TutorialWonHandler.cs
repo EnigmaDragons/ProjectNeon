@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Linq;
 
 public class TutorialWonHandler : OnMessage<TutorialWon>
@@ -10,7 +11,8 @@ public class TutorialWonHandler : OnMessage<TutorialWon>
     
     public static void Execute(float delay = 3f)
     {
-        Log.Info("Finished Tutorial Adventure");        
+        Log.Info("Finished Tutorial Adventure");
+        CurrentProgressionData.Data.RunsFinished = Math.Max(1, CurrentProgressionData.Data.RunsFinished);
         AllMetrics.PublishGameWon(AdventureIds.TutorialAdventureId);
         CurrentAcademyData.Mutate(a => a.TutorialData = new AcademyTutorialData { CompletedTutorialNames = AcademyData.RequiredLicenseTutorials.Concat(AcademyData.SimpleTutorialPanels).ToArray() });
         CurrentProgressionData.RecordCompletedAdventure(AdventureIds.TutorialAdventureId, TutorialDifficultyLevel, -1, TutorialHeroId.AsArray());

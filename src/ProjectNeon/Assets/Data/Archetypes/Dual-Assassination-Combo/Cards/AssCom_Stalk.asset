@@ -20,7 +20,7 @@ MonoBehaviour:
   descriptionV2:
     text: "Gives <b>2 Mark</b>. \n\n<b>Sneaky:</b> You gain {0}"
     formatArgs:
-    - '{E[1]}'
+    - '{E[0]}'
   tags: 
   speed: 0
   isSinglePlay: 0
@@ -32,12 +32,17 @@ MonoBehaviour:
   actionSequences:
   - scope: 0
     group: 1
-    cardActions: {fileID: 11400000, guid: d4b7e7d989b69704c9394bc9b3a0f57c, type: 2}
+    cardActions: {fileID: 11400000, guid: 316264b94c2f85042a7acc7fe364490f, type: 2}
     repeatX: 0
     repeatCount: 0
   - scope: 0
     group: 0
     cardActions: {fileID: 11400000, guid: 1a4c3a7fbc28b114cbea75089e1b128b, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 0
+    group: 1
+    cardActions: {fileID: 11400000, guid: d4b7e7d989b69704c9394bc9b3a0f57c, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -50,5 +55,7 @@ MonoBehaviour:
   highlightCondition:
   - {fileID: 11400000, guid: e31a0ad53cebd7943bb65ca320c39969, type: 2}
   unhighlightCondition: []
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 0

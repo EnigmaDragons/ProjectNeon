@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class MpZeroGlobalLocalizationParams : MonoBehaviour, ILocalizationParamsManager
 {
+    private void Awake() => OnEnable(); //race condition
+    
     public void OnEnable()
     {
         if (LocalizationManager.ParamManagers.Contains(this)) return;

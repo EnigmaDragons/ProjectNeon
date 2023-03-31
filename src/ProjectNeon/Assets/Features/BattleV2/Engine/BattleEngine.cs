@@ -24,6 +24,7 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     [SerializeField] private ConfirmPlayerTurnV2 confirm;
     [SerializeField] private BattleGlobalEffectCardsPhase globalEffectCardsPhases;
     [SerializeField] private StartOfTurnCardsPhase startOfTurnCardsPhase;
+    [SerializeField] private Navigator navigator;
 
     private bool _triggeredBattleFinish;
     private bool _playerTurnConfirmed = false;
@@ -200,7 +201,12 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
         
         _triggeredBattleFinish = true;
         var startedOnFinish = false;
-        if (state.PlayerLoses())
+        if (state.IsSingleTutorialBattle)
+        {
+            state.Wrapup();
+            navigator.NavigateToTitleScreen();
+        }
+        else if (state.PlayerLoses())
         {
             Message.Publish(new BattleFinished(TeamType.Enemies));
             state.Wrapup();

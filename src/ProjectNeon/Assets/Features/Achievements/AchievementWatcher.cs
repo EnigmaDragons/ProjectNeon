@@ -59,7 +59,7 @@ public class AchievementWatcher : MonoBehaviour
         battleState.ConsciousEnemyMembers.ForEach(m => _consciousEnemiesOnCardResolutionStart.Add(m.Id));
     }
 
-    private bool IsNotTutorial => adventure.Adventure.id != AdventureIds.TutorialAdventureId;
+    private bool IsNotTutorial => adventure.Adventure.id != AdventureIds.TutorialAdventureId && !battleState.IsSingleTutorialBattle;
     
     private void OnBattleFinished(BattleFinished msg)
     {

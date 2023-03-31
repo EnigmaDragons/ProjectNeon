@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ public class CharacterWordsController : OnMessage<DisplayCharacterWordRequested>
 
     private Member _member;
     private float _cooldown;
-    private readonly Queue<Action> _actionQueue = new Queue<Action>(); 
+    private readonly Queue<DisplayCharacterWordRequested> _messageQueue = new Queue<DisplayCharacterWordRequested>(); 
 
     public void Init(Member m)
     {
@@ -21,9 +22,10 @@ public class CharacterWordsController : OnMessage<DisplayCharacterWordRequested>
     {
         if (_cooldown > 0)
             _cooldown -= Time.unscaledDeltaTime;
-        if (_cooldown <= 0 && _actionQueue.AnyNonAlloc())
+        if (_cooldown <= 0 && _messageQueue.AnyNonAlloc())
         {
-            _actionQueue.Dequeue().Invoke();
+            var msg = _messageQueue.Dequeue();
+            Instantiate(prototype, transform.position + offset, Quaternion.identity, transform).Initialized(msg.ReactionType.DisplayTerm());
             _cooldown = cooldownDelay;
         }
     }
@@ -33,7 +35,7 @@ public class CharacterWordsController : OnMessage<DisplayCharacterWordRequested>
         if (_member == null || msg.MemberId != _member.Id)
             return;
 
-        _actionQueue.Enqueue(() => Instantiate(prototype, transform.position + offset, Quaternion.identity, transform).Initialized(msg.ReactionType.DisplayTerm()));
+        _messageQueue.Enqueue(msg);
     }
 
     public string[] GetLocalizeTerms()

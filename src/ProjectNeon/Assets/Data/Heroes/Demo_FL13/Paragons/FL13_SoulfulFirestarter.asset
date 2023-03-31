@@ -26,8 +26,8 @@ MonoBehaviour:
 
       You gain {1}'
     formatArgs:
-    - '{E[0]}'
     - '{E[1]}'
+    - '{E[0]}'
   tags: 28000000
   speed: 0
   isSinglePlay: 0
@@ -37,6 +37,16 @@ MonoBehaviour:
     plusXCost: 0
   rarity: 1
   actionSequences:
+  - scope: 1
+    group: 1
+    cardActions: {fileID: 11400000, guid: 316264b94c2f85042a7acc7fe364490f, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: c224480e34b362c4c80cbf6216e7e542, type: 2}
+    repeatX: 0
+    repeatCount: 0
   - scope: 1
     group: 1
     cardActions: {fileID: 11400000, guid: 9d1775e5cb31b1a47a3fc5dc9efefee2, type: 2}
@@ -56,5 +66,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3e862108f48305f4ba0ae1beb666c4b2, type: 2}
   highlightCondition: []
   unhighlightCondition: []
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 1
