@@ -18,6 +18,7 @@ public static class Log
     public static void Error(Exception e) => IgnoreExceptions(() => Debug.LogException(e));
 
     public static void NonCrashingError(Exception e) => IgnoreExceptions(() => Debug.LogException(new Exception("Non-Crashing", e)));
+    public static void NonCrashingError(string msg) => SinkAnd("Non-Crashing Error: " + msg, () => Debug.LogError(msg));
 
     public static void InfoOrError(string msg, bool isError) => IgnoreExceptions(() =>
     {
