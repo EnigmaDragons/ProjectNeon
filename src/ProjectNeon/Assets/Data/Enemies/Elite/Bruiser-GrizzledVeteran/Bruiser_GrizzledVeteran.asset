@@ -104,12 +104,15 @@ MonoBehaviour:
         EvaluationPartialFormula: 
         Prefix: 
         Suffix: 
+        PrefixTerm: 
+        SuffixTerm: 
       FlavorText:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
@@ -150,12 +153,15 @@ MonoBehaviour:
         EvaluationPartialFormula: 
         Prefix: 
         Suffix: 
+        PrefixTerm: 
+        SuffixTerm: 
       FlavorText:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
       ReactionConditionType: 10
       ReactionEffectScope:
         UseConstant: 1
@@ -163,6 +169,55 @@ MonoBehaviour:
         Variable: {fileID: 0}
       ReactionTimingWindow: 0
       ReactionSequence: {fileID: 11400000, guid: b18f993f6d8ecb04493afffa74e9fad4, type: 2}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+      Unpreventable: 0
+    - Id: 10101
+      EffectType: 73
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 12
+      StatusDetailText: 
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+        PrefixTerm: 
+        SuffixTerm: 
+      FlavorText:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
+      ReactionConditionType: 10
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionTimingWindow: 0
+      ReactionSequence: {fileID: 0}
       ReactionEffect:
         reactor: 0
         scope: 0

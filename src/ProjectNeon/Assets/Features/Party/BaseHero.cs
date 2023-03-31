@@ -44,6 +44,7 @@ public class BaseHero : ScriptableObject, HeroCharacter, ILocalizeTerms
     [SerializeField] private ResourceType resource2;
     [SerializeField] private CardType[] additionalStartingCards;
     [SerializeField] private CardType[] excludedStartingCards;
+    [SerializeField] private EffectData[] startOfBattleEffects = new EffectData[0];
 
     [SerializeField] public HeroFlavorDetails flavorDetails;
     [SerializeField] private HeroLevelUpPathway levelUpTree;
@@ -71,6 +72,7 @@ public class BaseHero : ScriptableObject, HeroCharacter, ILocalizeTerms
     public CharacterAnimationSoundSet AnimationSounds => animationSounds;
     public bool IsAllowedForSocialMedia => allowedForSocialMedia;
     public bool IsDisabled => isDisabled;
+    public EffectData[] StartOfBattleEffects => startOfBattleEffects;
     
     public IStats Stats => new StatAddends { ResourceTypes = GetResourceTypes() }
         .With(StatType.MaxHP, maxHp)

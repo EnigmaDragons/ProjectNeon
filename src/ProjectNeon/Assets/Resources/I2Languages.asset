@@ -2774,13 +2774,14 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - '{[t:Keywords/Drain]} 2 resources from each <b>{[t:Keywords/Afflicted]} Enemy</b>'
-      - "\u4ECE\u6BCF\u4E2A<b>{[t:Keywords/Afflicted]}\u654C\u4EBA\u5904{[t:Keywords/Drain]}2\u8D44\u6E90\n"
-      - "\u5F9E\u6BCF\u500B<b>{[t:Keywords/Afflicted]}\u6575\u4EBA\u8655{[t:Keywords/Drain]}2\u8CC7\u6E90"
-      - "{[t:Keywords/Drain]} 2 \u0440\u0435\u0441\u0443\u0440\u0441\u0430 \u0441
-        \u043A\u0430\u0436\u0434\u043E\u0433\u043E <b>{[t:Keywords/Afflicted]} \u0432\u0440\u0430\u0433</b>"
-      - '{[t:Keywords/Drain]} 2 recursos por cada enemigo <b>{[t:Keywords/Afflicted]}</b>'
-      - '{[t:Keywords/Drain]} 2 recursos de cada inimigo <b>{[t:Keywords/Afflicted]}
+      - '{[t:Keywords/Drain]} 2 {[t:Resources/Energy]} from each <b>{[t:Keywords/Afflicted]}
+        Enemy</b>'
+      - "\u4ECE\u6BCF\u4E2A<b>{[t:Keywords/Afflicted]}\u654C\u4EBA\u5904{[t:Keywords/Drain]}2{[t:Resources/Energy]}\n"
+      - "\u5F9E\u6BCF\u500B<b>{[t:Keywords/Afflicted]}\u6575\u4EBA\u8655{[t:Keywords/Drain]}2{[t:Resources/Energy]}"
+      - "{[t:Keywords/Drain]} 2 {[t:Resources/Energy]} \u0441 \u043A\u0430\u0436\u0434\u043E\u0433\u043E
+        <b>{[t:Keywords/Afflicted]} \u0432\u0440\u0430\u0433</b>"
+      - '{[t:Keywords/Drain]} 2 {[t:Resources/Energy]} por cada enemigo <b>{[t:Keywords/Afflicted]}</b>'
+      - '{[t:Keywords/Drain]} 2 {[t:Resources/Energy]} de cada inimigo <b>{[t:Keywords/Afflicted]}
         </b>'
       - 
       - 
@@ -3186,8 +3187,10 @@ MonoBehaviour:
       Languages:
       - "Til end of battle, at start of turn, deal <b>[2 \xD7 Current Owner[PrimaryResource]]</b>
         <sprite index=1>"
-      - "\u5728\u56DE\u5408\u5F00\u59CB\u65F6\uFF0C\u9020\u6210<b>[2\xD7\u5F53\u524D\u4F7F\u7528\u8005[PrimaryResource]]\u4F24\u5BB3</b>\uFF0C\u76F4\u5230\u6218\u6597\u7ED3\u675F"
-      - "\u5728\u56DE\u5408\u958B\u59CB\u6642\uFF0C\u9020\u6210<b>[2\xD7\u7576\u524D\u4F7F\u7528\u8005[PrimaryResource]]\u50B7\u5BB3</b>\uFF0C\u76F4\u5230\u6230\u9B25\u7D50\u675F"
+      - "\u5728\u56DE\u5408\u5F00\u59CB\u65F6\uFF0C\u9020\u6210<b>[2\xD7\u5F53\u524D\u4F7F\u7528\u8005[PrimaryResource]]\u4F24\u5BB3</b>\uFF0C\u76F4\u5230\u6218\u6597\u7ED3\u675F
+        <sprite index=1>"
+      - "\u5728\u56DE\u5408\u958B\u59CB\u6642\uFF0C\u9020\u6210<b>[2\xD7\u7576\u524D\u4F7F\u7528\u8005[PrimaryResource]]\u50B7\u5BB3</b>\uFF0C\u76F4\u5230\u6230\u9B25\u7D50\u675F
+        <sprite index=1>"
       - "\u0414\u043E \u043A\u043E\u043D\u0446\u0430 \u0431\u0438\u0442\u0432\u044B,
         \u0432 \u043D\u0430\u0447\u0430\u043B\u0435 \u043A\u0430\u0436\u0434\u043E\u0433\u043E
         \u0445\u043E\u0434\u0430, \u043D\u0430\u043D\u0435\u0441\u0438\u0442\u0435
@@ -5188,12 +5191,12 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Deal {[0]} + <b>2</b> per primary resource on that enemy
+      - 'Deal {[0]} + <b>2</b> per {[t:Resources/Energy]} on that enemy
 
         <b>{[t:Keywords/Disabled]}</b>
         for the next <b>1 Turn</b>'
-      - "\u654C\u4EBA\u6BCF\u62E5\u67091\u4E3B\u8981\u8D44\u6E90\uFF0C\u9020\u6210{[0]}+<b>2</b>\u4F24\u5BB3\n\u5728\u4E0B<b>\u56DE\u5408</b><b>{[t:Keywords/Disabled]}</b>"
-      - "\u6575\u4EBA\u6BCF\u64C1\u67091\u4E3B\u8981\u8CC7\u6E90\uFF0C\u9020\u6210{[0]}+<b>2</b>\u50B7\u5BB3\n\u5728\u4E0B<b>\u56DE\u5408</b><b>{[t:Keywords/Disabled]}</b>"
+      - "\u9020\u6210{[0]}+<b>2</b>\xD7\u76EE\u6807{[t:Resources/Energy]}\u6570\u7684\u4F24\u5BB3\n\u5728<b>\u4E0B\u56DE\u5408</b><b>{[t:Keywords/Disabled]}</b>"
+      - "\u9020\u6210{[0]}+<b>2</b>\xD7\u76EE\u6A19{[t:Resources/Energy]}\u6578\u7684\u50B7\u5BB3\n\u5728<b>\u4E0B\u56DE\u5408</b><b>{[t:Keywords/Disabled]}</b>\n"
       - 
       - "Inflige {[0]} + <b>2</b> por recurso primario en ese enemigo\n<b>{[t:Keywords/Disabled]}</b>
         por el pr\xF3ximo <b>1 Turno</b>"
@@ -5208,13 +5211,13 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Deals {[0]} + <b>2</b> per primary resource on that enemy
+      - 'Deals {[0]} + <b>2</b> per {[t:Resources/Energy]} on that enemy
 
 
         Doubles
         own <b>{[t:Stats/Stat-Magic]}</b>'
-      - "\u654C\u4EBA\u6BCF\u62E5\u67091\u4E3B\u8981\u8D44\u6E90\uFF0C\u9020\u6210{[0]}+<b>2</b>\u4F24\u5BB3\n\n\u81EA\u5DF1\u7684<b>{[t:Stats/Stat-Magic]}</b>\u7FFB\u500D"
-      - "\u6575\u4EBA\u6BCF\u64C1\u67091\u4E3B\u8981\u8CC7\u6E90\uFF0C\u9020\u6210{[0]}+<b>2</b>\u50B7\u5BB3\n\n\u81EA\u5DF1\u7684<b>{[t:Stats/Stat-Magic]}</b>\u7FFB\u500D"
+      - "\u9020\u6210{[0]}+<b>2</b>\xD7\u76EE\u6807{[t:Resources/Energy]}\u6570\u7684\u4F24\u5BB3\n\n\u81EA\u5DF1\u7684<b>{[t:Stats/Stat-Magic]}</b>\u7FFB\u500D"
+      - "\u9020\u6210{[0]}+<b>2</b>\xD7\u76EE\u6A19{[t:Resources/Energy]}\u6578\u7684\u50B7\u5BB3\n\n\u81EA\u5DF1\u7684<b>{[t:Stats/Stat-Magic]}</b>\u7FFB\u500D"
       - 
       - 'Inflige {[0]} + <b>2</b> por recurso primario en ese enemigo
 
@@ -5232,9 +5235,9 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Deal {[0]} + <b>1</b> per primary resource on that enemy
-      - "\u654C\u4EBA\u6BCF\u62E5\u67091\u4E3B\u8981\u8D44\u6E90\uFF0C\u9020\u6210{[0]}+<b>1</b>\u4F24\u5BB3"
-      - "\u6575\u4EBA\u6BCF\u64C1\u67091\u4E3B\u8981\u8CC7\u6E90\uFF0C\u9020\u6210{[0]}+<b>1</b>\u50B7\u5BB3"
+      - Deal {[0]} + <b>1</b> per {[t:Resources/Energy]} on that enemy
+      - "\u9020\u6210{[0]}+<b>1</b>\xD7\u76EE\u6807{[t:Resources/Energy]}\u6570\u7684\u4F24\u5BB3"
+      - "\u9020\u6210{[0]}+<b>1</b>\xD7\u76EE\u6A19{[t:Resources/Energy]}\u6578\u7684\u50B7\u5BB3"
       - 
       - Inflige {[0]} + <b>1</b> por recurso primario en ese enemigo
       - "Cause {[0]} de dano+ <b>1</b> por recurso prim\xE1rio naquele inimigo"
@@ -6190,10 +6193,10 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Start of turn after next: Gives 3 Primary Resource and 5 {[t:Stats/Stat-Armor]}
+      - 'Start of turn after next: Gives 3 {[t:Resources/Energy]} and 5 {[t:Stats/Stat-Armor]}
         & 5 {[t:Stats/Stat-Resistance]}'
-      - "\u4E0B\u56DE\u5408\u5F00\u59CB\u65F6\uFF1A\u7ED9\u4E883\u4E3B\u8981\u8D44\u6E90\u548C5{[t:Stats/Stat-Armor]}\u548C5{[t:Stats/Stat-Resistance]}"
-      - "\u4E0B\u56DE\u5408\u958B\u59CB\u6642\uFF1A\u7D66\u4E883\u4E3B\u8981\u8CC7\u6E90\u548C5{[t:Stats/Stat-Armor]}\u548C5{[t:Stats/Stat-Resistance]}"
+      - "\u4E0B\u56DE\u5408\u5F00\u59CB\u65F6\uFF1A\u7ED9\u4E883{[t:Resources/Energy]}\u548C5{[t:Stats/Stat-Armor]}\u4E0E5{[t:Stats/Stat-Resistance]}"
+      - "\u4E0B\u56DE\u5408\u958B\u59CB\u6642\uFF1A\u7D66\u4E883{[t:Resources/Energy]}\u548C5{[t:Stats/Stat-Armor]}\u82075{[t:Stats/Stat-Resistance]}"
       - 
       - "El turno inicia despu\xE9s del siguiente: Da 3 Recursos Primarios y 5 {[t:Stats/Stat-Armor]}
         y 5 {[t:Stats/Stat-Resistance]}"
@@ -6824,10 +6827,10 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Deal {[0]} <b>| {[t:Keywords/Critical]}:</b> If you have more resources than
-        the target
-      - "\u9020\u6210{[0]}\u4F24\u5BB3\n<b>|{[t:Keywords/Critical]}:</b>\u4F60\u62E5\u6709\u7684\u8D44\u6E90\u591A\u4E8E\u76EE\u6807"
-      - "\u9020\u6210{[0]}\u50B7\u5BB3\n<b>|{[t:Keywords/Critical]}:</b>\u4F60\u64C1\u6709\u7684\u8CC7\u6E90\u591A\u65BC\u76EE\u6A19"
+      - Deal {[0]} <b>| {[t:Keywords/Critical]}:</b> If you have more {[t:Resources/Energy]}
+        than the target
+      - "\u9020\u6210{[0]}\u4F24\u5BB3\n<b>|{[t:Keywords/Critical]}:</b>\u4F60\u62E5\u6709\u7684{[t:Resources/Energy]}\u591A\u4E8E\u76EE\u6807"
+      - "\u9020\u6210{[0]}\u50B7\u5BB3\n<b>|{[t:Keywords/Critical]}:</b>\u4F60\u64C1\u6709\u7684{[t:Resources/Energy]}\u591A\u65BC\u76EE\u6A19"
       - 
       - "Inflige {[0]} <b>| {[t:Keywords/Critical]}:</b> Si tienes m\xE1s recursos
         que el objetivo"
@@ -6900,10 +6903,10 @@ MonoBehaviour:
       - 'Gives {[0]}
 
 
-        <b>{[t:Keywords/Drain]}</b> all resources from all
-        enemies.'
-      - "\u65BD\u52A0{[0]}\n\n<b>{[t:Keywords/Drain]}</b>\u6240\u6709\u654C\u4EBA\u7684\u5168\u90E8\u8D44\u6E90"
-      - "\u65BD\u52A0{[0]}\n\n<b>{[t:Keywords/Drain]}</b>\u6240\u6709\u6575\u4EBA\u7684\u5168\u90E8\u8CC7\u6E90"
+        <b>{[t:Keywords/Drain]}</b> all {[t:Resources/Energy]}
+        from all enemies.'
+      - "\u65BD\u52A0{[0]}\n\n<b>{[t:Keywords/Drain]}</b>\u6240\u6709\u654C\u4EBA\u7684\u5168\u90E8{[t:Resources/Energy]}"
+      - "\u65BD\u52A0{[0]}\n\n<b>{[t:Keywords/Drain]}</b>\u6240\u6709\u6575\u4EBA\u7684\u5168\u90E8{[t:Resources/Energy]}"
       - 
       - 'Da {[0]}
 
@@ -7101,18 +7104,18 @@ MonoBehaviour:
       - 'Deal {[0]}
 
 
-        Remove all Resources'
-      - "\u9020\u6210{[0]}\u4F24\u5BB3\n\n\u79FB\u9664\u6240\u6709\u8D44\u6E90"
-      - "\u9020\u6210{[0]}\u50B7\u5BB3\n\n\u79FB\u9664\u6240\u6709\u8CC7\u6E90"
+        Remove all {[t:Resources/Energy]}'
+      - "\u9020\u6210{[0]}\u4F24\u5BB3\n\n\u79FB\u9664\u6240\u6709{[t:Resources/Energy]}"
+      - "\u9020\u6210{[0]}\u50B7\u5BB3\n\n\u79FB\u9664\u6240\u6709{[t:Resources/Energy]}"
       - 
       - 'Inflige {[0]}
 
 
-        Elimina todos los Recursos'
+        Elimina todos los {[t:Resources/Energy]}'
       - 'Cause {[0]} de dano
 
 
-        Remova todos os recursos'
+        Remova todos os {[t:Resources/Energy]}'
       - 
       - 
       - 
@@ -7771,9 +7774,9 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - <b>{[t:Keywords/Drain]}</b> all resources
-      - "<b>{[t:Keywords/Drain]}</b>\u6240\u6709\u8D44\u6E90"
-      - "<b>{[t:Keywords/Drain]}</b>\u6240\u6709\u8CC7\u6E90"
+      - <b>{[t:Keywords/Drain]}</b> all {[t:Resources/Energy]}
+      - "<b>{[t:Keywords/Drain]}</b>\u6240\u6709{[t:Resources/Energy]}"
+      - "<b>{[t:Keywords/Drain]}</b>\u6240\u6709{[t:Resources/Energy]}"
       - 
       - <b>{[t:Keywords/Drain]}</b> todos los recursos
       - <b>{[t:Keywords/Drain]}</b> todos os recursos
@@ -7788,9 +7791,10 @@ MonoBehaviour:
       Languages:
       - 'Deal {[0]}.
 
-        Prevent target from gaining resources until next turn.'
-      - "\u9020\u6210{[0]}\u4F24\u5BB3\n\u76EE\u6807\u65E0\u6CD5\u83B7\u5F97\u8D44\u6E90\uFF0C\u76F4\u5230\u4E0B\u56DE\u5408"
-      - "\u9020\u6210{[0]}\u50B7\u5BB3\n\u76EE\u6A19\u7121\u6CD5\u7372\u5F97\u8CC7\u6E90\uFF0C\u76F4\u5230\u4E0B\u56DE\u5408"
+        Prevent target from gaining {[t:Resources/Energy]}
+        until next turn.'
+      - "\u9020\u6210{[0]}\u4F24\u5BB3\n\u76EE\u6807\u76F4\u5230\u4E0B\u56DE\u5408\u65E0\u6CD5\u83B7\u5F97{[t:Resources/Energy]}"
+      - "\u9020\u6210{[0]}\u50B7\u5BB3\n\u76EE\u6A19\u76F4\u5230\u4E0B\u56DE\u5408\u7121\u6CD5\u7372\u5F97{[t:Resources/Energy]}"
       - 
       - "Inflige {[0]}.\nEvita que el objetivo gane recursos hasta el pr\xF3ximo
         turno."
@@ -7805,9 +7809,9 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - If target has 0 resources, gives {[0]}
-      - "\u5982\u679C\u76EE\u6807\u6CA1\u6709\u8D44\u6E90\uFF0C\u65BD\u52A0{[0]}"
-      - "\u5982\u679C\u76EE\u6A19\u6C92\u6709\u8CC7\u6E90\uFF0C\u65BD\u52A0{[0]}"
+      - If target has 0 {[t:Resources/Energy]}, gives {[0]}
+      - "\u5982\u679C\u76EE\u6807\u6CA1\u6709{[t:Resources/Energy]}\uFF0C\u65BD\u52A0{[0]}"
+      - "\u5982\u679C\u76EE\u6A19\u6C92\u6709{[t:Resources/Energy]}\uFF0C\u65BD\u52A0{[0]}"
       - 
       - Si el objetivo tiene 0 recursos, da {[0]}
       - "Se o alvo tiver 0 recursos, d\xEA {[0]}"
@@ -8103,9 +8107,9 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Deal {[0]} <b>| {[t:Keywords/Critical]}:</b> If target has 0 resources
-      - "\u9020\u6210{[0]}\u4F24\u5BB3\n|<b>{[t:Keywords/Critical]}:</b>\u76EE\u6807\u6CA1\u6709\u8D44\u6E90"
-      - "\u9020\u6210{[0]}\u50B7\u5BB3\n|<b>{[t:Keywords/Critical]}:</b>\u76EE\u6A19\u6C92\u6709\u8CC7\u6E90"
+      - Deal {[0]} <b>| {[t:Keywords/Critical]}:</b> If target has 0 {[t:Resources/Energy]}
+      - "\u9020\u6210{[0]}\u4F24\u5BB3\n|<b>{[t:Keywords/Critical]}:</b>\u76EE\u6807\u6CA1\u6709{[t:Resources/Energy]}"
+      - "\u9020\u6210{[0]}\u50B7\u5BB3\n|<b>{[t:Keywords/Critical]}:</b>\u76EE\u6A19\u6C92\u6709{[t:Resources/Energy]}"
       - 
       - Inflige {[0]} <b>| {[t:Keywords/Critical]}:</b> Si el objetivo tiene 0 recursos
       - Cause {[0]} de dano<b>| {[t:Keywords/Critical]}:</b> se o alvo tiver 0 recursos
@@ -8290,9 +8294,10 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Deal {[0]} and {[t:Keywords/Drain]} <b>1 Resource</b> for 3 turns
-      - "\u9020\u6210{[0]}\u4F24\u5BB3\u5E76{[t:Keywords/Drain]}<b>1\u8D44\u6E90</b>\uFF0C\u6301\u7EED3\u56DE\u5408"
-      - "\u9020\u6210{[0]}\u50B7\u5BB3\u4E26{[t:Keywords/Drain]}<b>1\u8CC7\u6E90</b>\uFF0C\u6301\u7E8C3\u56DE\u5408"
+      - Deal {[0]} and {[t:Keywords/Drain]} <b>1 {[t:Resources/Energy]}</b> for 3
+        turns
+      - "\u9020\u6210{[0]}\u4F24\u5BB3\u5E76{[t:Keywords/Drain]}<b>1{[t:Resources/Energy]}</b>\uFF0C\u6301\u7EED3\u56DE\u5408"
+      - "\u9020\u6210{[0]}\u50B7\u5BB3\u4E26{[t:Keywords/Drain]}<b>1{[t:Resources/Energy]}</b>\uFF0C\u6301\u7E8C3\u56DE\u5408"
       - 
       - Inflige {[0]} y {[t:Keywords/Drain]} <b>1 Recurso</b> por 3 turnos
       - Cause {[0]} de dano e {[t:Keywords/Drain]} <b>1 recurso</b> por 3 turnos
@@ -9100,8 +9105,10 @@ MonoBehaviour:
         <b>Whenever
         Damaged</b>: Deal <b>{[t:Stats/Stat-Shield]}</b> <sprite index=2> to all
         enemies'
-      - "\u5C06<b>{[t:Stats/Stat-MaxShield]}</b>\u8BBE\u4E3A({[0]})\u4E58<b>{[t:Stats/Stat-MaxShield]}</b>\n<b>\u4E00\u65E6\u53D7\u4F24</b>:\u5BF9\u6240\u6709\u654C\u4EBA\u9020\u6210<b>{[t:Stats/Stat-Shield]}\u4F24\u5BB3"
-      - "\u5C07<b>{[t:Stats/Stat-MaxShield]}</b>\u8A2D\u70BA({[0]})\u4E58<b>{[t:Stats/Stat-MaxShield]}</b>\r\n<b>\u4E00\u65E6\u53D7\u50B7</b>:\u5C0D\u6240\u6709\u6575\u4EBA\u9020\u6210<b>{[t:Stats/Stat-Shield]}\u50B7\u5BB3"
+      - "\u5C06<b>{[t:Stats/Stat-MaxShield]}</b>\u8BBE\u4E3A({[0]})\u4E58<b>{[t:Stats/Stat-MaxShield]}</b>\n<b>\u4E00\u65E6\u53D7\u4F24</b>:\u5BF9\u6240\u6709\u654C\u4EBA\u9020\u6210\u76F8\u5F53\u4E8E<b>{[t:Stats/Stat-Shield]}</b><sprite
+        index=2>\u7684\u4F24\u5BB3"
+      - "\u5C07<b>{[t:Stats/Stat-MaxShield]}</b>\u8A2D\u70BA({[0]})\u4E58<b>{[t:Stats/Stat-MaxShield]}</b>\n<b>\u4E00\u65E6\u53D7\u50B7</b>:\u5C0D\u6240\u6709\u6575\u4EBA\u9020\u6210\u76F8\u7576\u65BC<b>{[t:Stats/Stat-Shield]}</b><sprite
+        index=2>\u7684\u50B7\u5BB3"
       - 
       - "Establece <b>{[t:Stats/Stat-MaxShield]}</b> a ({[0]}) * <b>{[t:Stats/Stat-MaxShield]}</b>.\n<b>Siempre
         que resulte un da\xF1o</b>: Inflige <b>{[t:Stats/Stat-Shield]}</b> <sprite
@@ -9635,10 +9642,10 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "Enter <b>{[t:Keywords/Stealth]}</b>. \nGives <b>1 Primary Resource</b>.
+      - "Enter <b>{[t:Keywords/Stealth]}</b>. \nGives <b>1 {[t:Resources/Energy]}</b>.
         \nGives <b>1</b> {[t:Keywords/Power]} for <b>3</b> turns"
-      - "<b>{[t:Keywords/Stealth]}</b>\n\u7ED9\u4E88<b>1\u4E3B\u8981\u8D44\u6E90</b>\n\u5728<b>3</b>\u56DE\u5408\u5185\u7ED9\u4E88<b>1</b>{[t:Keywords/Power]}"
-      - "<b>{[t:Keywords/Stealth]}</b>\n\u7D66\u4E88<b>1\u4E3B\u8981\u8CC7\u6E90</b>\n\u5728<b>3</b>\u56DE\u5408\u5167\u7D66\u4E88<b>1</b>{[t:Keywords/Power]}"
+      - "<b>{[t:Keywords/Stealth]}</b>\n\u7ED9\u4E88<b>1{[t:Resources/Energy]}</b>\n\u5728<b>3</b>\u56DE\u5408\u5185\u7ED9\u4E88<b>1</b>{[t:Keywords/Power]}"
+      - "<b>{[t:Keywords/Stealth]}</b>\n\u7D66\u4E88<b>1{[t:Resources/Energy]}</b>\n\u5728<b>3</b>\u56DE\u5408\u5167\u7D66\u4E88<b>1</b>{[t:Keywords/Power]}"
       - 
       - "Ingresa <b>{[t:Keywords/Stealth]}</b>. \nDa <b>1 Recurso Primario</b>. \nDa
         <b>1</b> {[t:Keywords/PrimaryStat]} por <b>3</b> turnos"
@@ -9794,8 +9801,8 @@ MonoBehaviour:
       Languages:
       - '<b>If {[t:Keywords/Sneaky]}: {[t:Keywords/Drain]} 1 {[t:Resources/Energy]}</b>
         per <b>{[t:Keywords/Marked]}</b> and next turn gives {[0]}'
-      - "<b>\u5982\u679C{[t:Keywords/Sneaky]}\uFF1A\u6BCF\u6709\u4E00\u4E2A<b>{[t:Keywords/Marked]}</b>{[t:Keywords/Drain]}1{[t:Resources/Energy]}</b>\uFF0C\u4E0B\u56DE\u5408\u7ED9\u4E88{[0]}"
-      - "<b>\u5982\u679C{[t:Keywords/Sneaky]}\uFF1A\u6BCF\u6709\u4E00\u500B<b>{[t:Keywords/Marked]}</b>{[t:Keywords/Drain]}1{[t:Resources/Energy]}</b>\uFF0C\u4E0B\u56DE\u5408\u7D66\u4E88{[0]}"
+      - "<b>\u5982\u679C{[t:Keywords/Sneaky]}\uFF1A\u6BCF\u67091<b>{[t:Keywords/Marked]}</b>{[t:Keywords/Drain]}1{[t:Resources/Energy]}</b>\uFF0C\u4E0B\u56DE\u5408\u7ED9\u4E88{[0]}"
+      - "<b>\u5982\u679C{[t:Keywords/Sneaky]}\uFF1A\u6BCF\u67091<b>{[t:Keywords/Marked]}</b>{[t:Keywords/Drain]}1{[t:Resources/Energy]}</b>\uFF0C\u4E0B\u56DE\u5408\u7D66\u4E88{[0]}"
       - 
       - '<b>Si {[t:Keywords/Sneaky]}: {[t:Keywords/Drain]} 1 {[t:Resources/Energy]}</b>
         por <b>{[t:Keywords/Marked]}</b> y el siguiente turno da {[0]}'
@@ -10937,13 +10944,13 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Prevent target from gaining resources until next turn
+      - 'Prevent target from gaining {[t:Resources/Energy]} until next turn
 
 
-        You gain
-        {[0]} and {[1]} <b>{[t:Keywords/CardCycles]}</b>'
-      - "\u963B\u6B62\u76EE\u6807\u83B7\u5F97\u8D44\u6E90\uFF0C\u76F4\u5230\u4E0B\u56DE\u5408\n\n\u81EA\u5DF1\u83B7\u5F97{[0]}\u548C{[1]}<b>{[t:Keywords/CardCycles]}</b>"
-      - "\u963B\u6B62\u76EE\u6A19\u7372\u5F97\u8CC7\u6E90\uFF0C\u76F4\u5230\u4E0B\u56DE\u5408\n\n\u81EA\u5DF1\u7372\u5F97{[0]}\u548C{[1]}<b>{[t:Keywords/CardCycles]}</b>"
+        You
+        gain {[0]} and {[1]} <b>{[t:Keywords/CardCycles]}</b>'
+      - "\u963B\u6B62\u76EE\u6807\u83B7\u5F97{[t:Resources/Energy]}\uFF0C\u76F4\u5230\u4E0B\u56DE\u5408\n\n\u81EA\u5DF1\u83B7\u5F97{[0]}\u548C{[1]}<b>{[t:Keywords/CardCycles]}</b>"
+      - "\u963B\u6B62\u76EE\u6A19\u7372\u5F97{[t:Resources/Energy]}\uFF0C\u76F4\u5230\u4E0B\u56DE\u5408\n\n\u81EA\u5DF1\u7372\u5F97{[0]}\u548C{[1]}<b>{[t:Keywords/CardCycles]}</b>"
       - 
       - "Evita que el objetivo gane recursos hasta el pr\xF3ximo turno\n\nT\xFA ganas
         {[0]} and {[1]} <b>{[t:Keywords/CardCycles]}</b>"
@@ -12066,12 +12073,12 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Lose 2 Resources
-      - "\u5931\u53BB2\u70B9\u8D44\u6E90"
-      - "\u5931\u53BB2\u9EDE\u8CC7\u6E90"
+      - Lose 2 {[t:Resources/Energy]}
+      - "\u5931\u53BB2{[t:Resources/Energy]}"
+      - "\u5931\u53BB2{[t:Resources/Energy]}"
       - 
-      - Pierde 2 Recursos
-      - Perca 2 recursos
+      - Pierde 2 {[t:Resources/Energy]}
+      - Perca 2 {[t:Resources/Energy]}
       - 
       - 
       - 
@@ -12922,9 +12929,9 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Lose all Primary Resources
-      - "\u5931\u53BB\u6240\u6709\u4E3B\u8981\u8D44\u6E90"
-      - "\u5931\u53BB\u6240\u6709\u4E3B\u8981\u8CC7\u6E90"
+      - Lose all {[t:Resources/Energy]}
+      - "\u5931\u53BB\u6240\u6709{[t:Resources/Energy]}"
+      - "\u5931\u53BB\u6240\u6709{[t:Resources/Energy]}"
       - 
       - Pierde todos los Recursos Primarios
       - "Perde todos os Recursos Prim\xE1rios"
@@ -13707,8 +13714,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - '* [Grenades Thrown]'
-      - 
-      - 
+      - "* [\u4F7F\u7528\u7684Grenades\u6570]"
+      - "* [\u4F7F\u7528\u7684Grenades\u6578]"
       - 
       - 
       - 
@@ -24988,6 +24995,24 @@ MonoBehaviour:
       - 
       Flags: 000000000000000000
       Languages_Touch: []
+    - Term: CardStatuses/Effect10101StatusDetail
+      TermType: 0
+      Description: 
+      Languages:
+      - <sprite index=4> is treated as <sprite index=6> for all purposes except it
+        has a much lower maximum
+      - "\n<sprite index=4>\u5747\u88AB\u89C6\u4E3A<sprite index=6>\uFF0C\u9664\u975E\u5B83\u7684\u6700\u5927\u503C\u66F4\u4F4E"
+      - "<sprite index=4>\u5747\u88AB\u8996\u70BA<sprite index=6>\uFF0C\u9664\u975E\u5B83\u7684\u6700\u5927\u503C\u66F4\u4F4E"
+      - 
+      - "<sprite index=4> se trata como <sprite index=6> a todos los efectos, excepto
+        que tiene un m\xE1ximo mucho m\xE1s bajo"
+      - "<sprite index=4> \xE9 tratada como <sprite index=6> para todos os prop\xF3sitos,
+        exceto que tem um m\xE1ximo muito menor"
+      - 
+      - 
+      - 
+      Flags: 000000000000000000
+      Languages_Touch: []
     - Term: CardStatuses/Effect20000StatusDetail
       TermType: 0
       Description: 
@@ -32409,8 +32434,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - Stand aside
-      - "\u9760\u8FB9\u7AD9"
-      - "\u9760\u908A\u7AD9"
+      - "\u7ED9\u6211\u9760\u8FB9\u7AD9\u3002"
+      - "\u7D66\u6211\u9760\u908A\u7AD9\u3002"
       - 
       - Hazte a un lado
       - Saia do meu caminho
@@ -40905,15 +40930,15 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Start of Turn: Gain 1 Resource'
-      - "\u56DE\u5408\u5F00\u59CB\u65F6\uFF1A\u83B7\u5F971\u8D44\u6E90"
-      - "\u56DE\u5408\u958B\u59CB\u6642\uFF1A\u7372\u5F971\u8CC7\u6E90"
+      - 'Start of Turn: Gain 1 {[t:Resources/Energy]}'
+      - "\u56DE\u5408\u5F00\u59CB\u65F6\uFF1A\u83B7\u5F971{[t:Resources/Energy]}"
+      - "\u56DE\u5408\u958B\u59CB\u6642\uFF1A\u7372\u5F971{[t:Resources/Energy]}"
       - "\u041D\u0430\u0447\u0430\u043B\u043E \u043F\u043E\u0432\u043E\u0440\u043E\u0442\u0430:
-        \u041F\u043E\u043B\u0443\u0447\u0438\u0442\u0435 1 \u0440\u0435\u0441\u0443\u0440\u0441"
-      - 'Inicio del turno: Gana 1 recurso'
-      - "In\xEDcio do turno: Ganhe 1 recurso"
-      - 'Start der Kurve: Gewinnen Sie 1 Ressource'
-      - "D\xE9but de virage: Gagnez 1 ressource"
+        \u041F\u043E\u043B\u0443\u0447\u0438\u0442\u0435 1 {[t:Resources/Energy]}"
+      - 'Inicio del turno: Gana 1 {[t:Resources/Energy]}'
+      - "In\xEDcio do turno: Ganhe 1 {[t:Resources/Energy]}"
+      - 'Start der Kurve: Gewinnen Sie 1 {[t:Resources/Energy]}'
+      - "D\xE9but de virage: Gagnez 1 {[t:Resources/Energy]}"
       - "\u30BF\u30FC\u30F3\u306E\u958B\u59CB\uFF1A1\u3064\u306E\u30EA\u30BD\u30FC\u30B9\u3092\u7372\u5F97\u3057\u307E\u3059"
       Flags: 000000000000000000
       Languages_Touch: []
@@ -41072,14 +41097,14 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - +2 Starting Resources
-      - "\u83B7\u5F972\u521D\u59CB\u8D44\u6E90"
-      - "\u7372\u5F972\u521D\u59CB\u8CC7\u6E90"
+      - +2 Starting {[t:Resources/Energy]}
+      - "\u83B7\u5F972\u521D\u59CB{[t:Resources/Energy]}"
+      - "\u7372\u5F972\u521D\u59CB{[t:Resources/Energy]}"
       - "+2 \u043D\u0430\u0447\u0430\u043B\u044C\u043D\u044B\u0445 \u0440\u0435\u0441\u0443\u0440\u0441\u0430"
-      - +2 recursos iniciales
-      - +2 Recursos iniciais
-      - +2 Startressourcen
-      - "+2 ressources de d\xE9part"
+      - +2 {[t:Resources/Energy]} iniciales
+      - +2 {[t:Resources/Energy]} iniciais
+      - +2 {[t:Resources/Energy]}
+      - "+2 {[t:Resources/Energy]} de d\xE9part"
       - "+2 \u958B\u59CB\u30EA\u30BD\u30FC\u30B9"
       Flags: 000000000000000000
       Languages_Touch: []
@@ -41143,15 +41168,15 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Start of Battle: Gain 1 Resource'
-      - "\u6218\u6597\u5F00\u59CB\u65F6\uFF1A\u83B7\u5F971\u8D44\u6E90"
-      - "\u6230\u9B25\u958B\u59CB\u6642\uFF1A\u7372\u5F971\u8CC7\u6E90"
+      - 'Start of Battle: Gain 1 {[t:Resources/Energy]}'
+      - "\u6218\u6597\u5F00\u59CB\u65F6\uFF1A\u83B7\u5F971{[t:Resources/Energy]}"
+      - "\u6230\u9B25\u958B\u59CB\u6642\uFF1A\u7372\u5F971{[t:Resources/Energy]}"
       - "\u041D\u0430\u0447\u0430\u043B\u043E \u0431\u0438\u0442\u0432\u044B: \u041F\u043E\u043B\u0443\u0447\u0438\u0442\u0435
-        1 \u0440\u0435\u0441\u0443\u0440\u0441"
-      - 'Inicio de la batalla: Gana 1 recurso'
-      - "In\xEDcio da batalha: Ganhe 1 recurso"
-      - 'Kampfstart: Gewinnen Sie 1 Ressource'
-      - "D\xE9but de la bataille: Gagnez 1 ressource"
+        1 {[t:Resources/Energy]}"
+      - 'Inicio de la batalla: Gana 1 {[t:Resources/Energy]}'
+      - "In\xEDcio da batalha: Ganhe 1 {[t:Resources/Energy]}"
+      - 'Kampfstart: Gewinnen Sie 1 {[t:Resources/Energy]}'
+      - "D\xE9but de la bataille: Gagnez 1 {[t:Resources/Energy]}"
       - "\u6226\u3044\u306E\u59CB\u307E\u308A\uFF1A1\u3064\u306E\u30EA\u30BD\u30FC\u30B9\u3092\u7372\u5F97\u3057\u307E\u3059"
       Flags: 000000000000000000
       Languages_Touch: []
@@ -41175,16 +41200,16 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'When {[t:Keywords/Bloodied]}: Gain 8 {[t:Stats/Stat-PrimaryResource]}'
-      - "{[t:Keywords/Bloodied]}\u65F6\uFF1A\u83B7\u5F978{[t:Stats/Stat-PrimaryResource]}"
-      - "{[t:Keywords/Bloodied]}\u6642\uFF1A\u7372\u5F978{[t:Stats/Stat-PrimaryResource]}"
+      - 'When {[t:Keywords/Bloodied]}: Gain 8 {[t:Resources/Energy]}'
+      - "{[t:Keywords/Bloodied]}\u65F6\uFF1A\u83B7\u5F978{[t:Resources/Energy]}"
+      - "{[t:Keywords/Bloodied]}\u6642\uFF1A\u7372\u5F978{[t:Resources/Energy]}"
       - "\u041A\u043E\u0433\u0434\u0430 {[t:Keywords/Bloodied]}: \u041F\u043E\u043B\u0443\u0447\u0438\u0442\u0435
-        8 {[t:Stats/Stat-PrimaryResource]}"
-      - 'Cuando {[t:Keywords/Bloodied]}: Gana 8 {[t:Stats/Stat-PrimaryResource]}'
-      - 'Quando {[t:Keywords/Bloodied]}: Ganhe 8 {[t:Stats/Stat-PrimaryResource]}'
-      - 'Wenn {[t:Keywords/Bloodied]}: Erhalte 8 {[t:Stats/Stat-PrimaryResource]}'
-      - "Lorsque {[t:Keywords/Bloodied]}\_: Gagnez 8\_{[t:Stats/Stat-PrimaryResource]}"
-      - "{[t:Keywords/Bloodied]}\u306E\u5834\u5408: {[t:Stats/Stat-PrimaryResource]}\u30928\u7372\u5F97"
+        8 {[t:Resources/Energy]}"
+      - 'Cuando {[t:Keywords/Bloodied]}: Gana 8 {[t:Resources/Energy]}'
+      - 'Quando {[t:Keywords/Bloodied]}: Ganhe 8 {[t:Resources/Energy]}'
+      - 'Wenn {[t:Keywords/Bloodied]}: Erhalte 8 {[t:Resources/Energy]}'
+      - "Lorsque {[t:Keywords/Bloodied]}\_: Gagnez 8\_{[t:Resources/Energy]}"
+      - "{[t:Keywords/Bloodied]}\u306E\u5834\u5408: {[t:Resources/Energy]}\u30928\u7372\u5F97"
       Flags: 000000000000000000
       Languages_Touch: []
     - Term: EquipmentDescriptions/00043-Desc
@@ -41220,16 +41245,18 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Start of Turn: If you have no resources, gain 2.'
-      - "\u56DE\u5408\u5F00\u59CB\u65F6\uFF1A\u5982\u679C\u4F60\u6CA1\u6709\u8D44\u6E90\uFF0C\u5219\u83B7\u5F972\u8D44\u6E90"
-      - "\u56DE\u5408\u958B\u59CB\u6642\uFF1A\u5982\u679C\u4F60\u6C92\u6709\u8CC7\u6E90\uFF0C\u5247\u7372\u5F972\u8CC7\u6E90"
+      - 'Start of Turn: If you have no {[t:Resources/Energy]}, gain 2.'
+      - "\u56DE\u5408\u5F00\u59CB\u65F6\uFF1A\u5982\u679C\u4F60\u6CA1\u6709{[t:Resources/Energy]}\uFF0C\u5219\u83B7\u5F972{[t:Resources/Energy]}"
+      - "\u56DE\u5408\u958B\u59CB\u6642\uFF1A\u5982\u679C\u4F60\u6C92\u6709{[t:Resources/Energy]}\uFF0C\u5247\u7372\u5F972{[t:Resources/Energy]}"
       - "\u041D\u0430\u0447\u0430\u043B\u043E \u0445\u043E\u0434\u0430: \u0435\u0441\u043B\u0438
-        \u0443 \u0432\u0430\u0441 \u043D\u0435\u0442 \u0440\u0435\u0441\u0443\u0440\u0441\u043E\u0432,
-        \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u0435 2."
-      - 'Inicio del turno: Si no tienes recursos, ganas 2.'
-      - "In\xEDcio do Turno: Se voc\xEA n\xE3o tiver recursos, ganhe 2."
-      - "Zugbeginn: Wenn du keine Ressourcen hast, erh\xE4ltst du 2."
-      - "D\xE9but du Tour : Si vous n'avez aucune ressource, gagnez 2."
+        \u0443 \u0432\u0430\u0441 \u043D\u0435\u0442 {[t:Resources/Energy]}, \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u0435
+        2."
+      - 'Inicio del turno: Si no tienes {[t:Resources/Energy]}, ganas 2.'
+      - "In\xEDcio do Turno: Se voc\xEA n\xE3o tiver {[t:Resources/Energy]}, ganhe
+        2."
+      - "Zugbeginn: Wenn du keine {[t:Resources/Energy]} hast, erh\xE4ltst du 2."
+      - "D\xE9but du Tour : Si vous n'avez aucune {[t:Resources/Energy]}, gagnez
+        2."
       - "\u30BF\u30FC\u30F3\u958B\u59CB\u6642\uFF1A\u81EA\u5206\u306E\u30EA\u30BD\u30FC\u30B9\u304C\u306A\u3044\u5834\u5408\u30012
         \u3092\u5F97\u308B\u3002"
       Flags: 000000000000000000
@@ -41238,22 +41265,22 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'End of Turn: If you have exactly 8 resources, gain +5 {[t:Stats/Stat-Magic]}
+      - 'End of Turn: If you have exactly 8 {[t:Resources/Energy]}, gain +5 {[t:Stats/Stat-Magic]}
         for the battle'
-      - "\u56DE\u5408\u7ED3\u675F\u65F6\uFF1A\u5982\u679C\u4F60\u6B63\u597D\u67098\u8D44\u6E90\uFF0C\u5219\u5728\u6218\u6597\u4E2D\u83B7\u5F975{[t:Stats/Stat-Magic]}"
-      - "\u56DE\u5408\u7D50\u675F\u6642\uFF1A\u5982\u679C\u4F60\u6B63\u597D\u67098\u8CC7\u6E90\uFF0C\u5247\u5728\u6230\u9B25\u4E2D\u7372\u5F975{[t:Stats/Stat-Magic]}"
+      - "\u56DE\u5408\u7ED3\u675F\u65F6\uFF1A\u5982\u679C\u4F60\u6B63\u597D\u67098{[t:Resources/Energy]}\uFF0C\u5219\u5728\u6218\u6597\u4E2D\u83B7\u5F975{[t:Stats/Stat-Magic]}"
+      - "\u56DE\u5408\u7D50\u675F\u6642\uFF1A\u5982\u679C\u4F60\u6B63\u597D\u67098{[t:Resources/Energy]}\uFF0C\u5247\u5728\u6230\u9B25\u4E2D\u7372\u5F975{[t:Stats/Stat-Magic]}"
       - "\u041A\u043E\u043D\u0435\u0446 \u0445\u043E\u0434\u0430: \u0435\u0441\u043B\u0438
-        \u0443 \u0432\u0430\u0441 \u0440\u043E\u0432\u043D\u043E 8 \u0440\u0435\u0441\u0443\u0440\u0441\u043E\u0432,
+        \u0443 \u0432\u0430\u0441 \u0440\u043E\u0432\u043D\u043E 8 {[t:Resources/Energy]},
         \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u0435 +5 {[t:Stats/Stat-Magic]}
         \u043A \u0431\u0438\u0442\u0432\u0435."
-      - 'Fin del turno: si tienes exactamente 8 recursos, ganas +5 {[t:Stats/Stat-Magic]}
-        para la batalla'
-      - "Fim do Turno: Se voc\xEA tiver exatamente 8 recursos, ganhe +5 {[t:Stats/Stat-Magic]}
-        para a batalha"
-      - "Ende der Runde: Wenn du genau 8 Ressourcen hast, erh\xE4ltst du +5 {[t:Stats/Stat-Magic]}
-        f\xFCr den Kampf"
-      - "Fin de tour\_: si vous avez exactement 8\_ressources, gagnez +5\_{[t:Stats/Stat-Magic]}
-        pour la bataille"
+      - 'Fin del turno: si tienes exactamente 8 {[t:Resources/Energy]}, ganas +5
+        {[t:Stats/Stat-Magic]} para la batalla'
+      - "Fim do Turno: Se voc\xEA tiver exatamente 8 {[t:Resources/Energy]}, ganhe
+        +5 {[t:Stats/Stat-Magic]} para a batalha"
+      - "Ende der Runde: Wenn du genau 8 {[t:Resources/Energy]} hast, erh\xE4ltst
+        du +5 {[t:Stats/Stat-Magic]} f\xFCr den Kampf"
+      - "Fin de tour\_: si vous avez exactement 8\_{[t:Resources/Energy]}, gagnez
+        +5\_{[t:Stats/Stat-Magic]} pour la bataille"
       - "\u30BF\u30FC\u30F3\u7D42\u4E86\u6642\uFF1A\u81EA\u5206\u306E\u30EA\u30BD\u30FC\u30B9\u304C\u3061\u3087\u3046\u30698\u306E\u5834\u5408\u3001\u305D\u306E\u30D0\u30C8\u30EB\u4E2D\u3001{[t:Stats/Stat-Magic]}\u3092+5\u5F97\u308B"
       Flags: 000000000000000000
       Languages_Touch: []
@@ -41419,16 +41446,16 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'On Afflict: Gain 1 {[t:Stats/Stat-PrimaryResource]}'
-      - "\u9020\u6210\u6298\u78E8\u65F6\uFF1A\u83B7\u5F971{[t:Stats/Stat-PrimaryResource]}"
-      - "\u9020\u6210\u6298\u78E8\u6642\uFF1A\u7372\u5F971{[t:Stats/Stat-PrimaryResource]}"
+      - 'On Afflict: Gain 1 {[t:Resources/Energy]}'
+      - "\u9020\u6210\u6298\u78E8\u65F6\uFF1A\u83B7\u5F971{[t:Resources/Energy]}"
+      - "\u9020\u6210\u6298\u78E8\u6642\uFF1A\u7372\u5F971{[t:Resources/Energy]}"
       - "\u041F\u0440\u0438 \u043F\u043E\u0440\u0430\u0436\u0435\u043D\u0438\u0438:
-        \u041F\u043E\u043B\u0443\u0447\u0438\u0442\u0435 1 {[t:Stats/Stat-PrimaryResource]}"
-      - "En Aflicci\xF3n: Gana 1 {[t:Stats/Stat-PrimaryResource]}"
-      - 'Se Aflito: Ganhe 1 {[t:Stats/Stat-PrimaryResource]}'
-      - 'Bei Leiden: Erhalte 1 {[t:Stats/Stat-PrimaryResource]}'
-      - "En cas d'affliction\_: gagnez 1\_{[t:Stats/Stat-PrimaryResource]}"
-      - "\u88AB\u707D\u6642: 1 {[t:Stats/Stat-PrimaryResource]}\u3092\u7372\u5F97"
+        \u041F\u043E\u043B\u0443\u0447\u0438\u0442\u0435 1 {[t:Resources/Energy]}"
+      - "En Aflicci\xF3n: Gana 1 {[t:Resources/Energy]}"
+      - 'Se Aflito: Ganhe 1 {[t:Resources/Energy]}'
+      - 'Bei Leiden: Erhalte 1 {[t:Resources/Energy]}'
+      - "En cas d'affliction\_: gagnez 1\_{[t:Resources/Energy]}"
+      - "\u88AB\u707D\u6642: 1 {[t:Resources/Energy]}\u3092\u7372\u5F97"
       Flags: 000000000000000000
       Languages_Touch: []
     - Term: EquipmentDescriptions/00059-Desc
@@ -41478,28 +41505,29 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'Start of Battle: Gain 1 Resource
+      - 'Start of Battle: Gain 1 {[t:Resources/Energy]}
 
         Team: +1 {[t:Keywords/CardPlays]},
         -2 Card Draws'
-      - "\u6218\u6597\u5F00\u59CB\u65F6\uFF1A\u83B7\u5F971\u8D44\u6E90\n\u961F\u4F0D\uFF1A\u83B7\u5F971{[t:Keywords/CardPlays]}\uFF0C-2\u62BD\u724C"
-      - "\u6230\u9B25\u958B\u59CB\u6642\uFF1A\u7372\u5F971\u8CC7\u6E90\n \u968A\u4F0D\uFF1A\u7372\u5F971{[t:Keywords/CardPlays]}\uFF0C-2\u62BD\u724C"
+      - "\u6218\u6597\u5F00\u59CB\u65F6\uFF1A\u83B7\u5F971{[t:Resources/Energy]}\n\u961F\u4F0D\uFF1A\u83B7\u5F971{[t:Keywords/CardPlays]}\uFF0C-2\u62BD\u724C"
+      - "\u6230\u9B25\u958B\u59CB\u6642\uFF1A\u7372\u5F971{[t:Resources/Energy]}\n
+        \u968A\u4F0D\uFF1A\u7372\u5F971{[t:Keywords/CardPlays]}\uFF0C-2\u62BD\u724C"
       - "\u041D\u0430\u0447\u0430\u043B\u043E \u0431\u0438\u0442\u0432\u044B: \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u0435
-        1 \u0440\u0435\u0441\u0443\u0440\u0441\r\n\u041A\u043E\u043C\u0430\u043D\u0434\u0430:
-        +1 {[t:Keywords/CardPlays]}, -2 \u0434\u043E\u0431\u043E\u0440\u0430 \u043A\u0430\u0440\u0442"
-      - 'Inicio de la batalla: gana 1 recurso
+        1 {[t:Resources/Energy]}\n\u041A\u043E\u043C\u0430\u043D\u0434\u0430: +1
+        {[t:Keywords/CardPlays]}, -2 \u0434\u043E\u0431\u043E\u0440\u0430 \u043A\u0430\u0440\u0442"
+      - 'Inicio de la batalla: gana 1 {[t:Resources/Energy]}
 
-        Equipo: +1 {[t:Keywords/CardPlays]},
-        -2 Retiros de Cartas'
-      - "Come\xE7o da Batalha: Ganhe 1 Recurso\nEquipe: +1 {[t:Keywords/CardPlays]},
+        Equipo: +1
+        {[t:Keywords/CardPlays]}, -2 Retiros de Cartas'
+      - "Come\xE7o da Batalha: Ganhe 1 {[t:Resources/Energy]}\nEquipe: +1 {[t:Keywords/CardPlays]},
         -2 Cartas Puxadas"
-      - 'Kampfbeginn: Erhalte 1 Ressource
+      - 'Kampfbeginn: Erhalte 1 {[t:Resources/Energy]}
 
         Team: +1 {[t:Keywords/CardPlays]},
         -2 Kartenziehen'
-      - "D\xE9but de bataille\_: gagnez 1\_ressource\r\n\xC9quipe\_: +1\_{[t:Keywords/CardPlays]},
+      - "D\xE9but de bataille\_: gagnez 1\_{[t:Resources/Energy]}\n\xC9quipe\_: +1\_{[t:Keywords/CardPlays]},
         -2 tirages de cartes"
-      - "\u6226\u95D8\u958B\u59CB: \u8CC7\u6E90\u30921\u3064\u7372\u5F97\r\n\u30C1\u30FC\u30E0:
+      - "\u6226\u95D8\u958B\u59CB: \u8CC7\u6E90\u30921\u3064\u7372\u5F97\n\u30C1\u30FC\u30E0:
         +1 {[t:Keywords/CardPlays]}\u3001-2 \u30AB\u30FC\u30C9 \u30C9\u30ED\u30FC"
       Flags: 000000000000000000
       Languages_Touch: []
@@ -41844,16 +41872,16 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'On Hp Damage Dealt: Also remove 1 resource'
-      - "\u9020\u6210HP\u4F24\u5BB3\u65F6\uFF1A\u79FB\u96641\u8D44\u6E90"
-      - "\u9020\u6210HP\u50B7\u5BB3\u6642\uFF1A\u79FB\u96641\u8CC7\u6E90"
+      - 'On Hp Damage Dealt: Also remove 1 {[t:Resources/Energy]}'
+      - "\u9020\u6210HP\u4F24\u5BB3\u65F6\uFF1A\u79FB\u96641{[t:Resources/Energy]}"
+      - "\u9020\u6210HP\u50B7\u5BB3\u6642\uFF1A\u79FB\u96641{[t:Resources/Energy]}"
       - "\u041F\u0440\u0438 \u043D\u0430\u043D\u0435\u0441\u0435\u043D\u0438\u0438
         \u0443\u0440\u043E\u043D\u0430 \u043F\u043E \u0445\u043F: \u0442\u0430\u043A\u0436\u0435
-        \u0443\u0434\u0430\u043B\u0438\u0442\u0435 1 \u0440\u0435\u0441\u0443\u0440\u0441."
-      - "Al Infligir Da\xF1o en HP: tambi\xE9n elimina 1 recurso"
-      - "Ao causar dano de HP: remova tamb\xE9m 1 recurso"
-      - "Bei zugef\xFCgtem HP-Schaden: Entferne au\xDFerdem 1 Ressource"
-      - "Sur HP Damage Dealt: Supprimez \xE9galement 1 ressource"
+        \u0443\u0434\u0430\u043B\u0438\u0442\u0435 1 {[t:Resources/Energy]}."
+      - "Al Infligir Da\xF1o en HP: tambi\xE9n elimina 1 {[t:Resources/Energy]}"
+      - "Ao causar dano de HP: remova tamb\xE9m 1 {[t:Resources/Energy]}"
+      - "Bei zugef\xFCgtem HP-Schaden: Entferne au\xDFerdem 1 {[t:Resources/Energy]}"
+      - "Sur HP Damage Dealt: Supprimez \xE9galement 1 {[t:Resources/Energy]}"
       - "\u4E0E\u3048\u3089\u308C\u305F HP \u30C0\u30E1\u30FC\u30B8: \u307E\u305F\u30011
         \u3064\u306E\u30EA\u30BD\u30FC\u30B9\u3092\u524A\u9664\u3057\u307E\u3059\u3002"
       Flags: 000000000000000000
@@ -41862,15 +41890,15 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'On Caused {[t:Keywords/Stun]}: Gain 2 Resource'
-      - "\u9020\u6210{[t:Keywords/Stun]}\u65F6\uFF1A\u83B7\u5F972\u8D44\u6E90"
-      - "\u9020\u6210{[t:Keywords/Stun]}\u6642\uFF1A\u7372\u5F972\u8CC7\u6E90"
+      - 'On Caused {[t:Keywords/Stun]}: Gain 2 {[t:Resources/Energy]}'
+      - "\u9020\u6210{[t:Keywords/Stun]}\u65F6\uFF1A\u83B7\u5F972{[t:Resources/Energy]}"
+      - "\u9020\u6210{[t:Keywords/Stun]}\u6642\uFF1A\u7372\u5F972{[t:Resources/Energy]}"
       - "\u041F\u0440\u0438 \u0432\u044B\u0437\u0432\u0430\u043D\u043D\u043E\u043C
-        {[t:Keywords/Stun]}: \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u0435 2 \u0440\u0435\u0441\u0443\u0440\u0441\u0430"
-      - 'En {[t:Keywords/Stun]} causado: gana 2 recursos'
-      - 'Ao causar {[t:Keywords/Stun]}: Ganhe 2 recursos'
-      - 'Bei verursachtem {[t:Keywords/Stun]}: Erhalte 2 Ressourcen'
-      - "On a caus\xE9 {[t:Keywords/Stun]}\_: Gagnez 2\_ressources"
+        {[t:Keywords/Stun]}: \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u0435 2 {[t:Resources/Energy]}"
+      - 'En {[t:Keywords/Stun]} causado: gana 2 {[t:Resources/Energy]}'
+      - 'Ao causar {[t:Keywords/Stun]}: Ganhe 2 {[t:Resources/Energy]}'
+      - 'Bei verursachtem {[t:Keywords/Stun]}: Erhalte 2 {[t:Resources/Energy]}'
+      - "On a caus\xE9 {[t:Keywords/Stun]}\_: Gagnez 2\_{[t:Resources/Energy]}"
       - "{[t:Keywords/Stun]}\u306E\u767A\u751F\u6642: \u30EA\u30BD\u30FC\u30B9\u30922\u7372\u5F97"
       Flags: 000000000000000000
       Languages_Touch: []
@@ -42060,15 +42088,15 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - -1 Starting Resource, +12 {[t:Stats/Stat-StartingShield]}
-      - "\u51CF\u5C111\u521D\u59CB\u8D44\u6E90\uFF0C\u83B7\u5F9712{[t:Stats/Stat-StartingShield]}"
-      - "\u6E1B\u5C111\u521D\u59CB\u8CC7\u6E90\uFF0C\u7372\u5F9712{[t:Stats/Stat-StartingShield]}"
-      - "-1 \u043D\u0430\u0447\u0430\u043B\u044C\u043D\u044B\u0439 \u0440\u0435\u0441\u0443\u0440\u0441,
+      - -1 Starting {[t:Resources/Energy]}, +12 {[t:Stats/Stat-StartingShield]}
+      - "\u51CF\u5C111\u521D\u59CB{[t:Resources/Energy]}\uFF0C\u83B7\u5F9712{[t:Stats/Stat-StartingShield]}"
+      - "\u6E1B\u5C111\u521D\u59CB{[t:Resources/Energy]}\uFF0C\u7372\u5F9712{[t:Stats/Stat-StartingShield]}"
+      - "-1 \u043D\u0430\u0447\u0430\u043B\u044C\u043D\u044B\u0439 {[t:Resources/Energy]},
         +12 {[t:Stats/Stat-StartingShield]}"
-      - -1 Recurso inicial, +12 {[t:Stats/Stat-StartingShield]}
-      - -1 Recurso Inicial, +12 {[t:Stats/Stat-StartingShield]}
-      - -1 Startressource, +12 {[t:Stats/Stat-StartingShield]}
-      - "-1 Ressource de d\xE9part, +12 {[t:Stats/Stat-StartingShield]}"
+      - -1 {[t:Resources/Energy]} inicial, +12 {[t:Stats/Stat-StartingShield]}
+      - -1 {[t:Resources/Energy]} Inicial, +12 {[t:Stats/Stat-StartingShield]}
+      - -1 {[t:Resources/Energy]}, +12 {[t:Stats/Stat-StartingShield]}
+      - "-1 {[t:Resources/Energy]} de d\xE9part, +12 {[t:Stats/Stat-StartingShield]}"
       - "-1 \u958B\u59CB\u30EA\u30BD\u30FC\u30B9\u3001+12 {[t:Stats/Stat-StartingShield]}"
       Flags: 000000000000000000
       Languages_Touch: []
@@ -42205,16 +42233,16 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'On Give Shield: Gain 1 Resource'
-      - "\u83B7\u5F97\u62A4\u76FE\u65F6\uFF1A\u83B7\u5F971\u8D44\u6E90"
-      - "\u7372\u5F97\u8B77\u76FE\u6642\uFF1A\u7372\u5F971\u8CC7\u6E90"
+      - 'On Give Shield: Gain 1 {[t:Resources/Energy]}'
+      - "\u83B7\u5F97\u62A4\u76FE\u65F6\uFF1A\u83B7\u5F971{[t:Resources/Energy]}"
+      - "\u7372\u5F97\u8B77\u76FE\u6642\uFF1A\u7372\u5F971{[t:Resources/Energy]}"
       - "\u041F\u0440\u0438 \u043F\u0440\u0435\u0434\u043E\u0441\u0442\u0430\u0432\u043B\u0435\u043D\u0438\u0438
         \u0449\u0438\u0442\u0430: \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u0435
-        1 \u0440\u0435\u0441\u0443\u0440\u0441"
-      - 'Al dar escudo: gana 1 recurso'
-      - 'Ao conceder escudo: ganhe 1 recurso'
-      - 'Bei Schild geben: Erhalte 1 Ressource'
-      - 'Sur Give Shield: Gagnez 1 Ressource'
+        1 {[t:Resources/Energy]}"
+      - 'Al dar escudo: gana 1 {[t:Resources/Energy]}'
+      - 'Ao conceder escudo: ganhe 1 {[t:Resources/Energy]}'
+      - 'Bei Schild geben: Erhalte 1 {[t:Resources/Energy]}'
+      - 'Sur Give Shield: Gagnez 1 {[t:Resources/Energy]}'
       - "On Give Shield: \u30EA\u30BD\u30FC\u30B9\u30921\u3064\u7372\u5F97"
       Flags: 000000000000000000
       Languages_Touch: []
@@ -42354,15 +42382,15 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'On {[t:Keywords/Stealth]}: Gain 1 Resource'
-      - "{[t:Keywords/Stealth]}\u65F6\uFF1A\u83B7\u5F971\u8D44\u6E90"
-      - "{[t:Keywords/Stealth]}\u6642\uFF1A\u7372\u5F971\u8CC7\u6E90"
+      - 'On {[t:Keywords/Stealth]}: Gain 1 {[t:Resources/Energy]}'
+      - "{[t:Keywords/Stealth]}\u65F6\uFF1A\u83B7\u5F971{[t:Resources/Energy]}"
+      - "{[t:Keywords/Stealth]}\u6642\uFF1A\u7372\u5F971{[t:Resources/Energy]}"
       - "\u041F\u0440\u0438 {[t:Keywords/Stealth]}: \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u0435
-        1 \u0440\u0435\u0441\u0443\u0440\u0441"
-      - 'En {[t:Keywords/Stealth]}: gana 1 recurso'
-      - 'Ao estar {[t:Keywords/Stealth]}: Ganhe 1 Recurso'
-      - 'Auf {[t:Keywords/Stealth]}: Erhalte 1 Ressource'
-      - "Sur {[t:Keywords/Stealth]}\_: gagnez 1\_ressource"
+        1 {[t:Resources/Energy]}"
+      - 'En {[t:Keywords/Stealth]}: gana 1 {[t:Resources/Energy]}'
+      - 'Ao estar {[t:Keywords/Stealth]}: Ganhe 1 {[t:Resources/Energy]}'
+      - 'Auf {[t:Keywords/Stealth]}: Erhalte 1 {[t:Resources/Energy]}'
+      - "Sur {[t:Keywords/Stealth]}\_: gagnez 1\_{[t:Resources/Energy]}"
       - "{[t:Keywords/Stealth]}\u6642: \u30EA\u30BD\u30FC\u30B9\u30921\u3064\u7372\u5F97"
       Flags: 000000000000000000
       Languages_Touch: []
@@ -52838,8 +52866,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - "No Augments Installed \n\n<i>(Level Up to Acquire)</i>"
-      - "\u672A\u5B89\u88C5\u5F3A\u5316\u88C5\u7F6E\n\n<i>(Level Up to Acquire)</i>"
-      - "\u672A\u5B89\u88DD\u5F37\u5316\u88DD\u7F6E\n \n <i>(Level Up to Acquire)</i>"
+      - "\u672A\u5B89\u88C5\u5F3A\u5316\u88C5\u7F6E\n\n<i>(\u901A\u8FC7\u5347\u7EA7\u83B7\u53D6)</i>"
+      - "\u672A\u5B89\u88DD\u5F37\u5316\u88DD\u7F6E\n \n <i>(\u901A\u904E\u5347\u7D1A\u7372\u53D6)</i>"
       - "\u0414\u043E\u043F\u043E\u043B\u043D\u0435\u043D\u0438\u044F \u043D\u0435
         \u0443\u0441\u0442\u0430\u043D\u043E\u0432\u043B\u0435\u043D\u044B\r\n\r\n<i>(\u041F\u043E\u0432\u044B\u0448\u0435\u043D\u0438\u0435
         \u0443\u0440\u043E\u0432\u043D\u044F \u0434\u043B\u044F \u043F\u043E\u043B\u0443\u0447\u0435\u043D\u0438\u044F)</i>"
@@ -60988,13 +61016,13 @@ MonoBehaviour:
       Languages:
       - "Heroes with <b>{[t:Keywords/Disabled]}</b> can't play their cards. Enemies
         with <b>{[t:Keywords/Stun]}</b> will lose 1 Stun each time they play a card
-        and that card will have no effect <i>(the card still cost resources)</i>.
+        and that card will have no effect <i>(the card still cost {[t:Resources/Energy]})</i>.
         \n\nA character with {[t:Keywords/Disabled]} or {[t:Keywords/Stun]} cannot
         perform Counterattack reactions."
       - "\u5177\u6709<b>{[t:Keywords/Disabled]}</b>\u7684\u82F1\u96C4\u65E0\u6CD5\u51FA\u724C\u3002
         \u5177\u6709<b>{[t:Keywords/Stun]}</b>\u7684\u654C\u4EBA\u6BCF\u6B21\u6253\u51FA\u4E00\u5F20\u724C\u90FD\u4F1A\u5931\u53BB
-        1 \u5C42\u7729\u6655\uFF0C\u5E76\u4E14\u8BE5\u724C\u4E0D\u4F1A\u4EA7\u751F\u4EFB\u4F55\u6548\u679C<i>\uFF08\u8BE5\u724C\u4ECD\u4F1A\u6D88\u8017\u8D44\u6E90\uFF09</i>\u3002\n\n\u5177\u6709{[t:Keywords/Disabled]}\u6216{[t:Keywords/Stun]}\u7684\u89D2\u8272\u65E0\u6CD5\u6267\u884C\u53CD\u51FB\u53CD\u5E94\u3002"
-      - "\u5177\u6709<b>{[t:Keywords/Disabled]}</b>\u7684\u82F1\u96C4\u7121\u6CD5\u51FA\u724C\u3002\u5177\u6709<b>{[t:Keywords/Stun]}</b>\u7684\u6575\u4EBA\u6BCF\u6B21\u6253\u51FA\u4E00\u5F35\u724C\u90FD\u6703\u5931\u53BB1\u5C64\u7729\u6688\uFF0C\u4E26\u4E14\u8A72\u724C\u4E0D\u6703\u7522\u751F\u4EFB\u4F55\u6548\u679C<i>\uFF08\u8A72\u724C\u4ECD\u6703\u6D88\u8017\u8CC7\u6E90\uFF09</i>\u3002\n\n\u5177\u6709{[t:Keywords/Disabled]}\u6216{[t:Keywords/Stun]}\u7684\u89D2\u8272\u7121\u6CD5\u57F7\u884C\u53CD\u64CA\u53CD\u61C9\u3002"
+        1 \u5C42\u7729\u6655\uFF0C\u5E76\u4E14\u8BE5\u724C\u4E0D\u4F1A\u4EA7\u751F\u4EFB\u4F55\u6548\u679C<i>\uFF08\u8BE5\u724C\u4ECD\u4F1A\u6D88\u8017{[t:Resources/Energy]}\uFF09</i>\u3002\n\n\u5177\u6709{[t:Keywords/Disabled]}\u6216{[t:Keywords/Stun]}\u7684\u89D2\u8272\u65E0\u6CD5\u6267\u884C\u53CD\u51FB\u53CD\u5E94\u3002"
+      - "\u5177\u6709<b>{[t:Keywords/Disabled]}</b>\u7684\u82F1\u96C4\u7121\u6CD5\u51FA\u724C\u3002\u5177\u6709<b>{[t:Keywords/Stun]}</b>\u7684\u6575\u4EBA\u6BCF\u6B21\u6253\u51FA\u4E00\u5F35\u724C\u90FD\u6703\u5931\u53BB1\u5C64\u7729\u6688\uFF0C\u4E26\u4E14\u8A72\u724C\u4E0D\u6703\u7522\u751F\u4EFB\u4F55\u6548\u679C<i>\uFF08\u8A72\u724C\u4ECD\u6703\u6D88\u8017{[t:Resources/Energy]}\uFF09</i>\u3002\n\n\u5177\u6709{[t:Keywords/Disabled]}\u6216{[t:Keywords/Stun]}\u7684\u89D2\u8272\u7121\u6CD5\u57F7\u884C\u53CD\u64CA\u53CD\u61C9\u3002"
       - "\u0413\u0435\u0440\u043E\u0438 \u0441 <b>{[t:Keywords/Disabled]}</b> \u043D\u0435
         \u043C\u043E\u0433\u0443\u0442 \u0440\u0430\u0437\u044B\u0433\u0440\u044B\u0432\u0430\u0442\u044C
         \u0441\u0432\u043E\u0438 \u043A\u0430\u0440\u0442\u044B. \u0412\u0440\u0430\u0433\u0438
@@ -61005,30 +61033,31 @@ MonoBehaviour:
         \u043D\u0435 \u0431\u0443\u0434\u0435\u0442 \u0438\u043C\u0435\u0442\u044C
         \u043D\u0438\u043A\u0430\u043A\u043E\u0433\u043E \u044D\u0444\u0444\u0435\u043A\u0442\u0430
         <i>(\u043A\u0430\u0440\u0442\u0430 \u043F\u043E-\u043F\u0440\u0435\u0436\u043D\u0435\u043C\u0443
-        \u0442\u0440\u0435\u0431\u0443\u0435\u0442 \u0440\u0435\u0441\u0443\u0440\u0441\u043E\u0432)</i>.\n\n\u041F\u0435\u0440\u0441\u043E\u043D\u0430\u0436
+        \u0442\u0440\u0435\u0431\u0443\u0435\u0442 {[t:Resources/Energy]})</i>.\n\n\u041F\u0435\u0440\u0441\u043E\u043D\u0430\u0436
         \u0441 {[t:Keywords/Disabled]} \u0438\u043B\u0438 {[t:Keywords/Stun]} \u043D\u0435
         \u043C\u043E\u0436\u0435\u0442 \u0432\u044B\u043F\u043E\u043B\u043D\u044F\u0442\u044C
         \u0440\u0435\u0430\u043A\u0446\u0438\u0438 \u043A\u043E\u043D\u0442\u0440\u0430\u0442\u0430\u043A\u0438."
       - "Los h\xE9roes <b>{[t:Keywords/Disabled]}</b> no pueden jugar sus cartas.
         Los enemigos <b>{[t:Keywords/Stun]}</b> perder\xE1n 1 Aturdimiento cada vez
         que jueguen una carta y esa carta no tendr\xE1 efecto <i>(la carta sigue
-        costando recursos)</i>.\n\nUn personaje {[t:Keywords/Disabled]} o {[t:Keywords/Stun]}
-        no puede realizar reacciones de contraataque."
+        costando {[t:Resources/Energy]})</i>.\n\nUn personaje {[t:Keywords/Disabled]}
+        o {[t:Keywords/Stun]} no puede realizar reacciones de contraataque."
       - "Her\xF3is com <b>{[t:Keywords/Disabled]}</b> n\xE3o podem jogar suas cartas.
         Inimigos com <b>{[t:Keywords/Stun]}</b> perder\xE3o 1 Atordoamento cada vez
         que jogarem uma carta e essa carta n\xE3o ter\xE1 efeito <i>(a carta ainda
-        custa recursos)</i>.\n\nUm personagem com {[t:Keywords/Disabled]} ou {[t:Keywords/Stun]}
-        n\xE3o pode realizar rea\xE7\xF5es de contra-ataque."
+        custa {[t:Resources/Energy]})</i>.\n\nUm personagem com {[t:Keywords/Disabled]}
+        ou {[t:Keywords/Stun]} n\xE3o pode realizar rea\xE7\xF5es de contra-ataque."
       - "Helden mit <b>{[t:Keywords/Disabled]}</b> k\xF6nnen ihre Karten nicht ausspielen.
         Feinde mit <b>{[t:Keywords/Stun]}</b> verlieren jedes Mal 1 Stun, wenn sie
         eine Karte spielen, und diese Karte hat keinen Effekt <i>(die Karte kostet
-        immer noch Ressourcen)</i>.\n\nEin Charakter mit {[t:Keywords/Disabled]}
+        immer noch {[t:Resources/Energy]})</i>.\n\nEin Charakter mit {[t:Keywords/Disabled]}
         oder {[t:Keywords/Stun]} kann keine Gegenangriffsreaktionen ausf\xFChren."
       - "Les h\xE9ros avec <b>{[t:Keywords/Disabled]}</b> ne peuvent pas jouer leurs
         cartes. Les ennemis avec <b>{[t:Keywords/Stun]}</b> perdront 1\_\xE9tourdissement
         chaque fois qu'ils joueront une carte et cette carte n'aura aucun effet <i>(la
-        carte co\xFBte toujours des ressources)</i>.\n\nUn personnage avec {[t:Keywords/Disabled]}
-        ou {[t:Keywords/Stun]} ne peut pas effectuer de r\xE9actions de contre-attaque."
+        carte co\xFBte toujours des {[t:Resources/Energy]})</i>.\n\nUn personnage
+        avec {[t:Keywords/Disabled]} ou {[t:Keywords/Stun]} ne peut pas effectuer
+        de r\xE9actions de contre-attaque."
       - "<b>{[t:Keywords/Disabled]}</b>\u3092\u6301\u3064\u30D2\u30FC\u30ED\u30FC\u306F\u30AB\u30FC\u30C9\u3092\u30D7\u30EC\u30A4\u3067\u304D\u307E\u305B\u3093\u3002
         <b>{[t:Keywords/Stun]}</b>\u3092\u6301\u3064\u6575\u306F\u3001\u30AB\u30FC\u30C9\u3092\u30D7\u30EC\u30A4\u3059\u308B\u305F\u3073\u306B1\u3064\u306E\u6C17\u7D76\u3092\u5931\u3044\u3001\u305D\u306E\u30AB\u30FC\u30C9\u306F<i>\u52B9\u679C\u304C\u3042\u308A\u307E\u305B\u3093(\u30AB\u30FC\u30C9\u306F\u30EA\u30BD\u30FC\u30B9\u3092\u6D88\u8CBB\u3057\u307E\u3059)</i>\u3002\n\n{[t:Keywords/Disabled]}\u307E\u305F\u306F{[t:Keywords/Stun]}\u3092\u6301\u3064\u30AD\u30E3\u30E9\u30AF\u30BF\u30FC\u306F\u53CD\u6483\u53CD\u5FDC\u3092\u5B9F\u884C\u3067\u304D\u307E\u305B\u3093\u3002"
       Flags: 000000000000000000
@@ -61151,25 +61180,25 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'In order to play a card, the owner must be able to afford the resource cost
-        of the card, and not have {[t:Keywords/Disabled]}.
+      - 'In order to play a card, the owner must be able to afford the {[t:Resources/Energy]}
+        cost of the card, and not have {[t:Keywords/Disabled]}.
 
 
-        If you cannot
-        afford to play a card, there will be no highlight around the border of the
-        card. Even if you cannot afford a card, you might be able to switch it to
-        the owner''s basic card and play it.'
-      - "\u4E3A\u4E86\u6253\u51FA\u4E00\u5F20\u724C\uFF0C\u6240\u6709\u8005\u5FC5\u987B\u80FD\u591F\u8D1F\u62C5\u8FD9\u5F20\u724C\u7684\u8D44\u6E90\uFF0C\u4E14\u672A\u88AB
-        {[t:Keywords/Disabled]}\u3002\n\n\u5982\u679C\u4F60\u6CA1\u6709\u8D44\u6E90\u51FA\u724C\uFF0C\u724C\u7684\u8FB9\u7F18\u5C31\u4E0D\u4F1A\u53D1\u4EAE\u3002
+        If you
+        cannot afford to play a card, there will be no highlight around the border
+        of the card. Even if you cannot afford a card, you might be able to switch
+        it to the owner''s basic card and play it.'
+      - "\u4E3A\u4E86\u6253\u51FA\u4E00\u5F20\u724C\uFF0C\u82F1\u96C4\u5FC5\u987B\u6709\u8DB3\u591F\u7684{[t:Resources/Energy]}\u53EF\u4F9B\u6D88\u8017\uFF0C\u4E14\u672A\u88AB
+        {[t:Keywords/Disabled]}\u3002\n\n\u5982\u679C\u4F60\u6CA1\u6709\u8DB3\u591F\u80FD\u91CF\uFF0C\u724C\u7684\u8FB9\u7F18\u5C31\u4E0D\u4F1A\u53D1\u4EAE\u3002
         \u5373\u4F7F\u4F60\u6CA1\u6709\u8D44\u6E90\u51FA\u724C\uFF0C\u4E5F\u53EF\u4EE5\u5C06\u5176\u8F6C\u6362\u4E3A\u6240\u6709\u8005\u7684\u57FA\u672C\u5361\u724C\u5E76\u4F7F\u7528\u5B83\u3002"
-      - "\u70BA\u4E86\u6253\u51FA\u4E00\u5F35\u724C\uFF0C\u6240\u6709\u8005\u5FC5\u9808\u80FD\u5920\u8CA0\u64D4\u9019\u5F35\u724C\u7684\u8CC7\u6E90\uFF0C\u4E14\u672A\u88AB{[t:Keywords/Disabled]}\u3002\n\n\u5982\u679C\u4F60\u6C92\u6709\u8CC7\u6E90\u51FA\u724C\uFF0C\u724C\u7684\u908A\u7DE3\u5C31\u4E0D\u6703\u767C\u4EAE\u3002\u5373\u4F7F\u4F60\u6C92\u6709\u8CC7\u6E90\u51FA\u724C\uFF0C\u4E5F\u53EF\u4EE5\u5C07\u5176\u8F49\u63DB\u70BA\u6240\u6709\u8005\u7684\u57FA\u672C\u5361\u724C\u4E26\u4F7F\u7528\u5B83\u3002"
+      - "\u70BA\u4E86\u6253\u51FA\u4E00\u5F35\u724C\uFF0C\u6240\u6709\u8005\u5FC5\u9808\u80FD\u5920\u8CA0\u64D4\u9019\u5F35\u724C\u7684{[t:Resources/Energy]}\uFF0C\u4E14\u672A\u88AB{[t:Keywords/Disabled]}\u3002\n\n\u5982\u679C\u4F60\u6C92\u6709\u8CC7\u6E90\u51FA\u724C\uFF0C\u724C\u7684\u908A\u7DE3\u5C31\u4E0D\u6703\u767C\u4EAE\u3002\u5373\u4F7F\u4F60\u6C92\u6709\u8CC7\u6E90\u51FA\u724C\uFF0C\u4E5F\u53EF\u4EE5\u5C07\u5176\u8F49\u63DB\u70BA\u6240\u6709\u8005\u7684\u57FA\u672C\u5361\u724C\u4E26\u4F7F\u7528\u5B83\u3002"
       - "\u0427\u0442\u043E\u0431\u044B \u0440\u0430\u0437\u044B\u0433\u0440\u0430\u0442\u044C
         \u043A\u0430\u0440\u0442\u0443, \u0432\u043B\u0430\u0434\u0435\u043B\u0435\u0446
         \u0434\u043E\u043B\u0436\u0435\u043D \u0431\u044B\u0442\u044C \u0432 \u0441\u043E\u0441\u0442\u043E\u044F\u043D\u0438\u0438
         \u043F\u043E\u0437\u0432\u043E\u043B\u0438\u0442\u044C \u0441\u0435\u0431\u0435
-        \u0441\u0442\u043E\u0438\u043C\u043E\u0441\u0442\u044C \u0440\u0435\u0441\u0443\u0440\u0441\u043E\u0432
+        \u0441\u0442\u043E\u0438\u043C\u043E\u0441\u0442\u044C {[t:Resources/Energy]}
         \u043A\u0430\u0440\u0442\u044B \u0438 \u043D\u0435 \u0438\u043C\u0435\u0442\u044C
-        {[t:Keywords/Disabled]}.\r\n\r\n\u0415\u0441\u043B\u0438 \u0432\u044B \u043D\u0435
+        {[t:Keywords/Disabled]}.\n\n\u0415\u0441\u043B\u0438 \u0432\u044B \u043D\u0435
         \u043C\u043E\u0436\u0435\u0442\u0435 \u043F\u043E\u0437\u0432\u043E\u043B\u0438\u0442\u044C
         \u0441\u0435\u0431\u0435 \u0440\u0430\u0437\u044B\u0433\u0440\u0430\u0442\u044C
         \u043A\u0430\u0440\u0442\u0443, \u0432\u043E\u043A\u0440\u0443\u0433 \u0433\u0440\u0430\u043D\u0438\u0446\u044B
@@ -61181,24 +61210,24 @@ MonoBehaviour:
         \u0437\u0430\u043C\u0435\u043D\u0438\u0442\u044C \u0435\u0435 \u043D\u0430
         \u043E\u0441\u043D\u043E\u0432\u043D\u0443\u044E \u043A\u0430\u0440\u0442\u0443
         \u0432\u043B\u0430\u0434\u0435\u043B\u044C\u0446\u0430 \u0438 \u0440\u0430\u0437\u044B\u0433\u0440\u0430\u0442\u044C."
-      - "Para jugar una carta, el propietario debe poder pagar el costo de recursos
+      - "Para jugar una carta, el propietario debe poder pagar el costo de {[t:Resources/Energy]}
         de la carta y no estar {[t:Keywords/Disabled]}.\n\nSi no puede permitirse
         el lujo de jugar una carta, el borde de la carta no estar\xE1 resaltado.
         Incluso si no puedes pagar una carta, es posible que puedas cambiarla por
         la carta b\xE1sica del propietario y jugarla."
-      - "Para jogar uma carta, o personagem tem que poder arcar com o custo de recursos
+      - "Para jogar uma carta, o personagem tem que poder arcar com o custo de {[t:Resources/Energy]}
         da carta e n\xE3o ter {[t:Keywords/Disabled]}.\n\nSe voc\xEA n\xE3o puder
         jogar uma carta, n\xE3o haver\xE1 destaque na borda da carta. Mesmo que voc\xEA
         n\xE3o possa jogar uma carta, voc\xEA pode troc\xE1-la pela carta b\xE1sica
         do personagem e jog\xE1-la."
-      - "Um eine Karte zu spielen, muss der Besitzer sich die Ressourcenkosten der
-        Karte leisten k\xF6nnen und darf nicht \xFCber {[t:Keywords/Disabled]} verf\xFCgen.\r\n\r\nWenn
-        Sie es sich nicht leisten k\xF6nnen, eine Karte auszuspielen, wird der Rand
-        der Karte nicht hervorgehoben. Selbst wenn Sie sich eine Karte nicht leisten
-        k\xF6nnen, k\xF6nnen Sie sie m\xF6glicherweise auf die Basiskarte des Besitzers
-        umstellen und sie spielen."
+      - "Um eine Karte zu spielen, muss der Besitzer sich die {[t:Resources/Energy]}
+        der Karte leisten k\xF6nnen und darf nicht \xFCber {[t:Keywords/Disabled]}
+        verf\xFCgen.\n\nWenn Sie es sich nicht leisten k\xF6nnen, eine Karte auszuspielen,
+        wird der Rand der Karte nicht hervorgehoben. Selbst wenn Sie sich eine Karte
+        nicht leisten k\xF6nnen, k\xF6nnen Sie sie m\xF6glicherweise auf die Basiskarte
+        des Besitzers umstellen und sie spielen."
       - "Pour jouer une carte, le propri\xE9taire doit \xEAtre en mesure de payer
-        le co\xFBt en ressources de la carte et ne pas avoir {[t:Keywords/Disabled]}.\r\n\r\nSi
+        le co\xFBt en {[t:Resources/Energy]} de la carte et ne pas avoir {[t:Keywords/Disabled]}.\n\nSi
         vous ne pouvez pas vous permettre de jouer une carte, il n'y aura pas de
         surbrillance autour de la bordure de la carte. M\xEAme si vous n'avez pas
         les moyens d'acheter une carte, vous pourrez peut-\xEAtre la remplacer par
@@ -61517,33 +61546,33 @@ MonoBehaviour:
 
 
         {[t:Stats/Stat-HP]},
-        {[t:Stats/Stat-Shield]}, Resources, and Statuses are all shown here.'
+        {[t:Stats/Stat-Shield]}, {[t:Resources/Energy]}, and Statuses are all shown
+        here.'
       - "\u5728\u5DE6\u4E0A\u89D2\uFF0C\u4F60\u5C06\u770B\u5230\u5C0F\u961F\u4FE1\u606F\u7684\u6458\u8981\u3002\n\n{[t:Stats/Stat-HP]},
-        {[t:Stats/Stat-Shield]}\uFF0C\u8D44\u6E90\u548C\u72B6\u6001\u90FD\u5728\u6B64\u5904\u663E\u793A\u3002"
-      - "\u5728\u5DE6\u4E0A\u89D2\uFF0C\u4F60\u5C07\u770B\u5230\u5C0F\u968A\u8CC7\u8A0A\u7684\u6458\u8981\u3002\n\n{[t:Stats/Stat-HP]},{[t:Stats/Stat-Shield]}\uFF0C\u8CC7\u6E90\u548C\u72C0\u614B\u90FD\u5728\u6B64\u8655\u986F\u793A\u3002"
+        {[t:Stats/Stat-Shield]}\uFF0C{[t:Resources/Energy]}\u548C\u72B6\u6001\u90FD\u5728\u6B64\u5904\u663E\u793A\u3002"
+      - "\u5728\u5DE6\u4E0A\u89D2\uFF0C\u4F60\u5C07\u770B\u5230\u5C0F\u968A\u8CC7\u8A0A\u7684\u6458\u8981\u3002\n\n{[t:Stats/Stat-HP]},{[t:Stats/Stat-Shield]}\uFF0C{[t:Resources/Energy]}\u548C\u72C0\u614B\u90FD\u5728\u6B64\u8655\u986F\u793A\u3002"
       - "\u0412 \u0432\u0435\u0440\u0445\u043D\u0435\u043C \u043B\u0435\u0432\u043E\u043C
         \u043A\u043E\u0440\u0440\u0435\u043A\u0442\u0435 \u0432\u044B \u0443\u0432\u0438\u0434\u0438\u0442\u0435
         \u0441\u0432\u043E\u0434\u043A\u0443 \u0438\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u0438
         \u043E \u0432\u0430\u0448\u0435\u043C \u043E\u0442\u0440\u044F\u0434\u0435.
-        \n\n{[t:Stats/Stat-HP]}, {[t:Stats/Stat-Shield]}, \u0440\u0435\u0441\u0443\u0440\u0441\u044B
+        \n\n{[t:Stats/Stat-HP]}, {[t:Stats/Stat-Shield]}, {[t:Resources/Energy]}
         \u0438 \u0441\u0442\u0430\u0442\u0443\u0441\u044B \u043E\u0442\u043E\u0431\u0440\u0430\u0436\u0430\u044E\u0442\u0441\u044F
         \u0437\u0434\u0435\u0441\u044C."
       - "En la esquina superior izquierda, ver\xE1s un resumen de la informaci\xF3n
         de tu escuadr\xF3n. \n\nAqu\xED se muestran los {[t:Stats/Stat-HP]}, {[t:Stats/Stat-Shield]},
-        recursos y estados"
+        {[t:Resources/Energy]} y estados"
       - "Na parte superior esquerda, voc\xEA ver\xE1 um resumo das informa\xE7\xF5es
-        do seu esquadr\xE3o. \n\n{[t:Stats/Stat-HP]}, {[t:Stats/Stat-Shield]}, recursos
+        do seu esquadr\xE3o. \n\n{[t:Stats/Stat-HP]}, {[t:Stats/Stat-Shield]}, {[t:Resources/Energy]}
         e status s\xE3o todos mostrados aqui."
       - 'In der oberen linken Ecke sehen Sie eine Zusammenfassung Ihrer Kaderinformationen.
 
-        
 
         Hier
-        werden {[t:Stats/Stat-HP]}, {[t:Stats/Stat-Shield]}, Ressourcen und Status
-        angezeigt.'
+        werden {[t:Stats/Stat-HP]}, {[t:Stats/Stat-Shield]}, {[t:Resources/Energy]}
+        und Status angezeigt.'
       - "Dans le corrida sup\xE9rieur gauche, vous verrez un r\xE9sum\xE9 de vos
         informations d'escouade. \n\n{[t:Stats/Stat-HP]}, {[t:Stats/Stat-Shield]},
-        Resources et Status sont tous illustr\xE9s ici."
+        {[t:Resources/Energy]} et Status sont tous illustr\xE9s ici."
       - "\u5DE6\u4E0A\u306E\u30B3\u30EB\u30CA\u30FC\u3067\u306F\u3001\u5206\u968A\u60C5\u5831\u306E\u8981\u7D04\u304C\u8868\u793A\u3055\u308C\u307E\u3059\u3002\n\n{[t:Stats/Stat-HP]},
         {[t:Stats/Stat-Shield]}\u3001\u30EA\u30BD\u30FC\u30B9\u3001\u30B9\u30C6\u30FC\u30BF\u30B9\u304C\u3059\u3079\u3066\u3053\u3053\u306B\u793A\u3055\u308C\u3066\u3044\u307E\u3059\u3002"
       Flags: 000000000000000000
@@ -62324,17 +62353,18 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - "At the end of most enemies' turn, they will gain resources. Once they have
-        built enough resources, they can use their ultimate. \n\nTo see detailed
-        scouting information, or see what their ultimate is, right-click on the enemy."
-      - "\u5728\u5927\u591A\u6570\u654C\u4EBA\u56DE\u5408\u7ED3\u675F\u65F6\uFF0C\u4ED6\u4EEC\u5C06\u83B7\u5F97\u8D44\u6E90\u3002\u4E00\u65E6\u4ED6\u4EEC\u83B7\u5F97\u4E86\u8DB3\u591F\u7684\u8D44\u6E90\uFF0C\u4ED6\u4EEC\u5C31\u53EF\u4EE5\u4F7F\u7528\u7EC8\u7ED3\u6280\u3002\n\n\u67E5\u770B\u8BE6\u7EC6\u4FE1\u606F\uFF0C\u6216\u8005\u67E5\u770B\u5B83\u4EEC\u7684\u7EC8\u7ED3\u6280\uFF0C\u53F3\u952E\u5355\u51FB\u654C\u4EBA\u5373\u53EF\u67E5\u770B\u3002"
-      - "\u5728\u5927\u591A\u6578\u6575\u4EBA\u56DE\u5408\u7D50\u675F\u6642\uFF0C\u4ED6\u5011\u5C07\u7372\u5F97\u8CC7\u6E90\u3002\u4E00\u65E6\u4ED6\u5011\u7372\u5F97\u4E86\u8DB3\u5920\u7684\u8CC7\u6E90\uFF0C\u4ED6\u5011\u5C31\u53EF\u4EE5\u4F7F\u7528\u7D42\u7D50\u6280\u3002\n\n\u67E5\u770B\u8A73\u7D30\u8CC7\u8A0A\uFF0C\u6216\u8005\u67E5\u770B\u5B83\u5011\u7684\u7D42\u7D50\u6280\uFF0C\u6309\u53F3\u9375\u6575\u4EBA\u5373\u53EF\u67E5\u770B\u3002"
+      - "At the end of most enemies' turn, they will gain {[t:Resources/Energy]}.
+        Once they have built enough {[t:Resources/Energy]}, they can use their ultimate.
+        \n\nTo see detailed scouting information, or see what their ultimate is,
+        right-click on the enemy."
+      - "\u5728\u5927\u591A\u6570\u654C\u4EBA\u56DE\u5408\u7ED3\u675F\u65F6\uFF0C\u4ED6\u4EEC\u5C06\u83B7\u5F97{[t:Resources/Energy]}\u3002\u4E00\u65E6\u4ED6\u4EEC\u83B7\u5F97\u4E86\u8DB3\u591F\u7684{[t:Resources/Energy]}\uFF0C\u4ED6\u4EEC\u5C31\u53EF\u4EE5\u4F7F\u7528\u7EC8\u7ED3\u6280\u3002\n\n\u67E5\u770B\u8BE6\u7EC6\u4FE1\u606F\uFF0C\u6216\u8005\u67E5\u770B\u5B83\u4EEC\u7684\u7EC8\u7ED3\u6280\uFF0C\u53F3\u952E\u5355\u51FB\u654C\u4EBA\u5373\u53EF\u67E5\u770B\u3002"
+      - "\u5728\u5927\u591A\u6578\u6575\u4EBA\u56DE\u5408\u7D50\u675F\u6642\uFF0C\u4ED6\u5011\u5C07\u7372\u5F97{[t:Resources/Energy]}\u3002\u4E00\u65E6\u4ED6\u5011\u7372\u5F97\u4E86\u8DB3\u5920\u7684{[t:Resources/Energy]}\uFF0C\u4ED6\u5011\u5C31\u53EF\u4EE5\u4F7F\u7528\u7D42\u7D50\u6280\u3002\n\n\u67E5\u770B\u8A73\u7D30\u8CC7\u8A0A\uFF0C\u6216\u8005\u67E5\u770B\u5B83\u5011\u7684\u7D42\u7D50\u6280\uFF0C\u6309\u53F3\u9375\u6575\u4EBA\u5373\u53EF\u67E5\u770B\u3002"
       - "\u0412 \u043A\u043E\u043D\u0446\u0435 \u043E\u0447\u0435\u0440\u0435\u0434\u0438
         \u0431\u043E\u043B\u044C\u0448\u0438\u043D\u0441\u0442\u0432\u0430 \u0432\u0440\u0430\u0433\u043E\u0432
-        \u043E\u043D\u0438 \u043F\u043E\u043B\u0443\u0447\u0430\u0442 \u0440\u0435\u0441\u0443\u0440\u0441\u044B.
+        \u043E\u043D\u0438 \u043F\u043E\u043B\u0443\u0447\u0430\u0442 {[t:Resources/Energy]}.
         \u041F\u043E\u0441\u043B\u0435 \u0442\u043E\u0433\u043E, \u043A\u0430\u043A
         \u043E\u043D\u0438 \u043F\u043E\u0441\u0442\u0440\u043E\u0438\u043B\u0438
-        \u0434\u043E\u0441\u0442\u0430\u0442\u043E\u0447\u043D\u043E \u0440\u0435\u0441\u0443\u0440\u0441\u043E\u0432,
+        \u0434\u043E\u0441\u0442\u0430\u0442\u043E\u0447\u043D\u043E {[t:Resources/Energy]},
         \u043E\u043D\u0438 \u043C\u043E\u0433\u0443\u0442 \u0438\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u0442\u044C
         \u0441\u0432\u043E\u0438 Ultimate. \n\n\u0447\u0442\u043E\u0431\u044B \u0443\u0432\u0438\u0434\u0435\u0442\u044C
         \u043F\u043E\u0434\u0440\u043E\u0431\u043D\u0443\u044E \u0438\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044E
@@ -62343,22 +62373,24 @@ MonoBehaviour:
         \u0449\u0435\u043B\u043A\u043D\u0438\u0442\u0435 \u043F\u0440\u0430\u0432\u043E\u0439
         \u043A\u043D\u043E\u043F\u043A\u043E\u0439 \u043C\u044B\u0448\u0438 \u043F\u043E
         \u0432\u0440\u0430\u0433\u0443."
-      - "Al final del turno de la mayor\xEDa de los enemigos, ganar\xE1n recursos.
-        Una vez que han acumulado suficientes recursos, pueden usar el m\xE1ximo
-        ataque. \n\nPara ver informaci\xF3n de exploraci\xF3n detallada, o ver cu\xE1l
-        es su m\xE1ximo ataque, haz clic sobre el enemigo con el bot\xF3n derecho."
-      - "No final do turno da maioria dos inimigos, eles ganhar\xE3o recursos. Depois
-        de juntarem recursos suficientes, eles poder\xE3o usar seu golpe cr\xEDtico.
-        \n\nPara ver informa\xE7\xF5es detalhadas do golpe, clique com o bot\xE3o
-        direito do mouse no inimigo."
-      - "Am Ende der meisten Feinde werden sie Ressourcen erhalten. Sobald sie genug
-        Ressourcen aufgebaut haben, k\xF6nnen sie ihr Ultimate nutzen. \n\num detaillierte
-        Scouting-Informationen zu sehen oder zu sehen, was ihr ultimatives ist, klicken
-        Sie mit der rechten Maustaste auf den Feind."
-      - "\xC0 la fin du tour de la plupart des ennemis, ils gagneront des ressources.
-        Une fois qu'ils ont construit suffisamment de ressources, ils peuvent utiliser
-        leur ultime. \n\nPour voir des informations de d\xE9pistage d\xE9taill\xE9es,
-        ou voyez quel est leur ultime, cliquez avec le bouton droit sur l'ennemi."
+      - "Al final del turno de la mayor\xEDa de los enemigos, ganar\xE1n {[t:Resources/Energy]}.
+        Una vez que han acumulado suficientes {[t:Resources/Energy]}, pueden usar
+        el m\xE1ximo ataque. \n\nPara ver informaci\xF3n de exploraci\xF3n detallada,
+        o ver cu\xE1l es su m\xE1ximo ataque, haz clic sobre el enemigo con el bot\xF3n
+        derecho."
+      - "No final do turno da maioria dos inimigos, eles ganhar\xE3o {[t:Resources/Energy]}.
+        Depois de juntarem {[t:Resources/Energy]} suficientes, eles poder\xE3o usar
+        seu golpe cr\xEDtico. \n\nPara ver informa\xE7\xF5es detalhadas do golpe,
+        clique com o bot\xE3o direito do mouse no inimigo."
+      - "Am Ende der meisten Feinde werden sie {[t:Resources/Energy]} erhalten. Sobald
+        sie genug {[t:Resources/Energy]} aufgebaut haben, k\xF6nnen sie ihr Ultimate
+        nutzen. \n\num detaillierte Scouting-Informationen zu sehen oder zu sehen,
+        was ihr ultimatives ist, klicken Sie mit der rechten Maustaste auf den Feind."
+      - "\xC0 la fin du tour de la plupart des ennemis, ils gagneront des {[t:Resources/Energy]}.
+        Une fois qu'ils ont construit suffisamment de {[t:Resources/Energy]}, ils
+        peuvent utiliser leur ultime. \n\nPour voir des informations de d\xE9pistage
+        d\xE9taill\xE9es, ou voyez quel est leur ultime, cliquez avec le bouton droit
+        sur l'ennemi."
       - "\u307B\u3068\u3093\u3069\u306E\u6575\u306E\u30BF\u30FC\u30F3\u306E\u7D42\u308F\u308A\u306B\u3001\u5F7C\u3089\u306F\u30EA\u30BD\u30FC\u30B9\u3092\u7372\u5F97\u3057\u307E\u3059\u3002\u5341\u5206\u306A\u30EA\u30BD\u30FC\u30B9\u3092\u69CB\u7BC9\u3057\u305F\u3089\u3001\u7A76\u6975\u3092\u4F7F\u7528\u3067\u304D\u307E\u3059\u3002
         \n\n\u8A73\u7D30\u306A\u30B9\u30AB\u30A6\u30C6\u30A3\u30F3\u30B0\u60C5\u5831\u3092\u78BA\u8A8D\u3059\u308B\u304B\u3001\u7A76\u6975\u304C\u4F55\u3067\u3042\u308B\u304B\u3092\u78BA\u8A8D\u3059\u308B\u306B\u306F\u3001\u6575\u3092\u53F3\u30AF\u30EA\u30C3\u30AF\u3057\u307E\u3059\u3002"
       Flags: 000000000000000000
@@ -62487,40 +62519,40 @@ MonoBehaviour:
       Description: 
       Languages:
       - "Your basic doesn't have a glow around it because you can't afford the cost
-        of 6 {[t:Resources/Energy]}. \n\nYou need to gain resources. \n\nTo flip
-        the card back over to its original side, right-click on it again."
+        of 6 {[t:Resources/Energy]}. \n\nYou need to gain {[t:Resources/Energy]}.
+        \n\nTo flip the card back over to its original side, right-click on it again."
       - "\u4F60\u7684\u57FA\u672C\u5361\u724C\u6CA1\u6709\u53D1\u4EAE\uFF0C\u56E0\u4E3A\u4F60\u6CA1\u67096
-        {[t:Resources/Energy]} \u4F5C\u4E3A\u8D39\u7528\u3002\n\n\u4F60\u9700\u8981\u83B7\u5F97\u8D44\u6E90\u3002\n\n\u8981\u5C06\u5361\u7247\u7FFB\u8F6C\u56DE\u539F\u6765\u7684\u4E00\u9762\uFF0C\u8BF7\u518D\u6B21\u53F3\u952E\u5355\u51FB\u5B83\u3002"
-      - "\u4F60\u7684\u57FA\u672C\u5361\u724C\u6C92\u6709\u767C\u4EAE\uFF0C\u56E0\u70BA\u4F60\u6C92\u67096{[t:Resources/Energy]}\u4F5C\u70BA\u8CBB\u7528\u3002\n\n\u4F60\u9700\u8981\u7372\u5F97\u8CC7\u6E90\u3002\n\n\u8981\u5C07\u5361\u7247\u7FFB\u8F49\u56DE\u539F\u4F86\u7684\u4E00\u9762\uFF0C\u8ACB\u518D\u6B21\u6309\u53F3\u9375\u5B83\u3002"
+        {[t:Resources/Energy]} \u4F5C\u4E3A\u8D39\u7528\u3002\n\n\u4F60\u9700\u8981\u83B7\u5F97{[t:Resources/Energy]}\u3002\n\n\u8981\u5C06\u5361\u7247\u7FFB\u8F6C\u56DE\u539F\u6765\u7684\u4E00\u9762\uFF0C\u8BF7\u518D\u6B21\u53F3\u952E\u5355\u51FB\u5B83\u3002"
+      - "\u4F60\u7684\u57FA\u672C\u5361\u724C\u6C92\u6709\u767C\u4EAE\uFF0C\u56E0\u70BA\u4F60\u6C92\u67096{[t:Resources/Energy]}\u4F5C\u70BA\u8CBB\u7528\u3002\n\n\u4F60\u9700\u8981\u7372\u5F97{[t:Resources/Energy]}\u3002\n\n\u8981\u5C07\u5361\u7247\u7FFB\u8F49\u56DE\u539F\u4F86\u7684\u4E00\u9762\uFF0C\u8ACB\u518D\u6B21\u6309\u53F3\u9375\u5B83\u3002"
       - "\u0412\u0430\u0448 \u0431\u0430\u0437\u043E\u0432\u044B\u0439 \u043F\u0440\u0435\u0434\u043C\u0435\u0442
         \u043D\u0435 \u0438\u043C\u0435\u0435\u0442 \u0441\u0432\u0435\u0447\u0435\u043D\u0438\u044F
         \u0432\u043E\u043A\u0440\u0443\u0433 \u043D\u0435\u0433\u043E, \u043F\u043E\u0442\u043E\u043C\u0443
         \u0447\u0442\u043E \u0432\u044B \u043D\u0435 \u043C\u043E\u0436\u0435\u0442\u0435
         \u043F\u043E\u0437\u0432\u043E\u043B\u0438\u0442\u044C \u0441\u0435\u0431\u0435
-        \u0441\u0442\u043E\u0438\u043C\u043E\u0441\u0442\u044C 6 {[t:Resources/Energy]}.\r\n\r\n\u0412\u0430\u043C
+        \u0441\u0442\u043E\u0438\u043C\u043E\u0441\u0442\u044C 6 {[t:Resources/Energy]}.\n\n\u0412\u0430\u043C
         \u043D\u0443\u0436\u043D\u043E \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u044C
-        \u0440\u0435\u0441\u0443\u0440\u0441\u044B.\r\n\r\n\u0427\u0442\u043E\u0431\u044B
-        \u043F\u0435\u0440\u0435\u0432\u0435\u0440\u043D\u0443\u0442\u044C \u043A\u0430\u0440\u0442\u0443
-        \u043E\u0431\u0440\u0430\u0442\u043D\u043E \u043D\u0430 \u0438\u0441\u0445\u043E\u0434\u043D\u0443\u044E
-        \u0441\u0442\u043E\u0440\u043E\u043D\u0443, \u0441\u043D\u043E\u0432\u0430
-        \u0449\u0435\u043B\u043A\u043D\u0438\u0442\u0435 \u0435\u0435 \u043F\u0440\u0430\u0432\u043E\u0439
-        \u043A\u043D\u043E\u043F\u043A\u043E\u0439 \u043C\u044B\u0448\u0438."
+        {[t:Resources/Energy]}.\n\n\u0427\u0442\u043E\u0431\u044B \u043F\u0435\u0440\u0435\u0432\u0435\u0440\u043D\u0443\u0442\u044C
+        \u043A\u0430\u0440\u0442\u0443 \u043E\u0431\u0440\u0430\u0442\u043D\u043E
+        \u043D\u0430 \u0438\u0441\u0445\u043E\u0434\u043D\u0443\u044E \u0441\u0442\u043E\u0440\u043E\u043D\u0443,
+        \u0441\u043D\u043E\u0432\u0430 \u0449\u0435\u043B\u043A\u043D\u0438\u0442\u0435
+        \u0435\u0435 \u043F\u0440\u0430\u0432\u043E\u0439 \u043A\u043D\u043E\u043F\u043A\u043E\u0439
+        \u043C\u044B\u0448\u0438."
       - "Tu carta b\xE1sica no tiene un brillo a su alrededor porque no puedes permitirte
-        el costo de 6 {[t:Resources/Energy]}.\n\nNecesitas ganar recursos.\n\nPara
+        el costo de 6 {[t:Resources/Energy]}.\n\nNecesitas ganar {[t:Resources/Energy]}.\n\nPara
         voltear la carta a su lado original, haz clic sobre ella con el bot\xF3n
         derecho nuevamente."
       - "Sua carta b\xE1sica n\xE3o tem um brilho em torno dela porque voc\xEA n\xE3o
         pode arcar com o custo de 6 {[t:Resources/Energy]}.\n\nVoc\xEA precisa obter
-        recursos.\n\nPara virar a carta de volta ao seu lado original, clique com
-        o bot\xE3o direito nela novamente."
+        {[t:Resources/Energy]}.\n\nPara virar a carta de volta ao seu lado original,
+        clique com o bot\xE3o direito nela novamente."
       - "Dein Basic leuchtet nicht, weil du dir die Kosten von 6 {[t:Resources/Energy]}
-        nicht leisten kannst.\n\nSie m\xFCssen Ressourcen gewinnen.\n\nUm die Karte
-        wieder auf ihre urspr\xFCngliche Seite zu drehen, klicken Sie erneut mit
-        der rechten Maustaste darauf."
+        nicht leisten kannst.\n\nSie m\xFCssen {[t:Resources/Energy]} gewinnen.\n\nUm
+        die Karte wieder auf ihre urspr\xFCngliche Seite zu drehen, klicken Sie erneut
+        mit der rechten Maustaste darauf."
       - "Votre base n'a pas de lueur autour d'elle car vous ne pouvez pas vous permettre
-        le co\xFBt de 6\_{[t:Resources/Energy]}.\r\n\r\nVous avez besoin de gagner
-        des ressources.\r\n\r\nPour retourner la carte sur sa face d'origine, faites
-        \xE0 nouveau un clic droit dessus."
+        le co\xFBt de 6\_{[t:Resources/Energy]}.\n\nVous avez besoin de gagner des
+        {[t:Resources/Energy]}.\n\nPour retourner la carte sur sa face d'origine,
+        faites \xE0 nouveau un clic droit dessus."
       - "6 {[t:Resources/Energy]}\u306E\u30B3\u30B9\u30C8\u3092\u652F\u6255\u3046\u4F59\u88D5\u304C\u306A\u3044\u305F\u3081\u3001\u57FA\u672C\u306E\u5468\u308A\u306B\u30B0\u30ED\u30FC\u304C\u3042\u308A\u307E\u305B\u3093\u3002\r\n\r\n\u30EA\u30BD\u30FC\u30B9\u3092\u7372\u5F97\u3059\u308B\u5FC5\u8981\u304C\u3042\u308A\u307E\u3059\u3002\r\n\r\n\u30AB\u30FC\u30C9\u3092\u5143\u306E\u9762\u306B\u623B\u3059\u306B\u306F\u3001\u3082\u3046\u4E00\u5EA6\u53F3\u30AF\u30EA\u30C3\u30AF\u3057\u307E\u3059\u3002"
       Flags: 000000000000000000
       Languages_Touch: []
@@ -62528,34 +62560,34 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - 'You have 6 resources now.
+      - 'You have 6 {[t:Resources/Energy]} now.
 
 
-        All you need to do to win is flip one
-        of your cards over to your basic and defeat this enemy with it.'
-      - "\u4F60\u73B0\u5728\u67096\u4E2A\u8D44\u6E90\u3002\n\n\u4E3A\u4E86\u53D6\u80DC\uFF0C\u4F60\u6240\u9700\u8981\u505A\u7684\u5C31\u662F\u5C06\u4E00\u5F20\u5361\u724C\u8F6C\u5316\u4E3A\u57FA\u672C\u5361\uFF0C\u5E76\u51FB\u8D25\u8FD9\u4E2A\u654C\u4EBA\u3002"
-      - "\u4F60\u73FE\u5728\u67096\u500B\u8CC7\u6E90\u3002\n\n\u70BA\u4E86\u53D6\u52DD\uFF0C\u4F60\u6240\u9700\u8981\u505A\u7684\u5C31\u662F\u5C07\u4E00\u5F35\u5361\u724C\u8F49\u5316\u70BA\u57FA\u672C\u5361\uFF0C\u4E26\u64CA\u6557\u9019\u500B\u6575\u4EBA\u3002"
+        All you need to do to win
+        is flip one of your cards over to your basic and defeat this enemy with it.'
+      - "\u4F60\u73B0\u5728\u67096\u4E2A{[t:Resources/Energy]}\u3002\n\n\u4E3A\u4E86\u53D6\u80DC\uFF0C\u4F60\u6240\u9700\u8981\u505A\u7684\u5C31\u662F\u5C06\u4E00\u5F20\u5361\u724C\u8F6C\u5316\u4E3A\u57FA\u672C\u5361\uFF0C\u5E76\u51FB\u8D25\u8FD9\u4E2A\u654C\u4EBA\u3002"
+      - "\u4F60\u73FE\u5728\u67096\u500B{[t:Resources/Energy]}\u3002\n\n\u70BA\u4E86\u53D6\u52DD\uFF0C\u4F60\u6240\u9700\u8981\u505A\u7684\u5C31\u662F\u5C07\u4E00\u5F35\u5361\u724C\u8F49\u5316\u70BA\u57FA\u672C\u5361\uFF0C\u4E26\u64CA\u6557\u9019\u500B\u6575\u4EBA\u3002"
       - "\u0421\u0435\u0439\u0447\u0430\u0441 \u0443 \u0432\u0430\u0441 \u0435\u0441\u0442\u044C
-        6 \u0440\u0435\u0441\u0443\u0440\u0441\u043E\u0432. \n\n\u0412\u0441\u0435,
-        \u0447\u0442\u043E \u0432\u0430\u043C \u043D\u0443\u0436\u043D\u043E \u0441\u0434\u0435\u043B\u0430\u0442\u044C,
+        6 {[t:Resources/Energy]}. \n\n\u0412\u0441\u0435, \u0447\u0442\u043E \u0432\u0430\u043C
+        \u043D\u0443\u0436\u043D\u043E \u0441\u0434\u0435\u043B\u0430\u0442\u044C,
         \u0447\u0442\u043E\u0431\u044B \u0432\u044B\u0438\u0433\u0440\u0430\u0442\u044C,
         - \u044D\u0442\u043E \u043F\u0435\u0440\u0435\u0432\u0435\u0440\u043D\u0443\u0442\u044C
         \u043E\u0434\u043D\u0443 \u0438\u0437 \u0432\u0430\u0448\u0438\u0445 \u043A\u0430\u0440\u0442
         \u043D\u0430 \u0432\u0430\u0448 \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u0439
         \u0438 \u043F\u043E\u0431\u0435\u0434\u0438\u0442\u044C \u044D\u0442\u043E\u0433\u043E
         \u0432\u0440\u0430\u0433\u0430."
-      - "Ahora tienes 6 recursos. \n\nLo \xFAnico que tienes que hacer para ganar
-        es voltear una de tus cartas a la carta b\xE1sica y derrotar a este enemigo
-        con ella."
-      - "Voc\xEA tem 6 recursos agora. \n\nTudo o que voc\xEA precisa fazer para
-        vencer \xE9 virar uma das suas cartas para o seu lado b\xE1sico e derrotar
-        esse inimigo com ela."
-      - "Sie haben jetzt 6 Ressourcen. \n\nAlles, was Sie tun m\xFCssen, um zu gewinnen,
-        ist, eine Ihrer Karten auf Ihren Basis umzudrehen und diesen Feind damit
-        zu besiegen."
-      - "Vous avez 6 ressources maintenant. \n\nTout ce que vous avez \xE0 faire
-        pour gagner est de retourner l'une de vos cartes sur votre base et de vaincre
-        cet ennemi avec."
+      - "Ahora tienes 6 {[t:Resources/Energy]}. \n\nLo \xFAnico que tienes que hacer
+        para ganar es voltear una de tus cartas a la carta b\xE1sica y derrotar a
+        este enemigo con ella."
+      - "Voc\xEA tem 6 {[t:Resources/Energy]} agora. \n\nTudo o que voc\xEA precisa
+        fazer para vencer \xE9 virar uma das suas cartas para o seu lado b\xE1sico
+        e derrotar esse inimigo com ela."
+      - "Sie haben jetzt 6 {[t:Resources/Energy]}. \n\nAlles, was Sie tun m\xFCssen,
+        um zu gewinnen, ist, eine Ihrer Karten auf Ihren Basis umzudrehen und diesen
+        Feind damit zu besiegen."
+      - "Vous avez 6 {[t:Resources/Energy]} maintenant. \n\nTout ce que vous avez
+        \xE0 faire pour gagner est de retourner l'une de vos cartes sur votre base
+        et de vaincre cet ennemi avec."
       - "\u73FE\u5728\u30016\u3064\u306E\u30EA\u30BD\u30FC\u30B9\u304C\u3042\u308A\u307E\u3059\u3002\n\n\u52DD\u3064\u305F\u3081\u306B\u5FC5\u8981\u306A\u306E\u306F\u3001\u30AB\u30FC\u30C9\u306E1\u3064\u3092\u57FA\u672C\u306B\u3072\u3063\u304F\u308A\u8FD4\u3057\u3066\u3001\u3053\u306E\u6575\u3092\u5012\u3059\u3053\u3068\u3060\u3051\u3067\u3059\u3002"
       Flags: 000000000000000000
       Languages_Touch: []
@@ -64755,7 +64787,7 @@ MonoBehaviour:
     Google_WebServiceURL: https://script.google.com/macros/s/AKfycbyxEWOh-oly9VUweggR4FE-PJti-q6vB4eiq60gjqN60mMW8pqUSFQDcNZf5paleAfH/exec
     Google_SpreadsheetKey: 1_k0GnzCkReGlY_2s-ODT0hVniGHYfv2qnG9nqRQ4VvU
     Google_SpreadsheetName: I2Loc MetroplexZero Localization
-    Google_LastUpdatedVersion: 1680213213959
+    Google_LastUpdatedVersion: 1680233721644
     Google_Password: 23jh9hj2rjfhj33^$^%^$inhgf9g9j90i
     GoogleUpdateFrequency: 2
     GoogleInEditorCheckFrequency: 2

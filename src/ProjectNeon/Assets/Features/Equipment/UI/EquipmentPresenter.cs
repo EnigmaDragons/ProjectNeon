@@ -59,7 +59,8 @@ public class EquipmentPresenter : OnMessage<LanguageChanged>, IPointerDownHandle
             : AnyTerm.ToLocalized();
         var labelPrefix = ArchetypesTerm.ToLocalized();
         classesLabel.SetFinalText($"{labelPrefix} - {archetypeText}");
-        descriptionLabel.SetTerm(e.LocalizationDescriptionTerm());
+        var description = ResourceIcons.ReplaceTextWithResourceIcons(e.LocalizationDescriptionTerm().ToLocalized());
+        descriptionLabel.SetFinalText(description);
         rarity.Set(e.Rarity);
         slotIcon.sprite = slotIcons.All[e.Slot];
         var corp = allCorps.GetCorpByNameOrNone(e.Corp);

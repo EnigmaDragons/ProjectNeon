@@ -163,7 +163,7 @@ public static class InterpolatedCardDescriptions
                 result = result.Replace("{ID[" + effectIndex + "]}", DurationDescription(innerEffects[effectIndex], owner, xCost));
         }
 
-        if (owner.IsPresent && _resourceIcons.TryGetValue(owner.Value.PrimaryResourceQuantity().ResourceType, out var icon))
+        if (owner.IsPresent && ResourceIcons.Icons.TryGetValue(owner.Value.PrimaryResourceQuantity().ResourceType, out var icon))
         {
             result = result.Replace("Owner[PrimaryResource]", Sprite(icon));
             result = result.Replace("GlobalPrimaryResource", Sprite(icon));
@@ -172,12 +172,8 @@ public static class InterpolatedCardDescriptions
         result = result.Replace("GlobalPrimaryResource", "Resources");
         result = result.Replace("POW", "Power");
         result = result.Replace("PrimaryStat", "Power");
-        
-        foreach (var r in _resourceIcons)
-        {
-            result = Regex.Replace(result, $" {r.Key}", $" {Sprite(r.Value)}");
-            result = Regex.Replace(result, $"{r.Key}", $"{Sprite(r.Value)}");
-        }
+
+        result = ResourceIcons.ReplaceTextWithResourceIcons(result);
 
         result = Regex.Replace(result, @"@(\w+)", "$1");
         
@@ -228,24 +224,7 @@ public static class InterpolatedCardDescriptions
     
     private static string UppercaseFirst(string s) => char.ToUpper(s[0]) + s.Substring(1);
 
-    private static Dictionary<string, int> _resourceIcons = new Dictionary<string, int>(StringComparer.CurrentCultureIgnoreCase)
-    {
-        { "Ammo", 4 },
-        { "Chems", 5 },
-        { "Energy", 6 },
-        { "Flames", 7 },
-        { "Mana", 20 },
-        { "Insight", 24 },
-        { "Tech Points", 23 },
-        { "TechPoints", 23 },
-        { "PrimaryResource", 6 },
-        { "Primary Resource", 6 },
-        { "Grenades", 8 },
-        { "Grenade", 8 },
-        { "Ambition", 9 },
-        { "Credits", 21},
-        { "Creds", 21},
-    };
+    
     public static string PhysDamageIcon => Sprite(0);
     public static string TrueDamageIcon => Sprite(1);
     public static string MagicDamageIcon => Sprite(2);
@@ -288,7 +267,7 @@ public static class InterpolatedCardDescriptions
         if (data.EffectType == EffectType.AdjustCounterMaxFormula)
             return $"{FormulaAmount(data, owner, xCost)} Max {FriendlyScopeName(data.EffectScope.Value)}";
         if (data.EffectType == EffectType.AdjustPrimaryResourceFormula)
-            return $"{FormulaAmount(data, owner, xCost)} {(owner.IsPresent && showSprites ? owner.Value.PrimaryResourceQuantity().ResourceType : "Resources/Resources".ToLocalized())}";
+            return $"{FormulaAmount(data, owner, xCost)} {(owner.IsPresent && showSprites ? owner.Value.PrimaryResourceQuantity().ResourceType : "Resources/Energy".ToLocalized())}";
         if (data.EffectType == EffectType.ShieldBasedOnNumberOfOpponentsDoTs)
             return owner.IsPresent
                 ? RoundUp(Mathf.Min(owner.Value.MaxShield(),(data.FloatAmount * owner.Value.State[StatType.MaxShield]))).ToString()
