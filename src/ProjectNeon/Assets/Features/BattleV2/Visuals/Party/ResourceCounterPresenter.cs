@@ -17,18 +17,20 @@ public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerE
     private bool _ignoreMessages = false;
     private int _lastAmount = -999;
     private int _lastMaxAmount = -999;
+    private bool _showZero = true;
     
     public void Hide()
     {
         gameObject.SetActive(false);
     }
     
-    public void Init(Member member, IResourceType resource)
+    public void Init(Member member, IResourceType resource, bool showZero = true)
     {
         _member = member;
         _resourceType = resource;
+        _showZero = showZero;
         icon.sprite = resource.Icon;
-        UpdateUi(member.State);
+        UpdateUi(member.State, false);
         gameObject.SetActive(true);
     }
 
@@ -36,24 +38,26 @@ public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerE
     
     protected override void Execute(MemberStateChanged msg)
     {
-        if (_ignoreMessages || msg.State.MemberId != _member.Id) return;
+        if (_ignoreMessages || msg.State == null || _member == null || msg.State.MemberId != _member.Id) return;
         
         UpdateUi(msg.State);
     }
     
-    private void UpdateUi(MemberState state)
+    private void UpdateUi(MemberState state, bool animate = true)
     {
         if (state[_resourceType] == _lastAmount && state.Max(_resourceType.Name) == _lastMaxAmount)
             return;
         
         var max = state.Max(_resourceType.Name);
         var maxString = max < 25 ? $"/{max}" : string.Empty;
-        counter.text = $"{state[_resourceType]}{maxString}";
+        var counterText = $"{state[_resourceType]}{maxString}";
+        counter.text = _showZero || !counterText.Equals("0") ? counterText : "";
         if (resourceNameLabel != null)
             resourceNameLabel.SetTerm(_resourceType.GetTerm());
 
         transform.DOKill(true);
-        transform.DOPunchScale(new Vector3(1.5f, 1.5f, 1.5f), 0.3f, 1);
+        if (animate)
+            transform.DOPunchScale(new Vector3(1.5f, 1.5f, 1.5f), 0.3f, 1);
 
         _lastAmount = state[_resourceType];
         _lastMaxAmount = max;
