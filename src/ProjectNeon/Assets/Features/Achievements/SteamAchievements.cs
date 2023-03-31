@@ -43,8 +43,7 @@ public class SteamAchievements : IAchievements
         }
         catch (Exception e)
         {
-            Log.Error(e);
-            Log.Error($"Unable to Record Steam Achievement - {achievementId}");
+            Log.NonCrashingError(new Exception($"Unable to Record Steam Achievement - {achievementId}", e));
         }
     }
 
