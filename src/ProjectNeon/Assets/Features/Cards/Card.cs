@@ -7,7 +7,7 @@ using UnityEngine;
 public sealed class Card : CardTypeData
 {
     [SerializeField] private int id;
-    [SerializeField] private CardTypeDataBox type;
+    [SerializeField] private CardTypeData type;
     [SerializeField] private Member owner;
     [SerializeField] private readonly Maybe<Color> tint;
     [SerializeField] private readonly Maybe<Sprite> ownerBust;
@@ -17,10 +17,10 @@ public sealed class Card : CardTypeData
     public CardMode Mode { get; private set; }
     public bool IsActive => Mode != CardMode.Dead && Mode != CardMode.Glitched;
 
-    public bool IsBasic => Owner != null && (Mode == CardMode.Basic || Owner.BasicCard.IsPresentAnd(b => b.Id == type.Get().Id));
-    private CardTypeData _type => IsBasic ? Owner.BasicCard.Value : type.Get();
+    public bool IsBasic => Owner != null && (Mode == CardMode.Basic || Owner.BasicCard.IsPresentAnd(b => b.Id == type.Id));
+    private CardTypeData _type => IsBasic ? Owner.BasicCard.Value : type;
     public CardTypeData Type => IsBasic ? Owner.BasicCard.Value : this;
-    public CardTypeData BaseType => type.Get();
+    public CardTypeData BaseType => type;
     
     public Member Owner => owner;
 
@@ -60,7 +60,7 @@ public sealed class Card : CardTypeData
     {
         this.owner = owner ?? throw new ArgumentNullException(nameof(owner));
         this.id = id;
-        this.type = new CardTypeDataBox(type ?? throw new ArgumentNullException(nameof(CardTypeData)));
+        this.type = type ?? throw new ArgumentNullException(nameof(CardTypeData));
         this.tint = tint;
         this.ownerBust = ownerBust;
     }
