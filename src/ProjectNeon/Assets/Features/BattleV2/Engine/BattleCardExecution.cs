@@ -14,11 +14,11 @@ public static class BattleCardExecution
     public static List<IPayloadProvider> GetPayloads(this Card card, Target[] targets, BattleStateSnapshot battleStateSnapshot, ResourceQuantity xPaidAmount, ResourceQuantity paidAmount)
     {
         if (card.ActionSequences.Length > targets.Length)
-            Log.Error($"{card.Name}: For {card.ActionSequences.Length} there are only {targets.Length} targets");
+            Log.NonCrashingError($"{card.Name}: For {card.ActionSequences.Length} there are only {targets.Length} targets");
 
         var sequences = new List<CardActionSequence>();
         var sequenceTargets = new List<Target>();
-        for (var i = 0; i < card.ActionSequences.Length; i++)
+        for (var i = 0; i < card.ActionSequences.Length && i < targets.Length; i++)
         {
             var seq = card.ActionSequences[i];
             var numRepetitions = seq.RepeatX ? xPaidAmount.Amount : seq.RepeatCount > 0 ? seq.RepeatCount : 1;
