@@ -15,7 +15,7 @@ public sealed class PartyAdventureState : ScriptableObject
     [SerializeField] private PartyEquipmentCollection equipment;
     [SerializeField] private Hero[] heroes = Array.Empty<Hero>();
     [SerializeField] private ShopCardPool allCards;
-    [SerializeField] private EquipmentBox[] globalEquipment = Array.Empty<EquipmentBox>();
+    [SerializeField] private Equipment[] globalEquipment = Array.Empty<Equipment>();
 
     private List<CorpCostModifier> _corpCostModifiers = new List<CorpCostModifier>();
     private List<Blessing> _blessings = new List<Blessing>();
@@ -37,7 +37,7 @@ public sealed class PartyAdventureState : ScriptableObject
     public Blessing[] Blessings => _blessings?.ToArray() ?? (_blessings = new List<Blessing>()).ToArray();
     public PartyCardCollection Cards => cards;
     public PartyEquipmentCollection Equipment => equipment;
-    public Equipment[] GlobalEquipment => globalEquipment.FromBoxes();
+    public Equipment[] GlobalEquipment => globalEquipment;
     private Dictionary<string, List<Hero>> _archKeyHeroes;
 
     public bool IsInitialized => Decks.Sum(x => x.Cards.Count) >= 12;
@@ -337,12 +337,12 @@ public sealed class PartyAdventureState : ScriptableObject
     {
         if (GlobalEquipment.Contains(equip))
             return;
-        globalEquipment = GlobalEquipment.Concat(equip).ToBoxes();
+        globalEquipment = GlobalEquipment.Concat(equip).ToArray();
         heroes.ForEach(x => x.ApplyPermanent(equip));
     }
     public void RemoveGlobalEquipment(Equipment equip)
     {
-        globalEquipment = GlobalEquipment.Where(x => x != equip).ToArray().ToBoxes();
+        globalEquipment = GlobalEquipment.Where(x => x != equip).ToArray();
         heroes.ForEach(x => x.Equipment.Unequip(equip));
     }
     

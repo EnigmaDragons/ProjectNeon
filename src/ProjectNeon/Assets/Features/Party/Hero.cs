@@ -6,12 +6,12 @@ using UnityEngine;
 [Serializable]
 public class Hero
 {
-    [SerializeField] private HeroCharacterBox character = new HeroCharacterBox();
+    [SerializeField] private HeroCharacter character;
     [SerializeField] private HeroHealth health;
     [SerializeField] private RuntimeDeck deck;
     [SerializeField] private HeroEquipment equipment;
     [SerializeField] private HeroLevels levels;
-    [SerializeField] private CardTypeDataBox basicCard;
+    [SerializeField] private CardTypeData basicCard;
 
     private IStats _statAdditions = new StatAddends();
     private Maybe<StatType> _primaryStat = Maybe<StatType>.Missing();
@@ -21,29 +21,29 @@ public class Hero
     {
         if (character == null)
             Log.Error("Hero Ctor Character is null! WTF!");
-        this.character = new HeroCharacterBox(character);
+        this.character = character;
         this.deck = deck;
         levels = new HeroLevels();
         equipment = new HeroEquipment(character.Archetypes.ToArray());
         health = new HeroHealth(() => Stats);
-        basicCard = new CardTypeDataBox(character.BasicCard);
+        basicCard = character.BasicCard;
         _primaryResourceType = character.Stats.ResourceTypes.FirstAsMaybe().Select(r => r, () => new InMemoryResourceType());
     }
 
-    public string NameTerm => character?.Get() == null ? "" : character.Get().NameTerm();
-    public string ClassTerm => character?.Get() == null ? "" : character.Get().ClassTerm();
-    public HeroCharacter Character => character.Get();
+    public string NameTerm => character == null ? "" : character.NameTerm();
+    public string ClassTerm => character == null ? "" : character.ClassTerm();
+    public HeroCharacter Character => character;
     public RuntimeDeck Deck => deck;
     public int CurrentHp => Stats.MaxHp() - health.MissingHp;
     public HeroEquipment Equipment => equipment;
     public HeroHealth Health => health;
     public HeroLevels Levels => levels;
     public int Level => IsMaxLevelV4 ? Character.LevelUpTreeV4.MaxLevel : Levels.CurrentLevel;
-    public CardTypeData BasicCard => basicCard.Get();
+    public CardTypeData BasicCard => basicCard;
     public StatType PrimaryStat => _primaryStat.OrDefault(NonTemporaryStats.DefaultPrimaryStat(Character.Stats));
     public IResourceType PrimaryResource => _primaryResourceType;
     public Maybe<StatType> PlayerPrimaryStatSelection => _primaryStat;
-    public HashSet<string> Archetypes => character?.Get()?.Archetypes ?? new HashSet<string>();
+    public HashSet<string> Archetypes => character?.Archetypes ?? new HashSet<string>();
     public bool IsMaxLevelV4 => Levels.NextLevelUpLevel > Character.LevelUpTreeV4.MaxLevel;
     public HeroLevelUpRewardV4 NextLevelUpRewardV4 => Character.LevelUpTreeV4.ForLevel(Levels.NextLevelUpLevel);
 
@@ -78,7 +78,7 @@ public class Hero
     public void SetHp(int hp) => UpdateState(() => health.SetHp(hp));
     public void AdjustHp(int amount) => UpdateState(() => health.AdjustHp(amount));
 
-    public void SetBasic(CardTypeData c) => basicCard = new CardTypeDataBox(c);
+    public void SetBasic(CardTypeData c) => basicCard = c;
     public void SetDeck(RuntimeDeck d) => deck = d;
     public void SetLevels(HeroLevels l) => levels = l;
     public void SetHealth(HeroHealth h)
@@ -112,7 +112,7 @@ public class Hero
     public Member AsMember(int id)
     {
         var m = new Member(id, Character.NameTerm(), Character.ClassTerm(), Character.MaterialType, TeamType.Party,
-            Stats, Character.BattleRole, PrimaryStat, true, false, CurrentHp, new Maybe<CardTypeData>(basicCard.Get()));
+            Stats, Character.BattleRole, PrimaryStat, true, false, CurrentHp, new Maybe<CardTypeData>(basicCard));
         Character.CounterAdjustments.ForEach(c => m.State.Adjust(c.Key, c.Value));
         return m;
     }
@@ -147,7 +147,7 @@ public class Hero
 
     private Member WithStartOfBattleEffects(Member m, EffectContext ctx)
     {
-        character?.Get()?.StartOfBattleEffects?.ForEach(effect => AllEffects.Apply(effect, ctx.WithReactionTimingContext(effect.FinalReactionTimingWindow)));
+        character?.StartOfBattleEffects?.ForEach(effect => AllEffects.Apply(effect, ctx.WithReactionTimingContext(effect.FinalReactionTimingWindow)));
         return m;
     }
 
