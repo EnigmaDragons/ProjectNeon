@@ -32,6 +32,11 @@ public class CoreController : MemberInitable
 
     private void Execute(CardResolutionFinished card)
     {
+        if (_member == null)
+        {
+            Log.NonCrashingError("Core Controller was never initialized");
+            return;
+        }
         if (_member.State[StatType.ExtraCardPlays] == _cardPlays)
             return;
         toScale.ForEach(x => x.transform.localScale = new Vector3(stage2Scale, stage2Scale, 0));

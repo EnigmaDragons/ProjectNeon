@@ -83,6 +83,12 @@ public class CardPlayZones : ScriptableObject
             BattleLog.Write("Hand Is Full. Not Drawing Any More Cards");
             return;
         }
+
+        if (!DrawZone.Cards.Concat(DiscardZone.Cards).Any())
+        {
+            BattleLog.Write("Unable to find cards. Not Drawing Any Cards");
+            return;
+        }
         
         if (DrawZone.IsEmpty)
             Reshuffle();
@@ -98,7 +104,7 @@ public class CardPlayZones : ScriptableObject
             return;
         }
 
-        if (AllCards.None(cardCondition))
+        if (!DrawZone.Cards.Concat(DiscardZone.Cards).Any(cardCondition))
         {
             BattleLog.Write("Unable to find card of selected type. Not Drawing Any Cards");
             return;

@@ -116,7 +116,7 @@ public static class AllEffects
         { EffectType.AdjustOwnersPrimaryResourceBasedOnTargetShieldSum, 
             e => new FullContextEffect((ctx, t) => ctx.Source.State.AdjustPrimaryResource((ctx.Target.TotalShields() 
                 * Formula.EvaluateRaw(ctx.SourceSnapshot.State, ctx.Source.State, e.Formula, ctx.XPaidAmount, ctx.ScopedData)).CeilingInt()))},
-        { EffectType.RemoveTemporalModsMatchingStatusTag, e => new SimpleEffect(m => m.RemoveTemporaryEffects(t => t.Status.Tag.ToString() == e.EffectScope.Value))},
+        { EffectType.RemoveTemporalModsMatchingStatusTag, e => new AegisPreventable(new SimpleEffect(m => m.RemoveTemporaryEffects(t => t.Status.Tag.ToString() == e.EffectScope.Value)), $"Remove Temporal Mods Matching Status Tag {e.EffectScope.Value}")},
         { EffectType.InvulnerableForTurns, e => new FullContextEffect((ctx, duration, m) => m.ApplyTemporaryMultiplier(new AdjustedStats(
             new StatMultipliers().With(StatType.Damagability, 0f),
             TemporalStateMetadata.BuffForDuration(ctx.Source.Id, duration, new StatusDetail(StatusTag.Invulnerable, Maybe<string>.Missing())))), e.DurationFormula)},
