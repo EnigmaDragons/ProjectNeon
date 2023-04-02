@@ -60,7 +60,7 @@ public class CardShopPresenter : OnMessage<RefreshShop, CardPurchased>
             nodeInfo.CardShopSelection = selection.Cards.Cast<CardType>().ToArray();
             Message.Publish(new SaveDeterminationsRequested());
         }
-        _selection = new ShopSelection(new List<Equipment>(), new List<CardTypeData>(nodeInfo.CardShopSelection.Value));
+        _selection = new ShopSelection(new List<StaticEquipment>(), new List<CardTypeData>(nodeInfo.CardShopSelection.Value));
         var cardsWithOwners = _selection.Cards.Select(c => c.ToNonBattleCard(party));
         cardsWithOwners.ForEach(c => 
             Instantiate(cardPurchasePrototype, cardParent.transform)

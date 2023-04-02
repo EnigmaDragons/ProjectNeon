@@ -106,7 +106,6 @@ public static class AllEffects
         { EffectType.ChooseAndDrawCard, e => new ChooseAndDrawSelectedCard(e.EffectScope) },
         { EffectType.ChooseCardToCreate, e => new ChooseCardToCreate(e.EffectScope, e.Formula) },
         { EffectType.ChooseAndDrawCardOfArchetype, e => new ChooseAndDrawCardOfArchetype(e.EffectScope) },
-        { EffectType.ChooseBuyoutCardsOrDefault, e => new ChooseBuyoutCardOrDefaultToCreate(e.EffectScope) },
         { EffectType.BuyoutEnemyById, e => new BuyoutEnemyById(e.EffectScope) },
         { EffectType.AdjustBattleRewardFormula, e => new AdjustBattleReward(e.EffectScope, e.Formula)},
         { EffectType.TransformCardsIntoCard, e => new TransformOwnersCardsIntoCard(e.EffectScope)},

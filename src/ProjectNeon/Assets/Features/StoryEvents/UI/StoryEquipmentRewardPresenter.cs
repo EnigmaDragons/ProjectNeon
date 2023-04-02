@@ -5,5 +5,5 @@ public class StoryEquipmentRewardPresenter : MonoBehaviour
 {
     [SerializeField] private EquipmentPresenter presenter;
 
-    public void Init(Equipment e) => presenter.Initialized(e, () => { });
+    public void Init(StaticEquipment e) => presenter.Initialized(e, () => { });
 }

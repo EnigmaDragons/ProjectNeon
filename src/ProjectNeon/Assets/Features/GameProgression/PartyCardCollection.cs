@@ -64,7 +64,7 @@ public sealed class PartyCardCollection : ScriptableObject
             Enumerable.Range(0, numAdditionalNeeded).ForEach(_ => Add(c));
     }
     
-    public CardTypeData[] CardsForHero(HeroCharacter h)
+    public CardTypeData[] CardsForHero(BaseHero h)
         => AllCards
             .Where(cardWithCount => 
                 cardWithCount.Key.Archetypes.All(archetype => h.Archetypes.Contains(archetype)) 

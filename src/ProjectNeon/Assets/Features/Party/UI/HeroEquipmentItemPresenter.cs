@@ -12,7 +12,7 @@ public class HeroEquipmentItemPresenter : MonoBehaviour, IPointerDownHandler
 
     private Action _onClick = () => {};
     
-    public HeroEquipmentItemPresenter Initialized(EquipmentSlot slot, Maybe<Equipment> e, Action onClick)
+    public HeroEquipmentItemPresenter Initialized(EquipmentSlot slot, Maybe<StaticEquipment> e, Action onClick)
     {
         _onClick = onClick;
         nameLabel.SetTerm(e.IsPresent ? e.Value.LocalizationNameTerm() : "---");

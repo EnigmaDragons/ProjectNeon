@@ -6,7 +6,7 @@ using UnityEngine;
 [Serializable]
 public class Hero
 {
-    [SerializeField] private HeroCharacter character;
+    [SerializeField] private BaseHero character;
     [SerializeField] private HeroHealth health;
     [SerializeField] private RuntimeDeck deck;
     [SerializeField] private HeroEquipment equipment;
@@ -17,7 +17,7 @@ public class Hero
     private Maybe<StatType> _primaryStat = Maybe<StatType>.Missing();
     private IResourceType _primaryResourceType;
 
-    public Hero(HeroCharacter character, RuntimeDeck deck)
+    public Hero(BaseHero character, RuntimeDeck deck)
     {
         if (character == null)
             Log.Error("Hero Ctor Character is null! WTF!");
@@ -32,7 +32,7 @@ public class Hero
 
     public string NameTerm => character == null ? "" : character.NameTerm();
     public string ClassTerm => character == null ? "" : character.ClassTerm();
-    public HeroCharacter Character => character;
+    public BaseHero Character => character;
     public RuntimeDeck Deck => deck;
     public int CurrentHp => Stats.MaxHp() - health.MissingHp;
     public HeroEquipment Equipment => equipment;
@@ -56,12 +56,14 @@ public class Hero
         .Plus(new StatAddends().With(Equipment.All.SelectMany(e =>
             e.ResourceModifiers.Select(r => r.WithPrimaryResourceMappedForOwner(_primaryResourceType))).ToArray()))
         .Plus(Equipment.All.Select(e => e.AdditiveStats()))
+        .Plus(Equipment.Implants.Select(e => e.AdditiveStats()))
         .Times(Equipment.All.Select(e => e.MultiplierStats()));
 
     public IStats Stats => Character.Stats
         .Plus(_statAdditions)
         .Plus(new StatAddends().With(Equipment.All.SelectMany(e => e.ResourceModifiers.Select(r => r.WithPrimaryResourceMappedForOwner(_primaryResourceType))).ToArray()))
         .Plus(Equipment.All.Select(e => e.AdditiveStats()))
+        .Plus(Equipment.Implants.Select(e => e.AdditiveStats()))
         .Plus(health.AdditiveStats(PrimaryStat))
         .Times(Equipment.All.Select(e => e.MultiplierStats()))
         .Times(health.MultiplicativeStats(PrimaryStat));
@@ -88,16 +90,17 @@ public class Hero
     }
 
     public void AddToStats(IStats stats) => UpdateState(() => _statAdditions = _statAdditions.Plus(stats.WithConvertedPower(PrimaryStat)));
-    public void Equip(Equipment e) => UpdateState(() => equipment.Equip(e));
-    public void EquipPermanent(Equipment e)
+    public void Equip(StaticEquipment e) => UpdateState(() => equipment.Equip(e));
+    public void EquipPermanent(StaticEquipment e)
     {
         var currentHealth = Stats.MaxHp() - Health.MissingHp;
         equipment.EquipPermanent(e);
         Health.SetHp(Math.Min(currentHealth, Stats.MaxHp()));
     }
-    public void Unequip(Equipment e) => UpdateState(() => equipment.Unequip(e));
-    public bool CanEquip(Equipment e) => equipment.CanEquip(e);
-    public void ApplyPermanent(Equipment e) => UpdateState(() => equipment.EquipPermanent(e));
+    public void Unequip(StaticEquipment e) => UpdateState(() => equipment.Unequip(e));
+    public bool CanEquip(StaticEquipment e) => equipment.CanEquip(e);
+    public void ApplyPermanent(StaticEquipment e) => UpdateState(() => equipment.EquipPermanent(e));
+    public void ApplyImplant(InMemoryEquipment e) => UpdateState(() => equipment.EquipImplant(e));
     
     // Progression
     public void AddXp(int xp) => UpdateState(() => levels.AddXp(xp));

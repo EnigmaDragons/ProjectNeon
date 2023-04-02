@@ -1,7 +1,7 @@
 
 public class BeginHeroShowcaseRequested
 {
-    public HeroCharacter Hero { get; }
+    public BaseHero Hero { get; }
 
-    public BeginHeroShowcaseRequested(HeroCharacter h) => Hero = h;
+    public BeginHeroShowcaseRequested(BaseHero h) => Hero = h;
 }

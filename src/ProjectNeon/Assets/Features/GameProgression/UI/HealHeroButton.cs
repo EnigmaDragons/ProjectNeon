@@ -12,11 +12,11 @@ public sealed class HealHeroButton : MonoBehaviour, ILocalizeTerms
     [SerializeField] private int reviveCost;
 
     private int _healCost;
-    private HeroCharacter _hero;
+    private BaseHero _hero;
     
     private void Awake() => button.onClick.AddListener(HealToFullIfCanAfford);
 
-    public void Init(HeroCharacter h)
+    public void Init(BaseHero h)
     {
         _hero = h;
         _healCost = party.CurrentHpOf(_hero) > 0 ? cost : reviveCost;

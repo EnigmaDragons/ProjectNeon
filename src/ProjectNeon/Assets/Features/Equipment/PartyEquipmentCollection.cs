@@ -5,20 +5,20 @@ using System.Linq;
 [Serializable]
 public class PartyEquipmentCollection
 {
-    private List<Equipment> _all = new List<Equipment>();
-    private List<Equipment> _available = new List<Equipment>();
-    private List<Equipment> _equipped = new List<Equipment>();
+    private List<StaticEquipment> _all = new List<StaticEquipment>();
+    private List<StaticEquipment> _available = new List<StaticEquipment>();
+    private List<StaticEquipment> _equipped = new List<StaticEquipment>();
     
-    public List<Equipment> All => (_all ?? new List<Equipment>()).ToList();
-    public List<Equipment> Available => (_available ?? new List<Equipment>()).ToList();
-    public List<Equipment> Equipped => (_equipped ?? new List<Equipment>()).ToList();
+    public List<StaticEquipment> All => (_all ?? new List<StaticEquipment>()).ToList();
+    public List<StaticEquipment> Available => (_available ?? new List<StaticEquipment>()).ToList();
+    public List<StaticEquipment> Equipped => (_equipped ?? new List<StaticEquipment>()).ToList();
 
-    public IEnumerable<Equipment> AvailableFor(HeroCharacter c) =>
+    public IEnumerable<StaticEquipment> AvailableFor(BaseHero c) =>
         Available.Where(e => e.Archetypes.All(c.Archetypes.Contains)).ToList();
 
-    public PartyEquipmentCollection(params Equipment[] e) => Add(e);
+    public PartyEquipmentCollection(params StaticEquipment[] e) => Add(e);
     
-    public void Add(params Equipment[] e)
+    public void Add(params StaticEquipment[] e)
     {
         if (e == null)
             return;
@@ -27,7 +27,7 @@ public class PartyEquipmentCollection
         _available.AddRange(e);
     }
 
-    public void MarkEquipped(Equipment e)
+    public void MarkEquipped(StaticEquipment e)
     {
         var indexOf = _available.IndexOf(e);
         if (indexOf < 0)
@@ -37,7 +37,7 @@ public class PartyEquipmentCollection
         _equipped.Add(e);
     }
 
-    public void MarkUnequipped(Equipment e)
+    public void MarkUnequipped(StaticEquipment e)
     {
         var indexOf = _equipped.IndexOf(e);
         if (indexOf < 0)

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
-    [SerializeField] private HeroCharacter currentHero;
+    [SerializeField] private BaseHero currentHero;
     [SerializeField] private GameObject hoverGraphic;
     [SerializeField] private Image heroBust;
     [SerializeField] private Localize heroName;
@@ -50,9 +50,9 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void DisableClick() => _isClickable = false;
     
-    public void Init(HeroCharacter c) => Init(c, false, () => {});
-    public void Init(HeroCharacter c, bool isClickable, Action onClick) => Init(c, c.AsMemberForLibrary(), isClickable, onClick);
-    public void Init(HeroCharacter c, Member m, bool isClickable, Action onClick)
+    public void Init(BaseHero c) => Init(c, false, () => {});
+    public void Init(BaseHero c, bool isClickable, Action onClick) => Init(c, c.AsMemberForLibrary(), isClickable, onClick);
+    public void Init(BaseHero c, Member m, bool isClickable, Action onClick)
     {
         _isInitialized = true;
         _onClick = onClick;

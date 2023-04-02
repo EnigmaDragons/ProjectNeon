@@ -52,10 +52,10 @@ public class LootPicker
         return selectedCards.ToArray();
     }
 
-    public Equipment[] PickEquipments(EquipmentPool equipmentPool, int numEquipment, params Rarity[] rarities)
+    public StaticEquipment[] PickEquipments(EquipmentPool equipmentPool, int numEquipment, params Rarity[] rarities)
         => PickEquipments(equipmentPool, numEquipment, "", rarities);
     
-    public Equipment[] PickEquipments(EquipmentPool equipmentPool, int numEquipment, string corpName,
+    public StaticEquipment[] PickEquipments(EquipmentPool equipmentPool, int numEquipment, string corpName,
         params Rarity[] rarities)
     {
         rarities = rarities.None() ? new[] { Rarity.Common, Rarity.Uncommon, Rarity.Rare, Rarity.Epic } : rarities;
@@ -95,12 +95,12 @@ public class LootPicker
                 .Shuffled(rng);
         }
 
-        return new ShopSelection(new List<Equipment>(), selectedCards.ToList());
+        return new ShopSelection(new List<StaticEquipment>(), selectedCards.ToList());
     }
     
     public ShopSelection GenerateEquipmentSelection(EquipmentPool equipment, int numEquips, string corpNameFilter)
     {
-        Equipment[] selectedEquipment;
+        StaticEquipment[] selectedEquipment;
         if (stage > 1)
         {
             selectedEquipment = PickEquipments(equipment, 2, corpNameFilter, Rarity.Rare, Rarity.Epic)

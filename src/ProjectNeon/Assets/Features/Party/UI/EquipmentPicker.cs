@@ -8,7 +8,7 @@ public class EquipmentPicker : OnMessage<GetUserSelectedEquipment>, ILocalizeTer
     [SerializeField] private EquipmentPresenter equipmentPrototype;
     [SerializeField] private GameObject optionsParent;
 
-    private Action<Maybe<Equipment>> _onSelected = _ => { };
+    private Action<Maybe<StaticEquipment>> _onSelected = _ => { };
 
     private const string NoneTerm = "Menu/None";
     
@@ -28,13 +28,13 @@ public class EquipmentPicker : OnMessage<GetUserSelectedEquipment>, ILocalizeTer
     }
 
     private void ClearView() => optionsParent.DestroyAllChildren();
-    private void SelectEquipment(Equipment e)
+    private void SelectEquipment(StaticEquipment e)
     {
         Debug.Log($"Selected Equipment {e.Name}");
-        FinishSelection(() => _onSelected(new Maybe<Equipment>(e)));
+        FinishSelection(() => _onSelected(new Maybe<StaticEquipment>(e)));
     }
 
-    private void SelectNone() => FinishSelection(() => _onSelected(Maybe<Equipment>.Missing()));
+    private void SelectNone() => FinishSelection(() => _onSelected(Maybe<StaticEquipment>.Missing()));
     private void FinishSelection(Action s)
     {
         view.SetActive(false);

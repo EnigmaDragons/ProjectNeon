@@ -80,7 +80,7 @@ public class CharacterCreatorAnimationController : OnMessage<CharacterAnimationR
         if (msg.Condition.IsPresent)
         {
             var ctx = new EffectContext(msg.Source, msg.Target, msg.Card, msg.XPaidAmount, msg.PaidAmount, partyAdventureState, state.PlayerState, state.RewardState,
-                state.Members, state.PlayerCardZones, new UnpreventableContext(), new SelectionContext(), new Dictionary<int, CardTypeData>(), state.CreditsAtStartOfBattle, 
+                state.Members, state.PlayerCardZones, new UnpreventableContext(), new SelectionContext(), new Dictionary<int, CardType>(), state.CreditsAtStartOfBattle, 
                 state.Party.Credits, state.Enemies.ToDictionary(x => x.Member.Id, x => (EnemyType)x.Enemy), () => state.GetNextCardId(), 
                 state.CurrentTurnCardPlays(), state.OwnerTints, state.OwnerBusts, false, ReactionTimingWindow.NotApplicable, new EffectScopedData(), new DoubleDamageContext(msg.Source, false));
             var reasonToNotApply = msg.Condition.Value.GetShouldNotApplyReason(ctx);

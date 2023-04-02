@@ -13,35 +13,37 @@ public class HeroEquipment
     [SerializeField] private string armorName;
     [SerializeField] private string[] augments = new string[MaxAugments];
     [SerializeField] private string[] permanents = new string[0];
+    [SerializeField] private string[] implants = new string[0];
     
-    private Equipment _weapon;
-    private Equipment _armor;
-    private readonly Equipment[] _augments = new Equipment[MaxAugments];
-    private readonly List<Equipment> _permanents = new List<Equipment>();
+    private StaticEquipment _weapon;
+    private StaticEquipment _armor;
+    private readonly StaticEquipment[] _augments = new StaticEquipment[MaxAugments];
+    private readonly List<StaticEquipment> _permanents = new List<StaticEquipment>();
+    private readonly List<InMemoryEquipment> _implants = new List<InMemoryEquipment>();
     
     public HeroEquipment() {}
     public HeroEquipment(params string[] a) => archetypes = a;
 
     public int TotalSlots => 6;
-    public Maybe<Equipment> Weapon => new Maybe<Equipment>(_weapon);
-    public Maybe<Equipment> Armor => new Maybe<Equipment>(_armor);
-    public Equipment[] Augments => _augments.Where(a => a?.Archetypes != null).ToArray();
-    public Equipment[] Permanents => _permanents.ToArray();
-    public Equipment[] Implants => _permanents.Where(x => x.Name.Equals("Implant")).ToArray();
+    public Maybe<StaticEquipment> Weapon => new Maybe<StaticEquipment>(_weapon);
+    public Maybe<StaticEquipment> Armor => new Maybe<StaticEquipment>(_armor);
+    public StaticEquipment[] Augments => _augments.Where(a => a?.Archetypes != null).ToArray();
+    public StaticEquipment[] Permanents => _permanents.ToArray();
+    public InMemoryEquipment[] Implants => _implants.ToArray();
     public int OpenSlots => (Weapon.IsMissing ? 1 : 0) + (Armor.IsMissing ? 1 : 0) + _augments.Count(a => a != null); 
     
-    public Equipment[] All => new []{ _weapon, _armor }
+    public StaticEquipment[] All => new []{ _weapon, _armor }
         .Concat(_augments)
         .Concat(_permanents)
         .Where(a => a?.Archetypes != null) // Nasty Hack to make this both handle optional serializables and make this work for Standalone Unit Tests
         .ToArray();
     
-    public bool CanEquip(Equipment e)
+    public bool CanEquip(StaticEquipment e)
     {
         return e.Archetypes.All(archetypes.Contains);
     }
 
-    public bool HasSpareRoomFor(Equipment e)
+    public bool HasSpareRoomFor(StaticEquipment e)
     {
         if (!CanEquip(e))
             return false;
@@ -55,7 +57,7 @@ public class HeroEquipment
         return true;
     }
     
-    public void Unequip(Equipment e)
+    public void Unequip(StaticEquipment e)
     {
         if (_weapon == e)
             _weapon = null;
@@ -70,13 +72,19 @@ public class HeroEquipment
             }
     }
 
-    public void EquipPermanent(Equipment e)
+    public void EquipPermanent(StaticEquipment e)
     {
         _permanents.Add(e);
         permanents = _permanents.Select(x => x.Name).ToArray();
     }
+    
+    public void EquipImplant(InMemoryEquipment e)
+    {
+        _implants.Add(e);
+        implants = _implants.Select(x => x.Name).ToArray();
+    }
 
-    public void Equip(Equipment e)
+    public void Equip(StaticEquipment e)
     {
         if (!CanEquip(e))
             throw new InvalidOperationException();

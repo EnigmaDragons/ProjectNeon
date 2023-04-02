@@ -4,9 +4,9 @@ using UnityEngine;
 public class AugmentLevelUpOption : LevelUpOption
 {
     private readonly PartyAdventureState _party;
-    private readonly Equipment _e;
+    private readonly StaticEquipment _e;
 
-    public AugmentLevelUpOption(PartyAdventureState party, Equipment e)
+    public AugmentLevelUpOption(PartyAdventureState party, StaticEquipment e)
     {
         _party = party;
         _e = e;

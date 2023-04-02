@@ -29,7 +29,7 @@ public class BattleVFXController : OnMessage<BattleEffectAnimationRequested, Pla
             LogInfo($"Requested VFX {e.EffectName}");
         var f = _fxByName.ValueOrMaybe(e.EffectName);
         var ctx = new EffectContext(e.Source, e.Target, e.Card, e.XPaidAmount, e.PaidAmount, partyAdventureState, state.PlayerState, state.RewardState,
-            state.Members, state.PlayerCardZones, new UnpreventableContext(), new SelectionContext(), new Dictionary<int, CardTypeData>(), state.CreditsAtStartOfBattle, 
+            state.Members, state.PlayerCardZones, new UnpreventableContext(), new SelectionContext(), new Dictionary<int, CardType>(), state.CreditsAtStartOfBattle, 
             state.Party.Credits, state.Enemies.ToDictionary(x => x.Member.Id, x => (EnemyType)x.Enemy), () => state.GetNextCardId(), 
             state.CurrentTurnCardPlays(), state.OwnerTints, state.OwnerBusts, false, ReactionTimingWindow.NotApplicable, new EffectScopedData(), new DoubleDamageContext(e.Source, false));
         var conditionResult = e.Condition.GetShouldNotApplyReason(ctx);

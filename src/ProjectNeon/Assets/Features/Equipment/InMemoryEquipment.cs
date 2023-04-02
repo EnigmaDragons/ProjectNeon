@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 
 [Serializable]
-public class InMemoryEquipment : Equipment
+public class InMemoryEquipment
 {
     [SerializeField] private int id = -1;
     [SerializeField] private string name = "None";
@@ -118,9 +118,13 @@ public class InMemoryEquipment : Equipment
     public GameEquipmentData GetData() 
         => new GameEquipmentData { Type = GameEquipmentDataType.GeneratedEquipment, GeneratedEquipment = this };
 
-    public Equipment Initialized(string archetype)
+    public InMemoryEquipment Initialized(string archetype)
     {
         Archetypes = new[] {archetype};
         return this;
     }
+    
+    public StatAddends AdditiveStats()
+        => new StatAddends(Modifiers.Where(m => m.ModifierType == StatMathOperator.Additive)
+            .ToDictionary(m => m.StatType, m => m.Amount));
 }

@@ -12,7 +12,7 @@ public sealed class ShopEquipmentPurchaseSlot : OnMessage<PartyAdventureStateCha
     [SerializeField] private Color discountTextColor = Color.green;
     [SerializeField] private Color markupTextColor = Color.red;
     
-    private Equipment _equipment;
+    private StaticEquipment _equipment;
     private float _priceFactor;
     private int _price;
     private bool _purchased;
@@ -22,9 +22,9 @@ public sealed class ShopEquipmentPurchaseSlot : OnMessage<PartyAdventureStateCha
         UpdateAffordability();
     }
 
-    public ShopEquipmentPurchaseSlot Initialized(Equipment e) => Initialized(e, 1f);
+    public ShopEquipmentPurchaseSlot Initialized(StaticEquipment e) => Initialized(e, 1f);
     
-    public ShopEquipmentPurchaseSlot Initialized(Equipment e, float priceFactor)
+    public ShopEquipmentPurchaseSlot Initialized(StaticEquipment e, float priceFactor)
     {
         soldVisual.SetActive(false);
         _equipment = e;

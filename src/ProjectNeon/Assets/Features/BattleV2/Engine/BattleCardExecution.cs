@@ -60,8 +60,10 @@ public static class BattleCardExecution
     // Sequence Actions
     public static IPayloadProvider Play(this CardActionsData cardData, CardActionContext ctx, bool isFirstSequenceWithABattleEffectWithChosenTarget = true)
     {
-        var firstBattleEffectIndex = cardData.Actions.FirstIndexOf(x => x.Type == CardBattleActionType.Battle);
-        return new MultiplePayloads(cardData.Name, cardData.Actions.Select((x, i) => x.Play(isFirstSequenceWithABattleEffectWithChosenTarget && i == firstBattleEffectIndex, ctx)), 
+        var payloadProviders = cardData.Actions.Select((x, i) => x.Play(false, ctx));
+        if (isFirstSequenceWithABattleEffectWithChosenTarget) //hacky way to ensure certain reactions happen inspite of conditions not met
+            payloadProviders = new[] {new SinglePayload(new ApplyBattleEffect(true, new EffectData { EffectType = EffectType.Nothing }, ctx.Source, ctx.Target, ctx.Card, ctx.XAmountPaid, ctx.AmountPaid, ctx.Preventions, ctx.Group, ctx.Scope, isReaction: false, ReactionTimingWindow.FirstCause, ctx.DoubleDamage)) }.Concat(payloadProviders);
+        return new MultiplePayloads(cardData.Name, payloadProviders, 
             new SinglePayload(new Finished<CardActionContext> {Message = ctx}).AsArray());
     }
 

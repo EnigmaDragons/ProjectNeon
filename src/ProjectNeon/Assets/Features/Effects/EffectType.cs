@@ -100,7 +100,6 @@ public enum EffectType
     ResolveInnerEffect = 86,
     AdjustPrimaryStatForEveryCardCycledAndInHand = 40,
     BuyoutEnemyById = 47,
-    ChooseBuyoutCardsOrDefault = 48,
     AdjustBattleRewardFormula = 91,
     TransformCardsIntoCard = 93,
     AdjustOwnersPrimaryResourceBasedOnTargetShieldSum = 98,

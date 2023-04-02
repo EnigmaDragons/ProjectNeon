@@ -37,8 +37,8 @@ public class HeroEquipmentPanelV2 : MonoBehaviour
         var h = state.SelectedHeroesDeck.Hero;
         var augments = h.Equipment.Augments;
         var a = augments.Length > slot - 1
-            ? new Maybe<Equipment>(augments[slot - 1])
-            : Maybe<Equipment>.Missing();
+            ? new Maybe<StaticEquipment>(augments[slot - 1])
+            : Maybe<StaticEquipment>.Missing();
         augmentSlot.Initialized(EquipmentSlot.Augmentation, a,
             () => a.IfPresent(e =>
             {

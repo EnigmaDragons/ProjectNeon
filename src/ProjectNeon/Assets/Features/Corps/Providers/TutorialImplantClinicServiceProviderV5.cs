@@ -93,7 +93,7 @@ public class TutorialImplantClinicServiceProviderV5 : ClinicServiceProvider
 
     private void AdjustHero(Hero hero, StatType lossStat, int lossAmount, StatType gainStat, int gainAmount)
     {
-        hero.ApplyPermanent(new InMemoryEquipment
+        hero.ApplyImplant(new InMemoryEquipment
         {
             Name = "Implant",
             Slot = EquipmentSlot.Permanent,

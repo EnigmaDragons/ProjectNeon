@@ -24,7 +24,7 @@ public class GearRulesPresenter : MonoBehaviour
         Hide();
     }
     
-    public void Show(Equipment e, int maxRulesToShow = 999)
+    public void Show(StaticEquipment e, int maxRulesToShow = 999)
     {
         if (e == null)
         {

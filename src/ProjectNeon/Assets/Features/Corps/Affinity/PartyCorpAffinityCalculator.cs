@@ -4,7 +4,7 @@ using System.Linq;
 
 public static class PartyCorpAffinityCalculator
 {
-    public static PartyCorpAffinity ForEquippedEquipment(int equipmentSlots, Dictionary<string, Corp> allCorps, IEnumerable<Equipment> equipment)
+    public static PartyCorpAffinity ForEquippedEquipment(int equipmentSlots, Dictionary<string, Corp> allCorps, IEnumerable<StaticEquipment> equipment)
     {
         if (!equipment.Any())
             return new PartyCorpAffinity();

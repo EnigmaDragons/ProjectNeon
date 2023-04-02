@@ -10,7 +10,7 @@ public sealed class VictoryEquipmentSelectionUI : OnMessage<GetUserSelectedEquip
     [SerializeField] private BattleState state;
     [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI creditsLabel;
 
-    private Action<Maybe<Equipment>> _onSelected = _ => { };
+    private Action<Maybe<StaticEquipment>> _onSelected = _ => { };
     private void ClearView() => optionsParent.DestroyAllChildren();
     private bool _hasSelected = false;
 
@@ -26,14 +26,14 @@ public sealed class VictoryEquipmentSelectionUI : OnMessage<GetUserSelectedEquip
         view.SetActive(true);
     }
 
-    private void SelectEquipment(Equipment e)
+    private void SelectEquipment(StaticEquipment e)
     {
         if (_hasSelected)
             return;
 
         _hasSelected = true;
         Debug.Log($"Selected Equipment {e.Name}");
-        _onSelected(new Maybe<Equipment>(e));
+        _onSelected(new Maybe<StaticEquipment>(e));
         ClearView();
         Instantiate(equipmentPresenter, optionsParent.transform).Set(e, () => { });
     }

@@ -24,9 +24,9 @@ public class Library : ScriptableObject
     public Difficulty DefaultDifficulty => UnlockedDifficulties.FirstOrDefault(x => x.id == 0) ?? UnlockedDifficulties.First();
 
     public BaseHero HeroById(int id) => allHeroes.GetHeroByIdOrDefault(id);
-    public Maybe<CardTypeData> GetCardById(int id) => allCards.GetCardById(id);
+    public Maybe<CardType> GetCardById(int id) => allCards.GetCardById(id);
     
-    public Maybe<Equipment> GetEquipment(GameEquipmentData data) => allEquipment.GetFromSaveData(data);
+    public Maybe<StaticEquipment> GetEquipment(GameEquipmentData data) => allEquipment.GetFromSaveData(data);
     public Maybe<StaticHeroLevelUpOption> GetLevelUpPerkById(int id) => allLevelUps.GetLevelUpPerkById(id);
 
     public Maybe<Adventure> GetAdventureById(int adventureId) => unlockedAdventures.Where(a => a.id == adventureId).FirstAsMaybe();

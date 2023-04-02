@@ -34,31 +34,31 @@ public class HeroEquipmentPanel : MonoBehaviour
         InitAugmentSlot3(h, augments);
     }
 
-    private void InitAugmentSlot3(Hero h, Equipment[] augments)
+    private void InitAugmentSlot3(Hero h, StaticEquipment[] augments)
     {
         var a3 = augments.Length > 2
-            ? new Maybe<Equipment>(augments[2])
-            : Maybe<Equipment>.Missing();
+            ? new Maybe<StaticEquipment>(augments[2])
+            : Maybe<StaticEquipment>.Missing();
         augment3Slot.Initialized(EquipmentSlot.Augmentation, a3, () => BeginEquipmentSelection(h, EquipmentSlot.Augmentation, a3));
     }
 
-    private void InitAugmentSlot2(Hero h, Equipment[] augments)
+    private void InitAugmentSlot2(Hero h, StaticEquipment[] augments)
     {
         var a2 = augments.Length > 1
-            ? new Maybe<Equipment>(augments[1])
-            : Maybe<Equipment>.Missing();
+            ? new Maybe<StaticEquipment>(augments[1])
+            : Maybe<StaticEquipment>.Missing();
         augment2Slot.Initialized(EquipmentSlot.Augmentation, a2, () => BeginEquipmentSelection(h, EquipmentSlot.Augmentation, a2));
     }
 
-    private void InitAugmentSlot1(Hero h, Equipment[] augments)
+    private void InitAugmentSlot1(Hero h, StaticEquipment[] augments)
     {
         var a1 = augments.Length > 0
-            ? new Maybe<Equipment>(augments[0])
-            : Maybe<Equipment>.Missing();
+            ? new Maybe<StaticEquipment>(augments[0])
+            : Maybe<StaticEquipment>.Missing();
         augment1Slot.Initialized(EquipmentSlot.Augmentation, a1, () => BeginEquipmentSelection(h, EquipmentSlot.Augmentation, a1));
     }
 
-    private void BeginEquipmentSelection(Hero h, EquipmentSlot slot, Maybe<Equipment> equip)
+    private void BeginEquipmentSelection(Hero h, EquipmentSlot slot, Maybe<StaticEquipment> equip)
     {
         equip.IfPresent(e => party.UnequipFrom(e, h));
         var equipmentOptions = party.Equipment.AvailableFor(h.Character)

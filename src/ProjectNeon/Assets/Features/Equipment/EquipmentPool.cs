@@ -12,17 +12,10 @@ public class EquipmentPool : ScriptableObject
     [UnityEngine.UI.Extensions.ReadOnly] public List<StaticEquipment> all;
     public AllCorps corps;
     [SerializeField] private EquipmentPool[] subPools = new EquipmentPool[0];
-    [SerializeField] private int numRandomCommons = 32;
-    [SerializeField] private int numRandomUncommons = 16;
-    [SerializeField] private int numRandomRares = 6;
-    [SerializeField] private int numRandomEpics = 3;
     [SerializeField] private int weaponOdds = 1;
     [SerializeField] private int armorOdds = 1;
     [SerializeField] private int augmentOdds = 3;
 
-    private EquipmentGenerator _generator;
-    private EquipmentGenerator Generator => _generator ??= new EquipmentGenerator(corps);
-    
     private Dictionary<EquipmentSlot, int> Odds => new Dictionary<EquipmentSlot, int>
     {
         { EquipmentSlot.Weapon, weaponOdds },
@@ -30,12 +23,8 @@ public class EquipmentPool : ScriptableObject
         { EquipmentSlot.Augmentation, augmentOdds }
     };
 
-    public IEnumerable<Equipment> All => all
-        .Concat(subPools.SelectMany(s => s.All))
-        .Concat(Enumerable.Range(0, numRandomCommons).Select(_ => Generator.GenerateRandomCommon()))
-        .Concat(Enumerable.Range(0, numRandomUncommons).Select(_ => Generator.GenerateRandomUncommon()))
-        .Concat(Enumerable.Range(0, numRandomRares).Select(_ => Generator.GenerateRandomRare()))
-        .Concat(Enumerable.Range(0, numRandomEpics).Select(_ => Generator.GenerateRandomEpic()));
+    public IEnumerable<StaticEquipment> All => all
+        .Concat(subPools.SelectMany(s => s.All));
 
     public IEnumerable<EquipmentSlot> Random(int n)
     {
@@ -44,10 +33,10 @@ public class EquipmentPool : ScriptableObject
         return Enumerable.Range(0, n).Select(_ => factoredList.Random());
     }
 
-    public IEnumerable<Equipment> Random(EquipmentSlot slot, Rarity rarity, HeroCharacter[] party, int n, string corp = null) 
+    public IEnumerable<StaticEquipment> Random(EquipmentSlot slot, Rarity rarity, BaseHero[] party, int n, string corp = null) 
         => Random(slot, new HashSet<Rarity> {rarity}, party, n, corp);
     
-    public IEnumerable<Equipment> Random(EquipmentSlot slot, HashSet<Rarity> rarities, HeroCharacter[] party, int n, string corp = null)
+    public IEnumerable<StaticEquipment> Random(EquipmentSlot slot, HashSet<Rarity> rarities, BaseHero[] party, int n, string corp = null)
     {
         var partyKeyStats = party.SelectMany(h => h.Stats.KeyStatTypes()).ToHashSet();
         return All
@@ -62,7 +51,7 @@ public class EquipmentPool : ScriptableObject
             .Take(n);
     }
 
-    public Equipment Random(EquipmentSlot slot, Rarity rarity, HeroCharacter[] party, string corp = null)
+    public StaticEquipment Random(EquipmentSlot slot, Rarity rarity, BaseHero[] party, string corp = null)
     {
         try
         {
@@ -75,7 +64,7 @@ public class EquipmentPool : ScriptableObject
         }
     }
 
-    public IEnumerable<Equipment> Possible(EquipmentSlot slot, HashSet<Rarity> rarities, HashSet<string> archs, HashSet<StatType> heroStats, HashSet<StatType> partyStats)
+    public IEnumerable<StaticEquipment> Possible(EquipmentSlot slot, HashSet<Rarity> rarities, HashSet<string> archs, HashSet<StatType> heroStats, HashSet<StatType> partyStats)
         => All
             .Where(x => x.Slot == slot)
             .Where(x => rarities.Contains(x.Rarity))

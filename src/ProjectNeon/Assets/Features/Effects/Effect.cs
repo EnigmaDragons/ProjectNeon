@@ -23,7 +23,7 @@ public class EffectContext
     public CardPlayZones PlayerCardZones { get; }
     public PreventionContext Preventions { get; }
     public SelectionContext Selections { get; }
-    public IDictionary<int, CardTypeData> AllCards { get; }
+    public IDictionary<int, CardType> AllCards { get; }
     public int BattleStartingCredits { get; }
     public int CurrentCredits { get; }
     public IDictionary<int, EnemyType> EnemyTypes { get; }
@@ -38,7 +38,7 @@ public class EffectContext
 
     public EffectContext(Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, ResourceQuantity paidAmount,
         PartyAdventureState adventureState, PlayerState playerState, BattleRewardState rewardState, IDictionary<int, Member> battleMembers, 
-        CardPlayZones playerCardZones, PreventionContext preventions, SelectionContext selections, IDictionary<int, CardTypeData> allCards, 
+        CardPlayZones playerCardZones, PreventionContext preventions, SelectionContext selections, IDictionary<int, CardType> allCards, 
         int battleStartingCredits, int currentCredits, IDictionary<int, EnemyType> enemyTypes, Func<int> getNextCardId, PlayedCardSnapshot[] cardsPlayedThisTurn, 
         Dictionary<int, Color> ownerTints, Dictionary<int, Sprite> ownerBusts, bool isReaction, ReactionTimingWindow timing, 
         EffectScopedData scopedData, DoubleDamageContext doubleDamage)
@@ -92,7 +92,7 @@ public class EffectContext
             state.PlayerCardZones,
             new UnpreventableContext(), 
             new SelectionContext(), 
-            new Dictionary<int, CardTypeData>(), // Weird. This might be needed.
+            new Dictionary<int, CardType>(), // Weird. This might be needed.
             state.Party.Credits,
             state.Party.Credits, 
             new Dictionary<int, EnemyType>(), // Weird. This might be needed.
@@ -127,10 +127,10 @@ public class EffectContext
     public static EffectContext ForTests(Member source, Target target, Maybe<Card> card, ResourceQuantity xPaidAmount, ResourceQuantity paidAmount, PreventionContext preventions)
         => new EffectContext(source, target, card, xPaidAmount, paidAmount, PartyAdventureState.InMemory(), new PlayerState(), BattleRewardState.InMemory(),
             target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m), CardPlayZones.InMemory, preventions, new SelectionContext(), 
-            new Dictionary<int, CardTypeData>(), 0, 0, new Dictionary<int, EnemyType>(), () => 0, new PlayedCardSnapshot[0],
+            new Dictionary<int, CardType>(), 0, 0, new Dictionary<int, EnemyType>(), () => 0, new PlayedCardSnapshot[0],
             new Dictionary<int, Color>(), new Dictionary<int, Sprite>(), false, ReactionTimingWindow.FirstCause, new EffectScopedData(), new DoubleDamageContext(source, false));
 
-    public static EffectContext ForTests(Member source, Target target, CardPlayZones cardPlayZones, Dictionary<int, CardTypeData> allCards)
+    public static EffectContext ForTests(Member source, Target target, CardPlayZones cardPlayZones, Dictionary<int, CardType> allCards)
         => new EffectContext(source, target, Maybe<Card>.Missing(), ResourceQuantity.None, ResourceQuantity.None, PartyAdventureState.InMemory(),
             new PlayerState(0), BattleRewardState.InMemory(), new Dictionary<int, Member>(), cardPlayZones, new UnpreventableContext(), new SelectionContext(), 
             allCards, 0, 0, new Dictionary<int, EnemyType>(), () => 0, new PlayedCardSnapshot[0], new Dictionary<int, Color>(),
@@ -139,7 +139,7 @@ public class EffectContext
     public static EffectContext ForTests(Member source, Target target, PartyAdventureState adventureState)
         => new EffectContext(source, target, Maybe<Card>.Missing(), ResourceQuantity.None, ResourceQuantity.None, adventureState,
             new PlayerState(0), BattleRewardState.InMemory(), new Dictionary<int, Member>(), CardPlayZones.InMemory, new UnpreventableContext(), new SelectionContext(), 
-            new Dictionary<int, CardTypeData>(), 0, 0, new Dictionary<int, EnemyType>(), () => 0, new PlayedCardSnapshot[0],
+            new Dictionary<int, CardType>(), 0, 0, new Dictionary<int, EnemyType>(), () => 0, new PlayedCardSnapshot[0],
             new Dictionary<int, Color>(), new Dictionary<int, Sprite>(), false, ReactionTimingWindow.FirstCause, new EffectScopedData(), new DoubleDamageContext(source, false));
 }
 
@@ -151,7 +151,7 @@ public static class EffectExtensions
     private static void ApplyForTests(this Effect effect, Member source, Target target, Maybe<Card> card, ResourceQuantity xAmountPaid, ResourceQuantity paidAmount) 
         => effect.Apply(new EffectContext(source, target, card, xAmountPaid, paidAmount, PartyAdventureState.InMemory(), new PlayerState(0), BattleRewardState.InMemory(),  
             target.Members.Concat(source).SafeToDictionary(m => m.Id, m => m), CardPlayZones.InMemory, new PreventionContextMut(target), 
-            new SelectionContext(), new Dictionary<int, CardTypeData>(), 0, 0, new Dictionary<int, EnemyType>(), () => 0, 
+            new SelectionContext(), new Dictionary<int, CardType>(), 0, 0, new Dictionary<int, EnemyType>(), () => 0, 
             new PlayedCardSnapshot[0], new Dictionary<int, Color>(), new Dictionary<int, Sprite>(), false, ReactionTimingWindow.FirstCause, new EffectScopedData(), new DoubleDamageContext(source, false)));
 }
 

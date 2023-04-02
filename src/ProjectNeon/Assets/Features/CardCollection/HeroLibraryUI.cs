@@ -16,12 +16,12 @@ public class HeroLibraryUI : MonoBehaviour
 
     private void Awake()
     {
-        heroSelector.Init(library.UnlockedHeroes.Cast<HeroCharacter>().ToArray(), GenerateCardSelection);
+        heroSelector.Init(library.UnlockedHeroes.ToArray(), GenerateCardSelection);
         GenerateCardSelection(library.UnlockedHeroes.First());
         Log.Info("Hero Library UI - Init");
     }
 
-    private void GenerateCardSelection(HeroCharacter hero)
+    private void GenerateCardSelection(BaseHero hero)
     {
         var archKeys = hero.ArchetypeKeys();
         var heroMember = hero.AsMemberForLibrary();

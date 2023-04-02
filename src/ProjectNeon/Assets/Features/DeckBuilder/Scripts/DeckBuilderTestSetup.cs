@@ -27,7 +27,7 @@ public class DeckBuilderTestSetup : MonoBehaviour
         SetupFixedEncounter();
     }
     
-    public void InitPartyEquipment(IEnumerable<Equipment> h1, IEnumerable<Equipment> h2, IEnumerable<Equipment> h3)
+    public void InitPartyEquipment(IEnumerable<StaticEquipment> h1, IEnumerable<StaticEquipment> h2, IEnumerable<StaticEquipment> h3)
     {
         partyEquipment.ForEach(e => party.Add(e));
         h1.ForEach(e => party.Add(e));
@@ -40,7 +40,7 @@ public class DeckBuilderTestSetup : MonoBehaviour
     
     private void SetupFixedEncounter() => battle.SetNextEncounter(enemies.Select(x => x.ForStage(stage)));
     
-    private void InitEquipmentForHero(Hero hero, Equipment equip)
+    private void InitEquipmentForHero(Hero hero, StaticEquipment equip)
     {
         if (equip.Slot == EquipmentSlot.Permanent)
             hero.ApplyPermanent(equip);

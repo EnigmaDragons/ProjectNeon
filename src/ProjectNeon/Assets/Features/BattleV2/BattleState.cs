@@ -67,7 +67,7 @@ public class BattleState : ScriptableObject
     public int PredictedTotalRewardXp => rewards.RewardXp + (_heroesById.First().Value.Levels.XpRequiredForNextLevel * adventureProgress.AdventureProgress.BonusXpLevelFactor).CeilingInt();
     public int RewardClinicVouchers => adventure.Adventure.BattleRewardClinicVouchers;
     public CardTypeData[] RewardCards => rewards.RewardCards;
-    public Equipment[] RewardEquipments => rewards.RewardEquipments;
+    public StaticEquipment[] RewardEquipments => rewards.RewardEquipments;
 
     public bool HasCustomEnemyEncounter => nextEnemies != null && nextEnemies.Length > 0;
     public EnemyInstance[] NextEncounterEnemies => nextEnemies.ToArray();
@@ -389,7 +389,7 @@ public class BattleState : ScriptableObject
     public void AddRewardCredits(int amount) => UpdateState(() => rewards.AddRewardCredits(amount));
     public void AddRewardXp(int xp) => UpdateState(() => rewards.AddRewardXp(xp)); 
     public void SetRewardCards(params CardTypeData[] cards) => UpdateState(() => rewards.SetRewardCards(cards));
-    public void SetRewardEquipment(params Equipment[] equipments) => UpdateState(() => rewards.SetRewardEquipment(equipments));
+    public void SetRewardEquipment(params StaticEquipment[] equipments) => UpdateState(() => rewards.SetRewardEquipment(equipments));
 
     public void AddEnemy(EnemyInstance e, GameObject gameObject, Member member) 
         => UpdateState(() =>
@@ -497,7 +497,7 @@ public class BattleState : ScriptableObject
     public bool IsMissingOrUnconscious(int memberId) => !Members.TryGetValue(memberId, out var m) || m.IsUnconscious();
     public bool IsHero(int memberId) => _heroesById.ContainsKey(memberId);
     public bool IsEnemy(int memberId) => _enemiesById.ContainsKey(memberId);
-    public HeroCharacter GetHeroById(int memberId) => _heroesById[memberId].Character;
+    public BaseHero GetHeroById(int memberId) => _heroesById[memberId].Character;
     public Dictionary<int, Color> OwnerTints => _heroesById.ToDictionary(x => x.Key, x => x.Value.Character.Tint);
     public Dictionary<int, Sprite> OwnerBusts => _heroesById.ToDictionary(x => x.Key, x => x.Value.Character.Bust);
 
@@ -545,7 +545,7 @@ public class BattleState : ScriptableObject
             bounds.Encapsulate(GetMaybeCenterPoint(target.Members[i].Id).Map(cp => cp.position).OrDefault(Vector3.zero)); 
         return bounds.center;
     }
-    public Member GetMemberByHero(HeroCharacter hero) => _membersById[_heroesById.First(x => x.Value.Character == hero).Key];
+    public Member GetMemberByHero(BaseHero hero) => _membersById[_heroesById.First(x => x.Value.Character == hero).Key];
     public Maybe<Member> GetMaybeMemberByHeroCharacterId(int heroCharacterId) => _heroesById
         .FirstAsMaybe(x => x.Value.Character.Id == heroCharacterId)
         .Chain(x => _membersById.ValueOrMaybe(x.Key));

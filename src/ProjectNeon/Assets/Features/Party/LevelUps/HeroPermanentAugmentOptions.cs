@@ -17,12 +17,12 @@ public class HeroPermanentAugmentOptions : LevelUpOptions, ILocalizeTerms
     {
         var finalSet = GenerateHeroGearOptions(allEquipmentPool, party, h.Character, new HashSet<Rarity> {rarity}, 3);
         if (choiceOverride.Length == 3)
-            finalSet = choiceOverride.Cast<Equipment>().ToArray();
+            finalSet = choiceOverride.ToArray();
             
         return ToLevelUpOptions(h, finalSet, party, customPresenterPrototype);
     }
 
-    public static LevelUpOption[] ToLevelUpOptions(Hero h, Equipment[] equipments, PartyAdventureState party, EquipmentPresenter customPresenterPrototype)
+    public static LevelUpOption[] ToLevelUpOptions(Hero h, StaticEquipment[] equipments, PartyAdventureState party, EquipmentPresenter customPresenterPrototype)
     {
         return equipments
             .Select(e => (LevelUpOption)new WithCustomPresenter(
@@ -33,8 +33,8 @@ public class HeroPermanentAugmentOptions : LevelUpOptions, ILocalizeTerms
             .Shuffled();
     }
     
-    public static Equipment[] GenerateHeroGearOptions(EquipmentPool allEquipmentPool, PartyAdventureState party,
-        HeroCharacter h, HashSet<Rarity> rarities, int count)
+    public static StaticEquipment[] GenerateHeroGearOptions(EquipmentPool allEquipmentPool, PartyAdventureState party,
+        BaseHero h, HashSet<Rarity> rarities, int count)
     {
         var archetypes = h.Archetypes;
         var possible = allEquipmentPool.Possible(EquipmentSlot.Augmentation, rarities, h.Archetypes, h.Stats.KeyStatTypes(), party.KeyStats).ToList();

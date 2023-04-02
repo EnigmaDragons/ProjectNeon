@@ -7,7 +7,7 @@ public class DraftGearPicker : OnMessage<GetUserSelectedEquipmentForDraft>
     [SerializeField] private EquipmentPresenter[] slots;
     [SerializeField] private Canvas hoverCardOverrideCanvas;
     
-    private Action<Maybe<Equipment>> _onSelected = _ => { };
+    private Action<Maybe<StaticEquipment>> _onSelected = _ => { };
     private bool _hasSelected = false;
     
     protected override void Execute(GetUserSelectedEquipmentForDraft msg)
@@ -35,7 +35,7 @@ public class DraftGearPicker : OnMessage<GetUserSelectedEquipmentForDraft>
         panel.SetActive(true);
     }
     
-    private void SelectEquipment(Equipment e, Transform itemTransform)
+    private void SelectEquipment(StaticEquipment e, Transform itemTransform)
     {
         if (_hasSelected)
             return;
@@ -44,7 +44,7 @@ public class DraftGearPicker : OnMessage<GetUserSelectedEquipmentForDraft>
         HideView();
         Debug.Log($"Draft - Selected Equipment {e.Name}");
         Message.Publish(new DraftItemPicked(itemTransform));
-        _onSelected(new Maybe<Equipment>(e));
+        _onSelected(new Maybe<StaticEquipment>(e));
     }
 
     private void HideView() => panel.SetActive(false);

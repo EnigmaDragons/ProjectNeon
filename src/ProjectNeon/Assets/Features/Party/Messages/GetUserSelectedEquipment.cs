@@ -4,10 +4,10 @@ using System.Linq;
 
 public class GetUserSelectedEquipment
 {
-    public Equipment[] Options { get; }
-    public Action<Maybe<Equipment>> OnSelected { get; }
+    public StaticEquipment[] Options { get; }
+    public Action<Maybe<StaticEquipment>> OnSelected { get; }
 
-    public GetUserSelectedEquipment(IEnumerable<Equipment> options, Action<Maybe<Equipment>> onSelected)
+    public GetUserSelectedEquipment(IEnumerable<StaticEquipment> options, Action<Maybe<StaticEquipment>> onSelected)
     {
         Options = options.ToArray();
         OnSelected = onSelected;

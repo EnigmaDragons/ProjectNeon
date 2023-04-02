@@ -5,9 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "OnlyOnce/All Cards")]
 public class AllCards : ScriptableObject
 {
-    private Dictionary<int, CardTypeData> _map;
+    private Dictionary<int, CardType> _map;
     [UnityEngine.UI.Extensions.ReadOnly] public CardType[] Cards; //Unity Collection Readonly
 
-    public Dictionary<int, CardTypeData> GetMap() => _map ??= Cards.Where(c => c != null).SafeToDictionaryWithLoggedErrors(x => x.id, x => (CardTypeData)x);
-    public Maybe<CardTypeData> GetCardById(int id) => GetMap().ValueOrMaybe(id);
+    public Dictionary<int, CardType> GetMap() => _map ??= Cards.Where(c => c != null).SafeToDictionaryWithLoggedErrors(x => x.id, x => x);
+    public Maybe<CardType> GetCardById(int id) => GetMap().ValueOrMaybe(id);
 }

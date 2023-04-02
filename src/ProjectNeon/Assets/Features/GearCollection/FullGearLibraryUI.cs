@@ -20,7 +20,6 @@ public class FullGearLibraryUI : MonoBehaviour
             emptyObj, 
             gearPool.All
                 .Where(c => c.Slot == EquipmentSlot.Augmentation)
-                .Where(c => !c.IsRandomlyGenerated())
                 .OrderByDescending(c => c.Archetypes.Any())
                 .ThenBy(c => c.GetArchetypeKey())
                 .ThenBy(c => c.Rarity)
@@ -33,7 +32,7 @@ public class FullGearLibraryUI : MonoBehaviour
             false);
     }
     
-    private Action<GameObject> InitEquipmentInLibraryButton(Equipment equipment) 
+    private Action<GameObject> InitEquipmentInLibraryButton(StaticEquipment equipment) 
         => gameObj => gameObj.GetComponent<EquipmentInLibraryButton>().InitInfoOnly(equipment, cheatGainEquipment ? () =>
             {
                 party.Add(equipment);

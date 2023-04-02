@@ -91,7 +91,7 @@ public static class Formula
     {
         if (ctx.Target.IsPresent && expression.ContainsAnyCase(TargetString))
         {
-            expression = ReplaceIfContains(expression, TargetMaxPrimaryResource, () => ctx.Target.Value.PrimaryResource.MaxAmount.GetString());
+            expression = ReplaceIfContains(expression, TargetMaxPrimaryResource, () => ctx.Target.Value.PrimaryResourceMaxAmount.GetString());
             expression = ReplaceIfContains(expression, TargetPrimaryResource, () => ctx.Target.Value.PrimaryResourceAmount.GetString());
         }
         expression = expression.Replace(MaxPrimaryResource, ctx.Source.PrimaryResource.MaxAmount.GetString());

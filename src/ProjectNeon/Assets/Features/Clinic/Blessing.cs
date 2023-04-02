@@ -6,7 +6,7 @@ using System.Linq;
 public class Blessing
 {
     public string Name;
-    public HeroCharacter[] Targets;
+    public BaseHero[] Targets;
     public EffectData Effect;
     public int Duration;
     
@@ -40,7 +40,7 @@ public class Blessing
             state.PlayerCardZones,
             new UnpreventableContext(), 
             new SelectionContext(), 
-            new Dictionary<int, CardTypeData>(),
+            new Dictionary<int, CardType>(),
             state.Party.Credits,
             state.Party.Credits, 
             new Dictionary<int, EnemyType>(), 

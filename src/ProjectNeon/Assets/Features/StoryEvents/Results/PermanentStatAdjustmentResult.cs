@@ -21,7 +21,7 @@ public class PermanentStatAdjustmentResult : StoryResult
             foreach (var member in members)
             {
                 if (member.Character.Stats[stat.Stat] > 0)
-                    member.ApplyPermanent(new InMemoryEquipment
+                    member.ApplyImplant(new InMemoryEquipment
                     {
                         Name = "Implant",
                         Slot = EquipmentSlot.Permanent,

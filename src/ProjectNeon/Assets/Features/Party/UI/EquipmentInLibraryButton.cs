@@ -10,14 +10,14 @@ public class EquipmentInLibraryButton : MonoBehaviour
     [SerializeField] private GameObject darken;
     [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI countLabel;
     
-    public void InitInfoOnly(Equipment e, Action action)
+    public void InitInfoOnly(StaticEquipment e, Action action)
     {
         presenter.Set(e, action);
         presenter.SetOnHover(() => transform.SetAsLastSibling(), () => {});
         countLabel.text = "";
     }
 
-    public void Init(Equipment e, int totalCount, int availableCount, bool canAdd)
+    public void Init(StaticEquipment e, int totalCount, int availableCount, bool canAdd)
     {
         var countLabelText = totalCount > 1 ? $"{availableCount}/{totalCount}" : "";
         if (canAdd)
@@ -36,7 +36,7 @@ public class EquipmentInLibraryButton : MonoBehaviour
         }
     }
 
-    private void Equip(Equipment e)
+    private void Equip(StaticEquipment e)
     {
         if (e.Slot == EquipmentSlot.Weapon && deckBuilderState.SelectedHeroesDeck.Hero.Equipment.Weapon.IsPresent)
             partyAdventureState.UnequipFrom(deckBuilderState.SelectedHeroesDeck.Hero.Equipment.Weapon.Value, deckBuilderState.SelectedHeroesDeck.Hero);

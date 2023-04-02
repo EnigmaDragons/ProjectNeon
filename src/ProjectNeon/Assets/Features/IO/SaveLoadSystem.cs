@@ -124,7 +124,7 @@ public sealed class SaveLoadSystem : ScriptableObject
             maybeCards.Select(c => c.Value).ToArray(),
             maybeEquipments.Select(e => e.Value).ToArray());
         
-        var deckMaybeCards = partyData.Heroes.Select(h => h.Deck.CardIds.Select(id => library.GetCardById(id)).ToList());
+        var deckMaybeCards = partyData.Heroes.Select(h => h.Deck.CardIds.Select(id => new Maybe<CardTypeData>(library.GetCardById(id).Value)).ToList());
         if (deckMaybeCards.Any(d => d.Any(c => c.IsMissing)))
             return LoadFailedReason("Missing Cards From Decks");
         party.UpdateDecks(deckMaybeCards.Select(d => d.Select(c => c.Value).ToList()).ToArray());
@@ -141,7 +141,7 @@ public sealed class SaveLoadSystem : ScriptableObject
             var data = blessingSaveData;
             maybeBlessingData.IfPresent(b =>
             {
-                var targetHeroes = data.TargetHeroIds.Select(id => heroesById[id]).Cast<HeroCharacter>().ToArray();
+                var targetHeroes = data.TargetHeroIds.Select(id => heroesById[id]).ToArray();
                 party.AddBlessing(new Blessing { Name = b.Name, Effect = b.Effect, Targets = targetHeroes, Duration = data.Duration });
             });
         }
@@ -176,7 +176,7 @@ public sealed class SaveLoadSystem : ScriptableObject
             }
 
             foreach (var implant in heroSaveData.Implants)
-                hero.ApplyPermanent(implant.GeneratedEquipment);
+                hero.ApplyImplant(implant.GeneratedEquipment);
 
             foreach (var equipment in party.GlobalEquipment)
                 hero.ApplyPermanent(equipment);

@@ -15,9 +15,9 @@ public class GearOptionReward : BattleRewards
     private void GetUserSelectedEquipment(Action onFinished, LootPicker rewardPicker)
     {
         var selectedRarity = rewardPicker.RandomRarity();
-        var rewardEquips = new List<Equipment>();
+        var rewardEquips = new List<StaticEquipment>();
         
-        var possibleEquips = new Queue<Equipment>(rewardPicker.PickEquipments(equipmentPrizePool, 20, selectedRarity));
+        var possibleEquips = new Queue<StaticEquipment>(rewardPicker.PickEquipments(equipmentPrizePool, 20, selectedRarity));
         while (rewardEquips.Count < 3)
         {
             var nextEquipment = possibleEquips.Dequeue();

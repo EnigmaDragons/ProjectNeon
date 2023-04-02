@@ -1,10 +1,10 @@
 
 public sealed class EquipmentPersistentState : IPersistentState
 {
-    private readonly Equipment _equipment;
+    private readonly StaticEquipment _equipment;
     private readonly EffectContext _ctx;
 
-    public EquipmentPersistentState(Equipment equipment, EffectContext ctx)
+    public EquipmentPersistentState(StaticEquipment equipment, EffectContext ctx)
     {
         _equipment = equipment;
         _ctx = ctx;

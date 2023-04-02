@@ -81,13 +81,13 @@ public static class CardTypeDataExtensions
     public static Card ToNonBattleCard(this CardTypeData c, Hero hero)
         => ToNonBattleCard(c, hero.Character, hero.Stats);
 
-    public static Card ToNonBattleCard(this CardTypeData c, HeroCharacter hero, IStats heroStats) 
+    public static Card ToNonBattleCard(this CardTypeData c, BaseHero hero, IStats heroStats) 
         => new Card(-1, hero.AsMemberForLibrary(heroStats), c, c.NonBattleTint(hero), c.NonBattleBust(hero));
 
-    private static Color NonBattleTint(this CardTypeData c, HeroCharacter h)
+    private static Color NonBattleTint(this CardTypeData c, BaseHero h)
         => c.Archetypes.AnyNonAlloc() ? h.Tint : Color.white;
     
-    private static Maybe<Sprite> NonBattleBust(this CardTypeData c, HeroCharacter h)
+    private static Maybe<Sprite> NonBattleBust(this CardTypeData c, BaseHero h)
         => c.Archetypes.AnyNonAlloc() ? new Maybe<Sprite>(h.Bust) : Maybe<Sprite>.Missing();
 
     public static CardType[] ReferencedCards(this CardTypeData c)

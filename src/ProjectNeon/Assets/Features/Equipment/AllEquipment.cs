@@ -5,19 +5,14 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "OnlyOnce/All Equipment")]
 public class AllEquipment : ScriptableObject
 {
-    private Dictionary<int, Equipment> _map;
+    private Dictionary<int, StaticEquipment> _map;
     [UnityEngine.UI.Extensions.ReadOnly] public StaticEquipment[] Equipments; //Unity Collection Readonly
 
-    public Dictionary<int, Equipment> GetMap() => _map ??= Equipments.ToDictionary(x => x.id, x => (Equipment)x);
-    public Maybe<Equipment> GetEquipmentById(int id) => GetMap().ValueOrMaybe(id);
+    public Dictionary<int, StaticEquipment> GetMap() => _map ??= Equipments.ToDictionary(x => x.id, x => x);
+    public Maybe<StaticEquipment> GetEquipmentById(int id) => GetMap().ValueOrMaybe(id);
 
-    public Maybe<Equipment> GetFromSaveData(GameEquipmentData data)
+    public Maybe<StaticEquipment> GetFromSaveData(GameEquipmentData data)
     {
-        if (data.Type == GameEquipmentDataType.GeneratedEquipment)
-            return data.GeneratedEquipment;
-        if (data.Type == GameEquipmentDataType.StaticEquipmentId)
-            return GetEquipmentById(data.StaticEquipmentId);
-        Log.Error($"Unknown how to return saved Equipment of type {data.Type}");
-        return Maybe<Equipment>.Missing();
+        return GetEquipmentById(data.StaticEquipmentId);
     }
 }

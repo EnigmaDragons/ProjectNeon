@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Equipment", order = -80)]
-public class StaticEquipment : ScriptableObject, Equipment, ILocalizeTerms
+public class StaticEquipment : ScriptableObject, ILocalizeTerms
 {
     [SerializeField, UnityEngine.UI.Extensions.ReadOnly] public int id;
     [SerializeField] private string displayName;
@@ -63,7 +63,7 @@ public class StaticEquipment : ScriptableObject, Equipment, ILocalizeTerms
     public string EditorName => $"{WipWord(IsWip)}{Rarity} - {Name}";
 
     public GameEquipmentData GetData() 
-        => new GameEquipmentData { Type = GameEquipmentDataType.StaticEquipmentId, StaticEquipmentId = id };
+        => new GameEquipmentData { StaticEquipmentId = id };
 
     public IEnumerable<EffectData> AllEffects => TurnStartEffects.Concat(TurnEndEffects).Concat(BattleStartEffects).Concat(BattleEndEffects);
 

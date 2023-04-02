@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class HeroCardExportPresenter : MonoBehaviour
 {
-    [SerializeField] private HeroCharacter currentHero;
+    [SerializeField] private BaseHero currentHero;
     [SerializeField] private Image heroBody;
     [SerializeField] private Localize heroName;
     [SerializeField] private Localize heroClassName;
@@ -37,8 +37,8 @@ public class HeroCardExportPresenter : MonoBehaviour
 
     public void Hide() => gameObject.SetActive(false);
     
-    public void Init(HeroCharacter c) => Init(c, c.AsMemberForLibrary());
-    public void Init(HeroCharacter c, Member m)
+    public void Init(BaseHero c) => Init(c, c.AsMemberForLibrary());
+    public void Init(BaseHero c, Member m)
     {
         _isInitialized = true;
         currentHero = c;

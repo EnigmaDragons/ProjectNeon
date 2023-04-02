@@ -18,7 +18,7 @@ public class DeckBuilderState : ScriptableObject
     public bool ShowFormulas { get; set; } = false;
     public EquipmentSlot[] ShowEquipmentSlots { get; set; } = new EquipmentSlot[0];
 
-    public HeroCharacter SelectedHeroCharacter => SelectedHeroesDeck.Hero.Character;
+    public BaseHero SelectedHeroCharacter => SelectedHeroesDeck.Hero.Character;
     public Hero SelectedHero => SelectedHeroesDeck.Hero;
     public HeroesDeck SelectedHeroesDeck
     {

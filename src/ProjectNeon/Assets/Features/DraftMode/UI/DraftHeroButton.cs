@@ -6,7 +6,7 @@ public class DraftHeroButton : MonoBehaviour
     [SerializeField] private Image heroBust;
     [SerializeField] private GameObject selected;
 
-    public void Init(HeroCharacter h, bool isSelected)
+    public void Init(BaseHero h, bool isSelected)
     {
         heroBust.sprite = h.Bust;
         gameObject.SetActive(true);

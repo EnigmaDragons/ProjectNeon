@@ -15,7 +15,7 @@ public sealed class PartyAdventureState : ScriptableObject
     [SerializeField] private PartyEquipmentCollection equipment;
     [SerializeField] private Hero[] heroes = Array.Empty<Hero>();
     [SerializeField] private ShopCardPool allCards;
-    [SerializeField] private Equipment[] globalEquipment = Array.Empty<Equipment>();
+    [SerializeField] private StaticEquipment[] globalEquipment = Array.Empty<StaticEquipment>();
 
     private List<CorpCostModifier> _corpCostModifiers = new List<CorpCostModifier>();
     private List<Blessing> _blessings = new List<Blessing>();
@@ -29,7 +29,7 @@ public sealed class PartyAdventureState : ScriptableObject
     public float MissingHpFactor => (float)TotalMissingHp / Heroes.Sum(h => h.CurrentHp);
     public int TotalNumInjuries => Heroes.Sum(h => h.Health.InjuryNames.Count());
 
-    public HeroCharacter[] BaseHeroes => heroes.Select(h => h.Character).ToArray();
+    public BaseHero[] BaseHeroes => heroes.Select(h => h.Character).ToArray();
     public Hero[] Heroes => heroes;
     public HashSet<StatType> KeyStats => heroes.SelectMany(h => h.Stats.KeyStatTypes()).ToHashSet();
     public int[] Hp =>  heroes.Select(h => h.CurrentHp).ToArray();
@@ -37,7 +37,7 @@ public sealed class PartyAdventureState : ScriptableObject
     public Blessing[] Blessings => _blessings?.ToArray() ?? (_blessings = new List<Blessing>()).ToArray();
     public PartyCardCollection Cards => cards;
     public PartyEquipmentCollection Equipment => equipment;
-    public Equipment[] GlobalEquipment => globalEquipment;
+    public StaticEquipment[] GlobalEquipment => globalEquipment;
     private Dictionary<string, List<Hero>> _archKeyHeroes;
 
     public bool IsInitialized => Decks.Sum(x => x.Cards.Count) >= 12;
@@ -173,7 +173,7 @@ public sealed class PartyAdventureState : ScriptableObject
         return this;
     }
 
-    public void InitFromSave(BaseHero one, BaseHero two, BaseHero three, int numCredits, int numClinicVouchers, CardTypeData[] partyCards, Equipment[] equipments)
+    public void InitFromSave(BaseHero one, BaseHero two, BaseHero three, int numCredits, int numClinicVouchers, CardTypeData[] partyCards, StaticEquipment[] equipments)
     {
         party.Initialized(one, two, three);
         var baseHeroes = party.Heroes;
@@ -215,16 +215,16 @@ public sealed class PartyAdventureState : ScriptableObject
 
     public void UpdateNumShopRestocksBy(int amount) => UpdateState(() => numShopRestocks += amount);
 
-    public int CurrentHpOf(HeroCharacter hero) => Hp[IndexOf(hero)];
+    public int CurrentHpOf(BaseHero hero) => Hp[IndexOf(hero)];
     public void SetHeroHp(Hero h, int hp) => UpdateState(() => h.SetHp(hp));
-    public void HealHeroToFull(HeroCharacter hero)
+    public void HealHeroToFull(BaseHero hero)
         => UpdateState(() =>
         {
             var index = IndexOf(hero);
             heroes[index].HealToFull();
         });
 
-    private int IndexOf(HeroCharacter hero)
+    private int IndexOf(BaseHero hero)
     {
         var index = 0;
         for (; index < heroes.Length; index++)
@@ -249,15 +249,15 @@ public sealed class PartyAdventureState : ScriptableObject
         });
 
     public void Add(params CardTypeData[] c) => UpdateState(() => Cards.Add(c));
-    public void Add(params Equipment[] e) => UpdateState(() => equipment.Add(e));
-    public void EquipTo(Equipment e, Hero h) => UpdateState(() =>
+    public void Add(params StaticEquipment[] e) => UpdateState(() => equipment.Add(e));
+    public void EquipTo(StaticEquipment e, Hero h) => UpdateState(() =>
     {
         h.Equip(e);
         equipment.MarkEquipped(e);
         DevLog.Info($"Equipment - Equipped {e.Name} to {h.NameTerm.ToEnglish()}. Available: {equipment.Available.Count}. Equipped: {equipment.Equipped.Count}");
     });
 
-    public void UnequipFrom(Equipment e, Hero h) => UpdateState(() =>
+    public void UnequipFrom(StaticEquipment e, Hero h) => UpdateState(() =>
     {
         h.Unequip(e);
         equipment.MarkUnequipped(e);
@@ -333,14 +333,14 @@ public sealed class PartyAdventureState : ScriptableObject
     public void SetCorpCostModifier(CorpCostModifier[] modifiers) => _corpCostModifiers = modifiers?.ToList() ?? new List<CorpCostModifier>();
     public void AddCorpCostModifier(CorpCostModifier modifier) => _corpCostModifiers.Add(modifier);
 
-    public void AddGlobalEquipment(Equipment equip)
+    public void AddGlobalEquipment(StaticEquipment equip)
     {
         if (GlobalEquipment.Contains(equip))
             return;
         globalEquipment = GlobalEquipment.Concat(equip).ToArray();
         heroes.ForEach(x => x.ApplyPermanent(equip));
     }
-    public void RemoveGlobalEquipment(Equipment equip)
+    public void RemoveGlobalEquipment(StaticEquipment equip)
     {
         globalEquipment = GlobalEquipment.Where(x => x != equip).ToArray();
         heroes.ForEach(x => x.Equipment.Unequip(equip));

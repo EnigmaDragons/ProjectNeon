@@ -6,7 +6,7 @@ public static class GearPackGeneration
     private const int _numAugmentsInPack = 5;
     private static readonly RarityFactors Factors = new DefaultRarityFactors();
 
-    public static Equipment[] GetRandomAugments(Hero currentHero, EquipmentPool gearPool, PartyAdventureState party)
+    public static StaticEquipment[] GetRandomAugments(Hero currentHero, EquipmentPool gearPool, PartyAdventureState party)
     {
         var currentHeroGearIds = currentHero.Equipment.All.Select(e => e.Id).ToHashSet();
         
@@ -18,7 +18,7 @@ public static class GearPackGeneration
         return gearOptions.ToArray();
     }
 
-    public static Equipment[] GetDualRarityAugmentPack(Hero currentHero, EquipmentPool gearPool, PartyAdventureState party)
+    public static StaticEquipment[] GetDualRarityAugmentPack(Hero currentHero, EquipmentPool gearPool, PartyAdventureState party)
     {
         var packRarityPicked = Enumerable.Range(0, 5)
             .Select(r => new Rarity[] { Rarity.Common, Rarity.Uncommon, Rarity.Rare, Rarity.Epic }.Random(Factors))

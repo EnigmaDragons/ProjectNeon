@@ -31,14 +31,14 @@ public class BattleSetupV2 : MonoBehaviour
     
     public void InitBattleField(GameObject battlefield) => state.SetNextBattleground(battlefield);
     public void InitParty(BaseHero h1, BaseHero h2, BaseHero h3) => party.Initialized(h1, h2, h3);
-    public void InitPartyEquipment(IEnumerable<Equipment> h1, IEnumerable<Equipment> h2, IEnumerable<Equipment> h3)
+    public void InitPartyEquipment(IEnumerable<StaticEquipment> h1, IEnumerable<StaticEquipment> h2, IEnumerable<StaticEquipment> h3)
     {
         h1.Concat(h2).Concat(h3).ForEach(e => party.Add(e));
         h1.ForEach(e => InitEquipmentForHero(party.Heroes[0], e));
         h2.ForEach(e => InitEquipmentForHero(party.Heroes[1], e));
         h3.ForEach(e => InitEquipmentForHero(party.Heroes[2], e));
     }
-    private void InitEquipmentForHero(Hero hero, Equipment equip)
+    private void InitEquipmentForHero(Hero hero, StaticEquipment equip)
     {
         if (equip.Slot == EquipmentSlot.Permanent)
             hero.ApplyPermanent(equip);

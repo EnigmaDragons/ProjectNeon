@@ -32,7 +32,7 @@ public class DeckUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckC
 
     private void OnDeckChanged() => GenerateDeck();
 
-    public void Init(HeroCharacter character)
+    public void Init(BaseHero character)
     {
         var deck = new RuntimeDeck {Cards = character.Deck.CardTypes};
         state.SelectedHeroesDeck = new HeroesDeck { Hero = new Hero(character, deck), Deck = deck.Cards };

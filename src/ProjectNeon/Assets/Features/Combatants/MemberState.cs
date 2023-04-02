@@ -109,8 +109,9 @@ public sealed class MemberState : IStats
     public float this[TemporalStatType statType] => _counters[statType.GetString()].Amount + _currentStats[statType];
     public IResourceType[] ResourceTypes => _currentStats.ResourceTypes;
     public int Max(string name) => _counters.TryGetValue(name, out var c) ? c.Max : 0;
-    public IResourceType PrimaryResource => ResourceTypes.AnyNonAlloc() ? ResourceTypes[0] : new InMemoryResourceType();
+    public IResourceType PrimaryResource => ResourceTypes.AnyNonAlloc() ? ResourceTypes[0] : new InMemoryResourceType(); //cant be fucking trusted for numbers
     public int PrimaryResourceAmount => ResourceTypes.AnyNonAlloc() ? _counters[PrimaryResource.Name].Amount : 0;
+    public int PrimaryResourceMaxAmount => ResourceTypes.AnyNonAlloc() ? _counters[PrimaryResource.Name].Max : 0;
 
     public ResourceQuantity CurrentPrimaryResources => new ResourceQuantity
         {Amount = PrimaryResourceAmount, ResourceType = PrimaryResource.Name};

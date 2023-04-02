@@ -18,19 +18,19 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, Highligh
     [SerializeField] private Material evadeMaterial;
     private readonly List<GameObject> _heroes = new List<GameObject>();
 
-    private readonly Dictionary<HeroCharacter, Animator> _animators = new Dictionary<HeroCharacter, Animator>();
-    private readonly Dictionary<HeroCharacter, SpriteRenderer> _renderers = new Dictionary<HeroCharacter, SpriteRenderer>();
-    private readonly Dictionary<HeroCharacter, HoverCharacter> _hovers  = new Dictionary<HeroCharacter, HoverCharacter>();
-    private readonly Dictionary<HeroCharacter, ShieldVisual> _shields  = new Dictionary<HeroCharacter, ShieldVisual>();
-    private readonly Dictionary<HeroCharacter, CharacterCreatorStealthTransparency> _stealths = new Dictionary<HeroCharacter, CharacterCreatorStealthTransparency>();
-    private readonly Dictionary<HeroCharacter, MemberHighlighter> _highlighters  = new Dictionary<HeroCharacter, MemberHighlighter>();
-    private readonly Dictionary<HeroCharacter, TauntEffect> _tauntEffects  = new Dictionary<HeroCharacter, TauntEffect>();
-    private readonly Dictionary<HeroCharacter, StunnedDisabledEffect> _stunnedDisabledEffects = new Dictionary<HeroCharacter, StunnedDisabledEffect>();
-    private readonly Dictionary<HeroCharacter, BlindedEffect> _blindedEffects = new Dictionary<HeroCharacter, BlindedEffect>();
-    private readonly Dictionary<HeroCharacter, DamageNumbersController> _damagesNew  = new Dictionary<HeroCharacter, DamageNumbersController>();
-    private readonly Dictionary<HeroCharacter, CharacterWordsController> _words  = new Dictionary<HeroCharacter, CharacterWordsController>();
-    private readonly Dictionary<HeroCharacter, CenterPoint> _centers = new Dictionary<HeroCharacter, CenterPoint>();
-    private readonly Dictionary<HeroCharacter, I2ProgressiveTextRevealWorld> _speech = new Dictionary<HeroCharacter, I2ProgressiveTextRevealWorld>();
+    private readonly Dictionary<BaseHero, Animator> _animators = new Dictionary<BaseHero, Animator>();
+    private readonly Dictionary<BaseHero, SpriteRenderer> _renderers = new Dictionary<BaseHero, SpriteRenderer>();
+    private readonly Dictionary<BaseHero, HoverCharacter> _hovers  = new Dictionary<BaseHero, HoverCharacter>();
+    private readonly Dictionary<BaseHero, ShieldVisual> _shields  = new Dictionary<BaseHero, ShieldVisual>();
+    private readonly Dictionary<BaseHero, CharacterCreatorStealthTransparency> _stealths = new Dictionary<BaseHero, CharacterCreatorStealthTransparency>();
+    private readonly Dictionary<BaseHero, MemberHighlighter> _highlighters  = new Dictionary<BaseHero, MemberHighlighter>();
+    private readonly Dictionary<BaseHero, TauntEffect> _tauntEffects  = new Dictionary<BaseHero, TauntEffect>();
+    private readonly Dictionary<BaseHero, StunnedDisabledEffect> _stunnedDisabledEffects = new Dictionary<BaseHero, StunnedDisabledEffect>();
+    private readonly Dictionary<BaseHero, BlindedEffect> _blindedEffects = new Dictionary<BaseHero, BlindedEffect>();
+    private readonly Dictionary<BaseHero, DamageNumbersController> _damagesNew  = new Dictionary<BaseHero, DamageNumbersController>();
+    private readonly Dictionary<BaseHero, CharacterWordsController> _words  = new Dictionary<BaseHero, CharacterWordsController>();
+    private readonly Dictionary<BaseHero, CenterPoint> _centers = new Dictionary<BaseHero, CenterPoint>();
+    private readonly Dictionary<BaseHero, I2ProgressiveTextRevealWorld> _speech = new Dictionary<BaseHero, I2ProgressiveTextRevealWorld>();
     
     public IEnumerator Setup()
     {
@@ -62,7 +62,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, Highligh
         _blindedEffects.ForEach(x => x.Value.Init(state.GetMemberByHero(x.Key)));
     }
 
-    private void SetupHero(GameObject heroOrigin, HeroCharacter hero, int visualOrder)
+    private void SetupHero(GameObject heroOrigin, BaseHero hero, int visualOrder)
     {
         var character = Instantiate(hero.Body, heroOrigin.transform);
         _heroes.Add(character);
@@ -85,7 +85,7 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, Highligh
         AddRequired(hero, character, _blindedEffects);
     }
 
-    private void AddRequired<TComponent>(HeroCharacter hero, GameObject character, Dictionary<HeroCharacter, TComponent> collection)
+    private void AddRequired<TComponent>(BaseHero hero, GameObject character, Dictionary<BaseHero, TComponent> collection)
     {
         var e = character.GetComponentInChildren<TComponent>();
         if (e == null)

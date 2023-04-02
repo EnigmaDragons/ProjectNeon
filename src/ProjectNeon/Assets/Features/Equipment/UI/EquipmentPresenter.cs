@@ -29,7 +29,7 @@ public class EquipmentPresenter : OnMessage<LanguageChanged>, IPointerDownHandle
     private Action _onClick = NoOp;
     private Action _onHoverEnter = NoOp;
     private Action _onHoverExit = NoOp;
-    private Equipment _currentEquipment;
+    private StaticEquipment _currentEquipment;
     
     private Maybe<CardTypeData> _referencedCard = Maybe<CardTypeData>.Missing();
     private Canvas _canvas;
@@ -39,9 +39,9 @@ public class EquipmentPresenter : OnMessage<LanguageChanged>, IPointerDownHandle
     private const string AnyTerm = "Archetypes/Any";
     private const string MadeByTerm = "BattleUI/Made By";
 
-    public void Set(Equipment e, Action onClick) => Initialized(e, onClick);
+    public void Set(StaticEquipment e, Action onClick) => Initialized(e, onClick);
     
-    public EquipmentPresenter Initialized(Equipment e, Action onClick, bool useHoverHighlight = false, bool useAnyHover = true)
+    public EquipmentPresenter Initialized(StaticEquipment e, Action onClick, bool useHoverHighlight = false, bool useAnyHover = true)
     {
         InitCanvasIfNeeded();
         ClearHoverCard();

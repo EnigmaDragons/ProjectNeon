@@ -23,7 +23,7 @@ public class EquipmentLibraryUI : OnMessage<EquipmentPickerCurrentGearChanged, D
         
         var totalCount = new Dictionary<string, int>();
         var availableCount = new Dictionary<string, int>();
-        var equipUsage = new List<(Equipment, bool)>();
+        var equipUsage = new List<(StaticEquipment, bool)>();
         
         partyState.Equipment.Available
             .Where(e => e.Archetypes.All(_selectedHero.Archetypes.Contains) 
@@ -67,7 +67,7 @@ public class EquipmentLibraryUI : OnMessage<EquipmentPickerCurrentGearChanged, D
             false);
     }
     
-    private Action<GameObject> InitEquipmentInLibraryButton(Equipment equipment, int totalCount, int availableCount, bool canAdd)
+    private Action<GameObject> InitEquipmentInLibraryButton(StaticEquipment equipment, int totalCount, int availableCount, bool canAdd)
     {
         void Init(GameObject gameObj)
         {

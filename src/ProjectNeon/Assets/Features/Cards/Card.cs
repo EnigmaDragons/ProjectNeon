@@ -7,7 +7,9 @@ using UnityEngine;
 public sealed class Card : CardTypeData
 {
     [SerializeField] private int id;
-    [SerializeField] private CardTypeData type;
+    [SerializeField] private CardType cardType;
+    [SerializeField] private ReactionCardType reactionCardType;
+    [SerializeField] private bool isReactionCard;
     [SerializeField] private Member owner;
     [SerializeField] private readonly Maybe<Color> tint;
     [SerializeField] private readonly Maybe<Sprite> ownerBust;
@@ -17,10 +19,10 @@ public sealed class Card : CardTypeData
     public CardMode Mode { get; private set; }
     public bool IsActive => Mode != CardMode.Dead && Mode != CardMode.Glitched;
 
-    public bool IsBasic => Owner != null && (Mode == CardMode.Basic || Owner.BasicCard.IsPresentAnd(b => b.Id == type.Id));
-    private CardTypeData _type => IsBasic ? Owner.BasicCard.Value : type;
+    public bool IsBasic => Owner != null && (Mode == CardMode.Basic || Owner.BasicCard.IsPresentAnd(b => b.Id == BaseType.Id));
+    private CardTypeData _type => IsBasic ? Owner.BasicCard.Value : BaseType;
     public CardTypeData Type => IsBasic ? Owner.BasicCard.Value : this;
-    public CardTypeData BaseType => type;
+    public CardTypeData BaseType => isReactionCard ? (CardTypeData)reactionCardType : (CardTypeData)cardType;
     
     public Member Owner => owner;
 
@@ -60,7 +62,22 @@ public sealed class Card : CardTypeData
     {
         this.owner = owner ?? throw new ArgumentNullException(nameof(owner));
         this.id = id;
-        this.type = type ?? throw new ArgumentNullException(nameof(CardTypeData));
+        if (type == null)
+            throw new ArgumentNullException(nameof(CardTypeData));
+        else if (type is CardType cardType)
+        {
+            this.cardType = cardType;
+            isReactionCard = false;
+        }
+        else if (type is ReactionCardType reactionCardType)
+        {
+            this.reactionCardType = reactionCardType;
+            isReactionCard = true;
+        }
+        else
+        {
+            throw new ArgumentException("can't initialize a card with a Card as its type");
+        }
         this.tint = tint;
         this.ownerBust = ownerBust;
     }

@@ -120,7 +120,7 @@ public class BattleTestSetup : MonoBehaviour
             ? hero1Equipment : hero.Id.Equals(hero2.Id) 
             ? hero2Equipment : hero.Id.Equals(hero3.Id) 
             ? hero3Equipment : new List<StaticEquipment>();
-        setup.InitPartyEquipment(equipment, new List<Equipment>(), new List<Equipment>());
+        setup.InitPartyEquipment(equipment, new List<StaticEquipment>(), new List<StaticEquipment>());
 
         if (useRandomRngSeed)
             setup.InitRng(new DeterministicRng(Rng.NewSeed()));

@@ -12,8 +12,8 @@ public class HeroFaceSelector : MonoBehaviour
     [SerializeField] private Localize nameLocalize;
     [SerializeField] private Localize classLocalize;
 
-    private IndexSelector<HeroCharacter> _heroes = new IndexSelector<HeroCharacter>(Array.Empty<HeroCharacter>());
-    private Action<HeroCharacter> _onChanged = _ => { };
+    private IndexSelector<BaseHero> _heroes = new IndexSelector<BaseHero>(Array.Empty<BaseHero>());
+    private Action<BaseHero> _onChanged = _ => { };
 
     private void Awake()
     {
@@ -21,9 +21,9 @@ public class HeroFaceSelector : MonoBehaviour
         previousHeroButton.onClick.AddListener(() => MovePrevious());
     }
 
-    public void Init(HeroCharacter[] heroes, Action<HeroCharacter> onChanged)
+    public void Init(BaseHero[] heroes, Action<BaseHero> onChanged)
     {
-        _heroes = new IndexSelector<HeroCharacter>(heroes);
+        _heroes = new IndexSelector<BaseHero>(heroes);
         _onChanged = onChanged;
         Render();
     }

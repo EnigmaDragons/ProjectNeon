@@ -36,8 +36,8 @@ public class CurrentGlobalEffects : ScriptableObject
     public void PreventTravelTo(string corpName, MapNodeType nodeType) => PublishAfter(() => travelPreventedCorpNodeTypes.Add(new Tuple<string, MapNodeType>(corpName, nodeType)));
     public void AllowTravelTo(string corpName, MapNodeType nodeType) => PublishAfter(() => travelPreventedCorpNodeTypes.Remove(new Tuple<string, MapNodeType>(corpName, nodeType)));
 
-    public void AddHeroEquipment(Equipment equipment) => party.AddGlobalEquipment(equipment);
-    public void RemoveHeroEquipment(Equipment equipment) => party.RemoveGlobalEquipment(equipment);
+    public void AddHeroEquipment(StaticEquipment equipment) => party.AddGlobalEquipment(equipment);
+    public void RemoveHeroEquipment(StaticEquipment equipment) => party.RemoveGlobalEquipment(equipment);
     
     public void Clear() => PublishAfter(() =>
     {

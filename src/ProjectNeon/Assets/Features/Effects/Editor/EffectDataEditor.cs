@@ -62,7 +62,6 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.ChooseAndDrawCard, new [] { "EffectScope" }},
         {EffectType.ChooseCardToCreate, new [] { "EffectScope", "Formula", "InterpolatePartialFormula" }},
         {EffectType.ChooseAndDrawCardOfArchetype, new [] { "EffectScope" }},
-        {EffectType.ChooseBuyoutCardsOrDefault, new [] { "EffectScope" }},
         {EffectType.DrawCardsOfOwner, new [] { "Formula", "InterpolatePartialFormula" } },
         {EffectType.DrawCardsOfArchetype, new [] { "Formula", "EffectScope" } },
         {EffectType.AdjustBattleRewardFormula, new[] { "Formula", "EffectScope" } },
