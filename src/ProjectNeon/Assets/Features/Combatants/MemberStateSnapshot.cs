@@ -53,7 +53,7 @@ public sealed class MemberStateSnapshot
     public int HpAndShield => Hp + Shield;
     public int HpAndShieldWithOverkill => Hp + Shield - OverkillDamageAmount;
     public IResourceType PrimaryResource => ResourceTypes.Any() ? ResourceTypes[0] : new InMemoryResourceType();
-    public int PrimaryResourceAmount => ResourceTypes.Any() ? Counters[PrimaryResource.Name] : 0;
+    public int PrimaryResourceAmount => ResourceTypes.Any() && Counters.ContainsKey(PrimaryResource.Name) ? Counters[PrimaryResource.Name] : 0;
 }
 
 public static class MemberStateSnapshotExtensions
