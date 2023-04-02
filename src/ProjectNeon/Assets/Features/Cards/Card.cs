@@ -62,6 +62,9 @@ public sealed class Card : CardTypeData
     {
         this.owner = owner ?? throw new ArgumentNullException(nameof(owner));
         this.id = id;
+        
+        while (type is Card card)
+            type = card.BaseType;
         if (type == null)
             throw new ArgumentNullException(nameof(CardTypeData));
         else if (type is CardType cardType)
@@ -73,10 +76,6 @@ public sealed class Card : CardTypeData
         {
             this.reactionCardType = reactionCardType;
             isReactionCard = true;
-        }
-        else
-        {
-            throw new ArgumentException("can't initialize a card with a Card as its type");
         }
         this.tint = tint;
         this.ownerBust = ownerBust;
