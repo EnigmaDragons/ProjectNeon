@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class Tutorial5Orchestrator : OnMessage<StartCardSetupRequested, BeginTargetSelectionRequested, EndOfTurnStatusEffectsResolved, 
@@ -7,7 +8,11 @@ public class Tutorial5Orchestrator : OnMessage<StartCardSetupRequested, BeginTar
     private const string _callerId = "Tutorial5Orchestrator";
 
     [SerializeField] private BattleState battleState;
+    [SerializeField] private float _notPlayingBasicPromptDelay;
     
+    private float _timeTilPrompt;
+    private bool _hasPlayedBasic;
+    private bool _hasPlayedHide;
     private bool _firstTurnFinished;
     private bool _hasWon;
 
@@ -16,6 +21,20 @@ public class Tutorial5Orchestrator : OnMessage<StartCardSetupRequested, BeginTar
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.ClickableControls, false, _callerId));
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.TrashRecycleDropArea, false, _callerId));
         Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.PlayerShields, false, _callerId));
+        _timeTilPrompt = _notPlayingBasicPromptDelay;
+    }
+    
+    private void Update()
+    {
+        if (!_hasPlayedBasic && _hasPlayedHide)
+        {
+            _timeTilPrompt = Math.Max(0, _timeTilPrompt - Time.deltaTime);
+            if (_timeTilPrompt <= 0)
+            {
+                Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial02-01".ToLocalized()));
+                _timeTilPrompt = _notPlayingBasicPromptDelay;
+            }
+        }
     }
     
     protected override void Execute(StartCardSetupRequested msg) => StartCoroutine(ShowTutorialAfterDelay());
@@ -46,8 +65,13 @@ public class Tutorial5Orchestrator : OnMessage<StartCardSetupRequested, BeginTar
     protected override void Execute(EndOfTurnStatusEffectsResolved msg) => _firstTurnFinished = true;
     protected override void Execute(CardResolutionFinished msg)
     {
+        if (msg.CardName == "Energize")
+            _hasPlayedBasic = true;
         if (msg.CardName == "Hide" && !_firstTurnFinished)
+        {
+            _hasPlayedHide = true;
             Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial05-03".ToLocalized()));
+        }
         if (msg.CardName == "Hidden Blade" && battleState.Members[4].CurrentHp() == battleState.Members[4].MaxHp())
             Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial05-04".ToLocalized())); 
     }
