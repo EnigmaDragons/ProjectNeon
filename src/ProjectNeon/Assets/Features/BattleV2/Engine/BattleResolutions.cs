@@ -115,8 +115,7 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         EffectType.Kill, 
         EffectType.DamageOverTimeFormula,
         EffectType.MagicAttackFormula, 
-        EffectType.TrueDamageAttackFormula,
-        EffectType.DealTrueDamageFormula
+        EffectType.TrueDamageAttackFormula
     });
     
     protected override void Execute(CardActionPrevented msg)

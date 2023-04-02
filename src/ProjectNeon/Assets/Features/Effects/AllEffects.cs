@@ -55,9 +55,9 @@ public static class AllEffects
         { EffectType.SwapLifeForce, e => new SwapLifeForce() },
         { EffectType.DuplicateStatesOfType, e => new DuplicateStatesOfType(e.StatusTag)},
         { EffectType.DuplicateStatesOfTypeToRandomEnemy, e => new DuplicateStatesOfTypeToRandomEnemy(e.StatusTag)},
-        { EffectType.DealTrueDamageFormula, e => new FullContextEffect((ctx, _, m) => 
+        { EffectType.DealTrueDamageFormula, e => AegisPreventable.If(new FullContextEffect((ctx, _, m) => 
             BattleLoggedItem(amount => $"{amount} true damage dealt to {m.NameTerm.ToEnglish()}", 
-                m.TakeTrueDamage(ctx.DoubleDamage.WithDoubleDamage(Formula.EvaluateToInt(new FormulaContext(ctx.SourceStateSnapshot, m, ctx.XPaidAmount, ctx.ScopedData), e.Formula)))), e.DurationFormula)},
+                m.TakeTrueDamage(ctx.DoubleDamage.WithDoubleDamage(Formula.EvaluateToInt(new FormulaContext(ctx.SourceStateSnapshot, m, ctx.XPaidAmount, ctx.ScopedData), e.Formula)))), e.DurationFormula), !e.Unpreventable, "deal true damage")},
         { EffectType.ApplyAdditiveStatInjury, e => new AegisPreventable(new ApplyStatInjury(StatOperation.Add, e.EffectScope, e.TotalAmount, e.FlavorText), "Injury") },
         { EffectType.ApplyMultiplicativeStatInjury, e => new AegisPreventable(new ApplyStatInjury(StatOperation.Multiply, e.EffectScope, e.TotalAmount, e.FlavorText), "Injury") },
         { EffectType.Kill, e => new AegisPreventable(new SimpleEffect(m => m.SetHp(0)), "Kill") },
