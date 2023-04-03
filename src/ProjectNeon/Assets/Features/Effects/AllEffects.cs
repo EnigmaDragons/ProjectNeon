@@ -55,7 +55,7 @@ public static class AllEffects
         { EffectType.SwapLifeForce, e => new SwapLifeForce() },
         { EffectType.DuplicateStatesOfType, e => new DuplicateStatesOfType(e.StatusTag)},
         { EffectType.DuplicateStatesOfTypeToRandomEnemy, e => new DuplicateStatesOfTypeToRandomEnemy(e.StatusTag)},
-        { EffectType.DealTrueDamageFormula, e => AegisPreventable.If(new FullContextEffect((ctx, _, m) => 
+        { EffectType.DealTrueDamageFormula, e => DodgePreventable.If(new FullContextEffect((ctx, _, m) => 
             BattleLoggedItem(amount => $"{amount} true damage dealt to {m.NameTerm.ToEnglish()}", 
                 m.TakeTrueDamage(ctx.DoubleDamage.WithDoubleDamage(Formula.EvaluateToInt(new FormulaContext(ctx.SourceStateSnapshot, m, ctx.XPaidAmount, ctx.ScopedData), e.Formula)))), e.DurationFormula), !e.Unpreventable, "deal true damage")},
         { EffectType.ApplyAdditiveStatInjury, e => new AegisPreventable(new ApplyStatInjury(StatOperation.Add, e.EffectScope, e.TotalAmount, e.FlavorText), "Injury") },

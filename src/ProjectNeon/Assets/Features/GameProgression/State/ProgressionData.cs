@@ -9,6 +9,7 @@ public class ProgressionData
     public List<AdventureCompletionRecord> AdventureCompletions = new List<AdventureCompletionRecord>();
     public List<UnlockItemDisplayRecord> ShownUnlocks = new List<UnlockItemDisplayRecord>();
     public int RunsFinished;
+    public int UnlocksShown;
     public bool HasShownWishlistScene;
     public bool HasSeenAlgeronFinalBoss;
 

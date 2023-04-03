@@ -6,16 +6,14 @@ public class UnlocksToShowProcessor : MonoBehaviour, ILocalizeTerms
 {
     [SerializeField] private Library library;
     [SerializeField] private Adventure tutorialAdventure;
-    [SerializeField] private UnlockPresenter presenter;
-
-    private Queue<UnlockUiData> _toShow;
+    [SerializeField] private MultiUnlockPresenter presenter;
 
     private void Awake() => presenter.Hide();
     
     private void Start()
     {
         var progressionData = CurrentProgressionData.Data;
-        if (progressionData.RunsFinished == progressionData.ShownUnlocks.Count && CurrentProgressionData.Data.HasShownUnlockForAdventure(AdventureIds.OrganizedHarvestorsAdventureId))
+        if (progressionData.RunsFinished == progressionData.UnlocksShown && CurrentProgressionData.Data.HasShownUnlockForAdventure(AdventureIds.OrganizedHarvestorsAdventureId))
             return;
         
         var difficulties = library.UnlockedDifficulties.Where(x => x.id > 0);
@@ -38,33 +36,21 @@ public class UnlocksToShowProcessor : MonoBehaviour, ILocalizeTerms
             .Where(x => x.AdventuresPlayedBeforeUnlocked > 0 && progressionData.RunsFinished >= x.AdventuresPlayedBeforeUnlocked && !progressionData.HasShownUnlockForHeroId(x.Id))
             .OrderBy(x => x.AdventuresPlayedBeforeUnlocked);
 
-        if (unshownAdventureUnlocks.Any() && ((unshownHeroUnlocks.None() && unshownDifficultes.None()) || library.UnlockedAdventures.All(x => x.IsLocked || x.IsCompleted)))
-            _toShow = unshownAdventureUnlocks.Take(1).Select(a => new UnlockUiData(ProgressionData.UnlockTypeAdventure, a.id, "Unlocks/UnlockAdventureHeader", a.MapTitleTerm, a.AdventureImage)).ToQueue();
-        else if (unshownHeroUnlocks.Any() && (unshownDifficultes.None() || heroes
-                 .Where(x => x.AdventuresPlayedBeforeUnlocked == 0 || progressionData.HasShownUnlockForHeroId(x.id))
-                 .All(h => progressionData.AdventureCompletions.Any(a => a.HeroId == h.id))))
-            _toShow = unshownHeroUnlocks.Take(1).Select(h => new UnlockUiData(ProgressionData.UnlockTypeHero, h.id, "Unlocks/UnlockHeroHeader", h.NameTerm(), h.Bust)).ToQueue();
-        else if (unshownDifficultes.Any())
-            _toShow = unshownDifficultes.Take(1).Select(d => new UnlockUiData(ProgressionData.UnlockTypeDifficulty, d.id, "Unlocks/UnlockDifficultyHeader", d.NameTerm, d.Image)).ToQueue();
-        else
-            _toShow = new Queue<UnlockUiData>();
-        ShowNext();
-    }
 
-    private void ShowNext()
-    {
-        if (!_toShow.Any())
-            return;
-        
-        this.ExecuteAfterDelay(() =>
-        {
-            var unlock = _toShow.Dequeue();
-            presenter.Show(unlock, () =>
-            {
-                CurrentProgressionData.Mutate(d => d.Record(unlock.ToDataRecord()));
-                ShowNext();
-            });
-        }, 1f);
+        var toShow = new List<UnlockUiData>();
+        if (unshownAdventureUnlocks.Any())
+            toShow.AddRange(unshownAdventureUnlocks.Take(1).Select(a => new UnlockUiData(ProgressionData.UnlockTypeAdventure, a.id, "Unlocks/UnlockAdventureHeader", a.MapTitleTerm, a.AdventureImage)));
+        if (unshownHeroUnlocks.Any())
+            toShow.AddRange(unshownHeroUnlocks.Take(1).Select(h => new UnlockUiData(ProgressionData.UnlockTypeHero, h.id, "Unlocks/UnlockHeroHeader", h.NameTerm(), h.Bust)));
+        if (unshownDifficultes.Any())
+            toShow.AddRange(unshownDifficultes.Take(1).Select(d => new UnlockUiData(ProgressionData.UnlockTypeDifficulty, d.id, "Unlocks/UnlockDifficultyHeader", d.NameTerm, d.Image)));
+        presenter.Show(toShow.ToArray());
+        CurrentProgressionData.Write(x => 
+        { 
+            toShow.ForEach(unlock => x.Record(new UnlockItemDisplayRecord { ItemId = unlock.ItemId, UnlockType = unlock.UnlockType }));
+            x.UnlocksShown = x.UnlocksShown + 1;
+            return x;
+        });
     }
 
     public string[] GetLocalizeTerms()

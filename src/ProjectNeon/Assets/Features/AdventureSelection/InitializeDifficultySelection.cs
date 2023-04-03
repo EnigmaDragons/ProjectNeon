@@ -13,12 +13,12 @@ public class InitializeDifficultySelection : MonoBehaviour
     private void Start()
     {
         container.DestroyAllChildren();
-        var difficulties = library.UnlockedDifficulties.Where(x => x.id <= 0 || CurrentProgressionData.Data.HasShownUnlockForDifficultyId(x.id)).OrderBy(x => x.id).ToArray();
+        var difficulties = library.UnlockedDifficulties.ToArray();
         for (var i = 0; i < difficulties.Length; i++)
         {
             var difficulty = difficulties[i];
             var difficultyInstance = Instantiate(difficultyPrefab, container.transform);
-            difficultyInstance.Init(difficulty, () => Begin(difficulty));
+            difficultyInstance.Init(difficulty, difficulty.id > 0 && !CurrentProgressionData.Data.HasShownUnlockForDifficultyId(difficulty.id), () => Begin(difficulty));
         }
     }
     

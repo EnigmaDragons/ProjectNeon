@@ -11,8 +11,9 @@ public class DifficultyPresenter : MonoBehaviour
     [SerializeField] private Localize description;
     [SerializeField] private Button selectButton;
     [SerializeField] private Image difficultyImage;
+    [SerializeField] private GameObject lockVisual;
 
-    public void Init(Difficulty difficulty, Action onSelect)
+    public void Init(Difficulty difficulty, bool locked, Action onSelect)
     {
         nameLabel.SetTerm(difficulty.NameTerm);
         changes.SetTerm(difficulty.ChangesTerm);
@@ -20,5 +21,7 @@ public class DifficultyPresenter : MonoBehaviour
         difficultyImage.sprite = difficulty.Image;
         
         selectButton.onClick.AddListener(() => onSelect());
+        selectButton.enabled = !locked;
+        lockVisual.SetActive(locked);
     }
 }
