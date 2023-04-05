@@ -38,6 +38,6 @@ public class ChooseCardToPlay : Effect
                     ctx.OwnerTints.ContainsKey(ctx.Source.Id) ? ctx.OwnerTints[ctx.Source.Id] : Maybe<Color>.Missing(), 
                     ctx.OwnerBusts.ContainsKey(ctx.Source.Id) ? ctx.OwnerBusts[ctx.Source.Id] : Maybe<Sprite>.Missing()))
                 .ToArray();
-        ctx.Selections.OnCardSelected = card => Message.Publish(new BonusCardPlayRequested(ctx.Source, new BonusCardDetails(card.BaseType, ResourceQuantity.None)));
+        ctx.Selections.OnCardSelected = card => Message.Publish(new BonusCardPlayRequested(ctx.Source, new BonusCardDetails(card.CardTypeOrNothing.Value, ResourceQuantity.None)));
     }
 }

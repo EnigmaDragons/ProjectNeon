@@ -57,17 +57,6 @@ public class DeckUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckC
             false);
     }
 
-    private Action<GameObject> InitCardInDeckButton(CardTypeData card)
-    {
-        Action<GameObject> init = gameObj =>
-        {
-            var cardInDeckButton = gameObj.GetComponent<CardInDeckButton>();
-            cardInDeckButton.Init(card, _cardInDeckSuperFocusEnabled);
-            _cardButtons.Add(cardInDeckButton);
-        };
-        return init;
-    }
-    
     private Action<GameObject> InitCardInDeckButton(Card card)
     {
         Action<GameObject> init = gameObj =>

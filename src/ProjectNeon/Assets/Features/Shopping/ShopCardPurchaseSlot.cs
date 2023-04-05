@@ -61,7 +61,7 @@ public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged,
         cardPresenter.Clear();
         soldVisual.SetActive(true);
         party.UpdateCreditsBy(-_price);
-        party.Add(_card.BaseType);
+        party.Add(_card.CardTypeOrNothing.Value);
         Message.Publish(new CardPurchased(_card, transform));
         Message.Publish(new SetSuperFocusBuyControl(false));
     }

@@ -14,7 +14,7 @@ public class TargetHasNotBeenTargetedBySourceThisTurn : StaticEffectCondition
                         || !card.Targets.Any(
                             target => target.Members.Any(
                                 x => x.Id == member.Id))
-                        || !tags.All(x => card.Card.Tags.Contains(x))))
+                        || !tags.All(x => card.CardTags.Contains(x))))
             ? Maybe<string>.Missing()
             : new Maybe<string>("One of the target members has been targeted by the source this turn");
     }

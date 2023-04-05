@@ -32,7 +32,7 @@ public class AchievementWatcher : MonoBehaviour
     {
         var turnAdvanced = msg.Before.TurnNumber != msg.State.TurnNumber;
         var notTutorialAndTurnAdvanced = IsNotTutorial && turnAdvanced;
-        if (notTutorialAndTurnAdvanced && msg.Before.PlayedCardHistory.AnyNonAlloc() && msg.Before.PlayedCardHistory.Last().Count(c => c.Card.Speed != CardSpeed.Quick) >= 5)
+        if (notTutorialAndTurnAdvanced && msg.Before.PlayedCardHistory.AnyNonAlloc() && msg.Before.PlayedCardHistory.Last().Count(c => c.CardSpeed != CardSpeed.Quick) >= 5)
             Achievements.Record(Achievement.PlaystyleFiveCardPlaysInATurn);
         if (turnAdvanced && msg.State.Heroes.AnyNonAlloc(h => h.IsConscious() && h.CurrentShield() >= 60))
             Achievements.Record(Achievement.PlaystyleShields60);

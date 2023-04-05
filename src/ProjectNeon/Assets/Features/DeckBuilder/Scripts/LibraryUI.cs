@@ -36,7 +36,7 @@ public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderSta
             .ThenByDescending(c => (int)c.Key.Rarity)
             .ToList();
 
-        cardsForHero.Insert(0, new KeyValuePair<CardTypeData, int>(_selectedHero.BasicCard, 0));
+        cardsForHero.Insert(0, new KeyValuePair<CardType, int>(_selectedHero.BasicCard, 0));
 
         var cardUsage = cardsForHero.SafeToDictionary(c => c.Key,
             c => new Tuple<int, int>(c.Value, c.Value - state.HeroesDecks.Sum(deck => deck.Deck.Count(card => card.Id == c.Key.Id))));
@@ -58,7 +58,7 @@ public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderSta
             !heroChanged);
     }
 
-    private Action<GameObject> InitCardInLibraryButton(CardTypeData card, int numTotal, int numAvailable)
+    private Action<GameObject> InitCardInLibraryButton(CardType card, int numTotal, int numAvailable)
     {
         void Init(GameObject gameObj)
         {

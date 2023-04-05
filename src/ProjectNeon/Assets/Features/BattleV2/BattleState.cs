@@ -50,7 +50,7 @@ public class BattleState : ScriptableObject
     public int NumberOfRecyclesRemainingThisTurn => PlayerState.NumberOfRecyclesRemainingThisTurn;
 
     private int CurrentTurnPartyNonBonusStandardCardPlays => CurrentTurnCardPlays()
-        .Count(x => x.Member.TeamType == TeamType.Party && !x.WasTransient && x.Card.Speed == CardSpeed.Standard);
+        .Count(x => x.Member.TeamType == TeamType.Party && !x.WasTransient && x.CardSpeed == CardSpeed.Standard);
 
     public int NumberOfCardPlaysRemainingThisTurn => playerState.CurrentStats.CardPlays() -
                                                      CurrentTurnPartyNonBonusStandardCardPlays -
@@ -66,7 +66,7 @@ public class BattleState : ScriptableObject
     public int RewardXp => rewards.RewardXp;
     public int PredictedTotalRewardXp => rewards.RewardXp + (_heroesById.First().Value.Levels.XpRequiredForNextLevel * adventureProgress.AdventureProgress.BonusXpLevelFactor).CeilingInt();
     public int RewardClinicVouchers => adventure.Adventure.BattleRewardClinicVouchers;
-    public CardTypeData[] RewardCards => rewards.RewardCards;
+    public CardType[] RewardCards => rewards.RewardCards;
     public StaticEquipment[] RewardEquipments => rewards.RewardEquipments;
 
     public bool HasCustomEnemyEncounter => nextEnemies != null && nextEnemies.Length > 0;
@@ -388,7 +388,7 @@ public class BattleState : ScriptableObject
     }
     public void AddRewardCredits(int amount) => UpdateState(() => rewards.AddRewardCredits(amount));
     public void AddRewardXp(int xp) => UpdateState(() => rewards.AddRewardXp(xp)); 
-    public void SetRewardCards(params CardTypeData[] cards) => UpdateState(() => rewards.SetRewardCards(cards));
+    public void SetRewardCards(params CardType[] cards) => UpdateState(() => rewards.SetRewardCards(cards));
     public void SetRewardEquipment(params StaticEquipment[] equipments) => UpdateState(() => rewards.SetRewardEquipment(equipments));
 
     public void AddEnemy(EnemyInstance e, GameObject gameObject, Member member) 

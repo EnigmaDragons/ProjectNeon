@@ -60,11 +60,11 @@ public class BaseHero : ScriptableObject, ILocalizeTerms
     public MemberMaterialType MaterialType => materialType;
     public BattleRole BattleRole => battleRole;
     public Deck Deck => startingDeck;
-    public CardTypeData[] AdditionalStartingCards => additionalStartingCards != null ? additionalStartingCards.Cast<CardTypeData>().ToArray() : Array.Empty<CardTypeData>();    
-    public HashSet<CardTypeData> ExcludedCards => excludedStartingCards != null 
-        ? new HashSet<CardTypeData>(excludedStartingCards.Concat(BasicCard)) 
-        : new HashSet<CardTypeData>(BasicCard.AsArray());
-    public CardTypeData BasicCard => basic;
+    public CardType[] AdditionalStartingCards => additionalStartingCards != null ? additionalStartingCards.ToArray() : Array.Empty<CardType>();    
+    public HashSet<CardType> ExcludedCards => excludedStartingCards != null 
+        ? new HashSet<CardType>(excludedStartingCards.Concat(BasicCard)) 
+        : new HashSet<CardType>(BasicCard.AsArray());
+    public CardType BasicCard => basic;
     public int StartingCredits => startingCredits;
     public HeroLevelUpPathway LevelUpTree => levelUpTree;
     public HeroLevelUpTreeV4 LevelUpTreeV4 => levelUpTreeV4;
@@ -107,7 +107,7 @@ public class BaseHero : ScriptableObject, ILocalizeTerms
         }
     }
 
-    public CardTypeData[] ParagonCards => 
+    public CardType[] ParagonCards => 
         levelUpTreeV4 != null
             ? levelUpTreeV4.ParagonCards
             : levelUpTree != null 
@@ -116,7 +116,7 @@ public class BaseHero : ScriptableObject, ILocalizeTerms
                     .OfType<NewBasicLevelUpOption>()
                     .Select(o => o.Card)
                     .ToArray()
-                : new CardTypeData[0];
+                : Array.Empty<CardType>();
     
     public Dictionary<string, int> CounterAdjustments => new Dictionary<string, int>
     {

@@ -72,7 +72,7 @@ public static class CardTypeDataExtensions
 
     public static void ShowDetailedCardView(this CardTypeData c) => Message.Publish(new ShowDetailedCardView(c));
 
-    public static Card ToNonBattleCard(this CardTypeData c, PartyAdventureState party)
+    public static Card ToNonBattleCard(this CardType c, PartyAdventureState party)
     {
         var hero = party.BestMatchFor(c.GetArchetypeKey());
         return ToNonBattleCard(c, hero);

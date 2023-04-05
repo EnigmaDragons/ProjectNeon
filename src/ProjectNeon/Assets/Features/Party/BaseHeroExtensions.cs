@@ -24,12 +24,12 @@ public static class BaseHeroExtensions
     public static Member AsMemberForLibrary(this BaseHero h) => AsMemberForLibrary(h, h.Stats);
     public static Member AsMemberForLibrary(this BaseHero h, IStats stats)
     {
-        var m = new Member(-1, h.NameTerm(), h.ClassTerm(), h.MaterialType, TeamType.Party, stats, h.BattleRole, stats.DefaultPrimaryStat(stats), true, false, stats.MaxHp(), Maybe<CardTypeData>.Present(h.BasicCard));
+        var m = new Member(-1, h.NameTerm(), h.ClassTerm(), h.MaterialType, TeamType.Party, stats, h.BattleRole, stats.DefaultPrimaryStat(stats), true, false, stats.MaxHp(), h.BasicCard);
         h.CounterAdjustments.ForEach(c => m.State.Adjust(c.Key, c.Value));
         return m;
     }
 
-    public static CardTypeData[] StartingCards(this BaseHero hero, ShopCardPool allCards) => allCards
+    public static CardType[] StartingCards(this BaseHero hero, ShopCardPool allCards) => allCards
         .Get(hero.Archetypes, new HashSet<int>(), Rarity.Starter)
         .Concat(hero.AdditionalStartingCards)
         .Except(hero.ExcludedCards)

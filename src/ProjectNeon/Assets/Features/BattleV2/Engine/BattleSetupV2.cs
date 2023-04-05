@@ -45,7 +45,7 @@ public class BattleSetupV2 : MonoBehaviour
         else
             party.EquipTo(equip, hero);
     }
-    public void InitPartyDecks(List<CardTypeData> d1, List<CardTypeData> d2, List<CardTypeData> d3) => party.UpdateDecks(d1, d2, d3);
+    public void InitPartyDecks(List<CardType> d1, List<CardType> d2, List<CardType> d3) => party.UpdateDecks(d1, d2, d3);
     public void InitEncounterBuilder(EncounterBuilderV5 e) => encounterBuilder = e;
     public void InitEncounter(IEnumerable<EnemyInstance> enemies) => enemyArea.Initialized(enemies);
     public void InitRng(DeterministicRng rng) => _battleRng = rng;

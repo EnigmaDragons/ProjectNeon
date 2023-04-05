@@ -7,19 +7,19 @@ using UnityEngine;
 public class BattleRewardState : ScriptableObject
 {
     [SerializeField, ReadOnly] private int rewardCredits;
-    [SerializeField, ReadOnly] private CardTypeData[] rewardCards = Array.Empty<CardTypeData>();
+    [SerializeField, ReadOnly] private CardType[] rewardCards = Array.Empty<CardType>();
     [SerializeField, ReadOnly] private StaticEquipment[] rewardEquipments = Array.Empty<StaticEquipment>();
     [SerializeField, ReadOnly] private int rewardXp = 0;
     
     public int RewardCredits => rewardCredits;
     public int RewardXp => rewardXp;
-    public CardTypeData[] RewardCards => rewardCards.ToArray();
+    public CardType[] RewardCards => rewardCards.ToArray();
     public StaticEquipment[] RewardEquipments => rewardEquipments.ToArray();
     
     public void Init()
     {
         rewardCredits = 0;
-        rewardCards = Array.Empty<CardTypeData>();
+        rewardCards = Array.Empty<CardType>();
         rewardEquipments = Array.Empty<StaticEquipment>();
         rewardXp = 0;
     }
@@ -33,7 +33,7 @@ public class BattleRewardState : ScriptableObject
     }
     public void AddRewardCredits(int amount) => UpdateState(() => rewardCredits += amount);
     public void AddRewardXp(int xp) => UpdateState(() => rewardXp += xp); 
-    public void SetRewardCards(params CardTypeData[] cards) => UpdateState(() => rewardCards = cards);
+    public void SetRewardCards(params CardType[] cards) => UpdateState(() => rewardCards = cards);
     public void SetRewardEquipment(params StaticEquipment[] equipments) => UpdateState(() => rewardEquipments = equipments);
 
     private void UpdateState(Action a)

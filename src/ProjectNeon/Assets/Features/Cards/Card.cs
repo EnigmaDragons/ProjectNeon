@@ -21,8 +21,9 @@ public sealed class Card : CardTypeData
 
     public bool IsBasic => Owner != null && (Mode == CardMode.Basic || Owner.BasicCard.IsPresentAnd(b => b.Id == BaseType.Id));
     private CardTypeData _type => IsBasic ? Owner.BasicCard.Value : BaseType;
-    public CardTypeData Type => IsBasic ? Owner.BasicCard.Value : this;
+    public CardTypeData Type => IsBasic ? (CardTypeData)Owner.BasicCard.Value : (CardTypeData)this;
     public CardTypeData BaseType => isReactionCard ? (CardTypeData)reactionCardType : (CardTypeData)cardType;
+    public Maybe<CardType> CardTypeOrNothing => new Maybe<CardType>(cardType);
     
     public Member Owner => owner;
 

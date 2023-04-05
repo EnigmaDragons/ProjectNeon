@@ -1,11 +1,11 @@
 
 public class EnemySpecialCircumstanceCards
 {
-    public CardTypeData DisabledCard { get; }
-    public CardTypeData AntiStealthCard { get; }
-    public CardTypeData AiGlitchedCard { get; }
+    public CardType DisabledCard { get; }
+    public CardType AntiStealthCard { get; }
+    public CardType AiGlitchedCard { get; }
     
-    public EnemySpecialCircumstanceCards(CardTypeData disabledCard, CardTypeData antiStealthCard, CardTypeData aiGlitchedCard)
+    public EnemySpecialCircumstanceCards(CardType disabledCard, CardType antiStealthCard, CardType aiGlitchedCard)
     {
         DisabledCard = disabledCard;
         AntiStealthCard = antiStealthCard;

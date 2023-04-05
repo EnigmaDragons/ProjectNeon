@@ -11,7 +11,7 @@ public class Hero
     [SerializeField] private RuntimeDeck deck;
     [SerializeField] private HeroEquipment equipment;
     [SerializeField] private HeroLevels levels;
-    [SerializeField] private CardTypeData basicCard;
+    [SerializeField] private CardType basicCard;
 
     private IStats _statAdditions = new StatAddends();
     private Maybe<StatType> _primaryStat = Maybe<StatType>.Missing();
@@ -39,11 +39,11 @@ public class Hero
     public HeroHealth Health => health;
     public HeroLevels Levels => levels;
     public int Level => IsMaxLevelV4 ? Character.LevelUpTreeV4.MaxLevel : Levels.CurrentLevel;
-    public CardTypeData BasicCard => basicCard;
+    public CardType BasicCard => basicCard;
     public StatType PrimaryStat => _primaryStat.OrDefault(NonTemporaryStats.DefaultPrimaryStat(Character.Stats));
     public IResourceType PrimaryResource => _primaryResourceType;
     public Maybe<StatType> PlayerPrimaryStatSelection => _primaryStat;
-    public HashSet<string> Archetypes => character?.Archetypes ?? new HashSet<string>();
+    public HashSet<string> Archetypes => character == null ? new HashSet<string>() : character.Archetypes ?? new HashSet<string>();
     public bool IsMaxLevelV4 => Levels.NextLevelUpLevel > Character.LevelUpTreeV4.MaxLevel;
     public HeroLevelUpRewardV4 NextLevelUpRewardV4 => Character.LevelUpTreeV4.ForLevel(Levels.NextLevelUpLevel);
 
@@ -80,7 +80,7 @@ public class Hero
     public void SetHp(int hp) => UpdateState(() => health.SetHp(hp));
     public void AdjustHp(int amount) => UpdateState(() => health.AdjustHp(amount));
 
-    public void SetBasic(CardTypeData c) => basicCard = c;
+    public void SetBasic(CardType c) => basicCard = c;
     public void SetDeck(RuntimeDeck d) => deck = d;
     public void SetLevels(HeroLevels l) => levels = l;
     public void SetHealth(HeroHealth h)
@@ -115,7 +115,7 @@ public class Hero
     public Member AsMember(int id)
     {
         var m = new Member(id, Character.NameTerm(), Character.ClassTerm(), Character.MaterialType, TeamType.Party,
-            Stats, Character.BattleRole, PrimaryStat, true, false, CurrentHp, new Maybe<CardTypeData>(basicCard));
+            Stats, Character.BattleRole, PrimaryStat, true, false, CurrentHp, new Maybe<CardType>(basicCard));
         Character.CounterAdjustments.ForEach(c => m.State.Adjust(c.Key, c.Value));
         return m;
     }
@@ -150,7 +150,8 @@ public class Hero
 
     private Member WithStartOfBattleEffects(Member m, EffectContext ctx)
     {
-        character?.StartOfBattleEffects?.ForEach(effect => AllEffects.Apply(effect, ctx.WithReactionTimingContext(effect.FinalReactionTimingWindow)));
+        if (character != null)
+            character.StartOfBattleEffects?.ForEach(effect => AllEffects.Apply(effect, ctx.WithReactionTimingContext(effect.FinalReactionTimingWindow)));
         return m;
     }
 

@@ -20,7 +20,7 @@ public class TransformOwnersCardsIntoCard : Effect
         ReplaceZone(ctx, ctx.PlayerCardZones.DiscardZone, card);
     }
 
-    private void ReplaceZone(EffectContext ctx, CardPlayZone zone, CardTypeData cardReplacer)
+    private void ReplaceZone(EffectContext ctx, CardPlayZone zone, CardType cardReplacer)
     {
         while (zone.Cards.Any(card 
             => _cards.Contains(card.Id)

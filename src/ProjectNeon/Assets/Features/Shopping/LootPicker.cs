@@ -22,7 +22,7 @@ public class LootPicker
     public Rarity RandomRarity() => factors.Random();
     
     // Factor out duplication after more thinking. Be careful not to combine all archetypes across heroes.
-    public CardTypeData[] PickCardsForSingleHero(ShopCardPool cards, HashSet<string> archetypes, int numCards, params Rarity[] rarities)
+    public CardType[] PickCardsForSingleHero(ShopCardPool cards, HashSet<string> archetypes, int numCards, params Rarity[] rarities)
     {
         var weightedCards = cards.Get(archetypes, party.CardsYouCantHaveMoreOf(), rarities)
             .Distinct()
@@ -30,14 +30,14 @@ public class LootPicker
             .ToArray()
             .Shuffled();
     
-        var selectedCards = new HashSet<CardTypeData>();
+        var selectedCards = new HashSet<CardType>();
         for (var i = 0; i < weightedCards.Length && selectedCards.Count < numCards; i++)
             selectedCards.Add(weightedCards[i]);
         
         return selectedCards.ToArray();
     }
 
-    public CardTypeData[] PickCards(ShopCardPool cards, int numCards, params Rarity[] rarities)
+    public CardType[] PickCards(ShopCardPool cards, int numCards, params Rarity[] rarities)
     {
         var weightedCards = party.BaseHeroes.SelectMany(h => cards.Get(h.Archetypes, party.CardsYouCantHaveMoreOf(), rarities))
             .Distinct()
@@ -45,7 +45,7 @@ public class LootPicker
             .ToArray()
             .Shuffled();
 
-        var selectedCards = new HashSet<CardTypeData>();
+        var selectedCards = new HashSet<CardType>();
         for (var i = 0; i < weightedCards.Length && selectedCards.Count < numCards; i++)
             selectedCards.Add(weightedCards[i]);
         
@@ -77,7 +77,7 @@ public class LootPicker
 
     public ShopSelection GenerateCardSelection(ShopCardPool cards, int numCards)
     {
-        CardTypeData[] selectedCards;
+        CardType[] selectedCards;
         if (stage > 1)
         {
             selectedCards = PickCards(cards, 2, Rarity.Rare, Rarity.Epic)
@@ -123,6 +123,6 @@ public class LootPicker
         {
             selectedEquipment = selectedEquipment.Concat(PickEquipments(equipment, 1, corpNameFilter, Rarity.Common)).ToArray();
         }
-        return new ShopSelection(selectedEquipment.ToList(), new List<CardTypeData>());
+        return new ShopSelection(selectedEquipment.ToList(), new List<CardType>());
     }
 }

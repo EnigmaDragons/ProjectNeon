@@ -9,7 +9,7 @@ public class HeroLevelUpTreeV4 : ScriptableObject
     
     public int MaxLevel => rewards.Length + 1;
     public int TotalHpGrowth => rewards.Sum(r => r.HpGain);
-    public CardTypeData[] ParagonCards => paragons.Cast<CardTypeData>().ToArray();
+    public CardType[] ParagonCards => paragons.ToArray();
     
 #if UNITY_EDITOR
     public HeroLevelUpRewardV4[] EditorRewards => rewards;

@@ -16,7 +16,7 @@ public class Member
     public TeamType TeamType { get; }
     public BattleRole BattleRole { get; }
     public MemberState State { get; }
-    public Maybe<CardTypeData> BasicCard { get; }
+    public Maybe<CardType> BasicCard { get; }
     public bool ShouldLive { get; }
     public bool IsHasty { get; }
     
@@ -27,9 +27,9 @@ public class Member
     public override string ToString() => $"{NameTerm.ToEnglish()} {Id}";
     
     public Member(int id, string nameTerm, string characterClassTerm, MemberMaterialType materialType, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat, bool shouldLive, bool isHasty)
-        : this(id, nameTerm, characterClassTerm, materialType, team, baseStats, battleRole, primaryStat, shouldLive, isHasty, baseStats.MaxHp(), Maybe<CardTypeData>.Missing()) {}
+        : this(id, nameTerm, characterClassTerm, materialType, team, baseStats, battleRole, primaryStat, shouldLive, isHasty, baseStats.MaxHp(), Maybe<CardType>.Missing()) {}
     
-    public Member(int id, string nameTerm, string characterClassTerm, MemberMaterialType materialType, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat, bool shouldLive, bool isHasty, int initialHp, Maybe<CardTypeData> basicCard)
+    public Member(int id, string nameTerm, string characterClassTerm, MemberMaterialType materialType, TeamType team, IStats baseStats, BattleRole battleRole, StatType primaryStat, bool shouldLive, bool isHasty, int initialHp, Maybe<CardType> basicCard)
     {
         if (id > -1 && baseStats.Damagability() < 0.01)
             throw new InvalidDataException($"Damagability of {NameTerm.ToEnglish()} is 0");
@@ -106,21 +106,6 @@ public static class MemberExtensions
     public static int RemainingPrimaryResourceCapacity(this Member m) => m.ResourceMax(m.State.PrimaryResource) - m.State.PrimaryResourceAmount;
     public static int ResourceMax(this Member m, IResourceType resourceType) => RoundUp(m.State.Max(resourceType.Name));
     public static int ResourceAmount(this Member m, IResourceType resourceType) => RoundUp(m.State[resourceType]);
-
-    public static bool CanAfford(this Member m, CardTypeData c, PartyAdventureState partyState)
-    {
-        try
-        {
-            if (!c.Cost.PlusXCost && c.Cost.BaseAmount == 0)
-                return true;
-            return m.CanAfford(m.CalculateResources(c), partyState);
-        }
-        catch (Exception)
-        {
-            Debug.Log($"{c.Name} has something null");
-            throw;
-        }
-    }
 
     public static bool CanAfford(this Member m, ResourceCalculations calc, PartyAdventureState partyState)
     {

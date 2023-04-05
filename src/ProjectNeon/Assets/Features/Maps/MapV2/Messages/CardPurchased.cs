@@ -3,9 +3,9 @@ using UnityEngine;
 public class CardPurchased 
 {
     public Transform UiSource { get; }
-    public CardTypeData Card { get; }
+    public Card Card { get; }
 
-    public CardPurchased(CardTypeData card, Transform uiSource)
+    public CardPurchased(Card card, Transform uiSource)
     {
         Card = card;
         UiSource = uiSource;

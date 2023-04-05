@@ -57,7 +57,25 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private const string LibraryString = "Library";
     
     private Card _card;
-    private CardTypeData _cardType;
+    
+    private Card _card1;
+    private CardType _card2;
+    private ReactionCardType _card3;
+    private void SetCard(CardTypeData cardType)
+    {
+        _card1 = null;
+        _card2 = null;
+        _card3 = null;
+        if (cardType == null)
+            return;
+        if (cardType is Card card1)
+            _card1 = card1;
+        else if (cardType is CardType card2)
+            _card2 = card2;
+        else if (cardType is ReactionCardType card3)
+            _card3 = card3;
+    }
+    private CardTypeData _cardType => _card1 != null ? (CardTypeData)_card1 : _card2 != null ? (CardTypeData)_card2 : (CardTypeData)_card3;
 
     private Func<BattleState, Card, bool> _getCanPlay;
     private Func<bool> _getCanActivate;
@@ -86,10 +104,9 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     //targeting
     private bool _requiresPlayerTargeting;
     private bool _isTargeting;
-    private Maybe<Target> _target = Maybe<Target>.Missing();    
+    private Maybe<Target> _target = Maybe<Target>.Missing();
 
     public bool Contains(Card c) => HasCard && c.CardId == _card.CardId;
-    public bool Contains(CardTypeData c) => HasCard && _cardType.Name.Equals(c.Name);
     public bool HasCard => _cardType != null;
     public bool IsFocused { get; private set; }
     public bool IsPlayable { get; private set; }
@@ -124,7 +141,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         gameObject.SetActive(false);
         IsFocused = false;
         _card = null;
-        _cardType = null;
+        SetCard(null);
         UpdateDragArea();
         _siblingIndex = -1;
     }
@@ -152,7 +169,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _onDiscard = onDiscard;
         _onBeginDrag = onBeginDrag;
         _card = card;
-        _cardType = card.Type;
+        SetCard(card.Type);
         _getCanPlay = getCanPlay;
         _getCanActivate = getCanActivate;
         _zone = zone;
@@ -173,7 +190,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
         _onBeginDrag = () => {};
         _card = null;
-        _cardType = cardType;
+        SetCard(cardType);
         _getCanPlay = (_, __) => false;
         _onRightClick = _cardType.ShowDetailedCardView;
         _zone = LibraryString;
@@ -251,7 +268,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (_debug)
             DebugLog($"UI - Toggle as Basic");
         _card.TransitionTo(_card.Mode != CardMode.Basic ? CardMode.Basic : CardMode.Normal);
-        _cardType = _card.Type;
+        SetCard(_card.Type);
         _requiresPlayerTargeting = _cardType.RequiresPlayerTargeting();
         RenderCardType();
         ShowComprehensiveCardInfo();

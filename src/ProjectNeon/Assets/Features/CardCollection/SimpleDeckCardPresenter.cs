@@ -20,7 +20,7 @@ public class SimpleDeckCardPresenter : OnMessage<SceneChanged>, IPointerEnterHan
 
     private Canvas _canvas;
     private Maybe<Card> _card = Maybe<Card>.Missing();
-    private CardTypeData _cardType;
+    private CardType _cardType;
     private int _count;
     private GameObject _hoverCard;
     private Action _leftClickAction = () => { };
@@ -38,7 +38,7 @@ public class SimpleDeckCardPresenter : OnMessage<SceneChanged>, IPointerEnterHan
         _canvas = c;
     }
     
-    public SimpleDeckCardPresenter Initialized(int count, CardTypeData c)
+    public SimpleDeckCardPresenter Initialized(int count, CardType c)
     {
         _count = count;
         _card = Maybe<Card>.Missing();
@@ -53,7 +53,7 @@ public class SimpleDeckCardPresenter : OnMessage<SceneChanged>, IPointerEnterHan
     {
         _count = count;
         _card = c;
-        _cardType = c.BaseType;
+        _cardType = c.CardTypeOrNothing.Value;
         _leftClickAction = () => { };
         _isBasic = c.Owner.BasicCard.IsPresentAnd(b => c.Id == b.Id);
         Render();

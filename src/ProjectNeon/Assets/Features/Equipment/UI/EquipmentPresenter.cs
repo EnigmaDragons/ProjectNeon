@@ -31,7 +31,7 @@ public class EquipmentPresenter : OnMessage<LanguageChanged>, IPointerDownHandle
     private Action _onHoverExit = NoOp;
     private StaticEquipment _currentEquipment;
     
-    private Maybe<CardTypeData> _referencedCard = Maybe<CardTypeData>.Missing();
+    private Maybe<CardType> _referencedCard = Maybe<CardType>.Missing();
     private Canvas _canvas;
     private HoverCard _hoverCard;
     

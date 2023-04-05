@@ -107,11 +107,11 @@ public sealed class SaveLoadSystem : ScriptableObject
         if (numHeroes == 0)
             return true;
         
-        var maybeCards = partyData.CardIds.Select(id => library.GetCardById(id));
+        var maybeCards = partyData.CardIds.Select(id => library.GetCardById(id)).ToArray();
         if (maybeCards.Any(c => c.IsMissing))
             return LoadFailedReason("Missing Cards");
 
-        var maybeEquipments = partyData.Equipment.Select(e => library.GetEquipment(e));
+        var maybeEquipments = partyData.Equipment.Select(e => library.GetEquipment(e)).ToArray();
         if (maybeEquipments.Any(c => c.IsMissing))
             return LoadFailedReason("Missing Equipments");
 
@@ -124,10 +124,10 @@ public sealed class SaveLoadSystem : ScriptableObject
             maybeCards.Select(c => c.Value).ToArray(),
             maybeEquipments.Select(e => e.Value).ToArray());
         
-        var deckMaybeCards = partyData.Heroes.Select(h => h.Deck.CardIds.Select(id => new Maybe<CardTypeData>(library.GetCardById(id).Value)).ToList());
-        if (deckMaybeCards.Any(d => d.Any(c => c.IsMissing)))
+        var deckMaybeCards = partyData.Heroes.Select(h => h.Deck.CardIds.Select(id => library.GetCardById(id).Value).ToList()).ToArray();
+        if (!deckMaybeCards.Any())
             return LoadFailedReason("Missing Cards From Decks");
-        party.UpdateDecks(deckMaybeCards.Select(d => d.Select(c => c.Value).ToList()).ToArray());
+        party.UpdateDecks(deckMaybeCards);
 
         // Don't blow up the load over a missing blessing. Just don't grant it.
         var heroesById = partyData.Blessings

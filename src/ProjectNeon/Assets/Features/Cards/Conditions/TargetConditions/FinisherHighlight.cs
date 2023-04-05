@@ -16,7 +16,7 @@ public class FinisherHighlight : StaticTargetedCardCondition
     public static bool Evaluate(int memberId, PlayedCardSnapshot[] playedCardsThisTurn)
     {
         var cardOwnersInPlayOrder = playedCardsThisTurn
-            .Where(x => x.Member.TeamType == TeamType.Party && x.Card.Speed != CardSpeed.Quick)
+            .Where(x => x.Member.TeamType == TeamType.Party && x.CardSpeed != CardSpeed.Quick)
             .Select(x => x.Member.Id)
             .Reverse()
             .ToArray();

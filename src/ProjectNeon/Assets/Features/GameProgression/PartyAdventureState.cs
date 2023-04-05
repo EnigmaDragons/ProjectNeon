@@ -118,11 +118,11 @@ public sealed class PartyAdventureState : ScriptableObject
         return this;
     }
 
-    private IEnumerable<CardTypeData> HeroDraftStartingCards(BaseHero hero)
+    private IEnumerable<CardType> HeroDraftStartingCards(BaseHero hero)
         => HeroStartingCards(hero)
             .Where(c => c.Archetypes.None());
 
-    private IEnumerable<CardTypeData> HeroStartingCards(BaseHero hero) => hero.StartingCards(allCards);
+    private IEnumerable<CardType> HeroStartingCards(BaseHero hero) => hero.StartingCards(allCards);
 
     public PartyAdventureState WithAddedHero(BaseHero hero)
     {
@@ -173,7 +173,7 @@ public sealed class PartyAdventureState : ScriptableObject
         return this;
     }
 
-    public void InitFromSave(BaseHero one, BaseHero two, BaseHero three, int numCredits, int numClinicVouchers, CardTypeData[] partyCards, StaticEquipment[] equipments)
+    public void InitFromSave(BaseHero one, BaseHero two, BaseHero three, int numCredits, int numClinicVouchers, CardType[] partyCards, StaticEquipment[] equipments)
     {
         party.Initialized(one, two, three);
         var baseHeroes = party.Heroes;
@@ -237,7 +237,7 @@ public sealed class PartyAdventureState : ScriptableObject
     public void UpdateDecks(Deck one, Deck two, Deck three) 
         => UpdateDecks(one.CardTypes, two.CardTypes, three.CardTypes);
 
-    public void UpdateDecks(params List<CardTypeData>[] decks) =>
+    public void UpdateDecks(params List<CardType>[] decks) =>
         UpdateState(() =>
         {
             Log.Info($"Num Heroes {heroes.Length}");
@@ -248,7 +248,7 @@ public sealed class PartyAdventureState : ScriptableObject
                 heroes[2]?.SetDeck(CreateDeck(decks[2]));
         });
 
-    public void Add(params CardTypeData[] c) => UpdateState(() => Cards.Add(c));
+    public void Add(params CardType[] c) => UpdateState(() => Cards.Add(c));
     public void Add(params StaticEquipment[] e) => UpdateState(() => equipment.Add(e));
     public void EquipTo(StaticEquipment e, Hero h) => UpdateState(() =>
     {
@@ -265,7 +265,7 @@ public sealed class PartyAdventureState : ScriptableObject
     });
 
     private RuntimeDeck CreateDeck(Deck deck) => CreateDeck(deck.CardTypes);
-    private RuntimeDeck CreateDeck(List<CardTypeData> cards) => new RuntimeDeck { Cards = cards };
+    private RuntimeDeck CreateDeck(List<CardType> cards) => new RuntimeDeck { Cards = cards };
 
     private void UpdateState(Action update)
     {

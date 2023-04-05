@@ -89,9 +89,9 @@ public class BattleTestSetup : MonoBehaviour
     
     public void SetupCardTest()
     {
-        var h1Deck = new List<CardTypeData>();
-        var h2Deck = new List<CardTypeData>();
-        var h3Deck = new List<CardTypeData>();
+        var h1Deck = new List<CardType>();
+        var h2Deck = new List<CardType>();
+        var h3Deck = new List<CardType>();
         
         var cardArchs = cards.First().Archetypes;
         var hero = cardArchs.All(hero1.Archetypes.Contains) 

@@ -30,13 +30,13 @@ public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl, St
 
     public CardInLibraryButton Init(Card card, int numTotal, int numAvailable, bool superFocusEnabled)
     {
-        presenter.Set(card, CreateCardAction(card, numAvailable));
+        presenter.Set(card, CreateCardAction(card.CardTypeOrNothing.Value, numAvailable));
         UpdateNumberText(numTotal, numAvailable);
         superFocus.SetActive(superFocusEnabled);
         return this;
     }
     
-    public CardInLibraryButton Init(CardTypeData card, int numTotal, int numAvailable, bool superFocusEnabled)
+    public CardInLibraryButton Init(CardType card, int numTotal, int numAvailable, bool superFocusEnabled)
     {
         presenter.Set(card, CreateCardAction(card, numAvailable));
         UpdateNumberText(numTotal, numAvailable);
@@ -44,7 +44,7 @@ public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl, St
         return this;
     }
 
-    private Action CreateCardAction(CardTypeData c, int numAvailable) =>
+    private Action CreateCardAction(CardType c, int numAvailable) =>
         numAvailable > 0 
         && state.SelectedHeroesDeck.Deck.Count(x => x.Id == c.Id) < 4
         && (state.SelectedHeroesDeck.Deck.GroupBy(x => x.Name).Count() < 12 || state.SelectedHeroesDeck.Deck.Any(x => x.Name == c.Name))
@@ -68,7 +68,7 @@ public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl, St
         return this;
     }
 
-    public void AddCard(CardTypeData card)
+    public void AddCard(CardType card)
     {
         if (card.Rarity == Rarity.Starter && card.Archetypes.None() && !CurrentAcademyData.Data.ReceivedNoticeAboutGeneralStarterCards)
         {

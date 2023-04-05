@@ -1,4 +1,6 @@
-﻿public interface IPlayedCard
+﻿using System.Collections.Generic;
+
+public interface IPlayedCard
 {
     int PlayedCardId { get; }
     Member Member { get; }
@@ -24,7 +26,8 @@ public sealed class PlayedCardSnapshot
 {
     public MemberSnapshot Member { get; }
     public bool WasDiscarded { get; }
-    public CardTypeData Card { get; }
+    public CardSpeed CardSpeed { get; }
+    public HashSet<CardTag> CardTags { get; }
     public Target[] Targets { get; }
     public ResourceQuantity Spent { get; }
     public bool WasTransient { get; }
@@ -33,7 +36,8 @@ public sealed class PlayedCardSnapshot
     {
         Member = p.Member.GetSnapshot();
         WasDiscarded = !p.Card.IsActive;
-        Card = p.Card.Type;
+        CardSpeed = p.Card.Speed;
+        CardTags = p.Card.Tags;
         Targets = p.Targets;
         Spent = p.Spent;
         WasTransient = p.IsTransient;

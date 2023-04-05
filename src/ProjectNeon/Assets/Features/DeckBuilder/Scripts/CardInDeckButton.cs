@@ -10,7 +10,7 @@ public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged, SetSupe
 
     private Canvas _canvas;
     private Maybe<Card> _card = Maybe<Card>.Missing();
-    private CardTypeData _cardType;
+    private CardType _cardType;
     private int _count;
     private GameObject _hoverCard;
     
@@ -22,20 +22,12 @@ public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged, SetSupe
     {
         if (msg.Name == DeckBuilderControls.CardInDeck)
             superFocus.SetActive(msg.Enabled);
-    } 
-
-    public void Init(CardTypeData c, bool superFocusEnabled)
-    {
-        _card = Maybe<Card>.Missing();
-        _cardType = c;
-        UpdateInfo();
-        superFocus.SetActive(superFocusEnabled);
     }
 
     public void Init(Card c, bool superFocusEnabled)
     {
         _card = c;
-        _cardType = c.BaseType;
+        _cardType = c.CardTypeOrNothing.Value;
         UpdateInfo();
         superFocus.SetActive(superFocusEnabled);
     }
@@ -46,16 +38,6 @@ public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged, SetSupe
         _count--;
         Message.Publish(new DeckBuilderCurrentDeckChanged(state.SelectedHeroesDeck));
         Message.Publish(new CardRemovedFromDeck(transform));
-    }
-
-    public void OnHover()
-    {
-        _hoverCard = Instantiate(hoverCard.gameObject, _canvas.transform);
-        if (_card.IsPresent)
-            _hoverCard.GetComponent<HoverCard>().Init(_card.Value);
-        else
-            _hoverCard.GetComponent<HoverCard>().Init(_cardType);
-        Message.Publish(new CardHoveredOnDeck(transform));
     }
 
     public void OnExit()

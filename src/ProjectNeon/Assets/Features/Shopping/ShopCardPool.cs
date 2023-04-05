@@ -11,9 +11,9 @@ public class ShopCardPool : ScriptableObject
     [SerializeField] private List<ShopCardPool> subPools;
     [UnityEngine.UI.Extensions.ReadOnly] public List<CardType> allCards; //Unity Collection Readonly
     
-    public IEnumerable<CardTypeData> All => subPools.SelectMany(s => s.All).Concat(allCards).Distinct();
+    public IEnumerable<CardType> All => subPools.SelectMany(s => s.All).Concat(allCards).Distinct();
 
-    public IEnumerable<CardTypeData> Get(HashSet<string> archetypesToGet, HashSet<int> unobtainableCards, params Rarity[] raritiesToGet)
+    public IEnumerable<CardType> Get(HashSet<string> archetypesToGet, HashSet<int> unobtainableCards, params Rarity[] raritiesToGet)
     {
         var isSelectedPool = archetypesToGet.None() || Archetypes().All(archetypesToGet.Contains);
         if (isSelectedPool && (includedRarities.All(raritiesToGet.Contains) || raritiesToGet.None()))

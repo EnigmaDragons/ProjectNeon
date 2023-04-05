@@ -12,5 +12,5 @@ public class TargetHasBeenTargetedByOwnerThisTurnHighlight : StaticTargetedCardC
                     && card.Targets.Any(
                         target => target.Members.Any(
                             x => x.Id == enemy.Id))
-                    && tags.All(x => card.Card.Tags.Contains(x)))); 
+                    && tags.All(x => card.CardTags.Contains(x)))); 
 }

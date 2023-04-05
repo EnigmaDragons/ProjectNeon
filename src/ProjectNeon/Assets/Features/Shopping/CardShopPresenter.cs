@@ -14,7 +14,7 @@ public class CardShopPresenter : OnMessage<RefreshShop, CardPurchased>
 
     private int _numCards;
     private ShopSelection _selection;
-    private List<CardTypeData> _purchases = new List<CardTypeData>();
+    private List<Card> _purchases = new List<Card>();
 
     public ShopSelection Selection => _selection;
     
@@ -30,7 +30,7 @@ public class CardShopPresenter : OnMessage<RefreshShop, CardPurchased>
         if (cardParent != null)
             foreach (Transform c in cardParent.transform)
                 Destroy(c.gameObject);
-        _purchases = new List<CardTypeData>();
+        _purchases = new List<Card>();
     }
 
     protected override void Execute(RefreshShop msg) => GetMoreInventory();
@@ -57,10 +57,10 @@ public class CardShopPresenter : OnMessage<RefreshShop, CardPurchased>
             var selection = adventureProgress.AdventureProgress
                 .CreateLootPicker(party)
                 .GenerateCardSelection(cards, _numCards);
-            nodeInfo.CardShopSelection = selection.Cards.Cast<CardType>().ToArray();
+            nodeInfo.CardShopSelection = selection.Cards.ToArray();
             Message.Publish(new SaveDeterminationsRequested());
         }
-        _selection = new ShopSelection(new List<StaticEquipment>(), new List<CardTypeData>(nodeInfo.CardShopSelection.Value));
+        _selection = new ShopSelection(new List<StaticEquipment>(), nodeInfo.CardShopSelection.Value.ToList());
         var cardsWithOwners = _selection.Cards.Select(c => c.ToNonBattleCard(party));
         cardsWithOwners.ForEach(c => 
             Instantiate(cardPurchasePrototype, cardParent.transform)

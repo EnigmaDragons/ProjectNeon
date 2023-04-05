@@ -6,15 +6,15 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "OnlyOnce/PartyCardCollection")]
 public sealed class PartyCardCollection : ScriptableObject
 {
-    [SerializeField] private List<CardTypeData> allCards = new List<CardTypeData>();
+    [SerializeField] private List<CardType> allCards = new List<CardType>();
 
-    private Dictionary<CardTypeData, int> cardsWithCounts = new Dictionary<CardTypeData, int>();
+    private Dictionary<CardType, int> cardsWithCounts = new Dictionary<CardType, int>();
 
-    public Dictionary<CardTypeData, int> AllCards => cardsWithCounts;
+    public Dictionary<CardType, int> AllCards => cardsWithCounts;
     
-    public PartyCardCollection Initialized(IEnumerable<CardTypeData> cards)
+    public PartyCardCollection Initialized(IEnumerable<CardType> cards)
     {
-        allCards = new List<CardTypeData>();
+        allCards = new List<CardType>();
         allCards.AddRange(cards);
         cardsWithCounts = allCards
             .GroupBy(c => c.Name)
@@ -22,7 +22,7 @@ public sealed class PartyCardCollection : ScriptableObject
         return this;
     }
 
-    public void Add(params CardTypeData[] cards)
+    public void Add(params CardType[] cards)
     {
         cards.ForEach(c =>
         {
@@ -36,7 +36,7 @@ public sealed class PartyCardCollection : ScriptableObject
         });
     }
 
-    public void Remove(params CardTypeData[] cards)
+    public void Remove(params CardType[] cards)
     {
         cards.ForEach(c =>
         {
@@ -48,7 +48,7 @@ public sealed class PartyCardCollection : ScriptableObject
         });
     }
     
-    public void Add(CardTypeData card, int count)
+    public void Add(CardType card, int count)
     {
         allCards.Add(card);
         if (!cardsWithCounts.ContainsKey(card))
@@ -56,7 +56,7 @@ public sealed class PartyCardCollection : ScriptableObject
         cardsWithCounts[card] = cardsWithCounts[card] + count;
     }
 
-    public void EnsureHasAtLeast(CardTypeData c, int numCopies)
+    public void EnsureHasAtLeast(CardType c, int numCopies)
     {
         var amount = cardsWithCounts.ContainsKey(c) ? cardsWithCounts[c] : 0;
         var numAdditionalNeeded = numCopies - amount;
@@ -64,7 +64,7 @@ public sealed class PartyCardCollection : ScriptableObject
             Enumerable.Range(0, numAdditionalNeeded).ForEach(_ => Add(c));
     }
     
-    public CardTypeData[] CardsForHero(BaseHero h)
+    public CardType[] CardsForHero(BaseHero h)
         => AllCards
             .Where(cardWithCount => 
                 cardWithCount.Key.Archetypes.All(archetype => h.Archetypes.Contains(archetype)) 

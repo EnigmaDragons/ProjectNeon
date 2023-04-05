@@ -7,5 +7,5 @@ public class Deck : ScriptableObject
 {
     public List<CardType> Cards;
 
-    public List<CardTypeData> CardTypes => Cards.Cast<CardTypeData>().ToList();
+    public List<CardType> CardTypes => Cards.ToList();
 }

@@ -12,7 +12,7 @@ public class AllEnemiesTargetedByOwnerThisTurn : StaticCardCondition
                     && card.Targets.Any(
                         target => target.Members.Any(
                             x => x.Id == enemy.Id))
-                    && tags.All(x => card.Card.Tags.Contains(x))));
+                    && tags.All(x => card.CardTags.Contains(x))));
 
     public override string Description => "Thoughts/Condition006".ToLocalized();
     public override string[] GetLocalizeTerms() => new [] { "Thoughts/Condition006" };

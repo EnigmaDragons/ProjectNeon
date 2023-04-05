@@ -21,7 +21,7 @@ public class NewBasicLevelUpOption : StaticHeroLevelUpOption, ILocalizeTerms
     public override bool HasDetail => true;
     public override bool IsFunctional => card != null;
 
-    public CardTypeData Card => card;
+    public CardType Card => card;
     
     public override bool UseCustomOptionPresenter => true;
     public override GameObject CreatePresenter(LevelUpCustomPresenterContext ctx)

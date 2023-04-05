@@ -99,12 +99,16 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipD
 
             var selected = e.Value;
             AllMetrics.PublishDraftCardSelection(selected.Name, options.Select(g => g.Name).ToArray());
-            party.Cards.Add(e.Value.BaseType);
+            var card = e.Value.CardTypeOrNothing;
+            if (card.Value)
+                party.Cards.Add(card.Value);
+            else
+                Log.NonCrashingError("Card wasn't present in Draft Orchestrator");
             Message.Publish(new DraftStepCompleted());
         }));
     }
 
-    private RuntimeDeck CreateBlankDeck() => new RuntimeDeck {Cards = blankDraftDeck.Cast<CardTypeData>().ToList()};
+    private RuntimeDeck CreateBlankDeck() => new RuntimeDeck {Cards = blankDraftDeck.ToList()};
     
     private void SelectHero()
     {

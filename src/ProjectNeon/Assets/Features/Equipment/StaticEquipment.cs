@@ -53,9 +53,8 @@ public class StaticEquipment : ScriptableObject, ILocalizeTerms
             ExcludeIfPartyHasStatType = excludeIfPartyHasStatType
         };
 
-    public Maybe<CardTypeData> ReferencedCard => TurnStartEffects.Concat(TurnEndEffects).Concat(BattleStartEffects)
+    public Maybe<CardType> ReferencedCard => TurnStartEffects.Concat(TurnEndEffects).Concat(BattleStartEffects)
         .Select(e => e.BonusCardType)
-        .Cast<CardTypeData>()
         .Where(e => e != null)
         .FirstAsMaybe();
 

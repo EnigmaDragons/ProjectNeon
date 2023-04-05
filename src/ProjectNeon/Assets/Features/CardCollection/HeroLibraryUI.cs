@@ -52,20 +52,14 @@ public class HeroLibraryUI : MonoBehaviour
             false);
     }
 
-    private Action<GameObject> InitCardInLibraryButton(CardTypeData card)
-    {
-        void Init(GameObject gameObj) => gameObj.GetComponent<CardInLibraryButton>().InitInfoOnly(card);
-        return Init;
-    }
-    
     private Action<GameObject> InitCardInLibraryButton(Card card)
     {
         void Init(GameObject gameObj) => gameObj.GetComponent<CardInLibraryButton>().InitInfoOnly(card, cheatGainCard ? () =>
             {
-                party.Add(card.BaseType);
-                party.Add(card.BaseType);
-                party.Add(card.BaseType);
-                party.Add(card.BaseType);
+                party.Add(card.CardTypeOrNothing.Value);
+                party.Add(card.CardTypeOrNothing.Value);
+                party.Add(card.CardTypeOrNothing.Value);
+                party.Add(card.CardTypeOrNothing.Value);
                 Message.Publish(new ToggleCardLibrary());
             }
             : (Action)(() => {}));

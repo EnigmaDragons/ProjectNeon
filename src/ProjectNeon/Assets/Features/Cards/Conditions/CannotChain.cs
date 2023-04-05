@@ -19,7 +19,7 @@ public class CannotChain : StaticCardCondition
     public static bool Evaluate(int memberId, IPlayedCard[] pendingCards, PlayedCardSnapshot[] playedCardsThisTurn)
     {
         var cardOwnersInPlayOrder = playedCardsThisTurn
-            .Where(x => x.Member.TeamType == TeamType.Party && x.Card.Speed != CardSpeed.Quick)
+            .Where(x => x.Member.TeamType == TeamType.Party && x.CardSpeed != CardSpeed.Quick)
             .Select(x => x.Member.Id)
             .Concat(pendingCards
                 .Where(x => x.Member.TeamType == TeamType.Party && x.Card.Speed != CardSpeed.Quick)

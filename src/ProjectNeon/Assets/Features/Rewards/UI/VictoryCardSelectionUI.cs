@@ -2,7 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class VictoryCardSelectionUI : OnMessage<GetUserSelectedCardType, GetUserSelectedCard>
+public class VictoryCardSelectionUI : OnMessage<GetUserSelectedCard>
 {
     [SerializeField] private GameObject view;
     [SerializeField] private CardPresenter cardPresenter;
@@ -12,21 +12,8 @@ public class VictoryCardSelectionUI : OnMessage<GetUserSelectedCardType, GetUser
     [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI clinicVouchersLabel;
 
     private bool _hasSelected = false;
-    private Action<Maybe<CardTypeData>> _onSelectedType = _ => { };
     private Action<Maybe<Card>> _onSelectedCard = _ => { };
     private void ClearView() => optionsParent.DestroyAllChildren();
-
-    protected override void Execute(GetUserSelectedCardType msg)
-    {
-        _hasSelected = false;
-        _onSelectedType = msg.OnSelected;
-        ClearView();
-        msg.Options.ForEach(o =>
-            Instantiate(cardPresenter, optionsParent.transform)
-                .Set(o, () => SelectCard(o)));
-        creditsLabel.text = state.RewardCredits.ToString() + 0;
-        view.SetActive(true);
-    }
 
     protected override void Execute(GetUserSelectedCard msg)
     {
@@ -39,18 +26,6 @@ public class VictoryCardSelectionUI : OnMessage<GetUserSelectedCardType, GetUser
         creditsLabel.text = state.RewardCredits.ToString() + 0;
         clinicVouchersLabel.text = state.RewardClinicVouchers.ToString();
         view.SetActive(true);
-    }
-
-    private void SelectCard(CardTypeData c)
-    {        
-        if (_hasSelected)
-            return;
-
-        _hasSelected = true;
-        Debug.Log($"Selected Card {c.Name}");
-        _onSelectedType(new Maybe<CardTypeData>(c));
-        ClearView();
-        Instantiate(cardPresenter, optionsParent.transform).Set(c, () => {});
     }
     
     private void SelectCard(Card c)
