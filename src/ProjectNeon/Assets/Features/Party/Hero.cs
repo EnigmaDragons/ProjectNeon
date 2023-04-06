@@ -15,7 +15,7 @@ public class Hero
 
     private IStats _statAdditions = new StatAddends();
     private Maybe<StatType> _primaryStat = Maybe<StatType>.Missing();
-    private IResourceType _primaryResourceType;
+    private InMemoryResourceType _primaryResourceType;
 
     public Hero(BaseHero character, RuntimeDeck deck)
     {
@@ -41,7 +41,7 @@ public class Hero
     public int Level => IsMaxLevelV4 ? Character.LevelUpTreeV4.MaxLevel : Levels.CurrentLevel;
     public CardType BasicCard => basicCard;
     public StatType PrimaryStat => _primaryStat.OrDefault(NonTemporaryStats.DefaultPrimaryStat(Character.Stats));
-    public IResourceType PrimaryResource => _primaryResourceType;
+    public InMemoryResourceType PrimaryResource => _primaryResourceType;
     public Maybe<StatType> PlayerPrimaryStatSelection => _primaryStat;
     public HashSet<string> Archetypes => character == null ? new HashSet<string>() : character.Archetypes ?? new HashSet<string>();
     public bool IsMaxLevelV4 => Levels.NextLevelUpLevel > Character.LevelUpTreeV4.MaxLevel;

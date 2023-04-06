@@ -36,7 +36,7 @@ public sealed class StatAddends : IStats
 
     public StatAddends With(params IResourceType[] resourceTypes)
     {
-        ResourceTypes = resourceTypes;
+        ResourceTypes = resourceTypes.Select(x => new InMemoryResourceType(x)).ToArray();
         return this;
     }
 
@@ -49,7 +49,7 @@ public sealed class StatAddends : IStats
         return this;
     }
     
-    public IResourceType[] ResourceTypes { get; set; } = new IResourceType[0];
+    public InMemoryResourceType[] ResourceTypes { get; set; } = new InMemoryResourceType[0];
     
     public override string ToString() => string.Join(", ", _values.Select(kv => $"{Sign(kv.Value)}{kv.Value} {kv.Key}"));
     private string Sign(float val) => val > 0 ? "+" : "";

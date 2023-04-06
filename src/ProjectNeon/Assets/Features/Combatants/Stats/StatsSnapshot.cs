@@ -9,14 +9,14 @@ public class StatsSnapshotMut : IStats
 
     public float this[StatType statType] => _statValues[statType];
     public float this[TemporalStatType statType] => _temporalValues[statType];
-    public IResourceType[] ResourceTypes { get; private set; }
+    public InMemoryResourceType[] ResourceTypes { get; private set; }
 
-    public StatsSnapshotMut() => ResourceTypes = Array.Empty<IResourceType>();
+    public StatsSnapshotMut() => ResourceTypes = Array.Empty<InMemoryResourceType>();
 
-    public StatsSnapshotMut(IResourceType[] resourceTypes, IStats origin, StatType primaryStat) 
+    public StatsSnapshotMut(InMemoryResourceType[] resourceTypes, IStats origin, StatType primaryStat) 
         => Initialized(resourceTypes, origin, primaryStat);
 
-    public StatsSnapshotMut Initialized(IResourceType[] resourceTypes, IStats origin, StatType primaryStat)
+    public StatsSnapshotMut Initialized(InMemoryResourceType[] resourceTypes, IStats origin, StatType primaryStat)
     {
         ResourceTypes = resourceTypes;
         foreach (var st in StatExtensions.StatTypes)

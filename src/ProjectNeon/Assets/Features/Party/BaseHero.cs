@@ -134,22 +134,22 @@ public class BaseHero : ScriptableObject, ILocalizeTerms
         m.State.ApplyPersistentState(new EndOfTurnResourceGainPersistentState(new ResourceQuantity { ResourceType = resource1.Name, Amount = resource1GainPerTurn}, m, s.Party));
     }
 
-    private IResourceType[] GetResourceTypes()
+    private InMemoryResourceType[] GetResourceTypes()
     {
         var resourceCount = 0;
         if (resource1 != null)
             resourceCount++;
         if (resource2 != null)
             resourceCount++;
-        var rt = new IResourceType[resourceCount];
+        var rt = new InMemoryResourceType[resourceCount];
         if (resource1 != null)
         {
             rt[0] = resource1StartingAmountOverride > -1
                 ? resource1.WithAmounts(resource1StartingAmountOverride)
-                : resource1;
+                : new InMemoryResourceType(resource1);
         }
         if (resource2 != null)
-            rt[1] = resource2;
+            rt[1] = new InMemoryResourceType(resource2);
         return rt;
     }
 

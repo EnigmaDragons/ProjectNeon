@@ -9,7 +9,7 @@ using UnityEngine;
 public class EnemyInstance : EnemyType
 {
     private readonly int _enemyId;
-    private readonly IResourceType _resourceType;
+    private readonly InMemoryResourceType _resourceType;
     private readonly MemberMaterialType _materialType;
     private readonly EffectData[] _startOfBattleEffects;
     private readonly int _startingResourceAmount;
@@ -64,7 +64,7 @@ public class EnemyInstance : EnemyType
         MemberMaterialType materialType, string descriptionTerm, IEnumerable<ReactionCardType> reactionCards, AiPreferences aiPreferences)
     {
         _enemyId = enemyId;
-        _resourceType = resourceType;
+        _resourceType = new InMemoryResourceType(resourceType);
         _startOfBattleEffects = startOfBattleEffects;
         _startingResourceAmount = startingResourceAmount;
         _resourceGainPerTurn = resourceGainPerTurn;
@@ -132,7 +132,7 @@ public class EnemyInstance : EnemyType
         {
             ResourceTypes = _resourceType != null 
                 ? new[] {_resourceType.WithMax(Math.Max(_resourceType.MaxAmount, _maxResourceAmount))} 
-                : Array.Empty<IResourceType>()
+                : Array.Empty<InMemoryResourceType>()
         }
         .With(StatType.MaxHP, _maxHp)
         .With(StatType.MaxShield, _maxShield)

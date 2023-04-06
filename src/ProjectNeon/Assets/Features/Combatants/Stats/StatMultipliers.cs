@@ -33,6 +33,6 @@ public sealed class StatMultipliers : IStats
         return this;
     }
     
-    public IResourceType[] ResourceTypes { get; set; } = new IResourceType[0];
+    public InMemoryResourceType[] ResourceTypes { get; set; } = new InMemoryResourceType[0];
     public override string ToString() => string.Join(", ", _values.Select(kv => $"x{kv.Value} {kv.Key}"));
 }

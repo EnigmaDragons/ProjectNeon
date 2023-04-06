@@ -12,6 +12,7 @@ public class CheatHandler : OnMessage<GainRandomEquipment, CompleteAnyMapNode, W
     [SerializeField] private CurrentGameMap3 map;
     [SerializeField] private CurrentMapSegmentV5 map5;
     [SerializeField] private CurrentBoss boss;
+    [SerializeField] private CurrentAdventure currentAdventure;
         
     protected override void Execute(GainRandomEquipment msg)
     {
@@ -29,7 +30,7 @@ public class CheatHandler : OnMessage<GainRandomEquipment, CompleteAnyMapNode, W
     protected override void Execute(WinGameRequested msg)
     {
         CurrentProgressionData.RecordCompletedAdventure(adventure.AdventureProgress.AdventureId, adventure.AdventureProgress.Difficulty.id, boss.Boss.id, party.Heroes.Select(h => h.Character.Id).ToArray());
-        conclusion.RecordFinishedGameAndCleanUp(true, "You won because you pressed the developer cheat buttons! Congratulations! This is an epic tale!", CurrentGameData.Data.Stats, party.Heroes);
+        conclusion.RecordFinishedGameAndCleanUp(true, currentAdventure.Adventure.VictoryConclusionTerm, CurrentGameData.Data.Stats, party.Heroes);
         navigator.NavigateToConclusionScene();
     }
 

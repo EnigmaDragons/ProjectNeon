@@ -2,7 +2,7 @@
 public class InMemoryResourceAmount : IResourceAmount
 {
     public int BaseAmount { get; }
-    public IResourceType ResourceType { get; }
+    public InMemoryResourceType ResourceType { get; }
     public bool PlusXCost { get; }
 
     public InMemoryResourceAmount(int amount, string resourceType = "None", bool plusXCost = false)
@@ -11,7 +11,7 @@ public class InMemoryResourceAmount : IResourceAmount
     public InMemoryResourceAmount(int amount, IResourceType type, bool plusXCost)
     {
         BaseAmount = amount;
-        ResourceType = type;
+        ResourceType = new InMemoryResourceType(type);
         PlusXCost = plusXCost;
     }
 }

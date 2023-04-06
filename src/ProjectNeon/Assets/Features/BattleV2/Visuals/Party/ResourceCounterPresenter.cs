@@ -12,7 +12,7 @@ public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerE
     [SerializeField] private Localize resourceNameLabel;
 
     private Member _member;
-    private IResourceType _resourceType;
+    private InMemoryResourceType _resourceType;
     private bool IsInitialized => _member != null;
     private bool _ignoreMessages = false;
     private int _lastAmount = -999;
@@ -24,7 +24,7 @@ public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerE
         gameObject.SetActive(false);
     }
     
-    public void Init(Member member, IResourceType resource, bool showZero = true)
+    public void Init(Member member, InMemoryResourceType resource, bool showZero = true)
     {
         _member = member;
         _resourceType = resource;

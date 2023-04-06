@@ -8,7 +8,7 @@ public static class TestCards
     
     public static ReactionCardType ReactionCard(ReactiveMember src, ReactiveTargetScope target, EffectData e)
     {
-        var resourceType = TestableObjectFactory.Create<TestResourceType>().Initialized("Ammo");
+        var resourceType = TestableObjectFactory.Create<SimpleResourceType>();
         var reactionCardType = TestableObjectFactory.Create<ReactionCardType>()
             .Initialized(
                 new ResourceCost(0, resourceType),

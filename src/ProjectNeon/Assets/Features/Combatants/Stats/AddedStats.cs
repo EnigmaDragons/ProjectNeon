@@ -11,7 +11,7 @@ public sealed class AddedStats : IStats
 
     public float this[TemporalStatType statType] => _first[statType] + _second[statType];
 
-    public IResourceType[] ResourceTypes => _resourceTypeStats.AsArray();
+    public InMemoryResourceType[] ResourceTypes => _resourceTypeStats.AsArray();
 
     public AddedStats(IStats first, IStats second)
     {
@@ -31,7 +31,7 @@ public sealed class SubtractedStats : IStats
 
     public float this[TemporalStatType statType] => _first[statType] - _second[statType];
 
-    public IResourceType[] ResourceTypes => _resourceTypeStats.AsArray();
+    public InMemoryResourceType[] ResourceTypes => _resourceTypeStats.AsArray();
 
     public SubtractedStats(IStats first, IStats second)
     {

@@ -13,7 +13,7 @@ public class InMemoryEquipment
     [SerializeField] private string[] archetypes = new string[0];
     [SerializeField] private EquipmentSlot slot = EquipmentSlot.Weapon;
     [SerializeField] private EquipmentStatModifier[] modifiers = new EquipmentStatModifier[0];
-    [SerializeField] private SerializableResourceType[] resourceModifiers = new SerializableResourceType[0];
+    [SerializeField] private InMemoryResourceType[] resourceModifiers = new InMemoryResourceType[0];
     [SerializeField] private EffectData[] turnStartEffects = new EffectData[0];
     [SerializeField] private EffectData[] turnEndEffects = new EffectData[0];
     [SerializeField] private EffectData[] battleStartEffects = new EffectData[0];
@@ -71,10 +71,10 @@ public class InMemoryEquipment
         set => modifiers = value;
     }
 
-    public IResourceType[] ResourceModifiers
+    public InMemoryResourceType[] ResourceModifiers
     {
-        get => resourceModifiers.Cast<IResourceType>().ToArray();
-        set => resourceModifiers = value.Select(x => new SerializableResourceType(x)).ToArray();
+        get => resourceModifiers.ToArray();
+        set => resourceModifiers = value.Select(x => new InMemoryResourceType(x)).ToArray();
     }
 
     public EffectData[] TurnStartEffects

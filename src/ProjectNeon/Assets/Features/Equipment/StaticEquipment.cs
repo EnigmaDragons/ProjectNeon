@@ -40,7 +40,7 @@ public class StaticEquipment : ScriptableObject, ILocalizeTerms
     public string ArchetypeKey => string.Join(" + ", Archetypes.OrderBy(a => a));
     public EquipmentSlot Slot => slot;
     public EquipmentStatModifier[] Modifiers => modifiers.ToArray();
-    public IResourceType[] ResourceModifiers => resourceModifiers;
+    public ResourceTypeModifications[] ResourceModifiers => resourceModifiers;
     public EffectData[] TurnStartEffects => turnStartEffects;
     public EffectData[] TurnEndEffects => turnEndEffects;
     public EffectData[] BattleStartEffects => battleStartEffects;

@@ -2,7 +2,7 @@
 public interface IResourceAmount
 {
     int BaseAmount { get; }
-    IResourceType ResourceType { get; }
+    InMemoryResourceType ResourceType { get; }
     bool PlusXCost { get; }
 }
 

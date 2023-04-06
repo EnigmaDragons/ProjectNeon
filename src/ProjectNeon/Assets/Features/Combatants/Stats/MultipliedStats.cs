@@ -10,7 +10,7 @@ public sealed class MultipliedStats : IStats
     public float this[StatType statType] => _first[statType] * _second[statType];
     public float this[TemporalStatType statType] => _first[statType] * _second[statType];
 
-    public IResourceType[] ResourceTypes => _resourceTypeStats.AsArray();
+    public InMemoryResourceType[] ResourceTypes => _resourceTypeStats.AsArray();
 
     public MultipliedStats(IStats first, IStats second)
     {

@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 
+[Serializable]
 public sealed class InMemoryResourceType : IResourceType
 {
     public string Name { get; set; } = "None";
@@ -9,6 +11,22 @@ public sealed class InMemoryResourceType : IResourceType
 
     public InMemoryResourceType() : this("None") {}
     public InMemoryResourceType(string name) => Name = name;
+    public InMemoryResourceType(IResourceType r)
+    {
+        Name = r.Name;
+        Icon = r.Icon;
+        MaxAmount = r.MaxAmount;
+        StartingAmount = r.StartingAmount;
+    }
+    public InMemoryResourceType(IResourceType first, IResourceType second, Func<int, int, int> operation)
+    {
+        if (!first.Name.Equals(second.Name))
+            throw new ArgumentException("Cannot add {first.Name} to a {second.Name} modifier");
+        Name = first.Name;
+        Icon = first.Icon;
+        MaxAmount = operation(first.MaxAmount, second.MaxAmount);
+        StartingAmount = operation(first.StartingAmount, second.StartingAmount);
+    }
 }
 
 public static class ResourceTypeExtensions
@@ -16,9 +34,9 @@ public static class ResourceTypeExtensions
     public static string GetLocalizedName(this IResourceType r) => r.GetTerm().ToLocalized();
     public static string GetTerm(this IResourceType r) => $"Resources/{r.Name}";
     
-    public static IResourceType WithMax(this IResourceType r, int max) => r.WithAmounts(r.StartingAmount, max); 
+    public static InMemoryResourceType WithMax(this IResourceType r, int max) => r.WithAmounts(r.StartingAmount, max); 
     
-    public static IResourceType WithAmounts(this IResourceType r, int starting) => new InMemoryResourceType
+    public static InMemoryResourceType WithAmounts(this IResourceType r, int starting) => new InMemoryResourceType
     {
         Name = r.Name,
         Icon = r.Icon,
@@ -26,7 +44,7 @@ public static class ResourceTypeExtensions
         MaxAmount = r.MaxAmount
     };
     
-    public static IResourceType WithAmounts(this IResourceType r, int starting, int max) => new InMemoryResourceType
+    public static InMemoryResourceType WithAmounts(this IResourceType r, int starting, int max) => new InMemoryResourceType
     {
         Name = r.Name,
         Icon = r.Icon,
@@ -34,7 +52,7 @@ public static class ResourceTypeExtensions
         MaxAmount = max
     };
     
-    public static IResourceType WithName(this IResourceType r, string name) => new InMemoryResourceType
+    public static InMemoryResourceType WithName(this IResourceType r, string name) => new InMemoryResourceType
     {
         Name = name,
         Icon = r.Icon,

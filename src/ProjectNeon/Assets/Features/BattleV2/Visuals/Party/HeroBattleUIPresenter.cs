@@ -31,7 +31,7 @@ public class HeroBattleUIPresenter : OnMessage<SetHeroesUiVisibility>
         hp.SetShieldsVisibility(shieldsVisible);
     }
 
-    private void InitResources(Member member, IResourceType[] resources, bool resourcesVisible)
+    private void InitResources(Member member, InMemoryResourceType[] resources, bool resourcesVisible)
     {
         _hasResource1 = resources.Length > 0 && resources[0].MaxAmount > 0;
         _hasResource2 = resources.Length > 1 && resources[1].MaxAmount > 0;

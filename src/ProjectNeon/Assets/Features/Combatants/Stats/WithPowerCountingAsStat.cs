@@ -22,7 +22,7 @@ public sealed class WithPowerCountingAsStat : IStats
             : _inner[statType];
 
     public float this[TemporalStatType statType] => _inner[statType];
-    public IResourceType[] ResourceTypes => _inner.ResourceTypes;
+    public InMemoryResourceType[] ResourceTypes => _inner.ResourceTypes;
 }
 
 public static class WithPowerCountingAsStatExtensions

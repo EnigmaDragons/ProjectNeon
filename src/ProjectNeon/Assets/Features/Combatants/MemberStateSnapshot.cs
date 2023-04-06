@@ -10,22 +10,22 @@ public sealed class MemberStateSnapshot
     public IStats Stats { get; private set; }
     public IStats BaseStats { get; private set; }
     public Dictionary<string, int> Counters { get; private set; }
-    public IResourceType[] ResourceTypes { get; private set; }
+    public InMemoryResourceType[] ResourceTypes { get; private set; }
     public DictionaryWithDefault<CardTag, int> TagsPlayed { get; private set; }
     public DictionaryWithDefault<StatusTag, int> StatusesOfType { get; private set; }
     public StatType PrimaryStat { get; private set; }
     // Maybe we could store Counter Maximums if needed. Could be relevant for MaxHP and MaxShield
 
     public MemberStateSnapshot() : this(-1, -1, new StatAddends(), new StatAddends(), new Dictionary<string, int>(),
-        Array.Empty<IResourceType>(), new DictionaryWithDefault<CardTag, int>(0),
+        Array.Empty<InMemoryResourceType>(), new DictionaryWithDefault<CardTag, int>(0),
         new DictionaryWithDefault<StatusTag, int>(0), StatType.Attack) {}
 
-    private MemberStateSnapshot(int versionNumber, int memberId, IStats stats, IStats baseStats, Dictionary<string, int> counters, IResourceType[] resourceTypes, 
+    private MemberStateSnapshot(int versionNumber, int memberId, IStats stats, IStats baseStats, Dictionary<string, int> counters, InMemoryResourceType[] resourceTypes, 
         DictionaryWithDefault<CardTag, int> tagsPlayed, DictionaryWithDefault<StatusTag, int> statusesOfType, StatType primaryStat) 
         => Initialized(versionNumber, memberId, stats, baseStats, counters, resourceTypes, tagsPlayed, statusesOfType, primaryStat);
 
     public MemberStateSnapshot Initialized(int versionNumber, int memberId, IStats stats, IStats baseStats,
-        Dictionary<string, int> counters, IResourceType[] resourceTypes,
+        Dictionary<string, int> counters, InMemoryResourceType[] resourceTypes,
         DictionaryWithDefault<CardTag, int> tagsPlayed, DictionaryWithDefault<StatusTag, int> statusesOfType,
         StatType primaryStat)
     {
@@ -70,7 +70,7 @@ public static class MemberStateSnapshotExtensions
     public static bool Init = true;
     
     public static MemberStateSnapshot Create(int versionNumber, int memberId, IStats stats, IStats baseStats,
-        Dictionary<string, int> counters, IResourceType[] resourceTypes, DictionaryWithDefault<CardTag, int> tagsPlayed,
+        Dictionary<string, int> counters, InMemoryResourceType[] resourceTypes, DictionaryWithDefault<CardTag, int> tagsPlayed,
         DictionaryWithDefault<StatusTag, int> statusesOfType, StatType primaryStat) 
             => GetNext().Initialized(versionNumber, memberId, stats, baseStats, counters, resourceTypes, tagsPlayed, statusesOfType, primaryStat);
 }

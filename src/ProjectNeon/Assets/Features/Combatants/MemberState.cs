@@ -31,7 +31,8 @@ public sealed class MemberState : IStats
         .Times(_multiplierMods.Where(x => x.IsActive).Select(x => x.Stats).ToArray())
         .WithPowerCountedAs(PrimaryStat)
         .NotBelowZero(StatExtensions.StatsThatCanGoBelowZero)
-        .WithWholeNumbersWhereExpected();
+        .WithWholeNumbersWhereExpected()
+        .WithMaxHPMinimumOne();
 
     private BattleCounter Counter(string name) => _counters.VerboseGetValue(name, n => $"Counter '{n}'");
     private BattleCounter Counter(StatType statType) => _counters[statType.GetString()];
@@ -107,9 +108,9 @@ public sealed class MemberState : IStats
     private bool IsVulnerable() => Counter(TemporalStatType.Vulnerable).Amount > 0;
     private bool IsAntiHeal() => Counter(TemporalStatType.AntiHeal).Amount > 0;
     public float this[TemporalStatType statType] => _counters[statType.GetString()].Amount + _currentStats[statType];
-    public IResourceType[] ResourceTypes => _currentStats.ResourceTypes;
+    public InMemoryResourceType[] ResourceTypes => _currentStats.ResourceTypes;
     public int Max(string name) => _counters.TryGetValue(name, out var c) ? c.Max : 0;
-    public IResourceType PrimaryResource => ResourceTypes.AnyNonAlloc() ? ResourceTypes[0] : new InMemoryResourceType(); //cant be fucking trusted for numbers
+    public InMemoryResourceType PrimaryResource => ResourceTypes.AnyNonAlloc() ? ResourceTypes[0] : new InMemoryResourceType(); //cant be fucking trusted for numbers
     public int PrimaryResourceAmount => ResourceTypes.AnyNonAlloc() ? _counters[PrimaryResource.Name].Amount : 0;
     public int PrimaryResourceMaxAmount => ResourceTypes.AnyNonAlloc() ? _counters[PrimaryResource.Name].Max : 0;
 
