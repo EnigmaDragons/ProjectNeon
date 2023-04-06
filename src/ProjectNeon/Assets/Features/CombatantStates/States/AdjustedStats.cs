@@ -7,10 +7,11 @@ public class AdjustedStats : TemporalStateBase
     public AdjustedStats(IStats stats, TemporalStateMetadata metadata)
         : base(metadata)
     {
-        Stats = stats;
+        _stats = new EvaluatedStats(stats, StatType.Power);
     }
     
-    public override IStats Stats { get; }
+    private EvaluatedStats _stats;
+    public override IStats Stats => _stats;
     public override Maybe<int> Amount => Maybe<int>.Missing();
     public override IPayloadProvider OnTurnStart() => new NoPayload();
     public override IPayloadProvider OnTurnEnd()

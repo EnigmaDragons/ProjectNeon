@@ -17,7 +17,7 @@ public sealed class ReactWithCardAfterEnoughHealthLoss : ReactiveStateV2
     public bool IsActive => _tracker.IsActive;
     public Maybe<int> RemainingTurns => _tracker.RemainingTurns;
     public Maybe<int> Amount => _tracker.RemainingUses;
-    public IStats Stats { get; } = new StatAddends();
+    public IStats Stats => new StatAddends();
     public ReactionTimingWindow Timing => ReactionTimingWindow.ReactionCard;
     public bool OnlyReactDuringCardPhases => false;
 

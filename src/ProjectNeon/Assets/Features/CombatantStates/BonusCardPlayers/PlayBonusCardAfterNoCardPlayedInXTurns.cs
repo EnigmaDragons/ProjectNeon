@@ -6,7 +6,7 @@ public class PlayBonusCardAfterNoCardPlayedInXTurns : TemporalStateBase, IBonusC
     private readonly CardType _bonusCard;
     private readonly int _numTurns;
 
-    public override IStats Stats { get; } = new StatAddends();
+    public override IStats Stats => new StatAddends();
     public override Maybe<int> Amount { get; } = Maybe<int>.Missing();
     public override ITemporalState CloneOriginal() => new PlayBonusCardAfterNoCardPlayedInXTurns(_memberId, _bonusCard, _numTurns, Status);
     public override IPayloadProvider OnTurnStart() => new NoPayload();

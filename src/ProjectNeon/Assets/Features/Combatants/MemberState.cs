@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
-public sealed class MemberState : IStats
+public sealed class MemberState
 {
     private int _versionNumber;
 
@@ -10,7 +11,7 @@ public sealed class MemberState : IStats
 
     private readonly DictionaryWithDefault<CardTag, int> _tagsPlayedCount = new DictionaryWithDefault<CardTag, int>(0);
 
-    private readonly IStats _baseStats;
+    private readonly EvaluatedStats _baseStats;
     private readonly List<IPersistentState> _persistentStates = new List<IPersistentState>();
     private readonly List<ITemporalState> _additiveMods = new List<ITemporalState>();
     private readonly List<ITemporalState> _multiplierMods = new List<ITemporalState>();
@@ -21,10 +22,10 @@ public sealed class MemberState : IStats
     private readonly List<ResourceCalculator> _multiplicativeResourceCalculators = new List<ResourceCalculator>();
     private readonly List<CustomStatusIcon> _customStatusIcons = new List<CustomStatusIcon>();
 
-    public IStats BaseStats => _baseStats;
+    public EvaluatedStats BaseStats => _baseStats;
     public StatType PrimaryStat { get; }
 
-    private IStats _currentStats;
+    private EvaluatedStats _currentStats;
     
     private IStats GetCurrentStats() => _baseStats
         .Plus(_additiveMods.Where(x => x.IsActive).Select(x => x.Stats).ToArray())
@@ -52,7 +53,7 @@ public sealed class MemberState : IStats
         MemberId = id;
         NameTerm = nameTerm;
         PrimaryStat = primaryStat;
-        _baseStats = baseStats;
+        _baseStats = new EvaluatedStats(baseStats, StatType.Power);
 
         _counters[TemporalStatType.HP.GetString()] =
             new BattleCounter(TemporalStatType.HP, initialHp, () => _currentStats.MaxHp());
@@ -89,7 +90,7 @@ public sealed class MemberState : IStats
             statusTagCounts[tag]++;
         }
 
-        return MemberStateSnapshotExtensions.Create(_versionNumber, MemberId, _currentStats.ToSnapshot(PrimaryStat), BaseStats.ToSnapshot(PrimaryStat),
+        return MemberStateSnapshotExtensions.Create(_versionNumber, MemberId, _currentStats, BaseStats,
             _counters.ToDictionary(c => c.Key, c => c.Value.Amount), ResourceTypes, _tagsPlayedCount, statusTagCounts, PrimaryStat);
     }
 
@@ -235,7 +236,7 @@ public sealed class MemberState : IStats
 
     private void UpdateCurrentStats()
     {
-        _currentStats = GetCurrentStats().ToSnapshot(PrimaryStat);
+        _currentStats = new EvaluatedStats(GetCurrentStats(), PrimaryStat);
     }
 
     public ITemporalState[] DamageOverTimes() => TemporalStates.Where(x => x.Status.Tag == StatusTag.DamageOverTime).ToArray();
@@ -525,4 +526,22 @@ public sealed class MemberState : IStats
         Message.Publish(new MemberStateChanged(before, this));
         return new T[] {beforeVal, afterVal};
     }
+    
+    public int MissingHp() => MaxHp() - Hp();
+    public int MaxHp() => RoundUp(this[StatType.MaxHP]);
+    public int Hp() => RoundUp(this[TemporalStatType.HP]);
+    public int Shield() => RoundUp(this[TemporalStatType.Shield]);
+    public int HpAndShield() => this.Hp() + this.Shield();
+    public int StartingShield() => RoundUp(this[StatType.StartingShield]);
+    public int MaxShield() => RoundUp(this[StatType.MaxShield]);
+    public int Attack() => RoundUp(this[StatType.Attack]);
+    public int Magic() => RoundUp(this[StatType.Magic]);
+    public int Leadership() => RoundUp(this[StatType.Leadership]);
+    public int Economy() => RoundUp(this[StatType.Economy]);
+    public int Armor() => RoundUp(this[StatType.Armor]);
+    public int Resistance() => RoundUp(this[StatType.Resistance]);
+    public int ExtraCardPlays() => RoundUp(this[StatType.ExtraCardPlays]);
+    public float Damagability() => this[StatType.Damagability];
+    public float Healability() => this[StatType.Healability];
+    private int RoundUp(float v) => Mathf.CeilToInt(v);
 }

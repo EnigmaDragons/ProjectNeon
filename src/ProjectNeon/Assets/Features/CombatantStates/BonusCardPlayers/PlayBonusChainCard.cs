@@ -5,7 +5,7 @@ public class PlayBonusChainCard : TemporalStateBase, IBonusCardPlayer
     private readonly int _memberId;
     private readonly CardType _bonusCard;
 
-    public override IStats Stats { get; } = new StatAddends();
+    public override IStats Stats => new StatAddends();
     public override Maybe<int> Amount { get; } = Maybe<int>.Missing();
     public override ITemporalState CloneOriginal() => new PlayBonusChainCard(_memberId, _bonusCard, Status);
     public override IPayloadProvider OnTurnStart() => new NoPayload();

@@ -5,7 +5,7 @@ public class AdjustedPlayerStats : TemporalStateBase, ITemporalPlayerState
 
     public override ITemporalState CloneOriginal() => new AdjustedPlayerStats(PlayerStats, Tracker.Metadata.MaxDurationTurns, Tracker.IsDebuff);
     
-    public override IStats Stats { get; } = new StatAddends();
+    public override IStats Stats => new StatAddends();
     public override Maybe<int> Amount { get; } = Maybe<int>.Missing();
 
     public override IPayloadProvider OnTurnStart() => new NoPayload();

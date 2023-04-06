@@ -13,7 +13,7 @@ public class Hero
     [SerializeField] private HeroLevels levels;
     [SerializeField] private CardType basicCard;
 
-    private IStats _statAdditions = new StatAddends();
+    private EvaluatedStats _statAdditions = new EvaluatedStats();
     private Maybe<StatType> _primaryStat = Maybe<StatType>.Missing();
     private InMemoryResourceType _primaryResourceType;
 
@@ -25,7 +25,7 @@ public class Hero
         this.deck = deck;
         levels = new HeroLevels();
         equipment = new HeroEquipment(character.Archetypes.ToArray());
-        health = new HeroHealth(() => Stats);
+        health = new HeroHealth();
         basicCard = character.BasicCard;
         _primaryResourceType = character.Stats.ResourceTypes.FirstAsMaybe().Select(r => r, () => new InMemoryResourceType());
     }
@@ -77,8 +77,8 @@ public class Hero
     public IStats LevelUpsAndImplants => _statAdditions;
 
     public void HealToFull() => UpdateState(() => health.HealToFull());
-    public void SetHp(int hp) => UpdateState(() => health.SetHp(hp));
-    public void AdjustHp(int amount) => UpdateState(() => health.AdjustHp(amount));
+    public void SetHp(int hp) => UpdateState(() => health.SetHp(hp, Stats.MaxHp()));
+    public void AdjustHp(int amount) => UpdateState(() => health.AdjustHp(amount, Stats.MaxHp()));
 
     public void SetBasic(CardType c) => basicCard = c;
     public void SetDeck(RuntimeDeck d) => deck = d;
@@ -86,16 +86,15 @@ public class Hero
     public void SetHealth(HeroHealth h)
     {
         health = h;
-        h.Init(() => Stats);
     }
 
-    public void AddToStats(IStats stats) => UpdateState(() => _statAdditions = _statAdditions.Plus(stats.WithConvertedPower(PrimaryStat)));
+    public void AddToStats(IStats stats) => UpdateState(() => _statAdditions = new EvaluatedStats(_statAdditions.Plus(stats.WithConvertedPower(PrimaryStat)), PrimaryStat));
     public void Equip(StaticEquipment e) => UpdateState(() => equipment.Equip(e));
     public void EquipPermanent(StaticEquipment e)
     {
         var currentHealth = Stats.MaxHp() - Health.MissingHp;
         equipment.EquipPermanent(e);
-        Health.SetHp(Math.Min(currentHealth, Stats.MaxHp()));
+        Health.SetHp(Math.Min(currentHealth, Stats.MaxHp()), Stats.MaxHp());
     }
     public void Unequip(StaticEquipment e) => UpdateState(() => equipment.Unequip(e));
     public bool CanEquip(StaticEquipment e) => equipment.CanEquip(e);

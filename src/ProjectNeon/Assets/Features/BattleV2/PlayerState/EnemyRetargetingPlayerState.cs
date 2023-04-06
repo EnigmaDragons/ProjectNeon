@@ -6,7 +6,7 @@ public class EnemyRetargetingPlayerState : TemporalStateBase, ITemporalPlayerSta
 
     public override ITemporalState CloneOriginal() => new EnemyRetargetingPlayerState(OriginatorId, Tracker.Metadata.MaxDurationTurns);
     
-    public override IStats Stats { get; } = new StatAddends();
+    public override IStats Stats => new StatAddends();
     public override Maybe<int> Amount { get; } = Maybe<int>.Missing();
 
     public override IPayloadProvider OnTurnStart() => new NoPayload();
