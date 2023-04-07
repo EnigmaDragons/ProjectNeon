@@ -17,6 +17,7 @@ public class Hero
     private Maybe<StatType> _primaryStat = Maybe<StatType>.Missing();
     private InMemoryResourceType _primaryResourceType;
 
+    public Hero() {}
     public Hero(BaseHero character, RuntimeDeck deck)
     {
         if (character == null)
@@ -51,21 +52,16 @@ public class Hero
         Character.Stats.Plus(_statAdditions);
     
     // TODO: Maybe don't calculate this every time
-    public IStats NonTemporaryStats => Character.Stats
-        .Plus(_statAdditions)
+    public IStats NonTemporaryStats => Log.LogIfNull(Character.Stats, "Character Stats", new StatAddends())
+        .Plus(Log.LogIfNull(_statAdditions, "Stat Additions", new EvaluatedStats()))
         .Plus(new StatAddends().With(Equipment.All.SelectMany(e =>
             e.ResourceModifiers.Select(r => r.WithPrimaryResourceMappedForOwner(_primaryResourceType))).ToArray()))
-        .Plus(Equipment.All.Select(e => e.AdditiveStats()))
-        .Plus(Equipment.Implants.Select(e => e.AdditiveStats()))
-        .Times(Equipment.All.Select(e => e.MultiplierStats()));
-
-    public IStats Stats => Character.Stats
-        .Plus(_statAdditions)
-        .Plus(new StatAddends().With(Equipment.All.SelectMany(e => e.ResourceModifiers.Select(r => r.WithPrimaryResourceMappedForOwner(_primaryResourceType))).ToArray()))
-        .Plus(Equipment.All.Select(e => e.AdditiveStats()))
-        .Plus(Equipment.Implants.Select(e => e.AdditiveStats()))
+        .Plus(Equipment.All.Select(e => Log.LogIfNull(e.AdditiveStats(), "Equipment Additive Stats", new StatAddends())))
+        .Plus(Equipment.Implants.Select(e => Log.LogIfNull(e.AdditiveStats(), "Implants", new StatAddends())))
+        .Times(Equipment.All.Select(e => Log.LogIfNull(e.MultiplierStats(), "Equipment Multiplier Stats", new StatMultipliers())));
+    
+    public IStats Stats => Log.LogIfNull(NonTemporaryStats, "Non Temporary Stats", new StatAddends())
         .Plus(health.AdditiveStats(PrimaryStat))
-        .Times(Equipment.All.Select(e => e.MultiplierStats()))
         .Times(health.MultiplicativeStats(PrimaryStat));
 
     public IStats PermanentStats => Character.Stats

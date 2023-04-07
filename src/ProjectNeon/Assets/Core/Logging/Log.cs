@@ -71,4 +71,19 @@ public static class Log
             
         }
     }
+
+    public static T LogIfNull<T>(T thing, string context, T defaultThing)
+    {
+        if (thing != null)
+            return thing;
+        Log.NonCrashingError($"{typeof(T).Name} is null: {context}");
+        return defaultThing;
+    }
+    
+    public static T LogIfNull<T>(T thing, string context)
+    {
+        if (thing == null)
+            Log.Error($"{typeof(T).Name} is null: {context}");
+        return thing;
+    }
 }
