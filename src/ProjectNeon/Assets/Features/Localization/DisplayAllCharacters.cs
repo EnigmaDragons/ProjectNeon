@@ -10,6 +10,7 @@ public class DisplayAllCharacters : OnMessage<LanguageChanged>
     [SerializeField] private int charactersPerPage;
     [SerializeField] private Button next;
     [SerializeField] private Button prev;
+    [SerializeField] private Button saveAllCharacters;
     [SerializeField] private Localize text;
 
     private char[] _characters;
