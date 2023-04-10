@@ -1,4 +1,5 @@
 ﻿#if UNITY_EDITOR
+using System;
 using System.Text;
 using I2.Loc;
 using UnityEngine;
@@ -8,26 +9,37 @@ public class CharDisplay : MonoBehaviour
 {
     [SerializeField] private Localize characterContainer;
     [SerializeField] private Button button;
-    
-    private char _character;
+    [SerializeField] private Image image;
 
-    public bool Selected { get; set; }
-    
-    private void Awake()
-    {
-        button.onClick.AddListener(Toggle);
-    }
-    
-    public void Init(char character)
+    private char _character;
+    private bool _selected;
+    private Action<bool, char> _onSelect;
+
+    public void Init(char character, bool selected, Action<bool, char> onSelect)
     {
         _character = character;
+        _selected = selected;
+        _onSelect = onSelect;
+        button.onClick.RemoveAllListeners();
+        button.onClick.AddListener(() =>
+        {
+            _selected = !_selected;
+            _onSelect(_selected, _character);
+            UpdateButtonColor();
+        });
+        UpdateButtonColor();
+        characterContainer.SetFinalText(character.ToString());
+        gameObject.SetActive(true);
     }
 
-    private void Toggle() => Selected = !Selected;
-
-    public string ToUnicode()
+    public void Hide()
     {
-        return "";
+        gameObject.SetActive(false);
+    }
+
+    private void UpdateButtonColor()
+    {
+        image.color = _selected ? Color.yellow : Color.white;
     }
 }
 #endif
