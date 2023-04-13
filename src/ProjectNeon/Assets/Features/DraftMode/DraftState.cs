@@ -35,8 +35,8 @@ public class DraftState : ScriptableObject
     public bool Init(int numHeroes, DraftData data)
     {
         numDraftHeroes = numHeroes;
-        heroIndex = data.HeroIndex;
-        draftStepIndex = data.DraftStepIndex;
+        heroIndex = data?.HeroIndex ?? 0;
+        draftStepIndex = data?.DraftStepIndex ?? 0;
         return true;
     }
 
