@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipD
     [SerializeField] private EquipmentPool gearPool;
     [SerializeField] private ShopCardPool cardPool;
     [SerializeField] private GameObject draftUi;
+    [SerializeField] private DeterminedNodeInfo nodeInfo;
     
     private LootPicker _picker;
 
@@ -62,7 +64,12 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipD
     private void SelectGear()
     {
         var currentHero = party.Heroes[draftState.HeroIndex];
-        var gearOptions = GearPackGeneration.GetDualRarityAugmentPack(currentHero, gearPool, party);
+        if (nodeInfo.DraftGearSelection.IsMissing)
+        {
+            nodeInfo.DraftGearSelection = GearPackGeneration.GetDualRarityAugmentPack(currentHero, gearPool, party);
+            Message.Publish(new SaveDeterminationsRequested());
+        }
+        var gearOptions = nodeInfo.DraftGearSelection.Value;
         Message.Publish(new GetUserSelectedEquipmentForDraft(gearOptions, e =>
         {
             if (e.IsMissing)
@@ -71,6 +78,7 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipD
                 FinishDraft();
             }
 
+            nodeInfo.DraftGearSelection = Maybe<StaticEquipment[]>.Missing();
             var gear = e.Value;
             AllMetrics.PublishDraftGearSelection(gear.Name, gearOptions.Select(g => g.Name).ToArray());
             party.Add(gear);
@@ -82,17 +90,23 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipD
     private void SelectCard()
     {
         var currentHero = party.Heroes[draftState.HeroIndex];
-        var cardsYouCantHaveMoreOf = party.CardsYouCantHaveMoreOf();
-        var starterCardOptions = currentHero.Character
-            .StartingCards(cardPool)
-            .Where(x => x.Archetypes.Any())
-            .Where(x => !cardsYouCantHaveMoreOf.Contains(x.Id))
-            .Distinct()
-            .TakeRandom(2);
         
-        var nonStarterOptions = _picker.PickCardsForSingleHero(cardPool, currentHero.Archetypes, 5, new [] {Rarity.Common, Rarity.Uncommon, Rarity.Rare, Rarity.Epic});
+        if (nodeInfo.DraftCardSelection.IsMissing)
+        {
+            var cardsYouCantHaveMoreOf = party.CardsYouCantHaveMoreOf();
+            var starterCardOptions = currentHero.Character
+                .StartingCards(cardPool)
+                .Where(x => x.Archetypes.Any())
+                .Where(x => !cardsYouCantHaveMoreOf.Contains(x.Id))
+                .Distinct()
+                .TakeRandom(2);
+            var nonStarterOptions = _picker.PickCardsForSingleHero(cardPool, currentHero.Archetypes, 5, new [] {Rarity.Common, Rarity.Uncommon, Rarity.Rare, Rarity.Epic});
+            nodeInfo.DraftCardSelection = starterCardOptions.Concat(nonStarterOptions).ToArray();
+            Message.Publish(new SaveDeterminationsRequested());
+        }
+        
         var member = currentHero.AsMember(draftState.HeroIndex);
-        var options = starterCardOptions.Concat(nonStarterOptions).Select(s => new Card(NextCardId.Get(), member, s)).ToArray().Shuffled();
+        var options = nodeInfo.DraftCardSelection.Value.Select(s => new Card(NextCardId.Get(), member, s)).ToArray().Shuffled();
         Message.Publish(new GetUserSelectedCardForDraft(options, e =>
         {
             if (e.IsMissing)
@@ -101,6 +115,7 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipD
                 FinishDraft();
             }
 
+            nodeInfo.DraftCardSelection = Maybe<CardType[]>.Missing();
             var selected = e.Value;
             AllMetrics.PublishDraftCardSelection(selected.Name, options.Select(g => g.Name).ToArray());
             var card = e.Value.CardTypeOrNothing;
@@ -112,7 +127,7 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipD
         }));
     }
 
-    private RuntimeDeck CreateBlankDeck() => new RuntimeDeck {Cards = blankDraftDeck.ToList()};
+    private RuntimeDeck CreateBlankDeck() => new RuntimeDeck {Cards = new List<CardType>()};
     
     private void SelectHero()
     {

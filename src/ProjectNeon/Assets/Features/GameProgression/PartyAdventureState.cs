@@ -64,7 +64,7 @@ public sealed class PartyAdventureState : ScriptableObject
         var one = startingHeroes.Length > 0 ? startingHeroes[0] : null;
         var two = startingHeroes.Length > 1 ? startingHeroes[1] : null;
         var three = startingHeroes.Length > 2 ? startingHeroes[2] : null;
-        return Initialized(one, two, three);
+        return Initialized(one, two, three, h => CreateDeck(h.Deck));
     }
 
     public PartyAdventureState InitializedForDraft(params BaseHero[] startingHeroes)
@@ -72,7 +72,7 @@ public sealed class PartyAdventureState : ScriptableObject
         var one = startingHeroes.Length > 0 ? startingHeroes[0] : null;
         var two = startingHeroes.Length > 1 ? startingHeroes[1] : null;
         var three = startingHeroes.Length > 2 ? startingHeroes[2] : null;
-        Initialized(one, two, three);
+        Initialized(one, two, three, h => new RuntimeDeck { Cards = new List<CardType>() });
         
         var allStartingCards = party.Heroes
             .SelectMany(HeroDraftStartingCards)
@@ -83,13 +83,13 @@ public sealed class PartyAdventureState : ScriptableObject
         return this;
     }
     
-    public PartyAdventureState Initialized(BaseHero one, BaseHero two, BaseHero three)
+    public PartyAdventureState Initialized(BaseHero one, BaseHero two, BaseHero three, Func<BaseHero, RuntimeDeck> createDeck)
     {
         party.Initialized(one, two, three);
         var baseHeroes = party.Heroes;
         heroes = baseHeroes.Select(h =>
         {
-            var hero = new Hero(h, CreateDeck(h.Deck));
+            var hero = new Hero(h, createDeck(h));
             foreach (var equip in GlobalEquipment)
                 hero.ApplyPermanent(equip);
             return hero;

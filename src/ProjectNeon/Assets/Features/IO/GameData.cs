@@ -164,6 +164,8 @@ public class DeterminedData
     public Maybe<ImplantData[]> Implants;
     public Maybe<int[]> BlessingIds;
     public Maybe<int[]> CardRewardIds;
+    public Maybe<int[]> DraftCardSelectionIds;
+    public Maybe<int[]> DraftGearSelectionIds;
 }
 
 [Serializable]
