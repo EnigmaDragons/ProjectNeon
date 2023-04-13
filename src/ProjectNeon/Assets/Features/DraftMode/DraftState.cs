@@ -6,7 +6,7 @@ public class DraftState : ScriptableObject
     [SerializeField] private int numDraftHeroes = 0;
     [SerializeField] private int heroIndex = -1;
     [SerializeField] private int draftStepIndex = 0;
-    
+
     private DraftStep[] DraftSteps = {
         DraftStep.PickHero,
         DraftStep.PickGear,
@@ -32,11 +32,12 @@ public class DraftState : ScriptableObject
         DraftStep.Finished
     };
 
-    public void Init(int numHeroes)
+    public bool Init(int numHeroes, DraftData data)
     {
         numDraftHeroes = numHeroes;
-        heroIndex = -1;
-        draftStepIndex = 0;
+        heroIndex = data.HeroIndex;
+        draftStepIndex = data.DraftStepIndex;
+        return true;
     }
 
     public int HeroIndex => heroIndex;
@@ -61,4 +62,8 @@ public class DraftState : ScriptableObject
         Message.Publish(new DraftStateUpdated(draftStepIndex + 1, DraftSteps.Length - 1, heroIndex));
         return DraftSteps[draftStepIndex];
     }
+    
+    public DraftStep Current => DraftSteps[draftStepIndex];
+
+    public DraftData GetData() => new DraftData {HeroIndex = heroIndex, DraftStepIndex = draftStepIndex};
 }

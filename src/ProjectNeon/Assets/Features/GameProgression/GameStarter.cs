@@ -13,6 +13,7 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
     [SerializeField] private EncounterBuilderHistory encounterHistory;
     [SerializeField] private Library library;
     [SerializeField] private DeterminedNodeInfo nodeInfo;
+    [SerializeField] private DraftState draftState;
     
     protected override void Execute(StartNewGame msg)
     {
@@ -65,6 +66,7 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
             party.Initialized(overrideHeroes.Select(o => o, adventure.FixedStartingHeroes));
         party.UpdateClinicVouchersBy(adventure.StartingClinicVouchers);
         nodeInfo.InitNewAdventure();
+        draftState.Init(adventure.PartySize, new DraftData());
         CurrentGameData.Write(s =>
         {
             s.IsInitialized = true;
@@ -72,6 +74,7 @@ public class GameStarter : OnMessage<StartNewGame, ContinueCurrentGame, StartNew
             s.AdventureProgress = adventureProgress.AdventureProgress.GetData();
             s.PartyData = party.GetData();
             s.DeterminedData = new DeterminedData();
+            s.DraftData = new DraftData();
             return s;
         });
         Navigate(navigator, adventureProgress5);

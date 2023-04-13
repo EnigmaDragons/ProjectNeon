@@ -18,6 +18,7 @@ public sealed class SaveLoadSystem : ScriptableObject
     [SerializeField] private CorpClinicProvider clinics;
     [SerializeField] private AllStaticGlobalEffects globalEffects;
     [SerializeField] private DeterminedNodeInfo determinedNodeInfo;
+    [SerializeField] private DraftState draftState;
 
     public bool HasSavedGame => CurrentGameData.HasActiveGame;
     public void SaveCheckpoint() => SaveCurrentGame();
@@ -32,6 +33,7 @@ public sealed class SaveLoadSystem : ScriptableObject
             s.GameMap = adventureProgress.AdventureProgress.AdventureType.GetMapData(map, mapV5);
             s.Stats = s.Stats.WithAdditionalElapsedTime(RunTimer.ConsumeElapsedTime());
             s.DeterminedData = determinedNodeInfo.GetData();
+            s.DraftData = draftState.GetData();
             return s;
         });
     }
@@ -68,6 +70,8 @@ public sealed class SaveLoadSystem : ScriptableObject
             loadedSuccessfully = determinedNodeInfo.SetData(saveData.DeterminedData);
         if (loadedSuccessfully && saveData.FinishedPhase(CurrentGamePhase.SelectedAdventure))
             loadedSuccessfully = InitMap(saveData.GameMap);
+        if (loadedSuccessfully)
+            loadedSuccessfully = draftState.Init(saveData.PartyData.Heroes.Length, saveData.DraftData);
         if (!loadedSuccessfully)
             return CurrentGamePhase.LoadError;
 

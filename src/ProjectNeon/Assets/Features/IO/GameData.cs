@@ -15,6 +15,7 @@ public class GameData
     public RunStats Stats = new RunStats();
     public FightHistoryData Fights = new FightHistoryData();
     public DeterminedData DeterminedData = new DeterminedData();
+    public DraftData DraftData = new DraftData();
 
     public bool FinishedPhase(CurrentGamePhase phase) => (int)Phase >= (int)phase;
 }
@@ -163,6 +164,13 @@ public class DeterminedData
     public Maybe<ImplantData[]> Implants;
     public Maybe<int[]> BlessingIds;
     public Maybe<int[]> CardRewardIds;
+}
+
+[Serializable]
+public class DraftData
+{
+    public int HeroIndex;
+    public int DraftStepIndex;
 }
 
 public enum GameEquipmentDataType

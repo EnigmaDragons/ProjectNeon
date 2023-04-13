@@ -16,10 +16,9 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipD
 
     protected override void Execute(BeginDraft msg)
     {
-        draftState.Init(adventure.Adventure.PartySize);
         draftUi.SetActive(true);
         _picker = new LootPicker(1, new DefaultRarityFactors(), party, new DeterministicRng(Rng.NewSeed()));
-        Advance();
+        ResolveDraftStep(draftState.Current);
     }
 
     protected override void Execute(DraftStepCompleted msg) => Advance();
@@ -41,7 +40,12 @@ public class DraftOrchestrator : OnMessage<BeginDraft, DraftStepCompleted, SkipD
 
     private void Advance()
     {
-        var draftStep = draftState.Advance();
+        Message.Publish(new AutoSaveRequested());
+        ResolveDraftStep(draftState.Advance());
+    }
+
+    private void ResolveDraftStep(DraftStep draftStep)
+    {
         if (draftStep == DraftStep.PickHero)
             if (party.Party.Heroes.Length > draftState.HeroIndex)
                 Advance();
