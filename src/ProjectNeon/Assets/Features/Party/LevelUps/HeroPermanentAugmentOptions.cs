@@ -10,27 +10,36 @@ public class HeroPermanentAugmentOptions : LevelUpOptions, ILocalizeTerms
     [SerializeField] private Rarity rarity;
     [SerializeField] private EquipmentPresenter customPresenterPrototype;
     [SerializeField] private StaticEquipment[] choiceOverride;
+    [SerializeField] private DeterminedNodeInfo nodeInfo;
 
     public override string ChoiceDescriptionTerm => "LevelUps/ChooseAugment";
 
     public override LevelUpOption[] Generate(Hero h)
     {
-        var finalSet = GenerateHeroGearOptions(allEquipmentPool, party, h.Character, new HashSet<Rarity> {rarity}, 3);
         if (choiceOverride.Length == 3)
-            finalSet = choiceOverride.ToArray();
-            
-        return ToLevelUpOptions(h, finalSet, party, customPresenterPrototype);
+            return ToLevelUpOptions(h, choiceOverride.ToArray(), party, customPresenterPrototype);
+        if (nodeInfo.HeroLevelUpAugments.IsMissing)
+        {
+            nodeInfo.HeroLevelUpAugments = GenerateHeroGearOptions(allEquipmentPool, party, h.Character, new HashSet<Rarity> {rarity}, 3);
+            Message.Publish(new SaveDeterminationsRequested());
+        }
+        return ToLevelUpOptions(h, nodeInfo.HeroLevelUpAugments.Value, party, customPresenterPrototype);
     }
 
-    public static LevelUpOption[] ToLevelUpOptions(Hero h, StaticEquipment[] equipments, PartyAdventureState party, EquipmentPresenter customPresenterPrototype)
+    private LevelUpOption[] ToLevelUpOptions(Hero h, StaticEquipment[] equipments, PartyAdventureState party, EquipmentPresenter customPresenterPrototype)
     {
         return equipments
-            .Select(e => (LevelUpOption)new WithCustomPresenter(
-                new AugmentLevelUpOption(party, e), 
-                ctx => Instantiate(customPresenterPrototype, ctx.Parent)
-                    .Initialized(e, () => Message.Publish(new LevelUpOptionSelected(ctx.Option, ctx.AllOptions)), true).gameObject))
+            .Select(e => ToLevelUpOption(h, e, party, customPresenterPrototype))
             .ToArray()
             .Shuffled();
+    }
+    
+    public static LevelUpOption ToLevelUpOption(Hero h, StaticEquipment equipment, PartyAdventureState party, EquipmentPresenter customPresenterPrototype)
+    {
+        return new WithCustomPresenter(
+            new AugmentLevelUpOption(party, equipment), 
+            ctx => Instantiate(customPresenterPrototype, ctx.Parent)
+                .Initialized(equipment, () => Message.Publish(new LevelUpOptionSelected(ctx.Option, ctx.AllOptions)), true).gameObject);
     }
     
     public static StaticEquipment[] GenerateHeroGearOptions(EquipmentPool allEquipmentPool, PartyAdventureState party,

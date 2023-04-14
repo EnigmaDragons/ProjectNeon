@@ -18,6 +18,7 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>, ILo
     [SerializeField] private Image bust;
     [SerializeField] private ResourceCounterPresenter primaryResourceCounter;
     [SerializeField] private ResourceCounterPresenter secondaryResourceCounter;
+    [SerializeField] private DeterminedNodeInfo nodeInfo;
     
     [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI faintLevelLabel;
     [SerializeField] private Image faintBust;
@@ -104,6 +105,8 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>, ILo
         faintClassName.DOColor(Color.white, 2.4f).SetEase(Ease.Linear);
         optionsPresenter.ClearUnselectedOptions(msg.Selected);
         AllMetrics.PublishLevelUpOptionSelection(_hero.NameTerm.ToEnglish(), _hero.Level, msg.Selected.Description, msg.Options.Select(o => o.Description).ToArray());
+        nodeInfo.HeroLevelUpAugments = Maybe<StaticEquipment[]>.Missing();
+        nodeInfo.DraftLevelUpOptions = Maybe<DraftWildLevelUpData[]>.Missing();
         msg.Selected.SelectAsLevelUp(_hero);
         Message.Publish(new LevelUpClicked(transform));
         

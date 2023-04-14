@@ -14,6 +14,8 @@ public class DeterminedNodeInfo : ScriptableObject
     [SerializeField] public Maybe<CardType[]> CardRewardOptions;
     [SerializeField] public Maybe<CardType[]> DraftCardSelection;
     [SerializeField] public Maybe<StaticEquipment[]> DraftGearSelection;
+    [SerializeField] public Maybe<StaticEquipment[]> HeroLevelUpAugments;
+    [SerializeField] public Maybe<DraftWildLevelUpData[]> DraftLevelUpOptions;
 
     public void InitNewAdventure()
     {
@@ -24,6 +26,8 @@ public class DeterminedNodeInfo : ScriptableObject
         CardRewardOptions = Maybe<CardType[]>.Missing();
         DraftCardSelection = Maybe<CardType[]>.Missing();
         DraftGearSelection = Maybe<StaticEquipment[]>.Missing();
+        HeroLevelUpAugments = Maybe<StaticEquipment[]>.Missing();
+        DraftLevelUpOptions = Maybe<DraftWildLevelUpData[]>.Missing();
     }
     
     public DeterminedData GetData()
@@ -35,7 +39,9 @@ public class DeterminedNodeInfo : ScriptableObject
                 BlessingIds = BlessingIds == null || BlessingIds.IsMissing ? Maybe<int[]>.Missing() : BlessingIds.Value.Select(x => x).ToArray(),
                 CardRewardIds = CardRewardOptions == null || CardRewardOptions.IsMissing ? Maybe<int[]>.Missing() : CardRewardOptions.Value.Select(x => x.Id).ToArray(),
                 DraftCardSelectionIds = DraftCardSelection == null || DraftCardSelection.IsMissing ? Maybe<int[]>.Missing() : DraftCardSelection.Value.Select(x => x.Id).ToArray(),
-                DraftGearSelectionIds = DraftGearSelection == null || DraftGearSelection.IsMissing ? Maybe<int[]>.Missing() : DraftGearSelection.Value.Select(x => x.Id).ToArray()
+                DraftGearSelectionIds = DraftGearSelection == null || DraftGearSelection.IsMissing ? Maybe<int[]>.Missing() : DraftGearSelection.Value.Select(x => x.Id).ToArray(),
+                HeroLevelUpAugmentIds = HeroLevelUpAugments == null || HeroLevelUpAugments.IsMissing ? Maybe<int[]>.Missing() : HeroLevelUpAugments.Value.Select(x => x.Id).ToArray(),
+                DraftLevelUpOptions = DraftLevelUpOptions == null || DraftLevelUpOptions.IsMissing ? Maybe<DraftWildLevelUpData[]>.Missing() : new Maybe<DraftWildLevelUpData[]>(DraftLevelUpOptions.Value)
             };
 
     public bool SetData(DeterminedData data)
@@ -56,6 +62,9 @@ public class DeterminedNodeInfo : ScriptableObject
             DraftCardSelection = draftCardSelectionIds.IsMissing ? Maybe<CardType[]>.Missing() : draftCardSelectionIds.Value.Select(x => library.GetCardById(x).Value).ToArray();
             var draftGearSelectionIds = data?.DraftGearSelectionIds ?? Maybe<int[]>.Missing();
             DraftGearSelection = draftGearSelectionIds.IsMissing ? Maybe<StaticEquipment[]>.Missing() : draftGearSelectionIds.Value.Select(x => library.GetEquipment(new GameEquipmentData { StaticEquipmentId = x }).Value).ToArray();
+            var heroLevelUpAugmentIds = data?.HeroLevelUpAugmentIds ?? Maybe<int[]>.Missing();
+            HeroLevelUpAugments = heroLevelUpAugmentIds.IsMissing ? Maybe<StaticEquipment[]>.Missing() : heroLevelUpAugmentIds.Value.Select(x => library.GetEquipment(new GameEquipmentData { StaticEquipmentId = x }).Value).ToArray();
+            DraftLevelUpOptions = data?.DraftLevelUpOptions ?? Maybe<DraftWildLevelUpData[]>.Missing();
             return true;
         }
         catch (Exception ex)

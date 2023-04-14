@@ -166,6 +166,17 @@ public class DeterminedData
     public Maybe<int[]> CardRewardIds;
     public Maybe<int[]> DraftCardSelectionIds;
     public Maybe<int[]> DraftGearSelectionIds;
+    public Maybe<int[]> HeroLevelUpAugmentIds;
+    public Maybe<DraftWildLevelUpData[]> DraftLevelUpOptions;
+}
+
+[Serializable]
+public class DraftWildLevelUpData
+{
+    public DraftWildType Type;
+    public Maybe<StatType> Stat;
+    public Maybe<int> GearId;
+    public Maybe<int> StaticOptionId;
 }
 
 [Serializable]
@@ -181,4 +192,3 @@ public enum GameEquipmentDataType
     StaticEquipmentId = 1,
     GeneratedEquipment = 2
 }
-
