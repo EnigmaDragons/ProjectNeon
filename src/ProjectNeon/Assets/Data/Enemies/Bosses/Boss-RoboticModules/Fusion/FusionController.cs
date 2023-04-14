@@ -10,6 +10,7 @@ public class FusionController : MemberInitable
     [SerializeField] private int stage1ModuleCount = 13;
     [SerializeField] private int stage2ModuleCount = 7;
     [SerializeField] private int stage3ModuleCount = 1;
+    [SerializeField] private BattleVFX pieceDeath;
     
     private Member _member;
     private int _moduleCount;
@@ -29,6 +30,7 @@ public class FusionController : MemberInitable
         if (msg.State.MemberId != _member?.Id || _moduleCount == _member.State[StatType.ExtraCardPlays])
             return;
         _moduleCount--;
+        Instantiate(pieceDeath, modules[_moduleCount].transform.position, Quaternion.identity, gameObject.transform).Initialized();
         modules[_moduleCount].SetActive(false);
         if (_moduleCount == stage2ModuleCount)
             toScale.ForEach(x => x.transform.localScale = new Vector3(stage2Scale, stage2Scale, 1));
