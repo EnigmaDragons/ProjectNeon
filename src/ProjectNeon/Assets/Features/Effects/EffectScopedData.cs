@@ -18,18 +18,12 @@ public class EffectScopedData
         variableNames.Clear();
         variables.Clear();
     }
-    
-    public void AdjustVariable(string name, float value)
-    {
-        var index = variableNames.IndexOf(name);
-        if (index == -1)
-        {
-            variableNames.Add(name);
-            variables.Add(0);
-            index = variableNames.Count - 1;
-        }
-        variables[index] += value;
-    }
+
+    public void SetVariable(string name, float value) 
+        => variables[GetIndex(name)] = value;
+
+    public void AdjustVariable(string name, float value) 
+        => variables[GetIndex(name)] += value;
 
     public float GetVariable(string name)
     {
@@ -41,5 +35,17 @@ public class EffectScopedData
         }
 
         return variables[index];
+    }
+
+    private int GetIndex(string name)
+    {
+        var index = variableNames.IndexOf(name);
+        if (index == -1)
+        {
+            variableNames.Add(name);
+            variables.Add(0);
+            index = variableNames.Count - 1;
+        }
+        return index;
     }
 }

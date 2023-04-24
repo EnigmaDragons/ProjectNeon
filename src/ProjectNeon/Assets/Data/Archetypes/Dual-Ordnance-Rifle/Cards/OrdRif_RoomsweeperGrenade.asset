@@ -22,7 +22,7 @@ MonoBehaviour:
     text: Spend all Ammo to deal {0} and give <b>-1 Primary Stat</b> this turn for
       each Ammo spent
     formatArgs:
-    - '{E[2]}'
+    - '{E[4]}'
   tags: 250000002a000000
   speed: 0
   isSinglePlay: 0
@@ -32,6 +32,16 @@ MonoBehaviour:
     plusXCost: 0
   rarity: 2
   actionSequences:
+  - scope: 1
+    group: 1
+    cardActions: {fileID: 11400000, guid: 316264b94c2f85042a7acc7fe364490f, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: 9b4266144e50e9a4f81865a87406645d, type: 2}
+    repeatX: 0
+    repeatCount: 0
   - scope: 1
     group: 1
     cardActions: {fileID: 11400000, guid: 37fffe36a865e7845938c29eab060d1c, type: 2}
