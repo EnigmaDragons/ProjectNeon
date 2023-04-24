@@ -472,6 +472,7 @@ public class QualityAssurance
     private static Regex _specialOpenTag = new Regex(@"{\[");
     private static Regex _specialCloseTag = new Regex("]}");
     private static Regex _invalidSpecialTag = new Regex(@"{[^\[]t:.*[^]]}", RegexOptions.IgnoreCase);
+    private static Regex _formatNumbers = new Regex(@"{\[(\d)]}");
 
     [MenuItem("Neon/QA/QA Terms")]
     private static void QaTerms()
@@ -523,6 +524,12 @@ public class QualityAssurance
             foreach (var term in terms)
             {
                 var issues = new List<string>();
+                var englishStr = LocalizationManager.GetTranslation(term, overrideLanguage: "English");
+                if (string.IsNullOrEmpty(englishStr))
+                    continue;
+                var formatTags = new HashSet<int>();
+                foreach (Match match in _formatNumbers.Matches(englishStr))
+                    formatTags.Add(int.Parse(match.Groups[1].Value));
                 foreach (var language in LocalizationManager.GetAllLanguages())
                 {
                     var str = LocalizationManager.GetTranslation(term, overrideLanguage: language);
@@ -564,6 +571,12 @@ public class QualityAssurance
                         issues.Add($"{term} ({language}) has an invalid {{}} tag");
                     if (_invalidSpecialTag.IsMatch(str))
                         issues.Add($"{term} ({language}) has a {{[t:]}} tag with out the [] tag");
+                    
+                    var languageFormatTags = new HashSet<int>();
+                    foreach (Match match in _formatNumbers.Matches(str))
+                        languageFormatTags.Add(int.Parse(match.Groups[1].Value));
+                    if (formatTags.Count != languageFormatTags.Count || formatTags.Any(x => !languageFormatTags.Contains(x)))
+                        issues.Add($"{term} ({language}) has the wrong string format tags");
                 }
                 if (issues.Any())
                     failures.Add(new ValidationResult($"Term: {term}", issues));
