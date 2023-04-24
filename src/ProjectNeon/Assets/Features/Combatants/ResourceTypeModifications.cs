@@ -9,7 +9,6 @@ public sealed class ResourceTypeModifications : IResourceType
     [SerializeField] private int startingAdjustment;
 
     public string Name => baseResource.Name;
-    public Sprite Icon => baseResource.Icon;
     public int MaxAmount => maxAdjustment;
     public int StartingAmount => startingAdjustment;
 }

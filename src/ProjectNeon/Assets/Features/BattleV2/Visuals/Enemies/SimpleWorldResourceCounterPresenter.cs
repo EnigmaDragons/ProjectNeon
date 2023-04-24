@@ -6,6 +6,7 @@ public class SimpleWorldResourceCounterPresenter : OnMessage<MemberStateChanged>
 {
     [SerializeField, NoLocalizationNeeded] private TextMeshPro text;
     [SerializeField] private SpriteRenderer icon;
+    [SerializeField] private ResourceSpriteMap resourceIcons;
 
     private int _lastAmount = -999;
     private Member _member;
@@ -14,7 +15,7 @@ public class SimpleWorldResourceCounterPresenter : OnMessage<MemberStateChanged>
     {
         _member = m;
         UpdateUi();
-        icon.sprite = _member.State.ResourceTypes[0].Icon;
+        icon.sprite = resourceIcons.Get(_member.State.ResourceTypes[0].Name);
         return this;
     }
     

@@ -9,6 +9,7 @@ public sealed class VisualResourceCounterPresenter : OnMessage<MemberStateChange
     [SerializeField] private float xSpacingWidth;
     [SerializeField] private float iconWidth;
     [SerializeField] private float animDuration = 0.5f;
+    [SerializeField] private ResourceSpriteMap resourceIcons;
 
     private readonly List<SpriteRenderer> _icons = new List<SpriteRenderer>();
 
@@ -31,7 +32,7 @@ public sealed class VisualResourceCounterPresenter : OnMessage<MemberStateChange
     private void UpdateUi(bool shouldAnimate)
     {
         var resourceAmount = _member.State.PrimaryResourceAmount;
-        var primaryResourceIcon = _member.State.ResourceTypes[0].Icon;
+        var primaryResourceIcon = resourceIcons.Get(_member.State.ResourceTypes[0].Name);
         var pos = transform.position;
         
         for (var i = 0; i < Math.Max(resourceAmount, _icons.Count); i++)

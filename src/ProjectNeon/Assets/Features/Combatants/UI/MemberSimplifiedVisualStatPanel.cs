@@ -25,13 +25,14 @@ public class MemberSimplifiedVisualStatPanel : MemberUiBase
     [SerializeField] private GameObject stealthItem;
     [SerializeField] private GameObject tauntItem;
     [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI tauntLabel;
+    [SerializeField] private ResourceSpriteMap resourceIcons;
 
     public void InitForCardExport(Member m)
     {
         hpBar.Init(m);
         Set(cardPlaysItem, cardPlaysLabel, m.ExtraCardPlays());
         Set(resourceGainItem, resourceGainLabel, m.ReferenceOnlyEndOfTurnResourceGain);
-        resourceGainIcon.sprite = m.PrimaryResourceType().Icon;
+        resourceGainIcon.sprite = resourceIcons.Get(m.PrimaryResourceType().Name);
         Set(leadershipItem, leadershipLabel, m.Leadership());
         Set(atkItem, atkLabel, m.Attack());
         Set(magicItem, magicLabel, m.Magic());
@@ -47,7 +48,7 @@ public class MemberSimplifiedVisualStatPanel : MemberUiBase
         hpBar.Init(m);
         Set(cardPlaysItem, cardPlaysLabel, m.ExtraCardPlays());
         Set(resourceGainItem, resourceGainLabel, m.ReferenceOnlyEndOfTurnResourceGain);
-        resourceGainIcon.sprite = m.PrimaryResourceType().Icon;
+        resourceGainIcon.sprite = resourceIcons.Get(m.PrimaryResourceType().Name);
         Set(leadershipItem, leadershipLabel, m.Leadership());
         Set(atkItem, atkLabel, m.Attack());
         Set(magicItem, magicLabel, m.Magic());

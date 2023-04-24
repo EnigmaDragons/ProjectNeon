@@ -10,6 +10,7 @@ public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerE
     [SerializeField] private Image icon;
     [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI counter;
     [SerializeField] private Localize resourceNameLabel;
+    [SerializeField] private ResourceSpriteMap resourceIcons;
 
     private Member _member;
     private InMemoryResourceType _resourceType;
@@ -29,7 +30,7 @@ public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerE
         _member = member;
         _resourceType = resource;
         _showZero = showZero;
-        icon.sprite = resource.Icon;
+        icon.sprite = resourceIcons.Get(resource.Name);
         UpdateUi(member.State, false);
         gameObject.SetActive(true);
     }

@@ -26,6 +26,7 @@ public class HeroCardExportPresenter : MonoBehaviour
     [SerializeField] private MemberSimplifiedVisualStatPanel statPanel;
     // [SerializeField] private SimpleDeckUI deckUi;
     // [SerializeField] private SimpleDeckUI basicUi;
+    [SerializeField] private ResourceSpriteMap resourceIcons;
 
     private bool _isInitialized;
     
@@ -60,7 +61,7 @@ public class HeroCardExportPresenter : MonoBehaviour
             var resourceGains = c.TurnResourceGains;
             if (resourceGains.Length > 0)
                 if (resourceGains[0].BaseAmount > 0)
-                    statPanel.SetPrimaryResourceGain(resourceGains[0].ResourceType.Icon, resourceGains[0].BaseAmount);
+                    statPanel.SetPrimaryResourceGain(resourceIcons.Get(resourceGains[0].ResourceType.Name), resourceGains[0].BaseAmount);
         }
         // if (deckUi != null)
         //     deckUi.Init(c.Deck.Cards.Select(card => card.ToNonBattleCard(c, c.Stats)).ToArray());

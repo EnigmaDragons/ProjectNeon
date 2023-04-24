@@ -8,6 +8,7 @@ public class CardCostPresenter : MonoBehaviour
     [SerializeField] private GameObject costPanel;
     [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI costLabel;
     [SerializeField] private Image costResourceTypeIcon;
+    [SerializeField] private ResourceSpriteMap resourceIcons;
     
     public void Render(Maybe<Card> c, CardTypeData ct, IResourceType primaryResourceType, bool forceShowXcostAsX = false)
     {
@@ -20,10 +21,10 @@ public class CardCostPresenter : MonoBehaviour
             {
                 costLabel.text = CostLabel(c, cost, forceShowXcostAsX);
                 costResourceTypeIcon.sprite = c.IsPresent && cost.ResourceType.Name.Equals("PrimaryResource")
-                    ? c.Value.Owner.State.PrimaryResource.Icon
+                    ? resourceIcons.Get(c.Value.Owner.State.PrimaryResource.Name)
                     : cost.ResourceType.Name.Equals("PrimaryResource")
-                        ? primaryResourceType.Icon
-                        : cost.ResourceType.Icon;
+                        ? resourceIcons.Get(primaryResourceType.Name)
+                        : resourceIcons.Get(cost.ResourceType.Name);
             }
         }
         catch (Exception e)

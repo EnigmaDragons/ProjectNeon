@@ -12,6 +12,7 @@ public class SingleUseResourceNumber : MonoBehaviour
     [SerializeField] private Color positiveChangeColor = Color.green;
     [SerializeField] private Color negativeChangeColor = Color.red;
     [SerializeField] private bool showNegativeSign = true;
+    [SerializeField] private ResourceSpriteMap resourceIcons;
     
     private float _duration = SingleUseObjectDriftConfig.DefaultDuration;
     private float _fadeDuration = SingleUseObjectDriftConfig.DefaultFadeDuration;
@@ -44,7 +45,7 @@ public class SingleUseResourceNumber : MonoBehaviour
         var prefix = amt < 0 && showNegativeSign ? "-" : "";
         text.text = $"{prefix}{Mathf.Abs(amt).ToString()}";
         allResourceTypes.GetResourceTypeByName(r.ResourceType)
-            .ExecuteIfPresentOrElse(t => resourceIcon.sprite = t.Icon, () => resourceIcon.enabled = false);
+            .ExecuteIfPresentOrElse(t => resourceIcon.sprite = resourceIcons.Get(t.Name), () => resourceIcon.enabled = false);
         _remaining = _duration;
         _remainingBeforeFade = _duration - _fadeDuration;
         this.SafeCoroutineOrNothing(FloatAnim());

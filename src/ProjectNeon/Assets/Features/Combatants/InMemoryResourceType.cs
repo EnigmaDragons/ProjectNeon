@@ -5,7 +5,6 @@ using UnityEngine;
 public sealed class InMemoryResourceType : IResourceType
 {
     public string Name { get; set; } = "None";
-    public Sprite Icon { get; set; } = null;
     public int MaxAmount { get; set; } = 0;
     public int StartingAmount { get; set; } = 0;
 
@@ -14,7 +13,6 @@ public sealed class InMemoryResourceType : IResourceType
     public InMemoryResourceType(IResourceType r)
     {
         Name = r.Name;
-        Icon = r.Icon;
         MaxAmount = r.MaxAmount;
         StartingAmount = r.StartingAmount;
     }
@@ -23,7 +21,6 @@ public sealed class InMemoryResourceType : IResourceType
         if (!first.Name.Equals(second.Name))
             throw new ArgumentException("Cannot add {first.Name} to a {second.Name} modifier");
         Name = first.Name;
-        Icon = first.Icon;
         MaxAmount = operation(first.MaxAmount, second.MaxAmount);
         StartingAmount = operation(first.StartingAmount, second.StartingAmount);
     }
@@ -39,7 +36,6 @@ public static class ResourceTypeExtensions
     public static InMemoryResourceType WithAmounts(this IResourceType r, int starting) => new InMemoryResourceType
     {
         Name = r.Name,
-        Icon = r.Icon,
         StartingAmount =  starting,
         MaxAmount = r.MaxAmount
     };
@@ -47,7 +43,6 @@ public static class ResourceTypeExtensions
     public static InMemoryResourceType WithAmounts(this IResourceType r, int starting, int max) => new InMemoryResourceType
     {
         Name = r.Name,
-        Icon = r.Icon,
         StartingAmount =  starting,
         MaxAmount = max
     };
@@ -55,7 +50,6 @@ public static class ResourceTypeExtensions
     public static InMemoryResourceType WithName(this IResourceType r, string name) => new InMemoryResourceType
     {
         Name = name,
-        Icon = r.Icon,
         StartingAmount =  r.StartingAmount,
         MaxAmount = r.MaxAmount
     };

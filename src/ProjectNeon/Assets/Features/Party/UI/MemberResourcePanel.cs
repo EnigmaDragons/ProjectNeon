@@ -10,6 +10,7 @@ public class MemberResourcePanel : MonoBehaviour
     [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI resource2Text;
     [SerializeField] private Color buffColor = Color.green;
     [SerializeField] private Color debuffColor = Color.red;
+    [SerializeField] private ResourceSpriteMap resourceIcons;
 
     public MemberResourcePanel Initialized(Hero h)
     {
@@ -21,7 +22,7 @@ public class MemberResourcePanel : MonoBehaviour
         if (resourceTypes.Length > 0 && baseResourceTypes.Length > 0)
         {
             
-            resource1Icon.sprite = resourceTypes[0].Icon;
+            resource1Icon.sprite = resourceIcons.Get(resourceTypes[0].Name);
             resource1Text.text = $"{resourceTypes[0].StartingAmount}/{resourceTypes[0].MaxAmount}";
             resource1Text.color = ColorFor(((resourceTypes[0].StartingAmount - baseResourceTypes[0].StartingAmount) * 10) + (resourceTypes[0].MaxAmount - baseResourceTypes[0].MaxAmount));
         }
@@ -31,7 +32,7 @@ public class MemberResourcePanel : MonoBehaviour
         resource2Text.gameObject.SetActive(hasSecondResource);
         if (hasSecondResource)
         {
-            resource2Icon.sprite = resourceTypes[1].Icon;
+            resource2Icon.sprite = resourceIcons.Get(resourceTypes[1].Name);
             resource2Text.text = $"{resourceTypes[1].StartingAmount}/{resourceTypes[1].MaxAmount}";
             resource2Text.color = ColorFor(((resourceTypes[1].StartingAmount - baseResourceTypes[1].StartingAmount) * 10) + (resourceTypes[1].MaxAmount - baseResourceTypes[1].MaxAmount));
         }

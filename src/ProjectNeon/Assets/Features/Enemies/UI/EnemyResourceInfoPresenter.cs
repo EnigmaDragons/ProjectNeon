@@ -10,6 +10,7 @@ public class EnemyResourceInfoPresenter : MonoBehaviour
     [SerializeField] private GameObject resourcesPerTurnParent;
     [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI resourcesPerTurnLabel;
     [SerializeField] private Image resourceIcon2;
+    [SerializeField] private ResourceSpriteMap resourceIcons;
 
     public void Init(EnemyInstance e)
     {
@@ -25,8 +26,8 @@ public class EnemyResourceInfoPresenter : MonoBehaviour
             startingResourcesParent.SetActive(primaryResource.StartingAmount > 0);
             resourcesPerTurnParent.SetActive(e.ResourceGainPerTurn > 0);
             startingResourcesLabel.text = e.StartingResourceAmount.ToString();
-            icon.sprite = primaryResource.Icon;
-            resourceIcon2.sprite = primaryResource.Icon;
+            icon.sprite = resourceIcons.Get(primaryResource.Name);
+            resourceIcon2.sprite = resourceIcons.Get(primaryResource.Name);
             resourcesPerTurnLabel.text = e.ResourceGainPerTurn.ToString();
         }
     }
