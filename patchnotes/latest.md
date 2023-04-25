@@ -1,6 +1,9 @@
 ## Patch Notes - v1.0.1
 ----
 
+Feature
+- Offical Brazilian Release (it is now fully tested and ready to go!)
+
 Balance:
 - Rebalance: Lifesteal now works on shields
 - Rebalance: death touch is now unpreventable
