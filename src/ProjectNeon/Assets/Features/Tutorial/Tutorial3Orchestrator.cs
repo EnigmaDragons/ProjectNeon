@@ -46,16 +46,20 @@ public class Tutorial3Orchestrator : OnMessage<StartCardSetupRequested, TurnStar
 
     protected override void Execute(CardResolutionFinished msg)
     {
-        if (msg.MemberId == 1 && (msg.CardName == "Strike" || msg.CardName == "Charged Strike") && mageHealth == battleState.Members[4].State.Hp() && warriorHealth == battleState.Members[5].State.Hp())
+        if (msg.MemberId == 1 && msg.CardName == "Strike" && mageHealth == battleState.Members[4].State.Hp() && warriorHealth == battleState.Members[5].State.Hp())
+        {
+            Message.Publish(new ShowHeroBattleThought(5, "Thoughts/Tutorial03-01".ToLocalized()));
+        }
+        else if (msg.MemberId == 1 && msg.CardName == "Charged Strike" && mageHealth == battleState.Members[4].State.Hp() && warriorHealth == battleState.Members[5].State.Hp())
         {
             Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial03-01".ToLocalized()));
         }
-        if (msg.MemberId == 1 && msg.CardName == "Strike" && mageHealth != battleState.Members[4].State.Hp() && !_hitWithPhysicalAttack)
+        else if (msg.MemberId == 1 && msg.CardName == "Strike" && mageHealth != battleState.Members[4].State.Hp() && !_hitWithPhysicalAttack)
         {
             _hitWithPhysicalAttack = true;
             Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial03-02".ToLocalized().SafeFormatWithDefault("Oof! I can't stop your {0}", TextColors.PhysDamageColoredDark("Thoughts/Tutorial03-03".ToLocalized()))));
         }
-        if (msg.MemberId == 1 && msg.CardName == "Charged Strike" && warriorHealth != battleState.Members[5].State.Hp() && _hitWithMagicAttack)
+        else if (msg.MemberId == 1 && msg.CardName == "Charged Strike" && warriorHealth != battleState.Members[5].State.Hp() && !_hitWithMagicAttack)
         {
             _hitWithMagicAttack = true;
             Message.Publish(new ShowHeroBattleThought(5, "Thoughts/Tutorial03-04".ToLocalized().SafeFormatWithDefault("Oof! Your {0} attacks hurt", TextColors.MagicDamageColoredDark("Thoughts/Tutorial03-05".ToLocalized()))));
