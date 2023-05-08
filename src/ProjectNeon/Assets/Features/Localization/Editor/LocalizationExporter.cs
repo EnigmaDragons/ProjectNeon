@@ -84,7 +84,7 @@ public class LocalizationExporter
         { "vulnerable", "{[t:Keywords/Vulnerable]}" },
     };
 
-    private static string CardDescriptionExport(string toReplace)
+    public static string CardDescriptionExport(string toReplace)
     {
         toReplace = toReplace.Replace("<br>", "\n").Replace("\\n", "\n").ToI2Format();
         foreach (var keyword in _firstKeywords.Concat(_keywords))
