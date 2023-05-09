@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using I2.Loc;
 using UnityEditor;
 using UnityEngine;
 
@@ -80,39 +81,41 @@ public class ContentExporter
         File.WriteAllText("./HeroData.json", json);
         Log.Info("Exported Hero Data");
     }
-    
+
     [MenuItem("Neon/JSON/Export Card Content")]
     public static void ExportCardContent() =>
-        WithLocalization(() => {
-        var cards = ScriptableExtensions.GetAllInstances<AllCards>().First().Cards
-            .Where(x => !x.IsWip && x.IncludeInPools)
-            .Select(x =>
-                new CardExportData() 
-                {
-                    name = x.NameTerm.ToEnglish(),
-                    description = x.LocalizedDescription( Maybe<Member>.Missing(), ResourceQuantity.DontInterpolateX),
-                    
-                    archetype1 = x.Archetypes.Count > 0 ? x.Archetypes.ElementAt(0) : "None",
-                    archetype2 = x.Archetypes.Count > 1 ? x.Archetypes.ElementAt(1) : "None",
-                    
-                    rarity = x.Rarity.ToString(),
-                    cost = x.cost.PlusXCost ? "X" : x.cost.BaseAmount.ToString()
-                })
-            .ToArray();
+        WithLocalization(() =>
+        {
+            var cards = ScriptableExtensions.GetAllInstances<AllCards>().First().Cards
+                .Where(x => !x.IsWip && x.IncludeInPools)
+                .Select(x =>
+                    new CardExportData()
+                    {
+                        name = x.NameTerm.ToEnglish(),
+                        description =
+                            x.LocalizedDescription(Maybe<Member>.Missing(), ResourceQuantity.DontInterpolateX),
 
-        var json = JsonUtility.ToJson(new ItemsWrapper<CardExportData> { Items = cards }, true);
-        File.WriteAllText("./CardData.json", json);
-        Log.Info("Exported Card Data");
-    })
+                        archetype1 = x.Archetypes.Count > 0 ? x.Archetypes.ElementAt(0) : "None",
+                        archetype2 = x.Archetypes.Count > 1 ? x.Archetypes.ElementAt(1) : "None",
 
-    private static T WithLocalization<T>(Func<T> func)
+                        rarity = x.Rarity.ToString(),
+                        cost = x.cost.PlusXCost ? "X" : x.cost.BaseAmount.ToString()
+                    })
+                .ToArray();
+
+            var json = JsonUtility.ToJson(new ItemsWrapper<CardExportData> { Items = cards }, true);
+            File.WriteAllText("./CardData.json", json);
+            Log.Info("Exported Card Data");
+        });
+
+    private static void WithLocalization(Action action)
     {
         var editorLocalizationParams = new MpZeroEditorGlobalLocalizationParams();
         LocalizationManager.ParamManagers.Add(editorLocalizationParams);
         LocalizationManager.LocalizeAll(true);
         try
         {
-            return func();
+            action();
         }
         catch (Exception ex)
         {
