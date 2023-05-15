@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -12,8 +13,7 @@ public class DirectionalInputHandler : MonoBehaviour
     private List<DirectionalInputNodeMap> _maps = new List<DirectionalInputNodeMap>();
     private List<DirectionalInputNode> _selectedNodes = new List<DirectionalInputNode>();
     private GameObject _selectedGameObject;
-    private float _previousVertical;
-    private float _previousHorizontal;
+    private InputDirection _previousDirection = InputDirection.None;
     private InputDirection _holdingDirection = InputDirection.None;
     private float _timeTilNextMovement;
     
@@ -32,13 +32,22 @@ public class DirectionalInputHandler : MonoBehaviour
     {
         var vertical = Input.GetAxisRaw("Vertical");
         var horizontal = Input.GetAxisRaw("Horizontal");
+        var direction = InputDirection.None;
+        if (Math.Abs(vertical) >= Math.Abs(horizontal) && vertical > 0)
+            direction = InputDirection.Up;
+        else if (Math.Abs(vertical) >= Math.Abs(horizontal) && vertical < 0)
+            direction = InputDirection.Down;
+        else if (Math.Abs(vertical) < Math.Abs(horizontal) && horizontal > 0)
+            direction = InputDirection.Right;
+        else if (Math.Abs(vertical) < Math.Abs(horizontal) && horizontal < 0)
+            direction = InputDirection.Left;
 
         if (_selectedNodes.Any())
         {
-            if ((_holdingDirection == InputDirection.Up && vertical <= 0)
-                || _holdingDirection == InputDirection.Left && horizontal >= 0
-                || _holdingDirection == InputDirection.Right && horizontal <= 0
-                || _holdingDirection == InputDirection.Down && vertical >= 0)
+            if ((_holdingDirection == InputDirection.Up && direction != InputDirection.Up)
+                || (_holdingDirection == InputDirection.Left && direction != InputDirection.Left)
+                || (_holdingDirection == InputDirection.Right && direction != InputDirection.Right)
+                || (_holdingDirection == InputDirection.Down && direction != InputDirection.Down))
                 _holdingDirection = InputDirection.None;
             if (_holdingDirection != InputDirection.None)
             {
@@ -54,13 +63,13 @@ public class DirectionalInputHandler : MonoBehaviour
             }
             else
             {
-                if (vertical > 0 && _previousVertical <= 0 && SelectedMap.GetNodeInDirection(SelectedNode, InputDirection.Up) != null)
+                if (direction == InputDirection.Up && _previousDirection != InputDirection.Up && SelectedMap.GetNodeInDirection(SelectedNode, InputDirection.Up) != null)
                     _holdingDirection = InputDirection.Up;
-                else if (vertical < 0 && _previousVertical >= 0 && SelectedMap.GetNodeInDirection(SelectedNode, InputDirection.Down) != null)
+                else if (direction == InputDirection.Down && _previousDirection != InputDirection.Down && SelectedMap.GetNodeInDirection(SelectedNode, InputDirection.Down) != null)
                     _holdingDirection = InputDirection.Down;
-                else if (horizontal > 0 && _previousHorizontal <= 0 && SelectedMap.GetNodeInDirection(SelectedNode, InputDirection.Right) != null)
+                else if (direction == InputDirection.Right && _previousDirection != InputDirection.Right && SelectedMap.GetNodeInDirection(SelectedNode, InputDirection.Right) != null)
                     _holdingDirection = InputDirection.Right;
-                else if (horizontal < 0 && _previousHorizontal >= 0 && SelectedMap.GetNodeInDirection(SelectedNode, InputDirection.Left) != null)
+                else if (direction == InputDirection.Left && _previousDirection != InputDirection.Left && SelectedMap.GetNodeInDirection(SelectedNode, InputDirection.Left) != null)
                     _holdingDirection = InputDirection.Left;
                 if (_holdingDirection != InputDirection.None)
                 {
@@ -72,8 +81,7 @@ public class DirectionalInputHandler : MonoBehaviour
             }
             UpdateSelected();
         }
-        _previousVertical = vertical;
-        _previousHorizontal = horizontal;
+        _previousDirection = direction;
     }
     
     private void OnDisable()
@@ -92,7 +100,7 @@ public class DirectionalInputHandler : MonoBehaviour
             _maps.Insert(index, msg.Map);
             _selectedNodes.Insert(index, msg.Map.DefaultSelectedNode);
         }
-        if (index == 0)
+        if (index == 0 || _maps.Count == 1)
             _holdingDirection = InputDirection.None;
         UpdateSelected();
     }
