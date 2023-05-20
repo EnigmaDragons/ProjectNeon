@@ -53,7 +53,7 @@ public sealed class MemberState
         MemberId = id;
         NameTerm = nameTerm;
         PrimaryStat = primaryStat;
-        _baseStats = new EvaluatedStats(baseStats, StatType.Power);
+        _baseStats = new EvaluatedStats(baseStats, primaryStat);
 
         _counters[TemporalStatType.HP.GetString()] =
             new BattleCounter(TemporalStatType.HP, initialHp, () => _currentStats.MaxHp());
