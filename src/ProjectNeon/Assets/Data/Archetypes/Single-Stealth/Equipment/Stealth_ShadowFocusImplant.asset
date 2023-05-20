@@ -14,12 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3
   displayName: 
-  description: 'On {[t:Keywords/Stealth]}: Gain +5 {[t:Stats/Stat-Attack]} until
-    the end of next turn'
+  description: 'On {[t:Keywords/Stealth]}: Gain +3 {[t:Stats/Stat-Attack]}'
   corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 1e6b060bb2d10434c8d325b3765125dd, type: 2}
-  rarity: 3
+  rarity: 4
   slot: 2
   priceFactor: 1
   modifiers:
@@ -50,13 +49,15 @@ MonoBehaviour:
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: 'On Stealth: Gain +5 Attack until the end of next turn'
+    StatusDetailText: 'On Stealth: Gain +3 Attack'
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
       EvaluationPartialFormula: 
       Prefix: 
       Suffix: 
+      PrefixTerm: 
+      SuffixTerm: 
     FlavorText:
       UseConstant: 0
       ConstantValue: 
