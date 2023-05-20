@@ -13,11 +13,12 @@ const getNumberOfRunsPlayed = async (metrics) => {
   return items.length;
 }
 
-const getWinLossDetails = async (metrics) => {
+const getWinLossDetails = async (metrics, numRunsPlayed) => {
   const winLossEvents = await metrics.queryGamesWonOrLost();
   const result = { 
     wins: 0, 
-    losses: 0 
+    losses: 0,
+    incompletes: numRunsPlayed - winLossEvents.length
   };
   winLossEvents.forEach(wl => {
     if (wl.EventType == 'gameLost') {
@@ -27,7 +28,8 @@ const getWinLossDetails = async (metrics) => {
     }
   });
   const numCompletedRuns = result.wins + result.losses
-  result.winRate = naiveRound(result.wins / numCompletedRuns, 2);
+  result.completedWinRate = naiveRound(result.wins / numCompletedRuns, 2);
+  result.totalWinRate = naiveRound(result.wins / numRunsPlayed, 2);
   result.numCompletedRuns = numCompletedRuns;
   return result;
 }
@@ -35,11 +37,13 @@ const getWinLossDetails = async (metrics) => {
 const getPlaySummary = async (metrics) => {
   const numPlayers = await getNumberOfPlayers(metrics);
   const numRunsPlayed = await getNumberOfRunsPlayed(metrics);
-  const winLossDetails = await getWinLossDetails(metrics);
-  return ({ numPlayers, 
+  const winLossDetails = await getWinLossDetails(metrics, numRunsPlayed);
+  return ({ 
+    numPlayers, 
     numRunsPlayed, 
     ...winLossDetails, 
-    numIncompleteRuns: numRunsPlayed - winLossDetails.numCompletedRuns });
+    numIncompleteRuns: numRunsPlayed - winLossDetails.numCompletedRuns 
+  });
 }
 
 const enrichedWithRates = (obj, selectNumerator, selectDenominator) => {
@@ -79,6 +83,8 @@ const getHeroSelectionDetails = async (metrics) => {
   const heroesPicked = await metrics.queryHeroesPicked();
   const result = ({});
   heroesPicked.forEach(h => {
+    if (!result[h.heroName])
+      result[h.heroName] = { selected: 0, presented: 0 };
     h.heroOptions.forEach(o => { 
       if (!result[o])
         result[o] = { selected: 0, presented: 0 };
@@ -303,7 +309,7 @@ const getLevelUpSummary = async (metrics) => {
   return ({ items: itemSummary, heroes: heroItemSummary });
 }
 
-const getAdventureProgressMetrics = async (metrics) => 
+// const getAdventureProgressMetrics = async (metrics) => 
 
 module.exports = { getPlaySummary, getHeroSummary, getCardSummary,
   getHeroSelectionDetails, getCardSelectionDetails, getAttritionFactors, getLevelUpSelectionDetails, getLevelUpSummary };
