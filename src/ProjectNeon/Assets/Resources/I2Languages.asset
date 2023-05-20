@@ -7531,8 +7531,8 @@ MonoBehaviour:
       Description: 
       Languages:
       - "Deal {[0]} \n<i>({[1]})</i>\n\nLose {[2]} your {[t:Stats/Stat-Shield]}"
-      - "\u9020\u6210{[0]}<i>({[1]})</i>\u4F24\u5BB3\n\n\u5931\u53BB\u4F60\u4E00\u534A\u7684{[t:Stats/Stat-Shield]}"
-      - "\u9020\u6210{[0]}<i>({[1]})</i>\u50B7\u5BB3\n\n\u5931\u53BB\u4F60\u4E00\u534A\u7684{[t:Stats/Stat-Shield]}"
+      - "\u9020\u6210{[0]}<i>({[1]})</i>\u4F24\u5BB3\n\n\u5931\u53BB\u4F60{[2]}\u4E00\u534A\u7684{[t:Stats/Stat-Shield]}"
+      - "\u9020\u6210{[0]}<i>({[1]})</i>\u50B7\u5BB3\n\n\u5931\u53BB\u4F60{[2]}\u4E00\u534A\u7684{[t:Stats/Stat-Shield]}"
       - 
       - 'Inflige {[0]} <i>({[1]})</i>
 
@@ -8794,10 +8794,8 @@ MonoBehaviour:
         Gives {[0]} {[t:Stats/Stat-Resistance]} & {[0]}
         {[t:Stats/Stat-Armor]}
 
-        Start of turn: Deal {[1]}
-
-'
-      - "\u5411\u5176\u4ED6\u76DF\u53CB\uFF1A\n\u7ED9\u4E88{[0]}{[t:Stats/Stat-Resistance]}&{[t:Stats/Stat-Armor]}\n\u56DE\u5408\u5F00\u59CB\u65F6\uFF1A\u9020\u6210{[1]}\u4F24\u5BB3\n"
+        Start of turn: Deal {[1]}'
+      - "\u5411\u5176\u4ED6\u76DF\u53CB\uFF1A\n\u7ED9\u4E88{[0]}{[t:Stats/Stat-Resistance]}&{[t:Stats/Stat-Armor]}\n\u56DE\u5408\u5F00\u59CB\u65F6\uFF1A\u9020\u6210{[1]}\u4F24\u5BB3"
       - "\u5411\u5176\u4ED6\u76DF\u53CB\uFF1A\n\u7D66\u4E88{[0]}{[t:Stats/Stat-Resistance]}&{[t:Stats/Stat-Armor]}\n\u56DE\u5408\u958B\u59CB\u6642\uFF1A\u9020\u6210{[1]}\u50B7\u5BB3"
       - 
       - 'A otros aliados:
@@ -9570,8 +9568,10 @@ MonoBehaviour:
 
         Grenade {[1]} <b>| {[t:Keywords/Critical]}:</b>
         Has been shot'
-      - "<b>\u95EA\u51FB\uFF1A</b>\u9009\u62E9\u5E76\u83B7\u5F97\u4E00\u5F20\u724C\uFF1A\n\u5C04\u51FB\uFF1A\u63A8\u8FDB\n\u624B\u69B4\u5F39\uFF1A\u58F0\u6CE2\u624B\u69B4\u5F39"
-      - "<b>\u9583\u64CA\uFF1A</b>\u9078\u64C7\u4E26\u7372\u5F97\u4E00\u5F35\u724C\uFF1A\n\u5C04\u64CA\uFF1A\u63A8\u9032\n\u624B\u69B4\u5F48\uFF1A\u8072\u6CE2\u624B\u69B4\u5F48"
+      - "<b>\u95EA\u51FB\uFF1A</b>\u9009\u62E9\u5E76\u83B7\u5F97\u4E00\u5F20\u724C\uFF1A\n\u5C04\u51FB
+        {[0]}\uFF1A\u63A8\u8FDB\n\u624B\u69B4\u5F39 {[1]}\uFF1A\u58F0\u6CE2\u624B\u69B4\u5F39"
+      - "<b>\u9583\u64CA\uFF1A</b>\u9078\u64C7\u4E26\u7372\u5F97\u4E00\u5F35\u724C\uFF1A\n\u5C04\u64CA
+        {[0]}\uFF1A\u63A8\u9032\n\u624B\u69B4\u5F48 {[1]}\uFF1A\u8072\u6CE2\u624B\u69B4\u5F48"
       - 
       - "<b>R\xE1pido:</b> Elige una carta para ganar:\nDispara {[0]} +<b> {[t:Keywords/Stun]}
         1</b> Si golpea una granada\nGranada {[1]} <b>| {[t:Keywords/Critical]}:</b>
@@ -64924,7 +64924,7 @@ MonoBehaviour:
     Google_WebServiceURL: https://script.google.com/macros/s/AKfycbyxEWOh-oly9VUweggR4FE-PJti-q6vB4eiq60gjqN60mMW8pqUSFQDcNZf5paleAfH/exec
     Google_SpreadsheetKey: 1_k0GnzCkReGlY_2s-ODT0hVniGHYfv2qnG9nqRQ4VvU
     Google_SpreadsheetName: I2Loc MetroplexZero Localization
-    Google_LastUpdatedVersion: 1684611062662
+    Google_LastUpdatedVersion: 1684612010255
     Google_Password: 23jh9hj2rjfhj33^$^%^$inhgf9g9j90i
     GoogleUpdateFrequency: 2
     GoogleInEditorCheckFrequency: 2
