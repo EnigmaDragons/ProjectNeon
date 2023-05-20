@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 10
   displayName: Cranial Machine Learning
-  description: Additional {[t:Keywords/CardCycles]} based on {[t:Stats/Stat-Leadership]}
+  description: 'Team: +5 {[t:Keywords/CardCycles]}'
   corp: {fileID: 11400000, guid: 635ceb600e2d3cc4eae947d02d89a417, type: 2}
   archetypes:
   - {fileID: 11400000, guid: c3bd2cb0d323191448e78929b9cb214e, type: 2}
@@ -51,17 +51,20 @@ MonoBehaviour:
     StatusTag: 0
     StatusDetailText: 
     TurnDelay: 0
-    Formula: 0.2 * LD
+    Formula: 5
     InterpolatePartialFormula:
       EvaluationPartialFormula: 
       Prefix: 
       Suffix: 
+      PrefixTerm: 
+      SuffixTerm: 
     FlavorText:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
     ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
