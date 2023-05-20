@@ -7,6 +7,8 @@ using UnityEngine;
 
 public static class Formula
 {
+    private const bool _shouldLogDebug = false;
+    
     private static readonly StatType[] StatTypes = Enum.GetValues(typeof(StatType)).Cast<StatType>().ToArray();
     private static readonly TemporalStatType[] TemporalStatTypes = Enum.GetValues(typeof(TemporalStatType)).Cast<TemporalStatType>().ToArray();
     private static readonly CardTag[] CardTags = Enum.GetValues(typeof(CardTag)).Cast<CardTag>().ToArray();
@@ -50,6 +52,8 @@ public static class Formula
             var dataTable = new DataTable();
             newExp = ResolveConditionals(newExp, dataTable);
             var result = Convert.ToSingle(dataTable.Compute(newExp, null));
+            if (_shouldLogDebug)
+                Log.Info($"Base Power {ctx.Source.BaseStats._power} - Current Power {ctx.Source.Stats._power} - {newExp} - {result}");
             return result;
         }
         catch (Exception e)

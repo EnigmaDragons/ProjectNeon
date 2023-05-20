@@ -1,25 +1,26 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 public sealed class WithPowerCountingAsStat : IStats
 {
     private IStats _inner;
+    private IStats _baseStats;
     private StatType _primary;
 
-    public WithPowerCountingAsStat() : this(new StatAddends(), StatType.Attack) {}
-    public WithPowerCountingAsStat(IStats inner, StatType primary) => Initialized(inner, primary);
+    public WithPowerCountingAsStat() : this(new StatAddends(), new StatAddends(), StatType.Attack) {}
+    private WithPowerCountingAsStat(IStats inner,  IStats baseStats, StatType primary) => Initialized(inner, baseStats, primary);
 
-    public WithPowerCountingAsStat Initialized(IStats inner, StatType primary)
+    public WithPowerCountingAsStat Initialized(IStats inner, IStats baseStats, StatType primary)
     {
         _inner = inner;
         _primary = primary;
+        _baseStats = baseStats;
         return this;
     }
 
     public float this[StatType statType] => statType == StatType.Power
         ? 0
         : statType == _primary
-            ? _inner[statType] + _inner[StatType.Power]
+            ? _inner[statType] + (_inner[StatType.Power] - _baseStats[StatType.Power]) // Only add Additional Power
             : _inner[statType];
 
     public float this[TemporalStatType statType] => _inner[statType];
@@ -39,5 +40,5 @@ public static class WithPowerCountingAsStatExtensions
 
     public static bool Init = true;
     
-    public static IStats WithPowerCountedAs(this IStats s, StatType primary) => GetNext().Initialized(s, primary);
+    public static IStats WithPowerCountedAs(this IStats s, IStats baseStats, StatType primary) => GetNext().Initialized(s, baseStats, primary);
 }

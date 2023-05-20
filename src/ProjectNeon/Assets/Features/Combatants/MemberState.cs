@@ -30,7 +30,7 @@ public sealed class MemberState
     private IStats GetCurrentStats() => _baseStats
         .Plus(_additiveMods.Where(x => x.IsActive).Select(x => x.Stats).ToArray())
         .Times(_multiplierMods.Where(x => x.IsActive).Select(x => x.Stats).ToArray())
-        .WithPowerCountedAs(PrimaryStat)
+        .WithPowerCountedAs(_baseStats, PrimaryStat)
         .NotBelowZero(StatExtensions.StatsThatCanGoBelowZero)
         .WithWholeNumbersWhereExpected()
         .WithMaxHPMinimumOne();
