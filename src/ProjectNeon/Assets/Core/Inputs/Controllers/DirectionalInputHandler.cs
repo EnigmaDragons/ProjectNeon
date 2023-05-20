@@ -122,12 +122,12 @@ public class DirectionalInputHandler : MonoBehaviour
         if (_selectedGameObject != null && (_selectedNodes.Count == 0 || _selectedNodes[0].Selectable != _selectedGameObject))
         {
             _selectedGameObject = null;
-            eventSystem.SetSelectedGameObject(_selectedGameObject);
+            //eventSystem.SetSelectedGameObject(_selectedGameObject); commented out temporarily
         }
         if (_selectedGameObject == null && _selectedNodes.Count > 0)
         {
             _selectedGameObject = _selectedNodes[0].Selectable;
-            eventSystem.SetSelectedGameObject(_selectedGameObject);
+            //eventSystem.SetSelectedGameObject(_selectedGameObject);
         }
     }
 }
