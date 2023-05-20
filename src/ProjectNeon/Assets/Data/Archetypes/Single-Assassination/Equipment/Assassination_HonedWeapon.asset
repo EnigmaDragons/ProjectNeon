@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 110
   displayName: 
-  description: 'On {[t:Keywords/Marked]}: Gain +2 {[t:Stats/Stat-Attack]} for the
+  description: 'On {[t:Keywords/Marked]}: Gain +1 {[t:Stats/Stat-Attack]} for the
     battle'
   corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes:
@@ -47,19 +47,22 @@ MonoBehaviour:
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: 'On Mark: Gain +2 Attack for the battle'
+    StatusDetailText: 'On Mark: Gain +1 Attack for the battle'
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
       EvaluationPartialFormula: 
       Prefix: 
       Suffix: 
+      PrefixTerm: 
+      SuffixTerm: 
     FlavorText:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
     ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
     ReactionConditionType: 24
     ReactionEffectScope:
       UseConstant: 0
