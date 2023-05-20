@@ -14,17 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 18
   displayName: 
-  description: 'On {[t:Keywords/OnSlay]}: Gain +2 {[t:Keywords/PrimaryStat]} for
+  description: 'On {[t:Keywords/OnSlay]}: Gain +4 {[t:Keywords/PrimaryStat]} for
     the battle'
   corp: {fileID: 11400000, guid: 635ceb600e2d3cc4eae947d02d89a417, type: 2}
   archetypes: []
-  rarity: 3
+  rarity: 2
   slot: 2
   priceFactor: 1
-  modifiers:
-  - ModifierType: 0
-    Amount: 0
-    StatType: 
+  modifiers: []
   resourceModifiers: []
   turnStartEffects: []
   turnEndEffects: []
@@ -49,19 +46,22 @@ MonoBehaviour:
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: 'On Slay: Gain +2 Primary Stat for the battle'
+    StatusDetailText: 'On Slay: Gain +4 Primary Stat for the battle'
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
       EvaluationPartialFormula: 
       Prefix: 
       Suffix: 
+      PrefixTerm: 
+      SuffixTerm: 
     FlavorText:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
     ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
     ReactionConditionType: 21
     ReactionEffectScope:
       UseConstant: 1
