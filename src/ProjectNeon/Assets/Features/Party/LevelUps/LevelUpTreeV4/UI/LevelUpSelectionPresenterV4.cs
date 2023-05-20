@@ -104,7 +104,7 @@ public class LevelUpSelectionPresenterV4 : OnMessage<LevelUpOptionSelected>, ILo
         faintLevelLabel.DOColor(Color.white, 2.4f).SetEase(Ease.InQuad);
         faintClassName.DOColor(Color.white, 2.4f).SetEase(Ease.Linear);
         optionsPresenter.ClearUnselectedOptions(msg.Selected);
-        AllMetrics.PublishLevelUpOptionSelection(_hero.NameTerm.ToEnglish(), _hero.Level, msg.Selected.Description, msg.Options.Select(o => o.Description).ToArray());
+        AllMetrics.PublishLevelUpOptionSelection(_hero.NameTerm.ToEnglish(), _hero.Level, msg.Selected.EnglishDescription, msg.Options.Select(o => o.EnglishDescription).ToArray());
         nodeInfo.HeroLevelUpAugments = Maybe<StaticEquipment[]>.Missing();
         nodeInfo.DraftLevelUpOptions = Maybe<DraftWildLevelUpData[]>.Missing();
         msg.Selected.SelectAsLevelUp(_hero);

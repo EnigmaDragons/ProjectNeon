@@ -9,6 +9,7 @@ public class NewBasicLevelUpOption : StaticHeroLevelUpOption, ILocalizeTerms
 
     public override string IconName => "";
     public override string Description => $"{"LevelUps/NewBasic".ToLocalized()}: {card.NameTerm.ToLocalized()}";
+    public override string EnglishDescription => $"{"LevelUps/NewBasic".ToEnglish()}: {card.NameTerm.ToLocalized()}";
 
     public override void Apply(Hero h)
     {

@@ -26,6 +26,7 @@ public class LevelUpOptionWithHpAndStatGain : LevelUpOption
     
     public string IconName => _baseOption.IconName;
     public string Description => _baseOption.Description;
+    public string EnglishDescription => _baseOption.EnglishDescription;
     public void ShowDetail() => _baseOption.ShowDetail();
     public bool HasDetail => _baseOption.HasDetail;
     public bool IsFunctional => _baseOption.IsFunctional;

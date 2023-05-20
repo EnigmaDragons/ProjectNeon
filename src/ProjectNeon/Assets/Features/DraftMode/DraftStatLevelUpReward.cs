@@ -7,11 +7,13 @@ public class DraftStatLevelUpReward : LevelUpOption
     
     public string IconName => "";
     public string Description { get; }
+    public string EnglishDescription { get; }
 
-    public DraftStatLevelUpReward(string description, Action action)
+    public DraftStatLevelUpReward(string description, string englishDescription, Action action)
     {
         _action = action;
         Description = description;
+        EnglishDescription = englishDescription;
     }
     
     public void SelectAsLevelUp(Hero h)

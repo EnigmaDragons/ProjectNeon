@@ -4,6 +4,7 @@ public interface LevelUpOption
 {
     string IconName { get; }
     string Description { get; }
+    string EnglishDescription { get; }
     public void SelectAsLevelUp(Hero h);
     public bool IsFunctional { get; }
     

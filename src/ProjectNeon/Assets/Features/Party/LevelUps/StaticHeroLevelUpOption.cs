@@ -7,6 +7,7 @@ public abstract class StaticHeroLevelUpOption : ScriptableObject, LevelUpOption
     public int Id => id;
     public abstract string IconName { get; }
     public abstract string Description { get; }
+    public abstract string EnglishDescription { get; }
 
     public void SelectAsLevelUp(Hero h)
     {

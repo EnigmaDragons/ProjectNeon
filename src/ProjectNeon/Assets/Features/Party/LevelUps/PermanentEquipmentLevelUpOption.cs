@@ -7,6 +7,7 @@ public class PermanentEquipmentLevelUpOption : StaticHeroLevelUpOption, ILocaliz
     
     public override string IconName => "";
     public override string Description => $"{"LevelUps/PermanentEquipment".ToLocalized()}: {equipment.LocalizationNameTerm().ToLocalized()}";
+    public override string EnglishDescription =>  $"{"LevelUps/PermanentEquipment".ToEnglish()}: {equipment.LocalizationNameTerm().ToEnglish()}";
 
     public override void Apply(Hero h) => h.ApplyPermanent(equipment);
 

@@ -14,6 +14,7 @@ public class WithCustomPresenter : LevelUpOption
 
     public string IconName => _baseOption.IconName;
     public string Description => _baseOption.Description;
+    public string EnglishDescription => _baseOption.EnglishDescription;
     public void SelectAsLevelUp(Hero h) => _baseOption.SelectAsLevelUp(h);
     public void ShowDetail() => _baseOption.ShowDetail();
     public bool HasDetail => _baseOption.HasDetail;

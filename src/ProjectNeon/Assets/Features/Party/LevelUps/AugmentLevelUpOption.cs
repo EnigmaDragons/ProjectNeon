@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class AugmentLevelUpOption : LevelUpOption
@@ -14,6 +13,7 @@ public class AugmentLevelUpOption : LevelUpOption
 
     public string IconName => "Augment";
     public string Description => _e.LocalizationNameTerm().ToLocalized();
+    public string EnglishDescription => _e.LocalizationNameTerm().ToEnglish();
     
     public void SelectAsLevelUp(Hero h)
     {
