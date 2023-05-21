@@ -126,6 +126,8 @@ namespace ChangeLogGenerator
             { "Rebalance:", "Balance Changes" },
             { "Rebalanced:", "Balance Changes" },
             { "Nerfed", "Balance Changes" },
+            { "Buff", "Balance Changes" },
+            { "Buffed", "Balance Changes" },
 
             { "Cards", "New Content" },
             { "Zone", "New Content" },
