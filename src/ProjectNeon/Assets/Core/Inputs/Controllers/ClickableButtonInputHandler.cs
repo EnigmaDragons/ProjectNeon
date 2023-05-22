@@ -1,7 +1,9 @@
-﻿namespace Core.Inputs.Controllers
+﻿using UnityEngine;
+
+public class ClickableButtonInputHandler : MonoBehaviour
 {
-    public class ClickableButtonInputHandler
+    private void Update()
     {
-        
+
     }
 }

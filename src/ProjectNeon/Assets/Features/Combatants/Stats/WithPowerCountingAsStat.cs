@@ -13,7 +13,7 @@ public sealed class WithPowerCountingAsStat : IStats
     {
         _inner = inner;
         _primary = primary;
-        _baseStats = baseStats;
+        _baseStats = baseStats ?? new StatAddends();
         return this;
     }
 

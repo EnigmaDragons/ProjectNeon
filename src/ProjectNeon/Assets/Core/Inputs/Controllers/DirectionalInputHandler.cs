@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class DirectionalInputHandler : MonoBehaviour
 {
@@ -82,6 +83,9 @@ public class DirectionalInputHandler : MonoBehaviour
             UpdateSelected();
         }
         _previousDirection = direction;
+        
+        //if (Input.GetKeyDown("joystick button 0"))
+            //_selectedGameObject.GetComponent<Button>()?.onClick?.Invoke();
     }
     
     private void OnDisable()
@@ -122,7 +126,7 @@ public class DirectionalInputHandler : MonoBehaviour
         if (_selectedGameObject != null && (_selectedNodes.Count == 0 || _selectedNodes[0].Selectable != _selectedGameObject))
         {
             _selectedGameObject = null;
-            //eventSystem.SetSelectedGameObject(_selectedGameObject); commented out temporarily
+            //eventSystem.SetSelectedGameObject(_selectedGameObject);
         }
         if (_selectedGameObject == null && _selectedNodes.Count > 0)
         {
