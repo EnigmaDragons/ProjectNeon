@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ public class DirectionalInputHandler : MonoBehaviour
     [SerializeField] private EventSystem eventSystem;
     [SerializeField] private float holdSecondsBeforeSecondInput;
     [SerializeField] private float holdSecondsBetweenMovement;
+    [SerializeField] private float minimumMovementBeforeDirectionCounted = 0;
 
     private List<DirectionalInputNodeMap> _maps = new List<DirectionalInputNodeMap>();
     private List<DirectionalInputNode> _selectedNodes = new List<DirectionalInputNode>();
@@ -31,16 +33,20 @@ public class DirectionalInputHandler : MonoBehaviour
 
     private void Update()
     {
+        if (!_maps.Any())
+            return;
+        
+        var changedSelection = false;
         var vertical = Input.GetAxisRaw("Vertical");
         var horizontal = Input.GetAxisRaw("Horizontal");
         var direction = InputDirection.None;
-        if (Math.Abs(vertical) >= Math.Abs(horizontal) && vertical > 0)
+        if (Math.Abs(vertical) >= Math.Abs(horizontal) && vertical > minimumMovementBeforeDirectionCounted)
             direction = InputDirection.Up;
-        else if (Math.Abs(vertical) >= Math.Abs(horizontal) && vertical < 0)
+        else if (Math.Abs(vertical) >= Math.Abs(horizontal) && vertical < -minimumMovementBeforeDirectionCounted)
             direction = InputDirection.Down;
-        else if (Math.Abs(vertical) < Math.Abs(horizontal) && horizontal > 0)
+        else if (Math.Abs(vertical) < Math.Abs(horizontal) && horizontal > minimumMovementBeforeDirectionCounted)
             direction = InputDirection.Right;
-        else if (Math.Abs(vertical) < Math.Abs(horizontal) && horizontal < 0)
+        else if (Math.Abs(vertical) < Math.Abs(horizontal) && horizontal < -minimumMovementBeforeDirectionCounted)
             direction = InputDirection.Left;
 
         if (_selectedNodes.Any())
@@ -56,6 +62,7 @@ public class DirectionalInputHandler : MonoBehaviour
                 if (_timeTilNextMovement <= 0)
                 {
                     _selectedNodes[0] = SelectedMap.GetNodeInDirection(SelectedNode, _holdingDirection);
+                    changedSelection = true;
                     if (SelectedMap.GetNodeInDirection(SelectedNode, _holdingDirection) == null)
                         _holdingDirection = InputDirection.None;
                     else
@@ -76,6 +83,7 @@ public class DirectionalInputHandler : MonoBehaviour
                 {
                     _timeTilNextMovement = holdSecondsBeforeSecondInput;
                     _selectedNodes[0] = SelectedMap.GetNodeInDirection(SelectedNode, _holdingDirection);
+                    changedSelection = true;
                     if (SelectedMap.GetNodeInDirection(SelectedNode, _holdingDirection) == null)
                         _holdingDirection = InputDirection.None;
                 }
@@ -84,10 +92,37 @@ public class DirectionalInputHandler : MonoBehaviour
         }
         _previousDirection = direction;
         
-        //if (Input.GetKeyDown("joystick button 0"))
-            //_selectedGameObject.GetComponent<Button>()?.onClick?.Invoke();
+        if (Input.GetKeyDown("joystick button 0"))
+            ActivateControl(_selectedGameObject);
+        else if (Input.GetKeyDown("joystick button 1"))
+            ActivateControl(_maps[0].BackObject);
+        else if (!changedSelection && _selectedGameObject.TryGetComponent<Slider>(out var slider))
+        {
+            if (horizontal > minimumMovementBeforeDirectionCounted)
+                slider.value += 0.01f;
+            else if (horizontal < -minimumMovementBeforeDirectionCounted)
+                slider.value -= 0.01f;
+        }
+            
     }
-    
+
+    private void ActivateControl(GameObject control)
+    {
+        if (control == null)
+            return;
+        if (control.TryGetComponent<Button>(out var button))
+            button.onClick.Invoke();
+        else if (control.TryGetComponent<Toggle>(out var toggle))
+            toggle.isOn = !toggle.isOn;
+        else if (control.TryGetComponent<TMP_Dropdown>(out var dropdown))
+        {
+            if (dropdown.IsExpanded)
+                dropdown.Hide();
+            else
+                dropdown.Show();
+        }
+    }
+
     private void OnDisable()
         => Message.Unsubscribe(this);
 
@@ -126,12 +161,12 @@ public class DirectionalInputHandler : MonoBehaviour
         if (_selectedGameObject != null && (_selectedNodes.Count == 0 || _selectedNodes[0].Selectable != _selectedGameObject))
         {
             _selectedGameObject = null;
-            //eventSystem.SetSelectedGameObject(_selectedGameObject);
+            eventSystem.SetSelectedGameObject(_selectedGameObject);
         }
         if (_selectedGameObject == null && _selectedNodes.Count > 0)
         {
             _selectedGameObject = _selectedNodes[0].Selectable;
-            //eventSystem.SetSelectedGameObject(_selectedGameObject);
+            eventSystem.SetSelectedGameObject(_selectedGameObject);
         }
     }
 }

@@ -8,7 +8,7 @@ public class LanguageSelectionPresenter : MonoBehaviour
 
     public LanguageOption[] Options => config.Languages.ToArray();
     
-    void Start()
+    void Awake()
     {
         var enabledOptions = Options.Where(o => o.Enabled).ToArray();
         for (var i = 0; i < optionButtons.Length; i++)
