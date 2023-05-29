@@ -703,7 +703,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6405897044347270493}
   - component: {fileID: 6305085834335353386}
-  - component: {fileID: 8601712566010163045}
+  - component: {fileID: 4867801687210487847}
+  - component: {fileID: 9059280481825346110}
   m_Layer: 0
   m_Name: Panel
   m_TagString: Untagged
@@ -754,7 +755,7 @@ MonoBehaviour:
   m_Spacing: {x: 80, y: 40}
   m_Constraint: 0
   m_ConstraintCount: 2
---- !u!114 &8601712566010163045
+--- !u!114 &4867801687210487847
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -763,15 +764,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 9071894185551192976}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf3a0448ce94458982d084dfab665b1b, type: 3}
+  m_Script: {fileID: 11500000, guid: bc8795bd89de40019614d04663e679e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   z: 1
-  group: {fileID: 6305085834335353386}
-  back: {fileID: 9112792506099725266}
-  AdditionalNodes:
-  - Selectable: {fileID: 9112792506099725266}
-    Position: 12
+  backObject: {fileID: 9112792506099725266}
+  nodes:
+  - {fileID: 7381755804757999950}
+  containers:
+  - {fileID: 9059280481825346110}
+  defaultSelectedContainer: {fileID: 9059280481825346110}
+  defaultSelectedNode: {fileID: 0}
+--- !u!114 &9059280481825346110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9071894185551192976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71a6355b2714fecb9b5f50e3a08639b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9101732270289169646
 GameObject:
   m_ObjectHideFlags: 0

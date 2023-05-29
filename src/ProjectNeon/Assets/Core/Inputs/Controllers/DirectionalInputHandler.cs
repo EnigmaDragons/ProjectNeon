@@ -19,6 +19,7 @@ public class DirectionalInputHandler : MonoBehaviour
     private InputDirection _previousDirection = InputDirection.None;
     private InputDirection _holdingDirection = InputDirection.None;
     private float _timeTilNextMovement;
+    private bool _disabled;
     
     private DirectionalInputNodeMap SelectedMap => _maps.Any() ? _maps[0] : null;
     private DirectionalInputNode SelectedNode => _selectedNodes.Any() ? _selectedNodes[0] : null;
@@ -28,12 +29,15 @@ public class DirectionalInputHandler : MonoBehaviour
         _maps = new List<DirectionalInputNodeMap>();
         _selectedNodes = new List<DirectionalInputNode>();
         Message.Subscribe<DirectionalInputNodeMapEnabled>(Execute, this);
+        Message.Subscribe<DirectionalInputNodeMapChanged>(Execute, this);
         Message.Subscribe<DirectionalInputNodeMapDisabled>(Execute, this);
+        Message.Subscribe<DisableController>(Execute, this);
+        Message.Subscribe<EnableController>(Execute, this);
     }
 
     private void Update()
     {
-        if (!_maps.Any())
+        if (!_maps.Any() || _disabled)
             return;
         
         var changedSelection = false;
@@ -96,7 +100,7 @@ public class DirectionalInputHandler : MonoBehaviour
             ActivateControl(_selectedGameObject);
         else if (Input.GetKeyDown("joystick button 1"))
             ActivateControl(_maps[0].BackObject);
-        else if (!changedSelection && _selectedGameObject.TryGetComponent<Slider>(out var slider))
+        else if (!changedSelection && _selectedGameObject != null && _selectedGameObject.TryGetComponent<Slider>(out var slider))
         {
             if (horizontal > minimumMovementBeforeDirectionCounted)
                 slider.value += 0.01f;
@@ -128,6 +132,8 @@ public class DirectionalInputHandler : MonoBehaviour
 
     private void Execute(DirectionalInputNodeMapEnabled msg)
     {
+        if (msg.Map.DefaultSelectedNode == null)
+            return;
         var index = _maps.FirstIndexOf(x => msg.Map.Z >= x.Z);
         if (index == -1)
         {
@@ -144,6 +150,28 @@ public class DirectionalInputHandler : MonoBehaviour
         UpdateSelected();
     }
 
+    private void Execute(DirectionalInputNodeMapChanged msg)
+    {
+        if (msg.UpdatedMap.DefaultSelectedNode == null)
+        {
+            Execute(new DirectionalInputNodeMapDisabled(msg.OutdatedMap));
+            return;
+        }
+        var index = _maps.IndexOf(msg.OutdatedMap);
+        if (index == -1)
+        {
+            Execute(new DirectionalInputNodeMapEnabled(msg.UpdatedMap));
+            return;
+        }
+        _maps[index] = msg.UpdatedMap;
+        _selectedNodes[index] = msg.UpdatedMap.Nodes.Any(x => x.Selectable == _selectedNodes[index].Selectable)
+            ? msg.UpdatedMap.Nodes.First(x => x.Selectable == _selectedNodes[index].Selectable)
+            : msg.UpdatedMap.DefaultSelectedNode;
+        if (index == 0 || _maps.Count == 1)
+            _holdingDirection = InputDirection.None;
+        UpdateSelected();
+    } 
+
     private void Execute(DirectionalInputNodeMapDisabled msg)
     {
         var index = _maps.IndexOf(msg.Map);
@@ -155,9 +183,24 @@ public class DirectionalInputHandler : MonoBehaviour
             _holdingDirection = InputDirection.None;
         UpdateSelected();
     }
+
+    private void Execute(DisableController msg)
+    {
+        _disabled = true;
+        eventSystem.SetSelectedGameObject(null);
+    }
+    
+    private void Execute(EnableController msg)
+    {
+        _disabled = false;
+        eventSystem.SetSelectedGameObject(_selectedGameObject);
+        UpdateSelected();
+    }
     
     private void UpdateSelected()
     {
+        if (_disabled)
+            return;
         if (_selectedGameObject != null && (_selectedNodes.Count == 0 || _selectedNodes[0].Selectable != _selectedGameObject))
         {
             _selectedGameObject = null;

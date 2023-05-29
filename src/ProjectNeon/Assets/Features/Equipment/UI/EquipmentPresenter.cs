@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class EquipmentPresenter : OnMessage<LanguageChanged>, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler, ILocalizeTerms
+public class EquipmentPresenter : OnMessage<LanguageChanged>, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler, ILocalizeTerms, ISelectHandler, IDeselectHandler
 {
     [SerializeField] private SmoothFocusDarken focusDarken;
     [SerializeField] private GameObject highlight;
@@ -106,6 +106,7 @@ public class EquipmentPresenter : OnMessage<LanguageChanged>, IPointerDownHandle
             _onClick();
     }
 
+    public void OnSelect(BaseEventData eventData) => OnPointerEnter(new PointerEventData(EventSystem.current));
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (!_useAnyHover)
@@ -125,7 +126,8 @@ public class EquipmentPresenter : OnMessage<LanguageChanged>, IPointerDownHandle
         if (_canvas != null)
             _referencedCard.IfPresent(c => _hoverCard = Instantiate(hoverCardPrototype, _canvas.transform).Initialized(c));
     }
-
+    
+    public void OnDeselect(BaseEventData eventData) => OnPointerExit(new PointerEventData(EventSystem.current));
     public void OnPointerExit(PointerEventData eventData)
     {        
         if (!_useAnyHover)

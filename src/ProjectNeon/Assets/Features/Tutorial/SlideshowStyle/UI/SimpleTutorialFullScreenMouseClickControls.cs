@@ -11,4 +11,12 @@ public class SimpleTutorialFullScreenMouseClickControls : MonoBehaviour, IPointe
         if (eventData.button == PointerEventData.InputButton.Right)
             Message.Publish(new TutorialPreviousRequested());
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown("joystick button 0"))
+            Message.Publish(new TutorialNextRequested());
+        else if (Input.GetKeyDown("joystick button 1"))
+            Message.Publish(new TutorialPreviousRequested());
+    }
 }
