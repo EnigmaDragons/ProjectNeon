@@ -1,6 +1,5 @@
 ﻿using System;
 using I2.Loc;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +11,7 @@ public class DifficultyPresenter : MonoBehaviour
     [SerializeField] private Button selectButton;
     [SerializeField] private Image difficultyImage;
     [SerializeField] private GameObject lockVisual;
+    [SerializeField] private SelectableComponent selectable;
 
     public void Init(Difficulty difficulty, bool locked, Action onSelect)
     {
@@ -23,5 +23,7 @@ public class DifficultyPresenter : MonoBehaviour
         selectButton.onClick.AddListener(() => onSelect());
         selectButton.enabled = !locked;
         lockVisual.SetActive(locked);
+        if (locked)
+            Destroy(selectable);
     }
 }

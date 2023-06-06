@@ -521,6 +521,7 @@ GameObject:
   - component: {fileID: 5582844625416546792}
   - component: {fileID: 7955018143754828303}
   - component: {fileID: 611960382121658644}
+  - component: {fileID: 2293026146333929878}
   m_Layer: 5
   m_Name: DifficultyDisplay
   m_TagString: Untagged
@@ -708,6 +709,50 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5582844625416546792}
+          m_TargetAssemblyTypeName: FModButtonSounds, EnigmaDragons.Core
+          m_MethodName: OnHoverEnter
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 1991818987913111560}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+  - eventID: 10
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1991818987913111560}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &5582844625416546792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -743,6 +788,7 @@ MonoBehaviour:
   selectButton: {fileID: 3418693505463470586}
   difficultyImage: {fileID: 9114256980842851218}
   lockVisual: {fileID: 6766515448041888867}
+  selectable: {fileID: 2293026146333929878}
 --- !u!114 &611960382121658644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -757,6 +803,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1991818987913111560}
   additional: []
+--- !u!114 &2293026146333929878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3418693505463470588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7824d9ef84346a79ab19356f2735b67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Rect: {fileID: 0}
 --- !u!1 &5470888542344522817
 GameObject:
   m_ObjectHideFlags: 0

@@ -230,6 +230,7 @@ GameObject:
   - component: {fileID: 8394752139365506585}
   - component: {fileID: 8394752139365506588}
   - component: {fileID: 8394752139365506590}
+  - component: {fileID: 2626993098245037692}
   m_Layer: 5
   m_Name: DifficultyLayout
   m_TagString: Untagged
@@ -295,6 +296,19 @@ MonoBehaviour:
   m_Spacing: {x: 100, y: 100}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &2626993098245037692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8394752139365506589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71a6355b2714fecb9b5f50e3a08639b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetDepth: 1
 --- !u!1 &8394752139522129209
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,6 +323,7 @@ GameObject:
   - component: {fileID: 8394752139522129204}
   - component: {fileID: 8394752139522129205}
   - component: {fileID: 8394752139522129208}
+  - component: {fileID: 416339819850352088}
   m_Layer: 5
   m_Name: DifficultySelectionUI
   m_TagString: Untagged
@@ -450,6 +465,28 @@ MonoBehaviour:
   sounds: {fileID: 0}
   fmodSounds: {fileID: 0}
   isPrimaryActionButton: 0
+--- !u!114 &416339819850352088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8394752139522129209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc8795bd89de40019614d04663e679e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  z: 0
+  backObject: {fileID: 6302240865958711231}
+  nodes:
+  - {fileID: 5724191565984202019}
+  dynamicComponents: []
+  containers:
+  - {fileID: 2626993098245037692}
+  defaultSelectedContainer: {fileID: 2626993098245037692}
+  defaultSelectedComponent: {fileID: 0}
+  defaultSelectedNode: {fileID: 0}
 --- !u!1001 &8394752137683633664
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -955,6 +992,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10b7caf22a31f1443b34a410eeb3cafc, type: 3}
+--- !u!1 &6302240865958711231 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2591302867839920063, guid: 10b7caf22a31f1443b34a410eeb3cafc, type: 3}
+  m_PrefabInstance: {fileID: 8394752139014432768}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &5724191565984202019 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4319039391069738275, guid: 10b7caf22a31f1443b34a410eeb3cafc, type: 3}
@@ -965,7 +1007,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6191085497185043027, guid: 10b7caf22a31f1443b34a410eeb3cafc, type: 3}
   m_PrefabInstance: {fileID: 8394752139014432768}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 6302240865958711231}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 55509cb7b084451f8226cc1a94538cef, type: 3}

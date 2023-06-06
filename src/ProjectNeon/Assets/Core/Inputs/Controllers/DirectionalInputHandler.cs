@@ -96,10 +96,12 @@ public class DirectionalInputHandler : MonoBehaviour
         }
         _previousDirection = direction;
         
-        if (Input.GetKeyDown("joystick button 0"))
+        if (Input.GetKeyDown("joystick button 0") || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
             ActivateControl(_selectedGameObject);
-        else if (Input.GetKeyDown("joystick button 1"))
+        else if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Escape))
             ActivateControl(_maps[0].BackObject);
+        else if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.Space))
+            ActivateAlternateControl(_selectedGameObject);
         else if (!changedSelection && _selectedGameObject != null && _selectedGameObject.TryGetComponent<Slider>(out var slider))
         {
             if (horizontal > minimumMovementBeforeDirectionCounted)
@@ -125,6 +127,14 @@ public class DirectionalInputHandler : MonoBehaviour
             else
                 dropdown.Show();
         }
+    }
+
+    private void ActivateAlternateControl(GameObject control)
+    {
+        if (control == null)
+            return;
+        if (control.TryGetComponent<ActionComponent>(out var action))
+            action.Execute();
     }
 
     private void OnDisable()
