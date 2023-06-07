@@ -1,0 +1,178 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eab8ee0d4f7f91a4ca569ef0eacc2738, type: 3}
+  m_Name: InputIconsManager
+  m_EditorClassIdentifier: 
+  iconSetConfiguratorSO: {fileID: 11400000, guid: d9f6a2d5fd0df16419a30f0ab431893f, type: 2}
+  usedActionAssets:
+  - {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  controlSchemeName_Keyboard: Keyboard And Mouse
+  controlSchemeName_Gamepad: Gamepad
+  showAllInputOptionsInStyles: 0
+  tintingEnabled: 0
+  openingTag: 
+  closingTag: 
+  multipleInputsDelimiter: ' <size=80%>or</size> '
+  compositeInputDelimiter: ', '
+  textDisplayForUnboundActions: Undefined
+  textDisplayLanguage: 0
+  actionNameRenamings:
+  - originalString: delta
+    outputString: Mouse
+  - originalString: position
+    outputString: Mouse
+  - originalString: leftbutton
+    outputString: Left Mouse Button
+  - originalString: rightButton
+    outputString: Right  Mouse Button
+  defaultStartDeviceType: 0
+  gamepadIconDisplaySetting: 0
+  textUpdateOptions: 0
+  rebindBehaviour: 0
+  loadAndSaveInputBindingOverrides: 1
+  displayType: 0
+  deviceChangeDelay: 0.2
+  inputStyleKeyboardDataList: []
+  inputStyleGamepadDataList:
+  - isComposite: 0
+    isPartOfComposite: 0
+    tmproReferenceText: <style=Player/Move>
+    bindingName: Player/Move
+    inputStyleString: <sprite="XBox" name="LEFT STICK">
+    inputStyleString_singleInput: <sprite="XBox" name="LEFT STICK">
+    humanReadableString: LEFT STICK
+    humanReadableString_singleInput: LEFT STICK
+    fontReferenceText: <style=font/Player/Move>
+    fontCode: \uE90B
+    fontCode_singleInput: \uE90B
+  - isComposite: 0
+    isPartOfComposite: 0
+    tmproReferenceText: <style=Player/Look>
+    bindingName: Player/Look
+    inputStyleString: <sprite="XBox" name="RIGHT STICK">
+    inputStyleString_singleInput: <sprite="XBox" name="RIGHT STICK">
+    humanReadableString: RIGHT STICK
+    humanReadableString_singleInput: RIGHT STICK
+    fontReferenceText: <style=font/Player/Look>
+    fontCode: \uE913
+    fontCode_singleInput: \uE913
+  - isComposite: 0
+    isPartOfComposite: 0
+    tmproReferenceText: <style=Player/Fire>
+    bindingName: Player/Fire
+    inputStyleString: <sprite="XBox" name="RIGHT TRIGGER">
+    inputStyleString_singleInput: <sprite="XBox" name="RIGHT TRIGGER">
+    humanReadableString: RIGHT TRIGGER
+    humanReadableString_singleInput: RIGHT TRIGGER
+    fontReferenceText: <style=font/Player/Fire>
+    fontCode: \uE912
+    fontCode_singleInput: \uE912
+  - isComposite: 1
+    isPartOfComposite: 0
+    tmproReferenceText: <style=UI/Navigate>
+    bindingName: UI/Navigate
+    inputStyleString: <sprite="XBox" name="LEFT STICK/UP"><sprite="XBox" name="RIGHT
+      STICK/UP"><sprite="XBox" name="LEFT STICK/DOWN"><sprite="XBox" name="RIGHT
+      STICK/DOWN"><sprite="XBox" name="LEFT STICK/LEFT"><sprite="XBox" name="RIGHT
+      STICK/LEFT"><sprite="XBox" name="LEFT STICK/RIGHT"><sprite="XBox" name="RIGHT
+      STICK/RIGHT"> <size=80%>or</size> <sprite="XBox" name="D-PAD">
+    inputStyleString_singleInput: <sprite="XBox" name="LEFT STICK/UP"><sprite="XBox"
+      name="RIGHT STICK/UP"><sprite="XBox" name="LEFT STICK/DOWN"><sprite="XBox"
+      name="RIGHT STICK/DOWN"><sprite="XBox" name="LEFT STICK/LEFT"><sprite="XBox"
+      name="RIGHT STICK/LEFT"><sprite="XBox" name="LEFT STICK/RIGHT"><sprite="XBox"
+      name="RIGHT STICK/RIGHT">
+    humanReadableString: LEFT STICK/UP, RIGHT STICK/UP, LEFT STICK/DOWN, RIGHT STICK/DOWN,
+      LEFT STICK/LEFT, RIGHT STICK/LEFT, LEFT STICK/RIGHT, RIGHT STICK/RIGHT <size=80%>or</size>
+      D-PAD
+    humanReadableString_singleInput: LEFT STICK/UP, RIGHT STICK/UP, LEFT STICK/DOWN,
+      RIGHT STICK/DOWN, LEFT STICK/LEFT, RIGHT STICK/LEFT, LEFT STICK/RIGHT, RIGHT
+      STICK/RIGHT
+    fontReferenceText: <style=font/UI/Navigate>
+    fontCode: \uE910\uE918\uE90D\uE915\uE90E\uE916\uE90F\uE917 <size=80%>or</size>
+      \uE904
+    fontCode_singleInput: \uE910\uE918\uE90D\uE915\uE90E\uE916\uE90F\uE917
+  - isComposite: 0
+    isPartOfComposite: 1
+    tmproReferenceText: <style=UI/Navigate/up>
+    bindingName: UI/Navigate/up
+    inputStyleString: <sprite="XBox" name="LEFT STICK/UP"> <size=80%>or</size> <sprite="XBox"
+      name="RIGHT STICK/UP">
+    inputStyleString_singleInput: <sprite="XBox" name="LEFT STICK/UP">
+    humanReadableString: LEFT STICK/UP <size=80%>or</size> RIGHT STICK/UP
+    humanReadableString_singleInput: LEFT STICK/UP
+    fontReferenceText: <style=font/UI/Navigate/up>
+    fontCode: \uE910 <size=80%>or</size> \uE918
+    fontCode_singleInput: \uE910
+  - isComposite: 0
+    isPartOfComposite: 1
+    tmproReferenceText: <style=UI/Navigate/down>
+    bindingName: UI/Navigate/down
+    inputStyleString: <sprite="XBox" name="LEFT STICK/DOWN"> <size=80%>or</size>
+      <sprite="XBox" name="RIGHT STICK/DOWN">
+    inputStyleString_singleInput: <sprite="XBox" name="LEFT STICK/DOWN">
+    humanReadableString: LEFT STICK/DOWN <size=80%>or</size> RIGHT STICK/DOWN
+    humanReadableString_singleInput: LEFT STICK/DOWN
+    fontReferenceText: <style=font/UI/Navigate/down>
+    fontCode: \uE90D <size=80%>or</size> \uE915
+    fontCode_singleInput: \uE90D
+  - isComposite: 0
+    isPartOfComposite: 1
+    tmproReferenceText: <style=UI/Navigate/left>
+    bindingName: UI/Navigate/left
+    inputStyleString: <sprite="XBox" name="LEFT STICK/LEFT"> <size=80%>or</size>
+      <sprite="XBox" name="RIGHT STICK/LEFT">
+    inputStyleString_singleInput: <sprite="XBox" name="LEFT STICK/LEFT">
+    humanReadableString: LEFT STICK/LEFT <size=80%>or</size> RIGHT STICK/LEFT
+    humanReadableString_singleInput: LEFT STICK/LEFT
+    fontReferenceText: <style=font/UI/Navigate/left>
+    fontCode: \uE90E <size=80%>or</size> \uE916
+    fontCode_singleInput: \uE90E
+  - isComposite: 0
+    isPartOfComposite: 1
+    tmproReferenceText: <style=UI/Navigate/right>
+    bindingName: UI/Navigate/right
+    inputStyleString: <sprite="XBox" name="LEFT STICK/RIGHT"> <size=80%>or</size>
+      <sprite="XBox" name="RIGHT STICK/RIGHT">
+    inputStyleString_singleInput: <sprite="XBox" name="LEFT STICK/RIGHT">
+    humanReadableString: LEFT STICK/RIGHT <size=80%>or</size> RIGHT STICK/RIGHT
+    humanReadableString_singleInput: LEFT STICK/RIGHT
+    fontReferenceText: <style=font/UI/Navigate/right>
+    fontCode: \uE90F <size=80%>or</size> \uE917
+    fontCode_singleInput: \uE90F
+  - isComposite: 0
+    isPartOfComposite: 0
+    tmproReferenceText: <style=UI/Submit>
+    bindingName: UI/Submit
+    inputStyleString: <sprite="XBox" name="SUBMIT">
+    inputStyleString_singleInput: <sprite="XBox" name="SUBMIT">
+    humanReadableString: SUBMIT
+    humanReadableString_singleInput: SUBMIT
+    fontReferenceText: <style=font/UI/Submit>
+    fontCode: \uE902
+    fontCode_singleInput: \uE902
+  - isComposite: 0
+    isPartOfComposite: 0
+    tmproReferenceText: <style=UI/Cancel>
+    bindingName: UI/Cancel
+    inputStyleString: <sprite="XBox" name="CANCEL">
+    inputStyleString_singleInput: <sprite="XBox" name="CANCEL">
+    humanReadableString: CANCEL
+    humanReadableString_singleInput: CANCEL
+    fontReferenceText: <style=font/UI/Cancel>
+    fontCode: \uE900
+    fontCode_singleInput: \uE900
+  isUsingFonts: 0
+  TEXTMESHPRO_SPRITEASSET_FOLDERPATH: Assets/Plugins/TextMesh Pro/Resources/Sprite
+    Assets/
+  TEXTMESHPRO_FONTASSET_FOLDERPATH: Assets/Plugins/TextMesh Pro/Resources/Fonts &
+    Materials/
+  loggingEnabled: 1
