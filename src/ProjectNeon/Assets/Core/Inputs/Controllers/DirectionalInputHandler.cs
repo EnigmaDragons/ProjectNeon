@@ -12,6 +12,7 @@ public class DirectionalInputHandler : MonoBehaviour
     [SerializeField] private float holdSecondsBeforeSecondInput;
     [SerializeField] private float holdSecondsBetweenMovement;
     [SerializeField] private float minimumMovementBeforeDirectionCounted = 0;
+    [SerializeField] private BoolReference featureFlag;
 
     private List<DirectionalInputNodeMap> _maps = new List<DirectionalInputNodeMap>();
     private List<DirectionalInputNode> _selectedNodes = new List<DirectionalInputNode>();
@@ -26,6 +27,7 @@ public class DirectionalInputHandler : MonoBehaviour
     
     private void Awake()
     {
+        _disabled = !featureFlag.Value;
         _maps = new List<DirectionalInputNodeMap>();
         _selectedNodes = new List<DirectionalInputNode>();
         Message.Subscribe<DirectionalInputNodeMapEnabled>(Execute, this);
@@ -202,7 +204,7 @@ public class DirectionalInputHandler : MonoBehaviour
     
     private void Execute(EnableController msg)
     {
-        _disabled = false;
+        _disabled = !featureFlag.Value;
         eventSystem.SetSelectedGameObject(_selectedGameObject);
         UpdateSelected();
     }
