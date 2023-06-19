@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 621047163031096566}
   - component: {fileID: 7699510761494421833}
   - component: {fileID: 1184795805417230149}
-  - component: {fileID: 4783970193108391143}
+  - component: {fileID: 6722768557373832233}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -250,7 +250,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4783970193108391143
+--- !u!114 &6722768557373832233
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -259,12 +259,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1412323662071663583}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3da0d76bb03442daae610ab9e346a1f0, type: 3}
+  m_Script: {fileID: 11500000, guid: cd05b73e123143b39028522642d60f14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1184795805417230149}
-  nonControllerSprite: {fileID: 21300000, guid: 1296ca2fab8d6c547aab0df4899f5830, type: 3}
-  controllerSprite: {fileID: 21300000, guid: 2679d4f519de60b4b987c730502aea8d, type: 3}
+  sprite: {fileID: 11400000, guid: 38865b052b005e2419eeb53d8d7a8957, type: 2}
+  featureFlag:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: 258ae7aa386046c429bf9491fd6fbb38, type: 2}
 --- !u!1 &2929664666065385400
 GameObject:
   m_ObjectHideFlags: 0

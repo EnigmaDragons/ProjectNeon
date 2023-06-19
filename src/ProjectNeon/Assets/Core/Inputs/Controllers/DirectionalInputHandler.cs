@@ -100,7 +100,7 @@ public class DirectionalInputHandler : MonoBehaviour
         
         if (Input.GetKeyDown("joystick button 0") || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
             ActivateControl(_selectedGameObject);
-        else if (Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Escape))
+        else if (Input.GetKeyDown("joystick button 1"))
             ActivateControl(_maps[0].BackObject);
         else if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.Space))
             ActivateAlternateControl(_selectedGameObject);
@@ -118,7 +118,9 @@ public class DirectionalInputHandler : MonoBehaviour
     {
         if (control == null)
             return;
-        if (control.TryGetComponent<Button>(out var button))
+        if (control.TryGetComponent<ConfirmActionComponent>(out var action))
+            action.Execute();
+        else if (control.TryGetComponent<Button>(out var button))
             button.onClick.Invoke();
         else if (control.TryGetComponent<Toggle>(out var toggle))
             toggle.isOn = !toggle.isOn;
@@ -135,7 +137,7 @@ public class DirectionalInputHandler : MonoBehaviour
     {
         if (control == null)
             return;
-        if (control.TryGetComponent<ActionComponent>(out var action))
+        if (control.TryGetComponent<AlternateActionComponent>(out var action))
             action.Execute();
     }
 

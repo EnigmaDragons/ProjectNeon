@@ -22,7 +22,7 @@ public class AdventureDisplayPresenter : MonoBehaviour, ILocalizeTerms, IPointer
     [SerializeField] private GameObject isCompletedView;
     [SerializeField] private BossSelectionPresenter bossSelectionPresenter;
     [SerializeField] private CurrentBoss boss;
-    [SerializeField] private ActionComponent changeBoss;
+    [SerializeField] private AlternateActionComponent changeBoss;
     [SerializeField] private SelectableComponent component;
     
     private const string ChaptersTerm = "Menu/Chapters";
