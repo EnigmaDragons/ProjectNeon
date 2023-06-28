@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 22
   displayName: 
-  description: 'Start of Battle: Gain {[t:Keywords/DoubleDamage]}'
+  description: 'Start of Battle: Gain 3 {[t:Keywords/DoubleDamage]}'
   corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes: []
   rarity: 2
@@ -50,17 +50,20 @@ MonoBehaviour:
     StatusTag: 0
     StatusDetailText: 
     TurnDelay: 0
-    Formula: 1
+    Formula: 3
     InterpolatePartialFormula:
       EvaluationPartialFormula: 
       Prefix: 
       Suffix: 
+      PrefixTerm: 
+      SuffixTerm: 
     FlavorText:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
     ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 1

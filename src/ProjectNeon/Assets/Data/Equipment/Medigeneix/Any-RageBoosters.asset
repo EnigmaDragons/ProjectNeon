@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 24
   displayName: Rage Boosters
-  description: 'When Attacked: Gain 2 {[t:Stats/Stat-Power]} next turn'
+  description: 'When Attacked: Gain 3 {[t:Stats/Stat-Power]} next 2 turns'
   corp: {fileID: 11400000, guid: 635ceb600e2d3cc4eae947d02d89a417, type: 2}
   archetypes: []
   rarity: 1
@@ -55,12 +55,15 @@ MonoBehaviour:
       EvaluationPartialFormula: 
       Prefix: 
       Suffix: 
+      PrefixTerm: 
+      SuffixTerm: 
     FlavorText:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
     ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 1

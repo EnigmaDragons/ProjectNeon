@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 65
   displayName: 
-  description: 'On Hero {[t:Archetypes/Arcana]} Card Play: Gain +2 {[t:Stats/Stat-Magic]}
+  description: 'On Hero {[t:Archetypes/Arcana]} Card Play: Gain +3 {[t:Stats/Stat-Magic]}
     for the battle'
   corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
   archetypes:
@@ -47,13 +47,15 @@ MonoBehaviour:
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: 'On Arcana Card Play: Gain +2 Magic for the battle'
+    StatusDetailText: 'On Arcana Card Play: Gain +3 Magic for the battle'
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
       EvaluationPartialFormula: 
       Prefix: 
       Suffix: 
+      PrefixTerm: 
+      SuffixTerm: 
     FlavorText:
       UseConstant: 0
       ConstantValue: 

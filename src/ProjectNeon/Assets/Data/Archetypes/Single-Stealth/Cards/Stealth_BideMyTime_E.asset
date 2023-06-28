@@ -42,12 +42,15 @@ MonoBehaviour:
         EvaluationPartialFormula: 
         Prefix: 
         Suffix: 
+        PrefixTerm: 
+        SuffixTerm: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
@@ -91,6 +94,8 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 31
     battleEffect:
       Id: 2987
@@ -120,12 +125,15 @@ MonoBehaviour:
         EvaluationPartialFormula: 
         Prefix: 
         Suffix: 
+        PrefixTerm: 
+        SuffixTerm: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
@@ -169,6 +177,8 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 1
     battleEffect:
       Id: 2988
@@ -198,12 +208,15 @@ MonoBehaviour:
         EvaluationPartialFormula: 
         Prefix: 
         Suffix: 
+        PrefixTerm: 
+        SuffixTerm: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
@@ -247,6 +260,8 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
   - type: 1
     battleEffect:
       Id: 2989
@@ -272,17 +287,20 @@ MonoBehaviour:
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 1
-      Formula: 0.6 * Base[Power]
+      Formula: 0.7 * Base[Power]
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
         Suffix: 
+        PrefixTerm: 
+        SuffixTerm: 
       FlavorText:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
@@ -326,3 +344,5 @@ MonoBehaviour:
       conditions: []
     enemyToSpawn: {fileID: 0}
     enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0

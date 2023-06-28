@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 23
   displayName: PreVNRT Mk. 1
-  description: 'Start of Battle: Gain 1 {[t:Keywords/Aegis]}'
+  description: 'Start of Battle: Gain 2 {[t:Keywords/Aegis]}'
   corp: {fileID: 11400000, guid: 8aeaedde841a26d4586bfa1747e79d3e, type: 2}
   archetypes: []
   rarity: 1
@@ -47,17 +47,20 @@ MonoBehaviour:
     StatusTag: 0
     StatusDetailText: 
     TurnDelay: 0
-    Formula: 1
+    Formula: 2
     InterpolatePartialFormula:
       EvaluationPartialFormula: 
       Prefix: 
       Suffix: 
+      PrefixTerm: 
+      SuffixTerm: 
     FlavorText:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
     ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0

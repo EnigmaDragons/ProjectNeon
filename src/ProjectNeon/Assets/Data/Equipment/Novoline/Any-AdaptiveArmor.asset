@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 13
   displayName: 
-  description: 'When Damaged: Gain +2 {[t:Stats/Stat-Armor]} and +2 {[t:Stats/Stat-Resistance]}
+  description: 'When Damaged: Gain +3 {[t:Stats/Stat-Armor]} and +3 {[t:Stats/Stat-Resistance]}
     until the end of next turn'
   corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes: []
-  rarity: 1
+  rarity: 2
   slot: 2
   priceFactor: 1
   modifiers:
@@ -49,7 +49,7 @@ MonoBehaviour:
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: 'When Damaged: Gain +2 Armor and Resistance until the end of
+    StatusDetailText: 'When Damaged: Gain +3 Armor and Resistance until the end of
       next turn'
     TurnDelay: 0
     Formula: 
@@ -57,12 +57,15 @@ MonoBehaviour:
       EvaluationPartialFormula: 
       Prefix: 
       Suffix: 
+      PrefixTerm: 
+      SuffixTerm: 
     FlavorText:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
     ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
     ReactionConditionType: 4
     ReactionEffectScope:
       UseConstant: 1

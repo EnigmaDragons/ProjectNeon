@@ -43,8 +43,8 @@ MonoBehaviour:
   animationSounds: {fileID: 11400000, guid: f31f3f458a9414c40b41bf417f757877, type: 2}
   stageDetails:
   - stage: 1
-    maxHp: 66
-    maxShield: 11
+    maxHp: 70
+    maxShield: 20
     startingShield: 0
     startingAegis: 0
     startingPhase: 0
@@ -55,7 +55,7 @@ MonoBehaviour:
     leadership: 0
     armor: 0
     resistance: 0
-    nonStatCardValueFactor: 8
+    nonStatCardValueFactor: 10
     startingResourceAmount: 0
     maxResourceAmount: 5
     resourceGainPerTurn: 1
@@ -104,12 +104,15 @@ MonoBehaviour:
         EvaluationPartialFormula: 
         Prefix: 
         Suffix: 
+        PrefixTerm: 
+        SuffixTerm: 
       FlavorText:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
       ReactionConditionType: 0
       ReactionEffectScope:
         UseConstant: 1
