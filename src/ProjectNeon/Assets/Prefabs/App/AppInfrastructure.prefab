@@ -557,6 +557,7 @@ GameObject:
   - component: {fileID: 3427815521484423756}
   - component: {fileID: 6532309779157417352}
   - component: {fileID: 4262510499350077094}
+  - component: {fileID: 9054800771736672572}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -627,6 +628,23 @@ MonoBehaviour:
   eventSystem: {fileID: 3427815521484423756}
   holdSecondsBeforeSecondInput: 5
   holdSecondsBetweenMovement: 1
+  minimumMovementBeforeDirectionCounted: 0.2
+  featureFlag:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: 258ae7aa386046c429bf9491fd6fbb38, type: 2}
+--- !u!114 &9054800771736672572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6784926255551932881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d39c3b457c1e4387b4b487255b438448, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6828967637232568011
 GameObject:
   m_ObjectHideFlags: 0
@@ -1217,6 +1235,10 @@ PrefabInstance:
       propertyPath: mLocalizeTarget
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5495114164960293548, guid: 5bf41155b322c8e4e916d1e7c4696c71, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: efd7ae4b526e3404ab383a7330acf08a, type: 3}
     - target: {fileID: 6186473929347341304, guid: 5bf41155b322c8e4e916d1e7c4696c71, type: 3}
       propertyPath: m_fontAsset
       value: 
@@ -1233,6 +1255,10 @@ PrefabInstance:
       propertyPath: mLocalizeTarget
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8436191847929158377, guid: 5bf41155b322c8e4e916d1e7c4696c71, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: efd7ae4b526e3404ab383a7330acf08a, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5bf41155b322c8e4e916d1e7c4696c71, type: 3}
 --- !u!4 &2214724321523529010 stripped
@@ -1353,6 +1379,10 @@ PrefabInstance:
       propertyPath: mLocalizeTarget
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 972942990767014994, guid: af6b0bf68d383c241b9d39b50721bdeb, type: 3}
+      propertyPath: m_text
+      value: Wishlist
+      objectReference: {fileID: 0}
     - target: {fileID: 1608138505310851963, guid: af6b0bf68d383c241b9d39b50721bdeb, type: 3}
       propertyPath: m_Name
       value: WishlistUI
@@ -1421,6 +1451,22 @@ PrefabInstance:
       propertyPath: mLocalizeTarget
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3930011849148901354, guid: af6b0bf68d383c241b9d39b50721bdeb, type: 3}
+      propertyPath: m_text
+      value: Don't miss out on the Launch Discount!
+      objectReference: {fileID: 0}
+    - target: {fileID: 4154232244065472316, guid: af6b0bf68d383c241b9d39b50721bdeb, type: 3}
+      propertyPath: m_text
+      value: Exit
+      objectReference: {fileID: 0}
+    - target: {fileID: 5132901901577422656, guid: af6b0bf68d383c241b9d39b50721bdeb, type: 3}
+      propertyPath: m_text
+      value: Thanks for playing!
+      objectReference: {fileID: 0}
+    - target: {fileID: 5545548517374703017, guid: af6b0bf68d383c241b9d39b50721bdeb, type: 3}
+      propertyPath: m_text
+      value: That's Daisy, our lead game designer's dog ---------------------->
+      objectReference: {fileID: 0}
     - target: {fileID: 5725304720516888748, guid: af6b0bf68d383c241b9d39b50721bdeb, type: 3}
       propertyPath: mLocalizeTarget
       value: 
@@ -1433,10 +1479,20 @@ PrefabInstance:
       propertyPath: mLocalizeTarget
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6652788497312566658, guid: af6b0bf68d383c241b9d39b50721bdeb, type: 3}
+      propertyPath: m_text
+      value: If you enjoyed out game, it would greatly benefit our MegaCorp <i>2
+        developers, 1 composer and CEO Daisy the cyber dog)</i> for you to wishlist
+        our game.
+      objectReference: {fileID: 0}
     - target: {fileID: 7212931997076614525, guid: af6b0bf68d383c241b9d39b50721bdeb, type: 3}
       propertyPath: mLocalizeTarget
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8346239156382355497, guid: af6b0bf68d383c241b9d39b50721bdeb, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: efd7ae4b526e3404ab383a7330acf08a, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af6b0bf68d383c241b9d39b50721bdeb, type: 3}
 --- !u!4 &4239805077214534114 stripped

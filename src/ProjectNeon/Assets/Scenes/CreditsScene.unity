@@ -183,6 +183,7 @@ GameObject:
   - component: {fileID: 213621178}
   - component: {fileID: 213621183}
   - component: {fileID: 213621184}
+  - component: {fileID: 213621185}
   m_Layer: 5
   m_Name: CreditsCanvas
   m_TagString: Untagged
@@ -386,6 +387,29 @@ MonoBehaviour:
   sounds: {fileID: 0}
   fmodSounds: {fileID: 0}
   isPrimaryActionButton: 0
+--- !u!114 &213621185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213621177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a950ddf724e4815bfc0445aed2055a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeMap:
+    Z: 0
+    DefaultSelected:
+    - {fileID: 1232289173}
+    BackObject: {fileID: 1232289173}
+    Nodes:
+    - Up: {fileID: 0}
+      Left: {fileID: 0}
+      Selectable: {fileID: 1232289173}
+      Right: {fileID: 0}
+      Down: {fileID: 0}
 --- !u!1001 &377749643
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -754,7 +778,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7662283224723068775, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
   m_PrefabInstance: {fileID: 696068453}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1232289173}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 55509cb7b084451f8226cc1a94538cef, type: 3}
@@ -787,6 +811,11 @@ MonoBehaviour:
     ConstantValue: 3
     FloatVariable: {fileID: 0}
   yTarget: 0
+--- !u!1 &1232289173 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2038136876053344907, guid: 15f8bed6dcdfe3944824f5a4606e82a9, type: 3}
+  m_PrefabInstance: {fileID: 696068453}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1360460379
 PrefabInstance:
   m_ObjectHideFlags: 0

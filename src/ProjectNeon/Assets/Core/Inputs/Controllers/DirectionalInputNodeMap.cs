@@ -8,6 +8,7 @@ public class DirectionalInputNodeMap
 {
     public int Z;
     public GameObject[] DefaultSelected;
+    public GameObject BackObject;
     public DirectionalInputNode[] Nodes;
 
     public DirectionalInputNode DefaultSelectedNode 

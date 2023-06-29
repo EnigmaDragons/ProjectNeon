@@ -2,8 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using I2.Loc;
+using UnityEngine.EventSystems;
 
-public class AdventureDisplayPresenter : MonoBehaviour, ILocalizeTerms
+public class AdventureDisplayPresenter : MonoBehaviour, ILocalizeTerms, IPointerClickHandler
 {
     [SerializeField] private Image image;
     [SerializeField] private Localize nameText;
@@ -21,6 +22,8 @@ public class AdventureDisplayPresenter : MonoBehaviour, ILocalizeTerms
     [SerializeField] private GameObject isCompletedView;
     [SerializeField] private BossSelectionPresenter bossSelectionPresenter;
     [SerializeField] private CurrentBoss boss;
+    [SerializeField] private AlternateActionComponent changeBoss;
+    [SerializeField] private SelectableComponent component;
     
     private const string ChaptersTerm = "Menu/Chapters";
     
@@ -31,6 +34,7 @@ public class AdventureDisplayPresenter : MonoBehaviour, ILocalizeTerms
         storyText.SetTerm(adventure.StoryTerm);
         storyText.gameObject.SetActive(!adventure.BossSelection);
         bossSelectionPresenter.gameObject.SetActive(adventure.BossSelection);
+        changeBoss.Bind(() => bossSelectionPresenter.Next());
         lengthText.SetTerm(ChaptersTerm.ToLocalized().SafeFormatWithDefault("{0} Chapters", adventure.DynamicStages.Length));
         DisplayHeroPool(adventure);
         selectButton.onClick.AddListener(() =>
@@ -40,6 +44,8 @@ public class AdventureDisplayPresenter : MonoBehaviour, ILocalizeTerms
         });
         selectButton.enabled = !adventure.IsLocked;
         lockVisual.SetActive(adventure.IsLocked);
+        if (adventure.IsLocked)
+            Destroy(component);
         lockReasonLabel.SetFinalText(adventure.LockConditionExplanation);
         isCompletedView.SetActive(!adventure.IsLocked && adventure.IsCompleted);
         if (adventure.IsLocked)
@@ -77,4 +83,10 @@ public class AdventureDisplayPresenter : MonoBehaviour, ILocalizeTerms
         {
             ChaptersTerm
         };
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Right)
+            bossSelectionPresenter.Next();
+    }
 }

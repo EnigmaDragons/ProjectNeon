@@ -30,19 +30,21 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
     [SerializeField] private SimpleDeckUI deckUi;
     [SerializeField] private SimpleDeckUI basicUi;
     [SerializeField] private ResourceSpriteMap resourceIcons;
+    [SerializeField] private AlternateActionComponent changeTabs;
 
     private bool _isInitialized;
     private bool _isClickable = false;
     private Action _onClick = () => { };
+    private string _tab;
     
     private void Start()
     {
         statButton.onClick.AddListener(() => ShowTab("Stats"));
         loreButton.onClick.AddListener(() => ShowTab("Lore"));
         cardsButton.onClick.AddListener(() => ShowTab("Cards"));
-        loreButton.Select();
         if (buttonsPanel.activeSelf)
             ShowTab("Lore");
+        changeTabs.Bind(NextTab);
         if (!_isInitialized && currentHero != null)
             Init(currentHero);
     }
@@ -126,9 +128,20 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
             _onClick();
     }
 
+    private void NextTab()
+    {
+        if (_tab == "Lore")
+            ShowTab("Cards");
+        if (_tab == "Cards")
+            ShowTab("Stats");
+        if (_tab == "Stats")
+            ShowTab("Lore");
+    }
+
     private void ShowTab(string tabName)
     {
+        _tab = tabName;
         foreach (var tab in tabTargets) 
-            tab.Obj.SetActive(tab.Name.Equals(tabName));
+            tab.Obj.SetActive(tab.Name.Equals(_tab));
     }
 }

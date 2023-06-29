@@ -7,20 +7,15 @@ public class BossSelectionPresenter : MonoBehaviour
     [SerializeField] private Image bust;
     [SerializeField] private Localize name;
     [SerializeField] private Localize description;
-    [SerializeField] private Button nextButton;
-    [SerializeField] private Button prevButton;
     [SerializeField] private AllBosses bosses;
 
     private int _index;
     
     public Boss SelectedBoss { get; private set; }
 
-    private void Awake()
-    {
-        nextButton.onClick.AddListener(() => RenderBoss(_index == bosses.bosses.Length - 1 ? 0 : _index + 1));
-        prevButton.onClick.AddListener(() => RenderBoss(_index == 0 ? bosses.bosses.Length - 1 : _index - 1));
-        RenderBoss(Rng.Int(0, bosses.bosses.Length));
-    }
+    public void Next() => RenderBoss(_index == bosses.bosses.Length - 1 ? 0 : _index + 1);
+    
+    private void Awake() => RenderBoss(Rng.Int(0, bosses.bosses.Length));
 
     private void RenderBoss(int index)
     {
