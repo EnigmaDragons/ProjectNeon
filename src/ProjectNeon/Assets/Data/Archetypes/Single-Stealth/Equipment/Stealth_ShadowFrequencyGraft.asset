@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 112
   displayName: 
-  description: 'On {[t:Keywords/Stealth]}: Gain 1 Resource'
+  description: 'On {[t:Keywords/Stealth]}: Gain 1 Resource & +1 Power'
   corp: {fileID: 11400000, guid: 635ceb600e2d3cc4eae947d02d89a417, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 1e6b060bb2d10434c8d325b3765125dd, type: 2}
@@ -46,13 +46,15 @@ MonoBehaviour:
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: 'On Stealth: Gain 1 Energy'
+    StatusDetailText: 'On Stealth: Gain 1 Energy & 1 Power'
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
       EvaluationPartialFormula: 
       Prefix: 
       Suffix: 
+      PrefixTerm: 
+      SuffixTerm: 
     FlavorText:
       UseConstant: 0
       ConstantValue: 

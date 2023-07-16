@@ -19,8 +19,8 @@ MonoBehaviour:
     when an enemy attacks, you gain {RE[0]}"
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   descriptionV2:
-    text: "Next turn, gives <b>1 Vulnerable</b>. \nYou gain {0}.\nThis turn, when
-      an enemy attacks, you gain {1}"
+    text: "Next turn, gives enemies <b>1 Vulnerable</b>. \nGives {0}.\nThis turn,
+      when an enemy attacks an ally, they gain {1}."
     formatArgs:
     - '{E[0]}'
     - '{RE[0]}'
@@ -34,8 +34,13 @@ MonoBehaviour:
   rarity: 1
   actionSequences:
   - scope: 0
-    group: 1
+    group: 2
     cardActions: {fileID: 11400000, guid: 43612b6c59aac05409d8aa53f43e6b52, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  - scope: 1
+    group: 1
+    cardActions: {fileID: 11400000, guid: 3535aab4b85f01c47a9e36847ac1598a, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}

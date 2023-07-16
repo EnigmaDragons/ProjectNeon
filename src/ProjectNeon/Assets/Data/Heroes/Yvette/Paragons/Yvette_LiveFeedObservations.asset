@@ -22,10 +22,11 @@ MonoBehaviour:
     {RE[0]}'
   typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   descriptionV2:
-    text: 'Gives {0}.
+    text: 'Gives {0}
 
 
-      This turn, when an enemy attacks, target gains {1}'
+      This turn, when an enemy attacks an ally, they gain
+      {1}'
     formatArgs:
     - '{E[0]}'
     - '{RE[0]}'
@@ -52,5 +53,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c3bd2cb0d323191448e78929b9cb214e, type: 2}
   highlightCondition: []
   unhighlightCondition: []
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
   isWIP: 0
   notAvailableForGeneralDistribution: 1

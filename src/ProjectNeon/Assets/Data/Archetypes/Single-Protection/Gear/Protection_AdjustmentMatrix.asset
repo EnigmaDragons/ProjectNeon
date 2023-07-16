@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 103
   displayName: 
-  description: The first time each hero becomes {[t:Keywords/Bloodied]}, they gain
-    {[t:Keywords/Dodge]} 1
+  description: The first time each hero is damaged, they gain {[t:Keywords/Dodge]}
+    1
   corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
   archetypes:
   - {fileID: 11400000, guid: 52367da7d75fe6940897f666b23ea1a5, type: 2}
@@ -46,14 +46,16 @@ MonoBehaviour:
     HitsRandomTargetMember: 0
     ReTargetScope: 41
     ApplyToEachMemberIndividually: 0
-    StatusTag: 14
-    StatusDetailText: 'When Bloodied: Gain Dodge 1'
+    StatusTag: 9
+    StatusDetailText: 'When Damaged: Gain Dodge 1'
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
       EvaluationPartialFormula: 
       Prefix: 
       Suffix: 
+      PrefixTerm: 
+      SuffixTerm: 
     FlavorText:
       UseConstant: 0
       ConstantValue: 
@@ -61,7 +63,7 @@ MonoBehaviour:
     ReferencedSequence: {fileID: 0}
     ReferencedSequences: []
     OnlyReactDuringCardPhases: 0
-    ReactionConditionType: 10
+    ReactionConditionType: 4
     ReactionEffectScope:
       UseConstant: 0
       ConstantValue: 

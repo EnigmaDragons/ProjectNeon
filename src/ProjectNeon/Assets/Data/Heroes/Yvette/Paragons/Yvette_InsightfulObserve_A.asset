@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Stealth_KillerIntent_E
+  m_Name: Yvette_InsightfulObserve_A
   m_EditorClassIdentifier: 
   Actions:
-  - type: 30
+  - type: 1
     battleEffect:
-      Id: 3002
-      EffectType: 0
+      Id: 3836
+      EffectType: 82
       Conditions: []
       BaseAmount:
         UseConstant: 1
@@ -32,12 +32,12 @@ MonoBehaviour:
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      ReTargetScope: 0
+      ReTargetScope: 1
       ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 
+      Formula: 2
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
@@ -78,8 +78,7 @@ MonoBehaviour:
     characterAnimation: {fileID: 0}
     characterAnimation2:
       Type: 0
-      Conditions:
-      - {fileID: 11400000, guid: cc6a994bd6d4d714eac0bc744fc8fc40, type: 2}
+      Conditions: []
     atTargetAnimation:
       animation:
         UseConstant: 1
@@ -97,10 +96,10 @@ MonoBehaviour:
     enemySpawnOffset: {x: 0, y: 0, z: 0}
     enemySpawnConditions: []
     replacing: 0
-  - type: 31
+  - type: 1
     battleEffect:
-      Id: 3003
-      EffectType: 0
+      Id: 3837
+      EffectType: 74
       Conditions: []
       BaseAmount:
         UseConstant: 1
@@ -108,15 +107,15 @@ MonoBehaviour:
         Variable: {fileID: 0}
       FloatAmount:
         UseConstant: 1
-        ConstantValue: 0
+        ConstantValue: -1
         FloatVariable: {fileID: 0}
-      DurationFormula: 0
+      DurationFormula: 1
       EffectScope:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
       HitsRandomTargetMember: 0
-      ReTargetScope: 0
+      ReTargetScope: 41
       ApplyToEachMemberIndividually: 0
       StatusTag: 0
       StatusDetailText: 
@@ -137,99 +136,15 @@ MonoBehaviour:
       OnlyReactDuringCardPhases: 0
       ReactionConditionType: 0
       ReactionEffectScope:
-        UseConstant: 1
+        UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 0}
+        Variable: {fileID: 11400000, guid: 2f2a7d3c7d21efe41a694bdd1486f85a, type: 2}
       ReactionTimingWindow: 0
       ReactionSequence: {fileID: 0}
       ReactionEffect:
-        reactor: 0
-        scope: 0
-        cardActions: {fileID: 0}
-      BonusCardType: {fileID: 0}
-      Unpreventable: 0
-    conditionData:
-      ConditionType: 0
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 0
-        FloatVariable: {fileID: 0}
-      EffectScope:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReferencedEffect: {fileID: 0}
-    characterAnimation: {fileID: 0}
-    characterAnimation2:
-      Type: 0
-      Conditions: []
-    atTargetAnimation:
-      animation:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 11400000, guid: d344c2ad8f7429348945a07501a28e84, type: 2}
-      size: 1
-      speed: 1
-      color:
-        UseConstant: 1
-        ConstantValue: {r: 0.40784314, g: 0, b: 0.0627451, a: 1}
-        Variable: {fileID: 0}
-      skipWaitingForCompletion: 0
-      conditions:
-      - {fileID: 11400000, guid: cc6a994bd6d4d714eac0bc744fc8fc40, type: 2}
-    enemyToSpawn: {fileID: 0}
-    enemySpawnOffset: {x: 0, y: 0, z: 0}
-    enemySpawnConditions: []
-    replacing: 0
-  - type: 1
-    battleEffect:
-      Id: 3004
-      EffectType: 68
-      Conditions: []
-      BaseAmount:
-        UseConstant: 1
-        ConstantValue: 0
-        Variable: {fileID: 0}
-      FloatAmount:
-        UseConstant: 1
-        ConstantValue: 0
-        FloatVariable: {fileID: 0}
-      DurationFormula: 1
-      EffectScope:
-        UseConstant: 0
-        ConstantValue: 
-        Variable: {fileID: 11400000, guid: 776ba0867ae352c459b9844d0b78d6e2, type: 2}
-      HitsRandomTargetMember: 0
-      ReTargetScope: 0
-      ApplyToEachMemberIndividually: 0
-      StatusTag: 0
-      StatusDetailText: 
-      TurnDelay: 1
-      Formula: 2 * Base[Power]
-      InterpolatePartialFormula:
-        EvaluationPartialFormula: 
-        Prefix: 
-        Suffix: 
-        PrefixTerm: 
-        SuffixTerm: 
-      FlavorText:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReferencedSequence: {fileID: 0}
-      ReferencedSequences: []
-      OnlyReactDuringCardPhases: 0
-      ReactionConditionType: 0
-      ReactionEffectScope:
-        UseConstant: 1
-        ConstantValue: 
-        Variable: {fileID: 0}
-      ReactionTimingWindow: 0
-      ReactionSequence: {fileID: 0}
-      ReactionEffect:
-        reactor: 0
-        scope: 0
-        cardActions: {fileID: 0}
+        reactor: 1
+        scope: 1
+        cardActions: {fileID: 11400000, guid: e395503ed7ea5de45af13c6fc3180228, type: 2}
       BonusCardType: {fileID: 0}
       Unpreventable: 0
     conditionData:
