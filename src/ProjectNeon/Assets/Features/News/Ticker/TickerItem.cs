@@ -44,7 +44,7 @@ public class TickerItem : MonoBehaviour
         return this;
     }
 
-    private void LateUpdate()
+    private void FixedUpdate()
     {
         if (_isFinished)
             return;
