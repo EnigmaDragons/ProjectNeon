@@ -17,7 +17,11 @@ public class LoadingController : OnMessage<NavigateToSceneRequested, HideLoadUiR
 
     private void Awake()
     {
+#if UNITY_EDITOR
+        Application.targetFrameRate = -1;
+#else
         Application.targetFrameRate = 60;
+#endif
         loadUi.alpha = 0;
         loadUi.blocksRaycasts = false;
     }

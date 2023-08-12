@@ -10,16 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4bbb2179e5da40768ae707b33841df9f, type: 3}
-  m_Name: CorpFixer_LethalTempo
+  m_Name: Any-AdrenalineAmplifier
   m_EditorClassIdentifier: 
-  id: 54
-  displayName: Lethal Tempo
-  description: 'On Slay: Gain 1 Card Play'
-  corp: {fileID: 11400000, guid: 33641feb13cddf64da66a37831d9c198, type: 2}
-  archetypes:
-  - {fileID: 11400000, guid: 2a9990ef3da432e42acdb151f8669008, type: 2}
+  id: 120
+  displayName: Adrenline Amplifier
+  description: 'On Slay: Gain +1 {[t:Keywords/CardPlays]}'
+  corp: {fileID: 11400000, guid: f5920c1c199efb64f8f8f7b72c6c129e, type: 2}
+  archetypes: []
   rarity: 4
-  slot: 3
+  slot: 2
   priceFactor: 1
   modifiers: []
   resourceModifiers: []
@@ -34,19 +33,19 @@ MonoBehaviour:
       ConstantValue: 0
       Variable: {fileID: 0}
     FloatAmount:
-      UseConstant: 1
-      ConstantValue: -1
-      FloatVariable: {fileID: 0}
+      UseConstant: 0
+      ConstantValue: 0
+      FloatVariable: {fileID: 11400000, guid: fa23d96c8476d01469857aff1d7f4951, type: 2}
     DurationFormula: -1
     EffectScope:
-      UseConstant: 1
+      UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
     HitsRandomTargetMember: 0
     ReTargetScope: 0
     ApplyToEachMemberIndividually: 0
     StatusTag: 12
-    StatusDetailText: 'On Slay: Gain 1 Card Play'
+    StatusDetailText: 
     TurnDelay: 0
     Formula: 
     InterpolatePartialFormula:
@@ -64,20 +63,20 @@ MonoBehaviour:
     OnlyReactDuringCardPhases: 0
     ReactionConditionType: 21
     ReactionEffectScope:
-      UseConstant: 1
+      UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
-    ReactionTimingWindow: 0
+    ReactionTimingWindow: 100
     ReactionSequence: {fileID: 0}
     ReactionEffect:
-      reactor: 0
+      reactor: 1
       scope: 0
-      cardActions: {fileID: 11400000, guid: 53b58f89119950e409ccc20f0562f984, type: 2}
+      cardActions: {fileID: 11400000, guid: bc4c8b4fdf4c7ae47b54417dd1eeb29f, type: 2}
     BonusCardType: {fileID: 0}
     Unpreventable: 0
   battleEndEffects: []
   requiresStatType: 
   excludeIfPartyHasStatType: 
   isWIP: 0
-  notAvailableForGeneralDistribution: 1
+  notAvailableForGeneralDistribution: 0
   designComment: 
