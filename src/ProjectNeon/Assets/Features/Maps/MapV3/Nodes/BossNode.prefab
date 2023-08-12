@@ -82,8 +82,6 @@ MonoBehaviour:
   alwaysShowRules: 0
   description: {fileID: 5813108850059262376}
   nodeTerm: Boss
-  descriptionName: Boss
-  descriptionDetail: Hopefully you are prepared
 --- !u!1 &4855835980784240243
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,6 +171,7 @@ GameObject:
   - component: {fileID: 5557003431033689832}
   - component: {fileID: 7174820044032127555}
   - component: {fileID: 7629779233855660625}
+  - component: {fileID: 9190234400600124185}
   m_Layer: 5
   m_Name: InnerButton
   m_TagString: Untagged
@@ -338,6 +337,19 @@ MonoBehaviour:
   PlayOnAwake: 0
   PlayOnDestroy: 0
   hoverEnterSound: event:/DeckBulder_Scene/Hover
+--- !u!114 &9190234400600124185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8020724597277342753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7824d9ef84346a79ab19356f2735b67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Rect: {fileID: 0}
 --- !u!1001 &1301697304602939517
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -432,6 +444,14 @@ PrefabInstance:
     - target: {fileID: 1051396490930104852, guid: c4cc748977e4c724bbe29ca2b946a43d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5220102478622766479, guid: c4cc748977e4c724bbe29ca2b946a43d, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6721916034065125364, guid: c4cc748977e4c724bbe29ca2b946a43d, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c4cc748977e4c724bbe29ca2b946a43d, type: 3}

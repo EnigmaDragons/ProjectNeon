@@ -16,6 +16,7 @@ public class DynamicDirectionInputNodeMap : MonoBehaviour
     [SerializeField] private SelectablesContainer defaultSelectedContainer;
     [SerializeField] private SelectableComponent defaultSelectedComponent;
     [SerializeField] private RectTransform defaultSelectedNode;
+    [SerializeField] private RectTransform backupDefaultSelectedNode;
 
     private DirectionalInputNodeMap _nodeMap;
 
@@ -102,12 +103,14 @@ public class DynamicDirectionInputNodeMap : MonoBehaviour
             defaultSelected.Add(defaultSelectedContainer.GetDefault().gameObject);
         if (defaultSelectedComponent != null)
             defaultSelected.Add(defaultSelectedComponent.gameObject);
-        if (defaultSelectedNode != null)
+        if (defaultSelectedNode != null && defaultSelectedNode.gameObject.activeInHierarchy)
             defaultSelected.Add(defaultSelectedNode.gameObject);
+        if (backupDefaultSelectedNode != null && backupDefaultSelectedNode.gameObject.activeInHierarchy)
+            defaultSelected.Add(backupDefaultSelectedNode.gameObject);
         _nodeMap = new DirectionalInputNodeMap
         {
             Z = z,
-            BackObject = backObject,
+            BackObject = backObject != null && backObject.gameObject.activeInHierarchy ? backObject : null,
             DefaultSelected = defaultSelected.ToArray(),
             Nodes = result.ToArray()
         };

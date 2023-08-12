@@ -120,7 +120,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   presenter: {fileID: 2467984982212363474}
   state: {fileID: 11400000, guid: 7df03e0edb9ca294580e6020e56139d1, type: 2}
-  hoverCard: {fileID: 3364015709430732128, guid: 46ba6e5cd95ccea43bb7b5438ad78acf, type: 3}
   superFocus: {fileID: 3133887934116377192}
 --- !u!114 &1935405094885352368
 MonoBehaviour:
@@ -138,35 +137,11 @@ MonoBehaviour:
   - eventID: 0
     callback:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 9182151890571094327}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: OnHover
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
   - eventID: 1
     callback:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 9182151890571094327}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: OnExit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
   - eventID: 4
     callback:
       m_PersistentCalls:
@@ -5123,6 +5098,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SimpleDeckCardView
       objectReference: {fileID: 0}
+    - target: {fileID: 261206178603738676, guid: 92af839c84e0b4a42bbfa231e5a002b2, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 9087990976907618523, guid: 92af839c84e0b4a42bbfa231e5a002b2, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -5209,6 +5188,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92af839c84e0b4a42bbfa231e5a002b2, type: 3}
+--- !u!1 &2912188331059321460 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 200282875123974767, guid: 92af839c84e0b4a42bbfa231e5a002b2, type: 3}
+  m_PrefabInstance: {fileID: 3075298757811623963}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6103116683000901824 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9087990976907618523, guid: 92af839c84e0b4a42bbfa231e5a002b2, type: 3}
@@ -5219,9 +5203,22 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 643360188770524361, guid: 92af839c84e0b4a42bbfa231e5a002b2, type: 3}
   m_PrefabInstance: {fileID: 3075298757811623963}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2912188331059321460}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f94b78b86b4a459c95b6409b72ec02e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1899835721518486812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2912188331059321460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7824d9ef84346a79ab19356f2735b67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Rect: {fileID: 0}

@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class SimpleDeckCardPresenter : OnMessage<SceneChanged>, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
+public class SimpleDeckCardPresenter : OnMessage<SceneChanged>, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, ISelectHandler, IDeselectHandler
 {
     [SerializeField] private Localize cardNameText;
     [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI countText;
@@ -108,12 +108,12 @@ public class SimpleDeckCardPresenter : OnMessage<SceneChanged>, IPointerEnterHan
     {
         if (_cardType == null || !gameObject.activeSelf)
             return;
-        
+
         _hoverCard = Instantiate(hoverCard.gameObject, _canvas.transform);
         if (_card.IsPresent)
-            _hoverCard.GetComponent<HoverCard>().Init(_card.Value);
+            _hoverCard.GetComponent<HoverCard>().Init(_card.Value, true);
         else
-            _hoverCard.GetComponent<HoverCard>().Init(_cardType);
+            _hoverCard.GetComponent<HoverCard>().Init(_cardType, true);
         Message.Publish(new CardHoveredOnDeck(transform));
     }
 
@@ -156,4 +156,21 @@ public class SimpleDeckCardPresenter : OnMessage<SceneChanged>, IPointerEnterHan
     {
         _leftClickAction = () => { };
     }
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        if (_cardType == null || !gameObject.activeSelf)
+            return;
+
+        _hoverCard = Instantiate(hoverCard.gameObject, _canvas.transform);
+        var position = transform.position;
+        _hoverCard.transform.position = new Vector3(position.x + 250, position.y, position.z);
+        if (_card.IsPresent)
+            _hoverCard.GetComponent<HoverCard>().Init(_card.Value, false);
+        else
+            _hoverCard.GetComponent<HoverCard>().Init(_cardType, false);
+        Message.Publish(new CardHoveredOnDeck(transform));
+    }
+
+    public void OnDeselect(BaseEventData eventData) => OnExit();
 }

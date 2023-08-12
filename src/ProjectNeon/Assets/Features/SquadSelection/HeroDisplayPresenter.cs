@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, ISelectHandler, IDeselectHandler
 {
     [SerializeField] private BaseHero currentHero;
     [SerializeField] private GameObject hoverGraphic;
@@ -19,6 +19,7 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
     [SerializeField] private Slider complexitySlider;
     [SerializeField] private Localize backstory;
     [SerializeField] private NamedGameObject[] tabTargets;
+    [SerializeField] private NamedGameObject[] tabGlowTargets;
     [SerializeField] private ResourceCounterPresenter resource1;
     [SerializeField] private ResourceCounterPresenter resource2;
     [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI startingCredits;
@@ -30,6 +31,7 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
     [SerializeField] private SimpleDeckUI deckUi;
     [SerializeField] private SimpleDeckUI basicUi;
     [SerializeField] private ResourceSpriteMap resourceIcons;
+    [SerializeField] private ConfirmActionComponent confirm;
     [SerializeField] private AlternateActionComponent changeTabs;
 
     private bool _isInitialized;
@@ -44,6 +46,7 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
         cardsButton.onClick.AddListener(() => ShowTab("Cards"));
         if (buttonsPanel.activeSelf)
             ShowTab("Lore");
+        confirm.Bind(Confirm);
         changeTabs.Bind(NextTab);
         if (!_isInitialized && currentHero != null)
             Init(currentHero);
@@ -128,13 +131,19 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
             _onClick();
     }
 
+    public void Confirm()
+    {
+        if (_isClickable)
+            _onClick();
+    } 
+
     private void NextTab()
     {
         if (_tab == "Lore")
             ShowTab("Cards");
-        if (_tab == "Cards")
+        else if (_tab == "Cards")
             ShowTab("Stats");
-        if (_tab == "Stats")
+        else if (_tab == "Stats")
             ShowTab("Lore");
     }
 
@@ -143,5 +152,19 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
         _tab = tabName;
         foreach (var tab in tabTargets) 
             tab.Obj.SetActive(tab.Name.Equals(_tab));
+        foreach (var glow in tabGlowTargets) 
+            glow.Obj.SetActive(glow.Name.Equals(_tab));
+    }
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        if (_isClickable && hoverGraphic != null)
+            hoverGraphic.SetActive(true);
+    }
+
+    public void OnDeselect(BaseEventData eventData)
+    {
+        if (_isClickable && hoverGraphic != null)
+            hoverGraphic.SetActive(false);
     }
 }

@@ -5,7 +5,7 @@ using System.Linq;
 using I2.Loc;
 using UnityEngine.EventSystems;
 
-public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl, StartBattleInitiated>, IPointerEnterHandler, IPointerExitHandler, ILocalizeTerms
+public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl, StartBattleInitiated>, IPointerEnterHandler, IPointerExitHandler, ILocalizeTerms, ISelectHandler, IDeselectHandler
 {
     [SerializeField] private CardPresenter presenter;
     [SerializeField] private DeckBuilderState state;
@@ -102,4 +102,13 @@ public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl, St
 
     public string[] GetLocalizeTerms()
         => new[] {DialogTerms.StarterCardsWarning, DialogTerms.OptionGotIt};
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        Message.Publish(new CardHovered(transform));
+    }
+
+    public void OnDeselect(BaseEventData eventData)
+    {
+    }
 }

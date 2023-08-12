@@ -5,17 +5,12 @@ public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged, SetSupe
 {
     [SerializeField] private SimpleDeckCardPresenter presenter;
     [SerializeField] private DeckBuilderState state;
-    [SerializeField] private HoverCard hoverCard;
     [SerializeField] private GameObject superFocus;
-
-    private Canvas _canvas;
+    
     private Maybe<Card> _card = Maybe<Card>.Missing();
     private CardType _cardType;
     private int _count;
-    private GameObject _hoverCard;
     
-    private void Awake() => _canvas = FindObjectOfType<Canvas>();
-    private void OnDestroy() => OnExit();
     protected override void Execute(DeckBuilderCurrentDeckChanged msg) => UpdateInfo();
 
     protected override void Execute(SetSuperFocusDeckBuilderControl msg)
@@ -38,12 +33,6 @@ public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged, SetSupe
         _count--;
         Message.Publish(new DeckBuilderCurrentDeckChanged(state.SelectedHeroesDeck));
         Message.Publish(new CardRemovedFromDeck(transform));
-    }
-
-    public void OnExit()
-    {
-        if (_hoverCard != null)
-            Destroy(_hoverCard);
     }
 
     private void UpdateInfo()

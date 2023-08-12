@@ -98,11 +98,11 @@ public class DirectionalInputHandler : MonoBehaviour
         }
         _previousDirection = direction;
         
-        if (Input.GetKeyDown("joystick button 0") || Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        if (StaticControlChecker.IsConfirm())
             ActivateControl(_selectedGameObject);
-        else if (Input.GetKeyDown("joystick button 1"))
+        else if (StaticControlChecker.IsBack())
             ActivateControl(_maps[0].BackObject);
-        else if (Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.Space))
+        else if (StaticControlChecker.IsChange())
             ActivateAlternateControl(_selectedGameObject);
         else if (!changedSelection && _selectedGameObject != null && _selectedGameObject.TryGetComponent<Slider>(out var slider))
         {
