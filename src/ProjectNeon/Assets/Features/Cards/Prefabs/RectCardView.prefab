@@ -4400,6 +4400,9 @@ GameObject:
   - component: {fileID: 7815945678532425157}
   - component: {fileID: -4962557091865162813}
   - component: {fileID: 5522632562338923632}
+  - component: {fileID: 482137802103438828}
+  - component: {fileID: 2412049586069341376}
+  - component: {fileID: 1696089062390542735}
   m_Layer: 5
   m_Name: RectCardView
   m_TagString: Untagged
@@ -4527,6 +4530,8 @@ MonoBehaviour:
   allCards: {fileID: 11400000, guid: 6e690657ae3520e449e87b9ad2520786, type: 2}
   handZone: {fileID: 11400000, guid: d384cb3c3fffa7241a3f7e1555a17223, type: 2}
   state: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
+  confirm: {fileID: 482137802103438828}
+  change: {fileID: 1696089062390542735}
 --- !u!114 &4046767778847521054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4616,6 +4621,43 @@ MonoBehaviour:
       m_MinDegrees: -15
       m_MaxDegrees: 15
       m_RestSeconds: 2
+--- !u!114 &482137802103438828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8438847975545394452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2942c66c908e45fc81de5ecbeca629e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2412049586069341376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8438847975545394452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7824d9ef84346a79ab19356f2735b67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Rect: {fileID: 0}
+--- !u!114 &1696089062390542735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8438847975545394452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06605c5210094d67b403db870fbfa101, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8620177598150868222
 GameObject:
   m_ObjectHideFlags: 0

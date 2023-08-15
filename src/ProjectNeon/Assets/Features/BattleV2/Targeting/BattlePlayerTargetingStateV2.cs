@@ -12,6 +12,8 @@ public class BattlePlayerTargetingStateV2 : ScriptableObject
     public Maybe<int> TargetMember { get; private set; }
     private List<Func<Target>> _getTargets;
 
+    public int[] MembersToIndicate => _memberToTargetMap[0].Keys.ToArray();
+
     public bool HasValidTargets => !_memberToTargetMap.Any() || TargetMember.IsPresent;
     public Target[] Targets => _getTargets.Select(x => x()).ToArray();
 
@@ -42,5 +44,6 @@ public class BattlePlayerTargetingStateV2 : ScriptableObject
         TargetMember = Maybe<int>.Missing();
         _memberToTargetMap = memberToTargetMap;
         _getTargets = getTargets;
+        Message.Publish(new TargetingStateUpdated());
     }
 }

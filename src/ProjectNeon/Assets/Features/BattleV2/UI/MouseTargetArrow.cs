@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MouseTargetArrow : OnMessage<ShowMouseTargetArrow, HideMouseTargetArrow>
+public class MouseTargetArrow : OnMessage<ShowMouseTargetArrow, HideMouseTargetArrow, InputControlChanged>
 {
     [SerializeField] private ArrowRenderer arrow;
     [SerializeField] private float mouseDistanceFromScreen = 5f;
@@ -8,6 +8,7 @@ public class MouseTargetArrow : OnMessage<ShowMouseTargetArrow, HideMouseTargetA
 
     private Camera _camera;
     private Transform _origin;
+    private bool _usingMouse = true;
 
     private void Awake()
     {
@@ -27,6 +28,11 @@ public class MouseTargetArrow : OnMessage<ShowMouseTargetArrow, HideMouseTargetA
         arrow.gameObject.SetActive(false);
     }
 
+    protected override void Execute(InputControlChanged msg)
+    {
+        _usingMouse = InputControl.Type == ControlType.Mouse;
+    }
+
     private void Update()
     {
         if (!arrow.gameObject.activeSelf)
@@ -37,7 +43,8 @@ public class MouseTargetArrow : OnMessage<ShowMouseTargetArrow, HideMouseTargetA
 
     private void UpdateArrow()
     {
-        arrow.SetPositions(GetCardWorldPosition(), GetMouseWorldPosition());
+        if (_usingMouse)
+            arrow.SetPositions(GetCardWorldPosition(), GetMouseWorldPosition());
     }
 
     private Vector3 GetCardWorldPosition()
