@@ -75,4 +75,5 @@ public class EventPublisher : ScriptableObject
     public void CloseUiSubMenus() => Message.Publish(new CloseUiSubMenus());
     public void ShowCurrentTutorialAgain() => Message.Publish(new ShowCurrentTutorialAgain());
     public void ToggleTutorialBattles() => Message.Publish(new ToggleNamedTarget("TutorialBattles"));
+    public void ToggleLowQualityMode() => Message.Publish(new SetLowQualityMode(BooleanControlRequest.Toggle));
 }
