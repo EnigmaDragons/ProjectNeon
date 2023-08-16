@@ -31,8 +31,11 @@ public class BattleCardSelectionUI : OnMessage<PresentCardSelection>
         _onSelected = msg.Selectons.OnCardSelected;
         ClearView();
         msg.Selectons.CardSelectionOptions.ForEach(o =>
-            Instantiate(cardPresenter, optionsParent.transform)
-                .Set(o, () => SelectCard(o)));
+        {
+            var cardP = Instantiate(cardPresenter, optionsParent.transform);
+            cardP.Set(o, () => SelectCard(o));
+            cardP.SetHoverAction(() => cardP.SetHoverHighlight(true), () => cardP.SetHoverHighlight(false));
+        });
         _alpha = 0;
         canvasGroup.alpha = 0;
         view.SetActive(true);

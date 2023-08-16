@@ -149,6 +149,7 @@ public sealed class HandVisualizerV2 : HandVisualizerBase
             c.SetHandHighlight(isFocused);
             c.SetTargetPosition(targetPosition);
         }
+        Message.Publish(new CardPositionsUpdated());
     }
 
     private void DiscardCard(int cardIndex)

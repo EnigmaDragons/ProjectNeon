@@ -14,12 +14,14 @@ public class NonMouseTargetingProcessor : OnMessage<BeginTargetSelectionRequeste
     private bool _targeting;
     private DirectionalInputNodeMap _nodeMap;
     private bool _requiresTargeting;
+    private CardPresenter _presenter;
 
     private void Awake() => backButton.onClick.AddListener(() => Message.Publish(new CancelTargetSelectionRequested()));
 
     protected override void Execute(BeginTargetSelectionRequested msg)
     {
         _requiresTargeting = msg.Card.RequiresPlayerTargeting();
+        _presenter = msg.CardPresenter;
     }
 
     protected override void Execute(TargetingStateUpdated msg)
@@ -32,7 +34,7 @@ public class NonMouseTargetingProcessor : OnMessage<BeginTargetSelectionRequeste
             foreach (var member in targetingState.MembersToIndicate)
             {
                 var obj = Instantiate(targetable, parent.transform);
-                obj.Init(member);
+                obj.Init(_presenter, member);
                 nodes.Add(new DirectionalInputNode { Selectable = obj.gameObject });
             }
             for (var i = 0; i < nodes.Count; i++)

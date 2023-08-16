@@ -15,5 +15,5 @@ public static class StaticControlChecker
         => Input.GetKeyDown("joystick button 3");
 
     public static bool IsMenu()
-        => Input.GetKeyDown(KeyCode.Escape);
+        => Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown("joystick button 7");
 }

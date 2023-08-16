@@ -49,7 +49,7 @@ public class DynamicDirectionInputNodeMap : MonoBehaviour
 
     private void RefreshNodeMap()
     {
-        var allObjects = nodes.Where(x => x.gameObject.activeInHierarchy).Concat(dynamicComponents.Where(x => x.gameObject.activeInHierarchy).Select(x => x.Rect).Concat(containers.SelectMany(x => x.GetSelectables()))).ToArray();
+        var allObjects = nodes.Where(x => x.gameObject.activeInHierarchy).Concat(dynamicComponents.Where(x => x.gameObject.activeInHierarchy).Select(x => x.Rect).Concat(containers.SelectMany(x => x.GetSelectables()))).Where(x => x != null).ToArray();
         var result = new List<DirectionalInputNode>();
         foreach (var obj in allObjects)
         {

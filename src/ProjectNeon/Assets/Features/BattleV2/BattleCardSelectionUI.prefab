@@ -1069,6 +1069,7 @@ GameObject:
   - component: {fileID: 7951353844487988862}
   - component: {fileID: 517528931046271423}
   - component: {fileID: 4961146825546210141}
+  - component: {fileID: 1092994844399875790}
   m_Layer: 0
   m_Name: CardPicker
   m_TagString: Untagged
@@ -1169,6 +1170,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36b55cda921543d4b6d5a3c300eb45d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1092994844399875790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6110673001978986142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc8795bd89de40019614d04663e679e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  z: 2
+  backObject: {fileID: 0}
+  nodes: []
+  dynamicComponents: []
+  containers:
+  - {fileID: 2069322108364781435}
+  defaultSelectedContainer: {fileID: 2069322108364781435}
+  defaultSelectedComponent: {fileID: 0}
+  defaultSelectedNode: {fileID: 0}
+  backupDefaultSelectedNode: {fileID: 0}
 --- !u!1 &7140239793249882944
 GameObject:
   m_ObjectHideFlags: 0
@@ -1181,6 +1204,7 @@ GameObject:
   - component: {fileID: 794743719916180578}
   - component: {fileID: 8418516789003516674}
   - component: {fileID: 5608906754525229986}
+  - component: {fileID: 2069322108364781435}
   m_Layer: 0
   m_Name: CardOptionPanel
   m_TagString: Untagged
@@ -1267,6 +1291,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 1
   m_VerticalFit: 1
+--- !u!114 &2069322108364781435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7140239793249882944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71a6355b2714fecb9b5f50e3a08639b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetDepth: 1
 --- !u!1 &7463662833976573305
 GameObject:
   m_ObjectHideFlags: 0

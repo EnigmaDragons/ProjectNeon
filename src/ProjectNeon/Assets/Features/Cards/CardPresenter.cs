@@ -59,6 +59,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private const string LibraryString = "Library";
     
     private Card _card;
+    public Card Card => _card;
     
     private Card _card1;
     private CardType _card2;
@@ -87,6 +88,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     private Action _onRightClick;
     private Action _onBeginDrag;
     private Vector3 _position;
+    public Vector3 Position => _position;
     
     private bool _useCustomHoverActions;
     private Action _hoverEnterAction;
@@ -106,6 +108,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     //targeting
     private bool _requiresPlayerTargeting;
     private bool _isTargeting;
+    private bool _isSelected;
+    public bool IsSelected => _isSelected;
     private Maybe<Target> _target = Maybe<Target>.Missing();
 
     public bool Contains(Card c) => HasCard && c.CardId == _card.CardId;
@@ -118,39 +122,43 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     private void Awake()
     {
-        confirm.Bind(() => 
-        { 
-            if (_isHand && _getCanActivate())
-            {
-                controls.SetActive(false);
-                canvasGroup.blocksRaycasts = false;
-                HideComprehensiveCardInfo();
-
-                // This is crude. Reason for not being able to play a card should flow through
-                var owner = _card.Owner;
-                if (owner.IsDisabled())
-                    Message.Publish(new ShowHeroBattleThought(owner.Id, "Thoughts/Disabled".ToLocalized()));
-                else if (_card.Cost.BaseAmount > _card.Owner.ResourceAmount(_card.Cost.ResourceType))
-                {
-                    var impliedResourceType = _card.Cost.ResourceType.Name.Equals("PrimaryResource")
-                        ? _card.Owner.PrimaryResourceType().GetLocalizedName()
-                        : _card.Cost.ResourceType.GetLocalizedName();
-                    Message.Publish(new ShowHeroBattleThought(owner.Id, "Thoughts/NotEnoughResources".ToLocalized().SafeFormatWithDefault("I don't have enough {0} to play this card right now.", impliedResourceType)));
-                }
-                else if (conditionNotMetHighlight.activeSelf && _card.UnhighlightCondition is { IsPresent: true })
-                    Message.Publish(new ShowHeroBattleThought(owner.Id, _card.UnhighlightCondition.Value.UnhighlightMessage));
-
-                _onBeginDrag();
-                Message.Publish(new BeginTargetSelectionRequested(_card));
-            }
-            if (!_isHand)
-                _onClick();
-        });
+        confirm.Bind(OnControllerConfirm);
         change.Bind(() =>
         {
             if (_isHand && battleState.AllowRightClickOnCard)
                 ToggleAsBasic();
         });
+    }
+
+    private void OnControllerConfirm()
+    {
+        if (_isHand && _getCanActivate())
+        {
+            var owner = _card.Owner;
+            if (owner.IsDisabled())
+                Message.Publish(new ShowHeroBattleThought(owner.Id, "Thoughts/Disabled".ToLocalized()));
+            else if (_card.Cost.BaseAmount > _card.Owner.ResourceAmount(_card.Cost.ResourceType))
+            {
+                var impliedResourceType = _card.Cost.ResourceType.Name.Equals("PrimaryResource")
+                    ? _card.Owner.PrimaryResourceType().GetLocalizedName()
+                    : _card.Cost.ResourceType.GetLocalizedName();
+                Message.Publish(new ShowHeroBattleThought(owner.Id, "Thoughts/NotEnoughResources".ToLocalized().SafeFormatWithDefault("I don't have enough {0} to play this card right now.", impliedResourceType)));
+            }
+            else
+            {
+                controls.SetActive(false);
+                canvasGroup.blocksRaycasts = false;
+                IsDragging = true;
+                HideComprehensiveCardInfo();
+                    
+                if (conditionNotMetHighlight.activeSelf && _card.UnhighlightCondition is { IsPresent: true })
+                    Message.Publish(new ShowHeroBattleThought(owner.Id, _card.UnhighlightCondition.Value.UnhighlightMessage));
+                _onBeginDrag();
+                Message.Publish(new BeginTargetSelectionRequested(_card, this));
+            }
+        }
+        if (!_isHand)
+            _onClick();
     }
     
     private void OnEnable()
@@ -760,7 +768,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
             _onBeginDrag();
             Message.Publish(new CardDragged());
-            Message.Publish(new BeginTargetSelectionRequested(_card));
+            Message.Publish(new BeginTargetSelectionRequested(_card, this));
         }, () => { });
 
     public void OnEndDrag(PointerEventData eventData) 
@@ -790,7 +798,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         MouseDragState.Set(false);
     }
     
-    private void ReturnHandToNormal()
+    public void ReturnHandToNormal()
     {
         IsDragging = false;
         canvasGroup.blocksRaycasts = true;
@@ -831,7 +839,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void OnSelect(BaseEventData eventData)
     {
-        
+        _isSelected = true;
         if (_zone == LibraryString)
             canPlayHighlight.SetActive(true);
         else
@@ -846,6 +854,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void OnDeselect(BaseEventData eventData)
     {
+        _isSelected = false;
         if (_zone == LibraryString)
             canPlayHighlight.SetActive(false);
         else if (!MouseDragState.IsDragging && !IsDragging && _isHand)
