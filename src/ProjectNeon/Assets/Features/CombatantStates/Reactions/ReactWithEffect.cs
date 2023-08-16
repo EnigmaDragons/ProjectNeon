@@ -8,9 +8,10 @@ public class EffectReactWith : Effect
     private static Dictionary<ReactionConditionType, Func<ReactionConditionContext, Func<EffectResolved, bool>>> Conditions = new Dictionary<ReactionConditionType, Func<ReactionConditionContext, Func<EffectResolved, bool>>>
     {
         { ReactionConditionType.WhenHas10CardsOrMoreInHand, ctx => effect => ctx.Possessor.IsConscious() && effect.CardZones.HandZone.Count >= 10 },
+        { ReactionConditionType.OnArchetypeCardDrawn, ctx => effect => ctx.Actor.IsConscious() && effect.DrawnCard.IsPresentAnd(x => x.Archetypes.Contains(ctx.ReactionEffectScope)) },
         { ReactionConditionType.OnTeamCardCycled, ctx => effect => ctx.Actor.IsConscious() && effect.CycledCard.IsPresent },
-        { ReactionConditionType.OnCardPlayed, ctx => effect => ctx.Actor.IsConscious() && effect.Card.IsPresentAnd(c => c.Owner.Id == ctx.Possessor.Id) && effect.IsFirstBattleEffectOfChosenTarget },
-        { ReactionConditionType.OnNonQuickCardPlayed, ctx => effect => ctx.Actor.IsConscious() && effect.Card.IsPresentAnd(c =>  c.Owner.Id == ctx.Possessor.Id && !c.IsQuick) && effect.IsFirstBattleEffectOfChosenTarget },
+        { ReactionConditionType.OnCardPlayed, ctx => effect => ctx.Actor.IsConscious() && effect.OriginatingCard.IsPresentAnd(c => c.Owner.Id == ctx.Possessor.Id) && effect.IsFirstBattleEffectOfChosenTarget },
+        { ReactionConditionType.OnNonQuickCardPlayed, ctx => effect => ctx.Actor.IsConscious() && effect.OriginatingCard.IsPresentAnd(c =>  c.Owner.Id == ctx.Possessor.Id && !c.IsQuick) && effect.IsFirstBattleEffectOfChosenTarget },
         { ReactionConditionType.WhenAttacked, ctx => effect => 
             ctx.Actor.IsConscious()
             && new [] {EffectType.AttackFormula, EffectType.MagicAttackFormula, EffectType.TrueDamageAttackFormula}.Contains(effect.EffectData.EffectType)
@@ -90,9 +91,9 @@ public class EffectReactWith : Effect
             }
         },
         { ReactionConditionType.OnTagCardPlayed, ctx => effect => IsRelevant(ReactionConditionType.OnTagCardPlayed, effect, ctx) 
-           && effect.IsFirstBattleEffectOfChosenTarget && effect.Card.IsPresentAnd(x => x.Type.Tags.Contains(ctx.ReactionEffectScope.EnumVal<CardTag>()))},
+           && effect.IsFirstBattleEffectOfChosenTarget && effect.OriginatingCard.IsPresentAnd(x => x.Type.Tags.Contains(ctx.ReactionEffectScope.EnumVal<CardTag>()))},
         { ReactionConditionType.OnArchetypeCardPlayed, ctx => effect => IsRelevant(ReactionConditionType.OnArchetypeCardPlayed, effect, ctx)
-           && effect.IsFirstBattleEffectOfChosenTarget && effect.Card.IsPresentAnd(x => x.Archetypes.Contains(ctx.ReactionEffectScope))},
+           && effect.IsFirstBattleEffectOfChosenTarget && effect.OriginatingCard.IsPresentAnd(x => x.Archetypes.Contains(ctx.ReactionEffectScope))},
         { ReactionConditionType.OnDodged, ctx => effect => ctx.Possessor.IsConscious() 
            && effect.Preventions.IsDodging(ctx.Possessor) 
            && Decreased(effect.Select(ctx.Possessor, m => m.State[TemporalStatType.Dodge]))},

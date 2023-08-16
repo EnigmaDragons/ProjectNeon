@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnEnemy, DespawnEnemy, CardResolutionFinished, 
-    CardActionPrevented, WaitDuringResolution, ResolveReactionCards, ResolveReaction, RandomizeEnemyPositions, OverrideCardDelay>
+    CardActionPrevented, WaitDuringResolution, ResolveReactionCards, ResolveReaction, RandomizeEnemyPositions, OverrideCardDelay, PlayerCardDrawn>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private PartyAdventureState partyAdventureState;
@@ -67,9 +67,19 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         Log.Info("Cycled Card - Battle Resolutions");
         var battleSnapshot = state.GetSnapshot();
         var effectResolved = new EffectResolved(true, true, EffectData.Nothing, msg.CycledCard.Owner, new Single(msg.CycledCard.Owner), 
-            battleSnapshot, battleSnapshot, false, Maybe<Card>.Missing(), msg.CycledCard, new UnpreventableContext(), ReactionTimingWindow.FirstCause, state.PlayerCardZones);
+            battleSnapshot, battleSnapshot, false, Maybe<Card>.Missing(), msg.CycledCard, Maybe<Card>.Missing(), new UnpreventableContext(), ReactionTimingWindow.FirstCause, state.PlayerCardZones);
         FinalizeBattleEffect(Maybe<EffectResolved>.Present(effectResolved));
         this.SafeCoroutineOrNothing(FinishEffect("card cycled"));
+    }
+    
+    protected override void Execute(PlayerCardDrawn msg)
+    {        
+        Log.Info("Drawn Card - Battle Resolutions");
+        var battleSnapshot = state.GetSnapshot();
+        var effectResolved = new EffectResolved(true, true, EffectData.Nothing, msg.Card.Owner, new Single(msg.Card.Owner), 
+            battleSnapshot, battleSnapshot, false, Maybe<Card>.Missing(), Maybe<Card>.Missing(), msg.Card, new UnpreventableContext(), ReactionTimingWindow.FirstCause, state.PlayerCardZones);
+        FinalizeBattleEffect(Maybe<EffectResolved>.Present(effectResolved));
+        this.SafeCoroutineOrNothing(FinishEffect("card drawn"));
     }
 
     protected override void Execute(ApplyBattleEffect msg)
@@ -159,7 +169,7 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         // Effect Resolved Details
         var battleSnapshotAfter = state.GetSnapshot();
         var effectResolved = new EffectResolved(res.WasApplied, msg.IsFirstBattleEffectOfChosenTarget, msg.Effect, ctx.Source, ctx.Target, 
-            battleSnapshotBefore, battleSnapshotAfter, ctx.IsReaction, ctx.Card, Maybe<Card>.Missing(), ctx.Preventions, ctx.Timing, state.PlayerCardZones);
+            battleSnapshotBefore, battleSnapshotAfter, ctx.IsReaction, ctx.Card, Maybe<Card>.Missing(), Maybe<Card>.Missing(), ctx.Preventions, ctx.Timing, state.PlayerCardZones);
         return (res, effectResolved);
     }
 
@@ -247,7 +257,7 @@ public class BattleResolutions : OnMessage<CardCycled, ApplyBattleEffect, SpawnE
         else
             _partyWait = new WaitForSeconds(msg.Delay);
     }
-
+    
     private IEnumerator ResolveNextReactionCard()
     {
         while (Reactions.AnyReactionCards)

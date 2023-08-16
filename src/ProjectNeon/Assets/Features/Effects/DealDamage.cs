@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 public sealed class DealDamage : Effect
 {
@@ -24,13 +23,14 @@ public sealed class DealDamage : Effect
                 BattleLog.Write($"0 damage was dealt to Invincible {m.UnambiguousEnglishName}");
             else
             {
-                BattleLog.Write($"{amount} damage dealt to{wasVulnerableString}{m.UnambiguousEnglishName}");
                 if (_damage.DealTrueDamage)
                     m.State.TakeTrueDamage(amount);
                 else
                     m.State.TakeDamage(amount);
                 if (amount < 1)
                     Message.Publish(new DisplayCharacterWordRequested(m.Id, CharacterReactionType.TookZeroDamage));
+                if (amount >= 1)
+                    BattleLog.Write($"{amount} damage dealt to{wasVulnerableString}{m.UnambiguousEnglishName}");
             }
         });
     }

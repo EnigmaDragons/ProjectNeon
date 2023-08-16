@@ -35,6 +35,7 @@ public enum ReactionConditionType
     OnCardPlayed = 36,
     OnNonQuickCardPlayed = 50,
     OnTeamCardCycled = 61,
+    OnArchetypeCardDrawn = 62,
     WhenShieldMaxed = 38,
     WhenEnemyPrimaryStatBuffed = 40,
     WhenAllyVulnerable = 41,
