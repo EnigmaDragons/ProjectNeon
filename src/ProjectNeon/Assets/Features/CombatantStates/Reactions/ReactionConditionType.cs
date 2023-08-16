@@ -14,6 +14,7 @@ public enum ReactionConditionType
     WhenStunned = 106,
     WhenStatsReduced = 107,
     WhenMarked = 108,
+    OnGainedTaunt = 115,
     OnCausedAffliction = 14,
     OnCausedBloodied = 16,
     OnCausedHeal = 15,

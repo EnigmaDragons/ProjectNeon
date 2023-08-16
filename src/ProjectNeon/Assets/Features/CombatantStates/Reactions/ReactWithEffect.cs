@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using PlasticPipe.PlasticProtocol.Messages;
 using UnityEngine;
 
 public class EffectReactWith : Effect
 {
     private static Dictionary<ReactionConditionType, Func<ReactionConditionContext, Func<EffectResolved, bool>>> Conditions = new Dictionary<ReactionConditionType, Func<ReactionConditionContext, Func<EffectResolved, bool>>>
     {
+        { ReactionConditionType.OnGainedTaunt, ctx => effect => Increased(effect.SelectSum(x => x.State[TemporalStatType.Taunt])) },
         { ReactionConditionType.WhenHas10CardsOrMoreInHand, ctx => effect => ctx.Possessor.IsConscious() && effect.CardZones.HandZone.Count >= 10 },
         { ReactionConditionType.OnArchetypeCardDrawn, ctx => effect => ctx.Actor.IsConscious() && effect.DrawnCard.IsPresentAnd(x => x.Archetypes.Contains(ctx.ReactionEffectScope)) },
         { ReactionConditionType.OnTeamCardCycled, ctx => effect => ctx.Actor.IsConscious() && effect.CycledCard.IsPresent },
