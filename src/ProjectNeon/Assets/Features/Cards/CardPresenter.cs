@@ -116,7 +116,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public bool HasCard => _cardType != null;
     public bool IsFocused { get; private set; }
     public bool IsPlayable { get; private set; }
-    public bool IsDragging { get; set; } = false; //sus hack cause is dragging means more than you might think apperently
+    public bool IsDragging { get; set; } = false;
     
     public string CardName => _cardType?.Name ?? string.Empty;
 

@@ -77,7 +77,6 @@ public class NonMouseCardSelection : MonoBehaviour
         if (_shouldDiscard)
         {
             _shouldDiscard = false;
-            _cardPresenter.IsDragging = false;
             _cardPresenter.Discard();
             Message.Publish(new CheckForAutomaticTurnEnd());
         }
