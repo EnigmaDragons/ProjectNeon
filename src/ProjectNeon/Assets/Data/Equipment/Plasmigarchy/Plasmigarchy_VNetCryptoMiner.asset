@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 67
   displayName: V-Net Crypto Miner
-  description: 'Battle Rewards: Gain +15 Credits'
+  description: 'Battle Rewards: Gain +35 Credits'
   corp: {fileID: 11400000, guid: fce99e3ca09a280489698c4158425e80, type: 2}
   archetypes: []
   rarity: 1
@@ -47,17 +47,20 @@ MonoBehaviour:
     StatusTag: 0
     StatusDetailText: 
     TurnDelay: 0
-    Formula: 15
+    Formula: 35
     InterpolatePartialFormula:
       EvaluationPartialFormula: 
       Prefix: 
       Suffix: 
+      PrefixTerm: 
+      SuffixTerm: 
     FlavorText:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
     ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
     ReactionConditionType: 0
     ReactionEffectScope:
       UseConstant: 0
@@ -75,5 +78,5 @@ MonoBehaviour:
   requiresStatType: 
   excludeIfPartyHasStatType: 
   isWIP: 0
-  notAvailableForGeneralDistribution: 1
-  designComment: Not relevant in V4
+  notAvailableForGeneralDistribution: 0
+  designComment: 
