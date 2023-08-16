@@ -11,7 +11,7 @@ public class NonMouseTargetable : MonoBehaviour, ISelectHandler
     public void Init(CardPresenter card, int memberId)
     {
         _memberId = memberId;
-        card.Activate();
+        card.IsDragging = false;
         confirm.Bind(() => Message.Publish(new EndTargetSelectionRequested(false)));
     }
 

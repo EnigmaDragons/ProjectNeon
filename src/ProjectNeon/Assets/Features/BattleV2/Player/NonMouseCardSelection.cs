@@ -21,8 +21,9 @@ public class NonMouseCardSelection : MonoBehaviour
                 cardComponent.MiddleClick();
             else
             {
-                _shouldDiscard = true;
                 _cardPresenter = cardComponent;
+                _cardPresenter.IsDragging = true;
+                _shouldDiscard = true;
                 Message.Publish(new BeginTargetSelectionRequested(cardComponent.Card, cardComponent));
             }
         });
@@ -73,8 +74,8 @@ public class NonMouseCardSelection : MonoBehaviour
         if (_shouldDiscard)
         {
             _shouldDiscard = false;
+            _cardPresenter.IsDragging = false;
             _cardPresenter.Discard();
-            Message.Publish(new EndTargetSelectionRequested(true));
             Message.Publish(new CheckForAutomaticTurnEnd());
         }
     }
