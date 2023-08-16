@@ -102,6 +102,10 @@ public class DirectionalInputHandler : MonoBehaviour
             ActivateControl(_selectedGameObject);
         else if (StaticControlChecker.IsBack())
             ActivateControl(_maps[0].BackObject);
+        else if (StaticControlChecker.IsNext())
+            ActivateControl(_maps[0].NextObject);
+        else if (StaticControlChecker.IsPrevious())
+            ActivateControl(_maps[0].PreviousObject);
         else if (StaticControlChecker.IsChange())
             ActivateAlternateControl(_selectedGameObject);
         else if (!changedSelection && _selectedGameObject != null && _selectedGameObject.TryGetComponent<Slider>(out var slider))

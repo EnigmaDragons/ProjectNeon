@@ -4,5 +4,7 @@
     Back,
     Change,
     Inspect,
-    Menu
+    Menu,
+    Next,
+    Previous
 }

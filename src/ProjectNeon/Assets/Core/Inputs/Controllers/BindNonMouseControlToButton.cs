@@ -15,7 +15,9 @@ public class BindNonMouseControlToButton : MonoBehaviour
                 || (control == NonMouseControl.Back && StaticControlChecker.IsBack())
                 || (control == NonMouseControl.Change && StaticControlChecker.IsChange())
                 || (control == NonMouseControl.Inspect && StaticControlChecker.IsInspect())
-                || (control == NonMouseControl.Menu && StaticControlChecker.IsMenu()))
+                || (control == NonMouseControl.Menu && StaticControlChecker.IsMenu())
+                || (control == NonMouseControl.Next && StaticControlChecker.IsNext())
+                || (control == NonMouseControl.Previous && StaticControlChecker.IsPrevious()))
             button.onClick.Invoke();
     }
 }
