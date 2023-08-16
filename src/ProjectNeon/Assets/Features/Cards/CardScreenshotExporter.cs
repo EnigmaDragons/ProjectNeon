@@ -161,7 +161,7 @@ public class CardScreenshotExporter : MonoBehaviour
         {
             var p = pixels[i];
             if (p.r == transparentColor.r && p.g == transparentColor.g && p.b == transparentColor.b)
-                p = Color.clear;
+                pixels[i] = Color.clear;
         }
 
         newTexture.SetPixels(pixels);

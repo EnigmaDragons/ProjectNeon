@@ -8,20 +8,30 @@ public class BattlefieldScreenshotExporter : MonoBehaviour
     [SerializeField] private string baseExportPathDir;
     [SerializeField] private BattlefieldSet[] sets;
     [SerializeField] private GameObject stage;
+    [SerializeField] private int framesToWaitBeforeTextureCapture = 500;
     [SerializeField] private bool takeAll = false;
 
     private void Start() => this.SafeCoroutineOrNothing(Go());
 
+    private const string DoNotBakeTag = "DoNotBake";
+    
     private IEnumerator Go()
     {
+        var lowQualityMode = CurrentLowQualityMode.IsEnabled;
+        CurrentLowQualityMode.Disable();
         foreach (var s in sets)
         {
             foreach (var battlefield in s.Battlefields)
             {
                 stage.DestroyAllChildrenImmediate();
-                Instantiate(battlefield, stage.transform);
-            
+                var obj = Instantiate(battlefield, stage.transform);
                 for(var i = 0; i < 10; i++)
+                    yield return new WaitForEndOfFrame();
+                obj.GetComponentsInChildren<Transform>(true)
+                    .Where(t => t.CompareTag(DoNotBakeTag))
+                    .ForEach(t => t.gameObject.SetActive(false));
+
+                for(var i = 0; i < framesToWaitBeforeTextureCapture; i++)
                     yield return new WaitForEndOfFrame();
                 Export(battlefield.name);
                 
@@ -29,6 +39,7 @@ public class BattlefieldScreenshotExporter : MonoBehaviour
                     yield break;
             }
         }
+        CurrentLowQualityMode.Set(lowQualityMode);
         Log.Info("Finished Export");
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
@@ -40,11 +51,11 @@ public class BattlefieldScreenshotExporter : MonoBehaviour
         var savePath = Path.Combine(baseExportPathDir, fileName.Replace(" ", "").Replace("\"", "") + ".jpg");
         var tex = ScreenCapture.CaptureScreenshotAsTexture();
 
-        var newTexture = new Texture2D(tex.width, tex.height, TextureFormat.ARGB32, false);
+        var newTexture = new Texture2D(tex.width, tex.height, TextureFormat.RGBA64, false);
         var pixels = tex.GetPixels();
 
         newTexture.SetPixels(pixels);
-        var pngShot = ImageConversion.EncodeToJPG(newTexture);
+        var pngShot = ImageConversion.EncodeToJPG(newTexture, 95);
         File.WriteAllBytes(savePath, pngShot);
     }
 }
