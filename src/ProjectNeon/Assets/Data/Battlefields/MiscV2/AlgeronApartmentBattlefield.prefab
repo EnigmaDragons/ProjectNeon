@@ -160,6 +160,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7530206030661058434}
   - component: {fileID: 6885708738056574760}
+  - component: {fileID: 1758343840977587188}
   m_Layer: 7
   m_Name: AlgeronApartmentBattlefield
   m_TagString: Untagged
@@ -184,6 +185,7 @@ Transform:
   - {fileID: 7530206030244659178}
   - {fileID: 7530206029281313933}
   - {fileID: 7093420248704764148}
+  - {fileID: 4062929333217488}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -201,6 +203,75 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   music: event:/GameMusic/ZantoBattle
   delay: 0
+--- !u!114 &1758343840977587188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7530206030661058435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90c9db51e2fc476e9479a73f38f85832, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lowQualitySprite: {fileID: 21300000, guid: e3cb7f6660cd78f498ab80dae6b50e54, type: 3}
+  spriteRenderer: {fileID: 8721736639291042459}
+  standardQualityObjects:
+  - {fileID: 7530206028710616021}
+  - {fileID: 7530206029170843685}
+  - {fileID: 7530206030116210559}
+  - {fileID: 7530206030244659179}
+  - {fileID: 7530206029281313934}
+  - {fileID: 5334045667596582388}
+  lowQualityObjects:
+  - {fileID: 217196238947330438}
+  standardQualityScripts: []
+  lowQualityScripts: []
+--- !u!1001 &64764223630887898
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 7530206030661058434}
+    m_Modifications:
+    - target: {fileID: 65435792441025290, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 65435792441025290, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 65435792441025290, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 65435792441025290, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 280828892341461596, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+      propertyPath: m_Name
+      value: StaticBattlefieldV3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+--- !u!1 &217196238947330438 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 280828892341461596, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+  m_PrefabInstance: {fileID: 64764223630887898}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4062929333217488 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 65435792441025290, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+  m_PrefabInstance: {fileID: 64764223630887898}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &8721736639291042459 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 8786456852354294081, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+  m_PrefabInstance: {fileID: 64764223630887898}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3268530121613679587
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -427,6 +498,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2061af58f4a1f9242a9210ff20fe4e01, type: 3}
+--- !u!1 &5334045667596582388 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 96691328751962486, guid: 2061af58f4a1f9242a9210ff20fe4e01, type: 3}
+  m_PrefabInstance: {fileID: 5427349950777341058}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7093420248704764148 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2963709559799905398, guid: 2061af58f4a1f9242a9210ff20fe4e01, type: 3}

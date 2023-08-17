@@ -412,6 +412,7 @@ GameObject:
   - component: {fileID: 2500546049790728121}
   - component: {fileID: -6067479536716086082}
   - component: {fileID: 4592148508710748641}
+  - component: {fileID: 904331868242674094}
   m_Layer: 7
   m_Name: DarkAlleyV2_3
   m_TagString: Untagged
@@ -436,6 +437,7 @@ Transform:
   - {fileID: 2500546050481887185}
   - {fileID: 2500546048973827254}
   - {fileID: 1247155758420026425}
+  - {fileID: 4139374769782379069}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -474,6 +476,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f7d36c91c7a18e4a946c21750633498, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &904331868242674094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2500546049790728120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90c9db51e2fc476e9479a73f38f85832, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lowQualitySprite: {fileID: 21300000, guid: 23ab508df2300c645b11cd258e4ec22a, type: 3}
+  spriteRenderer: {fileID: 4644822129400025206}
+  standardQualityObjects: []
+  lowQualityObjects:
+  - {fileID: 4215314866592879467}
+  standardQualityScripts: []
+  lowQualityScripts: []
 --- !u!1 &2500546050353459012
 GameObject:
   m_ObjectHideFlags: 0
@@ -1197,6 +1218,50 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4247653899987350, guid: b532cb4afb82ac04c91e8cf9b388266f, type: 3}
   m_PrefabInstance: {fileID: 3673584606268664654}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4150765153444229431
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2500546049790728121}
+    m_Modifications:
+    - target: {fileID: 65435792441025290, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 65435792441025290, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 65435792441025290, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 65435792441025290, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 280828892341461596, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+      propertyPath: m_Name
+      value: StaticBattlefieldV3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+--- !u!1 &4215314866592879467 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 280828892341461596, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+  m_PrefabInstance: {fileID: 4150765153444229431}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4139374769782379069 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 65435792441025290, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+  m_PrefabInstance: {fileID: 4150765153444229431}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &4644822129400025206 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 8786456852354294081, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+  m_PrefabInstance: {fileID: 4150765153444229431}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4572021576693979475
 PrefabInstance:

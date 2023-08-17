@@ -93,19 +93,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &3660566256315825504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3660016829357126785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 176239506b324840a5be5dc5cd3eec3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationSpeed: {x: 0, y: 0, z: 12}
 --- !u!1 &3660566256047540630
 GameObject:
   m_ObjectHideFlags: 0
@@ -2141,6 +2128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6300596782723931125}
   - component: {fileID: 8746011890070880301}
+  - component: {fileID: 713006333666661577}
   m_Layer: 7
   m_Name: DevriesBunkerControlRoom
   m_TagString: Untagged
@@ -2162,6 +2150,7 @@ Transform:
   - {fileID: 6300596782301660243}
   - {fileID: 6300596783374949277}
   - {fileID: 6300596781342630138}
+  - {fileID: 7637541715391467618}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2188,6 +2177,28 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: 0
   OverrideMaxDistance: 0
+--- !u!114 &713006333666661577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6300596782723931124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90c9db51e2fc476e9479a73f38f85832, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lowQualitySprite: {fileID: 21300000, guid: 6dca49f82b5939842b4d85fac9198f6d, type: 3}
+  spriteRenderer: {fileID: 1223366993239216681}
+  standardQualityObjects:
+  - {fileID: 6300596782301660242}
+  - {fileID: 6300596783374949276}
+  - {fileID: 6300596781342630137}
+  lowQualityObjects:
+  - {fileID: 7705714332772077876}
+  standardQualityScripts: []
+  lowQualityScripts: []
 --- !u!1 &6300596783374949276
 GameObject:
   m_ObjectHideFlags: 0
@@ -3308,6 +3319,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1702558068146638, guid: 191aa21ca4bac4f4392dea427eb9e447, type: 3}
   m_PrefabInstance: {fileID: 3660566256325817679}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3660566256315825504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3660016829357126785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 176239506b324840a5be5dc5cd3eec3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: {x: 0, y: 0, z: 12}
 --- !u!1001 &3660566256363204111
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6583,4 +6607,48 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 473198, guid: c70dd99c5cd1cbf4c9b8f226c3284b85, type: 3}
   m_PrefabInstance: {fileID: 7124181730050532206}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7572105924293817192
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6300596782723931125}
+    m_Modifications:
+    - target: {fileID: 65435792441025290, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 65435792441025290, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 65435792441025290, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 65435792441025290, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 280828892341461596, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+      propertyPath: m_Name
+      value: StaticBattlefieldV3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+--- !u!4 &7637541715391467618 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 65435792441025290, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+  m_PrefabInstance: {fileID: 7572105924293817192}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &1223366993239216681 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 8786456852354294081, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+  m_PrefabInstance: {fileID: 7572105924293817192}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7705714332772077876 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 280828892341461596, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+  m_PrefabInstance: {fileID: 7572105924293817192}
   m_PrefabAsset: {fileID: 0}

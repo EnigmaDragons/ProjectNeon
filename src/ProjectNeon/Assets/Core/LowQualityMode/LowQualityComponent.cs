@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class LowQualityComponent : OnMessage<LowQualityModeChanged>
 {
+    [SerializeField] private Sprite lowQualitySprite;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private GameObject[] standardQualityObjects;
     [SerializeField] private GameObject[] lowQualityObjects;
     [SerializeField] private MonoBehaviour[] standardQualityScripts;
@@ -24,6 +26,9 @@ public class LowQualityComponent : OnMessage<LowQualityModeChanged>
             o.enabled = !lowQualityModeEnabled;
         foreach (var o in lowQualityScripts)
             o.enabled = lowQualityModeEnabled;
+        
+        if (lowQualityModeEnabled && lowQualitySprite != null && spriteRenderer != null)
+            spriteRenderer.sprite = lowQualitySprite;
     }
 
     protected override void Execute(LowQualityModeChanged msg) => UpdateState();

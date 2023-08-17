@@ -327,6 +327,7 @@ GameObject:
   - component: {fileID: 5268244832992164558}
   - component: {fileID: 4912923123287034236}
   - component: {fileID: 7425508755270721814}
+  - component: {fileID: 2446633352047092669}
   m_Layer: 7
   m_Name: ZantoCorpDataCenter03
   m_TagString: Untagged
@@ -349,6 +350,7 @@ Transform:
   - {fileID: 5268244831535965544}
   - {fileID: 5268244832609516198}
   - {fileID: 5268244832242352577}
+  - {fileID: 4374195520781508581}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -387,6 +389,29 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: 0
   OverrideMaxDistance: 0
+--- !u!114 &2446633352047092669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5268244832992164559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90c9db51e2fc476e9479a73f38f85832, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lowQualitySprite: {fileID: 21300000, guid: 38dcdcde6d3a3454995e6ed5c8fce44b, type: 3}
+  spriteRenderer: {fileID: 5022632695702592942}
+  standardQualityObjects:
+  - {fileID: 8428761908659872955}
+  - {fileID: 5268244831535965545}
+  - {fileID: 5268244832609516199}
+  - {fileID: 5268244832242352578}
+  lowQualityObjects:
+  - {fileID: 4591857722033413811}
+  standardQualityScripts: []
+  lowQualityScripts: []
 --- !u!1 &5750905126012622290
 GameObject:
   m_ObjectHideFlags: 0
@@ -2531,6 +2556,50 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4577932118663466, guid: 81def7ffea79b6647995dec97277e222, type: 3}
   m_PrefabInstance: {fileID: 3921035640423693787}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4349415280355736815
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 5268244832992164558}
+    m_Modifications:
+    - target: {fileID: 65435792441025290, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 65435792441025290, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 65435792441025290, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 65435792441025290, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 280828892341461596, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+      propertyPath: m_Name
+      value: StaticBattlefieldV3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+--- !u!1 &4591857722033413811 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 280828892341461596, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+  m_PrefabInstance: {fileID: 4349415280355736815}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &5022632695702592942 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 8786456852354294081, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+  m_PrefabInstance: {fileID: 4349415280355736815}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4374195520781508581 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 65435792441025290, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+  m_PrefabInstance: {fileID: 4349415280355736815}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5773709721652116751
 PrefabInstance:

@@ -138,6 +138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2080016775235732283}
   - component: {fileID: 6142167468792596222}
+  - component: {fileID: 3329344399206638405}
   m_Layer: 0
   m_Name: NnzImmigrationOfficeV2_2
   m_TagString: Untagged
@@ -160,6 +161,7 @@ Transform:
   - {fileID: 2080016776310111411}
   - {fileID: 2080016776161514667}
   - {fileID: 2080016775087740928}
+  - {fileID: 3866508367580604179}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -186,6 +188,29 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: 0
   OverrideMaxDistance: 0
+--- !u!114 &3329344399206638405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080016775235732284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90c9db51e2fc476e9479a73f38f85832, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lowQualitySprite: {fileID: 21300000, guid: d2fbfcfbe34269d408e768a79674afcb, type: 3}
+  spriteRenderer: {fileID: 5525673381755839832}
+  standardQualityObjects:
+  - {fileID: 2080016775937532977}
+  - {fileID: 2080016776310111412}
+  - {fileID: 2080016776161514668}
+  - {fileID: 2080016775087740929}
+  lowQualityObjects:
+  - {fileID: 3937647171902465605}
+  standardQualityScripts: []
+  lowQualityScripts: []
 --- !u!1 &2080016775256408820
 GameObject:
   m_ObjectHideFlags: 0
@@ -3091,6 +3116,50 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 2647611171924005366, guid: b6bad5870858d974cb4afcba04a4d16e, type: 3}
   m_PrefabInstance: {fileID: 2080016776932756732}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3837314677549597721
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2080016775235732283}
+    m_Modifications:
+    - target: {fileID: 65435792441025290, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 65435792441025290, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 65435792441025290, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 65435792441025290, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 280828892341461596, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+      propertyPath: m_Name
+      value: StaticBattlefieldV3
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+--- !u!4 &3866508367580604179 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 65435792441025290, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+  m_PrefabInstance: {fileID: 3837314677549597721}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3937647171902465605 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 280828892341461596, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+  m_PrefabInstance: {fileID: 3837314677549597721}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &5525673381755839832 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 8786456852354294081, guid: a3f766c5b42c6114e9be94d3e3963d98, type: 3}
+  m_PrefabInstance: {fileID: 3837314677549597721}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4624373268098297197
 PrefabInstance:
