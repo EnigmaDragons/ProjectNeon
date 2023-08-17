@@ -12,14 +12,12 @@ public sealed class InitLowQualityModeToggle : OnMessage<LowQualityModeChanged>
         toggle.onValueChanged.AddListener(Set);
     }
 
+    protected override void AfterEnable() => toggle.SetIsOnWithoutNotify(!CurrentLowQualityMode.IsEnabled);
+    protected override void Execute(LowQualityModeChanged msg) => toggle.SetIsOnWithoutNotify(msg.IsEnabled);
+
     private void Set(bool off)
     {
         CurrentLowQualityMode.Set(!off);
         toggle.SetIsOnWithoutNotify(off);
-    }
-
-    protected override void Execute(LowQualityModeChanged msg)
-    {
-        toggle.SetIsOnWithoutNotify(msg.IsEnabled);
     }
 }

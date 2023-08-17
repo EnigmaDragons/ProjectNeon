@@ -10,6 +10,10 @@ public class BattlefieldScreenshotExporter : MonoBehaviour
     [SerializeField] private GameObject stage;
     [SerializeField] private int framesToWaitBeforeTextureCapture = 500;
     [SerializeField] private bool takeAll = false;
+    [SerializeField] private bool isForBakingAndNotScreenshots = false;
+    [SerializeField] private GameObject bakeCamera;
+    [SerializeField] private GameObject standardCamera;
+    [SerializeField] private string nonBakePrefix = "MP0_";
 
     private void Start() => this.SafeCoroutineOrNothing(Go());
 
@@ -17,6 +21,8 @@ public class BattlefieldScreenshotExporter : MonoBehaviour
     
     private IEnumerator Go()
     {
+        bakeCamera.SetActive(isForBakingAndNotScreenshots);
+        standardCamera.SetActive(!isForBakingAndNotScreenshots);
         var lowQualityMode = CurrentLowQualityMode.IsEnabled;
         CurrentLowQualityMode.Disable();
         foreach (var s in sets)
@@ -27,9 +33,10 @@ public class BattlefieldScreenshotExporter : MonoBehaviour
                 var obj = Instantiate(battlefield, stage.transform);
                 for(var i = 0; i < 10; i++)
                     yield return new WaitForEndOfFrame();
-                obj.GetComponentsInChildren<Transform>(true)
-                    .Where(t => t.CompareTag(DoNotBakeTag))
-                    .ForEach(t => t.gameObject.SetActive(false));
+                if (isForBakingAndNotScreenshots)
+                    obj.GetComponentsInChildren<Transform>(true)
+                        .Where(t => t.CompareTag(DoNotBakeTag))
+                        .ForEach(t => t.gameObject.SetActive(false));
 
                 for(var i = 0; i < framesToWaitBeforeTextureCapture; i++)
                     yield return new WaitForEndOfFrame();
@@ -48,7 +55,8 @@ public class BattlefieldScreenshotExporter : MonoBehaviour
 
     private void Export(string fileName)
     {
-        var savePath = Path.Combine(baseExportPathDir, fileName.Replace(" ", "").Replace("\"", "") + ".jpg");
+        var withPrefix = isForBakingAndNotScreenshots ? fileName : nonBakePrefix + fileName;
+        var savePath = Path.Combine(baseExportPathDir, withPrefix.Replace(" ", "").Replace("\"", "") + ".jpg");
         var tex = ScreenCapture.CaptureScreenshotAsTexture();
 
         var newTexture = new Texture2D(tex.width, tex.height, TextureFormat.RGBA64, false);
