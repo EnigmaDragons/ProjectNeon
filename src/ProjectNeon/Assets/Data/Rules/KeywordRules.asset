@@ -52,15 +52,6 @@ MonoBehaviour:
 
       The bonus effect applies if the target is at
       or below half of their maximum health'
-  - title: Buyout
-    Key:
-      UseConstant: 1
-      ConstantValue: Buyout
-      Variable: {fileID: 11400000, guid: 3c078d6f5df480444bb3edd47b7e81f9, type: 2}
-    Value: '<b>Buyout</b>
-
-
-      The specified enemy leaves the battle.'
   - title: Card Cycles
     Key:
       UseConstant: 0
@@ -259,24 +250,13 @@ MonoBehaviour:
   - title: Power
     Key:
       UseConstant: 0
-      ConstantValue: 
+      ConstantValue: Buyout
       Variable: {fileID: 11400000, guid: 776ba0867ae352c459b9844d0b78d6e2, type: 2}
     Value: '<b>Power</b>
 
 
-      Power refers to the main card-scaling state of a
-      character.'
-  - title: Profitable
-    Key:
-      UseConstant: 1
-      ConstantValue: Profitable
-      Variable: {fileID: 11400000, guid: 3c078d6f5df480444bb3edd47b7e81f9, type: 2}
-    Value: '<b>Profitable/Unprofitable</b>
-
-
-      If you have gained more money
-      than lost during the battle than "Profitable" effects will apply, otherwise
-      "Unprofitable" effects will apply'
+      Power/Primary Stat refers to the main card-scaling
+      state of a character.'
   - title: Prominent
     Key:
       UseConstant: 0
@@ -290,16 +270,6 @@ MonoBehaviour:
 
       After breaking stealth, a character gains Prominent
       for the remainder of the turn. '
-  - title: Primary Stat
-    Key:
-      UseConstant: 0
-      ConstantValue: Buyout
-      Variable: {fileID: 11400000, guid: a961f902c2ecfd54ebfbfe875405e991, type: 2}
-    Value: '<b>Primary Stat</b>
-
-
-      Primary Stat refers to the main card-scaling
-      state of a character.'
   - title: Quick
     Key:
       UseConstant: 0
