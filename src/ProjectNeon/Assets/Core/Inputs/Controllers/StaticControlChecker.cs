@@ -18,8 +18,8 @@ public static class StaticControlChecker
         => Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown("joystick button 7");
 
     public static bool IsNext()
-        => Input.GetAxis("Right Trigger") >= 1 || Input.GetKeyDown(KeyCode.D);
+        => Input.GetAxis("Right Trigger") >= 1 || Input.GetKeyDown("joystick button 5") || Input.GetKeyDown(KeyCode.D);
     
     public static bool IsPrevious()
-        => Input.GetAxis("Left Trigger") >= 1 || Input.GetKeyDown(KeyCode.A);
+        => Input.GetAxis("Left Trigger") >= 1 || Input.GetKeyDown("joystick button 4") || Input.GetKeyDown(KeyCode.A);
 }
