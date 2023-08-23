@@ -4,6 +4,7 @@ public sealed class CardControlsPresenter : OnMessage<BattleStateChanged>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private GameObject cycleControl;
+    [SerializeField] private GameObject discardControl;
     [SerializeField] private GameObject toggleBasicControl;
     [SerializeField] private GameObject basicSuperFocus;
 
@@ -25,6 +26,7 @@ public sealed class CardControlsPresenter : OnMessage<BattleStateChanged>
     private void UpdateUi()
     {
         cycleControl.SetActive(state.NumberOfRecyclesRemainingThisTurn > 0);
+        discardControl.SetActive(state.NumberOfRecyclesRemainingThisTurn == 0);
         basicSuperFocus.SetActive(state.BasicSuperFocusEnabled);
     }
 }

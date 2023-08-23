@@ -189,8 +189,11 @@ public sealed class HandVisualizerV2 : HandVisualizerBase
     public override void RecycleCard(int cardIndex)
     {
         if (state.NumberOfRecyclesRemainingThisTurn < 1)
+        {
+            DiscardCardWithoutTargeting(cardIndex);
             return;
-        
+        }
+
         state.UseRecycle();
         var cycledCard = Hand.Take(cardIndex).RevertedToStandard();
         BattleLog.Write($"Cycled Card {cycledCard.Name}");
@@ -198,6 +201,15 @@ public sealed class HandVisualizerV2 : HandVisualizerBase
         zones.DrawOneCard();
         
         Message.Publish(new CardCycled(transform, cycledCard, Hand.Cards.Last()));
+        Message.Publish(new CheckForAutomaticTurnEnd());
+    }
+
+    public void DiscardCardWithoutTargeting(int cardIndex)
+    {
+        var cycledCard = Hand.Take(cardIndex).RevertedToStandard();
+        zones.HandZone.Remove(cycledCard);
+        zones.DiscardZone.PutOnBottom(cycledCard.RevertedToStandard());
+        state.RecordCardDiscarded();
         Message.Publish(new CheckForAutomaticTurnEnd());
     }
 }
