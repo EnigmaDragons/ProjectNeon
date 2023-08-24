@@ -438,6 +438,7 @@ GameObject:
   - component: {fileID: 4965048509555803942}
   - component: {fileID: 687800252133378862}
   - component: {fileID: 1722537254107617900}
+  - component: {fileID: 8543784376699349716}
   m_Layer: 0
   m_Name: RightClick
   m_TagString: Untagged
@@ -502,6 +503,24 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8543784376699349716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4895786042543793035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd05b73e123143b39028522642d60f14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 1722537254107617900}
+  sprite: {fileID: 11400000, guid: 6f10a30efe3fe6640b795c6e94dc63fe, type: 2}
+  featureFlag:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: 258ae7aa386046c429bf9491fd6fbb38, type: 2}
 --- !u!1 &6983608763813034756
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,6 +532,7 @@ GameObject:
   - component: {fileID: 1673387539906464110}
   - component: {fileID: 5293416385924695385}
   - component: {fileID: 2028983721778509027}
+  - component: {fileID: 7302357502783522219}
   m_Layer: 0
   m_Name: LeftClick
   m_TagString: Untagged
@@ -577,3 +597,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7302357502783522219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6983608763813034756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd05b73e123143b39028522642d60f14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 2028983721778509027}
+  sprite: {fileID: 11400000, guid: 3094c1dcd196fb547af28d04d53e6c2d, type: 2}
+  featureFlag:
+    UseConstant: 0
+    ConstantValue: 0
+    Variable: {fileID: 11400000, guid: 258ae7aa386046c429bf9491fd6fbb38, type: 2}

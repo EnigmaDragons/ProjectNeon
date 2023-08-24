@@ -52,6 +52,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     [SerializeField] private BattleState state;
     [SerializeField] private ConfirmActionComponent confirm;
     [SerializeField] private AlternateActionComponent change;
+    [SerializeField] private InspectActionComponent inspect;
     
     private bool _debug = false;
 
@@ -127,6 +128,11 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         {
             if (_isHand && battleState.AllowRightClickOnCard)
                 ToggleAsBasic();
+        });
+        inspect.Bind(() =>
+        {
+            if (!_isHand)
+                _onRightClick();
         });
     }
 

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class RuleUiTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ILocalizeTerms
+public class RuleUiTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ILocalizeTerms, ISelectHandler, IDeselectHandler
 {
     [SerializeField] private StringVariable key;
     [SerializeField] private StringKeyTermCollection rules;
@@ -14,7 +14,7 @@ public class RuleUiTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         if (rules != null && key != null)
         {
             _showing = true;
-            Message.Publish(new ShowTooltip(transform.position, rules[key].ToLocalized(), showBackground: true));
+            Message.Publish(new ShowTooltip(transform, rules[key].ToLocalized(), showBackground: true));
         }
     }
 
@@ -35,5 +35,16 @@ public class RuleUiTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public string[] GetLocalizeTerms()
         => new [] { rules[key] };
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        if (rules != null && key != null)
+        {
+            _showing = true;
+            Message.Publish(new ShowTooltip(transform, rules[key].ToLocalized(), showBackground: true));
+        }
+    }
+
+    public void OnDeselect(BaseEventData eventData) => Hide();
 }
     

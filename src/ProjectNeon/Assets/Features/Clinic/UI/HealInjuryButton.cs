@@ -21,6 +21,6 @@ public class HealInjuryButton : MonoBehaviour, IPointerEnterHandler, IPointerExi
         _button.onClick.AddListener(() => action());
     }
 
-    public void OnPointerEnter(PointerEventData eventData) => Message.Publish(new ShowTooltip(transform.position, _injuryTooltip));
+    public void OnPointerEnter(PointerEventData eventData) => Message.Publish(new ShowTooltip(transform, _injuryTooltip));
     public void OnPointerExit(PointerEventData eventData) => Message.Publish(new HideTooltip());
 }

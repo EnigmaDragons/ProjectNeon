@@ -11,6 +11,9 @@ public class DirectionalInputNodeMap
     public GameObject BackObject;
     public GameObject NextObject;
     public GameObject PreviousObject;
+    public GameObject NextObject2;
+    public GameObject PreviousObject2;
+    public GameObject InspectObject;
     public DirectionalInputNode[] Nodes;
 
     public DirectionalInputNode DefaultSelectedNode 

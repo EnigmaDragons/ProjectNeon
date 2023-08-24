@@ -18,8 +18,42 @@ public static class StaticControlChecker
         => Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown("joystick button 7");
 
     public static bool IsNext()
-        => Input.GetAxis("Right Trigger") >= 1 || Input.GetKeyDown("joystick button 5") || Input.GetKeyDown(KeyCode.D);
+        => Input.GetKeyDown("joystick button 5") || Input.GetKeyDown(KeyCode.Keypad6);
     
     public static bool IsPrevious()
-        => Input.GetAxis("Left Trigger") >= 1 || Input.GetKeyDown("joystick button 4") || Input.GetKeyDown(KeyCode.A);
+        => Input.GetKeyDown("joystick button 4") || Input.GetKeyDown(KeyCode.Keypad4);
+
+    private static bool _rightTriggerHeld;
+    public static bool IsNext2()
+    {
+        var rightTrigger = Input.GetAxis("Right Trigger") >= 1;
+        if (rightTrigger && !_rightTriggerHeld)
+        {
+            _rightTriggerHeld = true;
+            return true;
+        }
+        else if (!rightTrigger && _rightTriggerHeld)
+        {
+            _rightTriggerHeld = false;
+        }
+
+        return Input.GetKeyDown(KeyCode.Keypad8);
+    }
+
+    private static bool _leftTriggerHeld;
+    public static bool IsPrevious2()
+    {
+        var leftTrigger = Input.GetAxis("Left Trigger") >= 1;
+        if (leftTrigger && !_leftTriggerHeld)
+        {
+            _leftTriggerHeld = true;
+            return true;
+        }
+        else if (!leftTrigger && _leftTriggerHeld)
+        {
+            _leftTriggerHeld = false;
+        }
+
+        return Input.GetKeyDown(KeyCode.Keypad2);
+    }
 }

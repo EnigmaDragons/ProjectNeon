@@ -16,20 +16,27 @@ public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl, St
     
     public CardInLibraryButton InitInfoOnly(Card card, Action action)
     {
+        presenter.gameObject.SetActive(true);
         presenter.Set(card, action);
         numCopiesLabel.SetFinalText(string.Empty);
+        if (superFocus != null)
+            superFocus.SetActive(false);
         return this;
     }
 
     public CardInLibraryButton InitInfoOnly(CardTypeData card)
     {
+        presenter.gameObject.SetActive(true);
         presenter.Set(card, () => { });
         numCopiesLabel.SetFinalText(string.Empty);
+        if (superFocus != null)
+            superFocus.SetActive(false);
         return this;
     }
 
     public CardInLibraryButton Init(Card card, int numTotal, int numAvailable, bool superFocusEnabled)
     {
+        presenter.gameObject.SetActive(true);
         presenter.Set(card, CreateCardAction(card.CardTypeOrNothing.Value, numAvailable));
         UpdateNumberText(numTotal, numAvailable);
         superFocus.SetActive(superFocusEnabled);
@@ -38,9 +45,19 @@ public class CardInLibraryButton : OnMessage<SetSuperFocusDeckBuilderControl, St
     
     public CardInLibraryButton Init(CardType card, int numTotal, int numAvailable, bool superFocusEnabled)
     {
+        presenter.gameObject.SetActive(true);
         presenter.Set(card, CreateCardAction(card, numAvailable));
         UpdateNumberText(numTotal, numAvailable);
         superFocus.SetActive(superFocusEnabled);
+        return this;
+    }
+
+    public CardInLibraryButton InitEmpty()
+    {
+        presenter.gameObject.SetActive(false);
+        numCopiesLabel.SetFinalText(string.Empty);
+        if (superFocus != null)
+            superFocus.SetActive(false);
         return this;
     }
 

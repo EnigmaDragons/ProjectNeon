@@ -9,9 +9,8 @@ public class HeroSelectionUI : MonoBehaviour
 
     [SerializeField] private PartyAdventureState party;
     [SerializeField] private DeckBuilderState state;
-    [SerializeField] private SelectHeroButton selectHeroButtonTemplate;
+    [SerializeField] private SelectHeroButton[] selectHeroButtons;
     [SerializeField] private Button viewHeroDetailsButton;
-    [SerializeField] private Transform parent;
 
     private void Awake() => viewHeroDetailsButton.onClick.AddListener(ViewHeroDetails);
     
@@ -23,13 +22,13 @@ public class HeroSelectionUI : MonoBehaviour
         Log.Info($"Hero Selection UI - Init - Heroes {string.Join(",", party.Heroes.Select(h => h.NameTerm.ToEnglish()))} Decks {party.Decks.Length}");
         var buttons = new List<RectTransform>();
         state.HeroesDecks = party.Decks.Select((deck, i) => new HeroesDeck { Deck = deck.Cards.ToList(), Hero = party.Heroes[i]}).ToList();
-        state.HeroesDecks.ForEach(x =>
+        for (var i = 0; i < 3; i++)
         {
-            var button = Instantiate(selectHeroButtonTemplate, parent);
-            button.GetComponent<SelectHeroButton>().Init(x);
-            buttons.Add(button.GetComponent<RectTransform>());
-            Log.Info("Instantiate Hero Deck Button");
-        });
+            if (state.HeroesDecks.Count > i)
+                selectHeroButtons[i].Init(state.HeroesDecks[i]);
+            else
+                selectHeroButtons[i].gameObject.SetActive(false);
+        }
         for (var i = 0; i < buttons.Count; i++)
             buttons[i].anchoredPosition = new Vector2((i - (buttons.Count / 2f - 0.5f)) * (buttons[i].sizeDelta.x + Padding), buttons[i].anchoredPosition.y);
         SelectFirstHero();

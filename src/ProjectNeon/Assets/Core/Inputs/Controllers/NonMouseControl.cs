@@ -6,5 +6,7 @@
     Inspect,
     Menu,
     Next,
-    Previous
+    Previous,
+    Next2,
+    Previous2
 }

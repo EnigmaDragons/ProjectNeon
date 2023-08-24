@@ -6,13 +6,12 @@ using UnityEngine.UI;
 
 public class DeckUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckChanged, SetSuperFocusDeckBuilderControl>
 {
-    [SerializeField] private PageViewer pageViewer;
+    [SerializeField] private NonDestructivePageViewer pageViewer;
     [SerializeField] private DeckBuilderState state;
     [SerializeField] private CardInDeckButton cardInDeckButtonTemplate;
     [SerializeField] private GameObject emptyCard;
     [SerializeField] private Button clearDeckButton;
-
-    private List<CardInDeckButton> _cardButtons;
+    
     private bool _cardInDeckSuperFocusEnabled;
     
     private void Awake()
@@ -41,19 +40,18 @@ public class DeckUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckC
 
     public void GenerateDeck()
     {
-        _cardButtons = new List<CardInDeckButton>();
         if (state.SelectedHeroesDeck == null)
             return;
         
         var hero = state.SelectedHeroesDeck.Hero;
-        pageViewer.Init(cardInDeckButtonTemplate.gameObject, emptyCard, state.SelectedHeroesDeck.Deck
+        pageViewer.Init(state.SelectedHeroesDeck.Deck
             .Select(x => x.ToNonBattleCard(hero))
             .GroupBy(x => x.Name)
             .OrderBy(x => x.First().Cost.CostSortOrder())
             .ThenBy(x => x.First().Rarity)
             .ThenBy(x => x.Key)
             .Select(x => InitCardInDeckButton(x.First()))
-            .ToList(), x => {},
+            .ToList(), x => x.GetComponent<CardInDeckButton>().InitEmpty(),
             false);
     }
 
@@ -63,7 +61,6 @@ public class DeckUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckC
         {
             var cardInDeckButton = gameObj.GetComponent<CardInDeckButton>();
             cardInDeckButton.Init(card, _cardInDeckSuperFocusEnabled);
-            _cardButtons.Add(cardInDeckButton);
         };
         return init;
     }

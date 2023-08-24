@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class DynamicDirectionInputNodeMap : MonoBehaviour
@@ -10,6 +12,10 @@ public class DynamicDirectionInputNodeMap : MonoBehaviour
     
     [SerializeField] private int z;
     [SerializeField] private GameObject backObject;
+    [SerializeField] private GameObject nextObject;
+    [SerializeField] private GameObject previousObject;
+    [SerializeField] private GameObject nextObject2;
+    [SerializeField] private GameObject previousObject2;
     [SerializeField] private RectTransform[] nodes;
     [SerializeField] private SelectableComponent[] dynamicComponents; 
     [SerializeField] private SelectablesContainer[] containers;
@@ -17,6 +23,7 @@ public class DynamicDirectionInputNodeMap : MonoBehaviour
     [SerializeField] private SelectableComponent defaultSelectedComponent;
     [SerializeField] private RectTransform defaultSelectedNode;
     [SerializeField] private RectTransform backupDefaultSelectedNode;
+    [SerializeField] private float delayedRefresh;
 
     private DirectionalInputNodeMap _nodeMap;
 
@@ -27,11 +34,19 @@ public class DynamicDirectionInputNodeMap : MonoBehaviour
         foreach (var container in containers)
             container.Observe(Refresh);
     }
-    
+
     private void OnEnable()
     {
         RefreshNodeMap();
         Message.Publish(new DirectionalInputNodeMapEnabled(_nodeMap));
+        if (delayedRefresh > 0)
+            StartCoroutine(DelayedRefresh());
+    }
+
+    private IEnumerator DelayedRefresh()
+    {
+        yield return new WaitForSeconds(delayedRefresh);
+        Refresh();
     }
 
     private void Refresh()
@@ -111,6 +126,10 @@ public class DynamicDirectionInputNodeMap : MonoBehaviour
         {
             Z = z,
             BackObject = backObject != null && backObject.gameObject.activeInHierarchy ? backObject : null,
+            NextObject = nextObject != null && nextObject.gameObject.activeInHierarchy ? nextObject : null,
+            NextObject2 = nextObject2 != null && nextObject2.gameObject.activeInHierarchy ? nextObject2 : null,
+            PreviousObject = previousObject != null && previousObject.gameObject.activeInHierarchy ? previousObject : null,
+            PreviousObject2 = previousObject2 != null && previousObject2.gameObject.activeInHierarchy ? previousObject2 : null,
             DefaultSelected = defaultSelected.ToArray(),
             Nodes = result.ToArray()
         };

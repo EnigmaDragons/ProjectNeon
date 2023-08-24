@@ -8,7 +8,7 @@ public class MouseFollowTooltip : OnMessage<ShowTooltip, ShowTooltipObject, Hide
     [SerializeField] private GameObject panel;
     [SerializeField] private TextMeshProUGUI tooltipLabel;
     [SerializeField] private GameObject background;
-
+    
     private GameObject _tooltipObj;
     private RectTransform _rect;
     private Maybe<ShowTooltip> _showTooltipMsg;
@@ -24,17 +24,22 @@ public class MouseFollowTooltip : OnMessage<ShowTooltip, ShowTooltipObject, Hide
 
     private void LateUpdate()
     {
-        var mousePos = Input.mousePosition;
-        var wouldBeOffscreen = Screen.width - Input.mousePosition.x < _rect.sizeDelta.x;
-        panel.transform.position = wouldBeOffscreen
-            ? mousePos - new Vector3(_rect.sizeDelta.x + 92, 0)
-            : mousePos;
+        if (InputControl.Type == ControlType.Mouse)
+        {
+            var mousePos = Input.mousePosition;
+            var wouldBeOffscreen = Screen.width - Input.mousePosition.x < _rect.sizeDelta.x;
+            panel.transform.position = wouldBeOffscreen
+                ? mousePos - new Vector3(_rect.sizeDelta.x + 92, 0)
+                : mousePos;
+        }
+        else if (_showTooltipMsg.IsPresent)
+            panel.transform.position = _showTooltipMsg.Value.Position.position;
     }
 
     protected override void Execute(ShowTooltip msg)
     {
         HideTooltip();
-
+        
         _showTooltipMsg = msg;
         
         tooltipLabel.text = msg.Text.Replace("\\n", Environment.NewLine);
@@ -54,6 +59,7 @@ public class MouseFollowTooltip : OnMessage<ShowTooltip, ShowTooltipObject, Hide
     }
 
     protected override void Execute(HideTooltip msg) => HideTooltip();
+
     private void HideTooltip()
     {
         panel.SetActive(false);

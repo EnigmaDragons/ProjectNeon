@@ -6,7 +6,7 @@ public class CardShopPresenter : OnMessage<RefreshShop, CardPurchased>
 {
     [SerializeField] private ShopCardPool cards;
     [SerializeField] private PartyAdventureState party;
-    [SerializeField] private ShopCardPurchaseSlot cardPurchasePrototype;
+    [SerializeField] private ShopCardPurchaseSlot[] cardPurchaseSlot;
     [SerializeField] private GameObject cardParent;
     [SerializeField] private CurrentAdventureProgress adventureProgress;
     [SerializeField] private DeterminedNodeInfo nodeInfo;
@@ -20,7 +20,7 @@ public class CardShopPresenter : OnMessage<RefreshShop, CardPurchased>
     
     private void Awake()
     {
-        _numCards = cardParent.transform.childCount;
+        _numCards = cardPurchaseSlot.Length;
         Clear();
     }
 
@@ -29,7 +29,7 @@ public class CardShopPresenter : OnMessage<RefreshShop, CardPurchased>
         _selection = null;
         if (cardParent != null)
             foreach (Transform c in cardParent.transform)
-                Destroy(c.gameObject);
+                c.gameObject.SetActive(false);
         _purchases = new List<Card>();
     }
 
@@ -61,10 +61,9 @@ public class CardShopPresenter : OnMessage<RefreshShop, CardPurchased>
             Message.Publish(new SaveDeterminationsRequested());
         }
         _selection = new ShopSelection(new List<StaticEquipment>(), nodeInfo.CardShopSelection.Value.ToList());
-        var cardsWithOwners = _selection.Cards.Select(c => c.ToNonBattleCard(party));
-        cardsWithOwners.ForEach(c => 
-            Instantiate(cardPurchasePrototype, cardParent.transform)
-                .Initialized(c));
+        var cardsWithOwners = _selection.Cards.Select(c => c.ToNonBattleCard(party)).ToArray();
+        for (var i = 0; i < _numCards; i++)
+            cardPurchaseSlot[i].Initialized(cardsWithOwners[i]);
     }
 
     private void PublishShopPurchaseMetricIfRelevant()

@@ -5,8 +5,9 @@ public class ControllerWatcher : MonoBehaviour
 {
     [SerializeField] private ControlType overridenControlType;
     [SerializeField] private bool shouldOverride;
-    private static KeyCode[] _keyboardButtons = new[] { KeyCode.KeypadEnter, KeyCode.Return, KeyCode.Escape, KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.Space };
-    private static string[] _joystickButtons = new []{"joystick button 0", "joystick button 1", "joystick button 2", "joystick button 3"};
+    private static KeyCode[] _keyboardButtons = {KeyCode.KeypadEnter, KeyCode.Return, KeyCode.Escape, KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.Space, KeyCode.Tab, KeyCode.A, KeyCode.W, KeyCode.S, KeyCode.D};
+    private static string[] _joystickButtons = {"joystick button 0", "joystick button 1", "joystick button 2", "joystick button 3", "joystick button 4", "joystick button 5"};
+    private static string[] _joystickAxis = {"Right Trigger", "Left Trigger"};
     
     private void Update()
     {
@@ -27,7 +28,7 @@ public class ControllerWatcher : MonoBehaviour
             InputControl.Type = ControlType.Keyboard;
             Message.Publish(new InputControlChanged());
         }
-        else if (InputControl.Type != ControlType.Xbox && InputControl.Type != ControlType.Playstation && InputControl.Type != ControlType.Switch && _joystickButtons.Any(Input.GetKeyDown))
+        else if (InputControl.Type != ControlType.Xbox && InputControl.Type != ControlType.Playstation && InputControl.Type != ControlType.Switch && (_joystickButtons.Any(Input.GetKeyDown) || _joystickAxis.Any(x => Input.GetAxis(x) >= 1)))
         {
             var joysticks = Input.GetJoystickNames();
             if (joysticks[0].ToLower().Contains("playstation"))

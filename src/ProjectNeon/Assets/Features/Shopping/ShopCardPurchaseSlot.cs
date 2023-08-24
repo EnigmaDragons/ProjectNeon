@@ -39,6 +39,7 @@ public sealed class ShopCardPurchaseSlot : OnMessage<PartyAdventureStateChanged,
         _price = c.Rarity.CardShopPrice(globalEffects?.CardShopPriceFactor ?? 1f);
         costLabel.text = _price.ToString() + 0;
         UpdateAffordability();
+        gameObject.SetActive(true);
         return this;
     }
 

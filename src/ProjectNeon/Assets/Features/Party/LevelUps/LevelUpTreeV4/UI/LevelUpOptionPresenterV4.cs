@@ -4,18 +4,33 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public sealed class LevelUpOptionPresenterV4 : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
+public sealed class LevelUpOptionPresenterV4 : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
 {
     [SerializeField] private Localize text;
     [SerializeField] private Image button;
     [SerializeField] private Sprite hoverImg;
     [SerializeField] private GameObject hasDetailPrompt;
+    [SerializeField] private ConfirmActionComponent confirm;
+    [SerializeField] private InspectActionComponent inspect;
 
     private Sprite _defaultImg;
     private LevelUpOption _option;
     private LevelUpOption[] _allOptions;
 
-    private void Awake() => _defaultImg = button.sprite;
+    private void Awake()
+    {
+        _defaultImg = button.sprite;
+        confirm.Bind(() =>
+        {
+            SelectLevelUpOption();
+            Message.Publish(new LevelUpClicked(transform));
+        });
+        inspect.Bind(() =>
+        {
+            Message.Publish(new LevelUpClicked(transform));
+            _option.ShowDetail();
+        });
+    }
     private void OnEnable() => button.sprite = _defaultImg;
 
     public LevelUpOptionPresenterV4 Initialized(LevelUpOption o, LevelUpOption[] allOptions)
@@ -44,4 +59,6 @@ public sealed class LevelUpOptionPresenterV4 : MonoBehaviour, IPointerDownHandle
 
     public void OnPointerEnter(PointerEventData eventData) => button.sprite = hoverImg;
     public void OnPointerExit(PointerEventData eventData) => button.sprite = _defaultImg;
+    public void OnSelect(BaseEventData eventData) => button.sprite = hoverImg;
+    public void OnDeselect(BaseEventData eventData) => button.sprite = _defaultImg;
 }

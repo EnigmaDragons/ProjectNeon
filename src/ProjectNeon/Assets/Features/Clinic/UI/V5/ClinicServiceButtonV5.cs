@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ClinicServiceButtonV5 : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ClinicServiceButtonV5 : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
 {
     [SerializeField] private Localize title;
     [SerializeField] private Localize descriptionLocalize;
@@ -72,6 +72,19 @@ public class ClinicServiceButtonV5 : MonoBehaviour, IPointerEnterHandler, IPoint
     }
 
     public void OnPointerExit(PointerEventData eventData)
+    {
+        HideRules();
+        highlight.SetActive(false);
+    }
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        ShowRules();
+        highlight.SetActive(true);
+        Message.Publish(new ItemHovered(transform));
+    }
+
+    public void OnDeselect(BaseEventData eventData)
     {
         HideRules();
         highlight.SetActive(false);

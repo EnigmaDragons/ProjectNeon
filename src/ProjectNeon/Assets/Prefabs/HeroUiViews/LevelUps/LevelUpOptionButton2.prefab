@@ -301,6 +301,9 @@ GameObject:
   - component: {fileID: 7056801384905488705}
   - component: {fileID: 2682836273778021803}
   - component: {fileID: 838081407514010986}
+  - component: {fileID: 6410174811872198887}
+  - component: {fileID: 6949933881243549208}
+  - component: {fileID: 2258637524473096808}
   m_Layer: 0
   m_Name: LevelUpOptionButton2
   m_TagString: Untagged
@@ -399,6 +402,8 @@ MonoBehaviour:
   button: {fileID: 5330127451934037334}
   hoverImg: {fileID: 21300000, guid: df47266f712503f40854fa2739e9d5f3, type: 3}
   hasDetailPrompt: {fileID: 930873796886577422}
+  confirm: {fileID: 6410174811872198887}
+  inspect: {fileID: 6949933881243549208}
 --- !u!114 &2682836273778021803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -444,6 +449,43 @@ MonoBehaviour:
   PlayOnAwake: 0
   PlayOnDestroy: 0
   hoverEnterSound: event:/DeckBulder_Scene/Hover
+--- !u!114 &6410174811872198887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5330127451934037330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2942c66c908e45fc81de5ecbeca629e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6949933881243549208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5330127451934037330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30049313c89549469e78593f99c4fb83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2258637524473096808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5330127451934037330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7824d9ef84346a79ab19356f2735b67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Rect: {fileID: 0}
 --- !u!1 &5388486896796076355
 GameObject:
   m_ObjectHideFlags: 0

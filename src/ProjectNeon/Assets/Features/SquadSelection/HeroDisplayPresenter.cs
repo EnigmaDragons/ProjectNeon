@@ -31,6 +31,8 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
     [SerializeField] private SimpleDeckUI deckUi;
     [SerializeField] private SimpleDeckUI basicUi;
     [SerializeField] private ResourceSpriteMap resourceIcons;
+    [SerializeField] private GameObject controlsReference;
+    [SerializeField] private Localize confirmLabel;
     [SerializeField] private ConfirmActionComponent confirm;
     [SerializeField] private AlternateActionComponent changeTabs;
 
@@ -54,8 +56,13 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void Hide() => gameObject.SetActive(false);
 
-    public void DisableClick() => _isClickable = false;
-    
+    public void DisableClick()
+    {
+        _isClickable = false;
+        controlsReference.SetActive(false);
+    }
+
+    public void SetControlText(string term) => confirmLabel.SetTerm(term);
     public void Init(BaseHero c) => Init(c, false, () => {});
     public void Init(BaseHero c, bool isClickable, Action onClick) => Init(c, c.AsMemberForLibrary(), isClickable, onClick);
     public void Init(BaseHero c, Member m, bool isClickable, Action onClick)
@@ -63,6 +70,8 @@ public class HeroDisplayPresenter : MonoBehaviour, IPointerEnterHandler, IPointe
         _isInitialized = true;
         _onClick = onClick;
         _isClickable = isClickable;
+        if (!_isClickable)
+            controlsReference.SetActive(false);
         currentHero = c;
         heroBust.sprite = c.Bust;
         heroName.SetTerm(c.NameTerm());

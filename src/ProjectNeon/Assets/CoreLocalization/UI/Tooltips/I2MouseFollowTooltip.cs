@@ -7,6 +7,7 @@ public class I2MouseFollowTooltip : OnMessage<ShowTooltip, ShowTooltipObject, Hi
     [SerializeField] private GameObject panel;
     [SerializeField] private Localize tooltipLabel;
     [SerializeField] private GameObject background;
+    [SerializeField] private Vector3 nonMouseOffset;
 
     private GameObject _tooltipObj;
     private RectTransform _rect;
@@ -23,11 +24,16 @@ public class I2MouseFollowTooltip : OnMessage<ShowTooltip, ShowTooltipObject, Hi
 
     private void LateUpdate()
     {
-        var mousePos = Input.mousePosition;
-        var wouldBeOffscreen = Screen.width - Input.mousePosition.x < _rect.sizeDelta.x;
-        panel.transform.position = wouldBeOffscreen
-            ? mousePos - new Vector3(_rect.sizeDelta.x + 92, 0)
-            : mousePos;
+        if (InputControl.Type == ControlType.Mouse)
+        {
+            var mousePos = Input.mousePosition;
+            var wouldBeOffscreen = Screen.width - Input.mousePosition.x < _rect.sizeDelta.x;
+            panel.transform.position = wouldBeOffscreen
+                ? mousePos - new Vector3(_rect.sizeDelta.x + 92, 0)
+                : mousePos;
+        }
+        else if (_showTooltipMsg.IsPresent)
+            panel.transform.position = _showTooltipMsg.Value.Position.position + nonMouseOffset;
     }
 
     protected override void Execute(ShowTooltip msg)

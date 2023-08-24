@@ -20,6 +20,7 @@ public class EquipmentPresenter : OnMessage<LanguageChanged>, IPointerDownHandle
     [SerializeField] private GearRulesPresenter rulesPresenter;
     [SerializeField] private LocalizedLabelPresenter corpLabel;
     [SerializeField] private HoverCard hoverCardPrototype;
+    [SerializeField] private ConfirmActionComponent confirm;
 
     private static void NoOp() {}
     
@@ -39,6 +40,8 @@ public class EquipmentPresenter : OnMessage<LanguageChanged>, IPointerDownHandle
     private const string AnyTerm = "Archetypes/Any";
     private const string MadeByTerm = "BattleUI/Made By";
 
+    private void Awake() => confirm.Bind(() => _onClick());
+    
     public void Set(StaticEquipment e, Action onClick) => Initialized(e, onClick);
     
     public EquipmentPresenter Initialized(StaticEquipment e, Action onClick, bool useHoverHighlight = false, bool useAnyHover = true)

@@ -10,6 +10,7 @@ public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged, SetSupe
     private Maybe<Card> _card = Maybe<Card>.Missing();
     private CardType _cardType;
     private int _count;
+    private bool _empty;
     
     protected override void Execute(DeckBuilderCurrentDeckChanged msg) => UpdateInfo();
 
@@ -21,14 +22,24 @@ public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged, SetSupe
 
     public void Init(Card c, bool superFocusEnabled)
     {
+        _empty = false;
+        presenter.gameObject.SetActive(true);
         _card = c;
         _cardType = c.CardTypeOrNothing.Value;
         UpdateInfo();
         superFocus.SetActive(superFocusEnabled);
     }
 
+    public void InitEmpty()
+    {
+        _empty = true;
+        presenter.gameObject.SetActive(false);
+    }
+
     public void RemoveCard()
     {
+        if (_empty)
+            return;
         state.SelectedHeroesDeck.Deck.Remove(state.SelectedHeroesDeck.Deck.First(x => x.Name == _cardType.Name));
         _count--;
         Message.Publish(new DeckBuilderCurrentDeckChanged(state.SelectedHeroesDeck));
@@ -37,6 +48,8 @@ public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged, SetSupe
 
     private void UpdateInfo()
     {
+        if (_empty)
+            return;
         _count = state.SelectedHeroesDeck.Deck.Count(x => x.Name == _cardType.Name);
         if (_card != null && _card.IsPresent)
             presenter.Initialized(_count, _card.Value);

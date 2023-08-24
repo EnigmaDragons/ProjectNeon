@@ -14,6 +14,7 @@ public class SelectHeroButton : OnMessage<SetSuperFocusDeckBuilderControl>
 
     public void Init(HeroesDeck heroesDeck)
     {
+        gameObject.SetActive(true);
         _heroesDeck = heroesDeck;
         image.sprite = _heroesDeck.Hero.Character.Bust;
     }

@@ -17,6 +17,8 @@ public class SimpleDeckCardPresenter : OnMessage<SceneChanged>, IPointerEnterHan
     [SerializeField] private Image archetypeTint;
     [SerializeField] private UnityEngine.UI.Extensions.Gradient tintGradient;
     [SerializeField] private ArchetypeTints tints;
+    [SerializeField] private ConfirmActionComponent confirm;
+    [SerializeField] private InspectActionComponent inspect;
 
     private Canvas _canvas;
     private Maybe<Card> _card = Maybe<Card>.Missing();
@@ -26,7 +28,17 @@ public class SimpleDeckCardPresenter : OnMessage<SceneChanged>, IPointerEnterHan
     private Action _leftClickAction = () => { };
     private bool _isBasic;
 
-    private void Awake() => InitCanvasIfNeeded();
+    private void Awake()
+    {
+        confirm.Bind(() => _leftClickAction());
+        inspect.Bind(() =>
+        {
+            if (_card.IsPresent)
+                Message.Publish(new ShowDetailedCardView(_card.Value));
+        });
+        InitCanvasIfNeeded();
+    }
+
     private void OnDisable() => OnExit();
 
     protected override void Execute(SceneChanged msg) => OnExit();
@@ -86,6 +98,8 @@ public class SimpleDeckCardPresenter : OnMessage<SceneChanged>, IPointerEnterHan
 
     private void Render()
     {
+        if (_cardType == null)
+            return;
         cardNameText.SetTerm(_cardType.NameTerm);
         countText.text = _isBasic 
             ? "B" 

@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 2682464372425663966}
   - component: {fileID: 3512417057353185847}
   - component: {fileID: 397093670259243398}
+  - component: {fileID: 3071439981070840768}
+  - component: {fileID: 5202051401370042550}
   m_Layer: 5
   m_Name: SimpleDeckCardView
   m_TagString: Untagged
@@ -104,9 +106,8 @@ MonoBehaviour:
   archetypeTint: {fileID: 4358433358582384931}
   tintGradient: {fileID: 1863675727903535126}
   tints: {fileID: 11400000, guid: 50f6afa4651711f41a5d9cc2f3cce301, type: 2}
-  buttonImage: {fileID: 2432004854319639595}
-  buttonSprite: {fileID: 21300000, guid: 7e349ea785dd9f940bd51f0bf1b6f523, type: 3}
-  buttonSpriteGlow: {fileID: 21300000, guid: f4f6e47579c844949a1d4e8e643885ff, type: 3}
+  confirm: {fileID: 3071439981070840768}
+  inspect: {fileID: 5202051401370042550}
 --- !u!114 &2682464372425663966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,6 +169,30 @@ MonoBehaviour:
   costLabel: {fileID: 5612419341326234796}
   costResourceTypeIcon: {fileID: 906633365173485013}
   resourceIcons: {fileID: 11400000, guid: 5aa6d5409a19a394aa4dabcedc949b0e, type: 2}
+--- !u!114 &3071439981070840768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200282875123974767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2942c66c908e45fc81de5ecbeca629e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5202051401370042550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200282875123974767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30049313c89549469e78593f99c4fb83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &226831235970152633
 GameObject:
   m_ObjectHideFlags: 0

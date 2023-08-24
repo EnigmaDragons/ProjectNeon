@@ -2,12 +2,11 @@
 using System.Linq;
 using UnityEngine;
 
-public class SquadSlot : MonoBehaviour
+public class SquadSlot : MonoBehaviour, ILocalizeTerms
 {
     [SerializeField] private HeroPool heroPool;
     [SerializeField] private HeroDisplayPresenter presenter;
-    [SerializeField] private GameObject[] controls;
-    
+
     [ReadOnly, SerializeField] private BaseHero current;
     private int _index;
     private BaseHero[] _bannedHeroes;
@@ -18,6 +17,7 @@ public class SquadSlot : MonoBehaviour
         _bannedHeroes = bannedHeroes;
         SelectNextHero();
         SelectPreviousHero();
+        gameObject.SetActive(true);
     }
 
     public void Randomize(DeterministicRng rng) =>
@@ -30,30 +30,29 @@ public class SquadSlot : MonoBehaviour
         SelectHero(_index, AvailableHeroes.Concat(AvailableHeroes)
             .SkipWhile(x => current != null && x != current)
             .Skip(1)
-            .First());
+            .First(), false);
     }
 
     public void SelectPreviousHero()
     {
         if (current != null)
             heroPool.Unselect(_index, current);
-        SelectHero(_index, AvailableHeroes.Concat(AvailableHeroes).Reverse().SkipWhile(x => current != null && x != current).Skip(1).First());
+        SelectHero(_index, AvailableHeroes.Concat(AvailableHeroes).Reverse().SkipWhile(x => current != null && x != current).Skip(1).First(), false);
     }
 
     public void SelectRequiredHero(BaseHero c)
     {
-        SelectHero(_index, c);
-        SetNoChoicesAvailable();
+        SelectHero(_index, c, true);
     }
 
-    public void SetNoChoicesAvailable() => controls.ForEach(x => x.SetActive(false));
-    
-    private void SelectHero(int index, BaseHero c)
+    private void SelectHero(int index, BaseHero c, bool required)
     {
         current = c;
         heroPool.Select(index, c);
-        presenter.Init(c);
+        presenter.Init(c, !required, SelectNextHero);
+        presenter.SetControlText("Menu/Change");
     }
 
     private IEnumerable<BaseHero> AvailableHeroes => heroPool.AvailableHeroes.Except(_bannedHeroes);
+    public string[] GetLocalizeTerms() => new [] {"Menu/Change"};
 }

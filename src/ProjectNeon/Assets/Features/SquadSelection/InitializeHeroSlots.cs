@@ -6,11 +6,9 @@ public class InitializeHeroSlots : MonoBehaviour
 {
     [SerializeField] private HeroPool heroPool;
     [SerializeField] private GameObject container;
-    [SerializeField] private SquadSlot slotPrefab;
+    [SerializeField] private SquadSlot[] slots;
     [SerializeField] private CurrentAdventure current;
 
-    private void Awake() => gameObject.DestroyAllChildren();
-    
     private void OnEnable()
     {
         heroPool.ClearSelections();
@@ -19,16 +17,18 @@ public class InitializeHeroSlots : MonoBehaviour
             throw new InvalidOperationException("No Available Heroes");
 
         var rng = new DeterministicRng(CurrentGameData.Data.AdventureProgress.RngSeed);
-        for (var i = 0; i < current.Adventure.PartySize; i++)
+        for (var i = 0; i < 3; i++)
         {
-            var s = Instantiate(slotPrefab, container.transform);
-            s.Init(i, current.Adventure.BannedHeroes);
-            if (current.Adventure.RequiredHeroes.Length > i)
-                s.SelectRequiredHero(current.Adventure.RequiredHeroes[i]);
-            else if (current.Adventure.PartySize >= heroPool.TotalHeroesCount)
-                s.SetNoChoicesAvailable();
-            else
-                s.Randomize(rng);
+            if (i < current.Adventure.PartySize)
+            {
+                slots[i].Init(i, current.Adventure.BannedHeroes);
+                if (current.Adventure.RequiredHeroes.Length > i)
+                    slots[i].SelectRequiredHero(current.Adventure.RequiredHeroes[i]);
+                else
+                    slots[i].Randomize(rng);
+            }
+            else 
+                slots[i].gameObject.SetActive(false);
         }
     }
 }

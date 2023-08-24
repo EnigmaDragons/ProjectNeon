@@ -5,9 +5,7 @@ using UnityEngine;
 
 public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderStateUpdated, SetSuperFocusDeckBuilderControl>
 {
-    [SerializeField] private PageViewer pageViewer;
-    [SerializeField] private CardInLibraryButton cardInLibraryButtonTemplate;
-    [SerializeField] private GameObject emptyCard;
+    [SerializeField] private NonDestructivePageViewer pageViewer;
     [SerializeField] private PartyCardCollection partyCards;
     [SerializeField] private DeckBuilderState state;
 
@@ -51,10 +49,8 @@ public class LibraryUI : OnMessage<DeckBuilderCurrentDeckChanged, DeckBuilderSta
                 .ToList();
         
         pageViewer.Init(
-            cardInLibraryButtonTemplate.gameObject, 
-            emptyCard, 
             cardActions,
-            x => {},
+            x => x.GetComponent<CardInLibraryButton>().InitEmpty(),
             !heroChanged);
     }
 

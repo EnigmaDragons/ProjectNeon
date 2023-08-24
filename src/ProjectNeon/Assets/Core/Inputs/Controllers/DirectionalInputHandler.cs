@@ -106,8 +106,20 @@ public class DirectionalInputHandler : MonoBehaviour
             ActivateControl(_maps[0].NextObject);
         else if (StaticControlChecker.IsPrevious())
             ActivateControl(_maps[0].PreviousObject);
+        else if (StaticControlChecker.IsNext2())
+            ActivateControl(_maps[0].NextObject2);
+        else if (StaticControlChecker.IsPrevious2())
+            ActivateControl(_maps[0].PreviousObject2);
         else if (StaticControlChecker.IsChange())
             ActivateAlternateControl(_selectedGameObject);
+        else if (StaticControlChecker.IsInspect())
+        {
+            if (_maps[0].InspectObject != null)
+                ActivateControl(_maps[0].InspectObject);
+            else
+                ActivateInspectControl(_selectedGameObject);
+
+        }
         else if (!changedSelection && _selectedGameObject != null && _selectedGameObject.TryGetComponent<Slider>(out var slider))
         {
             if (horizontal > minimumMovementBeforeDirectionCounted)
@@ -120,14 +132,19 @@ public class DirectionalInputHandler : MonoBehaviour
 
     private void ActivateControl(GameObject control)
     {
-        if (control == null)
+        if (control == null || !control.activeInHierarchy)
             return;
         if (control.TryGetComponent<ConfirmActionComponent>(out var action))
             action.Execute();
         else if (control.TryGetComponent<Button>(out var button))
-            button.onClick.Invoke();
+        {
+            if (button.enabled)
+                button.onClick.Invoke();   
+        }
         else if (control.TryGetComponent<Toggle>(out var toggle))
             toggle.isOn = !toggle.isOn;
+        else if (control.TryGetComponent<OnClickAction>(out var clickAction))
+            clickAction.Click();
         else if (control.TryGetComponent<TMP_Dropdown>(out var dropdown))
         {
             if (dropdown.IsExpanded)
@@ -142,6 +159,14 @@ public class DirectionalInputHandler : MonoBehaviour
         if (control == null)
             return;
         if (control.TryGetComponent<AlternateActionComponent>(out var action))
+            action.Execute();
+    }
+
+    private void ActivateInspectControl(GameObject control)
+    {
+        if (control == null)
+            return;
+        if (control.TryGetComponent<InspectActionComponent>(out var action))
             action.Execute();
     }
 
@@ -182,7 +207,7 @@ public class DirectionalInputHandler : MonoBehaviour
             return;
         }
         _maps[index] = msg.UpdatedMap;
-        _selectedNodes[index] = msg.UpdatedMap.Nodes.Any(x => x.Selectable == _selectedNodes[index].Selectable)
+        _selectedNodes[index] = _selectedNodes[index].Selectable != null && _selectedNodes[index].Selectable.activeInHierarchy && msg.UpdatedMap.Nodes.Any(x => x.Selectable == _selectedNodes[index].Selectable)
             ? msg.UpdatedMap.Nodes.First(x => x.Selectable == _selectedNodes[index].Selectable)
             : msg.UpdatedMap.DefaultSelectedNode;
         if (index == 0 || _maps.Count == 1)

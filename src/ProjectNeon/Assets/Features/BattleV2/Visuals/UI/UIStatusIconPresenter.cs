@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public sealed class UIStatusIconPresenter : StatusIcon, IPointerEnterHandler, IPointerExitHandler
+public sealed class UIStatusIconPresenter : StatusIcon, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
 {
     [SerializeField] private Image icon;
     [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI label;
@@ -35,11 +35,25 @@ public sealed class UIStatusIconPresenter : StatusIcon, IPointerEnterHandler, IP
     {
         if (!gameObject.activeSelf) return;
         
-        Message.Publish(new ShowTooltip(transform.position, _tooltip, true));
+        Message.Publish(new ShowTooltip(transform, _tooltip, true));
         _originator.IfPresent(id => Message.Publish(new ActivateMemberHighlight(id, MemberHighlightType.StatusOriginator, true)));
     }
 
     public void OnPointerExit(PointerEventData eventData)
+    {
+        Message.Publish(new HideTooltip());
+        _originator.IfPresent(id => Message.Publish(new DeactivateMemberHighlight(id, MemberHighlightType.StatusOriginator)));
+    }
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        if (!gameObject.activeSelf) return;
+        
+        Message.Publish(new ShowTooltip(transform, _tooltip, true));
+        _originator.IfPresent(id => Message.Publish(new ActivateMemberHighlight(id, MemberHighlightType.StatusOriginator, true)));
+    }
+
+    public void OnDeselect(BaseEventData eventData)
     {
         Message.Publish(new HideTooltip());
         _originator.IfPresent(id => Message.Publish(new DeactivateMemberHighlight(id, MemberHighlightType.StatusOriginator)));

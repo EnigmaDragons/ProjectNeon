@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerEnterHandler, IPointerExitHandler, ILocalizeTerms
+public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerEnterHandler, IPointerExitHandler, ILocalizeTerms, ISelectHandler, IDeselectHandler
 {
     [SerializeField] private Image icon;
     [SerializeField, NoLocalizationNeeded] private TextMeshProUGUI counter;
@@ -67,11 +67,19 @@ public class ResourceCounterPresenter : OnMessage<MemberStateChanged>, IPointerE
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (IsInitialized && gameObject.activeSelf)
-            Message.Publish(new ShowTooltip(transform.position, "Tooltips/HeroHasResources".ToLocalized().SafeFormatWithDefault("{0} has {1} for paying Card Costs", _member.NameTerm.ToLocalized(), $"{_member.State[_resourceType]} {_resourceType.GetTerm().ToLocalized()}")));
+            Message.Publish(new ShowTooltip(transform, "Tooltips/HeroHasResources".ToLocalized().SafeFormatWithDefault("{0} has {1} for paying Card Costs", _member.NameTerm.ToLocalized(), $"{_member.State[_resourceType]} {_resourceType.GetTerm().ToLocalized()}")));
     }
 
     public void OnPointerExit(PointerEventData eventData) => Message.Publish(new HideTooltip());
 
     public string[] GetLocalizeTerms()
         => new[] { "Tooltips/HeroHasResources" };
+
+    public void OnSelect(BaseEventData eventData)
+    {
+        if (IsInitialized && gameObject.activeSelf)
+            Message.Publish(new ShowTooltip(transform, "Tooltips/HeroHasResources".ToLocalized().SafeFormatWithDefault("{0} has {1} for paying Card Costs", _member.NameTerm.ToLocalized(), $"{_member.State[_resourceType]} {_resourceType.GetTerm().ToLocalized()}")));
+    }
+
+    public void OnDeselect(BaseEventData eventData) => Message.Publish(new HideTooltip());
 }

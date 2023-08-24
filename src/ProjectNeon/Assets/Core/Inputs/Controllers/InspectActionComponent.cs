@@ -1,7 +1,11 @@
-﻿namespace Core.Inputs.Controllers
+﻿using System;
+using UnityEngine;
+
+public class InspectActionComponent : MonoBehaviour
 {
-    public class InspectActionComponent
-    {
-        
-    }
+    private Action _action;
+
+    public void Bind(Action action) => _action = action;
+
+    public void Execute() => _action();
 }

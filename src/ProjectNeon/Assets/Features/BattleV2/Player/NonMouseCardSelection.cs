@@ -7,6 +7,7 @@ public class NonMouseCardSelection : MonoBehaviour
     [SerializeField] private BattleState state;
     [SerializeField] private HandVisualizerBase hand;
     [SerializeField] private Button cycleOrDiscard;
+    [SerializeField] private Button inspectCharacters;
     [SerializeField] private Button endTurn;
 
     private DirectionalInputNodeMap _nodeMap;
@@ -65,8 +66,11 @@ public class NonMouseCardSelection : MonoBehaviour
         {
             Z = 0,
             BackObject = cycleOrDiscard.gameObject,
+            InspectObject = inspectCharacters.gameObject,
             NextObject = endTurn.gameObject,
-            //PreviousObject = endTurn.gameObject,
+            PreviousObject = endTurn.gameObject,
+            NextObject2 = endTurn.gameObject,
+            PreviousObject2 = endTurn.gameObject,
             DefaultSelected = nodes.Select(x => x.Selectable).ToArray(),
             Nodes = nodes
         };

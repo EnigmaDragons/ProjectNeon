@@ -18,4 +18,6 @@ public sealed class OnClickAction : MonoBehaviour, IPointerDownHandler
         if (allowedButtons.Contains(eventData.button))
             action.Invoke();
     }
+    
+    public void Click() => action.Invoke();
 }

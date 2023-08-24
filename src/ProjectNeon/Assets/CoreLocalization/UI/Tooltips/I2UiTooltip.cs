@@ -20,7 +20,7 @@ public class I2UiTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         if (!MouseDragState.IsDragging && tooltipTerm != null && gameObject.activeSelf)
         {
             _showing = true;
-            Message.Publish(new ShowTooltip(transform.position, tooltipTerm.ToLocalized()));
+            Message.Publish(new ShowTooltip(transform, tooltipTerm.ToLocalized()));
         }
     }
 

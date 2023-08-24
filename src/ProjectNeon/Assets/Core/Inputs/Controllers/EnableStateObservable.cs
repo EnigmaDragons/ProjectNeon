@@ -1,7 +1,12 @@
-﻿namespace Core.Inputs.Controllers
+﻿using System;
+using UnityEngine;
+
+public class EnableStateObservable : MonoBehaviour
 {
-    public class EnableStateObservable
-    {
-        
-    }
+    private Action _onChange = () => { };
+
+    public void Watch(Action onChange) => _onChange = onChange;
+
+    private void OnEnable() => _onChange();
+    private void OnDisable() => _onChange();
 }
