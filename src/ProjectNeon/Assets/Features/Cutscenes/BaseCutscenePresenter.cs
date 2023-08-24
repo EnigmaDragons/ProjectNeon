@@ -19,12 +19,16 @@ public abstract class BaseCutscenePresenter : MonoBehaviour
     protected bool _finishTriggered = false;
     protected bool _waitFinishTriggered = false;
     private bool _skippable = true;
+    private bool _wasLowQualityMode = false;
     
     protected readonly List<CutsceneCharacter> Characters = new List<CutsceneCharacter>();
     protected readonly Dictionary<string, List<GameObject>> CharacterAdditionalVisuals = new Dictionary<string, List<GameObject>>();
     
     private void OnEnable()
     {
+        _wasLowQualityMode = CurrentLowQualityMode.IsEnabled;
+        if (_wasLowQualityMode)
+            CurrentLowQualityMode.Disable();
         if (fadeDarken != null)
             fadeDarken.color = fadeDarken.color.WithAlpha(0f);
         narrator.Init(new [] { CutsceneCharacterAliases.Narrator });
@@ -225,7 +229,12 @@ public abstract class BaseCutscenePresenter : MonoBehaviour
         _currentSegment.Start();
     }
 
-    private void Execute(CutsceneFinished msg) => FinishCutscene();
+    private void Execute(CutsceneFinished msg)
+    {
+        if (_wasLowQualityMode)
+            CurrentLowQualityMode.Enable();
+        FinishCutscene();
+    }
 
     protected abstract void Execute(SkipCutsceneRequested msg);
     protected abstract void FinishCutscene();
