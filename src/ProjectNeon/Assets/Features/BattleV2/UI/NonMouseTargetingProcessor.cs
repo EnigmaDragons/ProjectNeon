@@ -39,10 +39,10 @@ public class NonMouseTargetingProcessor : OnMessage<BeginTargetSelectionRequeste
             }
             for (var i = 0; i < nodes.Count; i++)
             {
-                nodes[0].Up = nodes[i == 0 ? nodes.Count - 1 : i - 1].Selectable;
-                nodes[0].Down = nodes[i == nodes.Count - 1 ? 0 : i + 1].Selectable;
-                nodes[0].Left = nodes[i == 0 ? nodes.Count - 1 : i - 1].Selectable;
-                nodes[0].Right = nodes[i == nodes.Count - 1 ? 0 : i + 1].Selectable;
+                nodes[i].Up = nodes[i == 0 ? nodes.Count - 1 : i - 1].Selectable;
+                nodes[i].Down = nodes[i == nodes.Count - 1 ? 0 : i + 1].Selectable;
+                nodes[i].Left = nodes[i == 0 ? nodes.Count - 1 : i - 1].Selectable;
+                nodes[i].Right = nodes[i == nodes.Count - 1 ? 0 : i + 1].Selectable;
             }
             _nodeMap = new DirectionalInputNodeMap
             {
