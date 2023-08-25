@@ -653,7 +653,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (_isHand && CheckIfCanPlay() && eventData.button == PointerEventData.InputButton.Left)
         {
             Message.Publish(new CardClicked());
-            Cursor.visible = false;
+            CursorStateController.SetVisibility(false);
             Message.Publish(new TweenMovementRequested(transform, new Vector3(0, 30f, 0), 0.03f, MovementDimension.Spatial, TweenMovementType.RubberBand, "Click"));
         }
         if (!_isHand && eventData.button == PointerEventData.InputButton.Left)
@@ -674,14 +674,14 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             DebugLog("UI - Pointer Up");
         if (_leftButtonAlreadyDown && eventData.button == PointerEventData.InputButton.Left)
         {
-            Cursor.visible = true;
+            CursorStateController.SetVisibility(true);
             _leftButtonAlreadyDown = false; 
             if (_isHand && IsPlayable)
                 Message.Publish(new SnapBackTweenRequested(transform, ClickString));
         }
         if (_rightButtonAlreadyDown && eventData.button == PointerEventData.InputButton.Right)
         {
-            Cursor.visible = true;
+            CursorStateController.SetVisibility(true);
             _rightButtonAlreadyDown = false;
         }
     }
@@ -746,7 +746,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     public void OnBeginDrag(PointerEventData eventData)
         => WhenActivatableHand(() =>
         {
-            Cursor.visible = false;
+            CursorStateController.SetVisibility(false);
             IsDragging = true;
             MouseDragState.Set(true);
             controls.SetActive(false);
@@ -802,7 +802,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     private void UndoDragMovement()
     {
-        Cursor.visible = true;
+        CursorStateController.SetVisibility(true);
         MouseDragState.Set(false);
     }
     

@@ -8,7 +8,7 @@ public static class MouseDragState
     {
         var changed = IsDragging != isDragging;
         IsDragging = isDragging;
-        Cursor.visible = !isDragging;
+        CursorStateController.SetVisibility(!isDragging);
         if (changed)
             Message.Publish(new MouseDragStateChanged(isDragging));
     }

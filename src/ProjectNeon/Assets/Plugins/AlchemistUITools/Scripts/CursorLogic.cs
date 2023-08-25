@@ -15,7 +15,7 @@ public class CursorLogic : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        Cursor.visible = false;
+		CursorStateController.SetVisibility(false);
         _rect = GetComponent<RectTransform>();
     }
 	

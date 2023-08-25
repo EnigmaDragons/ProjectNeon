@@ -91,23 +91,11 @@ public class FirstPersonController : MonoBehaviour
 
         if (m_cursorIsLocked)
         {
-            UnlockCursor();
+            CursorStateController.SetLocked();
         }
         else if (!m_cursorIsLocked)
         {
-            LockCursor();
+            CursorStateController.SetUnlocked();
         }
-    }
-
-    private void UnlockCursor()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
-    private void LockCursor()
-    {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
     }
 }
