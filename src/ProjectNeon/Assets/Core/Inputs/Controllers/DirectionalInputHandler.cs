@@ -35,11 +35,12 @@ public class DirectionalInputHandler : MonoBehaviour
         Message.Subscribe<DirectionalInputNodeMapDisabled>(Execute, this);
         Message.Subscribe<DisableController>(Execute, this);
         Message.Subscribe<EnableController>(Execute, this);
+        Message.Subscribe<InputControlChanged>(_ => UpdateSelected(true), this);
     }
 
     private void Update()
     {
-        if (!_maps.Any() || _disabled)
+        if (!_maps.Any() || _disabled || InputControl.Type == ControlType.Mouse)
             return;
         
         var changedSelection = false;
@@ -94,7 +95,7 @@ public class DirectionalInputHandler : MonoBehaviour
                         _holdingDirection = InputDirection.None;
                 }
             }
-            UpdateSelected();
+            UpdateSelected(true);
         }
         _previousDirection = direction;
         
@@ -190,7 +191,7 @@ public class DirectionalInputHandler : MonoBehaviour
         }
         if (index == 0 || _maps.Count == 1)
             _holdingDirection = InputDirection.None;
-        UpdateSelected();
+        UpdateSelected(false);
     }
 
     private void Execute(DirectionalInputNodeMapChanged msg)
@@ -212,7 +213,7 @@ public class DirectionalInputHandler : MonoBehaviour
             : msg.UpdatedMap.DefaultSelectedNode;
         if (index == 0 || _maps.Count == 1)
             _holdingDirection = InputDirection.None;
-        UpdateSelected();
+        UpdateSelected(true);
     } 
 
     private void Execute(DirectionalInputNodeMapDisabled msg)
@@ -224,7 +225,7 @@ public class DirectionalInputHandler : MonoBehaviour
         _selectedNodes.RemoveAt(index);
         if (index == 0)
             _holdingDirection = InputDirection.None;
-        UpdateSelected();
+        UpdateSelected(false);
     }
 
     private void Execute(DisableController msg)
@@ -237,14 +238,23 @@ public class DirectionalInputHandler : MonoBehaviour
     {
         _disabled = !featureFlag.Value;
         eventSystem.SetSelectedGameObject(_selectedGameObject);
-        UpdateSelected();
+        UpdateSelected(true);
     }
     
-    private void UpdateSelected()
+    private void UpdateSelected(bool forceRefresh)
     {
         if (_disabled)
             return;
-        if (_selectedGameObject != null && (_selectedNodes.Count == 0 || _selectedNodes[0].Selectable != _selectedGameObject))
+        if (InputControl.Type == ControlType.Mouse)
+        {
+            if (_selectedGameObject != null)
+            {
+                _selectedGameObject = null;
+                eventSystem.SetSelectedGameObject(_selectedGameObject);   
+            }
+            return;
+        }
+        if (_selectedGameObject != null && (forceRefresh || _selectedNodes.Count == 0 || _selectedNodes[0].Selectable != _selectedGameObject))
         {
             _selectedGameObject = null;
             eventSystem.SetSelectedGameObject(_selectedGameObject);
