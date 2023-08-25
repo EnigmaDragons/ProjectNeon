@@ -27,6 +27,7 @@ public class SimpleDeckCardPresenter : OnMessage<SceneChanged>, IPointerEnterHan
     private GameObject _hoverCard;
     private Action _leftClickAction = () => { };
     private bool _isBasic;
+    private bool _isSelected;
 
     private void Awake()
     {
@@ -58,6 +59,11 @@ public class SimpleDeckCardPresenter : OnMessage<SceneChanged>, IPointerEnterHan
         _leftClickAction = () => { };
         _isBasic = false;
         Render();
+        if (_isSelected)
+        {
+            OnDeselect(null);
+            OnSelect(null);
+        }
         return this;
     }
 
@@ -69,6 +75,11 @@ public class SimpleDeckCardPresenter : OnMessage<SceneChanged>, IPointerEnterHan
         _leftClickAction = () => { };
         _isBasic = c.Owner.BasicCard.IsPresentAnd(b => c.Id == b.Id);
         Render();
+        if (_isSelected)
+        {
+            OnDeselect(null);
+            OnSelect(null);
+        }
         return this;
     }
 
@@ -176,6 +187,7 @@ public class SimpleDeckCardPresenter : OnMessage<SceneChanged>, IPointerEnterHan
         if (_cardType == null || !gameObject.activeSelf)
             return;
 
+        _isSelected = true;
         _hoverCard = Instantiate(hoverCard.gameObject, _canvas.transform);
         var position = transform.position;
         _hoverCard.transform.position = new Vector3(position.x + 250, position.y, position.z);
@@ -186,5 +198,9 @@ public class SimpleDeckCardPresenter : OnMessage<SceneChanged>, IPointerEnterHan
         Message.Publish(new CardHoveredOnDeck(transform));
     }
 
-    public void OnDeselect(BaseEventData eventData) => OnExit();
+    public void OnDeselect(BaseEventData eventData)
+    {
+        _isSelected = false;
+        OnExit();
+    }
 }

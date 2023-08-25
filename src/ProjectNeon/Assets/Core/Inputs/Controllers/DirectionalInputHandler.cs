@@ -11,7 +11,7 @@ public class DirectionalInputHandler : MonoBehaviour
     [SerializeField] private EventSystem eventSystem;
     [SerializeField] private float holdSecondsBeforeSecondInput;
     [SerializeField] private float holdSecondsBetweenMovement;
-    [SerializeField] private float minimumMovementBeforeDirectionCounted = 0;
+    [SerializeField] private FloatReference minimumMovementBeforeDirectionCounted;
     [SerializeField] private BoolReference featureFlag;
 
     private List<DirectionalInputNodeMap> _maps = new List<DirectionalInputNodeMap>();
@@ -35,7 +35,7 @@ public class DirectionalInputHandler : MonoBehaviour
         Message.Subscribe<DirectionalInputNodeMapDisabled>(Execute, this);
         Message.Subscribe<DisableController>(Execute, this);
         Message.Subscribe<EnableController>(Execute, this);
-        Message.Subscribe<InputControlChanged>(_ => UpdateSelected(true), this);
+        Message.Subscribe<InputControlChanged>(_ => UpdateSelected(), this);
     }
 
     private void Update()
@@ -47,13 +47,13 @@ public class DirectionalInputHandler : MonoBehaviour
         var vertical = Input.GetAxisRaw("Vertical");
         var horizontal = Input.GetAxisRaw("Horizontal");
         var direction = InputDirection.None;
-        if (Math.Abs(vertical) >= Math.Abs(horizontal) && vertical > minimumMovementBeforeDirectionCounted)
+        if (Math.Abs(vertical) >= Math.Abs(horizontal) && vertical > minimumMovementBeforeDirectionCounted.Value)
             direction = InputDirection.Up;
-        else if (Math.Abs(vertical) >= Math.Abs(horizontal) && vertical < -minimumMovementBeforeDirectionCounted)
+        else if (Math.Abs(vertical) >= Math.Abs(horizontal) && vertical < -minimumMovementBeforeDirectionCounted.Value)
             direction = InputDirection.Down;
-        else if (Math.Abs(vertical) < Math.Abs(horizontal) && horizontal > minimumMovementBeforeDirectionCounted)
+        else if (Math.Abs(vertical) < Math.Abs(horizontal) && horizontal > minimumMovementBeforeDirectionCounted.Value)
             direction = InputDirection.Right;
-        else if (Math.Abs(vertical) < Math.Abs(horizontal) && horizontal < -minimumMovementBeforeDirectionCounted)
+        else if (Math.Abs(vertical) < Math.Abs(horizontal) && horizontal < -minimumMovementBeforeDirectionCounted.Value)
             direction = InputDirection.Left;
 
         if (_selectedNodes.Any())
@@ -95,7 +95,7 @@ public class DirectionalInputHandler : MonoBehaviour
                         _holdingDirection = InputDirection.None;
                 }
             }
-            UpdateSelected(true);
+            UpdateSelected();
         }
         _previousDirection = direction;
         
@@ -191,7 +191,7 @@ public class DirectionalInputHandler : MonoBehaviour
         }
         if (index == 0 || _maps.Count == 1)
             _holdingDirection = InputDirection.None;
-        UpdateSelected(false);
+        UpdateSelected();
     }
 
     private void Execute(DirectionalInputNodeMapChanged msg)
@@ -213,7 +213,7 @@ public class DirectionalInputHandler : MonoBehaviour
             : msg.UpdatedMap.DefaultSelectedNode;
         if (index == 0 || _maps.Count == 1)
             _holdingDirection = InputDirection.None;
-        UpdateSelected(true);
+        UpdateSelected();
     } 
 
     private void Execute(DirectionalInputNodeMapDisabled msg)
@@ -225,7 +225,7 @@ public class DirectionalInputHandler : MonoBehaviour
         _selectedNodes.RemoveAt(index);
         if (index == 0)
             _holdingDirection = InputDirection.None;
-        UpdateSelected(false);
+        UpdateSelected();
     }
 
     private void Execute(DisableController msg)
@@ -238,10 +238,10 @@ public class DirectionalInputHandler : MonoBehaviour
     {
         _disabled = !featureFlag.Value;
         eventSystem.SetSelectedGameObject(_selectedGameObject);
-        UpdateSelected(true);
+        UpdateSelected();
     }
     
-    private void UpdateSelected(bool forceRefresh)
+    private void UpdateSelected()
     {
         if (_disabled)
             return;
@@ -254,7 +254,7 @@ public class DirectionalInputHandler : MonoBehaviour
             }
             return;
         }
-        if (_selectedGameObject != null && (forceRefresh || _selectedNodes.Count == 0 || _selectedNodes[0].Selectable != _selectedGameObject))
+        if (_selectedGameObject != null && (_selectedNodes.Count == 0 || _selectedNodes[0].Selectable != _selectedGameObject))
         {
             _selectedGameObject = null;
             eventSystem.SetSelectedGameObject(_selectedGameObject);

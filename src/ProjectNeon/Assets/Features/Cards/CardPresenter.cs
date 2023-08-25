@@ -235,6 +235,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         controls.SetCanToggleBasic(_isHand && battleState.ShowSwapCardForBasic && card.Owner.BasicCard.IsPresent);
         _requiresPlayerTargeting = _cardType.RequiresPlayerTargeting();
         RenderCardType();
+        if (_isSelected)
+            OnSelect(null);
     }
     
     public void Set(CardTypeData cardType, Action onClick)
