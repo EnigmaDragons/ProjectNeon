@@ -10,6 +10,7 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
     [SerializeField] private CardPlayZone playerHand;
     [SerializeField] private Button confirmUi;
     [SerializeField] private Button endEarlyButton;
+    [SerializeField] private Button endTurnInvisible;
 
     private bool _isConfirming = false;
     private bool _confirmRequestedManually;
@@ -23,6 +24,7 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
         confirmUi.gameObject.SetActive(false);
         confirmUi.onClick.AddListener(ConfirmEarly);
         endEarlyButton.onClick.AddListener(ConfirmEarly);
+        endTurnInvisible.onClick.AddListener(ConfirmEarly);
     }
 
     public void Init(BattleResolutions b) => _battleResolutions = b;

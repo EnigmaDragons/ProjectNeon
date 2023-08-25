@@ -69,8 +69,6 @@ public class NonMouseCardSelection : MonoBehaviour
             InspectObject = inspectCharacters.gameObject,
             NextObject = endTurn.gameObject,
             PreviousObject = endTurn.gameObject,
-            NextObject2 = endTurn.gameObject,
-            PreviousObject2 = endTurn.gameObject,
             DefaultSelected = nodes.Select(x => x.Selectable).ToArray(),
             Nodes = nodes
         };
