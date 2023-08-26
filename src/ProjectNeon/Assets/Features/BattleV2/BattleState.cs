@@ -145,6 +145,7 @@ public class BattleState : ScriptableObject
         ShowSwapCardForBasic = true;
         ShowCycleOrDiscard = true;
         AllowRightClickOnCard = true;
+        AllowMiddleClickOnCard = true;
         BasicSuperFocusEnabled = false;
         DevLog.Write($"Next Encounter has {string.Join(", ", nextEnemies.Select(x => x.NameTerm.ToEnglish()))}");
     }

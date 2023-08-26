@@ -26,12 +26,10 @@ public static class CursorStateController
         Update();
     }
 
-    public static void Update(bool forceUpdate = false)
+    public static void Update()
     {
         _isKeyboardAndMouse = InputControl.Type == ControlType.Mouse || InputControl.Type == ControlType.Keyboard;
-        if (forceUpdate || Cursor.visible != _visible && _isKeyboardAndMouse)
-            Cursor.visible = _visible && _isKeyboardAndMouse;
-        if (forceUpdate || Cursor.lockState != (_isKeyboardAndMouse ? _mode : CursorLockMode.Locked))
-            Cursor.lockState = _isKeyboardAndMouse ? _mode : CursorLockMode.Locked;
+        Cursor.visible = _visible && _isKeyboardAndMouse;
+        Cursor.lockState = _isKeyboardAndMouse ? _mode : CursorLockMode.Locked;
     }
 }
