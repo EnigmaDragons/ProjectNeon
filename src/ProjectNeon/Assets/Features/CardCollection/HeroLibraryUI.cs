@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class HeroLibraryUI : MonoBehaviour
 {
-    [SerializeField] private PageViewer pageViewer;
-    [SerializeField] private CardInLibraryButton cardInLibraryButtonTemplate;
+    [SerializeField] private NonDestructivePageViewer pageViewer;
     [SerializeField] private ShopCardPool allCards;
-    [SerializeField] private GameObject emptyCard;
     [SerializeField] private Library library;
     [SerializeField] private HeroFaceSelector heroSelector;
     [SerializeField] private ArchetypeTints archetypeTints;
@@ -42,13 +40,11 @@ public class HeroLibraryUI : MonoBehaviour
             .Concat(hero.ParagonCards);
         
         pageViewer.Init(
-            cardInLibraryButtonTemplate.gameObject, 
-            emptyCard, 
             cards
                 .Select(c => new Card(-1, heroMember, c))
                 .Select(InitCardInLibraryButton)
                 .ToList(), 
-            x => {},
+            x => x.GetComponent<CardInLibraryButton>().InitEmpty(),
             false);
     }
 
