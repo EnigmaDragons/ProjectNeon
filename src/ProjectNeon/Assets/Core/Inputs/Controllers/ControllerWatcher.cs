@@ -18,8 +18,8 @@ public class ControllerWatcher : MonoBehaviour
 
     private void Update()
     {
-        var vertical = Input.GetAxisRaw("Vertical");
-        var horizontal = Input.GetAxisRaw("Horizontal");
+        var vertical = Math.Max(Math.Abs(Input.GetAxisRaw("Vertical")), Math.Abs(Input.GetAxisRaw("VerticalDPad")));
+        var horizontal = Math.Max(Math.Abs(Input.GetAxisRaw("Horizontal")), Math.Abs(Input.GetAxisRaw("HorizontalDPad")));
         if (shouldOverride && InputControl.Type != overridenControlType)
         {
             InputControl.Type = overridenControlType;

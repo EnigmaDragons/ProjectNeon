@@ -45,7 +45,11 @@ public class DirectionalInputHandler : MonoBehaviour
         
         var changedSelection = false;
         var vertical = Input.GetAxisRaw("Vertical");
+        if (Math.Abs(vertical) < minimumMovementBeforeDirectionCounted)
+            vertical = Input.GetAxisRaw("VerticalDPad");
         var horizontal = Input.GetAxisRaw("Horizontal");
+        if (Math.Abs(horizontal) < minimumMovementBeforeDirectionCounted)
+            horizontal = Input.GetAxisRaw("HorizontalDPad");
         var direction = InputDirection.None;
         if (Math.Abs(vertical) >= Math.Abs(horizontal) && vertical > minimumMovementBeforeDirectionCounted.Value)
             direction = InputDirection.Up;
