@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class ArrowButtonController : OnMessage<InputControlChanged>
@@ -15,6 +16,15 @@ public class ArrowButtonController : OnMessage<InputControlChanged>
 
     protected override void AfterEnable() => Update();
     protected override void Execute(InputControlChanged msg) => Update();
+
+    private void Awake()
+    {
+        arrow.color = Color.white;
+        leftBumper.gameObject.SetActive(false);
+        rightBumper.gameObject.SetActive(false);
+        leftTrigger.gameObject.SetActive(false);
+        rightTrigger.gameObject.SetActive(false);
+    }
 
     private void Update()
     {

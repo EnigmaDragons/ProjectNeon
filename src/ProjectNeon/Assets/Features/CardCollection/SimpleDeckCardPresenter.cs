@@ -40,6 +40,8 @@ public class SimpleDeckCardPresenter : OnMessage<SceneChanged>, IPointerEnterHan
         InitCanvasIfNeeded();
     }
 
+    protected override void AfterEnable() => InitCanvasIfNeeded();
+
     private void OnDisable() => OnExit();
 
     protected override void Execute(SceneChanged msg) => OnExit();
@@ -134,6 +136,7 @@ public class SimpleDeckCardPresenter : OnMessage<SceneChanged>, IPointerEnterHan
         if (_cardType == null || !gameObject.activeSelf)
             return;
 
+        InitCanvasIfNeeded();
         _hoverCard = Instantiate(hoverCard.gameObject, _canvas.transform);
         if (_card.IsPresent)
             _hoverCard.GetComponent<HoverCard>().Init(_card.Value, true);
@@ -188,6 +191,7 @@ public class SimpleDeckCardPresenter : OnMessage<SceneChanged>, IPointerEnterHan
             return;
 
         _isSelected = true;
+        InitCanvasIfNeeded();
         _hoverCard = Instantiate(hoverCard.gameObject, _canvas.transform);
         var position = transform.position;
         _hoverCard.transform.position = new Vector3(position.x + 250, position.y, position.z);
