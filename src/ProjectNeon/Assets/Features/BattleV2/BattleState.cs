@@ -114,7 +114,9 @@ public class BattleState : ScriptableObject
     public bool IsTutorialCombat { get; private set; }
     public Maybe<int> OverrideStartingPlayerCards { get; private set; } = Maybe<int>.Missing();
     public bool ShowSwapCardForBasic { get; private set; } = true;
+    public bool ShowCycleOrDiscard { get; private set; } = true;
     public bool AllowRightClickOnCard { get; private set; } = true;
+    public bool AllowMiddleClickOnCard { get; private set; } = true;
     public bool BasicSuperFocusEnabled { get; private set; } = false;
     public bool IsSingleTutorialBattle { get; set; } = false;
     public CardType[] OverrideDeck { get; private set; }
@@ -141,6 +143,7 @@ public class BattleState : ScriptableObject
         OverrideDeck = overrideDeck;
         OverrideStartingPlayerCards = Maybe<int>.Missing();
         ShowSwapCardForBasic = true;
+        ShowCycleOrDiscard = true;
         AllowRightClickOnCard = true;
         BasicSuperFocusEnabled = false;
         DevLog.Write($"Next Encounter has {string.Join(", ", nextEnemies.Select(x => x.NameTerm.ToEnglish()))}");
@@ -157,6 +160,13 @@ public class BattleState : ScriptableObject
         ShowSwapCardForBasic = shouldAllow;
         AllowRightClickOnCard = shouldAllow;
         DevLog.Write($"Next Encounter has Allow Swap to Basic {shouldAllow}");
+    }
+    
+    public void SetAllowCycleOrDiscard(bool shouldAllow)
+    {
+        ShowCycleOrDiscard = shouldAllow;
+        AllowMiddleClickOnCard = shouldAllow;
+        DevLog.Write($"Next Encounter has Allow Cycle or Discard {shouldAllow}");
     }
 
     public void SetBasicSuperFocusEnabled(bool enabled) => UpdateState(() => BasicSuperFocusEnabled = enabled);

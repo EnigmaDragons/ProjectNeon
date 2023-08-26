@@ -43,6 +43,8 @@ public class CombatReactiveStarter2 : OnMessage<EnterRandomCombat, EnterRandomEl
 
         if (!msg.AllowBasic) 
             battleState.SetAllowSwapToBasic(msg.AllowBasic);
+        if (!msg.AllowCycleOrDiscard) 
+            battleState.SetAllowCycleOrDiscard(msg.AllowCycleOrDiscard);
         if (msg.IsTutorial)
             navigator.NavigateToBattleScene();
         else

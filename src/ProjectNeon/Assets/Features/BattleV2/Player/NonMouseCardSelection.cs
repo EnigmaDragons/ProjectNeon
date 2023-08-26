@@ -9,6 +9,7 @@ public class NonMouseCardSelection : MonoBehaviour
     [SerializeField] private Button cycleOrDiscard;
     [SerializeField] private Button inspectCharacters;
     [SerializeField] private Button endTurn;
+    [SerializeField] private Button skipTutorial;
 
     private DirectionalInputNodeMap _nodeMap;
     private bool _shouldDiscard;
@@ -18,6 +19,8 @@ public class NonMouseCardSelection : MonoBehaviour
     {
         cycleOrDiscard.onClick.AddListener(() =>
         {
+            if (!state.AllowMiddleClickOnCard)
+                return;
             var cardComponent = hand.ShownCards.First(x => x.IsSelected && x.gameObject.activeInHierarchy);
             if (state.NumberOfRecyclesRemainingThisTurn > 0)
                 cardComponent.MiddleClick();
@@ -69,6 +72,7 @@ public class NonMouseCardSelection : MonoBehaviour
             InspectObject = inspectCharacters.gameObject,
             NextObject = endTurn.gameObject,
             PreviousObject = endTurn.gameObject,
+            NextObject2 = skipTutorial.gameObject,
             DefaultSelected = nodes.Select(x => x.Selectable).ToArray(),
             Nodes = nodes
         };

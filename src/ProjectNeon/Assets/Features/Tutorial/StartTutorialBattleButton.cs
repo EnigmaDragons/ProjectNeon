@@ -22,6 +22,8 @@ public class StartTutorialBattleButton : MonoBehaviour
                 battleState.SetNextBattleStartingCardCount(tutorial.overrideStartingCardsCount);
             if (!tutorial.allowBasic) 
                 battleState.SetAllowSwapToBasic(tutorial.allowBasic);
+            if (!tutorial.allowCycleOrDiscard) 
+                battleState.SetAllowCycleOrDiscard(tutorial.allowCycleOrDiscard);
             if (tutorial.Cutscene != null)
                 current.InitStartBattle(tutorial.Cutscene);
             navigator.NavigateToBattleScene();

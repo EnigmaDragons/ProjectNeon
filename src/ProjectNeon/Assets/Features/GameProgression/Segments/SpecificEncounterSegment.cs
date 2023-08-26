@@ -20,6 +20,7 @@ public class SpecificEncounterSegment : StageSegment
     [SerializeField] public bool shouldOverrideStartingCards;
     [SerializeField] public int overrideStartingCardsCount;
     [SerializeField] public bool allowBasic = true;
+    [SerializeField] public bool allowCycleOrDiscard = true;
     [SerializeField] public CardType[] overrideDeck;
 
     public GameObject Battlefield => battlefield;
@@ -47,7 +48,7 @@ public class SpecificEncounterSegment : StageSegment
         if (cutscene != null)
             Message.Publish(new SetStartBattleCutsceneRequested(cutscene));
         Message.Publish(new EnterSpecificBattle(battlefield, isElite, enemies.Select(x => x.ForStage(stage)).ToArray(), 
-            false, overrideDeck?.Length > 0 ? overrideDeck : null, isTutorial, shouldOverrideStartingCards, overrideStartingCardsCount, allowBasic));
+            false, overrideDeck?.Length > 0 ? overrideDeck : null, isTutorial, shouldOverrideStartingCards, overrideStartingCardsCount, allowBasic, allowCycleOrDiscard));
     }
 
     public override IStageSegment GenerateDeterministic(AdventureGenerationContext ctx, MapNode3 mapData) => this;

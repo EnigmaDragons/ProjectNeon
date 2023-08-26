@@ -11,8 +11,9 @@ public sealed class EnterSpecificBattle
     public bool ShouldOverrideStartingCards { get; }
     public int OverrideNumStartingCards { get; }
     public bool AllowBasic { get; }
+    public bool AllowCycleOrDiscard { get; }
 
-    public EnterSpecificBattle(GameObject battleField, bool isElite, EnemyInstance[] enemies, bool isStoryEventCombat, CardType[] overrideDeck, bool isTutorial = false, bool shouldOverrideStartingCards = false, int overrideNumStartingCards = -1, bool allowBasic = true)
+    public EnterSpecificBattle(GameObject battleField, bool isElite, EnemyInstance[] enemies, bool isStoryEventCombat, CardType[] overrideDeck, bool isTutorial = false, bool shouldOverrideStartingCards = false, int overrideNumStartingCards = -1, bool allowBasic = true, bool allowCycleOrDiscard = true)
     {
         BattleField = battleField;
         IsElite = isElite;
@@ -23,5 +24,6 @@ public sealed class EnterSpecificBattle
         ShouldOverrideStartingCards = shouldOverrideStartingCards;
         OverrideNumStartingCards = overrideNumStartingCards;
         AllowBasic = allowBasic;
+        AllowCycleOrDiscard = allowCycleOrDiscard;
     }
 }

@@ -235,6 +235,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
                 : (Action)(() => { })
             : card.ShowDetailedCardView;
         controls.SetCanToggleBasic(_isHand && battleState.ShowSwapCardForBasic && card.Owner.BasicCard.IsPresent);
+        controls.SetCanCycleOrDiscard(_isHand && battleState.ShowCycleOrDiscard && card.Owner.BasicCard.IsPresent);
         _requiresPlayerTargeting = _cardType.RequiresPlayerTargeting();
         RenderCardType();
         if (_isSelected)
@@ -303,7 +304,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     
     private void NoOp() {}
 
-    public void SetMiddleButtonAction(Action action) => _onMiddleMouse = action;
+    public void SetMiddleButtonAction(Action action) => _onMiddleMouse = battleState.AllowMiddleClickOnCard ? action : NoOp;
 
     public void SetHoverAction(Action enter, Action exit)
     {

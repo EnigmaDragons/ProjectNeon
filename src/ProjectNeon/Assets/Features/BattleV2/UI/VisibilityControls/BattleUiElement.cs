@@ -12,4 +12,5 @@ public static class BattleUiElement
     public static string PlayerResources = "PlayerResources";
     public static string PlayerShields = "PlayerShields";
     public static string DiscardInfo = "DiscardInfo";
+    public static string InspectInfo = "InspectInfo";
 }
