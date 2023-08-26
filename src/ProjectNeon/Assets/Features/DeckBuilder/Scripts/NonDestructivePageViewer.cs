@@ -19,7 +19,7 @@ public class NonDestructivePageViewer : MonoBehaviour
     private bool _isInitialized;
     private List<Action<GameObject>> _initElements = new List<Action<GameObject>>();
     private Action<GameObject> _initAsDefaultElement = _ => { };
-    private int PageCount => (int)Math.Ceiling((decimal)_initElements.Count / elements.Length);
+    private int PageCount => Math.Max(1, (int)Math.Ceiling((decimal)_initElements.Count / elements.Length));
 
     public void Init(List<Action<GameObject>> initElement, Action<GameObject> initAsDefaultElement, bool keepPageIndex)
     {
