@@ -16,12 +16,6 @@ public class ControllerWatcher : MonoBehaviour
     private float _verticalAxis;
     private float _horizontalAxis;
 
-    private void Awake()
-    {
-        InputControl.Type = ControlType.Mouse;
-        Message.Publish(new InputControlChanged());
-    }
-
     private void Update()
     {
         var vertical = Input.GetAxisRaw("Vertical");
