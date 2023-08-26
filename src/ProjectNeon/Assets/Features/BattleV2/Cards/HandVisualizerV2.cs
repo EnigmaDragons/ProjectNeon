@@ -45,6 +45,7 @@ public sealed class HandVisualizerV2 : HandVisualizerBase
         Message.Subscribe<EndTargetSelectionRequested>(_ => _isDirty = true, this);
         Message.Subscribe<CancelTargetSelectionRequested>(_ => CancelCardPlays(), this);
         Message.Subscribe<RefreshCardsInHand>(_ => _isDirty = true, this);
+        Message.Subscribe<BattlePhaseChanged>(OnPhaseChange, this);
     }
 
     void OnDisable()
@@ -211,5 +212,17 @@ public sealed class HandVisualizerV2 : HandVisualizerBase
         zones.DiscardZone.PutOnBottom(cycledCard.RevertedToStandard());
         state.RecordCardDiscarded();
         Message.Publish(new CheckForAutomaticTurnEnd());
+    }
+
+    private void OnPhaseChange(BattlePhaseChanged msg)
+    {
+        if (msg.Phase == BattleV2Phase.PlayCards)
+        {
+            cards.ForEach(x => x.HighlightIfSelectedOrHovering());
+        }
+        else
+        {
+            cards.ForEach(x => x.Unhighlight());
+        }
     }
 }

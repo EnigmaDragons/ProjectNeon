@@ -209,7 +209,11 @@ public class BattleState : ScriptableObject
         ResetEffectScopedData();
     }
 
-    public void SetPhase(BattleV2Phase p) => UpdateState(() => phase = p);
+    public void SetPhase(BattleV2Phase p)
+    {
+        UpdateState(() => phase = p);
+        Message.Publish(new BattlePhaseChanged(p));
+    }
     public int GetNextCardId() => NextCardId.Get();
 
     private int EnemyStartingIndex => 4;

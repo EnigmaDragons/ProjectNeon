@@ -180,6 +180,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     private void OnDisable()
     {
+        _isHovering = false;
+        _isSelected = false;
         Message.Unsubscribe(this);
     }
 
@@ -685,9 +687,12 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             _rightButtonAlreadyDown = false;
         }
     }
+
+    private bool _isHovering;
     
     public void OnPointerEnter(PointerEventData eventData)
     {
+        _isHovering = true;
         if (!MouseDragState.IsDragging && _isHand && battleState.Phase == BattleV2Phase.PlayCards && Vector3.Distance(_position, transform.position) <= 0.1)
         {
             Message.Publish(new CardHoverEnter(this));
@@ -701,6 +706,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        _isHovering = false;
         if (!MouseDragState.IsDragging && !IsDragging && _isHand)
         {
             SetHandHighlight(false);
@@ -870,5 +876,18 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             SetHandHighlight(false);
             Message.Publish(new CardHoverExitSFX(transform));
         }
+    }
+
+    public void Unhighlight()
+    {
+        SetHandHighlight(false);
+    }
+
+    public void HighlightIfSelectedOrHovering()
+    {
+        if (_isSelected)
+            OnSelect(null);
+        else if (_isHovering)
+            OnPointerEnter(null);
     }
 }

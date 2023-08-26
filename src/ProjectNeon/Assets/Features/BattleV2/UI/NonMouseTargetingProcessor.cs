@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -54,7 +55,10 @@ public class NonMouseTargetingProcessor : OnMessage<BeginTargetSelectionRequeste
             Message.Publish(new DirectionalInputNodeMapEnabled(_nodeMap));
         }
         else if (InputControl.Type != ControlType.Mouse)
+        {
+            _presenter.ReturnHandToNormal();
             Message.Publish(new EndTargetSelectionRequested(false));
+        }
     }
 
     protected override void Execute(EndTargetSelectionRequested msg)
