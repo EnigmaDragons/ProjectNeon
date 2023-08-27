@@ -271,6 +271,16 @@ public static class CollectionExtensions
 
     public static bool NoneNonAlloc<T>(this T[] items) => !items.AnyNonAlloc();
     public static bool NoneNonAlloc<T>(this HashSet<T> items) => !items.AnyNonAlloc();
+    public static bool NoneNonAlloc<T>(this List<T> items) => !items.AnyNonAlloc();
+    public static bool NoneNonAlloc<T>(this IEnumerable<T> items, Func<T, bool> condition)
+    {
+        foreach (var i in items)
+            if (condition(i))
+                return false;
+
+        return true;
+    }
+    
     public static bool AnyNonAlloc<T>(this T[] items) => items.Length > 0;
     public static bool AnyNonAlloc<T>(this List<T> items) => items.Count > 0;
     public static bool AnyNonAlloc<T>(this Queue<T> items) => items.Count > 0;

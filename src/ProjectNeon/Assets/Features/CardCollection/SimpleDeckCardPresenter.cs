@@ -148,12 +148,19 @@ public class SimpleDeckCardPresenter : OnMessage<SceneChanged>, IPointerEnterHan
     public void OnPointerExit(PointerEventData eventData) => OnExit();
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (eventData.button == PointerEventData.InputButton.Left)
-            _leftClickAction();
-        
-        if (eventData.button == PointerEventData.InputButton.Right)
-            if (_card.IsPresent)
-                Message.Publish(new ShowDetailedCardView(_card.Value));
+        try
+        {
+            if (eventData.button == PointerEventData.InputButton.Left)
+                _leftClickAction();
+
+            if (eventData.button == PointerEventData.InputButton.Right)
+                if (_card.IsPresent)
+                    Message.Publish(new ShowDetailedCardView(_card.Value));
+        }
+        catch (Exception e)
+        {
+            Log.NonCrashingError(e);
+        }
     }
     
     private void RenderTint()

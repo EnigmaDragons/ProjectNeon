@@ -40,7 +40,11 @@ public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged, SetSupe
     {
         if (_empty)
             return;
-        state.SelectedHeroesDeck.Deck.Remove(state.SelectedHeroesDeck.Deck.First(x => x.Name == _cardType.Name));
+
+        var deck = state.SelectedHeroesDeck.Deck;
+        if (deck.NoneNonAlloc(x => x.Name == _cardType.Name)) return;
+        
+        deck.Remove(deck.First(x => x.Name == _cardType.Name));
         _count--;
         Message.Publish(new DeckBuilderCurrentDeckChanged(state.SelectedHeroesDeck));
         Message.Publish(new CardRemovedFromDeck(transform));
