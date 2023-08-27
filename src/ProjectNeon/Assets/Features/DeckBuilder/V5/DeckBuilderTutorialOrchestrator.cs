@@ -127,7 +127,11 @@ public class DeckBuilderTutorialOrchestrator : MonoBehaviour
     private void SetFocusHeroTabActive(bool isActive) => Message.Publish(new SetSuperFocusDeckBuilderControl(DeckBuilderControls.HeroTab, isActive));
     private void SetFocusAddCardActive(bool isActive) => Message.Publish(new SetSuperFocusDeckBuilderControl(DeckBuilderControls.CardInLibrary, isActive));
     private void SetFocusRemoveCardActive(bool isActive) => Message.Publish(new SetSuperFocusDeckBuilderControl(DeckBuilderControls.CardInDeck, isActive));
-    private void SetFocusLibraryNextActive(bool isActive) => libraryNextHighlight.SetActive(isActive);
+    private void SetFocusLibraryNextActive(bool isActive)
+    {
+        if (libraryNextHighlight)
+            libraryNextHighlight.SetActive(isActive);
+    }
 
     private void SetDoneButtonInteractivity() => deckBuilderModeControllerV5.SetSaveButtonContInteractivity(
         _hasSwitchedToEnemyTab 
