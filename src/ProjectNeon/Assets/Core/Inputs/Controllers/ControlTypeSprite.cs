@@ -17,6 +17,8 @@ public class ControlTypeSprite : ScriptableObject
             return keyboardSprite;
         if (InputControl.Type == ControlType.Xbox)
             return xboxSprite;
+        if (InputControl.Type == ControlType.Gamepad)
+            return xboxSprite;
         if (InputControl.Type == ControlType.Playstation)
             return playstationSprite;
         if (InputControl.Type == ControlType.Switch)
