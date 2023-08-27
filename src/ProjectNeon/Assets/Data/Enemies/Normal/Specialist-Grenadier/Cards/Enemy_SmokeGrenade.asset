@@ -10,28 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Enemy_EmpGrenade
+  m_Name: Enemy_SmokeGrenade
   m_EditorClassIdentifier: 
-  id: 220
+  id: 703
   customName: 
-  art: {fileID: 21300000, guid: 1fb2010bdb6cf5544881206ea988fe54, type: 3}
-  description: Remove all enemy shields
-  typeDescription: {fileID: 11400000, guid: 26f514ade584bd04da4a542740e478bb, type: 2}
+  art: {fileID: 21300000, guid: f1a8daa94b3769747839034eb15b4c79, type: 3}
+  description: Gives {E[0]}
+  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   descriptionV2:
-    text: Remove all enemy shields
-    formatArgs: []
-  tags: 0100000004000000
+    text: Gives {0}
+    formatArgs:
+    - '{E[0]}'
+  tags: 250000001600000004000000
   speed: 0
   isSinglePlay: 0
   cost:
     cost: 1
     resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
     plusXCost: 0
-  rarity: 0
+  rarity: 3
   actionSequences:
   - scope: 1
     group: 1
-    cardActions: {fileID: 11400000, guid: 0c6292935fce029448ef61b1e1405868, type: 2}
+    cardActions: {fileID: 11400000, guid: 3e9897775c7b56649b63e39cb5aa3e64, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -45,4 +46,4 @@ MonoBehaviour:
   targetedHighlightCondition: []
   targetedUnhighlightCondition: []
   isWIP: 0
-  notAvailableForGeneralDistribution: 0
+  notAvailableForGeneralDistribution: 1

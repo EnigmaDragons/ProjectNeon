@@ -237,6 +237,14 @@ public class AssetUpdater
         var allCards = ScriptableExtensions.GetAllInstances<AllCards>();
         allCards.ForEach(x =>
         {
+            if (x.Cards.Any(c => c == null))
+            {
+                x.Cards = x.Cards.Where(c => c != null).ToArray();
+                EditorUtility.SetDirty(x);
+            }
+        });
+        allCards.ForEach(x =>
+        {
             if (x.Cards.Length != cards.Length || cards.Any(card => !x.Cards.Contains(card)))
             {
                 x.Cards = cards;

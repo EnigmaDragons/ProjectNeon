@@ -10,28 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
-  m_Name: Enemy_EmpGrenade
+  m_Name: Enemy_Stockpile
   m_EditorClassIdentifier: 
-  id: 220
+  id: 704
   customName: 
-  art: {fileID: 21300000, guid: 1fb2010bdb6cf5544881206ea988fe54, type: 3}
-  description: Remove all enemy shields
-  typeDescription: {fileID: 11400000, guid: 26f514ade584bd04da4a542740e478bb, type: 2}
+  art: {fileID: 21300000, guid: d26ca57e79a3e904e87818388fdb27aa, type: 3}
+  description: 
+  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
   descriptionV2:
-    text: Remove all enemy shields
-    formatArgs: []
-  tags: 0100000004000000
+    text: Gain {[0]}
+    formatArgs:
+    - '{E[0]}'
+  tags: 260000006b0000002f000000
   speed: 0
   isSinglePlay: 0
   cost:
-    cost: 1
+    cost: 0
     resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
     plusXCost: 0
-  rarity: 0
+  rarity: 1
   actionSequences:
-  - scope: 1
-    group: 1
-    cardActions: {fileID: 11400000, guid: 0c6292935fce029448ef61b1e1405868, type: 2}
+  - scope: 0
+    group: 0
+    cardActions: {fileID: 11400000, guid: ba9de74d7ababde41bddce6facbb3dae, type: 2}
     repeatX: 0
     repeatCount: 0
   chainedCard: {fileID: 0}
@@ -45,4 +46,4 @@ MonoBehaviour:
   targetedHighlightCondition: []
   targetedUnhighlightCondition: []
   isWIP: 0
-  notAvailableForGeneralDistribution: 0
+  notAvailableForGeneralDistribution: 1
