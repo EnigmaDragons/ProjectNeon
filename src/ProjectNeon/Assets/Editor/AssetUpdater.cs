@@ -16,6 +16,7 @@ public class AssetUpdater
         Timed("Equipment Pools", UpdateEquipmentPools);
         UpdateLevelUpOptions();
         UpdateCardIDs();
+        UpdateReactionCardIDs();
         UpdateAllCards();
         UpdateEffectIds();
         UpdateEquipmentIDs();
@@ -157,7 +158,7 @@ public class AssetUpdater
             else
             {
                 if (hashSet.Contains(itemId))
-                    Debug.LogError($"{string.Join(" & ", subItems.Where(x => getId(x.Item2) == itemId).Select(x => x.Item1.name))} of type {typeof(T).Name} have the sub item of type {typeof(T2).Name} duplicate ID of {itemId}");
+                    Debug.LogWarning($"{string.Join(" & ", subItems.Where(x => getId(x.Item2) == itemId).Select(x => x.Item1.name))} of type {typeof(T).Name} have the sub item of type {typeof(T2).Name} duplicate ID of {itemId}");
                 else
                     hashSet.Add(itemId);
             }

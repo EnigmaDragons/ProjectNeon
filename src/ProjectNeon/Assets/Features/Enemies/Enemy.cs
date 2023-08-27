@@ -19,7 +19,6 @@ public class Enemy : ScriptableObject, ILocalizeTerms
     [SerializeField] private GameObject prefab;
     [SerializeField] private MemberMaterialType materialType;
     [SerializeField] private Vector3 libraryCameraOffset = new Vector3(0, -0.8f, 2.5f);
-    [SerializeField] private bool shouldLive;
     [SerializeField] private BattleRole battleRole;
     [SerializeField] private EnemyTier tier; 
     [SerializeField] private bool unique;
@@ -32,6 +31,8 @@ public class Enemy : ScriptableObject, ILocalizeTerms
     [SerializeField] public int maxCopies;
     [SerializeField] public int minimumAllies;
     [SerializeField] public DamageType damageType;
+    [Header("For Special Cutscene Enemy Variants")]
+    [SerializeField] private bool shouldLive;
 
     public bool IsAllowedForSocialMedia => allowedForSocialMedia;
     public bool IsCurrentlyWorking => isCurrentlyWorking;
