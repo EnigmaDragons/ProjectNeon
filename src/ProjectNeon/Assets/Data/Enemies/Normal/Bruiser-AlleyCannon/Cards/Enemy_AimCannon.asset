@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b41b1118d12e5c48a6e7ed020b96a84, type: 3}
+  m_Name: Enemy_AimCannon
+  m_EditorClassIdentifier: 
+  id: 698
+  customName: 
+  art: {fileID: 21300000, guid: 0499c008a6301f74eb5c6c3dd8c2b704, type: 3}
+  description: 
+  typeDescription: {fileID: 11400000, guid: 68c58a665fedb4e4e8035e8d6f02135d, type: 2}
+  descriptionV2:
+    text: 'Gives <b>{[0]} {[t:Keywords/Vulnerable]}</b> next turn.
+
+
+      Gives
+      self {[1]} <b>{[t:Stats/Stat-Magic]}</b> for 3 turns
+
+'
+    formatArgs:
+    - '{E[0]}'
+    - '{E[1]}'
+  tags: 08000000
+  speed: 0
+  isSinglePlay: 0
+  cost:
+    cost: 0
+    resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+    plusXCost: 0
+  rarity: 1
+  actionSequences:
+  - scope: 0
+    group: 1
+    cardActions: {fileID: 11400000, guid: cfd54968d4534e242b732851b1eb788a, type: 2}
+    repeatX: 0
+    repeatCount: 0
+  chainedCard: {fileID: 0}
+  swappedCard: {fileID: 0}
+  functionalityIssues: 
+  presentationIssues: 
+  archetypes:
+  - {fileID: 11400000, guid: 64a02020419674b4eb0a16d583b99aa1, type: 2}
+  highlightCondition: []
+  unhighlightCondition: []
+  targetedHighlightCondition: []
+  targetedUnhighlightCondition: []
+  isWIP: 0
+  notAvailableForGeneralDistribution: 1
