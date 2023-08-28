@@ -32,9 +32,18 @@ public class EnemyArea : ScriptableObject
     public void Remove(EnemyInstance enemy)
     {
         var index = enemies.IndexOf(enemy);
-        enemies.RemoveAt(index);
-        uiPositions.RemoveAt(index);
+        if (index == -1)
+            return;
+        
+        if (index < enemies.Count)
+            enemies.RemoveAt(index);
+        if (index < uiPositions.Count)
+            uiPositions.RemoveAt(index);
     }
     
-    public void Clear() => enemies = new List<EnemyInstance>();
+    public void Clear()
+    {
+        enemies = new List<EnemyInstance>();
+        uiPositions = new List<Transform>();
+    }
 }

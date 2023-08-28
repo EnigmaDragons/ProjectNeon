@@ -424,8 +424,8 @@ public class BattleState : ScriptableObject
     public void RemoveEnemy(MemberState member)
         => UpdateState(() =>
         {
-            var enemy = _enemiesById[member.MemberId];
-            EnemyArea.Remove(enemy);
+            if (_enemiesById.TryGetValue(member.MemberId, out var enemy)) 
+                EnemyArea.Remove(enemy);
             _enemiesById.Remove(member.MemberId);
             _membersById.Remove(member.MemberId);
             _uiTransformsById.Remove(member.MemberId);
