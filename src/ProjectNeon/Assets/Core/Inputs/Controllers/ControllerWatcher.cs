@@ -11,15 +11,15 @@ public class ControllerWatcher : MonoBehaviour
     private static KeyCode[] _verticalKeyboard = { KeyCode.UpArrow, KeyCode.DownArrow, KeyCode.W, KeyCode.S };
     private static KeyCode[] _horizontalKeyboard = { KeyCode.LeftArrow, KeyCode.RightArrow, KeyCode.A, KeyCode.D };
     private static string[] _joystickButtons = {"joystick button 0", "joystick button 1", "joystick button 2", "joystick button 3", "joystick button 4", "joystick button 5"};
-    private static string[] _joystickAxis = { "Right Trigger", "Left Trigger"};
+    private static string[] _joystickAxis = { "Axis10", "Axis6", "Axis9", "Axis3" };
 
     private float _verticalAxis;
     private float _horizontalAxis;
 
     private void Update()
     {
-        var vertical = Math.Max(Math.Abs(Input.GetAxisRaw("Vertical")), Math.Abs(Input.GetAxisRaw("VerticalDPad")));
-        var horizontal = Math.Max(Math.Abs(Input.GetAxisRaw("Horizontal")), Math.Abs(Input.GetAxisRaw("HorizontalDPad")));
+        var vertical = Math.Max(Math.Abs(Input.GetAxisRaw("Vertical")), Math.Abs(Input.GetAxisRaw("Axis7")));
+        var horizontal = Math.Max(Math.Abs(Input.GetAxisRaw("Horizontal")), Math.Abs(Input.GetAxisRaw("Axis6")));
         if (shouldOverride && InputControl.Type != overridenControlType)
         {
             InputControl.Type = overridenControlType;
@@ -46,8 +46,10 @@ public class ControllerWatcher : MonoBehaviour
             var joysticks = Input.GetJoystickNames();
             if (joysticks[0].ToLower().Contains("playstation"))
                 InputControl.Type = ControlType.Playstation;
-            else 
+            else if (joysticks[0].ToLower().Contains("xbox"))
                 InputControl.Type = ControlType.Xbox;
+            else
+                InputControl.Type = ControlType.Gamepad;
             Message.Publish(new InputControlChanged());
         }
         _verticalAxis = vertical;

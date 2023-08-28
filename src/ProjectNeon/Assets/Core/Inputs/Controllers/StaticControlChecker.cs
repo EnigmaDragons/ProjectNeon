@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 public static class StaticControlChecker
 {
@@ -26,7 +30,7 @@ public static class StaticControlChecker
     private static bool _rightTriggerHeld;
     public static bool IsNext2()
     {
-        var rightTrigger = Input.GetAxis("Right Trigger") >= 1;
+        var rightTrigger = Input.GetAxis("Axis10") >= 1 || (Input.GetAxis("Axis6") >= 1 && InputControl.Type != ControlType.Xbox);
         if (rightTrigger && !_rightTriggerHeld)
         {
             _rightTriggerHeld = true;
@@ -43,7 +47,7 @@ public static class StaticControlChecker
     private static bool _leftTriggerHeld;
     public static bool IsPrevious2()
     {
-        var leftTrigger = Input.GetAxis("Left Trigger") >= 1;
+        var leftTrigger = Input.GetAxis("Axis9") >= 1 || Input.GetAxis("Axis3") >= 1;
         if (leftTrigger && !_leftTriggerHeld)
         {
             _leftTriggerHeld = true;

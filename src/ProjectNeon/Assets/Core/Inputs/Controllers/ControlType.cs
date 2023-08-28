@@ -4,5 +4,6 @@
     Keyboard,
     Xbox,
     Playstation,
-    Switch
+    Switch,
+    Gamepad
 }

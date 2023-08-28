@@ -44,12 +44,8 @@ public class DirectionalInputHandler : MonoBehaviour
             return;
         
         var changedSelection = false;
-        var vertical = Input.GetAxisRaw("Vertical");
-        if (Math.Abs(vertical) < minimumMovementBeforeDirectionCounted)
-            vertical = Input.GetAxisRaw("VerticalDPad");
-        var horizontal = Input.GetAxisRaw("Horizontal");
-        if (Math.Abs(horizontal) < minimumMovementBeforeDirectionCounted)
-            horizontal = Input.GetAxisRaw("HorizontalDPad");
+        var vertical = GetVertical();
+        var horizontal = GetHorizontal();
         var direction = InputDirection.None;
         if (Math.Abs(vertical) >= Math.Abs(horizontal) && vertical > minimumMovementBeforeDirectionCounted.Value)
             direction = InputDirection.Up;
@@ -132,7 +128,22 @@ public class DirectionalInputHandler : MonoBehaviour
             else if (horizontal < -minimumMovementBeforeDirectionCounted)
                 slider.value -= 0.01f;
         }
-            
+    }
+
+    private float GetVertical()
+    {
+        var vertical = Input.GetAxisRaw("Vertical");
+        if (InputControl.Type == ControlType.Xbox && Math.Abs(vertical) < minimumMovementBeforeDirectionCounted.Value)
+            vertical = Input.GetAxisRaw("Axis7");
+        return vertical;
+    }
+
+    private float GetHorizontal()
+    {
+        var vertical = Input.GetAxisRaw("Horizontal");
+        if (InputControl.Type == ControlType.Xbox && Math.Abs(vertical) < minimumMovementBeforeDirectionCounted.Value)
+            vertical = Input.GetAxisRaw("Axis6");
+        return vertical;
     }
 
     private void ActivateControl(GameObject control)
