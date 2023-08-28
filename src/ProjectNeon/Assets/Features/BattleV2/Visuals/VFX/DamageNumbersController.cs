@@ -42,8 +42,8 @@ public sealed class DamageNumbersController : OnMessage<MemberStateChanged, Memb
 
         _actionQueue.Enqueue(() =>
         {
-            var current = msg.State.ToSnapshot();
-            var last = _last ?? msg.BeforeState;
+            var current = msg.AfterState;
+            var last = msg.BeforeState;
             var hpChange = current.Hp - last.Hp;
             var shieldChange = current.Shield - last.Shield;
 
@@ -55,8 +55,6 @@ public sealed class DamageNumbersController : OnMessage<MemberStateChanged, Memb
                 if (shieldChange != 0)
                     Instantiate(shieldNumberPrototype, transform.position + shieldNumOffset, Quaternion.identity, transform).Initialized(shieldChange);
             }
-
-            _last = current;
         });
     }
 

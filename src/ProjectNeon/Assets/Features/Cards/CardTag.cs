@@ -59,4 +59,5 @@ public enum CardTag
     RemoveDebuffs = 105,
     RequiresMark = 106,
     Utility = 107,
+    AlwaysPlayable = 108,
 }

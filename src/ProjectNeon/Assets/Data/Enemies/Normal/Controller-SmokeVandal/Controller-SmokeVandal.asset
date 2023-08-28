@@ -1,0 +1,136 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
+  m_Name: Controller-SmokeVandal
+  m_EditorClassIdentifier: 
+  id: 112
+  enemyName: Smoke Vandal
+  allowedForSocialMedia: 0
+  excludeFromBestiary: 0
+  isTutorialEnemy: 0
+  lastBalanceDate: 08/27/23
+  isCurrentlyWorking: 1
+  corp: {fileID: 11400000, guid: 4a1f16a350870734782dc204b16ce184, type: 2}
+  ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
+  aiPreferences:
+    DesignatedAttackerPriority: 40
+    CardOrderPreferenceFactor: 0
+    CardTagPriority: 0300000004000000
+    UnpreferredCardTags: 2f000000
+    RotatePlayingCardTags: 
+    IgnoreDesignatedAttackerRole: 0
+  preferredTurnOrder: 99
+  prefab: {fileID: 1657701614973015156, guid: bbbc80a59ff445e46a42bd4e80eb7ee8, type: 3}
+  materialType: 2
+  libraryCameraOffset: {x: 0, y: -0.8, z: 2.5}
+  battleRole: 3
+  tier: 0
+  unique: 0
+  isHasty: 0
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+  description: 
+  animations: {fileID: 0}
+  animationSounds: {fileID: 0}
+  stageDetails:
+  - stage: 1
+    maxHp: 34
+    maxShield: 0
+    startingShield: 0
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 0
+    startingTaunt: 0
+    attack: 10
+    magic: 0
+    leadership: 0
+    armor: 0
+    resistance: 0
+    nonStatCardValueFactor: 18
+    startingResourceAmount: 0
+    maxResourceAmount: 6
+    resourceGainPerTurn: 1
+    cardsPerTurn: 1
+    powerLevel: 75
+    calculationVariables:
+      startingDefensiveValueAdjustment: 0
+      startingValueAdjustment: 0
+      perTurnValueAdjustment: 0
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 34
+      perCardValue: 14
+      resourceValue: 4.62
+      perTurnPower: 18.62
+      maxAndStartingResourcesPower: 1.7044474
+      estimatedHeroDamage: 10
+      estimatedTurnsAlive: 2.2666667
+      estimatedPerTurnTotalValue: 39.288494
+      calculatedPowerLevel: 75
+    startOfBattleEffects:
+    - Id: 20040
+      EffectType: 75
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 1
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 10
+      StatusDetailText: 'On Killed: Blind Foes'
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+        PrefixTerm: 
+        SuffixTerm: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
+      ReactionConditionType: 99
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionTimingWindow: 99
+      ReactionSequence: {fileID: 11400000, guid: 602a7f9b8bc58bd4eadacede5e2d9341, type: 2}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+      Unpreventable: 0
+    Cards:
+    - {fileID: 11400000, guid: 71d13bd181fc5ec49bb3ba47410c0324, type: 2}
+    - {fileID: 11400000, guid: eebd3dc63480e304486039a9cb9489d8, type: 2}
+    - {fileID: 11400000, guid: 3617e4f0632448e459b34fc2950e9595, type: 2}
+    CardsTheyAppearsToHave: []
+  maxCopies: 1
+  minimumAllies: 1
+  damageType: 0
+  shouldLive: 0
