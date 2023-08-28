@@ -24,7 +24,11 @@ public class CurrentLowQualityMode
     {
         if (!PlayerPrefs.HasKey(PlayerPrefKey))
         {
+#if UNITY_STANDALONE_LINUX
+            PlayerPrefs.SetInt(PlayerPrefKey, 0);
+#else
             PlayerPrefs.SetInt(PlayerPrefKey, IsEnabled ? 1 : 0);
+#endif
             PlayerPrefs.Save();
         }
         IsEnabled = PlayerPrefs.GetInt(PlayerPrefKey) == 1;
