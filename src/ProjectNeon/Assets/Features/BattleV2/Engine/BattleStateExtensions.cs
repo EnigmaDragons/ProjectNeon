@@ -18,7 +18,9 @@ public static class BattleStateExtensions
             Log.Error($"Null - IsPlayable Check with Null Member");
             return false;
         }
-        
+
+        if (c.Tags.Any(t => t == CardTag.AlwaysPlayable))
+            return true;
         if (!member.IsConscious())
             return false;
         if (member.State[TemporalStatType.Disabled] > 0)
