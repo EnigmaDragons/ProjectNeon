@@ -11,13 +11,26 @@ public class SelectablesContainer : MonoBehaviour
     private Action _onChange;
     private List<Vector3> _positions;
     private List<RectTransform> _transforms;
-    private RectTransform[] _results;
+    private RectTransform[] _results = Array.Empty<RectTransform>();
 
     public void Observe(Action onChange) => _onChange = onChange;
 
     public RectTransform[] GetSelectables() => _results ?? Array.Empty<RectTransform>();
 
-    public GameObject GetDefault() => _results == null || _results.Length == 0 ? null : _results[0].gameObject;
+    public GameObject GetDefault()
+    {
+        try
+        {
+            return (_results == null || _results.Length == 0)
+                ? null
+                : _results[0].gameObject;
+        }
+        catch (Exception e)
+        {
+            Log.NonCrashingError(e);
+            return null;
+        }
+    }
 
     private void Update()
     {
