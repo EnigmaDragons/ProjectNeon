@@ -2,11 +2,13 @@
 public class MemberStateChanged
 {
     public MemberState State { get; }
+    public MemberStateSnapshot AfterState { get; }
     public MemberStateSnapshot BeforeState { get; }
 
     public MemberStateChanged(MemberStateSnapshot before, MemberState after)
     {
         BeforeState = before;
+        AfterState = after.ToSnapshot();
         State = after;
     }
 }

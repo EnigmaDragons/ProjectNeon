@@ -1,0 +1,136 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c91fe2b7c656eb4e876e4f9e7bc81a8, type: 3}
+  m_Name: QuadraLancer
+  m_EditorClassIdentifier: 
+  id: 111
+  enemyName: Quadra-Lancer
+  allowedForSocialMedia: 0
+  excludeFromBestiary: 0
+  isTutorialEnemy: 0
+  lastBalanceDate: 08/27/23
+  isCurrentlyWorking: 1
+  corp: {fileID: 11400000, guid: d20c2ade8bbc04c478ee886d55a9b984, type: 2}
+  ai: {fileID: 11400000, guid: cc712c08b34cfb04da419f06e693f578, type: 2}
+  aiPreferences:
+    DesignatedAttackerPriority: 10
+    CardOrderPreferenceFactor: 0
+    CardTagPriority: 
+    UnpreferredCardTags: 04000000
+    RotatePlayingCardTags: 
+    IgnoreDesignatedAttackerRole: 0
+  preferredTurnOrder: 10
+  prefab: {fileID: 3418916721475100179, guid: b8310a2e3810c8a4aaf8165a467350ba, type: 3}
+  materialType: 2
+  libraryCameraOffset: {x: 0, y: 0.4, z: 2.4}
+  battleRole: 3
+  tier: 0
+  unique: 0
+  isHasty: 1
+  resourceType: {fileID: 11400000, guid: 773a765e280f0054b8395259a89c656b, type: 2}
+  description: 
+  animations: {fileID: 0}
+  animationSounds: {fileID: 11400000, guid: f31f3f458a9414c40b41bf417f757877, type: 2}
+  stageDetails:
+  - stage: 1
+    maxHp: 46
+    maxShield: 24
+    startingShield: 24
+    startingAegis: 0
+    startingPhase: 0
+    startingDodge: 0
+    startingTaunt: 0
+    attack: 8
+    magic: 0
+    leadership: 0
+    armor: 0
+    resistance: 0
+    nonStatCardValueFactor: 25
+    startingResourceAmount: 0
+    maxResourceAmount: 6
+    resourceGainPerTurn: 1
+    cardsPerTurn: 1
+    powerLevel: 148
+    calculationVariables:
+      startingDefensiveValueAdjustment: 0
+      startingValueAdjustment: 0
+      perTurnValueAdjustment: 0
+      resourceScaledValueOverride: 0
+    calculationResults:
+      startingPower: 71.84047
+      perCardValue: 16.5
+      resourceValue: 5.445
+      perTurnPower: 21.945
+      maxAndStartingResourcesPower: 2.008813
+      estimatedHeroDamage: 12
+      estimatedTurnsAlive: 3.991137
+      estimatedPerTurnTotalValue: 73.75478
+      calculatedPowerLevel: 148
+    startOfBattleEffects:
+    - Id: 20039
+      EffectType: 74
+      Conditions: []
+      BaseAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 0
+        ConstantValue: 0
+        FloatVariable: {fileID: 11400000, guid: fa23d96c8476d01469857aff1d7f4951, type: 2}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 9
+      StatusDetailText: 'When Damaged: Deal 3 true damage to attacker'
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+        PrefixTerm: 
+        SuffixTerm: 
+      FlavorText:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 0}
+      ReferencedSequences: []
+      OnlyReactDuringCardPhases: 1
+      ReactionConditionType: 4
+      ReactionEffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionTimingWindow: 250
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 1
+        scope: 2
+        cardActions: {fileID: 11400000, guid: 2210a0d307035514f8576a71cd3f0f5f, type: 2}
+      BonusCardType: {fileID: 0}
+      Unpreventable: 0
+    Cards:
+    - {fileID: 11400000, guid: 8d91fd1e8a55c794aaab1d2c2aa43b80, type: 2}
+    - {fileID: 11400000, guid: c981646e96189af4fa74450778864ab9, type: 2}
+    - {fileID: 11400000, guid: 77f60fc8601e3164c9337b36d3bf15a5, type: 2}
+    CardsTheyAppearsToHave: []
+  maxCopies: 1
+  minimumAllies: 0
+  damageType: 1
+  shouldLive: 0

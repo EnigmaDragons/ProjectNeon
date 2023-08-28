@@ -135,7 +135,7 @@ public static class InterpolatedCardDescriptions
             var forInnerEffect = token.Value.StartsWith("{I");
             var prefixes = new[] {"{E", "{D", "{RE", "{RD", "{IE", "{ID", "{ES", "{F" };
             if (prefixes.None(p => token.Value.StartsWith(p)))
-                throw new InvalidDataException($"Unable to interpolate for things other than Battle Effects, Durations, and Reaction Effects");
+                throw new InvalidDataException($"Unable to interpolate for things other than Battle Effects, Durations, and Reaction Effects. Current Token {token}");
 
             var effectIndex = int.Parse(Regex.Match(token.Result("$1"), "\\[(.*?)\\]").Result("$1"));
             if (!forReaction && !forInnerEffect && effectIndex >= effects.Length)
