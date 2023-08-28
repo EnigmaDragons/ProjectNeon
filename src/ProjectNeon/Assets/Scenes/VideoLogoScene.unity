@@ -984,6 +984,7 @@ GameObject:
   - component: {fileID: 631019609381560329}
   - component: {fileID: 631019609381560328}
   - component: {fileID: 631019609381560330}
+  - component: {fileID: 631019609381560331}
   m_Layer: 0
   m_Name: Video Player
   m_TagString: Untagged
@@ -1061,6 +1062,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28c329da0e7a41149366ffd251617b42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &631019609381560331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 631019609381560327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1547ed3eda8b4aa3bad6c09b3d934392, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onLinuxOnStart:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1810781595}
+        m_TargetAssemblyTypeName: NavigateToSettingsOrAcademyOrTitleOrWelcomeCutscene,
+          GameAssembly
+        m_MethodName: Execute
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &631019609455980193
 GameObject:
   m_ObjectHideFlags: 0
