@@ -594,6 +594,7 @@ GameObject:
   - component: {fileID: 2801770920741468889}
   - component: {fileID: 4574886131017618885}
   - component: {fileID: 9028983656017019733}
+  - component: {fileID: 472103917939325431}
   m_Layer: 0
   m_Name: SlideText
   m_TagString: Untagged
@@ -667,7 +668,7 @@ MonoBehaviour:
     bottomLeft: {r: 1, g: 1, b: 1, a: 1}
     bottomRight: {r: 1, g: 1, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
+  m_spriteAsset: {fileID: 11400000, guid: 160441a61ab07d140b58d92a6521c25e, type: 2}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
   m_TextStyleHashCode: -1183493901
@@ -756,6 +757,23 @@ MonoBehaviour:
   mGUI_ShowCallback: 0
   mLocalizeTarget: {fileID: 0}
   mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
+--- !u!114 &472103917939325431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6282151801852999642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 435678f28263484f9b51806b0300150d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 4574886131017618885}
+  keyboard: {fileID: 11400000, guid: 02db4b9e205ebad4495f12072afde090, type: 2}
+  xbox: {fileID: 11400000, guid: 4165e222025aafe4682be5f0b1f65757, type: 2}
+  playstation: {fileID: 11400000, guid: eaad67d41a2d6f84c808b164c8aad5e0, type: 2}
+  switchPro: {fileID: 11400000, guid: 183caab22c67d084aa4f0893e45c4a05, type: 2}
 --- !u!1 &7486891192193222543
 GameObject:
   m_ObjectHideFlags: 0
