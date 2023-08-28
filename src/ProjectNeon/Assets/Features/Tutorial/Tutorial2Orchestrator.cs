@@ -86,7 +86,10 @@ public class Tutorial2Orchestrator : OnMessage<StartCardSetupRequested, CardReso
                 _hasCommentedOnGainingResources = true;
                 Message.Publish(new SetBattleUiElementVisibility(BattleUiElement.EnemyTechPoints, true, _callerId));
                 Message.Publish(new PunchYourself(BattleUiElement.EnemyTechPoints));
-                Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial02-01".ToLocalized()));
+                if (InputControl.Type == ControlType.Mouse)
+                    Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial02-01".ToLocalized()));
+                else
+                    Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial02-01_Controller".ToLocalized()));
             }
         }
     }
@@ -98,6 +101,7 @@ public class Tutorial2Orchestrator : OnMessage<StartCardSetupRequested, CardReso
         => new[]
         {
             "Thoughts/Tutorial02-01",
+            "Thoughts/Tutorial02-01_Controller",
             "Thoughts/Tutorial02-02",
             "Thoughts/Tutorial02-03",
         };

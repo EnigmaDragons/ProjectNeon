@@ -45,12 +45,18 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
                 if (!_hasClickedCard)
                 {
                     _timeTilPrompt = _notClickingCardPromptDelay;
-                    Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial01-01".ToLocalized()));
+                    if (InputControl.Type == ControlType.Mouse)
+                        Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial01-01".ToLocalized()));
+                    else 
+                        Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial01-01_Controller".ToLocalized()));
                 }
                 else if (!_hasDraggedCard)
                 {
                     _timeTilPrompt = _notDraggingCardPromptDelay;
-                    Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial01-02".ToLocalized()));
+                    if (InputControl.Type == ControlType.Mouse)
+                        Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial01-02".ToLocalized()));
+                    else 
+                        Message.Publish(new ShowHeroBattleThought(4, "Thoughts/Tutorial01-02_Controller".ToLocalized()));
                 }
                 else
                 {
@@ -135,7 +141,9 @@ public class Tutorial1Orchestrator : OnMessage<StartCardSetupRequested, PlayerCa
         => new[]
         {
             "Thoughts/Tutorial01-01",
+            "Thoughts/Tutorial01-01_Controller",
             "Thoughts/Tutorial01-02",
+            "Thoughts/Tutorial01-02_Controller",
             "Thoughts/Tutorial01-03",
             "Thoughts/Tutorial01-04",
             "Thoughts/Tutorial01-05",

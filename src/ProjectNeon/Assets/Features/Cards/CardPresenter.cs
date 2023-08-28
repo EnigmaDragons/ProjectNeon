@@ -152,6 +152,8 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             }
             else
             {
+                Message.Publish(new CardClicked());
+                Message.Publish(new CardDragged());
                 controls.SetActive(false);
                 canvasGroup.blocksRaycasts = false;
                 IsDragging = true;

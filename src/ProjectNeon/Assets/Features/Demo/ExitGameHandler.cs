@@ -1,5 +1,9 @@
 using UnityEngine;
 
+#if STEAMWORKS
+using Steamworks;
+#endif
+
 public class ExitGameHandler : OnMessage<ExitGameRequested>
 {
     [SerializeField] private BoolReference isDemo;
@@ -17,9 +21,12 @@ public class ExitGameHandler : OnMessage<ExitGameRequested>
     
     public void ExitGame()
     {     
+
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #elif UNITY_WEBGL
+#elif STEAMWORKS
+        SteamAPI.Shutdown();
 #else
         Application.Quit();
 #endif

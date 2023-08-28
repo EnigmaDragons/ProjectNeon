@@ -16,6 +16,15 @@ public class ControllerWatcher : MonoBehaviour
     private float _verticalAxis;
     private float _horizontalAxis;
 
+    private void Start()
+    {
+        if (PlayerPrefs.HasKey("InputControlType"))
+        {
+            InputControl.Type = (ControlType)PlayerPrefs.GetInt("InputControlType");
+            Message.Publish(new InputControlChanged());
+        }
+    }
+    
     private void Update()
     {
         var vertical = Math.Max(Math.Abs(Input.GetAxisRaw("Vertical")), Math.Abs(Input.GetAxisRaw("Axis7")));
@@ -30,11 +39,13 @@ public class ControllerWatcher : MonoBehaviour
         else if (InputControl.Type != ControlType.Mouse && (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2)))
         {
             InputControl.Type = ControlType.Mouse;
+            SaveInput();
             Message.Publish(new InputControlChanged());
         }
         else if (InputControl.Type != ControlType.Keyboard && _keyboardButtons.Any(Input.GetKeyDown))
         {
             InputControl.Type = ControlType.Keyboard;
+            SaveInput();
             Message.Publish(new InputControlChanged());
         }
         else if (InputControl.Type != ControlType.Xbox && InputControl.Type != ControlType.Playstation && InputControl.Type != ControlType.Switch && (
@@ -50,9 +61,12 @@ public class ControllerWatcher : MonoBehaviour
                 InputControl.Type = ControlType.Xbox;
             else
                 InputControl.Type = ControlType.Gamepad;
+            SaveInput();
             Message.Publish(new InputControlChanged());
         }
         _verticalAxis = vertical;
         _horizontalAxis = horizontal;
     }
+    
+    private void SaveInput() => PlayerPrefs.SetInt("InputControlType", (int)InputControl.Type);
 }

@@ -27,6 +27,6 @@ public class CanChain : StaticCardCondition
             .Reverse()
             .ToArray();
 
-        return cardOwnersInPlayOrder.Length > 2 && cardOwnersInPlayOrder.Take(3).All(x => x.Equals(memberId));
+        return cardOwnersInPlayOrder.Length >= 2 && cardOwnersInPlayOrder.Take(3).All(x => x.Equals(memberId));
     }
 }

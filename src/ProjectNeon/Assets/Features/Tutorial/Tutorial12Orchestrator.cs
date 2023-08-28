@@ -50,7 +50,10 @@ public class Tutorial12Orchestrator : OnMessage<StartCardSetupRequested, CardRes
             if (_timeTilPrompt <= 0)
             {
                 _timeTilPrompt = _notCyclingPromptDelay;
-                Message.Publish(new ShowHeroBattleThought(1, "Thoughts/Tutorial12-01".ToLocalized()));
+                if (InputControl.Type == ControlType.Mouse)
+                    Message.Publish(new ShowHeroBattleThought(1, "Thoughts/Tutorial12-01".ToLocalized()));
+                else
+                    Message.Publish(new ShowHeroBattleThought(1, "Thoughts/Tutorial12-01_Controller".ToLocalized()));
             }
         }
         else if (_turn == 2 && !_cardDiscarded)
@@ -59,7 +62,10 @@ public class Tutorial12Orchestrator : OnMessage<StartCardSetupRequested, CardRes
             if (_timeTilPrompt <= 0)
             {
                 _timeTilPrompt = _notDiscardingPromptDelay;
-                Message.Publish(new ShowHeroBattleThought(1, "Thoughts/Tutorial12-02".ToLocalized()));
+                if (InputControl.Type == ControlType.Mouse)
+                    Message.Publish(new ShowHeroBattleThought(1, "Thoughts/Tutorial12-02".ToLocalized()));
+                else
+                    Message.Publish(new ShowHeroBattleThought(1, "Thoughts/Tutorial12-02_Controller".ToLocalized()));
             }
         }
     }
@@ -139,7 +145,9 @@ public class Tutorial12Orchestrator : OnMessage<StartCardSetupRequested, CardRes
         => new[]
         {
             "Thoughts/Tutorial12-01",
+            "Thoughts/Tutorial12-01_Controller",
             "Thoughts/Tutorial12-02",
+            "Thoughts/Tutorial12-02_Controller",
             "Thoughts/Tutorial12-03",
             "Thoughts/Tutorial12-04",
             "Thoughts/Tutorial12-05",
