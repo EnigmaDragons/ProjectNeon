@@ -135,15 +135,19 @@ public class DirectionalInputHandler : MonoBehaviour
         var vertical = Input.GetAxisRaw("Vertical");
         if (InputControl.Type == ControlType.Xbox && Math.Abs(vertical) < minimumMovementBeforeDirectionCounted.Value)
             vertical = Input.GetAxisRaw("Axis7");
+        if (InputControl.Type == ControlType.Gamepad && Math.Abs(vertical) < minimumMovementBeforeDirectionCounted.Value)
+            vertical = Input.GetAxisRaw("Axis8");
         return vertical;
     }
 
     private float GetHorizontal()
     {
-        var vertical = Input.GetAxisRaw("Horizontal");
-        if (InputControl.Type == ControlType.Xbox && Math.Abs(vertical) < minimumMovementBeforeDirectionCounted.Value)
-            vertical = Input.GetAxisRaw("Axis6");
-        return vertical;
+        var horizontal = Input.GetAxisRaw("Horizontal");
+        if (InputControl.Type == ControlType.Xbox && Math.Abs(horizontal) < minimumMovementBeforeDirectionCounted.Value)
+            horizontal = Input.GetAxisRaw("Axis6");
+        if (InputControl.Type == ControlType.Gamepad && Math.Abs(horizontal) < minimumMovementBeforeDirectionCounted.Value)
+            horizontal = Input.GetAxisRaw("Axis7");
+        return horizontal;
     }
 
     private void ActivateControl(GameObject control)

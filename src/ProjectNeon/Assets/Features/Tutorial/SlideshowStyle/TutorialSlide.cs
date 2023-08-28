@@ -8,8 +8,8 @@ public class TutorialSlide : ScriptableObject, ILocalizeTerms
     [SerializeField] private GameObject uiElementPrototype;
 
     public string Text => Term;
-    public string Term => $"TutorialSlides/Tutorial_Slide_{id}";
+    public string Term => InputControl.Type == ControlType.Mouse || InputControl.Type == ControlType.Keyboard ? $"TutorialSlides/Tutorial_Slide_{id}" : $"TutorialSlides/Tutorial_Slide_{id}_Controller";
     public GameObject UiElementPrototype => uiElementPrototype;
 
-    public string[] GetLocalizeTerms() => Term.AsArray();
+    public string[] GetLocalizeTerms() => new [] { $"TutorialSlides/Tutorial_Slide_{id}", $"TutorialSlides/Tutorial_Slide_{id}_Controller" };
 }

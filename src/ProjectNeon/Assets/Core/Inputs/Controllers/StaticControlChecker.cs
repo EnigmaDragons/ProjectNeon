@@ -22,10 +22,10 @@ public static class StaticControlChecker
         => Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown("joystick button 7");
 
     public static bool IsNext()
-        => Input.GetKeyDown("joystick button 5") || Input.GetKeyDown(KeyCode.Keypad6);
+        => Input.GetKeyDown("joystick button 5") || Input.GetKeyDown(KeyCode.Keypad6) || Input.GetKeyDown(KeyCode.Alpha6);
     
     public static bool IsPrevious()
-        => Input.GetKeyDown("joystick button 4") || Input.GetKeyDown(KeyCode.Keypad4);
+        => Input.GetKeyDown("joystick button 4") || Input.GetKeyDown(KeyCode.Keypad4) || Input.GetKeyDown(KeyCode.Alpha4);
 
     private static bool _rightTriggerHeld;
     public static bool IsNext2()
@@ -41,7 +41,7 @@ public static class StaticControlChecker
             _rightTriggerHeld = false;
         }
 
-        return Input.GetKeyDown(KeyCode.Keypad8);
+        return Input.GetKeyDown(KeyCode.Keypad8) || Input.GetKeyDown(KeyCode.Alpha8);
     }
 
     private static bool _leftTriggerHeld;
@@ -58,6 +58,6 @@ public static class StaticControlChecker
             _leftTriggerHeld = false;
         }
 
-        return Input.GetKeyDown(KeyCode.Keypad2);
+        return Input.GetKeyDown(KeyCode.Keypad2) || Input.GetKeyDown(KeyCode.Alpha2);
     }
 }
