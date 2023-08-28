@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -25,6 +24,14 @@ public class CreditsPresenter : MonoBehaviour
         onStart.Invoke();
         yield return new WaitForSeconds(delayBeforeStart);
         
+        // for (var i = 0; i < allCredits.AdditionalCredits.Length; i++)
+        // {
+        //     var presenter = Instantiate(allCredits.AdditionalCredits[i], creditParent.transform);
+        //     var obj = presenter.gameObject;
+        //     Destroy(obj, maxLifetimeOfCredit);
+        //     yield return new WaitForSeconds(delayBetween);
+        // }
+        //
         for (var i = 0; i < allCredits.Credits.Length; i++)
         {
             var presenter = Instantiate(creditPresenter, creditParent.transform).Initialized(allCredits.Credits[i]);
