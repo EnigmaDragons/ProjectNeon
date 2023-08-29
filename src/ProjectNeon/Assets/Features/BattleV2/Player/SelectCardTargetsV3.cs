@@ -17,9 +17,9 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
     {
         card = msg.Card;
         battleState.IsSelectingTargets = true;
-        Message.Publish(new TargetSelectionBegun(card.Type));
         Log.Info($"UI - Began Target Selection for {card.Name}");
         InitCardForSelection();
+        Message.Publish(new TargetSelectionBegun(card.Type));
     }
 
     protected override void Execute(EndTargetSelectionRequested msg) => EndSelection(msg.ShouldDiscard);

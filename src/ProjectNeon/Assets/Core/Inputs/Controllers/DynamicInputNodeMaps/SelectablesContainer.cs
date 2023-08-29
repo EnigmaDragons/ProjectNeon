@@ -21,7 +21,7 @@ public class SelectablesContainer : MonoBehaviour
     {
         try
         {
-            return (_results == null || _results.Length == 0)
+            return (_results == null || _results.Length == 0 || _results[0] == null)
                 ? null
                 : _results[0].gameObject;
         }

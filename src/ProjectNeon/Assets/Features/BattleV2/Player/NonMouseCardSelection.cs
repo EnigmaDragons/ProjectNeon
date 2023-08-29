@@ -84,6 +84,7 @@ public class NonMouseCardSelection : MonoBehaviour
         {
             _shouldDiscard = false;
             _cardPresenter.Discard();
+            MouseDragState.Set(false);
             Message.Publish(new CheckForAutomaticTurnEnd());
         }
     }

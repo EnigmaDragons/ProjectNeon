@@ -33,6 +33,7 @@ public class CardInDeckButton : OnMessage<DeckBuilderCurrentDeckChanged, SetSupe
     public void InitEmpty()
     {
         _empty = true;
+        presenter.OnDeselect(null);
         presenter.gameObject.SetActive(false);
     }
 
