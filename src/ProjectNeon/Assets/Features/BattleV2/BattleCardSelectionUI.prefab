@@ -1070,6 +1070,7 @@ GameObject:
   - component: {fileID: 517528931046271423}
   - component: {fileID: 4961146825546210141}
   - component: {fileID: 1092994844399875790}
+  - component: {fileID: 8331022783670721333}
   m_Layer: 0
   m_Name: CardPicker
   m_TagString: Untagged
@@ -1184,6 +1185,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   z: 2
   backObject: {fileID: 0}
+  nextObject: {fileID: 0}
+  previousObject: {fileID: 0}
+  nextObject2: {fileID: 0}
+  previousObject2: {fileID: 0}
   nodes: []
   dynamicComponents: []
   containers:
@@ -1192,6 +1197,20 @@ MonoBehaviour:
   defaultSelectedComponent: {fileID: 0}
   defaultSelectedNode: {fileID: 0}
   backupDefaultSelectedNode: {fileID: 0}
+  delayedRefresh: 0
+--- !u!114 &8331022783670721333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6110673001978986142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5a889e836484dcdbe49b4fe0dfcd167, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scroll: {fileID: 2939291100791456304}
 --- !u!1 &7140239793249882944
 GameObject:
   m_ObjectHideFlags: 0

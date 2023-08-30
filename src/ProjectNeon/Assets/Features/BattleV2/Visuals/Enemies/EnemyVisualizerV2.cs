@@ -131,9 +131,8 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
         else
             shield.Init(member);
         
-        var initables = obj.GetComponentsInChildren<MemberInitable>();
-        if (initables != null)
-            initables.ForEach(x => x.Init(member));
+        var initables = obj.GetComponents<MemberInitable>().Concat(obj.GetComponentsInChildren<MemberInitable>()).Distinct();
+        initables.ForEach(x => x.Init(member));
         
         InitRequired<TauntEffect>(member, obj);
         InitRequired<StunnedDisabledEffect>(member, obj);
