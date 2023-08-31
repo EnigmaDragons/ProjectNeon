@@ -37,6 +37,18 @@ public class DirectionalInputNodeMap
         return null;
     }
     
-    public DirectionalInputNode GetNode(GameObject obj) 
-        => obj == null ? null : Nodes.SingleOrDefault(x => x.Selectable == obj);
+    public DirectionalInputNode GetNode(GameObject obj)
+    {
+        try
+        {
+            return obj == null
+                ? null
+                : (Nodes ?? Array.Empty<DirectionalInputNode>()).SingleOrDefault(x => x != null && x.Selectable != null && x.Selectable == obj);
+        }
+        catch (Exception e)
+        {
+            Log.NonCrashingError(e);
+            return null;
+        }
+    }
 }
