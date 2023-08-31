@@ -4,7 +4,7 @@ using System;
 public class StringReference
 {
     public bool UseConstant = true;
-    public string ConstantValue;
+    public string ConstantValue = string.Empty;
     public StringVariable Variable;
 
     public string Value => UseConstant || Variable == null ? ConstantValue : Variable.Value;

@@ -7,6 +7,6 @@ public class AdditiveStatInjury : HeroInjury
     public StringReference Stat;
     public float Amount;
 
-    public string InjuryName => Name;
+    public string InjuryName => Name ?? new StringReference("Injury");
     public string Description => $"{Amount} {$"Stats/Stat-{Stat}".ToLocalized()}";
 }
