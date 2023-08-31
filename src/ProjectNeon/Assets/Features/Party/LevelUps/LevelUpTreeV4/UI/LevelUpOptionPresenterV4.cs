@@ -50,6 +50,9 @@ public sealed class LevelUpOptionPresenterV4 : MonoBehaviour, IPointerDownHandle
     
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (_option == null)
+            return;
+        
         if (eventData.button == PointerEventData.InputButton.Left)
             SelectLevelUpOption();
         Message.Publish(new LevelUpClicked(transform));
