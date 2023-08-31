@@ -12,17 +12,14 @@ public class CardShopPresenter : OnMessage<RefreshShop, CardPurchased>
     [SerializeField] private DeterminedNodeInfo nodeInfo;
     [SerializeField] private CurrentMapSegmentV5 map;
 
-    private int _numCards;
+    private int NumCards => cardPurchaseSlot.Length;
+    
     private ShopSelection _selection;
     private List<Card> _purchases = new List<Card>();
 
     public ShopSelection Selection => _selection;
     
-    private void Awake()
-    {
-        _numCards = cardPurchaseSlot.Length;
-        Clear();
-    }
+    private void Awake() => Clear();
 
     private void Clear()
     {
@@ -40,7 +37,7 @@ public class CardShopPresenter : OnMessage<RefreshShop, CardPurchased>
     protected override void AfterDisable()
     {
         PublishShopPurchaseMetricIfRelevant();
-        if (_selection.Cards.Count == _numCards)
+        if (_selection.Cards.Count == NumCards && _selection.Cards.Count > 0)
             Achievements.Record(Achievement.MiscShoppingSpree);
         _selection = null;
         map.DisableSavingCurrentNode();
@@ -56,13 +53,13 @@ public class CardShopPresenter : OnMessage<RefreshShop, CardPurchased>
         {
             var selection = adventureProgress.AdventureProgress
                 .CreateLootPicker(party)
-                .GenerateCardSelection(cards, _numCards);
+                .GenerateCardSelection(cards, NumCards);
             nodeInfo.CardShopSelection = selection.Cards.ToArray();
             Message.Publish(new SaveDeterminationsRequested());
         }
         _selection = new ShopSelection(new List<StaticEquipment>(), nodeInfo.CardShopSelection.Value.ToList());
         var cardsWithOwners = _selection.Cards.Select(c => c.ToNonBattleCard(party)).ToArray();
-        for (var i = 0; i < _numCards; i++)
+        for (var i = 0; i < NumCards; i++)
             cardPurchaseSlot[i].Initialized(cardsWithOwners[i]);
     }
 
