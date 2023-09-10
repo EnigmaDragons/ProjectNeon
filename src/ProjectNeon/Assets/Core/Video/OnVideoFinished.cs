@@ -9,7 +9,10 @@ public sealed class OnVideoFinished : MonoBehaviour
     [SerializeField] private UnityEvent onFinished;
     [SerializeField] private FloatReference delay;
 
-    private void Awake() => GetComponent<VideoPlayer>().loopPointReached += _ => StartCoroutine(ExecuteAfterDelay());
+    private void Awake()
+    {
+        GetComponent<VideoPlayer>().loopPointReached += _ => StartCoroutine(ExecuteAfterDelay());
+    }
 
     private IEnumerator ExecuteAfterDelay()
     {
