@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NavigateToSettingsOrAcademyOrTitleOrWelcomeCutscene : OnMessage<NavigateToNextTutorialFlow>
 {
@@ -18,10 +19,12 @@ public class NavigateToSettingsOrAcademyOrTitleOrWelcomeCutscene : OnMessage<Nav
 
     protected override void AfterEnable()
     {
+        if (SceneManager.GetActiveScene().name != "VideoLogoScene")
+            return;
         this.ExecuteAfterDelay(20, () =>
         {
             if (this != null && !_triggered)
-                Log.Error("NavigateToSettingsOrAcademyOrTitleOrWelcomeCutscene did not navigate to another scene in 20 seconds.");
+                Log.Error("NavigateToSettingsOrAcademyOrTitleOrWelcomeCutscene did not navigate away from the Video Logo Scene in 20 seconds.");
         });
     }
 
