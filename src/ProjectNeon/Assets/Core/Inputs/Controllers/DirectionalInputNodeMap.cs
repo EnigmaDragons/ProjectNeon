@@ -17,7 +17,7 @@ public class DirectionalInputNodeMap
     public DirectionalInputNode[] Nodes;
 
     public DirectionalInputNode DefaultSelectedNode 
-        => GetNode(DefaultSelected?.FirstOrDefault(x => x.activeInHierarchy));
+        => GetNode(DefaultSelected?.FirstOrDefault(x => x != null && x.activeInHierarchy));
 
     public DirectionalInputNode GetNodeInDirection(DirectionalInputNode node, InputDirection direction)
     {
