@@ -19,7 +19,7 @@ public class NonMouseCardSelection : MonoBehaviour
     {
         cycleOrDiscard.onClick.AddListener(() =>
         {
-            if (!state.AllowMiddleClickOnCard)
+            if (!state.AllowMiddleClickOnCard || hand.ShownCards.None(x => x.IsSelected && x.gameObject.activeInHierarchy))
                 return;
             var cardComponent = hand.ShownCards.First(x => x.IsSelected && x.gameObject.activeInHierarchy);
             if (state.NumberOfRecyclesRemainingThisTurn > 0)

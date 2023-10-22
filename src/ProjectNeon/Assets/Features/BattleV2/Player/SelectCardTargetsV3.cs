@@ -52,11 +52,14 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
 
     private void DiscardCard()
     {
-        Debug.Log($"UI - Discarded {card.Name}");
+        if (card == null) //silly defensive programming, how are nulls getting here?
+        {
+            Debug.Log($"UI - Discarded {card.Name}");
         
-        sourceCardZone.Remove(card);
-        discardZone.PutOnBottom(card.RevertedToStandard());
-        battleState.RecordCardDiscarded();
+            sourceCardZone.Remove(card);
+            discardZone.PutOnBottom(card.RevertedToStandard());
+            battleState.RecordCardDiscarded();
+        }
         OnSelectionComplete();
     }
 

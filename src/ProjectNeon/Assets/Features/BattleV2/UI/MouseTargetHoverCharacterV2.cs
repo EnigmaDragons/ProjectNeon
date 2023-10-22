@@ -13,7 +13,7 @@ public class MouseTargetHoverCharacterV2 : OnMessage<CharacterHoverChanged, Targ
         {
             if (!_isSelectingTargets)
                 return;
-            if (msg.HoverCharacter.IsMissing)
+            if (msg?.HoverCharacter == null || msg.HoverCharacter.IsMissing || msg.HoverCharacter.Value?.Member?.Id == null) //overly defensive programming here
                 targetingState.StopIndicating();
             else
                 targetingState.IndicateMember(msg.HoverCharacter.Value.Member.Id);
