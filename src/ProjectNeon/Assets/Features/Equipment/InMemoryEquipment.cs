@@ -124,5 +124,6 @@ public class InMemoryEquipment
     
     public StatAddends AdditiveStats()
         => new StatAddends(Modifiers.Where(m => m.ModifierType == StatMathOperator.Additive)
-            .ToDictionary(m => m.StatType, m => m.Amount));
+            .GroupBy(m => m.StatType)
+            .ToDictionary(g => g.Key, g => g.Sum(x => x.Amount)));
 }
