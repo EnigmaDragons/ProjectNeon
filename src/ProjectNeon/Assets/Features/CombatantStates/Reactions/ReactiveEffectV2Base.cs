@@ -5,7 +5,7 @@ using System.Linq;
 public abstract class ReactiveEffectV2Base : ReactiveStateV2
 {
     private readonly TemporalStateTracker _tracker;
-    private readonly Func<EffectResolved, Maybe<ProposedReaction>> _createMaybeEffect;
+    private readonly Func<EffectResolved, ProposedReaction[]> _createMaybeEffects;
     private readonly bool _hasUnlimitedUsesPerTurn;
     private readonly int _maxUsesPerTurn;
     
@@ -23,23 +23,23 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
     public Maybe<int> RemainingTurns => _tracker.RemainingTurns;
     private bool HasUsesRemainingThisTurn => _hasUnlimitedUsesPerTurn || _usesThisTurn < _maxUsesPerTurn;
 
-    public ReactiveEffectV2Base(int originatorId, bool isDebuff, int maxDurationTurns, int maxUses, StatusDetail status, ReactionTimingWindow timing, bool onlyReactDuringCardPhases, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
-        : this(timing, onlyReactDuringCardPhases, new TemporalStateMetadata(originatorId, isDebuff, maxUses, maxDurationTurns, status), createMaybeEffect) {}
-    public ReactiveEffectV2Base(int originatorId, bool isDebuff, int maxDurationTurns, int maxUses, StatusDetail status, ReactionTimingWindow timing, bool onlyReactDuringCardPhases, int maxUsesPerTurn, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
-        : this(timing, onlyReactDuringCardPhases, new TemporalStateMetadata(originatorId, isDebuff, maxUses, maxDurationTurns, status), maxUsesPerTurn <= 0, maxUsesPerTurn, createMaybeEffect) {}
-    public ReactiveEffectV2Base(ReactionTimingWindow timing, bool onlyReactDuringCardPhases, TemporalStateMetadata metadata, Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
-        : this(timing, onlyReactDuringCardPhases, metadata, true, -1, createMaybeEffect) {}
+    public ReactiveEffectV2Base(int originatorId, bool isDebuff, int maxDurationTurns, int maxUses, StatusDetail status, ReactionTimingWindow timing, bool onlyReactDuringCardPhases, Func<EffectResolved, ProposedReaction[]> createMaybeEffects)
+        : this(timing, onlyReactDuringCardPhases, new TemporalStateMetadata(originatorId, isDebuff, maxUses, maxDurationTurns, status), createMaybeEffects) {}
+    public ReactiveEffectV2Base(int originatorId, bool isDebuff, int maxDurationTurns, int maxUses, StatusDetail status, ReactionTimingWindow timing, bool onlyReactDuringCardPhases, int maxUsesPerTurn, Func<EffectResolved, ProposedReaction[]> createMaybeEffects)
+        : this(timing, onlyReactDuringCardPhases, new TemporalStateMetadata(originatorId, isDebuff, maxUses, maxDurationTurns, status), maxUsesPerTurn <= 0, maxUsesPerTurn, createMaybeEffects) {}
+    public ReactiveEffectV2Base(ReactionTimingWindow timing, bool onlyReactDuringCardPhases, TemporalStateMetadata metadata, Func<EffectResolved, ProposedReaction[]> createMaybeEffects)
+        : this(timing, onlyReactDuringCardPhases, metadata, true, -1, createMaybeEffects) {}
 
     private ReactiveEffectV2Base(ReactionTimingWindow timing, bool onlyReactDuringCardPhases, TemporalStateMetadata metadata,
         bool hasUnlimitedUsesPerTurn, int maxUsesPerTurn,
-        Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect)
+        Func<EffectResolved, ProposedReaction[]> createMaybeEffects)
     {
         Timing = timing;
         OnlyReactDuringCardPhases = onlyReactDuringCardPhases;
         _tracker = new TemporalStateTracker(metadata);
         _hasUnlimitedUsesPerTurn = hasUnlimitedUsesPerTurn;
         _maxUsesPerTurn = maxUsesPerTurn;
-        _createMaybeEffect = createMaybeEffect;
+        _createMaybeEffects = createMaybeEffects;
     }
     
     public IPayloadProvider OnTurnStart()
@@ -55,55 +55,60 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
     }
 
     public ITemporalState CloneOriginal() =>
-        new ClonedReactiveEffect(Timing, OnlyReactDuringCardPhases, _tracker.Metadata, _createMaybeEffect);
+        new ClonedReactiveEffect(Timing, OnlyReactDuringCardPhases, _tracker.Metadata, _createMaybeEffects);
 
 
-    public Maybe<ProposedReaction> OnEffectResolved(EffectResolved e)
+    public ProposedReaction[] OnEffectResolved(EffectResolved e)
     {
         if (!_tracker.IsActive || !HasUsesRemainingThisTurn)
-            return Maybe<ProposedReaction>.Missing();
+            return Array.Empty<ProposedReaction>();
         
-        var maybeEffect = _createMaybeEffect(e);
-        if (maybeEffect.IsPresent)
+        var maybeEffects = _createMaybeEffects(e);
+        if (maybeEffects.Length > 0)
         {
             _tracker.RecordUse();
             _usesThisTurn++;
         }
-        return maybeEffect;
+        return maybeEffects;
     }
     
-    protected static Func<EffectResolved, Maybe<ProposedReaction>> CreateMaybeEffect(
+    protected static Func<EffectResolved, ProposedReaction[]> CreateMaybeEffects(
         IDictionary<int, Member> members, int possessingMemberId, Member originator, bool canReactToReactions,
-        ReactionCardType reaction, ReactionTimingWindow timing, Func<EffectResolved, bool> condition) => 
+        ReactionCardType reaction, ReactionTimingWindow timing, Func<EffectResolved, int> condition) => 
             effect =>
             {
                 var possessor = members.VerboseGetValue(possessingMemberId, "Reaction Possessing Member");
-                if (!ReactionIsApplicable(possessor, canReactToReactions, effect, condition))
-                    return Maybe<ProposedReaction>.Missing();
+                if (!ReactionIsApplicable(possessor, canReactToReactions, effect, condition(effect)))
+                    return Array.Empty<ProposedReaction>();
 
                 var action = reaction.ActionSequence;
                 var reactor = action.Reactor == ReactiveMember.Originator ? originator : possessor;
                 var target = GetReactionTarget(possessor, reactor, members, action, effect.Source, effect.Target);
                 if (target.Members.Any())
-                    return new ProposedReaction(reaction, reactor, target, timing);
-                return Maybe<ProposedReaction>.Missing();
+                    return new [] {new ProposedReaction(reaction, reactor, target, timing)};
+                return Array.Empty<ProposedReaction>();
             };
     
-    protected static Func<EffectResolved, Maybe<ProposedReaction>> CreateMaybeEffect(
+    protected static Func<EffectResolved, ProposedReaction[]> CreateMaybeEffects(
         IDictionary<int, Member> members, int possessingMemberId, Member originator, bool canReactToReactions,
-        CardReactionSequence reaction, ReactionTimingWindow timing, Func<EffectResolved, bool> condition) => 
+        CardReactionSequence reaction, ReactionTimingWindow timing, Func<EffectResolved, int> condition) => 
         effect =>
         {
             var possessor = members.VerboseGetValue(possessingMemberId, "Reaction Possessing Member");
-            if (!ReactionIsApplicable(possessor, canReactToReactions, effect, condition))
-                return Maybe<ProposedReaction>.Missing();
+            var triggerCount = condition(effect);
+            if (!ReactionIsApplicable(possessor, canReactToReactions, effect, triggerCount))
+                return Array.Empty<ProposedReaction>();
 
             var action = reaction;
             var reactor = action.Reactor == ReactiveMember.Originator ? originator : possessor;
-            var target = GetReactionTarget(possessor, reactor, members, action, effect.Source, effect.Target);
-            if (target.Members.Any())
-                return new ProposedReaction(reaction, reactor, target, timing);
-            return Maybe<ProposedReaction>.Missing();
+            var reactions = new List<ProposedReaction>();
+            for (var i = 0; i < (reaction.MultiTrigger ? triggerCount : 1); i++)
+            {
+                var target = GetReactionTarget(possessor, reactor, members, action, effect.Source, effect.Target);
+                if (target.Members.Any())
+                    reactions.Add(new ProposedReaction(reaction, reactor, target, timing));
+            }
+            return reactions.ToArray();
         };
 
     protected static Target GetReactionTarget(Member possessor, Member reactor, IDictionary<int, Member> members, CardReactionSequence action, Member effectSource, Target effectTarget)
@@ -134,11 +139,11 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
         return target;
     }
 
-    protected static bool ReactionIsApplicable(Member possessor, bool canReactToReactions, EffectResolved effect, Func<EffectResolved, bool> condition)
+    protected static bool ReactionIsApplicable(Member possessor, bool canReactToReactions, EffectResolved effect, int triggerCount)
     {
         if (effect.IsReaction && !canReactToReactions)
             return false;
-        if (!condition(effect))
+        if (triggerCount == 0)
             return false;
         return true;
     }
@@ -147,6 +152,6 @@ public abstract class ReactiveEffectV2Base : ReactiveStateV2
 public class ClonedReactiveEffect : ReactiveEffectV2Base
 {
     public ClonedReactiveEffect(ReactionTimingWindow timing, bool onlyReactDuringCardPhases, TemporalStateMetadata metadata, 
-        Func<EffectResolved, Maybe<ProposedReaction>> createMaybeEffect) 
-            : base(timing, onlyReactDuringCardPhases, metadata, createMaybeEffect) {}
+        Func<EffectResolved, ProposedReaction[]> createMaybeEffects) 
+            : base(timing, onlyReactDuringCardPhases, metadata, createMaybeEffects) {}
 }

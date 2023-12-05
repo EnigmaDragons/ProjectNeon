@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -124,8 +125,8 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
                     battleSnapshotAfter, 
                     false,
                     Maybe<Card>.Missing(),
-                    Maybe<Card>.Missing(),
-                    Maybe<Card>.Missing(),
+                    Array.Empty<Card>(),
+                    Array.Empty<Card>(),
                     new UnpreventableContext(),
                     ReactionTimingWindow.FirstCause,
                     state.PlayerCardZones);

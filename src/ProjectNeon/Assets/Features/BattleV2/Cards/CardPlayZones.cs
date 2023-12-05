@@ -55,8 +55,13 @@ public class CardPlayZones : ScriptableObject
     public void CycleHand()
     {
         var i = HandZone.Cards.Length;
+        if (i == 0)
+            return;
+        var cardsCycled = HandZone.Cards;
         DiscardHand();
         DrawCards(i);
+        var cardsDrawn = HandZone.Cards;
+        Message.Publish(new CardsCycled(cardsCycled, cardsDrawn));
     }
     
     public IEnumerator DrawHandAsync(int handSize)

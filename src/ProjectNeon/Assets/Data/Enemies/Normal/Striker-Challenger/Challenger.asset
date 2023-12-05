@@ -32,7 +32,6 @@ MonoBehaviour:
   prefab: {fileID: 5341214880613275972, guid: 08e4cda66b9d8b8448264998cabbd548, type: 3}
   materialType: 1
   libraryCameraOffset: {x: 0, y: -0.9, z: 2.6}
-  shouldLive: 0
   battleRole: 1
   tier: 0
   unique: 0
@@ -105,12 +104,15 @@ MonoBehaviour:
         EvaluationPartialFormula: 
         Prefix: 
         Suffix: 
+        PrefixTerm: 
+        SuffixTerm: 
       FlavorText:
         UseConstant: 0
         ConstantValue: 
         Variable: {fileID: 0}
       ReferencedSequence: {fileID: 0}
       ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
       ReactionConditionType: 40
       ReactionEffectScope:
         UseConstant: 1
@@ -121,6 +123,7 @@ MonoBehaviour:
       ReactionEffect:
         reactor: 0
         scope: 0
+        multiTrigger: 1
         cardActions: {fileID: 11400000, guid: c8f77f6e65d472b4e848a487ed8be99e, type: 2}
       BonusCardType: {fileID: 0}
       Unpreventable: 0
@@ -132,3 +135,4 @@ MonoBehaviour:
   maxCopies: 2
   minimumAllies: 0
   damageType: 1
+  shouldLive: 0

@@ -147,9 +147,7 @@ public sealed class MemberState
     public ProposedReaction[] GetReactions(EffectResolved e, bool duringCardPhases) =>
         ApplicableReactiveStates
             .Where(x => (int)x.Timing > (int)e.Timing && (duringCardPhases || !x.OnlyReactDuringCardPhases))
-            .Select(x => x.OnEffectResolved(e))
-            .Where(x => x.IsPresent)
-            .Select(x => x.Value)
+            .SelectMany(x => x.OnEffectResolved(e))
             .ToArray();
     
     private IEnumerable<ReactiveStateV2> ApplicableReactiveStates =>

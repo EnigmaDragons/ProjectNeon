@@ -56,5 +56,5 @@ public class RemoveDebuffsTests
     private ReactiveStateV2 Create(bool isDebuff, Member m) => new ReactWithCard(isDebuff, 2, 2,
         new StatusDetail(StatusTag.CounterAttack), ReactionTimingWindow.Default, false,
         ReactiveTriggerScope.All, new Dictionary<int, Member> {{m.Id, m}}, m.Id, m,
-        TestCards.AnyReaction(), _ => true);
+        TestCards.AnyReaction(), _ => 1);
 }

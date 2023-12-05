@@ -30,19 +30,19 @@ public sealed class ReactWithCardAfterEnoughHealthLoss : ReactiveStateV2
         _possessor = possessor;
     }
     
-    public Maybe<ProposedReaction> OnEffectResolved(EffectResolved e)
+    public ProposedReaction[] OnEffectResolved(EffectResolved e)
     {
         if (!_tracker.IsActive || !e.WasApplied || !_possessor.IsConscious())
-            return Maybe<ProposedReaction>.Missing();
+            return Array.Empty<ProposedReaction>();
         var healthLost = e.BattleBefore.Members[_possessor.Id].State.Hp - e.BattleAfter.Members[_possessor.Id].State.Hp;
         if (healthLost <= 0)
-            return Maybe<ProposedReaction>.Missing();
+            return Array.Empty<ProposedReaction>();
         _remainingHealthBeforeTrigger -= healthLost;
         if (_remainingHealthBeforeTrigger > 0)
-            return Maybe<ProposedReaction>.Missing();
+            return Array.Empty<ProposedReaction>();
         _remainingHealthBeforeTrigger = _healthToTrigger;
         _tracker.RecordUse();
-        return new ProposedReaction(_reaction, _possessor, new Single(_possessor), ReactionTimingWindow.ReactionCard);
+        return new [] {new ProposedReaction(_reaction, _possessor, new Single(_possessor), ReactionTimingWindow.ReactionCard)};
     }
 
     public IPayloadProvider OnTurnStart() => new NoPayload();

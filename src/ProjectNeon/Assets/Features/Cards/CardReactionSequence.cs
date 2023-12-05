@@ -6,10 +6,12 @@ public sealed class CardReactionSequence
 {
     [SerializeField] private ReactiveMember reactor;
     [SerializeField] private ReactiveTargetScope scope;
+    [SerializeField] private bool multiTrigger;
     [SerializeField] public CardActionsData cardActions;
 
     public ReactiveMember Reactor => reactor;
     public ReactiveTargetScope Scope => scope;
+    public bool MultiTrigger => multiTrigger;
     public CardActionsData CardActions => cardActions;
 
     public void Perform(string reactionName, Member source, Target target, ResourceQuantity xAmountPaid, ResourceQuantity amountPaid, ReactionTimingWindow timing)

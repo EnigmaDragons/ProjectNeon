@@ -55,12 +55,15 @@ MonoBehaviour:
       EvaluationPartialFormula: 
       Prefix: 
       Suffix: 
+      PrefixTerm: 
+      SuffixTerm: 
     FlavorText:
       UseConstant: 0
       ConstantValue: 
       Variable: {fileID: 0}
     ReferencedSequence: {fileID: 0}
     ReferencedSequences: []
+    OnlyReactDuringCardPhases: 0
     ReactionConditionType: 21
     ReactionEffectScope:
       UseConstant: 1
@@ -71,6 +74,7 @@ MonoBehaviour:
     ReactionEffect:
       reactor: 1
       scope: 0
+      multiTrigger: 1
       cardActions: {fileID: 11400000, guid: 00b5e2b09f02f3f4fb3d72cec8949c8d, type: 2}
     BonusCardType: {fileID: 0}
     Unpreventable: 0
