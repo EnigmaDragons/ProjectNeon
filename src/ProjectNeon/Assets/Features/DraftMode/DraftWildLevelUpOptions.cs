@@ -37,7 +37,7 @@ public class DraftWildLevelUpOptions : LevelUpOptions, ILocalizeTerms
                     Enumerable.Range(0, augmentRarityFactors[Rarity.Rare]).Select(_ => Rarity.Rare)).Concat(
                     Enumerable.Range(0, augmentRarityFactors[Rarity.Epic]).Select(_ => Rarity.Epic));
             var augmentGear = allEquipmentPool.Random(EquipmentSlot.Augmentation, rarities.Random(), new[] {h.Character}, 1).ToQueue();
-            var equipments = permanentEquipmentPool.options.Take(3).ToQueue();
+            var equipments = permanentEquipmentPool.options.Where(x => h.Equipment.Permanents.None(equipped => equipped.Id == x.Id)).Take(3).ToQueue();
 
             nodeInfo.DraftLevelUpOptions = pickTypes.Select(t =>
             {
