@@ -58,8 +58,9 @@ public sealed class Maybe<T>
 
     public T OrDefault(T defaultValue) => IsPresent ? Value : defaultValue;
     public T OrDefault(Func<T> createDefault) => IsPresent ? Value : createDefault();
-    
-    public static Maybe<T> Missing() => new Maybe<T>(default(T), false);
+
+    private static readonly Maybe<T> MissingVal = new Maybe<T>(default(T), false);
+    public static Maybe<T> Missing() => MissingVal;
     public static Maybe<T> Present(T val) => new Maybe<T>(val, true);
     
     public static implicit operator Maybe<T>(T obj) => new Maybe<T>(obj);

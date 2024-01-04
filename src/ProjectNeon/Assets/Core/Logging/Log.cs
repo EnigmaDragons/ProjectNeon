@@ -9,37 +9,126 @@ public static class Log
 
     public static void AddSink(Action<string> sink) => _additionalMessageSinks.Add(sink);
 
-    public static void Info(string msg) => IgnoreExceptions(() => SinkAnd(msg, () => Debug.Log(msg)));
-    public static void Info(string msg, Object context) => IgnoreExceptions(() => SinkAnd(msg, () => Debug.Log(msg, context)));
-    public static void Info(Object obj) => IgnoreExceptions(() => Debug.Log(obj));
-    public static void Warn(string msg) => IgnoreExceptions(() => SinkAnd("Warn: " + msg, () => Debug.LogWarning(msg)));
-    public static void Error(string msg) => IgnoreExceptions(() => SinkAnd("Error: " + msg, () => Debug.LogError(msg)));
-    public static void Error(string msg, Object context) => IgnoreExceptions(() => SinkAnd("Error: " + msg, () => Debug.LogError(msg, context)));
-    public static void Error(Exception e) => IgnoreExceptions(() => Debug.LogException(e));
+    public static void Info(string msg)
+    {
+        #if UNITY_EDITOR && !HIGH_PERF
+        try
+        {
+            _additionalMessageSinks.ForEach(s => s(msg));
+            Debug.Log(msg);;
+        }
+        catch
+        {
+        }
+        #endif
+    }
 
-    public static void NonCrashingError(Exception e) => IgnoreExceptions(() => Debug.LogException(new Exception("Non-Crashing", e)));
-    public static void NonCrashingError(string msg) => SinkAnd("Non-Crashing Error: " + msg, () => Debug.LogError(msg));
+    public static void Info(string msg, Object context)
+    {
+        #if UNITY_EDITOR && !HIGH_PERF
+        try
+        {
+            _additionalMessageSinks.ForEach(s => s(msg));
+            Debug.Log(msg, context);
+        }
+        catch
+        {
+        }
+        #endif
+    }
 
-    public static void InfoOrError(string msg, bool isError) => IgnoreExceptions(() =>
+    public static void Warn(string msg)
+    {
+        #if !HIGH_PERF
+        try
+        {
+            _additionalMessageSinks.ForEach(s => s(msg));
+            Debug.LogWarning(msg);
+        }
+        catch
+        {
+        }
+        #endif
+    }
+
+    public static void Error(string msg)
+    {
+        try
+        {
+            _additionalMessageSinks.ForEach(s => s(msg));
+            Debug.LogError(msg);
+        }
+        catch
+        {
+        }
+    }
+
+    public static void Error(string msg, Object context)
+    {
+        try
+        {
+            _additionalMessageSinks.ForEach(s => s(msg));
+            Debug.LogError(msg, context);
+        }
+        catch
+        {
+        }
+    }
+
+    public static void Error(Exception e)
+    {
+        try
+        {
+            _additionalMessageSinks.ForEach(s => s(e.ToString()));
+            Debug.LogException(e);
+        }
+        catch
+        {
+        }
+    }
+
+    public static void NonCrashingError(Exception e)
+    {
+        #if !HIGH_PERF
+        try
+        {
+            _additionalMessageSinks.ForEach(s => s(e.ToString()));
+            Debug.LogException(new Exception("Non-Crashing", e));
+        }
+        catch
+        {
+        }
+        #endif
+    }
+
+    public static void NonCrashingError(string msg)
+    {
+        #if !HIGH_PERF
+        try
+        {
+            _additionalMessageSinks.ForEach(s => s(msg));
+            Debug.LogError("Non-Crashing Error: " + msg);
+        }
+        catch
+        {
+        }
+        #endif
+    }
+
+    public static void InfoOrError(string msg, bool isError)
     {
         if (isError)
             Error(msg);
         else
             Info(msg);
-    });
-    
-    public static void InfoOrWarn(string msg, bool isWarn) => IgnoreExceptions(() =>
+    }
+
+    public static void InfoOrWarn(string msg, bool isWarn)
     {
         if (isWarn)
             Warn(msg);
         else
             Info(msg);
-    });
-
-    private static void SinkAnd(string msg, Action a)
-    {
-        _additionalMessageSinks.ForEach(s => s(msg));
-        a();
     }
     
     public static void ErrorIfNull<T>(T obj, string context, string elementName)
@@ -59,31 +148,19 @@ public static class Log
         Info(value.ToString());
         return value;
     }
-
-    private static void IgnoreExceptions(Action a)
-    {
-        try
-        {
-            a();
-        }
-        catch (Exception e)
-        {
-            
-        }
-    }
-
+    
     public static T LogIfNull<T>(T thing, string context, T defaultThing)
     {
         if (thing != null)
             return thing;
-        Log.NonCrashingError($"{typeof(T).Name} is null: {context}");
+        NonCrashingError($"{typeof(T).Name} is null: {context}");
         return defaultThing;
     }
     
     public static T LogIfNull<T>(T thing, string context)
     {
         if (thing == null)
-            Log.Error($"{typeof(T).Name} is null: {context}");
+            Error($"{typeof(T).Name} is null: {context}");
         return thing;
     }
 }

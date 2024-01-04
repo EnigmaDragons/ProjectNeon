@@ -823,6 +823,7 @@ GameObject:
   - component: {fileID: 5185844001985185326}
   - component: {fileID: 1338314674560044714}
   - component: {fileID: 5514280215100493384}
+  - component: {fileID: 138899332217424568}
   m_Layer: 0
   m_Name: BattleUIV2
   m_TagString: Untagged
@@ -1031,6 +1032,18 @@ MonoBehaviour:
   battleState: {fileID: 11400000, guid: 74a62169af23dfd4780c34235bfa37ed, type: 2}
   adventure: {fileID: 11400000, guid: 62e84d9ce18ccb747b8d7d0083704709, type: 2}
   eventPublisher: {fileID: 11400000, guid: af4dd5b2dd944724882b65e6ad0324bc, type: 2}
+--- !u!114 &138899332217424568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062663383584248952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1042150b26f44723b76c26e82a7e3a6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1156269812941561735
 GameObject:
   m_ObjectHideFlags: 0
@@ -11337,6 +11350,10 @@ PrefabInstance:
       propertyPath: mLocalizeTarget
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8946946012276280339, guid: c4cecf04308231646bcb82fbcd8513df, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: a466fa9b2e60ed44da4dff9d08ee6d86, type: 2}
     - target: {fileID: 9217266937942904414, guid: c4cecf04308231646bcb82fbcd8513df, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -12132,6 +12149,10 @@ PrefabInstance:
       propertyPath: mLocalizeTarget
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3646180889193323273, guid: 56c8ea6d94712cd4196591516cf358a4, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3808506189747827799, guid: 56c8ea6d94712cd4196591516cf358a4, type: 3}
       propertyPath: mLocalizeTarget
       value: 
@@ -12470,6 +12491,10 @@ PrefabInstance:
       propertyPath: mLocalizeTarget
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3119321117964225090, guid: 9be2915e2035477439c12de37f347369, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3165263560477045505, guid: 9be2915e2035477439c12de37f347369, type: 3}
       propertyPath: mLocalizeTarget
       value: 
@@ -12663,6 +12688,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8533364959820220769, guid: 9be2915e2035477439c12de37f347369, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8681623821735621679, guid: 9be2915e2035477439c12de37f347369, type: 3}
       propertyPath: mLocalizeTarget
       value: 
       objectReference: {fileID: 0}
@@ -17935,7 +17964,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5752301443787074269, guid: 1914058b0c1eabe4eb8be322a414c76c, type: 3}
       propertyPath: m_text
-      value: "<b>\u5361\u7247\u64AD\u653E</b>\n\n\u7B2C\u4E00\u4E2A\u6570\u5B57\u663E\u793A\u4E86\u5269\u4F59\u7684\u64AD\u653E\uFF0C\u7B2C\u4E8C\u4E2A\u6570\u5B57\u663E\u793A\u4E86\u672C\u56DE\u5408\u7684\u603B\u5267\u672C\u3002"
+      value: '<b>Card Plays</b>
+
+
+        The first number shows plays remaining,
+        and the second number shows total plays available this turn. '
       objectReference: {fileID: 0}
     - target: {fileID: 5752301443787074269, guid: 1914058b0c1eabe4eb8be322a414c76c, type: 3}
       propertyPath: m_fontSize
@@ -17944,7 +17977,7 @@ PrefabInstance:
     - target: {fileID: 5752301443787074269, guid: 1914058b0c1eabe4eb8be322a414c76c, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 87c545b6116207f49a3383df53bbf060, type: 2}
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 5752301443787074269, guid: 1914058b0c1eabe4eb8be322a414c76c, type: 3}
       propertyPath: m_fontSizeBase
       value: 16
@@ -17952,7 +17985,7 @@ PrefabInstance:
     - target: {fileID: 5752301443787074269, guid: 1914058b0c1eabe4eb8be322a414c76c, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: -5459410016884986833, guid: 87c545b6116207f49a3383df53bbf060, type: 2}
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 6741264942208778873, guid: 1914058b0c1eabe4eb8be322a414c76c, type: 3}
       propertyPath: m_Name
       value: RulePanel

@@ -169,15 +169,36 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             _onClick();
     }
     
+    private bool _actionsInitialized = false;
+    private Action<CardHighlighted> _cardHighlightedAction;
+    private Action<MemberUnconscious> _memberUnconsciousAction;
+    private Action<LanguageChanged> _languageChangedAction;
+    private Action<BeginTargetSelectionRequested> _beginTargetSelectionRequestedAction;
+    private Action<EndTargetSelectionRequested> _endTargetSelectionRequestedAction;
+    private Action<CancelTargetSelectionRequested> _cancelTargetSelectionRequestedAction;
+    private Action<TargetChanged> _targetChangedAction;
+    
     private void OnEnable()
     {
-        Message.Subscribe<CardHighlighted>(OnCardHighlighted, this);
-        Message.Subscribe<MemberUnconscious>(_ => UpdateCardHighlight(), this);
-        Message.Subscribe<LanguageChanged>(_ => RenderCardType(), this);
-        Message.Subscribe<BeginTargetSelectionRequested>(OnTargetingBegun, this);
-        Message.Subscribe<EndTargetSelectionRequested>(_ => OnTargetingEnded(), this);
-        Message.Subscribe<CancelTargetSelectionRequested>(_ => OnTargetingEnded(), this);
-        Message.Subscribe<TargetChanged>(OnTargetChanged, this);
+        if (!_actionsInitialized)
+        {
+            _cardHighlightedAction = OnCardHighlighted;
+            _memberUnconsciousAction = _ => UpdateCardHighlight();
+            _languageChangedAction = _ => RenderCardType();
+            _beginTargetSelectionRequestedAction = OnTargetingBegun;
+            _endTargetSelectionRequestedAction = _ => OnTargetingEnded();
+            _cancelTargetSelectionRequestedAction = _ => OnTargetingEnded();
+            _targetChangedAction = OnTargetChanged;
+            _actionsInitialized = true;
+        }
+        
+        Message.Subscribe<CardHighlighted>(_cardHighlightedAction, this);
+        Message.Subscribe<MemberUnconscious>(_memberUnconsciousAction, this);
+        Message.Subscribe<LanguageChanged>(_languageChangedAction, this);
+        Message.Subscribe<BeginTargetSelectionRequested>(_beginTargetSelectionRequestedAction, this);
+        Message.Subscribe<EndTargetSelectionRequested>(_endTargetSelectionRequestedAction, this);
+        Message.Subscribe<CancelTargetSelectionRequested>(_cancelTargetSelectionRequestedAction, this);
+        Message.Subscribe<TargetChanged>(_targetChangedAction, this);
     }
 
     private void OnDisable()

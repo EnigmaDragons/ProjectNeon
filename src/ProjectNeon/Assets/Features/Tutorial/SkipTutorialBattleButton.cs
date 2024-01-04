@@ -16,6 +16,7 @@ public class SkipTutorialBattleButton : OnMessage<BattleFinished>, ILocalizeTerm
         {
             if (adventure.Adventure == null)
             {
+                Log.Warn("Disabling UI - SkipTutorialBattleButton because no adventure is set");
                 gameObject.SetActive(false);
                 return;
             }

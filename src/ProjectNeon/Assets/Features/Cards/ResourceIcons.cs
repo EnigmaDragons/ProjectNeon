@@ -4,25 +4,53 @@ using System.Text.RegularExpressions;
 
 public static class ResourceIcons
 {
+    private static object Owner = new object();
+    private static readonly Dictionary<string, Regex> IconsRegex = new Dictionary<string, Regex>();
+    private static readonly Dictionary<string, Regex> TermIconsRegex = new Dictionary<string, Regex>();
+    private static HashSet<string> InitializedLanguages = new HashSet<string>();
+
+    static ResourceIcons()
+    {
+        foreach (var kvp in Icons)
+        {
+            IconsRegex[kvp.Key] = new Regex(kvp.Key, RegexOptions.Compiled);
+        }
+
+        InitLanguage();
+        Message.Subscribe<LanguageChanged>(OnLanguageChanged, Owner);
+    }
+    
+    private static void OnLanguageChanged(LanguageChanged msg)
+    {
+        InitLanguage();
+    }
+
+    private static void InitLanguage()
+    {
+        foreach (var kvp in TermIcons)
+        {
+            TermIconsRegex[kvp.Key] = new Regex(kvp.Key.ToLocalized(), RegexOptions.Compiled);
+        }
+    }
+
     public static string ReplaceTextWithResourceIcons(string str)
     {
-        foreach (var r in Icons)
+        if (string.IsNullOrWhiteSpace(str))
+            return str;
+        
+        foreach (var r in IconsRegex)
         {
-            str = Regex.Replace(str, $" {r.Key}", $" {Sprite(r.Value)}");
-            str = Regex.Replace(str, $"{r.Key}", $"{Sprite(r.Value)}");
+            str = r.Value.Replace(str, Sprite[Icons[r.Key]]);
         }
-        foreach (var r in TermIcons)
+        
+        foreach (var r in TermIconsRegex)
         {
-            var localized = r.Key.ToLocalized();
-            str = Regex.Replace(str, $" {localized}", $" {Sprite(r.Value)}");
-            str = Regex.Replace(str, $"{localized}", $"{Sprite(r.Value)}");
+            str = r.Value.Replace(str, Sprite[TermIcons.VerboseGetValue(r.Key, nameof(TermIcons))]);
         }
         return str;
     }
     
-    private static string Sprite(int index) => $"<sprite index={index}>";
-    
-    public static Dictionary<string, int> Icons = new Dictionary<string, int>(StringComparer.CurrentCultureIgnoreCase)
+    public static Dictionary<string, int> Icons = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
     {
         { "Ammo", 4 },
         { "Chems", 5 },
@@ -41,7 +69,36 @@ public static class ResourceIcons
         { "Creds", 21},
     };
 
-    public static Dictionary<string, int> TermIcons => new Dictionary<string, int>(StringComparer.CurrentCultureIgnoreCase)
+    private static string SpriteFn(int index) => $"<sprite index={index}>";
+    private static Dictionary<int, string> Sprite = new Dictionary<int, string>()
+    {
+        { 1, SpriteFn(1) },
+        { 2, SpriteFn(2) },
+        { 3, SpriteFn(3) },
+        { 4, SpriteFn(4) },
+        { 5, SpriteFn(5) },
+        { 6, SpriteFn(6) },
+        { 7, SpriteFn(7) },
+        { 8, SpriteFn(8) },
+        { 9, SpriteFn(9) },
+        { 10, SpriteFn(10) },
+        { 11, SpriteFn(11) },
+        { 12, SpriteFn(12) },
+        { 13, SpriteFn(13) },
+        { 14, SpriteFn(14) },
+        { 15, SpriteFn(15) },
+        { 16, SpriteFn(16) },
+        { 17, SpriteFn(17) },
+        { 18, SpriteFn(18) },
+        { 19, SpriteFn(19) },
+        { 20, SpriteFn(20) },
+        { 21, SpriteFn(21) },
+        { 22, SpriteFn(22) },
+        { 23, SpriteFn(23) },
+        { 24, SpriteFn(24) },
+    };
+
+    public static Dictionary<string, int> TermIcons = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
     {
         { "Resources/Ammo", 4 },
         { "Resources/Chems", 5 },
