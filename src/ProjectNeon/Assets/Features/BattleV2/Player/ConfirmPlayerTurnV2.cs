@@ -57,8 +57,10 @@ public class ConfirmPlayerTurnV2 : MonoBehaviour, IConfirmCancellable
         
         if (WillAutomaticallyEndTurn())
         {
+            #if UNITY_EDITOR
             DevLog.Write($"No playable cards. Requesting early turn Confirmation. " +
                          $"Hand Size {battleState.PlayerCardZones.HandZone.Cards.Length}. Num Cycles {battleState.NumberOfRecyclesRemainingThisTurn}");
+            #endif
             Confirm();
         }
     }

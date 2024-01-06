@@ -234,16 +234,16 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _maxDragPoint = new Vector2(screenWidth + _dragOffset.x - xPadding, screenHeight + _dragOffset.y - yPadding);
     }
 
-    public void Set(Card card) => Set(LibraryString, card, () => { }, () => {}, () => { }, (_, __) => false, () => false);
-    public void Set(Card card, Action onClick) => Set(LibraryString, card, onClick, () => {}, () => { }, (_, __) => false, () => false);
-    public void Set(CardTypeData card) => Set(card, () => { });
+    public void Set(Card card) => Set(LibraryString, card, NoOp, NoOp, NoOp, False, False);
+    public void Set(Card card, Action onClick) => Set(LibraryString, card, onClick, NoOp, NoOp, False, False);
+    public void Set(CardTypeData card) => Set(card, NoOp);
     
     public void Set(string zone, Card card, Action onClick, Action onBeginDrag, Action onDiscard, Func<BattleState, Card, bool> getCanPlay, Func<bool> getCanActivate)
     {
         if (_debug)
             DebugLog($"Card Set - {card.Name}");
         InitFreshCard(onClick);
-
+        
         _onDiscard = onDiscard;
         _onBeginDrag = onBeginDrag;
         _card = card;
@@ -255,7 +255,7 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         _onRightClick = _isHand
             ? battleState.AllowRightClickOnCard
                 ? ToggleAsBasic
-                : (Action)(() => { })
+                : (Action)NoOp
             : card.ShowDetailedCardView;
         controls.SetCanToggleBasic(_isHand && battleState.ShowSwapCardForBasic && card.Owner.BasicCard.IsPresent);
         controls.SetCanCycleOrDiscard(_isHand && battleState.ShowCycleOrDiscard && card.Owner.BasicCard.IsPresent);
@@ -264,15 +264,15 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         if (_isSelected)
             OnSelect(null);
     }
-    
+
     public void Set(CardTypeData cardType, Action onClick)
     {
         InitFreshCard(onClick);
 
-        _onBeginDrag = () => {};
+        _onBeginDrag = NoOp;
         _card = null;
         SetCard(cardType);
-        _getCanPlay = (_, __) => false;
+        _getCanPlay = False;
         _onRightClick = _cardType.ShowDetailedCardView;
         _zone = LibraryString;
         _isHand = false;
@@ -317,15 +317,17 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     public void DisableInteractions()
     {
-        _onClick = () => { };
-        _onMiddleMouse = () => { };
-        _onRightClick = () => { };
+        _onClick = NoOp;
+        _onMiddleMouse = NoOp;
+        _onRightClick = NoOp;
         _useCustomHoverActions = false;
         _hoverEnterAction = NoOp;
         _hoverExitAction = NoOp;
     } 
     
     private void NoOp() {}
+    private bool False(BattleState _, Card __) => false;
+    private bool False() => false;
 
     public void SetMiddleButtonAction(Action action) => _onMiddleMouse = battleState.AllowMiddleClickOnCard ? action : NoOp;
 

@@ -15,13 +15,15 @@ public class ControllerWatcher : MonoBehaviour
 
     private float _verticalAxis;
     private float _horizontalAxis;
+    
+    private static InputControlChanged _inputControlChangedNonAlloc = new InputControlChanged();
 
     private void Start()
     {
         if (PlayerPrefs.HasKey("InputControlType"))
         {
             InputControl.Type = (ControlType)PlayerPrefs.GetInt("InputControlType");
-            Message.Publish(new InputControlChanged());
+            Message.Publish(_inputControlChangedNonAlloc);
         }
     }
     
@@ -32,7 +34,7 @@ public class ControllerWatcher : MonoBehaviour
         if (shouldOverride && InputControl.Type != overridenControlType)
         {
             InputControl.Type = overridenControlType;
-            Message.Publish(new InputControlChanged());
+            Message.Publish(_inputControlChangedNonAlloc);
         }
         else if (shouldOverride)
             return;
@@ -40,13 +42,13 @@ public class ControllerWatcher : MonoBehaviour
         {
             InputControl.Type = ControlType.Mouse;
             SaveInput();
-            Message.Publish(new InputControlChanged());
+            Message.Publish(_inputControlChangedNonAlloc);
         }
         else if (InputControl.Type != ControlType.Keyboard && _keyboardButtons.Any(Input.GetKeyDown))
         {
             InputControl.Type = ControlType.Keyboard;
             SaveInput();
-            Message.Publish(new InputControlChanged());
+            Message.Publish(_inputControlChangedNonAlloc);
         }
         else if (InputControl.Type != ControlType.Xbox && InputControl.Type != ControlType.Playstation && InputControl.Type != ControlType.Switch && (
                _joystickButtons.Any(Input.GetKeyDown) 
@@ -62,7 +64,7 @@ public class ControllerWatcher : MonoBehaviour
             else
                 InputControl.Type = ControlType.Gamepad;
             SaveInput();
-            Message.Publish(new InputControlChanged());
+            Message.Publish(_inputControlChangedNonAlloc);
         }
         _verticalAxis = vertical;
         _horizontalAxis = horizontal;

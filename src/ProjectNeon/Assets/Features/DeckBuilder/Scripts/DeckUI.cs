@@ -44,16 +44,26 @@ public class DeckUI : OnMessage<DeckBuilderHeroSelected, DeckBuilderCurrentDeckC
             return;
         
         var hero = state.SelectedHeroesDeck.Hero;
+        var baseHero = hero.Character;
+        var heroAsMemberForLibrary = baseHero.AsMemberForLibrary(hero.Stats);
+        Func<CardType, Card> createCardDelegate = cardType => new Card(-1, heroAsMemberForLibrary, cardType, cardType.NonBattleTint(baseHero), cardType.NonBattleBust(baseHero));
         pageViewer.Init(state.SelectedHeroesDeck.Deck
-            .Select(x => x.ToNonBattleCard(hero))
-            .GroupBy(x => x.Name)
-            .OrderBy(x => x.First().Cost.CostSortOrder())
-            .ThenBy(x => x.First().Rarity)
-            .ThenBy(x => x.Key)
-            .Select(x => InitCardInDeckButton(x.First()))
-            .ToList(), x => x.GetComponent<CardInDeckButton>().InitEmpty(),
+            .Select(createCardDelegate)
+            .GroupBy(ByName)
+            .OrderBy(ByCost)
+            .ThenBy(ByRarity)
+            .ThenBy(ByKeyAlloc)
+            .Select(InitCardInDeckAlloc)
+            .ToList(), InitEmptyAlloc,
             false);
     }
+    
+    private string ByName(Card card) => card.Name;
+    private int ByCost(IGrouping<string, Card> grouping) => grouping.First().Cost.CostSortOrder();
+    private Rarity ByRarity(IGrouping<string, Card> grouping) => grouping.First().Rarity;
+    private string ByKeyAlloc(IGrouping<string, Card> grouping) => grouping.Key; 
+    private void InitEmptyAlloc(GameObject obj) => obj.GetComponent<CardInDeckButton>().InitEmpty();
+    private Action<GameObject> InitCardInDeckAlloc(IGrouping<string, Card> grouping) => InitCardInDeckButton(grouping.First());
 
     private Action<GameObject> InitCardInDeckButton(Card card)
     {

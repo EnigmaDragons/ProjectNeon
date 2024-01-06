@@ -156,8 +156,10 @@ public static class AICardSelectionLogic
             .ToArray()
             .Shuffled()
             .OrderByDescending(c => c.preference);
-            
+
+        #if UNITY_EDITOR
         DevLog.Write($"Card Preference Order: {string.Join(", ", options.Select(c => $"{c.option.Name} {c.preference}"))}");
+        #endif
         return options.First().option;
     }
 
@@ -183,8 +185,10 @@ public static class AICardSelectionLogic
     private static Maybe<CardTypeData> _lastCard = Maybe<CardTypeData>.Missing();
     private static CardSelectionContext WithLoggedSelection(this CardSelectionContext ctx, string selectionPhase)
     {
+        #if UNITY_EDITOR
         if (_lastCard.IsMissing && ctx.SelectedCard.IsPresent)
             DevLog.Write($"Selected Card in {selectionPhase}: {ctx.SelectedCard.Value.Name}");
+        #endif
 
         _lastCard = ctx.SelectedCard;
         return ctx;
@@ -283,7 +287,9 @@ public static class AICardSelectionLogic
             .ThenBy(o => o.card.Cost.BaseAmount)
             .ToList();
         
+        #if UNITY_EDITOR
         DevLog.Write($"Card Preference Order: {string.Join(", ", cardPreferenceOrder.Select(c => $"{c.card.Name} {c.typePriority}"))}");
+        #endif
         
         return cardPreferenceOrder.First().card;
     }

@@ -22,7 +22,9 @@ public class BattleEnemyCardsPhases : OnMessage<BattleStateChanged, CardResoluti
 
     public void GenerateAiStrategy()
     {
+        #if UNITY_EDITOR
         DevLog.Write("Generated AI Strategy");
+        #endif
         _currentTurnStrategy = _enemyStrategy.Generate(state, new EnemySpecialCircumstanceCards(disabledCard, antiStealthCard, aiGlitchedCard));
         _enemiesToActThisTurn = state.Enemies
             .Where(e => e.Member.IsConscious())

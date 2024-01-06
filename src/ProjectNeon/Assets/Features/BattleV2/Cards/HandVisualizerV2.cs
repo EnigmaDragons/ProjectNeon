@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -113,6 +114,8 @@ public sealed class HandVisualizerV2 : HandVisualizerBase
         }
     }
 
+    private bool CanPlayAlloc(BattleState battleState, Card card) => AllowInteractionsAlloc() && card.IsPlayable(battleState.Party, battleState.NumberOfCardPlaysRemainingThisTurn);
+    private bool AllowInteractionsAlloc() => allowInteractions;
     private void UpdateCurrentCards(Card[] cards)
     {
         var screenWidth = Screen.width;
@@ -139,11 +142,11 @@ public sealed class HandVisualizerV2 : HandVisualizerBase
                 continue;
             
             c.Set("Hand", card,
-                () => SelectCard(cardIndex),
-                () => BeginDragCard(card, cardIndex),
-                () => DiscardCard(cardIndex),
-                (battleState, c2) => allowInteractions && c2.IsPlayable(battleState.Party, battleState.NumberOfCardPlaysRemainingThisTurn),
-                () => allowInteractions);
+                SelectCardAlloc(cardIndex),
+                BeginDragCardAlloc(cardIndex),
+                DiscardCardAlloc(cardIndex),
+                CanPlayAlloc,
+                AllowInteractionsAlloc);
             c.SetSiblingIndex(cardIndex);
             c.SetMiddleButtonAction(() => RecycleCard(cardIndex));
             c.SetDisabled(card.Owner.IsUnconscious() || card.Owner.IsDisabled());
@@ -153,6 +156,15 @@ public sealed class HandVisualizerV2 : HandVisualizerBase
         Message.Publish(new CardPositionsUpdated());
     }
 
+    private Dictionary<int, Action> _discardCardPreAlloc;
+    private Action DiscardCardAlloc(int cardIndex)
+    {
+        if (_discardCardPreAlloc == null)
+            _discardCardPreAlloc = new Dictionary<int, Action>();
+        if (!_discardCardPreAlloc.ContainsKey(cardIndex))
+            _discardCardPreAlloc[cardIndex] = () => DiscardCard(cardIndex);
+        return _discardCardPreAlloc[cardIndex];
+    }
     private void DiscardCard(int cardIndex)
     {
         if (state.Phase != BattleV2Phase.PlayCards)
@@ -164,6 +176,15 @@ public sealed class HandVisualizerV2 : HandVisualizerBase
             Message.Publish(new CancelTargetSelectionRequested());
     }
     
+    private Dictionary<int, Action> _selectCardPreAlloc;
+    private Action SelectCardAlloc(int cardIndex)
+    {
+        if (_selectCardPreAlloc == null)
+            _selectCardPreAlloc = new Dictionary<int, Action>();
+        if (!_selectCardPreAlloc.ContainsKey(cardIndex))
+            _selectCardPreAlloc[cardIndex] = () => SelectCard(cardIndex);
+        return _selectCardPreAlloc[cardIndex];
+    }
     public override void SelectCard(int cardIndex)
     {
         if (state.Phase != BattleV2Phase.PlayCards)
@@ -175,12 +196,21 @@ public sealed class HandVisualizerV2 : HandVisualizerBase
             Message.Publish(new CancelTargetSelectionRequested());
     }
 
-    public void BeginDragCard(Card card, int cardIndex)
+    private Dictionary<int, Action> _beginDragCardAlloc;
+    private Action BeginDragCardAlloc(int cardIndex)
+    {
+        if (_beginDragCardAlloc == null)
+            _beginDragCardAlloc = new Dictionary<int, Action>();
+        if (!_beginDragCardAlloc.ContainsKey(cardIndex))
+            _beginDragCardAlloc[cardIndex] = () => SelectCard(cardIndex);
+        return _beginDragCardAlloc[cardIndex];
+    }
+    public void BeginDragCard(int cardIndex)
     {
         if (state.Phase != BattleV2Phase.PlayCards)
             return;
         
-        if (card.Type.RequiresPlayerTargeting() && _cardPool[cardIndex].IsPlayable)
+        if (Hand.Cards[cardIndex].Type.RequiresPlayerTargeting() && _cardPool[cardIndex].IsPlayable)
         {
             var targetPosition = new Vector3(Screen.width / 2f, _defaultPosition.y, _defaultPosition.z);
             _cardPool[cardIndex].SetTargetPosition(targetPosition);

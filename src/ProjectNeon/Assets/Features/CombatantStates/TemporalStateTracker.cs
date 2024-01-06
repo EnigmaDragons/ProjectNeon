@@ -28,10 +28,14 @@ public class TemporalStateTracker
     
     private void DebugLog(Action a)
     {
+        #if UNITY_EDITOR
         if (ShouldPerformDebugLogging)
             DevLog.Write($"Before Status {Metadata.Status.Tag} - Remaining Uses {_remainingUses} Turns {_remainingTurns}. IsActive {IsActive}");
+        #endif
         a();
+        #if UNITY_EDITOR
         if (ShouldPerformDebugLogging)
             DevLog.Write($"After Status {Metadata.Status.Tag} - Remaining Uses {_remainingUses} Turns {_remainingTurns}. IsActive {IsActive}");
+        #endif
     }
 }

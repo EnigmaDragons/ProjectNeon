@@ -6,7 +6,7 @@ public sealed class CardPool
     private readonly CardPresenter[] _cards;
 
     public CardPresenter this[int index] => _cards[index];
-    public CardPresenter[] ShownCards => _cards.ToArray();
+    public CardPresenter[] ShownCards => _cards;
 
     public CardPool(CardPresenter[] cards, bool clearOnConstruct = true)
     {

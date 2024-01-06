@@ -12,6 +12,8 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
     [SerializeField] private BattlePlayerTargetingStateV2 targetingState;
 
     [ReadOnly, SerializeField] private Card card;
+
+    private void Awake() => card = null; //stop uninitialized cards
     
     protected override void Execute(BeginTargetSelectionRequested msg)
     {
@@ -27,6 +29,8 @@ public class SelectCardTargetsV3 : OnMessage<BeginTargetSelectionRequested, EndT
 
     private void EndSelection(bool shouldDiscard)
     {
+        if (card == null)
+            return;
         Log.Info($"UI - Finished Target Selection. Discard {shouldDiscard}");
         if (battleState.Phase != BattleV2Phase.PlayCards)
             Cancel();

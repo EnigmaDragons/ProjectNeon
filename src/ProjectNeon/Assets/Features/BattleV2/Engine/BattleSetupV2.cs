@@ -63,7 +63,9 @@ public class BattleSetupV2 : MonoBehaviour
         visuals.Setup2(enemies);
         visuals.AfterBattleStateInitialized();
         ui.Setup();
+        #if UNITY_EDITOR
         DevLog.Write("Finished Character Setup");
+        #endif
     }
     
     public IEnumerator ExecuteCards()
@@ -72,7 +74,9 @@ public class BattleSetupV2 : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         yield return SetupPlayerCards();
         yield return new WaitForSeconds(1.05f);
+        #if UNITY_EDITOR
         DevLog.Write("Finished Card Setup");
+        #endif
     }
 
     private void ClearResolutionZone()
@@ -82,16 +86,22 @@ public class BattleSetupV2 : MonoBehaviour
     
     private void SetupEnemyEncounter()
     {
+        #if UNITY_EDITOR
         DevLog.Write("Setting Up Enemies");
+        #endif
         if (state.HasCustomEnemyEncounter)
         {
+            #if UNITY_EDITOR
             DevLog.Write("Setting Up Custom Encounter");
+            #endif
             state.SetupEnemyEncounter();
         }
 
         if (enemyArea.Enemies.Count == 0)
         {
+            #if UNITY_EDITOR
             DevLog.Write("Setting Up Fallback Random Encounter of Difficulty 250");
+            #endif
             enemyArea = enemyArea.Initialized(encounterBuilder.Generate(250, 1, false));
         }
 
@@ -124,7 +134,9 @@ public class BattleSetupV2 : MonoBehaviour
             cards.AddRange(cardTypes.Select(c => c.CreateInstance(state.GetNextCardId(), state.GetMemberByHero(hero), hero.Tint, hero.Bust)));
         }
 
+        #if UNITY_EDITOR
         DevLog.Write($"Setting Up Player Hand - Should Shuffle {!state.DontShuffleNextBattle} - Rng Seed {state.BattleRngSeed}");
+        #endif
         var rng = _battleRng ?? new DeterministicRng(state.BattleRngSeed);
         if (state.DontShuffleNextBattle)
             Deck.Init(cards);

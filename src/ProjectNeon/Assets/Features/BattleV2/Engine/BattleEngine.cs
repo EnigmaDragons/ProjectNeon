@@ -165,7 +165,9 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
 
     protected override void Execute(ResolutionsFinished msg)
     {
+        #if UNITY_EDITOR
         DevLog.Write($"Resolutions Finished {msg.Phase}");
+        #endif
         if (state.BattleIsOver())
             FinishBattle();
         else if (msg.Phase == BattleV2Phase.GlobalEffectCards)
@@ -251,8 +253,10 @@ public class BattleEngine : OnMessage<PlayerTurnConfirmed, StartOfTurnEffectsSta
     
     private void LogProcessStep(string message)
     {
+        #if UNITY_EDITOR
         if (logProcessSteps)
             DevLog.Write(message);
+        #endif
     }
 
     private void SafeCoroutine(IEnumerator coroutine) => this.SafeCoroutineOrNothing(coroutine);

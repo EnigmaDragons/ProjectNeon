@@ -48,6 +48,7 @@ public class HeroLibraryUI : MonoBehaviour
             false);
     }
 
+    private void NoOp() {}
     private Action<GameObject> InitCardInLibraryButton(Card card)
     {
         void Init(GameObject gameObj) => gameObj.GetComponent<CardInLibraryButton>().InitInfoOnly(card, cheatGainCard ? () =>
@@ -58,7 +59,7 @@ public class HeroLibraryUI : MonoBehaviour
                 party.Add(card.CardTypeOrNothing.Value);
                 Message.Publish(new ToggleCardLibrary());
             }
-            : (Action)(() => {}));
+            : (Action)NoOp);
         return Init;
     }
 }

@@ -83,14 +83,13 @@ public class BattleState : ScriptableObject
     public GameObject Battlefield => nextBattlegroundPrototype;
     public IDictionary<int, Member> Members => _membersById;
     public Member[] MembersWithoutIds => Members.Values.ToArray();
-    public Member[] Heroes => Members.Values.Where(x => x.TeamType == TeamType.Party).ToArray();
-    public Member[] EnemyMembers => Members.Values.Where(x => x.TeamType == TeamType.Enemies).ToArray();
+    public Member[] Heroes => Members.Values.Where(m => m.TeamType == TeamType.Party).ToArray();
+    public Member[] EnemyMembers => Members.Values.Where(m => m.TeamType == TeamType.Enemies).ToArray();
 
     public Member[] ConsciousEnemyMembers =>
-        Members.Values.Where(x => x.TeamType == TeamType.Enemies && x.IsConscious()).ToArray();
+        Members.Values.Where(m => m.TeamType == TeamType.Enemies && m.IsConscious()).ToArray();
 
-    public (Member Member, EnemyInstance Enemy)[] Enemies =>
-        EnemyMembers.Select(m => (m, _enemiesById[m.Id])).ToArray();
+    public (Member Member, EnemyInstance Enemy)[] Enemies => EnemyMembers.Select(m => (m, _enemiesById[m.Id])).ToArray();
 
     public PlayerState PlayerState => playerState;
     public AllCards AllCards => allCards;
@@ -129,7 +128,9 @@ public class BattleState : ScriptableObject
     public void SetNextBattleground(GameObject prototype)
     {
         nextBattlegroundPrototype = prototype;
+        #if UNITY_EDITOR
         DevLog.Write($"Next Battlefield is {prototype.name}");
+        #endif
     }
 
     public void SetNextEncounter(IEnumerable<EnemyInstance> e, bool isElite = false, bool isStoryEventCombat = false,
@@ -147,30 +148,48 @@ public class BattleState : ScriptableObject
         AllowRightClickOnCard = true;
         AllowMiddleClickOnCard = true;
         BasicSuperFocusEnabled = false;
+        #if UNITY_EDITOR
         DevLog.Write($"Next Encounter has {string.Join(", ", nextEnemies.Select(x => x.NameTerm.ToEnglish()))}");
+        #endif
     }
 
     public void SetNextBattleStartingCardCount(int cardCount)
     {
         OverrideStartingPlayerCards = cardCount;
+        #if UNITY_EDITOR
         DevLog.Write($"Next Encounter has {cardCount} Starting Cards");
+        #endif
     }
 
     public void SetAllowSwapToBasic(bool shouldAllow)
     {
         ShowSwapCardForBasic = shouldAllow;
         AllowRightClickOnCard = shouldAllow;
+        #if UNITY_EDITOR
         DevLog.Write($"Next Encounter has Allow Swap to Basic {shouldAllow}");
+        #endif
     }
     
     public void SetAllowCycleOrDiscard(bool shouldAllow)
     {
         ShowCycleOrDiscard = shouldAllow;
         AllowMiddleClickOnCard = shouldAllow;
+        #if UNITY_EDITOR
         DevLog.Write($"Next Encounter has Allow Cycle or Discard {shouldAllow}");
+        #endif
     }
 
-    public void SetBasicSuperFocusEnabled(bool enabled) => UpdateState(() => BasicSuperFocusEnabled = enabled);
+    public void SetBasicSuperFocusEnabled(bool enabled)
+    {
+        if (enabled == BasicSuperFocusEnabled)
+            return;
+        if (enabled)
+            UpdateState(SetBasicSuperFocusIsEnabledAlloc);
+        else
+            UpdateState(SetBasicSuperFocusIsNotEnabledAlloc);
+    }
+    public void SetBasicSuperFocusIsEnabledAlloc() => BasicSuperFocusEnabled = true;
+    public void SetBasicSuperFocusIsNotEnabledAlloc() => BasicSuperFocusEnabled = false;
 
     private void LogEncounterInfo(bool isElite, int targetPower, int actualPower)
     {
@@ -281,12 +300,20 @@ public class BattleState : ScriptableObject
         _nextEnemyId = id + 1;
 
         playerState = new PlayerState(adventure?.Adventure?.BaseNumberOfCardCycles ?? 0);
-        _membersById = _heroesById.Select(m => m.Value.AsMember(m.Key))
-            .Concat(result.Select(e => e.Item2))
-            .ToDictionary(x => x.Id, x => x);
         
-        _heroesById.ForEach(h => h.Value.InitState(_membersById[h.Key], this));
-        _enemiesById.ForEach(e => e.Value.SetupMemberState(_membersById[e.Key], this));
+        _membersById = new Dictionary<int, Member>();
+        foreach (var m in _heroesById)
+        {
+            var member = m.Value.AsMember(m.Key);
+            _membersById[member.Id] = member;
+        }
+        foreach (var enemy in result)
+            _membersById[enemy.Item1] = enemy.Item2;
+
+        foreach (var h in _heroesById)
+            h.Value.InitState(_membersById[h.Key], this);
+        foreach (var e in _enemiesById)
+            e.Value.SetupMemberState(_membersById[e.Key], this);
 
         PlayerState.NumberOfCyclesUsedThisTurn = 0;
         _numPlayerDiscardsUsedThisTurn = 0;
@@ -298,7 +325,9 @@ public class BattleState : ScriptableObject
         CreditsAtStartOfBattle = party.Credits;
         ExceptionSuppressor.LogAndContinue(() => party.ApplyBlessings(this), "Applying Party Blessings");
 
+        #if UNITY_EDITOR
         DevLog.Write("Finished Battle State Init");
+        #endif
         return result;
     }
 
@@ -332,7 +361,9 @@ public class BattleState : ScriptableObject
         
         EnemyArea.Clear();
         needsCleanup = false;
+        #if UNITY_EDITOR
         DevLog.Write("Finished Battle State Cleanup");
+        #endif
     }
 
     // During Battle State Tracking
@@ -344,15 +375,20 @@ public class BattleState : ScriptableObject
             Stats.CardsPlayed++;
     });
     public void RecordCardDiscarded() => UpdateState(() => _numPlayerDiscardsUsedThisTurn++);
-    public void CleanupExpiredMemberStates() => UpdateState(() => _membersById.ForEach(x => x.Value.State.CleanExpiredStates()));
+    public void CleanupExpiredMemberStates() => UpdateState(CleanupExpiredMemberStatesAlloc);
+    private void CleanupExpiredMemberStatesAlloc()
+    {
+        foreach (var m in _membersById)
+            m.Value.State.CleanExpiredStates();
+    }
 
     public void RecordSingleCardDamageDealt(BattleStateSnapshot before)
     {
-        var totalBefore = before.Members.Where(x => x.Value.TeamType == TeamType.Enemies).Sum(x => x.Value.State.HpAndShieldWithOverkill);
-        var totalAfter = Enemies.Sum(x => x.Member.HpAndShieldWithOverkill());
+        var totalBefore = before.Members.Where(m => m.Value.TeamType == TeamType.Enemies).Sum(m => m.Value.State.HpAndShieldWithOverkill);
+        var totalAfter = Enemies.Sum(e => e.Member.HpAndShieldWithOverkill());
         RecordSingleCardDamageDealt(totalBefore - totalAfter);
     }
-    
+
     private void RecordSingleCardDamageDealt(int amount)
     {
         if (TurnNumber > 3)
@@ -362,12 +398,12 @@ public class BattleState : ScriptableObject
         if (Stats.HighestPreTurn4CardDamage > PermanentStats.Data.HighestPreTurn4SingleCardDamage)
             PermanentStats.Mutate(s => s.HighestPreTurn4SingleCardDamage = Stats.HighestPreTurn4CardDamage);
     }
-    
+
     public Member[] GetAllNewlyUnconsciousMembers()
     {
         var newlyUnconscious = Members
             .Where(m => !_unconsciousMembers.ContainsKey(m.Key))
-            .Select(m => m.Value)
+            .Select(x => x.Value)
             .Where(m => !m.State.IsConscious)
             .ToArray();
         newlyUnconscious.ForEach(r => _unconsciousMembers[r.Id] = r);
@@ -378,13 +414,13 @@ public class BattleState : ScriptableObject
     {
         var newlyConscious = Members
             .Where(m => _unconsciousMembers.ContainsKey(m.Key))
-            .Select(m => m.Value)
+            .Select(x => x.Value)
             .Where(m => m.State.IsConscious)
             .ToArray();
         newlyConscious.ForEach(r => _unconsciousMembers.Remove(r.Id));
         return newlyConscious;
     }
-    
+
     public void AdvanceTurn() =>
         UpdateState(() =>
         {

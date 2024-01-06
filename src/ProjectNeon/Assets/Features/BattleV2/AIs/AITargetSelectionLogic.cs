@@ -222,7 +222,9 @@ public static class AITargetSelectionLogic
     
     private static void Log(string msg)
     {
+        #if UNITY_EDITOR
         if (ShouldLogAiDetails)
             DevLog.Write(msg);
+        #endif
     }
 }

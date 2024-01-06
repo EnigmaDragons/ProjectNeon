@@ -69,21 +69,35 @@ public static class Formula
     private static string ReplaceTags(string expression, FormulaContext ctx)
     {
         foreach (var tag in CardTagSearchTerms)
-            expression = ReplaceIfContains(expression, tag.Value, () => ctx.Source.TagsPlayed[tag.Key].GetString());
+            expression = ReplaceIfContains(expression, tag.Value, ctx.Source.TagsPlayed[tag.Key]);
         return expression;
     }
-
-    private static string ReplaceIfContains(string expression, string ifContains, Func<string> getReplacementValue)
+    
+    #region splitforperformance 
+    private static string ReplaceIfContains(string expression, string ifContains, string replacementValue)
     {
         if (expression.ContainsAnyCase(ifContains))
-            expression = expression.Replace(ifContains, getReplacementValue());
+            expression = expression.Replace(ifContains, replacementValue);
         return expression;
     }
+    private static string ReplaceIfContains(string expression, string ifContains, int replacementValue)
+    {
+        if (expression.ContainsAnyCase(ifContains))
+            expression = expression.Replace(ifContains, replacementValue.GetString());
+        return expression;
+    }
+    private static string ReplaceIfContains(string expression, string ifContains, float replacementValue)
+    {
+        if (expression.ContainsAnyCase(ifContains))
+            expression = expression.Replace(ifContains, replacementValue.CeilingInt().ToString());
+        return expression;
+    }
+    #endregion
 
     private static string ReplaceShorthandStatNames(string expression)
     {
         foreach (var stat in StatTypeAliases.AbbreviationToFullNames) 
-            expression = ReplaceIfContains(expression, stat.Key, () => stat.Value);
+            expression = ReplaceIfContains(expression, stat.Key, stat.Value);
         return expression;
     }
 
@@ -95,8 +109,8 @@ public static class Formula
     {
         if (ctx.Target.IsPresent && expression.ContainsAnyCase(TargetString))
         {
-            expression = ReplaceIfContains(expression, TargetMaxPrimaryResource, () => ctx.Target.Value.PrimaryResourceMaxAmount.GetString());
-            expression = ReplaceIfContains(expression, TargetPrimaryResource, () => ctx.Target.Value.PrimaryResourceAmount.GetString());
+            expression = ReplaceIfContains(expression, TargetMaxPrimaryResource, ctx.Target.Value.PrimaryResourceMaxAmount);
+            expression = ReplaceIfContains(expression, TargetPrimaryResource, ctx.Target.Value.PrimaryResourceAmount);
         }
         expression = expression.Replace(MaxPrimaryResource, ctx.Source.PrimaryResource.MaxAmount.GetString());
         expression = expression.Replace(PrimaryResource, ctx.Source.PrimaryResourceAmount.GetString());
@@ -128,24 +142,22 @@ public static class Formula
         return expression;
     }
 
+    //removed call to execute if present or else to reduce memory alloc
     private const string TargetString = "Target";
     private const string TargetBaseString = "TargetBase";
     private static string ReplaceOrRemoveTargetValue(string expression, StatType stat, FormulaContext ctx)
     {        
         if (!expression.ContainsAnyCase(TargetString))
             return expression;
-        
-        ctx.Target.ExecuteIfPresentOrElse(
-            t => expression = ReplaceIfContains(expression, $"Target[{stat}]", () => t[stat].CeilingInt().GetString()), 
-            () => expression = ReplaceIfContains(expression, $"Target[{stat}]", () => string.Empty));
-        
+
+        expression = ctx.Target.IsPresent 
+            ? ReplaceIfContains(expression, $"Target[{stat}]", ctx.Target.Value[stat]) 
+            : ReplaceIfContains(expression, $"Target[{stat}]", string.Empty);
+
         if (!expression.ContainsAnyCase(TargetBaseString))
             return expression;
-        
-        ctx.Target.ExecuteIfPresentOrElse(
-            t => expression = expression.Replace($"TargetBase[{stat}]", t.BaseStats[stat].CeilingInt().GetString()), 
-            () => expression = expression.Replace($"TargetBase[{stat}]", ""));
-        return expression;
+
+        return expression.Replace($"TargetBase[{stat}]", ctx.Target.IsPresent ? ctx.Target.Value.BaseStats[stat].CeilingInt().GetString() : string.Empty);
     }
     
     private static string ReplaceOrRemoveTargetValue(string expression, TemporalStatType stat, FormulaContext ctx)
@@ -153,17 +165,12 @@ public static class Formula
         if (!expression.ContainsAnyCase(TargetString))
             return expression;
         
-        ctx.Target.ExecuteIfPresentOrElse(
-            t => expression = expression.Replace($"Target[{stat}]", t[stat].CeilingInt().GetString()), 
-            () => expression = expression.Replace($"Target[{stat}]", ""));
-        
+        expression = expression.Replace($"Target[{stat}]", ctx.Target.IsPresent ? ctx.Target.Value[stat].CeilingInt().GetString() : string.Empty);
+
         if (!expression.ContainsAnyCase(TargetBaseString))
             return expression;
-        
-        ctx.Target.ExecuteIfPresentOrElse(
-            t => expression = expression.Replace($"TargetBase[{stat}]", t.BaseStats[stat].CeilingInt().GetString()), 
-            () => expression = expression.Replace($"TargetBase[{stat}]", ""));
-        return expression;
+
+        return expression.Replace($"TargetBase[{stat}]", ctx.Target.IsPresent ? ctx.Target.Value.BaseStats[stat].CeilingInt().GetString() : string.Empty);
     }
 
     private const string XString = "X";

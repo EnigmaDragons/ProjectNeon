@@ -74,7 +74,9 @@ public class CardResolutionZone : ScriptableObject
             played.Card.ClearXValue();
             if (!condition(played)) continue;
             
+            #if UNITY_EDITOR
             DevLog.Write($"Expired played card {played.Card.Name} by {played.Member.NameTerm.ToEnglish()}");
+            #endif
             if (_pendingMoves.Count > i)
                 _pendingMoves.RemoveAt(i);
             if (played.Member.TeamType == TeamType.Party && playerPlayArea.HasCards)
@@ -97,7 +99,9 @@ public class CardResolutionZone : ScriptableObject
     
     public void BeginResolvingNext()
     {
+        #if UNITY_EDITOR
         DevLog.Write("Requested Resolve Next Card");
+        #endif
         isResolving = true;
         var move = _pendingMoves[0];
         _pendingMoves = _pendingMoves.Skip(1).ToList();
@@ -133,7 +137,9 @@ public class CardResolutionZone : ScriptableObject
         {
             played.Member.State.RecordUsage(played.Card);
             played.Member.Apply(m => m.Spend(played.Spent, battleState.Party));
+            #if UNITY_EDITOR
             DevLog.Write($"{played.Member.NameTerm.ToEnglish()} Played {played.Card.Name} - Spent {played.Spent}");
+            #endif
         }
     }
     

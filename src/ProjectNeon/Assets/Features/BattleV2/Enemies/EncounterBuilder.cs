@@ -75,7 +75,9 @@ public class EncounterBuilder : ScriptableObject, IEncounterBuilder
 
     private void DebugLog(string msg)
     {
+        #if UNITY_EDITOR
         if (_debugLog)
             DevLog.Write(msg);
+        #endif
     }
 }

@@ -107,7 +107,9 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
     private void ResolveNextStatusEffect()
     {
         var e = _currentMemberEffects.Dequeue();
+        #if UNITY_EDITOR
         DevLog.Write($"Resolve Next Status Effect - Effect is Finished {e.IsFinished()}");
+        #endif
         if (!e.IsFinished())
         {
             var member = _currentMember.Value;
@@ -157,8 +159,10 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
             var effects = _isProcessingStartOfTurn
                 ? member.State.GetTurnStartEffects()
                 : member.State.GetTurnEndEffects();
+            #if UNITY_EDITOR
             if (effects.Length > 0)
                 DevLog.Write($"Resolving {effects.Length} Status Effects for {member.NameTerm.ToEnglish()}");
+            #endif
             effects.Where(e => !e.IsFinished())
                 .ForEach(e => _currentMemberEffects.Enqueue(e));
             ResolveNext("Enqueue Next Member Effects");
@@ -167,7 +171,9 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
 
     protected override void Execute(StatusEffectResolved msg)
     {
+        #if UNITY_EDITOR
         DevLog.Write("Status Effect Resolved - Adding Status Effect Reactions");
+        #endif
         var reactions = state.Members.Values.SelectMany(v => v.State.GetReactions(msg.EffectResolved, state.Phase == BattleV2Phase.HastyEnemyCards || state.Phase == BattleV2Phase.PlayCards || state.Phase == BattleV2Phase.EnemyCards)).ToArray();
         Reactions.Enqueue(reactions);
         
@@ -186,7 +192,9 @@ public class BattleStatusEffects : OnMessage<StatusEffectResolved, PerformAction
         if (_processedCardIds.Contains(msg.PlayedCardId))
             return;
 
+        #if UNITY_EDITOR
         DevLog.Write($"Card Resolution Finished {msg.CardName} {msg.CardId} {msg.PlayedCardId}");
+        #endif
         _processedCardIds.Add(msg.PlayedCardId);
         ResolveNext("Card Resolution Finished");
     }

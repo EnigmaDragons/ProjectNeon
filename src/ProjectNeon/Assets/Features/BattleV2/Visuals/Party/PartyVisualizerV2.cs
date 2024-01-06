@@ -106,7 +106,9 @@ public class PartyVisualizerV2 : OnMessage<CharacterAnimationRequested, Highligh
         else
             this.SafeCoroutineOrNothing(animator.PlayAnimationUntilFinished(e.Animation.AnimationName, elapsed =>
             {
+                #if UNITY_EDITOR
                 DevLog.Write($"Finished {e.Animation} Animation in {elapsed} seconds.");
+                #endif
                 Message.Publish(new Finished<CharacterAnimationRequested>());
             }));
     }

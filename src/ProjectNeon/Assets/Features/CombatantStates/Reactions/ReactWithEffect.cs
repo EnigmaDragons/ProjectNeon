@@ -252,7 +252,9 @@ public class EffectReactWith : Effect
                 m.AddReactiveState(new ReactWithCard(_isDebuff, _numberOfUses, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m, _maxDurationFormula, ctx.XPaidAmount, ctx.ScopedData),
                     _status, _timing, _onlyReactDuringCardPhases, _triggerScope, ctx.BattleMembers, m.MemberId, ctx.Source, _reactionCard.Value,
                     _conditionBuilder(reactionConditionContext)));
+                #if UNITY_EDITOR
                 DevLog.Write($"Applied React With Card {_conditionType} to {m.NameTerm.ToEnglish()}");
+                #endif
             });
         else if (_reactionEffect.IsPresent)
             ctx.Target.ApplyToAllConscious(m =>
@@ -266,7 +268,9 @@ public class EffectReactWith : Effect
                 m.AddReactiveState(new ReactWithEffect(_isDebuff, _numberOfUses, Formula.EvaluateToInt(ctx.SourceSnapshot.State, m, _maxDurationFormula, ctx.XPaidAmount, ctx.ScopedData), 
                     _status, _timing, _onlyReactDuringCardPhases, _triggerScope, ctx.BattleMembers, m.MemberId, ctx.Source, _reactionEffect.Value, _maxUsesPerTurn,
                     _conditionBuilder(reactionConditionContext)));
+                #if UNITY_EDITOR
                 DevLog.Write($"Applied React With Effect {_conditionType} to {m.NameTerm.ToEnglish()}");
+                #endif
             });
     }
 }
@@ -280,7 +284,9 @@ public sealed class ReactWithEffect : ReactiveEffectV2Base
                 {
                     var isInTriggerScope = triggerScope.IsInTriggerScope(originator, allMembers[possessingMemberId], effect.Source);
                     var triggerCount = condition(effect);
+                    #if UNITY_EDITOR
                     DevLog.Write($"{status.Tag} Reaction - Member {possessingMemberId}- Is In Trigger Scope: {isInTriggerScope}. Condition Met: {triggerCount} times");
+                    #endif
                     return effect.WasApplied && isInTriggerScope ? triggerCount : 0;
                 })) {}
 }
@@ -294,7 +300,9 @@ public sealed class ReactWithCard : ReactiveEffectV2Base
             {
                 var isInTriggerScope = triggerScope.IsInTriggerScope(originator, allMembers[possessingMemberId], effect.Source);
                 var triggerCount = condition(effect);
+                #if UNITY_EDITOR
                 DevLog.Write($"{status.Tag} Reaction - Member {possessingMemberId}- Is In Trigger Scope: {isInTriggerScope}. Condition Met: {triggerCount} times");
+                #endif
                 return effect.WasApplied && isInTriggerScope ? triggerCount : 0;
             })) {}
 }

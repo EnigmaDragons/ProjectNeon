@@ -191,7 +191,9 @@ public static class AllEffects
                 : effectData.TurnDelay == 1
                     ? " at the start of next turn" 
                     : $" in {effectData.TurnDelay} turns";
+            #if UNITY_EDITOR
             DevLog.Write($"Applying Effect of {effectData.EffectType} to {updatedContext.Target.MembersDescriptions()}{whenClause}");
+            #endif
             if (effectData.TurnDelay > 0)
                 BattleLog.Write($"Will Apply {effectData.EffectType}{whenClause}");
             
@@ -199,8 +201,10 @@ public static class AllEffects
             var shouldNotApplyReason = effectData.Condition().GetShouldNotApplyReason(updatedContext);
             if (shouldNotApplyReason.IsPresent)
             {
+                #if UNITY_EDITOR
                 if (effectData.EffectType != EffectType.RecordConditionIsTrue)
                     DevLog.Write($"Did not apply {effectData.EffectType} because {shouldNotApplyReason.Value}");
+                #endif
                 return new ApplyEffectResult(false, updatedContext);
             } 
             

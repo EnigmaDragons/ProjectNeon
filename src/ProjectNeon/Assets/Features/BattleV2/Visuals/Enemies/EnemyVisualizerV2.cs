@@ -151,7 +151,9 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
     
     public EnemySpawnDetails Spawn(EnemyInstance enemy, Vector3 offset, Maybe<Member> isReplacing)
     {
+        #if UNITY_EDITOR
         DevLog.Write($"Spawning {enemy.NameTerm.ToEnglish()}");
+        #endif
         var member = enemy.AsMember(state.GetNextEnemyId());
         var enemyObject = AddEnemy(enemy, member, offset, isReplacing);
         state.AddEnemy(enemy, enemyObject, member);
@@ -162,7 +164,9 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
     
     public void Despawn(MemberState enemy)
     {
+        #if UNITY_EDITOR
         DevLog.Write($"Despawning {enemy.NameTerm.ToEnglish()}");
+        #endif
         enemy.HasLeft = true;
         var index = state.GetEnemyIndexByMemberId(enemy.MemberId);
         state.RemoveEnemy(enemy);
@@ -194,7 +198,9 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
     protected override void Execute(CharacterAnimationRequested e)
     {
         if (!state.IsEnemy(e.MemberId)) return;
+        #if UNITY_EDITOR
         DevLog.Write($"Playing Enemy Animation {e.Animation.AnimationName}");
+        #endif
         
         animationContext.SetAnimation(e);
             
@@ -203,13 +209,17 @@ public class EnemyVisualizerV2 : OnMessage<MemberRevived, CharacterAnimationRequ
         var animator = enemy.GetComponentInChildren<Animator>();
         if (animator == null)
         {
+            #if UNITY_EDITOR
             DevLog.Write($"No Animator found for {enemy.name}");
+            #endif
             Message.Publish(new Finished<CharacterAnimationRequested>());
         }
         else
             this.SafeCoroutineOrNothing(animator.PlayAnimationUntilFinished(e.Animation.AnimationName, elapsed =>
             {
+                #if UNITY_EDITOR
                 DevLog.Write($"Finished {e.Animation} in {elapsed} seconds.");
+                #endif
                 Message.Publish(new Finished<CharacterAnimationRequested>());
             }));
     }

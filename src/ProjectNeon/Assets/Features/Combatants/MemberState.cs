@@ -450,8 +450,10 @@ public sealed class MemberState
                 + _additiveResourceCalculators.RemoveAll(m => !m.IsActive)
                 + _multiplicativeResourceCalculators.RemoveAll(m => !m.IsActive)
                 + _bonusCardPlayers.RemoveAll(m => !m.IsActive);
+            #if UNITY_EDITOR
             if (count > 0)
                 DevLog.Write($"Cleaned {count} expired states from {NameTerm.ToEnglish()}");
+            #endif
         });
 
     private readonly List<TemporalStatType> _temporalStatsToReduceAtEndOfTurn = new List<TemporalStatType>
