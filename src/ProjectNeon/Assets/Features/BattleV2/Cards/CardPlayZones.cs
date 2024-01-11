@@ -99,7 +99,7 @@ public class CardPlayZones : ScriptableObject
 
         if (!DrawZone.Cards.Any(cardCondition))
             Reshuffle();
-        var card = DrawZone.DrawOneCard();
+        var card = DrawZone.DrawOneCard(cardCondition);
         HandZone.PutOnBottom(card);
         Message.Publish(new PlayerCardDrawn(card));
     }

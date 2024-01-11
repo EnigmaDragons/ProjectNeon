@@ -308,7 +308,7 @@ public class BattleState : ScriptableObject
             _membersById[member.Id] = member;
         }
         foreach (var enemy in result)
-            _membersById[enemy.Item1] = enemy.Item2;
+            _membersById[enemy.Item2.Id] = enemy.Item2;
 
         foreach (var h in _heroesById)
             h.Value.InitState(_membersById[h.Key], this);
