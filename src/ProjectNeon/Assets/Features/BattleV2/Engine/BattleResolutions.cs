@@ -5,7 +5,8 @@ using System.Linq;
 using UnityEngine;
 
 public class BattleResolutions : OnMessage<CardCycled, CardsCycled, ApplyBattleEffect, SpawnEnemy, DespawnEnemy, CardResolutionFinished, 
-    CardActionPrevented, WaitDuringResolution, ResolveReactionCards, ResolveReaction, RandomizeEnemyPositions, OverrideCardDelay, PlayerCardDrawn>
+    CardActionPrevented, WaitDuringResolution, ResolveReactionCards, ResolveReaction, RandomizeEnemyPositions, OverrideCardDelay, 
+    PlayerCardDrawn, CardSpeedChanged>
 {
     [SerializeField] private BattleState state;
     [SerializeField] private PartyAdventureState partyAdventureState;
@@ -23,13 +24,14 @@ public class BattleResolutions : OnMessage<CardCycled, CardsCycled, ApplyBattleE
     private float _playerDelayFactor = 0.01f;
     private bool _debugLog;
 
+    private float _cardSpeed;
     private WaitForSeconds _enemyWait;
     private WaitForSeconds _partyWait;
 
     private void Awake()
     {
-        _enemyWait = new WaitForSeconds(DelaySeconds(TeamType.Enemies));
-        _partyWait = new WaitForSeconds(DelaySeconds(TeamType.Party));
+        _cardSpeed = PlayerPrefs.GetFloat("CardSpeed", 1f);
+        UpdateWaitForSeconds();
     }
     
     private void DebugLog(string msg)
@@ -91,6 +93,18 @@ public class BattleResolutions : OnMessage<CardCycled, CardsCycled, ApplyBattleE
             battleSnapshot, battleSnapshot, false, Maybe<Card>.Missing(), Array.Empty<Card>(), new [] {msg.Card}, new UnpreventableContext(), ReactionTimingWindow.FirstCause, state.PlayerCardZones);
         FinalizeBattleEffect(Maybe<EffectResolved>.Present(effectResolved));
         this.SafeCoroutineOrNothing(FinishEffect("card drawn"));
+    }
+
+    protected override void Execute(CardSpeedChanged msg)
+    {
+        _cardSpeed = msg.CardSpeed;
+        UpdateWaitForSeconds();
+    }
+
+    private void UpdateWaitForSeconds()
+    {
+        _enemyWait = new WaitForSeconds(DelaySeconds(TeamType.Enemies));
+        _partyWait = new WaitForSeconds(DelaySeconds(TeamType.Party));
     }
 
     protected override void Execute(ApplyBattleEffect msg)
@@ -332,5 +346,5 @@ public class BattleResolutions : OnMessage<CardCycled, CardsCycled, ApplyBattleE
     }
 
     private float DelaySeconds(TeamType team) 
-        => delay.Value * (team == TeamType.Party ? _playerDelayFactor : 1f);
+        => delay.Value * (team == TeamType.Party ? _playerDelayFactor : 1f) / _cardSpeed;
 }
