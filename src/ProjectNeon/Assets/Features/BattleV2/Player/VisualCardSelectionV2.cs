@@ -37,7 +37,6 @@ public sealed class VisualCardSelectionV2 : MonoBehaviour, IDirectionControllabl
         _isDirty = true;
         _shouldHighlight = true;
         cards.SetCardPlayingAllowed(true);
-        cards.UpdateVisibleCards();
     }
     
     private void Update()

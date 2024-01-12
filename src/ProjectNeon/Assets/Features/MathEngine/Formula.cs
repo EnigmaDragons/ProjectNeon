@@ -14,7 +14,8 @@ public static class Formula
     private static readonly CardTag[] CardTags = Enum.GetValues(typeof(CardTag)).Cast<CardTag>().ToArray();
     private static readonly Dictionary<CardTag, string> CardTagSearchTerms = CardTags.ToDictionary(t => t, t => $"Tag[{t}]");
     private static readonly Dictionary<StatType, string> BaseStatSearchTerms = StatTypes.ToDictionary(t => t, t => $"Base[{t}]");
-    
+    private static readonly Dictionary<string, float> PreComputedResults = new Dictionary<string, float>();
+
     private static int RoundUp(float f) => f > 0 ? Mathf.CeilToInt(f) : Mathf.FloorToInt(f);
 
     public static int EvaluateToIntWithDoubleDamage(FormulaContext ctx, string expression)
@@ -51,7 +52,10 @@ public static class Formula
         {
             var dataTable = new DataTable();
             newExp = ResolveConditionals(newExp, dataTable);
+            if (PreComputedResults.ContainsKey(newExp))
+                return PreComputedResults[newExp];
             var result = Convert.ToSingle(dataTable.Compute(newExp, null));
+            PreComputedResults[newExp] = result;
             if (_shouldLogDebug)
                 Log.Info($"Base Power {ctx.Source.BaseStats._power} - Current Power {ctx.Source.Stats._power} - {newExp} - {result}");
             return result;
