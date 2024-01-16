@@ -105,7 +105,9 @@ public sealed class CardSelectionContext
     private CardSelectionContext LogAfter(Func<CardSelectionContext> getNext)
     {
         var ctx = getNext();
+        #if UNITY_EDITOR && !HIGH_PERF
         Log.Info($"AI - {ctx.Member.NameTerm.ToEnglish()} - {ctx.SelectedCard.Select(x => $"Selected {x.Name}", () => "Not Selected Yet")} - Options {ctx.CardOptionsString}");
+        #endif
         return ctx;
     }
 }
