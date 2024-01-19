@@ -49,7 +49,7 @@ public static class Message
         private static readonly Dictionary<Type, string> TypeNamesCache = new Dictionary<Type, string>();
         
         private readonly Dictionary<string, List<object>> _eventActions = new Dictionary<string, List<object>>();
-        private readonly Dictionary<object, List<MessageSubscription>> _ownerSubscriptions = new Dictionary<object, List<MessageSubscription>>();
+        private readonly Dictionary<object, List<UnsubscriptionAction>> _ownerUnsubscriptionActions = new Dictionary<object, List<UnsubscriptionAction>>();
 
         private readonly Queue<object> _eventQueue = new Queue<object>();
         private bool _isPublishing;
@@ -67,20 +67,19 @@ public static class Message
             var eventType = GetTypeName(subscription.EventType);
             if (!_eventActions.ContainsKey(eventType))
                 _eventActions[eventType] = new List<object>();
-            if (!_ownerSubscriptions.ContainsKey(subscription.Owner))
-                _ownerSubscriptions[subscription.Owner] = new List<MessageSubscription>();
+            if (!_ownerUnsubscriptionActions.ContainsKey(subscription.Owner))
+                _ownerUnsubscriptionActions[subscription.Owner] = new List<UnsubscriptionAction>();
             _eventActions[eventType].Add(subscription.OnEvent);
-            _ownerSubscriptions[subscription.Owner].Add(subscription);
+            _ownerUnsubscriptionActions[subscription.Owner].Add(new UnsubscriptionAction(subscription.OnEvent, _eventActions[eventType]));
         }
 
         public void Unsubscribe(object owner)
         {
-            if (!_ownerSubscriptions.ContainsKey(owner))
+            if (!_ownerUnsubscriptionActions.ContainsKey(owner))
                 return;
-            
-            var events = _ownerSubscriptions[owner];
-            _eventActions.ForEach(e => e.Value.RemoveAll(x => events.AnyNonAlloc(y => y.OnEvent.Equals(x))));
-            _ownerSubscriptions.Remove(owner);
+            foreach (var unsubscription in _ownerUnsubscriptionActions[owner])
+                unsubscription.Execute();
+            _ownerUnsubscriptionActions.Remove(owner);
         }
 
         private const string ProcessMessageString = "Processed Message Queue in {0}s";

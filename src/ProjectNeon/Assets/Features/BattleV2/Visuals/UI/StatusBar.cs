@@ -51,7 +51,8 @@ public abstract class StatusBar : OnMessage<MemberStateChanged>, ILocalizeTerms
             statusValue.OriginatorId = originators.First();
         
         var tooltip = new StringBuilder();
-        statuses.ForEach(status => tooltip.AppendLine(tooltipTemplate(status)));
+        foreach (var status in statuses)
+            tooltip.AppendLine(tooltipTemplate(status));
         statusValue.Tooltip = tooltip.ToString();
         
         return statusValue;
