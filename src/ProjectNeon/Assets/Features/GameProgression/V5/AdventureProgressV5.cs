@@ -14,6 +14,8 @@ public class AdventureProgressV5 : AdventureProgressBase
     [SerializeField] private int currentSegmentIndex;
     [SerializeField] private int rngSeed = Rng.NewSeed();
     [SerializeField] private Difficulty difficulty;
+    [SerializeField] private CurrentBoss boss;
+    [SerializeField] private AllBosses bosses;
 
     private const bool ShouldDebug = false; 
     private DictionaryWithDefault<string, bool> _storyStates = new DictionaryWithDefault<string, bool>(false);
@@ -182,7 +184,8 @@ public class AdventureProgressV5 : AdventureProgressBase
              RngSeed = rngSeed,
              States = _storyStates.Keys.ToArray(),
              StateValues = _storyStates.Values.ToArray(),
-             DifficultyId = difficulty != null ? difficulty.Id : 0
+             DifficultyId = difficulty != null ? difficulty.Id : 0,
+             BossId = boss.Boss.id
         };
     
     public bool InitAdventure(GameAdventureProgressData d, Adventure adventure)
@@ -195,6 +198,8 @@ public class AdventureProgressV5 : AdventureProgressBase
         for (var i = 0; i < d.States.Length; i++)
              _storyStates[d.States[i]] = d.StateValues[i];
         difficulty = library.GetDifficulty(d.DifficultyId);
+        if (bosses.bosses.Any(x => x.id == d.BossId))
+            boss.Boss = bosses.bosses.First(x => x.id == d.BossId);
         return true;
     }
 

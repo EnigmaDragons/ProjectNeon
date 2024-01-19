@@ -35,6 +35,7 @@ public class GameAdventureProgressData
     public string[] States = new string[0];
     public bool[] StateValues = new bool[0];
     public int DifficultyId = -99;
+    public int BossId = -1;
 }
 
 public enum GameAdventureProgressType

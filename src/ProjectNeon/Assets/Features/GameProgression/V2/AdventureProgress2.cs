@@ -167,7 +167,7 @@ public class AdventureProgress2 : AdventureProgressBase
             FinishedStoryEvents = FinishedStoryEvents,
             PlayerReadMapPrompt = PlayerReadMapPrompt,
             ActiveGlobalEffectIds = GlobalEffects.Value.Select(g => g.Data.OriginatingId).ToArray(),
-            RngSeed = rngSeed
+            RngSeed = rngSeed,
         };
     
     public bool InitAdventure(GameAdventureProgressData d, Adventure adventure)
