@@ -15,7 +15,7 @@ public class CardShopPresenter : OnMessage<RefreshShop, CardPurchased>
     private int NumCards => cardPurchaseSlot.Length;
     
     private ShopSelection _selection;
-    private List<Card> _purchases = new List<Card>();
+    private readonly List<Card> _purchases = new List<Card>();
 
     public ShopSelection Selection => _selection;
     
@@ -24,10 +24,10 @@ public class CardShopPresenter : OnMessage<RefreshShop, CardPurchased>
     private void Clear()
     {
         _selection = null;
+        _purchases.Clear();
         if (cardParent != null)
             foreach (Transform c in cardParent.transform)
                 c.gameObject.SetActive(false);
-        _purchases = new List<Card>();
     }
 
     protected override void Execute(RefreshShop msg) => GetMoreInventory();
@@ -37,7 +37,7 @@ public class CardShopPresenter : OnMessage<RefreshShop, CardPurchased>
     protected override void AfterDisable()
     {
         PublishShopPurchaseMetricIfRelevant();
-        if (_selection.Cards.Count == NumCards && _selection.Cards.Count > 0)
+        if (_purchases.Count == NumCards && _purchases.Count > 0)
             Achievements.Record(Achievement.MiscShoppingSpree);
         _selection = null;
         map.DisableSavingCurrentNode();
