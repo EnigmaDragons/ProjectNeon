@@ -5,6 +5,7 @@ public sealed class CardPlayDropTarget : MonoBehaviour, IDropHandler
 {
     public void OnDrop(PointerEventData eventData)
     {
+        Log.Info("Card Play - OnDrop");
         var cardComponent = eventData.pointerDrag.GetComponent<CardPresenter>();
         if (cardComponent != null)
         {

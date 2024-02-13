@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DiscardCardDropTarget : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
+public class DiscardCardDropTarget : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler, IEndDragHandler
 {
     [SerializeField] private GameObject rotateTarget;
     [SerializeField] private float shakeSize = 0.15f;
@@ -13,12 +13,17 @@ public class DiscardCardDropTarget : MonoBehaviour, IDropHandler, IPointerEnterH
     
     public void OnDrop(PointerEventData eventData)
     {
+        Log.Info("OnDrop - Trash");
         var cardComponent = eventData.pointerDrag.GetComponent<CardPresenter>();
         if (cardComponent != null)
         {
             cardComponent.Discard();
             BattleLog.Write($"Trashed {cardComponent.CardName}");
             Message.Publish(new CheckForAutomaticTurnEnd());
+        }
+        else
+        {
+            Log.Info("Card Component Not Found");
         }
         Reset();
         MouseDragState.Set(false);
@@ -32,6 +37,7 @@ public class DiscardCardDropTarget : MonoBehaviour, IDropHandler, IPointerEnterH
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        Log.Info("OnPointerEnter - Trash");
         if (!gameObject.activeSelf) return;
         
         if (eventData.dragging)
@@ -41,7 +47,11 @@ public class DiscardCardDropTarget : MonoBehaviour, IDropHandler, IPointerEnterH
         }
     }
 
-    public void OnPointerExit(PointerEventData eventData) => Reset();
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        Log.Info("OnPointerExit - Trash");
+        Reset();
+    }
 
     private void FixedUpdate()
     {
@@ -49,5 +59,10 @@ public class DiscardCardDropTarget : MonoBehaviour, IDropHandler, IPointerEnterH
             rotateTarget.transform.Rotate(Vector3.forward, Mathf.Sin(Time.timeSinceLevelLoad * shakeSpeed) * shakeSize);
         else
             rotateTarget.transform.rotation = Quaternion.identity;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        Log.Info("OnEndDrag - Trash");
     }
 }

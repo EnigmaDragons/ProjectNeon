@@ -811,8 +811,11 @@ public class CardPresenter : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
             Message.Publish(new BeginTargetSelectionRequested(_card, this));
         }, () => { });
 
-    public void OnEndDrag(PointerEventData eventData) 
-        => CleanupOnDragEnded();
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        Log.Info("Drag Ended");
+        CleanupOnDragEnded();
+    }
 
     private void CleanupOnDragEnded()
     {

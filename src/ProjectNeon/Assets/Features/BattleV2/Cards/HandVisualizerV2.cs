@@ -169,9 +169,12 @@ public sealed class HandVisualizerV2 : HandVisualizerBase
     {
         if (state.Phase != BattleV2Phase.PlayCards)
             return;
-        
+
         if (allowInteractions && Hand.Count > cardIndex)
+        {
+            DiscardCardWithoutTargeting(cardIndex);
             Message.Publish(new EndTargetSelectionRequested(true));
+        }
         else
             Message.Publish(new CancelTargetSelectionRequested());
     }
