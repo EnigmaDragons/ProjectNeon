@@ -292,6 +292,8 @@ public static class InterpolatedCardDescriptions
             return $"Enter {Bold("Stealth")}";
         if (data.EffectType == EffectType.AdjustPrimaryStatForEveryCardCycledAndInHand)
             return cardsInHand + cardCyclesUsedThisTurn - 1 > 0 ? $"{cardsInHand + cardCyclesUsedThisTurn - 1}" : string.Empty;
+        if (data.EffectType == EffectType.Nothing)
+            return $"";
         
         Log.Warn($"Description for {data.EffectType} is not implemented.");
         return "%%";

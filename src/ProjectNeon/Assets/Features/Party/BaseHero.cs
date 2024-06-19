@@ -28,21 +28,21 @@ public class BaseHero : ScriptableObject, ILocalizeTerms
 
     // Stats
     [SerializeField] public int maxHp = 40;
-    [SerializeField] private int maxShield = 12;
-    [SerializeField] private int startingShield = 0;
-    [SerializeField] private int attack = 8;
-    [SerializeField] private int magic = 0;
-    [SerializeField] private float armor = 0;
-    [SerializeField] private float resistance = 0;
-    [SerializeField] private int leadership = 0;
-    [SerializeField] private int economy = 0;
-    [SerializeField] private int startingAegis;
-    [SerializeField] private int startingDodge;
-    [SerializeField] private int startingTaunt;
-    [SerializeField] private ResourceType resource1;
-    [SerializeField] private int resource1GainPerTurn;
-    [SerializeField] private int resource1StartingAmountOverride = -1;
-    [SerializeField] private ResourceType resource2;
+    [SerializeField] public int maxShield = 12;
+    [SerializeField] public int startingShield = 0;
+    [SerializeField] public int attack = 8;
+    [SerializeField] public int magic = 0;
+    [SerializeField] public float armor = 0;
+    [SerializeField] public float resistance = 0;
+    [SerializeField] public int leadership = 0;
+    [SerializeField] public int economy = 0;
+    [SerializeField] public int startingAegis;
+    [SerializeField] public int startingDodge;
+    [SerializeField] public int startingTaunt;
+    [SerializeField] public ResourceType resource1;
+    [SerializeField] public int resource1GainPerTurn;
+    [SerializeField] public int resource1StartingAmountOverride = -1;
+    [SerializeField] public ResourceType resource2;
     [SerializeField] private CardType[] additionalStartingCards;
     [SerializeField] private CardType[] excludedStartingCards;
     [SerializeField] private EffectData[] startOfBattleEffects = new EffectData[0];
