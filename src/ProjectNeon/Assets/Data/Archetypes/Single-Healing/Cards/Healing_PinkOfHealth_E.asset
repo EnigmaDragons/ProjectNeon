@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a43112afbe2c4794a8a1d20599fb8680, type: 3}
-  m_Name: Healing_SoothingPulse_E
+  m_Name: Healing_PinkOfHealth_E
   m_EditorClassIdentifier: 
   Actions:
   - type: 30
     battleEffect:
-      Id: 4586
+      Id: 4589
       EffectType: 0
       Conditions: []
       BaseAmount:
@@ -99,7 +99,7 @@ MonoBehaviour:
     replacing: 0
   - type: 31
     battleEffect:
-      Id: 4587
+      Id: 4590
       EffectType: 0
       Conditions: []
       BaseAmount:
@@ -168,7 +168,7 @@ MonoBehaviour:
       animation:
         UseConstant: 0
         ConstantValue: 
-        Variable: {fileID: 11400000, guid: 338c4c289b5a2c9448f7cd83e239a981, type: 2}
+        Variable: {fileID: 11400000, guid: da1c37401e6341648be045665c941fed, type: 2}
       size: 1
       speed: 1
       color:
@@ -183,8 +183,92 @@ MonoBehaviour:
     replacing: 0
   - type: 1
     battleEffect:
-      Id: 4588
-      EffectType: 29
+      Id: 4591
+      EffectType: 54
+      Conditions: []
+      BaseAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        Variable: {fileID: 0}
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      DurationFormula: -1
+      EffectScope:
+        UseConstant: 0
+        ConstantValue: 
+        Variable: {fileID: 0}
+      HitsRandomTargetMember: 0
+      ReTargetScope: 0
+      ApplyToEachMemberIndividually: 0
+      StatusTag: 0
+      StatusDetailText: 
+      TurnDelay: 0
+      Formula: 
+      InterpolatePartialFormula:
+        EvaluationPartialFormula: 
+        Prefix: 
+        Suffix: 
+        PrefixTerm: 
+        SuffixTerm: 
+      FlavorText:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedSequence: {fileID: 11400000, guid: ec3b66ed741970e4b85fb258ef6700be, type: 2}
+      ReferencedSequences: []
+      OnlyReactDuringCardPhases: 0
+      ReactionConditionType: 0
+      ReactionEffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReactionTimingWindow: 0
+      ReactionSequence: {fileID: 0}
+      ReactionEffect:
+        reactor: 0
+        scope: 0
+        multiTrigger: 0
+        cardActions: {fileID: 0}
+      BonusCardType: {fileID: 0}
+      Unpreventable: 0
+    conditionData:
+      ConditionType: 0
+      FloatAmount:
+        UseConstant: 1
+        ConstantValue: 0
+        FloatVariable: {fileID: 0}
+      EffectScope:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      ReferencedEffect: {fileID: 0}
+    characterAnimation: {fileID: 0}
+    characterAnimation2:
+      Type: 0
+      Conditions: []
+    atTargetAnimation:
+      animation:
+        UseConstant: 1
+        ConstantValue: 
+        Variable: {fileID: 0}
+      size: 1
+      speed: 1
+      color:
+        UseConstant: 1
+        ConstantValue: {r: 0, g: 0, b: 0, a: 0}
+        Variable: {fileID: 0}
+      skipWaitingForCompletion: 0
+      conditions: []
+    enemyToSpawn: {fileID: 0}
+    enemySpawnOffset: {x: 0, y: 0, z: 0}
+    enemySpawnConditions: []
+    replacing: 0
+  - type: 1
+    battleEffect:
+      Id: 0
+      EffectType: 86
       Conditions: []
       BaseAmount:
         UseConstant: 1
@@ -205,7 +289,7 @@ MonoBehaviour:
       StatusTag: 0
       StatusDetailText: 
       TurnDelay: 0
-      Formula: 0.8 * Power
+      Formula: 
       InterpolatePartialFormula:
         EvaluationPartialFormula: 
         Prefix: 
@@ -216,7 +300,7 @@ MonoBehaviour:
         UseConstant: 1
         ConstantValue: 
         Variable: {fileID: 0}
-      ReferencedSequence: {fileID: 0}
+      ReferencedSequence: {fileID: 11400000, guid: ec3b66ed741970e4b85fb258ef6700be, type: 2}
       ReferencedSequences: []
       OnlyReactDuringCardPhases: 0
       ReactionConditionType: 0

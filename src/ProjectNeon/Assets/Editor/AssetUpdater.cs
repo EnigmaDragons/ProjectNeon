@@ -7,7 +7,7 @@ using Object = UnityEngine.Object;
 
 public class AssetUpdater
 {
-    [MenuItem("Neon/Update All Assets")]
+    [MenuItem("Neon/Update All Assets #&a")]
     public static void Go()
     {
         Timed("Heroes", UpdateHeroes);

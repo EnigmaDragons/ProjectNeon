@@ -33,6 +33,8 @@ public class EffectReactWith : Effect
         { ReactionConditionType.WhenGainedPrimaryResource, ctx => effect => ctx.Possessor.IsConscious() ? IncreasedBy(effect.Select(ctx.Possessor, m => m.State.PrimaryResourceAmount)) : 0 },
         { ReactionConditionType.WhenShieldMaxed, ctx => effect 
             => BoolToInt(ctx.Possessor.IsConscious() && BecameTrue(effect.Select(ctx.Possessor, x => x.State.Shield == x.State.MaxShield )))},
+        { ReactionConditionType.WhenHealthMaxed, ctx => effect 
+            => BoolToInt(ctx.Possessor.IsConscious() && BecameTrue(effect.Select(ctx.Possessor, x => x.State.Hp == x.State.MaxHp )))},
         { ReactionConditionType.OnCausedShieldGain, ctx => effect 
             => PossessorCaused(ctx, effect) ? IncreasedBy(effect.SelectSum(x => x.State[TemporalStatType.Shield])) : 0},
         { ReactionConditionType.OnCausedStun, ctx => effect 
