@@ -256,6 +256,8 @@ public static class InterpolatedCardDescriptions
             return $"× {FormulaAmount(data, owner, xCost)}";
         if (data.EffectType == EffectType.HealOverTime)
             return MagicAmount(data, owner);
+        if (data.EffectType == EffectType.HealOverTimeFormula)
+            return FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.DrawCards)
             return FormulaAmount(data, owner, xCost);
         if (data.EffectType == EffectType.DrawCardsOfOwner)
@@ -459,6 +461,8 @@ public static class InterpolatedCardDescriptions
             coreDesc = $"deal {e}";
         if (data.EffectType == EffectType.HealFormula)
             coreDesc = $"heal {e}";
+        if (data.EffectType == EffectType.HealOverTimeFormula)
+            coreDesc = $"heal {e} {d}";
         if (data.EffectType == EffectType.DealTrueDamageFormula)
             coreDesc = $"deal {e}";
         if (data.EffectType == EffectType.MagicAttackFormula)
@@ -539,6 +543,8 @@ public static class InterpolatedCardDescriptions
             coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.HealFormula)
             coreDesc = $"heal {Bold(EffectDescription(data, owner, xCost))}";
+        if (data.EffectType == EffectType.HealOverTimeFormula)
+            coreDesc = $"heal {Bold(EffectDescription(data, owner, xCost))} {DurationDescription(data, owner, xCost)}";
         if (data.EffectType == EffectType.DealTrueDamageFormula)
             coreDesc = $"deal {Bold(EffectDescription(data, owner, xCost))}";
         if (data.EffectType == EffectType.MagicAttackFormula)

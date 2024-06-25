@@ -36,6 +36,7 @@ public class EffectDataEditor : PropertyDrawer
         {EffectType.DuplicateStatesOfTypeToRandomEnemy, new [] { "StatusTag" }},
         {EffectType.DealTrueDamageFormula, new [] { "Formula", "InterpolatePartialFormula", "Unpreventable" }},
         {EffectType.HealFormula, new [] { "Formula", "InterpolatePartialFormula" }},
+        {EffectType.HealOverTimeFormula, new [] { "Formula", "InterpolatePartialFormula", "DurationFormula" }},
         {EffectType.ApplyAdditiveStatInjury, new [] { "FlavorText", "FloatAmount", "EffectScope" }},
         {EffectType.ApplyMultiplicativeStatInjury, new [] {  "FlavorText", "FloatAmount", "EffectScope" }},
         {EffectType.Kill, new string[0]},

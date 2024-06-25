@@ -40,6 +40,7 @@ public static class AllEffects
         { EffectType.DisableForTurns, e => new AegisPreventable(new FullContextEffect((ctx, duration, m) => BattleLogged($"{m.NameTerm.ToEnglish()} is disabled for {duration} turns.", 
             () => m.ApplyTemporaryAdditive(new DisableForTurns(ctx.Source.Id, duration))), e.DurationFormula), "Disable")},
         { EffectType.HealOverTime, e => new HealOverTime(e.FloatAmount, e.DurationFormula) },
+        { EffectType.HealOverTimeFormula, e => new HealOverTimeFormula(e) },
         { EffectType.AdjustPlayerStats, e => new PlayerEffect((p, duration, amount) => p.AddState(
             new AdjustedPlayerStats(new PlayerStatAddends().With(e.EffectScope.Value.EnumVal<PlayerStatType>(), amount), duration, amount < 0)), e.DurationFormula, e.IntAmount.ToString()) },
         { EffectType.AdjustPlayerStatsFormula, e => new PlayerEffect((p, duration, amount) => p.AddState(

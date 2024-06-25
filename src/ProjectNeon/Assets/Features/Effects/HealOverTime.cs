@@ -10,6 +10,7 @@ public sealed class HealOverTime : Effect
         _turnsFormula = turnsFormula;
         _multiplier = multiplier;
     }
+    
     public void Apply(EffectContext ctx)
     {
         ctx.Target.Members.ForEach(x => x.State.ApplyTemporaryAdditive(

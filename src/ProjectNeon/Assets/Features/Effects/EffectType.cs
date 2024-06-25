@@ -1,5 +1,5 @@
 // WARNING: BE VERY CAREFUL NOT TO RE-USE NUMBERS. ALSO, THESE AREN'T IN NUMERICAL ORDER.
-// LAST NUMBER USED: 112
+// LAST NUMBER USED: 113
 
 public enum EffectType
 {
@@ -78,6 +78,7 @@ public enum EffectType
     // Healing
     HealFormula = 29,
     HealOverTime = 20,
+    HealOverTimeFormula = 113,
     FullyReviveAllAllies = 61,
 
     // Party Effects
